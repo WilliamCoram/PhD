@@ -1,0 +1,457 @@
+\section{Newton Polygons}
+
+In this section we will determine a way to check for zeroes of a power series via constructing
+something called a Newton polygon. We will follow \cite[Section~7.4]{Gouvea} closely.
+
+\subsection{Polynomials}
+
+Suppose $p$ is a prime number and consider $K = \Q_p$. We can generalise everything here to
+discretely valued fields, but for notation it is enough to consider $\Q_p$.
+
+Consider a polynomial $f$ over $K$, we can define the Newton polygon of $f$ in the following way.
+
+\begin{defn}
+    The \emph{Newton polygon} of $f = \sum_{i=0}^n a_i x^i$ is the lower boundary of the convex hull
+    of the set of points $(i,\nu(a_i))$.
+    Here by convex hull we mean the smallest convex polygon that contains all points.
+\end{defn}
+
+This is easily constructable by the following algorithm, \cite[Pages~210-211]{Gouvea} .
+
+\begin{enumerate}
+    \item Plot the points $\{(i,\nu (i) )\}$.
+    \item Start with the vertical half-line down from the point with the smallest $i$.
+    \item Rotate that line counter-clockwise until it hits one of the points we have plotted.
+    \item Break the line at that point and continue rotation the remaining part until another point
+    is hit.
+    \item Continue until all the points have been hit or lie strictly above a portion of the
+    polygon.
+\end{enumerate}
+
+For example, consider the polynomial, $f(x) = 1 + p x^2 + p^4 x^3 + p^3 x^4 + p^3x^5$. Then applying
+the algorithm we obtain the Newton polygon in Figure 1.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2025-05-06 at 17.27.01.png}
+    \caption{Newton polygon of $f(x)= 1 + px^2+p^4x^3+p^3x^4+p^3x^5$}
+\end{figure}
+
+As mentioned, the study of Newton polygons is deeply connected to studying the zeroes of $f(x)$,
+thus we will assume $f(0) \neq 0$. That is, we factor out any powers of $x$ dividing $f$, which
+means our initial vertical line starts on the $y$-axis.
+
+Moreover, we will also assume $a_0 = 1$. This is because if we factor
+$f(x) = \sum_{i = 0}^n a_i x^i$ as $f(x) = a_0 \cdot g(x)$, where
+$ g(x) = 1 + \sum_{i=1}^n \frac{a_i}{a_0}x^i$, it is not hard to see that the resulting Newton
+polygon of $g(x)$ is the Newton polygon of $f(x)$ shifted down by $\nu (a_0)$.
+This follows from observing $\nu (\frac{a_i}{a_0}) = \nu(a_i) - \nu (a_0)$.
+
+Now we have defined what Newton polygons are, we want to explain why we care about them and their
+slopes, and why they are connected with studying the zeros of the polynomial.
+
+We give the following definitions which will be relevant.
+\begin{defn}
+    \begin{enumerate}
+        \item The \emph{slopes} of the line segments appearing in the Newton polygon are called the
+        slopes of $f(x)$.
+        \item The \emph{length} of a slope is the length of the projection of the line segment with
+        that slope onto the $x$-axis.
+        \item The \emph{breaks} are the values of $i$ which are vertices of the Newton polygon.
+    \end{enumerate}
+\end{defn}
+
+\begin{theorem}
+  The slopes of a Newton polgyon form an increasing sequence.
+\end{theorem}
+
+\begin{proof}
+    Consider the first point, $(0,0)$ and let the first break occur at $(i,m i)$, so
+    that the first slope is $m$. Then by construction no points lie below this line; that is
+    $(j, \nu(j))$ lies above the line for all $j$. In other words, this means $\nu (a_j) \geq m j$
+    for every j. But, if the second slope was smaller we would have to have $(j, \nu(a_j))$ lying
+    below this line, which contradicts above.
+\end{proof}
+
+The connection to roots is then witnessed in the following theorem, \cite[Theorem~7.4.7]{Gouvea}.
+\begin{thm}
+    \label{NPPoly}
+    Let $f(x) = 1 + a_1 x + \dots + a_nx^n$ be a polynomial over $K$, and let $m_1, \dots, m_r$ be
+    the slopes of its Newton polygon (in increasing order). Let $i_1, \dots, i_r$ be the
+    corresponding lengths. Then for each $k$, $1 \leq k \leq r$, $f(x)$ has exactly $i_k$ roots of
+    valuation $m_k$ (counting multiplicity).
+\end{thm}
+
+\begin{proof}
+  Need to write up.
+\end{proof}
+
+Therefore, by computing the Newton polygon of a polynomial we can get information about the
+valuations of its roots.
+
+\subsection{Power series}
+
+Thus far we have worked with Newton polygons of polynomials, however we will eventually want to
+know properties of roots of power series. Therefore, we would like to generalise all the work we
+have done previously to power series.
+
+The definition of Newton polygons of power series are formally identical, and can be constructed
+via the same algorithm. However, because of the non-finiteness of degree we can run into some
+interesting examples.
+For example, consider the following power series, \cite[Page~260]{Gouvea}.
+\[
+f(x) = 1 + a x + ax^2 + \cdots +a x^d +\cdots \quad \text{for some } a \text{ with } \nu_p(a) > 0.
+\]
+Our set of interest is $\{(0,0),(n,\nu (a))  : \forall n \in \mathbb{N} \}.$ Doing the algorithm
+gives a line that sweeps unbroken along the horizontal axis. Importantly, none of our points
+$(i, \nu (a))$ lies on the line, and any increase in the slope will mean some points lie below the
+line.
+To solve this issue we adjust the algorithm slightly. As before, start with the vertical half-line
+down from the origin. Then rotate this line counter-clockwise until one of the following happens:
+\begin{enumerate}
+    \item The line simultaneously hits infinitely many of the points we have plotted.
+    In this case don't break the line and the polygon is complete.
+    \item The line reaches a position where it can be rotated no further without leaving behind some
+    points (as in example above). In this case this half lines forms the final segment of the
+    polygon.
+    \item The line hits a finite number of points. In this case, break at the last point that was
+    hit and repeat the procedure.
+\end{enumerate}
+
+Defining slopes as before, we have a relation between the slope of the final segment and the
+radius of convergence of the series, \cite[Lemma~7.4.8]{Gouvea}.
+\begin{thm} \label{RadofCon}
+    Let $m$ be the supremum of the slopes appearing in the Newton polygon of a series
+    $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$. Then the radius of convergence of $f$ is $p^m.$
+\end{thm}
+
+The generalisation of Theorem \ref{NPPoly} to power series comes as a corollary of the following,
+\cite[Proposition~7.4.10]{Gouvea}.
+
+\begin{prop}\label{NP}
+    Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$ be a power series. Let $m_1,m_2, \dots,m_k$ be the
+    first $k$ slopes of the Newton polygon of $f(x)$, and assume that $f(x)$ converges on the
+    closed ball of radius $c = p^{m_k}$ (from previous section, this means it is a restricted power
+    series for parameter $c$ if $K$ is complete). Let $N$ be the $x$-coordinate of the right
+    endpoint of the $k$-th segment of the Newton polygon. Then there exists a polynomial
+    $g(x)$ of degree $N$ and a power series $h(x)$ such that
+    \begin{enumerate}
+        \item $f(x) = g(x) h(x)$,
+        \item $\| f(x) - g(x) \|_c < 1$,
+        \item $h(x)$ converges on the closed ball of radius $c$,
+        \item $\| h(x) - 1\|_c <1$, and
+        \item the Newton polygon of $g(x)$ is the same as the portion of the Newton polygon of
+        $f(x)$ contained in the region $0 \leq x \leq N$.
+    \end{enumerate}
+\end{prop}
+
+And as promised here is the generalisation of Theorem~\ref{NPPoly}.
+
+\begin{cor}
+    Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$ be a power series which converges on the closed ball
+    of radius $c = p^m$. Let $m_1,\dots, m_k$ be the slopes of the Newton polygon of $f(x)$ which
+    are less than or equal to $m$, and let $i_1,\dots,i_k$ be their lengths. Then, for each $j$, the
+    power series $f(x)$ has $i_j$ zeros with absolute value $p^{m_j}$, and there are no other zeros
+    in the closed ball of radius $p^m.$
+\end{cor}
+
+\subsection{Weierstrass preparation theorem}
+
+This section will be dedicated to proving Proposition~\ref{NP}.
+
+The first important theorem we need to know is the $p$-adic Weierstrass preparation theorem,
+\cite[Theorem~7.2.10]{Gouvea}.
+
+\begin{thm}\label{WP}
+    Let $c$ be a positive real number and $f (x) = \sum a_n x^n$ be a power series with coefficients
+    in $K$ such that $ \lvert a_n \rvert c^n \to 0$ as $n \to \infty$. Let $N$ be the number defined
+    by the conditions
+    \[
+    \lvert a_N \rvert c^N = \max \lvert a_n \rvert c^n = \|f(x)\|_c \quad \text{and} \quad
+    \lvert a_n \rvert c^n < \lvert a_N \rvert c^N \text{ for all } n > N.
+    \]
+    Then there exist a polynomial
+    \[
+    g(x) = b_0 + b_1x + \cdots + b_N x^N
+    \]
+    of degree $N$ and with coefficients in $K$, and a power series
+    \[
+    h(x) = 1 + d_1 x + d_2 x^2 + \cdots
+    \]
+    with coefficients in $K$, satisfying:
+    \begin{itemize}
+        \item $f(x) = g(x) h(x)$;
+        \item $\lvert b_N \rvert c^N = \max \lvert b_n \rvert c^n$, that is
+        $\| g (x) \|_c = \lvert b_N \rvert c^N$;
+        \item $h(x) \in \mathcal{A}_c$, that is it is a restricted power series over $K$ for
+        parameter $c$;
+        \item $\lvert d_n \rvert c^n < 1$ for all $n \geq 1$, so that $\| h(x) - 1 \|_c < 1$; and
+        \item $\| f(x) - g(x) \|_c < \| f(x)\|_c.$
+    \end{itemize}
+    In particular, $h(x)$ has no zeroes in $\overline{B}(0,c)$.
+\end{thm}
+
+To prove this we will need to give a string of lemmas that will all come together.
+
+We begin by showing that the Tate algebra with parameter $c$ is complete with respect to the Gauss
+norm of parameter $c$, \cite[Lemma~7.2.7]{Gouvea}.
+
+\begin{lemma}
+    $\mathcal{A}_c$ is complete with respect to the Gauss norm $\|\cdot \|_c$.
+\end{lemma}
+
+\begin{proof}
+    We need to show a Cauchy sequence in $\mathcal{A}_c$ converges with respect to the norm
+    $\|\cdot\|_c$. Therefore, consider a sequence of power series
+    \[
+    f_i(x) = a_{i,0} + a_{i,1}x + a_{i,2}x^2 + \cdots.
+    \]
+    Saying this sequence is Cauchy means
+    \[
+    \forall \; \varepsilon>0, \; \exists \; M \text{ such that } \forall \; i,j > M
+    \text{ we have } \|f_i (x) - f_j (x) \|_c < \varepsilon.
+    \]
+    Using the definition of the Gauss norm, this means that
+    \[
+    \max_{n} |a_{i,n}-a_{j,n} | c^n < \varepsilon \quad \forall \; i,j > M,
+    \]
+    and certainly,
+    \[
+    |a_{i,n} - a_{j,n}| < \varepsilon c^{-n}
+    \]
+    for each $n$ whenever $i,j > M.$ That is each of the sequences $(a_{i,n})_{i \in \N}$ forms a
+    Cauchy sequence. Since $K$ is complete, this means they are convergent.
+    Now consider
+    \[
+    g(x) = a_0 + a_1 x + a_2 x^2 + \cdots
+    \]
+    where $a_n = \lim_{i \to \infty} a_{i,n}$. We want to show this is the limit of the $f_n$ and
+    is also in $\mathcal{A}_c$.
+
+    For the first part, we know that if $i,j > M$ we have
+    \[
+    |a_{i,n} - a_{j,n} | c^n < \varepsilon
+    \]
+    and letting $j \to \infty$ it follows that if $i > M$
+    \[
+    | a_{i,n} - a_n| c^n \leq \varepsilon.
+    \]
+    Therefore, we have $\forall \; i > M$
+    \[
+    \| f_i (x) - g(x) \|_c = \max_n |a_{i,n} - a_n| c^n \leq \varepsilon
+    \]
+    and so $f_i(x) \to g(x)$ with respect to $\| \cdot \|_c.$
+
+    Finally, since $f_ i \in \mathcal{A}_c$, there exists $N$ such that for all
+    $n > N$, $|a_{i,n} | c^n \leq \varepsilon.$ Thus for all $n > N$
+    \[
+    | a_n |c^n = | a_n - a_{i,n} + a_{i,n}|c^n  \leq \max \{|a_n - a_{i,n}|c^n,|a_{i,n}|c^n\} \leq \varepsilon
+    \]
+    and therefore $|a_n|c^n \to 0$, which by definition means $g(x) \in \mathcal{A}_c$.
+    With this we conclude the proof.
+\end{proof}
+
+Next we show that polynomials are dense in the Tate algebra, \cite[Lemma~7.2.8]{Gouvea}.
+\begin{lemma}\label{PolyDense}
+    The space of polynomials $K[x]$ is dense in $\mathcal{A}_c$.
+\end{lemma}
+
+\begin{proof}
+    We need to show that any power series is the limit of a sequence of polynomials. Towards this
+    let
+    \[
+    f(x) = a_0 + a_1x+a_2x^2 + \cdots
+    \]
+    be a power series in $\mathcal{A}_c$.
+    Consider the sequence of truncations of $f(x)$,
+    \begin{align*}
+        f_0(x) &= a_0 \\
+        f_1(x) &= a_0 + a_1 x \\
+        f_2(x) &= a_0 + a_1 x + a_2 x^2 \\
+        & \; \; \vdots \\
+        f_k(x) &= a_0 + a_1 x + \cdots a_k x^k
+    \end{align*}
+    we want to show $f$ is the limit of this sequence. Now
+    \[
+    \| f(x) - f_k (x) \|_c = \max_{n>k} |a_n|c^n,
+    \]
+    which tends to zero as $k \to \infty$ since $\lim_{n \to \infty} |a_n|c^n = 0$. Thus
+    $f_k (x) \to f(x)$ with respect to the Gauss norm and we conclude.
+\end{proof}
+
+Finally, we give a generalisation of \cite[Lemma~7.2.9]{Gouvea}, which is an analogue of the
+Euclidean algorithm for Tate algebras.
+
+\begin{lemma} \label{euclidalgorithm}
+    Let $f(x) \in \mathcal{A}_c$, and let
+    \[
+    g(x) = b_0 + b_1 x + \cdots + b_N x^N
+    \]
+    be a polynomial with coefficients in $K$ satisfying
+    \[
+    \lvert b_N \rvert  c^N= \max_i (\lvert b_i \rvert c^i).
+    \]
+    Then there exist a power series $q(x) \in \mathcal{A}_c$ and a polynomial $r(x) \in K[x]$,
+    of degree less that $N$, such that
+    \[
+    f(x) = g(x) q(x) + r(x)
+    \]
+    where $q(x)$ and $r(x)$ satisfy
+    \[
+    \|f(x) \|_c \geq \|g(x)\|_c \| q(x)\|_c \quad \text{and} \quad \|f(x) \|_c \geq \| r(x) \|.
+    \]
+    \end{lemma}
+
+\begin{proof}
+    Need to write up.
+\end{proof}
+
+With these theorems we are now in a position to prove the $p$-adic Weierstrass preparation theorem.
+
+\begin{proof}[Proof of Theorem~\ref{WP}]
+    The idea is to start with an approximate factorisation, and then improve it. If we prove by
+    induction this is always possible, it will produce convergent sequences of polynomials and power
+    series which in the limit gives the factorisation we want.
+
+    \textbf{Base case:}
+    To start the induction we need to find a $\delta < 1$ and an initial pair $g_1 (x)$ and
+    $h_1 (x)$. Towards this consider
+    \[
+    g_1 (x) = \sum^{N}_{i = 0} a_i x^i \quad h_1(x) = 1.
+    \]
+    Then, since the assumption is that $\|f(x)\|_c = |a_N |c^N$ and the terms of higher degree are
+    smaller, we have
+    \[
+    \| f(x) - \sum_{i=0}^N a_i x^i\|_c < \|f(x)\|_c
+    \]
+    and let $\delta$ be a measure of how much smaller:
+    \[
+    \|f(x) - \sum_{i=0}^N a_i x^i \|_c = \delta \|f(x) \|_c,
+    \]
+    clearly $0 < \delta < 1$. Then we can easily check that all our properties are satisfied.
+
+    \textbf{Inductive step:}
+    Let $\delta$ be a fixed real number, $0 < \delta < 1$. Suppose at stage $n$ we have a polynomial
+    $g_n (x)$ and a power series $h_n (x)$ such that
+    \begin{enumerate}
+        \item $\|f(x) - g_n (x) h_n(x) \|_c \leq \delta^n \|f(x)\|_c$;
+        \item $\deg g_n (x) = N$;
+        \item $\|g_n(x) \|_c = |b_{n,N} | c^N$;
+        \item $h_n (x) \in \mathcal{A}_c$;
+        \item $\| h_n(x) - 1 \|_c \leq \delta^n$; and
+        \item $\|f (x) - g_n (x) \|_c < \delta \|f(x)\|_c.$
+    \end{enumerate}
+
+    Firstly, $\|f(x) - g_n (x) \|_c \leq \delta \|f(x) \|$ implies $ \| f(x) \|_c = \| g(x)_n \|_c$,
+    using the fact $\| \cdot \|_c$ is non-archimedean and that $0 < \delta < 1$.
+
+    By Lemma \ref{euclidalgorithm} we can find a polynomial $r(x)$ of degree less than $N$ and a
+    power series $q(x) \in \mathcal{A}_c$ such that
+    \[
+    f(x) - g_n (x) h_n (x) = q(x) g_n(x) + r(x)
+    \]
+    and
+    \begin{align*}
+    \| q(x) \|_c & \leq \frac{\| f(x) - g_n (x) h_n (x) \|_c}{\| g_n (x) \|_c} \leq
+    \frac{\delta^n \|f_n(x)\|_c}{\|f(x) \|_c} = \delta^n \leq \delta\\
+    \| r(x) \|_c &\leq \| f(x) - g_n (x) h_n (x) \|_c \leq
+    \delta^n \| f(x) \|_c \leq \delta \| f(x) \|_c.
+    \end{align*}
+    Now consider
+    \[
+    g_{n+1} = g_n (x) + r(x) \quad \text{and} \quad h_{n+1}(x) = h_n (x) + q(x).
+    \]
+    We claim these are better approximations and satisfy the wanted properties.
+
+    Firstly, since $\deg r(x) < N$ we must have $\deg g_{n+1} (x) = N = \deg g_n (x)$ and
+    $g_{n+1}$ will also have leading term $b_{n,N}$.
+    Moreover, since $\mathcal{A}_c$ forms a ring, $h_{n+1} \in \mathcal{A}_c$ (polynomials are
+    trivially restricted power series).
+
+    Next, we have
+    \begin{align*}
+        \| f(x) - g_{n+1}(x) \|_c &= \| f(x) - g_n (x) - r(x) \|_c \\
+        & \leq \max \{ \|f(x) - g_n(x) \|_c, \| r(x) \|_c \} \\
+        & \leq \delta \| f(x) \|_c
+    \end{align*}
+    which means by the same argument as for $g_n$
+    \[
+    \|g_{n+1} (x)\|_c = \| f(x) \|_n = \| g_n ( x) \|_c = |b_{n,N}| c^N = | b_{n+1,N} | c^N.
+    \]
+    We also have
+    \begin{align*}
+        \| h_{n+1} (x) - 1 \|_c & = \| h_n (x) - 1 + q(x) \|_c \\
+        & \leq \max \{ \| h_n (x) - 1 \|_c , \| q(x) \|_c \} \\
+        & \leq \delta .
+    \end{align*}
+
+    Now we want to show it indeed gives a better approximation:
+    \begin{align*}
+        f(x) &- g_{n+1} (x) h_{n+1}(x) = f(x) - (g_n (x) + r(x) ) (h_n(x) + q(x)) \\
+        &= f(x) - g_n (x) h_n (x) - q(x) g_n(x) - r(x) h_n (x) - r(x) q(x) \\
+        & = r(x) - r(x) h_n (x) - r(x) q(x) \\
+        & = r(x) ( 1 - h_n (x) - q(x) )
+    \end{align*}
+    and therefore
+    \begin{align*}
+    \| f(x) - g_{n+1} (x) h_{n+1} (x) \|_c &= \| r(x) \|_c \|(1 - h_n(x)) - q(x) \|_c \\
+    & \leq \delta \|f(x) \|_c \max\{ \|(1 - h_n (x)) \|_c, \|q(x)\|_c \} \\
+    & \leq \delta^{n+1} \|f(x) \|_c.
+    \end{align*}
+    Since, $0 < \delta < 1$ this implies we do indeed have a better approximation.
+
+    Therefore $g_{n+1}$ and $h_{n+1}$ satisfies all our properties with $\delta^n$ replaced by
+    $\delta^{n+1}$.
+
+    To conclude, we want to show these functions actually form the sequence we want.
+    Firstly, they are Cauchy as
+    \[
+    \| q(x) \|_c \leq \delta^n \implies \|h_n (x) - h_{n+1}  (x) \|_c \leq \delta^n
+    \]
+    and
+    \[
+    \| r(x) \|_c \leq \delta^i \|f(x) \|_c \implies
+    \|g_n (x) - g_{n+1} (x) \|_c \leq \delta^i \| f(x) \|.
+    \]
+    Therefore, as $\mathcal{A}_c$ is complete, we have they converge to a $g(x)$ and $h(x)$. It is
+    then immediate via taking limits that these have the wanted properties.
+\end{proof}
+
+Finally, with this out the way we can prove Proposition \ref{NP}.
+
+\begin{proof}[Proof of Proposition~\ref{NP}]
+    We prove this by induction on $k$:\\
+    If $k=1$, write the break point as $(N, m_1N)$. We know all points are on or above the line
+    $y = m x$, and the ones where $j > N$ are strictly above it. This translates to
+    \begin{itemize}
+        \item $|a_j | (p^j)^{m_1} \leq 1$ for all $j$,
+        \item $|a_N | (p^N)^{m_1} = 1$, and
+        \item $|a_j | (p^{m_1})^j$ < 1 if $j > N.$
+    \end{itemize}
+    This says that $\|f(x) \|_{p^{m_1}} = 1$ and that the maximum is last realised at the degree
+    $N$. Thus, we can apply the Weierstrass preparation theorem to conclude that there is a
+    polynomial of degree $N$ and a power series $h(x)$ satisfying
+    \[
+    \| h(x) - 1 \|_{p^m_1} < 1 \quad \|f(x) - g(x)\|_{p^m_1} < \|f(x) \|_{p^m_1} \quad \text{and} \quad f(x) = g(x) h(x).
+    \]
+    Combining the middle equation with $\| f(x) \|_{p^{m_1}} < 1$ means
+    $\| f(x) - g(x) \|_{p^{m_1}} < 1$.
+    Now, using facts about Newton polygons of polynomials, it follows that the zeros of $f(x)$ in
+    the closed ball of radius $p^m$ coincide with the those of $g(x)$. That is, we must have the
+    Newton polygon of $g(x)$ coincides with the Newton polygon of $f(x)$ on $0 \leq x \leq N$.
+    Finally, we have $f(x)$ converges on the closed ball of radius $p^{m_1}$, by Theorem
+    \ref{RadofCon}, and thus so does $h(x).$
+    \\
+    By induction, assume we have $f(x) = g_{k-1}(x)h_{k-1}(x)$ for a polynomial $g_{k-1}(x)$ and
+    power series $h_{k-1}(x)$, such that the Newton polygon of $g_{k-1}(x)$ coincides with the
+    first $k-1$ segments of the polygon for $f(x)$ and $h_{k-1}(x)$ has no zeroes in the closed ball
+    of radius $p^{m_{k-1}}$.
+    \\
+    Let us now consider the $k$-th segment. By definition, the $k$-th segment ending at $x = N$
+    means that for any $i > N$, $(i, \nu_p (a_i))$ lies above the line of slope $m_k$ through the
+    point $(N, \nu_p (a_N))$. This means that, writing $c = p^{m_k}$, $\| f(x) \|_{p^{c}} =
+    \lvert a_N \rvert c^N$ and $\lvert a_n \rvert c^N > \lvert a_i \rvert c^i $ for any $i > N$.
+    Thus, we can apply the $p$-adic Weierstrass preparation theorem to get a polynomial $g(x)$.
+    It is then easy to see $g_1 (x) \mid g(x)$, and that its Newton polygon coincides with the
+    relevant portion of the Newton polygon of $f(x).$
+\end{proof}
