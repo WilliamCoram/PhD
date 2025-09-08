@@ -10,13 +10,13 @@ discretely valued fields, but for notation it is enough to consider $\Q_p$.
 
 Consider a polynomial $f$ over $K$, we can define the Newton polygon of $f$ in the following way.
 
-\begin{defn}
+\begin{definition}
     The \emph{Newton polygon} of $f = \sum_{i=0}^n a_i x^i$ is the lower boundary of the convex hull
     of the set of points $(i,\nu(a_i))$.
     Here by convex hull we mean the smallest convex polygon that contains all points.
-\end{defn}
+\end{definition}
 
-This is easily constructable by the following algorithm, \cite[Pages~210-211]{Gouvea} .
+This is easily constructable by the following algoritheorem, \cite[Pages~210-211]{Gouvea} .
 
 \begin{enumerate}
     \item Plot the points $\{(i,\nu (i) )\}$.
@@ -29,7 +29,7 @@ This is easily constructable by the following algorithm, \cite[Pages~210-211]{Go
 \end{enumerate}
 
 For example, consider the polynomial, $f(x) = 1 + p x^2 + p^4 x^3 + p^3 x^4 + p^3x^5$. Then applying
-the algorithm we obtain the Newton polygon in Figure 1.
+the algoritheorem we obtain the Newton polygon in Figure 1.
 
 \begin{figure}[h!]
     \centering
@@ -51,7 +51,7 @@ Now we have defined what Newton polygons are, we want to explain why we care abo
 slopes, and why they are connected with studying the zeros of the polynomial.
 
 We give the following definitions which will be relevant.
-\begin{defn}
+\begin{definition}
     \begin{enumerate}
         \item The \emph{slopes} of the line segments appearing in the Newton polygon are called the
         slopes of $f(x)$.
@@ -59,7 +59,7 @@ We give the following definitions which will be relevant.
         that slope onto the $x$-axis.
         \item The \emph{breaks} are the values of $i$ which are vertices of the Newton polygon.
     \end{enumerate}
-\end{defn}
+\end{definition}
 
 \begin{theorem}
   The slopes of a Newton polgyon form an increasing sequence.
@@ -74,13 +74,13 @@ We give the following definitions which will be relevant.
 \end{proof}
 
 The connection to roots is then witnessed in the following theorem, \cite[Theorem~7.4.7]{Gouvea}.
-\begin{thm}
+\begin{theorem}
     \label{NPPoly}
     Let $f(x) = 1 + a_1 x + \dots + a_nx^n$ be a polynomial over $K$, and let $m_1, \dots, m_r$ be
     the slopes of its Newton polygon (in increasing order). Let $i_1, \dots, i_r$ be the
     corresponding lengths. Then for each $k$, $1 \leq k \leq r$, $f(x)$ has exactly $i_k$ roots of
     valuation $m_k$ (counting multiplicity).
-\end{thm}
+\end{theorem}
 
 \begin{proof}
   Need to write up.
@@ -96,17 +96,17 @@ know properties of roots of power series. Therefore, we would like to generalise
 have done previously to power series.
 
 The definition of Newton polygons of power series are formally identical, and can be constructed
-via the same algorithm. However, because of the non-finiteness of degree we can run into some
+via the same algoritheorem. However, because of the non-finiteness of degree we can run into some
 interesting examples.
 For example, consider the following power series, \cite[Page~260]{Gouvea}.
 \[
 f(x) = 1 + a x + ax^2 + \cdots +a x^d +\cdots \quad \text{for some } a \text{ with } \nu_p(a) > 0.
 \]
-Our set of interest is $\{(0,0),(n,\nu (a))  : \forall n \in \mathbb{N} \}.$ Doing the algorithm
+Our set of interest is $\{(0,0),(n,\nu (a))  : \forall n \in \mathbb{N} \}.$ Doing the algoritheorem
 gives a line that sweeps unbroken along the horizontal axis. Importantly, none of our points
 $(i, \nu (a))$ lies on the line, and any increase in the slope will mean some points lie below the
 line.
-To solve this issue we adjust the algorithm slightly. As before, start with the vertical half-line
+To solve this issue we adjust the algoritheorem slightly. As before, start with the vertical half-line
 down from the origin. Then rotate this line counter-clockwise until one of the following happens:
 \begin{enumerate}
     \item The line simultaneously hits infinitely many of the points we have plotted.
@@ -120,15 +120,15 @@ down from the origin. Then rotate this line counter-clockwise until one of the f
 
 Defining slopes as before, we have a relation between the slope of the final segment and the
 radius of convergence of the series, \cite[Lemma~7.4.8]{Gouvea}.
-\begin{thm} \label{RadofCon}
+\begin{theorem} \label{RadofCon}
     Let $m$ be the supremum of the slopes appearing in the Newton polygon of a series
     $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$. Then the radius of convergence of $f$ is $p^m.$
-\end{thm}
+\end{theorem}
 
 The generalisation of Theorem \ref{NPPoly} to power series comes as a corollary of the following,
-\cite[Proposition~7.4.10]{Gouvea}.
+\cite[proposition~7.4.10]{Gouvea}.
 
-\begin{prop}\label{NP}
+\begin{proposition}\label{NP}
     Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$ be a power series. Let $m_1,m_2, \dots,m_k$ be the
     first $k$ slopes of the Newton polygon of $f(x)$, and assume that $f(x)$ converges on the
     closed ball of radius $c = p^{m_k}$ (from previous section, this means it is a restricted power
@@ -143,7 +143,7 @@ The generalisation of Theorem \ref{NPPoly} to power series comes as a corollary 
         \item the Newton polygon of $g(x)$ is the same as the portion of the Newton polygon of
         $f(x)$ contained in the region $0 \leq x \leq N$.
     \end{enumerate}
-\end{prop}
+\end{proposition}
 
 And as promised here is the generalisation of Theorem~\ref{NPPoly}.
 
@@ -157,12 +157,12 @@ And as promised here is the generalisation of Theorem~\ref{NPPoly}.
 
 \subsection{Weierstrass preparation theorem}
 
-This section will be dedicated to proving Proposition~\ref{NP}.
+This section will be dedicated to proving proposition~\ref{NP}.
 
 The first important theorem we need to know is the $p$-adic Weierstrass preparation theorem,
 \cite[Theorem~7.2.10]{Gouvea}.
 
-\begin{thm}\label{WP}
+\begin{theorem}\label{WP}
     Let $c$ be a positive real number and $f (x) = \sum a_n x^n$ be a power series with coefficients
     in $K$ such that $ \lvert a_n \rvert c^n \to 0$ as $n \to \infty$. Let $N$ be the number defined
     by the conditions
@@ -189,7 +189,7 @@ The first important theorem we need to know is the $p$-adic Weierstrass preparat
         \item $\| f(x) - g(x) \|_c < \| f(x)\|_c.$
     \end{itemize}
     In particular, $h(x)$ has no zeroes in $\overline{B}(0,c)$.
-\end{thm}
+\end{theorem}
 
 To prove this we will need to give a string of lemmas that will all come together.
 
@@ -280,9 +280,9 @@ Next we show that polynomials are dense in the Tate algebra, \cite[Lemma~7.2.8]{
 \end{proof}
 
 Finally, we give a generalisation of \cite[Lemma~7.2.9]{Gouvea}, which is an analogue of the
-Euclidean algorithm for Tate algebras.
+Euclidean algoritheorem for Tate algebras.
 
-\begin{lemma} \label{euclidalgorithm}
+\begin{lemma} \label{euclidalgoritheorem}
     Let $f(x) \in \mathcal{A}_c$, and let
     \[
     g(x) = b_0 + b_1 x + \cdots + b_N x^N
@@ -345,7 +345,7 @@ With these theorems we are now in a position to prove the $p$-adic Weierstrass p
     Firstly, $\|f(x) - g_n (x) \|_c \leq \delta \|f(x) \|$ implies $ \| f(x) \|_c = \| g(x)_n \|_c$,
     using the fact $\| \cdot \|_c$ is non-archimedean and that $0 < \delta < 1$.
 
-    By Lemma \ref{euclidalgorithm} we can find a polynomial $r(x)$ of degree less than $N$ and a
+    By Lemma \ref{euclidalgoritheorem} we can find a polynomial $r(x)$ of degree less than $N$ and a
     power series $q(x) \in \mathcal{A}_c$ such that
     \[
     f(x) - g_n (x) h_n (x) = q(x) g_n(x) + r(x)
@@ -417,9 +417,9 @@ With these theorems we are now in a position to prove the $p$-adic Weierstrass p
     then immediate via taking limits that these have the wanted properties.
 \end{proof}
 
-Finally, with this out the way we can prove Proposition \ref{NP}.
+Finally, with this out the way we can prove proposition \ref{NP}.
 
-\begin{proof}[Proof of Proposition~\ref{NP}]
+\begin{proof}[Proof of proposition~\ref{NP}]
     We prove this by induction on $k$:\\
     If $k=1$, write the break point as $(N, m_1N)$. We know all points are on or above the line
     $y = m x$, and the ones where $j > N$ are strictly above it. This translates to
