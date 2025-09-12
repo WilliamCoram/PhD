@@ -1,0 +1,79 @@
+\chapter{Quaternionic Modular Forms}
+
+\section{Definition}
+
+We define quaternionic modular forms explicitely as the following space.
+
+\begin{definition}
+  Let $\kappa : \mathbb{Z}_p^\times \to \mathcal{O}_p^\times$ be a locally analytic character.
+  Given $\alpha \in \mathbb{N}$, let
+  \[
+    \Sigma_\alpha = \left\{ \gamma =  \begin{pmatrix}
+      a & b \\
+      c & d
+    \end{pmatrix}
+    \in \text{M}_2(\mathbb{Z}_p) : p^\alpha \mid c, \; p \nmid d, \; \det (\gamma) \neq 0 \right\}.
+  \]
+  The weight $\kappa$ action of $\gamma =  \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in
+  \Sigma_\alpha$ on the Tate algebra $\mathcal{A}_p$ with coefficients in $\mathbb{C}_p$ is given by
+  the continuous $\mathbb{C}_p$-linear extension of the map sending
+  \[
+    z^k \mapsto \frac{\kappa(c z + d)}{(cz + d)^2} \left( \frac{az+b}{cz+d} \right)^k
+  \]
+  and given $f(z) \in \mathcal{A}_p$ we write $(f||_\kappa \gamma)(z)$ for this action.
+
+  Fix $\alpha$ and $\kappa$ in the above, let $D$ be a definite quaternion algebra and let $U$ be
+  an open compact subgroup of $D_f^\times$, where $D_f = D  \otimes_\mathbb{Q} \mathbb{A}_f$ is $D$
+  over the finite adeles, of wild level $\geq p^\alpha$; that is the projection $U \to D_p^\times$
+  is contained in $\Sigma_\alpha.$ Now let $A$ be any right $\Sigma_\alpha$-module.
+
+  Then the level $U$, weight $\kappa$ space of automorphic forms is the space
+  \[
+    \mathcal{L}(U,A) = \{ \varphi : D_f^\times \to A  \;  | \; \varphi (dgu) = \varphi (g)
+    ||_\kappa u_p, \; \forall d \in D^\times, \; g \in D^\times_f, \; u \in U \}.
+  \]
+\end{definition}
+
+\section{Finite Dimensional}
+
+\begin{lemma}
+  Using the above notation and supposing $D_f^\times = \coprod_{i \in I} D^\times c_i U$
+  is the decomposition into finite double cosets, then
+  \[
+    \mathcal{L}(U,A) \cong \bigoplus_{i \in I} A^{\Gamma_i}
+  \]
+  as a $\mathbb{C}_p$ vector space, where $\Gamma_i = c_i^{-1} D^\times c_i \cap U$.
+\end{lemma}
+
+\section{Hecke Operators}
+
+We can define Hecke operators on these automorphic forms. We will keep the notation from the above
+definitions.
+Given $\varphi \in \mathcal{L}(U,A)$ we define a right action of $U$ on $\mathcal{L}(U,A)$:
+\[
+  (\varphi |_\kappa u) (g) := \varphi (gu^{-1}) ||_\kappa u_p.
+\]
+
+With this we have:
+\begin{definition}
+  Let $\nu \in D^\times_f$ such that $\nu_p \in \Sigma_\alpha$. Then the double coset $U\nu U$ may
+  be written as a disjoint union
+  \[
+    U \nu U = \coprod_{t \in T} U \nu_t
+  \]
+  where $T$ is a finite set, and $\nu_t \in D_f^\times$. The Hecke operator is the map
+  $[U \nu U] : \mathcal{L}(U,A) \to \mathcal{L}(U,A)$ given by
+  \[
+    [U \nu U] \varphi := \sum_{t \in T} \varphi |_\kappa \nu_t.
+  \]
+\end{definition}
+
+\begin{definition}
+  We set $\varpi_l$ to be the element of $\mathbb{A}_f$ which is $l$ at  $l$ and 1 at all other
+  places, and set $\eta_l = \begin{pmatrix} \varpi_l & 0 \\ 0 &1 \end{pmatrix}$.\\
+  The standard Hecke operators are then given by
+  \[
+    T_l := [U \eta_l U] \quad \text{and} \quad S_l:=[U \varpi U]
+  \]
+  and if $l = p$, we write $T_p = U_p$.
+\end{definition}
