@@ -16,15 +16,15 @@ When $K$ is a ring, it is not hard to see that power series over $K$ form a ring
 refer to them as the ring of power series over $K$.
 
 We want to introduce a convergence property on the terms $a_n x^n$, to do this we need a norm.
+Towards this we recall the definition of a normed ring: we say a ring $R$ is a normed ring if we can
+equip it with a norm.
 
-\begin{definition}
-    We say a ring $R$ is a normed ring if we can equip it with a norm.
-\end{definition}
 
 We now restrict ourselves to normed rings $R$ and define a subset of power series with a convergence
 property.
 
 \begin{definition}
+    \label{PowerSeries.IsRestricted}
     \lean{PowerSeries.IsRestricted}
     \leanok
     Let $f$ be a power series over $R$ in one variable, write $f = \sum_{n=0}^\infty a_n x^n$, and
@@ -43,8 +43,6 @@ The non-archimedean property is key here; restricted power series form an additi
 of the norm on $K$, but a stronger bound than the triangle inequality is necessary for the
 multiplication to be closed. This can be seen by the following example:
 
-\begin{example}
-
 Let $f = \sum_{n=0}^\infty \frac{(-1)^n}{\sqrt{n+1}}x^n$ be a power series over $\mathbb{R}$
 equipped with the standard norm. Then it is trivial to see that $f$ is a restricted power series for
 the parameter 1. However, the product $f^2$ has coefficients
@@ -59,19 +57,27 @@ Therefore $\lim_{n \to \infty} \lvert b_n \rvert \geq \lim_{n \to \infty} \frac{
 that is $f^2$ is not a restricted power series for parameter 1, and we see multiplication is not
 closed.
 
-\end{example}
-
 \begin{theorem}
+  \label{PowerSeries.Restricted.IsGroup}
   \lean{PowerSeries.Restricted.IsGroup}
   \leanok
   Restricted power series over a normed ring $R$ form an additive group.
 \end{theorem}
 
+\begin{proof}
+  \leanok
+\end{proof}
+
 \begin{theorem}
+  \label{PowerSeries.Restricted.IsRing}
   \lean{PowerSeries.Restricted.IsRing}
   \leanok
   Restricted power series over a non-archimedean normed ring $R$ form a ring.
 \end{theorem}
+
+\begin{proof}
+  \leanok
+\end{proof}
 
 We now suppose that $K$ is a non-archimedean complete field; that is a field equipped with a metric
 that is complete and whose metric has the non-archimedean property as defined earlier, like $\Q_p$.
