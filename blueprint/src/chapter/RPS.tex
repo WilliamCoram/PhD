@@ -25,6 +25,8 @@ We now restrict ourselves to normed rings $R$ and define a subset of power serie
 property.
 
 \begin{definition}
+    \lean{PowerSeries.IsRestricted}
+    \leanok
     Let $f$ be a power series over $R$ in one variable, write $f = \sum_{n=0}^\infty a_n x^n$, and
     let $c$ be a real number. We say $f$ is a restricted power series of parameter $c$ over $K$ if
     \[
@@ -60,10 +62,14 @@ closed.
 \end{example}
 
 \begin{theorem}
+  \lean{PowerSeries.Restricted.IsGroup}
+  \leanok
   Restricted power series over a normed ring $R$ form an additive group.
 \end{theorem}
 
 \begin{theorem}
+  \lean{PowerSeries.Restricted.IsRing}
+  \leanok
   Restricted power series over a non-archimedean normed ring $R$ form a ring.
 \end{theorem}
 
