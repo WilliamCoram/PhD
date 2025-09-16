@@ -1,7 +1,39 @@
 \chapter{Introduction}
 
-This page consists of the outline for my PhD project. Ultimately, the goal is to formalise results
-on $p$-adic modular forms - however there will be a lot of foundational work required to get to this
-point.
+Jacquet-Langlands suggests that certain classical modular forms should be related to modular forms
+on quaternion algebras. This is because classical modular forms can be viewed as automorphic forms
+for $M_2 (\Q)$; which is also a quaternion algebra. Compared to the analytic defintion of classical
+modular forms, for definite quaternion algebras, the definition of quaternionic modular forms is
+much nicer to work with - specifically, being of a concrete combinatorial nature. Thus, to study
+(some) classical modular forms, it may be easier to study quaternionic modular forms.
 
-Right now the goal is to formalise Daniel Jacobs thesis "slopes of compact Hecke operators".
+In this project the aim is to define such quaternionic modular forms over definite quaternion
+algebras and then prove some results surrounding them in Lean. Specifcally, we aim to formalise
+Daniel Jacobs' thesis "slopes of compact Hecke operators", which says that $p$-adic valuations of the
+eigenvalues of certain Hecke operators over quaternionic modular forms are in arithmetic
+progression.
+
+\subsection{What is being formalised?}
+
+In attempting to formalise Daniel Jacobs' theis paper we need to first build up foundation material
+before we can start working on his paper. This includes:
+
+\begin{enumerate}
+  \item restricted power series;
+  \item the Gauss norm; and
+  \item Newton polygons.
+\end{enumerate}
+
+Each of these can be found in its own chapter of the blueprint. Where we introduce the topic and
+state what we need in Lean. This is by no means the entirity of the field, but should be sufficient
+for what we need.
+
+After what we are dubbing the foundational material, we need to start working on results on
+quaternionic modular forms. This includes:
+\begin{enumerate}
+  \item their definition;
+  \item a result on their finite dimensionality (Fujisaki's lemma); and
+  \item their Hecke operators.
+\end{enumerate}
+
+Finally, with this we can hopefully start formalising the results from Jacobs' thesis.
