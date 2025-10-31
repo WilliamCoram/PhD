@@ -1,51 +1,71 @@
 \chapter{Restricted Power Series}
 
-Recall formal power series over a set $K$ in one variable, written $K [ \! [ x ] \! ] $, are
+Formal power series over a set $K$ in one variable, written $K [ \! [ x ] \! ] $, are
 infinite sums
 \[
 f(x) = \sum_{n=0}^\infty a_n x^n, \quad \forall i, \; a_i \in K.
 \]
-This can be generalized to multivariate formal power series as
-\[
-\sum a_{(n)} x^{(n)}
-\]
-where $x^{(n)} = x_1^{n_1} \cdots x_m^{n_m}$ with $n = \sum_{i = 1}^m n_i$, and the sum is taken
-over all tuples $(n) = (n_1,\dots,n_m)$ of non-negative integers.
+When $K$ is a ring, we can show power series over $K$ form a ring, and we will often refer to them
+as the ring of power series over $K$, denoted by $\mathcal{F}_K$.
 
-When $K$ is a ring, it is not hard to see that power series over $K$ form a ring, and we will often
-refer to them as the ring of power series over $K$.
+We define a subset of $\mathcal{F}$ that consists of power series whose coefficeients approach zero,
+to do this we first better make sure $K$ is a normed ring
 
-We want to introduce a convergence property on the terms $a_n x^n$, to do this we need a norm.
-Towards this we recall the definition of a normed ring: we say a ring $R$ is a normed ring if we can
-equip it with a norm.
+\begin{definition*}
+A normed ring is a pair $(R,\lvert \cdot \rvert)$, of a ring and a norm.
+\end{definition*}
 
-
-We now restrict ourselves to normed rings $R$ and define a subset of power series with a convergence
-property.
+With this we define,
 
 \begin{definition}
     \label{PowerSeries.IsRestricted}
     \lean{PowerSeries.IsRestricted}
     \leanok
-    Let $f$ be a power series over $R$ in one variable, write $f = \sum_{n=0}^\infty a_n x^n$, and
-    let $c$ be a real number. We say $f$ is a restricted power series of parameter $c$ over $K$ if
+    Let $f$ be a power series over a normed ring $R$ in one variable, write
+    $f = \sum_{n=0}^\infty a_n x^n$, and let $c$ be a real number.
+    We say $f$ is a restricted power series of parameter $c$ over $K$ if
     \[
     \lim_{n \to \infty} \lvert a_n \rvert c^n = 0.
     \]
 \end{definition}
 
-It would be nice if restricted power series of weight $c$ were a ring, that is if we added, or
-multiplied, two restricted power series the resulting power series would also be restricted of
-weight $c$.
+Note this is not the same as convergent power series in the usual sense unless $R$ is complete,
+since in complete spaces Cauchy sequences converge.
 
-If the norm of $R$ has the non-archimedean property, it indeed turns out this is true.
-The non-archimedean property is key here; restricted power series form an additive group regardless
-of the norm on $K$, but a stronger bound than the triangle inequality is necessary for the
-multiplication to be closed. This can be seen by the following example:
+It turns out that restricted power series of parameter $c$ are not just a set, in fact we have the
+following.
+
+\begin{theorem}
+  \label{PowerSeries.Restricted.IsGroup}
+  \lean{PowerSeries.Restricted.IsGroup}
+  \leanok
+  Restricted power series over a normed ring $R$ form an additive group.
+\end{theorem}
+
+Moreover, if the norm of $R$ has the non-archimedean property,
+
+\begin{definition*}
+  We say a norm is non-archimedean if
+  \[
+  \lvert a + b \rvert \leq \max \{ \lvert a \rvert, \lvert b \rvert\}.
+  \]
+  Else the norm is archimedean.
+\end{definition*}
+
+we can strengthen this lemma.
+
+\begin{theorem}
+  \label{PowerSeries.Restricted.IsRing}
+  \lean{PowerSeries.Restricted.IsRing}
+  \leanok
+  Restricted power series over a non-archimedean normed ring $R$ form a ring.
+\end{theorem}
+
+The importance of the non-archimedean property can be seen in the following example.
 
 Let $f = \sum_{n=0}^\infty \frac{(-1)^n}{\sqrt{n+1}}x^n$ be a power series over $\mathbb{R}$
-equipped with the standard norm. Then it is trivial to see that $f$ is a restricted power series for
-the parameter 1. However, the product $f^2$ has coefficients
+equipped with the standard norm. Then it is immediate to see that $f$ is a restricted power series
+for the parameter 1. However, the product $f^2$ has coefficients
 \[
 b_n = (-1)^n \sum_{k=0}^n \frac{1}{(n - k -1)(k+1)},
 \]
@@ -57,33 +77,15 @@ Therefore $\lim_{n \to \infty} \lvert b_n \rvert \geq \lim_{n \to \infty} \frac{
 that is $f^2$ is not a restricted power series for parameter 1, and we see multiplication is not
 closed.
 
-\begin{theorem}
-  \label{PowerSeries.Restricted.IsGroup}
-  \lean{PowerSeries.Restricted.IsGroup}
-  \leanok
-  Restricted power series over a normed ring $R$ form an additive group.
-\end{theorem}
-
-\begin{proof}
-  \leanok
-\end{proof}
-
-\begin{theorem}
-  \label{PowerSeries.Restricted.IsRing}
-  \lean{PowerSeries.Restricted.IsRing}
-  \leanok
-  Restricted power series over a non-archimedean normed ring $R$ form a ring.
-\end{theorem}
-
-\begin{proof}
-  \leanok
-\end{proof}
-
 We now suppose that $K$ is a non-archimedean complete field; that is a field equipped with a metric
-that is complete and whose metric has the non-archimedean property as defined earlier, like $\Q_p$.
+that is complete and whose metric has the non-archimedean property as defined earlier. We give a
+new name to restricted power series with these $K$.
 
 \begin{definition}
     When $K$ is a non-archimedean complete field we denote the ring of restricted power series with
     parameter $c$ over $K$ by $\mathcal{A}_c(K)$ and call it the Tate algebra over $K$ of parameter
     $c$.
 \end{definition}
+
+As mentioned earlier, this set is equivalent to power series that converge on the ball of radius
+$c$, and so sometimes in literature the Tate algebra may be referenced as convergent power series.
