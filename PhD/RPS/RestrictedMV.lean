@@ -45,6 +45,9 @@ instance {σ : Type*} [Fintype σ] : IsDirected (σ →₀ ℕ) (fun (a b : (σ 
     · use b
     · use a
 
+-- For infinite variables, could add the condition that the max of the convergence set is bounded...
+-- so vacously solves our problem 
+
 def IsRestricted {R : Type*} [NormedRing R] (c : ℝ) {σ : Type*} [Fintype σ] [Nonempty σ]
     (f : MvPowerSeries σ R) :=
   Tendsto (fun (t : σ →₀ ℕ) ↦ (norm (coeff t f)) * c^(range_sum t)) atTop (𝓝 0)
