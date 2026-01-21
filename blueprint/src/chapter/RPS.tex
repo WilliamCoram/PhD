@@ -1,5 +1,144 @@
 \chapter{Restricted Power Series}
 
+\section{Definition}
+
+Recall formal multivariate power series over a set $K$ in $n$ variables, written
+$K [ \! [ x_1, \dots, x_n ] \! ]$ are infinite sums
+\[
+  f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n},
+\]
+where the sum is taken over all $n$-tuples $(i_1, \cdots i_n)$ with $i_j \in \mathbb{N}$ and
+$a_{(i_1, \cdots, i_n)} \in K$.
+
+When $K$ is a ring, formal multivariate power series in $n$ variables form a ring, and we will refer
+to them as the ring of power series over $K$ in $n$ variables. We again denote such
+rings using $K [ \! [ x_1, \dots, x_n ] \! ]$.
+
+We define a subset of $K [ \! [ x_1, \dots, x_n ] \! ]$ that consists of power series whose
+coefficeients approach zero in the cofinite filter.
+
+\begin{definition}
+  \label{IsRestricted}
+  \lean{IsRestricted}
+  \leanok
+  Let $f$ be a power series over a normed ring $R$ in one variable, write
+  $f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n},$, and let
+  $c = (c_1, \cdots, c_n)$ be an $n$-tuple of real numbers.
+  We say $f$ is a restricted power series of parameter $c$ over $R$ in $n$ variables if
+  \[
+    \lim_{n \to \infty} \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} = 0
+  \]
+  in the cofinite topology.
+
+  We denote the set of restricted power series of parameter $c$ over $R$ in $n$ variables by
+  $R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{definition}
+
+\begin{remark}
+  Note
+  \[
+    \lim \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} = 0
+  \]
+  in the cofinite topology, if for all $0 < \epsilon$ there are finitely many $n$-tuples that have
+  $\left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} \right \rvert$
+  greater than $\varepsilon$.
+\end{remark}
+
+\section{Additive Group}
+
+It turns out that restricted power series of parameter $c$ over a normed ring $R$ in $n$ variables
+are not just a set, in fact they form an additive group.
+
+\begin{theorem}
+  For any normed ring $R$, $n \in \mathbb{N}$ and $c \in \mathbb{R}^n$. Then
+  $R_c [ \! [ x_1, \dots, x_n ] \! ]$ forms an additive group.
+\end{theorem}
+
+Let $R$ be a normed ring, $n \in \N$ and $c \in \mathbb{R}^n$
+We prove this in lean using the following lemmas.
+
+\begin{lemma}
+  \label{isRestricted_iff_abs}
+  \lean{isRestricted_iff_abs}
+  \leanok
+  \uses{IsRestricted} %% Do I need to say uses in all the statements?
+  $f \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ if and only if $f \in R_{\lvert c \rvert}
+  [ \! [ x_1, \dots, x_n ] \! ]$.
+  That is we can always consider $c$ to have positive entries.
+\end{lemma}
+
+\begin{proof}
+  \[
+    \left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{j=n} c_j^{i_j} \right \rvert =
+    \left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{j=n} \lvert c \rvert _j^{i_j}
+    \right \rvert.
+  \]
+\end{proof}
+
+\begin{lemma}
+  \label{zero}
+  \lean{zero}
+  \leanok
+  $0 \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  Substitute the zero power series into the definition - every coefficient is 0, thus we are
+  immediately done.
+\end{proof}
+
+\begin{lemma}
+  \label{monomial}
+  \lean{monomial}
+  \leanok
+  Any monomial $m = a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$ is restricted.
+\end{lemma}
+
+\begin{proof}
+  Only one coefficient is non-zero.
+\end{proof}
+
+\begin{lemma}
+  \label{One}
+  \lean{One}
+  \leanok
+  \uses{monomial}
+  $1 \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  1 is a monomial.
+\end{proof}
+
+\begin{lemma}
+  \label{add}
+  \lean{add}
+  \leanok
+  \uses{IsRestricted, isRestricted_iff_abs}
+  If $f, g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ then $f+g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  Squeeze theorem.
+\end{proof}
+
+\begin{lemma}
+  \label{neg}
+  \lean{neg}
+  \leanok
+  \uses{IsRestricted, isRestricted_iff_abs}
+
+\end{lemma}
+
+\begin{proof}
+  \[
+    \left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} \right \rvert =
+    \left \lvert \lvert - a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} \right \rvert.
+  \]
+\end{proof}
+
+\iffalse
+
 Formal power series over a set $K$ in one variable, written $K [ \! [ x ] \! ] $, are
 infinite sums
 \[
@@ -25,8 +164,9 @@ With this we define,
     $f = \sum_{n=0}^\infty a_n x^n$, and let $c$ be a real number.
     We say $f$ is a restricted power series of parameter $c$ over $K$ if
     \[
-    \lim_{n \to \infty} \lvert a_n \rvert c^n = 0.
+    \lim_{n \to \infty} \lvert a_n \rvert c^n = 0
     \]
+    in the cofinite topology.
 \end{definition}
 
 Note this is not the same as convergent power series in the usual sense unless $R$ is complete,
@@ -41,6 +181,10 @@ following.
   \leanok
   Restricted power series over a normed ring $R$ form an additive group.
 \end{theorem}
+
+\section{Additive Group}
+
+To prove that they form a ring in
 
 Moreover, if the norm of $R$ has the non-archimedean property,
 
@@ -89,3 +233,5 @@ new name to restricted power series with these $K$.
 
 As mentioned earlier, this set is equivalent to power series that converge on the ball of radius
 $c$, and so sometimes in literature the Tate algebra may be referenced as convergent power series.
+
+\fi

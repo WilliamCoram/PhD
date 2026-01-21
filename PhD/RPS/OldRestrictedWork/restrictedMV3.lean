@@ -21,6 +21,8 @@ lemma test {σ : Type*} (n : σ →₀ ℕ) : range_sum n = range_sum' n := by
   simp only [Nat.cast_id]
 -/
 
+-- Q : Do I need to change c from ℝ to σ → ℝ, i.e. a tuple instead of just a single value?
+
 def IsRestricted {R : Type*} [NormedRing R] (c : ℝ) {σ : Type*} (f : MvPowerSeries σ R) :=
   Tendsto (fun (t : σ →₀ ℕ) ↦ (norm (coeff t f)) * c^(range_sum t)) Filter.cofinite (𝓝 0)
 
@@ -244,15 +246,14 @@ lemma zsmul {R : Type*} [NormedRing R] (c : ℝ) {σ : Type*} (n : ℤ)
 
 open IsUltrametricDist
 
-lemma tendsto_antidiagonal {R S : Type*} [AddMonoid R] [Finset.HasAntidiagonal R]
-    {f g : R → S} [NormedRing S]
-    (hf : Tendsto (fun i ↦ ‖f i‖) cofinite (𝓝 0)) (hg : Tendsto (fun i ↦ ‖g i‖) cofinite (𝓝 0)) :
-    Tendsto (fun a ↦ ‖∑ p ∈ Finset.antidiagonal a, (f p.1 * g p.2)‖) cofinite (𝓝 0) := by
+lemma tendsto_antidiagonal {R S C: Type*} [AddMonoid R] [Finset.HasAntidiagonal R]
+    {f g : R → S} [NormedRing S] [IsUltrametricDist S] {C : R → ℝ} -- need C to be monoid morphism to ℝ with mult
+    (hf : Tendsto (fun i ↦ ‖f i‖ * C i ) cofinite (𝓝 0))
+    (hg : Tendsto (fun i ↦ ‖g i‖ * C i) cofinite (𝓝 0)) :
+    Tendsto (fun a ↦ ‖∑ p ∈ Finset.antidiagonal a, (f p.1 * g p.2)‖ * C a) cofinite (𝓝 0) := by
   rw [@NormedAddCommGroup.tendsto_nhds_zero] at *
   simp only [gt_iff_lt, Real.norm_eq_abs, eventually_cofinite, not_lt] at *
 
-  -- this isnt true because we can just consider points
-  -- x = a + _ where a is in the finite set greater than ε
   sorry
 
 lemma mul' {R : Type*} [NormedRing R] [IsUltrametricDist R] {σ : Type*}
