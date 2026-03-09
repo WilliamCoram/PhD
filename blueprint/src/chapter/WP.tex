@@ -1,0 +1,261 @@
+\chapter{Weierstrass preparation}
+
+This section is dedicated to the classical theorem "Weierstrass preparation".
+
+%% Need to convert everything into BGR notation and work... then hope it can be translate to
+%% use for Gouvea's work
+
+\begin{theorem}\label{WP}
+    Let $c$ be a positive real number and $f (x) = \sum a_n x^n$ be a power series with coefficients
+    in $K$ such that $ \lvert a_n \rvert c^n \to 0$ as $n \to \infty$. Let $N$ be the number defined
+    by the conditions
+    \[
+    \lvert a_N \rvert c^N = \max \lvert a_n \rvert c^n = \|f(x)\|_c \quad \text{and} \quad
+    \lvert a_n \rvert c^n < \lvert a_N \rvert c^N \text{ for all } n > N.
+    \]
+    Then there exist a polynomial
+    \[
+    g(x) = b_0 + b_1x + \cdots + b_N x^N
+    \]
+    of degree $N$ and with coefficients in $K$, and a power series
+    \[
+    h(x) = 1 + d_1 x + d_2 x^2 + \cdots
+    \]
+    with coefficients in $K$, satisfying:
+    \begin{itemize}
+        \item $f(x) = g(x) h(x)$;
+        \item $\lvert b_N \rvert c^N = \max \lvert b_n \rvert c^n$, that is
+        $\| g (x) \|_c = \lvert b_N \rvert c^N$;
+        \item $h(x) \in \mathcal{A}_c$, that is it is a restricted power series over $K$ for
+        parameter $c$;
+        \item $\lvert d_n \rvert c^n < 1$ for all $n \geq 1$, so that $\| h(x) - 1 \|_c < 1$; and
+        \item $\| f(x) - g(x) \|_c < \| f(x)\|_c.$
+    \end{itemize}
+    In particular, $h(x)$ has no zeroes in $\overline{B}(0,c)$.
+\end{theorem}
+
+To prove this we will need to give a string of lemmas that will all come together.
+
+We begin by showing that the Tate algebra with parameter $c$ is complete with respect to the Gauss
+norm of parameter $c$, \cite[Lemma~7.2.7]{Gouvea}.
+
+\begin{lemma}
+    $\mathcal{A}_c$ is complete with respect to the Gauss norm $\|\cdot \|_c$.
+\end{lemma}
+
+\begin{proof}
+    We need to show a Cauchy sequence in $\mathcal{A}_c$ converges with respect to the norm
+    $\|\cdot\|_c$. Therefore, consider a sequence of power series
+    \[
+    f_i(x) = a_{i,0} + a_{i,1}x + a_{i,2}x^2 + \cdots.
+    \]
+    Saying this sequence is Cauchy means
+    \[
+    \forall \; \varepsilon>0, \; \exists \; M \text{ such that } \forall \; i,j > M
+    \text{ we have } \|f_i (x) - f_j (x) \|_c < \varepsilon.
+    \]
+    Using the definition of the Gauss norm, this means that
+    \[
+    \max_{n} |a_{i,n}-a_{j,n} | c^n < \varepsilon \quad \forall \; i,j > M,
+    \]
+    and certainly,
+    \[
+    |a_{i,n} - a_{j,n}| < \varepsilon c^{-n}
+    \]
+    for each $n$ whenever $i,j > M.$ That is each of the sequences $(a_{i,n})_{i \in \N}$ forms a
+    Cauchy sequence. Since $K$ is complete, this means they are convergent.
+    Now consider
+    \[
+    g(x) = a_0 + a_1 x + a_2 x^2 + \cdots
+    \]
+    where $a_n = \lim_{i \to \infty} a_{i,n}$. We want to show this is the limit of the $f_n$ and
+    is also in $\mathcal{A}_c$.
+
+    For the first part, we know that if $i,j > M$ we have
+    \[
+    |a_{i,n} - a_{j,n} | c^n < \varepsilon
+    \]
+    and letting $j \to \infty$ it follows that if $i > M$
+    \[
+    | a_{i,n} - a_n| c^n \leq \varepsilon.
+    \]
+    Therefore, we have $\forall \; i > M$
+    \[
+    \| f_i (x) - g(x) \|_c = \max_n |a_{i,n} - a_n| c^n \leq \varepsilon
+    \]
+    and so $f_i(x) \to g(x)$ with respect to $\| \cdot \|_c.$
+
+    Finally, since $f_ i \in \mathcal{A}_c$, there exists $N$ such that for all
+    $n > N$, $|a_{i,n} | c^n \leq \varepsilon.$ Thus for all $n > N$
+    \[
+    | a_n |c^n = | a_n - a_{i,n} + a_{i,n}|c^n  \leq \max \{|a_n - a_{i,n}|c^n,|a_{i,n}|c^n\} \leq \varepsilon
+    \]
+    and therefore $|a_n|c^n \to 0$, which by definition means $g(x) \in \mathcal{A}_c$.
+    With this we conclude the proof.
+\end{proof}
+
+Next we show that polynomials are dense in the Tate algebra, \cite[Lemma~7.2.8]{Gouvea}.
+\begin{lemma}\label{PolyDense}
+    The space of polynomials $K[x]$ is dense in $\mathcal{A}_c$.
+\end{lemma}
+
+\begin{proof}
+    We need to show that any power series is the limit of a sequence of polynomials. Towards this
+    let
+    \[
+    f(x) = a_0 + a_1x+a_2x^2 + \cdots
+    \]
+    be a power series in $\mathcal{A}_c$.
+    Consider the sequence of truncations of $f(x)$,
+    \begin{align*}
+        f_0(x) &= a_0 \\
+        f_1(x) &= a_0 + a_1 x \\
+        f_2(x) &= a_0 + a_1 x + a_2 x^2 \\
+        & \; \; \vdots \\
+        f_k(x) &= a_0 + a_1 x + \cdots a_k x^k
+    \end{align*}
+    we want to show $f$ is the limit of this sequence. Now
+    \[
+    \| f(x) - f_k (x) \|_c = \max_{n>k} |a_n|c^n,
+    \]
+    which tends to zero as $k \to \infty$ since $\lim_{n \to \infty} |a_n|c^n = 0$. Thus
+    $f_k (x) \to f(x)$ with respect to the Gauss norm and we conclude.
+\end{proof}
+
+Finally, we give a generalisation of \cite[Lemma~7.2.9]{Gouvea}, which is an analogue of the
+Euclidean algoritheorem for Tate algebras.
+
+\begin{lemma} \label{euclidalgoritheorem}
+    Let $f(x) \in \mathcal{A}_c$, and let
+    \[
+    g(x) = b_0 + b_1 x + \cdots + b_N x^N
+    \]
+    be a polynomial with coefficients in $K$ satisfying
+    \[
+    \lvert b_N \rvert  c^N= \max_i (\lvert b_i \rvert c^i).
+    \]
+    Then there exist a power series $q(x) \in \mathcal{A}_c$ and a polynomial $r(x) \in K[x]$,
+    of degree less that $N$, such that
+    \[
+    f(x) = g(x) q(x) + r(x)
+    \]
+    where $q(x)$ and $r(x)$ satisfy
+    \[
+    \|f(x) \|_c \geq \|g(x)\|_c \| q(x)\|_c \quad \text{and} \quad \|f(x) \|_c \geq \| r(x) \|.
+    \]
+    \end{lemma}
+
+\begin{proof}
+    Need to write up.
+\end{proof}
+
+With these theorems we are now in a position to prove the $p$-adic Weierstrass preparation theorem.
+
+\begin{proof}[Proof of Theorem~\ref{WP}]
+    The idea is to start with an approximate factorisation, and then improve it. If we prove by
+    induction this is always possible, it will produce convergent sequences of polynomials and power
+    series which in the limit gives the factorisation we want.
+
+    \textbf{Base case:}
+    To start the induction we need to find a $\delta < 1$ and an initial pair $g_1 (x)$ and
+    $h_1 (x)$. Towards this consider
+    \[
+    g_1 (x) = \sum^{N}_{i = 0} a_i x^i \quad h_1(x) = 1.
+    \]
+    Then, since the assumption is that $\|f(x)\|_c = |a_N |c^N$ and the terms of higher degree are
+    smaller, we have
+    \[
+    \| f(x) - \sum_{i=0}^N a_i x^i\|_c < \|f(x)\|_c
+    \]
+    and let $\delta$ be a measure of how much smaller:
+    \[
+    \|f(x) - \sum_{i=0}^N a_i x^i \|_c = \delta \|f(x) \|_c,
+    \]
+    clearly $0 < \delta < 1$. Then we can easily check that all our properties are satisfied.
+
+    \textbf{Inductive step:}
+    Let $\delta$ be a fixed real number, $0 < \delta < 1$. Suppose at stage $n$ we have a polynomial
+    $g_n (x)$ and a power series $h_n (x)$ such that
+    \begin{enumerate}
+        \item $\|f(x) - g_n (x) h_n(x) \|_c \leq \delta^n \|f(x)\|_c$;
+        \item $\deg g_n (x) = N$;
+        \item $\|g_n(x) \|_c = |b_{n,N} | c^N$;
+        \item $h_n (x) \in \mathcal{A}_c$;
+        \item $\| h_n(x) - 1 \|_c \leq \delta^n$; and
+        \item $\|f (x) - g_n (x) \|_c < \delta \|f(x)\|_c.$
+    \end{enumerate}
+
+    Firstly, $\|f(x) - g_n (x) \|_c \leq \delta \|f(x) \|$ implies $ \| f(x) \|_c = \| g(x)_n \|_c$,
+    using the fact $\| \cdot \|_c$ is non-archimedean and that $0 < \delta < 1$.
+
+    By Lemma \ref{euclidalgoritheorem} we can find a polynomial $r(x)$ of degree less than $N$ and a
+    power series $q(x) \in \mathcal{A}_c$ such that
+    \[
+    f(x) - g_n (x) h_n (x) = q(x) g_n(x) + r(x)
+    \]
+    and
+    \begin{align*}
+    \| q(x) \|_c & \leq \frac{\| f(x) - g_n (x) h_n (x) \|_c}{\| g_n (x) \|_c} \leq
+    \frac{\delta^n \|f_n(x)\|_c}{\|f(x) \|_c} = \delta^n \leq \delta\\
+    \| r(x) \|_c &\leq \| f(x) - g_n (x) h_n (x) \|_c \leq
+    \delta^n \| f(x) \|_c \leq \delta \| f(x) \|_c.
+    \end{align*}
+    Now consider
+    \[
+    g_{n+1} = g_n (x) + r(x) \quad \text{and} \quad h_{n+1}(x) = h_n (x) + q(x).
+    \]
+    We claim these are better approximations and satisfy the wanted properties.
+
+    Firstly, since $\deg r(x) < N$ we must have $\deg g_{n+1} (x) = N = \deg g_n (x)$ and
+    $g_{n+1}$ will also have leading term $b_{n,N}$.
+    Moreover, since $\mathcal{A}_c$ forms a ring, $h_{n+1} \in \mathcal{A}_c$ (polynomials are
+    trivially restricted power series).
+
+    Next, we have
+    \begin{align*}
+        \| f(x) - g_{n+1}(x) \|_c &= \| f(x) - g_n (x) - r(x) \|_c \\
+        & \leq \max \{ \|f(x) - g_n(x) \|_c, \| r(x) \|_c \} \\
+        & \leq \delta \| f(x) \|_c
+    \end{align*}
+    which means by the same argument as for $g_n$
+    \[
+    \|g_{n+1} (x)\|_c = \| f(x) \|_n = \| g_n ( x) \|_c = |b_{n,N}| c^N = | b_{n+1,N} | c^N.
+    \]
+    We also have
+    \begin{align*}
+        \| h_{n+1} (x) - 1 \|_c & = \| h_n (x) - 1 + q(x) \|_c \\
+        & \leq \max \{ \| h_n (x) - 1 \|_c , \| q(x) \|_c \} \\
+        & \leq \delta .
+    \end{align*}
+
+    Now we want to show it indeed gives a better approximation:
+    \begin{align*}
+        f(x) &- g_{n+1} (x) h_{n+1}(x) = f(x) - (g_n (x) + r(x) ) (h_n(x) + q(x)) \\
+        &= f(x) - g_n (x) h_n (x) - q(x) g_n(x) - r(x) h_n (x) - r(x) q(x) \\
+        & = r(x) - r(x) h_n (x) - r(x) q(x) \\
+        & = r(x) ( 1 - h_n (x) - q(x) )
+    \end{align*}
+    and therefore
+    \begin{align*}
+    \| f(x) - g_{n+1} (x) h_{n+1} (x) \|_c &= \| r(x) \|_c \|(1 - h_n(x)) - q(x) \|_c \\
+    & \leq \delta \|f(x) \|_c \max\{ \|(1 - h_n (x)) \|_c, \|q(x)\|_c \} \\
+    & \leq \delta^{n+1} \|f(x) \|_c.
+    \end{align*}
+    Since, $0 < \delta < 1$ this implies we do indeed have a better approximation.
+
+    Therefore $g_{n+1}$ and $h_{n+1}$ satisfies all our properties with $\delta^n$ replaced by
+    $\delta^{n+1}$.
+
+    To conclude, we want to show these functions actually form the sequence we want.
+    Firstly, they are Cauchy as
+    \[
+    \| q(x) \|_c \leq \delta^n \implies \|h_n (x) - h_{n+1}  (x) \|_c \leq \delta^n
+    \]
+    and
+    \[
+    \| r(x) \|_c \leq \delta^i \|f(x) \|_c \implies
+    \|g_n (x) - g_{n+1} (x) \|_c \leq \delta^i \| f(x) \|.
+    \]
+    Therefore, as $\mathcal{A}_c$ is complete, we have they converge to a $g(x)$ and $h(x)$. It is
+    then immediate via taking limits that these have the wanted properties.
+\end{proof}

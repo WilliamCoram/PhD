@@ -137,101 +137,48 @@ We prove this in lean using the following lemmas.
   \]
 \end{proof}
 
-\iffalse
+\section{Ring}
 
-Formal power series over a set $K$ in one variable, written $K [ \! [ x ] \! ] $, are
-infinite sums
-\[
-f(x) = \sum_{n=0}^\infty a_n x^n, \quad \forall i, \; a_i \in K.
-\]
-When $K$ is a ring, we can show power series over $K$ form a ring, and we will often refer to them
-as the ring of power series over $K$, denoted by $\mathcal{F}_K$.
-
-We define a subset of $\mathcal{F}$ that consists of power series whose coefficeients approach zero,
-to do this we first better make sure $K$ is a normed ring
-
-\begin{definition*}
-A normed ring is a pair $(R,\lvert \cdot \rvert)$, of a ring and a norm.
-\end{definition*}
-
-With this we define,
-
-\begin{definition}
-    \label{PowerSeries.IsRestricted}
-    \lean{PowerSeries.IsRestricted}
-    \leanok
-    Let $f$ be a power series over a normed ring $R$ in one variable, write
-    $f = \sum_{n=0}^\infty a_n x^n$, and let $c$ be a real number.
-    We say $f$ is a restricted power series of parameter $c$ over $K$ if
-    \[
-    \lim_{n \to \infty} \lvert a_n \rvert c^n = 0
-    \]
-    in the cofinite topology.
-\end{definition}
-
-Note this is not the same as convergent power series in the usual sense unless $R$ is complete,
-since in complete spaces Cauchy sequences converge.
-
-It turns out that restricted power series of parameter $c$ are not just a set, in fact we have the
-following.
+Moreover, if the normed ring $R$ has the non-archimedean property, we further have that
+$R_c [ \! [ x_1, \dots, x_n ] \! ]$ is a ring.
 
 \begin{theorem}
-  \label{PowerSeries.Restricted.IsGroup}
-  \lean{PowerSeries.Restricted.IsGroup}
-  \leanok
-  Restricted power series over a normed ring $R$ form an additive group.
+  For any non-archimedean normed ring $R$, $n \in \mathbb{N}$ and $n$-tuple $c \in \mathbb{R}^n$,
+  $R_c [ \! [ x_1, \dots, x_n ] \! ]$ is a ring.
 \end{theorem}
 
-\section{Additive Group}
+To prove this we first give a more general statement.
 
-To prove that they form a ring in
-
-Moreover, if the norm of $R$ has the non-archimedean property,
-
-\begin{definition*}
-  We say a norm is non-archimedean if
+\begin{lemma}
+  \label{tendsto_antidiagonal}
+  \lean{tendsto_antidiagonal}
+  \leanok
+  Let $M$ be an additive monoid with an antidiagonal, and $S$ a non-archimedean normed ring. Let
+  $\phi : M \to \mathbb{R}$ be a function such that for all $a, b \in M, \phi(a + b) = \phi(a)
+  \phi(b)$. If two functions $f, g : M \to S$ have the property that
+  $\lim_i \lvert f i \rvert \phi (i) = 0$ in the cofinite filter and
+  $\lim_i \lvert f i \rvert \phi (i) = 0$ then
   \[
-  \lvert a + b \rvert \leq \max \{ \lvert a \rvert, \lvert b \rvert\}.
+  \lim_i \lvert \sum_{\mathclap{\substack{(a,b) \in \\ \textrm{antidiagonal } i}}} f(a) g(b) \rvert
+  \phi(i) = 0.
   \]
-  Else the norm is archimedean.
-\end{definition*}
+\end{lemma}
 
-we can strengthen this lemma.
-
-\begin{theorem}
-  \label{PowerSeries.Restricted.IsRing}
-  \lean{PowerSeries.Restricted.IsRing}
+\begin{lemma}
+  \label{mul}
+  \lean{mul}
   \leanok
-  Restricted power series over a non-archimedean normed ring $R$ form a ring.
-\end{theorem}
+  \uses{IsRestricted, isRestricted_abs_iff, tendsto_antidiagonal}
+  If $R$ has the non-archimedean property, then if $f,g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ then
+  $fg \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
 
-The importance of the non-archimedean property can be seen in the following example.
+\section{Tate Algebra}
 
-Let $f = \sum_{n=0}^\infty \frac{(-1)^n}{\sqrt{n+1}}x^n$ be a power series over $\mathbb{R}$
-equipped with the standard norm. Then it is immediate to see that $f$ is a restricted power series
-for the parameter 1. However, the product $f^2$ has coefficients
-\[
-b_n = (-1)^n \sum_{k=0}^n \frac{1}{(n - k -1)(k+1)},
-\]
-and it can be shown that
-\[
-\lvert b_n\rvert \geq \sum_{k = 0}^n \frac{2}{n + 2} = \frac{2 (n + 1)}{(n + 2)}.
-\]
-Therefore $\lim_{n \to \infty} \lvert b_n \rvert \geq \lim_{n \to \infty} \frac{2(n+1)}{(n+2)}=2$,
-that is $f^2$ is not a restricted power series for parameter 1, and we see multiplication is not
-closed.
-
-We now suppose that $K$ is a non-archimedean complete field; that is a field equipped with a metric
-that is complete and whose metric has the non-archimedean property as defined earlier. We give a
-new name to restricted power series with these $K$.
+With this set up we now define a neccesary component of our project.
 
 \begin{definition}
-    When $K$ is a non-archimedean complete field we denote the ring of restricted power series with
-    parameter $c$ over $K$ by $\mathcal{A}_c(K)$ and call it the Tate algebra over $K$ of parameter
-    $c$.
+  When $K$ is a complete non-archimedean field, we call the ring of restricted power series of
+  parameter $c$ over $K$ in $n$ variables, the \emph{Tate algebra} over $K$ of paramter $c$, denoted
+  $\mathcal{A}_c(K).$
 \end{definition}
-
-As mentioned earlier, this set is equivalent to power series that converge on the ball of radius
-$c$, and so sometimes in literature the Tate algebra may be referenced as convergent power series.
-
-\fi
