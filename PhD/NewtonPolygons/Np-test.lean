@@ -115,56 +115,12 @@ structure Segment where
   --- infinite length => hits point true = infiniteRay
   ---                    hits point false = limitingRay
   --- slope = ⊤ => length = 0 & stepResult.tail
-noncomputable
-def lineAt (x : ℕ) (y : Γ) (m : ℝ) (x' : ℕ) : ℝ :=
-  algebraMap Γ ℝ y + m * (x' - x)
-
-def Segment.ends_at_x (seg : Segment Γ) (hl : seg.l ≠ ⊤) : ℕ :=
-  seg.x + (seg.l.untop hl)
-
-noncomputable
-def Segment.ends_at_y (seg : Segment Γ) (hl : seg.l ≠ ⊤) (hm : seg.m ≠ ⊤) : ℝ :=
-  lineAt seg.x seg.y (seg.m.untop hm) (Segment.ends_at_x seg hl)
 
 -- note I really want ends_at_y to be in Γ
 
 end Segments
 
 section NPStructure
-
--- the newtonPolygonData is now replaced with just a list of segments
--- we should not need a structure for this anymore
-
-/-- Predicate to show if segments are properly connected. -/
-def NewtonPolygonData.connected (npd : List (Segment Γ)) : Prop :=
-  ∀ k : ℕ, ∀ hk : k + 1 < npd.length, ∀ hk' : (npd[k]'(Nat.lt_of_succ_lt hk)).l ≠ ⊤,
-    ∀ hk'' : (npd[k]'(Nat.lt_of_succ_lt hk)).m ≠ ⊤,
-    Segment.ends_at_x (npd[k]'(Nat.lt_of_succ_lt hk)) hk' = (npd[k + 1]'hk).x ∧
-    Segment.ends_at_y (npd[k]'(Nat.lt_of_succ_lt hk)) hk' hk'' = algebraMap Γ ℝ (npd[k + 1]'hk).y
-
--- this seems super over complicated...
-
--- but this just is not true because what happens when the next segment corresponds to a limiting
--- ray ... this becomes completely different
-
-/-- Predicate to show finite length slopes are strictly increasing. -/
-def NewtonPolygonData.slopes_strictlyIncreasing (npd : List (Segment Γ)) : Prop :=
-  ∀ k : ℕ, ∀ hk : k + 1 < npd.length, (npd[k]'(Nat.lt_of_succ_lt hk)).l ≠ ⊤ →
-    (npd[k]'(Nat.lt_of_succ_lt hk)).m < (npd[k + 1]'hk).m
-
-/-- Predicate to show the final ray's slope is at least the last segment's slope. -/
-def  NewtonPolygonData.ray_slope_valid (npd : List (Segment Γ)) : Prop :=
-  ∀ k : ℕ, ∀ hk : k + 1 < npd.length, (npd[k + 1]'hk).l = ⊤ →
-    if (npd[k + 1]'hk).hitsPoint = true then (npd[k]'(Nat.lt_of_succ_lt hk)).m < (npd[k + 1]'hk).m
-      else (npd[k]'(Nat.lt_of_succ_lt hk)).m ≤ (npd[k + 1]'hk).m
-
-/-- A well-formed Newton polygon satisfies all connectivity and monotonicity conditions. -/
-structure NewtonPolygonData.WellFormed (npd : List (Segment Γ)) : Prop where
-  connected : NewtonPolygonData.connected npd
-  slopes_strictlyIncreasing : NewtonPolygonData.slopes_strictlyIncreasing npd
-  ray_slope_valid : NewtonPolygonData.slopes_strictlyIncreasing npd
-
----- this is almost certainly all wrong need to work out how to write this
 
 variable (Γ) in
 /-- The empty Newton polygon (for the zero series or constant series). -/
@@ -271,27 +227,36 @@ def NewtonPolygonData.lengths (npd : List (Segment Γ)) : List (WithTop ℕ) :=
 
 end API
 
-section isWellFormed
+section WellFormed
 
-def getSegments : BuildResult Γ → List (Segment Γ)
-  | BuildResult.complete npd => npd
-  | BuildResult.incomplete npd _ => npd
+def Segment.isRay (seg : Segment Γ) : Prop :=
+  seg.l = ⊤
 
-lemma getSegments_eq (n : ℕ) {i₀ : ℕ} {i₁ : Γ} (h : findFirstFinite v 0 = some (i₀, i₁)) :
-    getSegments (buildNewtonPolygon.build v i₀ i₁ [] n) = (newtonPolygon v n):= by
-  unfold getSegments newtonPolygon buildNewtonPolygon
-  aesop
+def Segment.isFinite (seg : Segment Γ) : Prop :=
+  ∃ n : ℕ, seg.l = n
 
-def segments_connected (segs : List (Segment Γ)) : Prop :=
-  ∀ k : ℕ, ∀ hk : k + 1 < segs.length, ∀ hk' : (segs[k]'(Nat.lt_of_succ_lt hk)).l ≠ ⊤,
-    ∀ hk'' : (segs[k]'(Nat.lt_of_succ_lt hk)).m ≠ ⊤,
-    Segment.ends_at_x (segs[k]'(Nat.lt_of_succ_lt hk)) hk' = (segs[k + 1]'hk).x ∧
-    Segment.ends_at_y (segs[k]'(Nat.lt_of_succ_lt hk)) hk' hk'' = algebraMap Γ ℝ (segs[k + 1]'hk).y
+def NewtonPolygonData.connected : List (Segment Γ) → Prop
+  | [] => True
+  | [_] => True
+  | s₁ :: s₂ :: rest =>
+      ∃ l : ℕ, s₁.l = l ∧ s₂.x = s₁.x + l ∧ v (s₁.x + l) = s₂.y ∧
+        NewtonPolygonData.connected (s₂ :: rest)
 
-def ends_at (segs : List (Segment Γ)) (j₀ : ℕ) (j₁ : Γ) : Prop :=
-  match segs.getLast? with
-  | some s => Segment.ends_at_x s = j₀ ∧ s.j₁ = j₁
-  | none => True
+def NewtonPolygonData.slopes_strictlyIncreasing : List (Segment Γ) → Prop
+  | [] => True
+  | [_] => True
+  | s₁ :: s₂ :: rest =>
+      ((∃ l : ℕ, s₂.l = l) → s₁.m < s₂.m) ∧
+        NewtonPolygonData.slopes_strictlyIncreasing (s₂ :: rest)
 
+def NewtonPolygonData.ray_slope_valid : List (Segment Γ) → Prop
+  | [] => True
+  | [_] => True
+  | s₁ :: s₂ :: rest =>
+      ((s₂.l = ⊤) → if s₂.hitsPoint then s₁.m < s₂.m else s₁.m ≤ s₂.m) ∧
+        NewtonPolygonData.ray_slope_valid (s₂ :: rest)
 
--- new idea is to not reinvent the wheel, but instead work with a new segment
+structure NewtonPolygonData.WellFormed (npd : List (Segment Γ)) : Prop where
+  connected : NewtonPolygonData.connected (v := v) npd
+  slopes_strictlyIncreasing : NewtonPolygonData.slopes_strictlyIncreasing npd
+  ray_slope_valid : NewtonPolygonData.ray_slope_valid npd

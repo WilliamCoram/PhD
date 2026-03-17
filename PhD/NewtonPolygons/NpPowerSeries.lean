@@ -533,32 +533,20 @@ lemma succSlope_le_Slope {a₀ a₁ a₂ : ℝ} {b₀ b₁ b₂ : ℝ} (ha1 : a�
     exact mul_le_mul_of_nonneg_right hab (by grind)
   rw [add_comm, ← tsub_le_iff_right] at this
   rw [div_le_iff₀' (by grind), mul_comm]
-  exact this
+  grind
 
--- this should be able to be mirrored by above ... but need to work out how you can replace
--- le with lt everywhere
--- (not cleaning up until I work out how to do that)
-lemma test' (a₀ a₁ a₂ : ℝ) (b₀ b₁ b₂ : ℝ) (ha1 : a₀ < a₁) (hb2 : a₁ < a₂)
+lemma succSlope_lt_Slope {a₀ a₁ a₂ : ℝ} {b₀ b₁ b₂ : ℝ} (ha1 : a₀ < a₁) (hb2 : a₁ < a₂)
     (hab : (b₂ - b₁) / (a₂ - a₁) < (b₁ - b₀) / (a₁ - a₀)) :
     (b₂ - b₀) / (a₂ - a₀) < (b₁ - b₀) / (a₁ - a₀) := by
-  let m := (b₂ - b₁) / (a₂ - a₁)
-  let l := (b₁ - b₀) / (a₁ - a₀)
-  let n := (b₂ - b₀) / (a₂ - a₀)
-  let x := b₀ + l * (a₂ - a₀)
-  have x' : x = b₁ + l * (a₂ - a₁) := by grind
-  have leq' : m < l := by grind
-  have fin : b₂ < x := by
-    have : b₂ = b₁ + m * (a₂ - a₁) := by grind
-    simp_rw [this]
-    simp_rw [x']
+  have : b₂ < b₀ + (b₁ - b₀) / (a₁ - a₀) * (a₂ - a₀) := by
+    have h : b₂ = b₁ + (b₂ - b₁) / (a₂ - a₁) * (a₂ - a₁) := by grind
+    have : b₀ + (b₁ - b₀) / (a₁ - a₀) * (a₂ - a₀) = b₁ + (b₁ - b₀) / (a₁ - a₀) * (a₂ - a₁) := by
+      grind
+    rw [this, h]
     simp only [add_lt_add_iff_left, gt_iff_lt]
-    exact mul_lt_mul_of_pos_right (a := a₂ - a₁) leq' (by grind)
-  simp_rw [x, l] at fin
-  rw [add_comm] at fin
-  have : a₂ - a₀ > 0 := by grind
-  rw [div_lt_iff₀' this, mul_comm]
-  exact sub_right_lt_of_lt_add fin
-
+    exact mul_lt_mul_of_pos_right hab (by grind)
+  rw [div_lt_iff₀' (by grind), mul_comm]
+  grind
 
 end convexity
 
@@ -633,69 +621,164 @@ lemma newtonPolygon.slopes_strictlyIncreasing (n : ℕ) :
 
 section infiniteRayAPI
 
-section Segments2
+lemma infiniteRay_bddBelow (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.infiniteRay m) :
+    BddBelow (slopeSet v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  grind
 
-variable (Γ) in
-structure Segment' where
-  /-- Starting x-coordinate (index) -/
-  i₀ : ℕ
-  /-- Starting y-coordinate -/
-  i₁ : Γ
-  /-- Length (projected) -/
-  length : WithTop ℕ
-  /-- Slope -/
-  slope : WithTop ℝ
-  /-- Option whether it hits a point -/
-  hitsPoint : Bool
+lemma infiniteRay_nonempty (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.infiniteRay m) :
+    (achievingSet v i₀ i₁ m).Nonempty := by
+  simp_rw [nextStep] at h
+  split_ifs at h
+  · simp_all only [StepResult.infiniteRay.injEq]
+    rename_i _ _ _ fin
+    exact Set.Infinite.nonempty fin
+  · aesop
 
-def mkSegment' (i₀ : ℕ) (i₁ : Γ) (l : WithTop ℕ) (m : WithTop ℝ) (bool : Bool) : Segment' Γ :=
-  {i₀ := i₀, i₁ := i₁, length := l, slope := m, hitsPoint := bool }
+lemma infiniteRay_slope_eq_sInf (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.infiniteRay m) :
+    m = sInf (slopeSet v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  split_ifs at h
+  · simp only [StepResult.infiniteRay.injEq] at h
+    rename_i _ _ t _
+    convert Classical.choose_spec t
+    aesop
+  · aesop
 
-noncomputable
-def seg_to_seg' (seg : Segment Γ) : Segment' Γ where
-  i₀ := seg.i₀
-  i₁ := seg.i₁
-  length := Segment.length seg
-  slope := Segment.slope seg
-  hitsPoint := true
+lemma infiniteRay_ex (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.infiniteRay m) :
+    ∃ j₀ : ℕ, j₀ > i₀ ∧ finite v j₀ ∧ ∃ j₁ : Γ, v j₀ = j₁ ∧  m = slopeReal i₀ j₀ i₁ j₁ := by
+  obtain ⟨_, b⟩ := infiniteRay_nonempty v h
+  simp_rw [achievingSet] at b
+  aesop
 
-noncomputable
-def ray_to_seg' (ray : FinalRay Γ) : Segment' Γ where
-  i₀ := ray.i₀
-  i₁ := ray.i₁
-  length := ⊤
-  slope := ray.slope
-  hitsPoint := not ray.hitsInfinitelyMany
+end infiniteRayAPI
 
-noncomputable
-def newtonPolygon_full : ℕ → (Segment' Γ)
-  | 0 => match (newtonPolygon v 1).segments[0]? with
-            | some s => seg_to_seg' s
-            | none => match (newtonPolygon v 1).finalRay with
-                    | some r => ray_to_seg' r
-                    | none => match findFirstFinite v 0 with
-                                | some (i₀, i₁) => mkSegment' i₀ i₁ 0 ⊤ false -- happens when unbounded
-                                | none => mkSegment' 0 0 0 ⊤ false -- corresponds to the empty newtonPolygon
-  | n + 1 => match (newtonPolygon v (n + 2)).segments[n + 1]? with
-            | some s => seg_to_seg' s
-            | none => match (newtonPolygon v (n + 2)).finalRay with
-                    | some r => ray_to_seg' r
-                    | none => newtonPolygon_full n -- happens when we have a polynomial
+section limitingRayAPI
 
-def newtonPolygon_full.slopes_increasing (n : ℕ) : (newtonPolygon_full v n).slope ≤
-    (newtonPolygon_full v (n + 1)).slope := by
-  -- probably will have to go case by case
-  sorry
+lemma limitingRay_bddBelow (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.limitingRay m) :
+    BddBelow (slopeSet v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  grind
 
--- then want to refine this to strictly increasing sub case
+lemma limitingRay_nonempty (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.limitingRay m) : (slopeSet v i₀ i₁).Nonempty := by
+  simp_rw [nextStep] at h
+  split at h
+  · trivial
+  · rename_i fin
+    exact Set.nonempty_iff_ne_empty.mpr fin
 
+lemma limitingRay_slope_eq_sInf (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h :  nextStep v i₀ i₁ = StepResult.limitingRay m) : m = sInf (slopeSet v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  split_ifs at h
+  all_goals aesop
 
+end limitingRayAPI
 
--- now while hitsPoint is true, we have slopes are strictly increasing
--- and we are not constant
--- when it becomes false, we have (potential) equality
+theorem build_ray_slope_valid (v : ValSeq Γ) (i₀ : ℕ) (i₁ : Γ) (segs : List (Segment Γ)) (fuel : ℕ)
+    (h_end : ends_at segs i₀ i₁)
+    (h_bdd :  ∀ s ∈ segs.getLast?, BddBelow (slopeSet v s.i₀ s.i₁))
+    (h_final1 : ∀ s ∈ segs.getLast?, s.slope = sInf (slopeSet v s.i₀ s.i₁))
+    (h_final2 : ∀ s ∈ segs.getLast?, Set.Finite (achievingSet v s.i₀ s.i₁ s.slope))
+    (h_final3 : ∀ s ∈ segs.getLast?, Set.Nonempty (achievingSet v s.i₀ s.i₁ s.slope))
+    (h_final4 : ∀ s (hs : s ∈ segs.getLast?), s.j₀ = (Set.Finite.toFinset (h_final2 s hs)).max'
+      ((h_final2 s hs).toFinset_nonempty.mpr (h_final3 s hs))) :
+    (getResult (buildNewtonPolygon.build v i₀ i₁ segs fuel)).ray_slope_valid := by
+  induction' fuel with fuel ih generalizing i₀ i₁ segs
+  all_goals unfold buildNewtonPolygon.build
+  · trivial
+  · rw [ends_at] at h_end
+    simp only [getResult]
+    rcases h : nextStep v i₀ i₁ with ( _ | _ | _ | ⟨j₀, j₁⟩ | _ )
+    all_goals try trivial
+    all_goals simp only [Nat.add_eq_zero_iff, one_ne_zero, and_false, ↓reduceIte]
+    · unfold NewtonPolygonData.ray_slope_valid
+      simp only
+      split
+      · simp_all only [Option.mem_def, Option.some.injEq, forall_eq']
+        rename_i _  _ m _ _ r s hs hr t
+        simp_rw [← hr]
+        split_ifs
+        · obtain ⟨k₀, hk₀1, hk₀2, k₁, hk₁, hkeq⟩ := infiniteRay_ex _ h
+          by_contra
+          have help : s.i₀ < k₀ := by grind [s.lt]
+          suffices Segment.slope (mkSegment s.i₀ k₀ s.i₁ k₁ help) ≤
+              sInf (slopeSet v s.i₀ s.i₁) by
+            have : sInf (slopeSet v s.i₀ s.i₁) = Segment.slope (mkSegment s.i₀ k₀ s.i₁ k₁ help) := by
+              have : Segment.slope (mkSegment s.i₀ k₀ s.i₁ k₁ help) ∈ (slopeSet v s.i₀ s.i₁) := by
+                exact ⟨k₀, help, hk₀2, k₁, hk₁, rfl⟩
+              grind [csInf_le h_bdd this]
+            have : k₀ ∈ (achievingSet v s.i₀ s.i₁ (Segment.slope s)) := by
+              exact ⟨help, hk₀2, k₁, hk₁, by simpa [h_final1] using this⟩
+            grind [Finset.le_max' (h_final2 s hs).toFinset k₀ (by simpa using this)]
+          simp only [not_lt] at this
+          have foo : s.j₀ = i₀ := by
+            grind
+          simp_rw [← h_final1, Segment.slope, slopeReal, h_end, foo, hkeq] at ⊢ this
+          exact succSlope_le_Slope (by rw [← foo]; exact Nat.cast_lt.mpr s.lt)
+            (Nat.cast_lt.mpr hk₀1) this
+        · trivial
+      · trivial
+    · split_ifs with hij
+      · convert ih j₀ j₁ (segs ++ [mkSegment i₀ j₀ i₁ j₁ hij]) (by simp [ends_at, mkSegment])
+           _ _ _ _ _
+        all_goals intro s hs
+        all_goals simp only [List.getLast?_append, List.getLast?_singleton, Option.some_or,
+          Option.mem_def, Option.some.injEq] at hs
+        all_goals simp_rw [← hs]
+        · exact nextVertex_bddBelow _ h
+        · exact nextVertex_slope_eq_sInf _ h
+        · convert nextVertex_finite _ h
+          exact nextVertex_slope_eq_sInf _ h
+        · convert nextVertex_nonEmpty _ h
+          exact nextVertex_slope_eq_sInf _ h
+        · simp_rw [mkSegment]
+          convert nextVertex_j₀_eq_max _ h
+          exact nextVertex_slope_eq_sInf _ h
+      · trivial
+    · unfold NewtonPolygonData.ray_slope_valid
+      split
+      · simp_all only [Option.mem_def, Option.some.injEq, forall_eq']
+        rename_i m _ _ r s hs hr heq
+        simp_rw [← hr]
+        split_ifs with t
+        · trivial
+        · have : (mkFinalRay i₀ i₁ m false).slope = m := by rfl
+          rw [this]
+          simp_rw [limitingRay_slope_eq_sInf v h]
+          refine le_csInf (limitingRay_nonempty _ h) ?_
+          by_contra
+          simp only [not_forall, not_le] at this
+          obtain ⟨m', hm', m'_lt⟩ := this
+          obtain ⟨a₀, ha₀, a₀_fin, a₁, ha₁, hm'⟩ := hm'
+          have help : s.i₀ < a₀ := by grind [s.lt]
+          suffices Segment.slope (mkSegment s.i₀ a₀ s.i₁ a₁ help) <
+              sInf (slopeSet v s.i₀ s.i₁) by
+            have contra := csInf_le h_bdd (mem_segmentSlope_slopeSet v s a₀ a₁ help a₀_fin ha₁)
+            grind
+          have foo : s.j₀ = i₀ := by
+            grind
+          simp_rw [← h_final1, Segment.slope, slopeReal, h_end, foo, hm'] at m'_lt ⊢
+          exact succSlope_lt_Slope (by rw [← foo]; exact Nat.cast_lt.mpr s.lt) (Nat.cast_lt.mpr ha₀)
+            m'_lt
+      · trivial
 
--- when we are not constant we have they are connected
+lemma newtonPolygon.ray_slope_valid (n : ℕ) : (newtonPolygon v n).ray_slope_valid := by
+  rcases h : findFirstFinite v 0 with _ | ⟨i₀, i₁⟩
+  · simpa [newtonPolygon, buildNewtonPolygon, h] using emptyPolygon_wellFormed.ray_slope_valid
+  · convert build_ray_slope_valid v i₀ i₁ [] n
+      (emptyPolygon_wellFormed (Γ := Γ)).ray_slope_valid (by grind)
+      (by aesop) (by aesop) (by aesop) (by grind)
+    rw [getResult_eq v n h]
 
-
-end Segments2
+lemma newtonPolygon.wellFormed (n : ℕ) : (newtonPolygon v n).WellFormed where
+  connected := newtonPolygon.connected v n
+  slopes_strictlyIncreasing := newtonPolygon.slopes_strictlyIncreasing v n
+  ray_connected := newtonPolygon.ray_connected v n
+  ray_slope_valid := newtonPolygon.ray_slope_valid v n

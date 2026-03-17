@@ -1,508 +1,921 @@
 import Mathlib
 
-structure LowerConvexHull (K : Type*) [Field K] [LinearOrder K] [IsStrictOrderedRing K] where
-  /-- The number of points -/
-  n : ℕ -- we will want to add a withTop ℕ to resolve for powerseries in the future
-  /-- `x j` is the x-coordinate of the `j`th point when `0 ≤ j < n`. -/
-  x : ℕ → K
-  /-- `y j` is the y-coordinate of the `j`th point when `0 ≤ j < n`. -/
-  y : ℕ → K
-  /-- The x-coordinates are strictly increasing -/
-  increasing : StrictMonoOn x (Set.Ico 0 n)
-  /-- The Newton polygon is lower convex.
-  This considers three successive points with indices `j`, `j+1` and `j+2`. -/
-  -- We have a ≤ as we are allowing the slops to be the same for now.
-  convex : ∀ j : ℕ, j + 2 < n →
-      -- note this was originally ≤ n... but surely it has to be <
-      -- (as this allows x (j+2)) to make sense
-      x j * y (j + 2) + x (j + 1) * y j  + x (j + 2) * y (j + 1) ≤
-        x j * y (j + 1) + x (j + 1) * y (j + 2) + x (j + 2) * y j
-    -- note this convex condition is just saying that from the point j, the slope to j+1 is ≤
-    -- the slope to j+2.
+namespace NewtonPolygon
 
-namespace LowerConvexHull
+variable (K : Type*) [CommSemiring K] [LinearOrder K] [Algebra K ℝ]
 
-variable {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
-
-/-- The slopes of a lower convex hull. -/
-def slope (U : LowerConvexHull K) (j : ℕ) : K :=
-  (U.y (j + 1) - U.y j) / (U.x (j + 1) - U.x j)
-
-/-- The segments have positive (projected) length. -/
-lemma length_pos (U : LowerConvexHull K) {j : ℕ} (hj : j ∈ Set.Ico 0 (U.n - 1)) :
-    0 < U.x (j + 1) - U.x j := by
-  rw [sub_pos]
-  simp only [Set.mem_Ico, zero_le, true_and] at hj
-  refine U.increasing ?_ ?_ (lt_add_one j) <;> simp <;> omega
-
-/-- The slopes are increasing. -/ -- again not strict for now!
-lemma slope_MonotoneOn (U : LowerConvexHull K) : MonotoneOn U.slope (Set.Ico 0 (U.n - 1)) := by
-  refine monotoneOn_of_le_succ Set.ordConnected_Ico ?_
-  intro j hj₁ hj₂ hj₃
-  simp only [slope]
-  have h₁ : 0 < U.x (j + 1) - U.x j := U.length_pos hj₂
-  have h₂ : 0 < U.x (j + 2) - U.x (j + 1) := U.length_pos hj₃
-  simp +arith only [Nat.succ_eq_succ, Nat.succ_eq_add_one]
-  rw [div_le_div_iff₀ h₁ h₂, ← sub_nonpos]
-  have := U.convex j (by simp at hj₃; omega)
-  rw [← sub_nonpos] at this
-  convert this using 1
-  ring
-
-------------------------------------------------------------------------------------------------
-/-
-The goal is to give a function that sends a Polynomial R to a lower convexhull.
-To do this I want to write this as a composition of two functions.
-Function 1. Sends a Polynomial to a finite set of points
-         2. Sends a finite set of points to its lower convex hull
-
-Function 1 should be straight forward... just do i ↦ (i, v(a_i))
-  -- can probably leave it as a general function v for now
+/-- The y-values of our points, for powerseries this will be the valuations of the coefficients.
 -/
+abbrev ValSeq := ℕ → WithTop K
 
-section fun1
+variable (v : ValSeq K)
 
-variable  (M F : Type*) [Field M] [LinearOrder M] [IsStrictOrderedRing M]
-  [FunLike F M K] (v : F)
--- Given a polynomial we want a 3-tuple of a natural number and two functions indexing the wanted points
+/-- Predicate: the i-th coefficient is nonzero (has finite valuation). -/
+def finite (i : ℕ) : Prop := v i ≠ ⊤
 
-structure finset_Prod where
-  n : ℕ -- number of points
-  x : ℕ → M -- x values
-  y : ℕ → M -- y values
-  increasing : StrictMonoOn x (Set.Ico 0 n) -- We need to have the set be ordered in the x-axis with
-    -- points having the same x value (maybe there is a nicer way to define this structure?)
-    -- but this certainly is what the set arising from a polynomial/powerseries will look like
+/-- The set of indices with nonzero coefficients. -/
+def support : Set ℕ := {i | finite K v i}
 
--- Note the below will not work for powerseries, so maybe need to think of a better approach later
+section Slopes
 
--- fixed from an aristotle proof that did not work
+-- Ideally I would like this slope to be an element of K - for this I need to be able to subtract
+-- in K, and divide by ℕ
+-- What is the minimum assumption for this?
+
+-- a ring K that is a ℚ-module, and such that ℝ is a K-algebra?
+
+-- compute the slope as a real number (since ℝ is complete we can use sInf)
 noncomputable
-def Poly_set (f : Polynomial M) : finset_Prod K where
-  n := Finset.card {b : Fin (f.natDegree + 1) | Polynomial.coeff f b ≠ 0}
-  x := fun i => ((Finset.sort (· ≤ ·)
-    {b : Fin (f.natDegree + 1) | Polynomial.coeff f b ≠ 0}).getD i 0)
-  y := fun i => if i < (Finset.card {b : Fin (f.natDegree + 1) | Polynomial.coeff f b ≠ 0})
-                  then v (Polynomial.coeff f i)
-                else v (Polynomial.coeff f 0)
-                -- the junk value is to return to the first value (seems reasonable?)
-  increasing i hi j hj hij := by
-    -- this was adjusted from an aristotle proof which didnt work
-    have h_sorted : List.Pairwise (fun x y => x < y) (Finset.sort (· ≤ ·)
-        (Finset.filter (fun b : Fin (f.natDegree + 1) ↦ f.coeff b.val ≠ 0) Finset.univ)) :=
-      Finset.sort_sorted_lt _
-    have hi' : i < (Finset.sort (· ≤ ·) {b : Fin (f.natDegree + 1) | f.coeff ↑b ≠ 0}).length := by
-      aesop
-    have hj' : j < (Finset.sort (· ≤ ·) {b : Fin (f.natDegree + 1) | f.coeff ↑b ≠ 0}).length := by
-      aesop
-    convert  List.pairwise_iff_get.mp h_sorted ⟨i, hi'⟩ ⟨j, hj'⟩ hij
-    all_goals aesop
-    -- would like to extract but could not get the set up to work outside of the structure
-    -- i.e. lean would complain about things not begin infered
+def slopeReal (x₀ x₁ : ℕ) (y₀ y₁ : K) : ℝ :=
+  (algebraMap K ℝ y₁ - algebraMap K ℝ y₀) / (x₁ - x₀)
 
-end fun1
+def slopeSet (i₀ : ℕ) (i₁ : K) : Set ℝ :=
+  {m | ∃ j₀ : ℕ, j₀ > i₀ ∧ finite K v j₀ ∧ ∃ j₁ : K, v j₀ = j₁ ∧ m = slopeReal K i₀ j₀ i₁ j₁}
 
-section fun2
-/-
-If we denote a finite set S in Prod K K by f_x : ℕ → K and f_y : ℕ → K indexing their
-x and y points, with x values ordered, we want to compute its LowerConvexHull
--/
-variable [Infinite K]
-variable (N : ℕ) -- Size of our finite set, i.e. only care for i < N in f_x and f_y
-variable (f_x : ℕ → K) (f_y : ℕ → K) [hx : Fact (StrictMonoOn (f_x) (Set.Ico 0 N))]
--- assuming the f_x is strictly mono; that is we have ordered our set
+def achievingSet (i₀ : ℕ) (i₁ : K) (m : ℝ) : Set ℕ :=
+  {j : ℕ | j > i₀ ∧ finite K v j ∧ ∃ j₁ : K, v j = j₁ ∧ m = slopeReal K i₀ j i₁ j₁}
 
-/- The set of slopes out of the point indexed by i -/
-def Set_of_Slopes (i : ℕ) : Set K :=
-  Set.image (fun j => (f_y j - f_y i) / (f_x j - f_x i)) {j | j < N ∧ i < j}
+end Slopes
 
-omit [LinearOrder K] [IsStrictOrderedRing K] [Infinite K] hx in
-lemma Set_of_Slopes_nonempty (i : ℕ) (hi : i < N - 1) : Nonempty (Set_of_Slopes N f_x f_y i) := by
-  simp_rw [Set_of_Slopes]
-  refine Set.nonempty_iff_ne_empty'.mpr ?_
-  have : {j | j < N ∧ i < j} ≠ ∅ := by
-    contrapose hi
-    simp only [ne_eq, not_not, not_lt, tsub_le_iff_right] at *
-    by_contra h
-    simp only [not_le] at h
-    have : (i + 1) ∈ {j | j < N ∧ i < j} := by
-      simpa
-    aesop
-  aesop
+section AlgorithmStep
 
-def Set_of_Slopes_isFinite (i : ℕ): Set.Finite (Set_of_Slopes N f_x f_y i) := by
-  apply Set.Finite.image
-  exact Set.Finite.sep (Set.finite_lt_nat N) (LT.lt i)
+/-- The result of one step of the Newton polygon algorithm. -/
+inductive StepResult where
+  /-- No more finite values. -/
+  | Tail
+  /-- The set of minimum slopes is unbounded below. -/
+  | unboundedBelow
+  /-- Infinitely many points achieve the minimum slope m: final ray with infinitely many points. -/
+  | infiniteRay (m : ℝ)
+  /-- The minimum slope is achieved by finitely many points;
+      move to the rightmost point (j₀, j₁). -/
+  | nextVertex (j₀ : ℕ) (j₁ : K)
+  /-- The infimum is not attained (all later points are strictly above the limiting line):
+      final ray with no further lattice points. -/
+  | limitingRay (m : ℝ)
 
+/-- Compute the next step of the Newton polygon algorithm.
+    Given current index i, determines what happens next.
+    This is noncomputable because it uses sInf on K and classical choice. -/
+noncomputable def nextStep (i₀ : ℕ) (i₁ : K) : StepResult K :=
+  open Classical in
+  if slopeSet K v i₀ i₁ = ∅ then
+    -- No more finite values: tail
+    StepResult.Tail
+  else
+    -- slopeSetR is nonempty, compute the infimum in K and check if it is achieved by some
+    -- rational slope
+    if ¬ (BddBelow (slopeSet K v i₀ i₁)) then
+       -- if slopeSet is unbounded below we are left a vertical half-line down from i
+      StepResult.unboundedBelow
+    else
+      if hm : ∃ m ∈ slopeSet K v i₀ i₁, m = sInf (slopeSet K v i₀ i₁) then
+        if hInf : (achievingSet K v i₀ i₁ (Classical.choose hm)).Infinite then
+          -- infinitely many points achieve the minimum slope
+          StepResult.infiniteRay (Classical.choose hm)
+        else
+          -- Finitely many points achieve the minimum: take the maximum
+          have hNonempty : (achievingSet K v i₀ i₁ (Classical.choose hm)).Nonempty := by
+            simp only [↓existsAndEq, and_true] at hm
+            use Classical.choose hm
+            simp_rw [achievingSet]
+            grind
+          /-
+          let j := (Set.not_infinite.mp hInf).toFinset.max'
+            ((Set.not_infinite.mp hInf).toFinset_nonempty.mpr hNonempty)
+            -- should probably change over to this?
+          -/
+          let j := (Set.not_infinite.mp hInf).toFinset.sup'
+            ((Set.not_infinite.mp hInf).toFinset_nonempty.mpr hNonempty) id
+            -- question: why is this sup' not max...
+          match v j with
+            | ⊤ => StepResult.Tail -- should not happen by construction
+            | (j₁ : K) => StepResult.nextVertex j j₁
+      else
+        -- infimum not obtained (happens when the limit is in the completion)
+        StepResult.limitingRay (sInf (slopeSet K v i₀ i₁))
+
+end AlgorithmStep
+
+section Segments
+
+/-- A segment of the Newton polygon from vertex (i₀, i₁) to (j₀, j₁).
+    All coordinates are concrete values (indices as ℕ, valuations as ℤ). -/
+structure Segment where
+  /-- Starting x-coordinate (index) -/
+  i₀ : ℕ
+  /-- Starting y-coordinate (valuation as integer) -/
+  i₁ : K
+  /-- Ending x-coordinate (index) -/
+  j₀ : ℕ
+  /-- Ending y-coordinate (valuation as integer) -/
+  j₁ : K
+  /-- i₀ < i₁ -/
+  lt : i₀ < j₀
+  deriving Repr
+
+-- The horizontal length of a segment. -/
+def Segment.length (seg : Segment K) : ℕ := seg.j₀ - seg.i₀
+
+/-- The slope of a segment as a rational number. -/
 noncomputable
-def Set_of_Slopes_isFinset (i : ℕ) : Finset K :=
-  Set.Finite.toFinset (Set_of_Slopes_isFinite N f_x f_y i)
+def Segment.slope (seg : Segment K) : ℝ :=
+  slopeReal K seg.i₀ seg.j₀ seg.i₁ seg.j₁
 
--- this was initially proven by Aristotle
-omit [LinearOrder K] [IsStrictOrderedRing K] in
-lemma Set_of_Slopes_ne (i : ℕ) : ∃ b : K, b ∉ Set_of_Slopes N f_x f_y i := by
-  have := Set.Infinite.diff (by (expose_names; exact Set.infinite_univ_iff.mpr inst_1))
-    (Set_of_Slopes_isFinite N f_x f_y i)
-  contrapose this
-  have : Set_of_Slopes N f_x f_y i = Set.univ := by
-    aesop
-  simp_all only [Set.mem_univ, not_true_eq_false, exists_const, not_false_eq_true, sdiff_self,
-    Set.bot_eq_empty, Set.finite_empty, Set.Finite.not_infinite]
+/-- A segment is valid if its endpoints correspond to actual nonzero coefficients
+    with the claimed valuations. -/
+def Segment.valid (seg : Segment K) : Prop :=
+  finite K v seg.i₀ ∧ finite K v seg.j₀ ∧ v seg.i₀ = seg.i₁ ∧ v seg.j₀ = seg.j₁
 
-noncomputable
-def MinSlope (i : ℕ) : K :=
-  ((Finset.sort (· ≤ ·) (Set_of_Slopes_isFinset N f_x f_y i)).getD 0
-    (Set_of_Slopes_ne N f_x f_y i).choose)
-/- the junk value happens when 0 is outside the domain of the finset i.e. the set of slopes is empty
-  this happens when there are no later points... so want a junk value to represent top?
-  Later I find points which have
-  ... for now choosing it from choice using Set_of_Slopes_ne, but this seems wrong and stupid
+/-- The y-coordinate of a point on the line from (i₀, i₁) with slope m. -/
+noncomputable def lineAt (i₀ : ℕ) (i₁: K) (m : ℝ) (j₀ : ℕ) : ℝ :=
+  algebraMap K ℝ i₁ + m * (j₀ - i₀)
 
-  -- Note alternatively I could choose the final point by choosing the cardinality of the set!
--/
+/-- A segment is supporting if all points with j₀ > i₀ lie on or above the line. -/
+def Segment.supporting (seg : Segment K) : Prop :=
+  ∀ j₀ > seg.i₀, finite K v j₀ → ∀ (j₁ : K), j₁ = v j₀ →
+  algebraMap K ℝ j₁ ≥ lineAt K seg.i₀ seg.i₁ seg.slope j₀
 
-omit [IsStrictOrderedRing K] [Infinite K] hx in
-lemma Set_of_Slopes_list_length (i : ℕ) (hi : i < N - 1) :
-    0 < ((Finset.sort (· ≤ ·) (Set_of_Slopes_isFinset N f_x f_y i))).length := by
-  simp only [Finset.length_sort, Finset.card_pos, Set_of_Slopes_isFinset]
-  convert Set_of_Slopes_nonempty N f_x f_y i hi
-  aesop
+/-- A segment is tight if its endpoint (j₀, j₁) lies exactly on the line. -/
+def Segment.tight (seg : Segment K) : Prop :=
+  algebraMap K ℝ seg.j₁ = lineAt K seg.i₀ seg.i₁ seg.slope seg.j₀
 
-section Finset.sort
-
-lemma Finset.sort.getElem_mem {α : Type*} (r : α → α → Prop) [DecidableRel r]
-    [IsTrans α r] [IsAntisymm α r] [IsTotal α r] (s : Finset α) (fallback : α)
-    (n : ℕ) (hn : n < (Finset.sort r s).length) : (Finset.sort r s).getD n fallback ∈ s := by
-  simp_all only [List.getD_eq_getElem?_getD, getElem?_pos, Option.getD_some]
-  convert List.getElem_mem hn
-  · aesop
-
-lemma Finset.sort.range {α : Type*} (r : α → α → Prop) [DecidableRel r]
-    [IsTrans α r] [IsAntisymm α r] [IsTotal α r] (s : Finset α) (fallback : α) (n : ℕ) :
-    (Finset.sort r s).getD n fallback = fallback ∨ (Finset.sort r s).getD n fallback ∈ s := by
-  by_cases h : n < (Finset.sort r s).length
-  · right; exact getElem_mem r s fallback n h
-  · left; aesop
-
-end Finset.sort
-
-omit [IsStrictOrderedRing K] hx in
-lemma MinSlope_exists (i : ℕ) (hi : i < N - 1) : ∃ a, a ∈ {j | j < N ∧ i < j} ∧
-    (f_y a - f_y i) / (f_x a - f_x i) = MinSlope N f_x f_y i := by
-  have : (Finset.sort (· ≤ ·) (Set_of_Slopes_isFinset N f_x f_y i)).getD 0
-    (Set_of_Slopes_ne N f_x f_y i).choose ∈ Set_of_Slopes N f_x f_y i := by
-    have := Finset.sort.getElem_mem (· ≤ ·) (Set_of_Slopes_isFinset N f_x f_y i)
-      (Set_of_Slopes_ne N f_x f_y i).choose 0 (Set_of_Slopes_list_length N f_x f_y i hi)
-    simp_rw [Set_of_Slopes_isFinset] at this
-    aesop
-  aesop
-
-omit [IsStrictOrderedRing K] hx in
--- proof by aristotle then tidied up
-lemma MinSlope_min (i : ℕ) (m : K) (hm : m ∈ Set_of_Slopes N f_x f_y i) :
-    MinSlope N f_x f_y i ≤ m := by
-  have h_sorted : ∀ {l : List K}, List.Sorted (· ≤ ·) l → ∀ m ∈ l, l.getD 0
-      (Classical.choose (Set_of_Slopes_ne N f_x f_y i)) ≤ m := by
-    intro l hl m hm
-    induction l <;> aesop
-  convert h_sorted _ m _
-  · exact Finset.sort_sorted _ _
-  · exact Finset.mem_sort ( · ≤ · ) |>.2
-      (Set.Finite.mem_toFinset (Set_of_Slopes_isFinite N f_x f_y i ) |>.2 hm )
-
-def NextPoint_potential (i : ℕ) : Set ℕ :=
-  {j |  (f_y j - f_y i) / (f_x j - f_x i) = MinSlope N f_x f_y i} ∩ {j | j < N ∧ i < j}
-
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_potential_nonempty (i : ℕ) (hi : i < N - 1) :
-    Nonempty (NextPoint_potential N f_x f_y i) := by
-  simp only [nonempty_subtype]
-  simp_rw [NextPoint_potential]
-  convert MinSlope_exists N f_x f_y i hi
-  aesop
-
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_empty (i : ℕ) (hi : N - 1 ≤ i) : (NextPoint_potential N f_x f_y i) = ∅ := by
-  simp_rw [NextPoint_potential]
-  have : {j | j < N ∧ N - 1 < j} = ∅ := by
-    grind
+/-- Every segment is tight by construction. -/
+theorem Segment.tight_of_slope (seg : Segment K) : seg.tight := by
+  have : (seg.j₀ : ℝ) - seg.i₀ ≠ 0 := by
+     exact ne_of_gt (by simpa using seg.lt)
+  simp only [tight, lineAt, Segment.slope, slopeReal]
   grind
 
-def NextPoint_potential_isFinite (i : ℕ) : Set.Finite (NextPoint_potential N f_x f_y i) :=
-  Set.Finite.inter_of_right (Set.finite_iff_bddAbove.mpr (bddAbove_def.mpr (by use N; grind))) _
+/-- A final ray of the Newton polygon starting from (i₀, v₀) with slope m. -/
+structure FinalRay where
+  /-- Starting x-coordinate (index) -/
+  i₀ : ℕ
+  /-- Starting y-coordinate (valuation as integer) -/
+  i₁ : K
+  /-- The slope of the ray -/
+  slope : ℝ
+  /-- Whether the ray contains infinitely many lattice points -/
+  hitsInfinitelyMany : Bool
+  -- deriving Repr -- this breaks, so I really do want to have this slope as an element of K!
+
+/-- A final ray is supporting if all later points lie on or above the ray. -/
+def FinalRay.supporting (ray : FinalRay K) : Prop :=
+  ∀ j > ray.i₀, finite K v j → ∀ (j₁ : K), v j = j₁ →
+  algebraMap K ℝ j₁ ≥ lineAt K ray.i₀ ray.i₁ ray.slope j
+
+end Segments
+
+section NPStructure
+
+/-- The Newton polygon of a power series, consisting of:
+    - A (possibly empty) list of segments with strictly increasing slopes
+    - An optional final ray -/
+structure NewtonPolygonData where
+  /-- The list of segments. -/
+  segments : List (Segment K)
+  /-- The final ray, if the polygon terminates with a ray. -/
+  finalRay : Option (FinalRay K)
+  --deriving Repr
+
+/-- Predicate to show if segments are properly connected. -/
+def NewtonPolygonData.connected (npd : NewtonPolygonData K) : Prop :=
+  ∀ k : ℕ, ∀ hk : k + 1 < npd.segments.length,
+    (npd.segments[k]'(Nat.lt_of_succ_lt hk)).j₀ = (npd.segments[k + 1]'hk).i₀ ∧
+    (npd.segments[k]'(Nat.lt_of_succ_lt hk)).j₁ = (npd.segments[k + 1]'hk).i₁
+
+/-- Predicate to show if slopes are strictly increasing. -/
+def NewtonPolygonData.slopes_strictlyIncreasing (npd : NewtonPolygonData K) : Prop :=
+  ∀ k : ℕ, ∀ hk : k + 1 < npd.segments.length,
+    (npd.segments[k]'(Nat.lt_of_succ_lt hk)).slope < (npd.segments[k + 1]'hk).slope
+
+/-- Predicate to show the final ray is properly connected to the last segment. -/
+def NewtonPolygonData.ray_connected (npd : NewtonPolygonData K) : Prop :=
+  match npd.finalRay, npd.segments.getLast? with
+  | some r, some s => r.i₀ = s.j₀ ∧ r.i₁ = s.j₁
+  | _, _ => True
+
+/-- Predicate to show the final ray's slope is at least the last segment's slope. -/
+def  NewtonPolygonData.ray_slope_valid (npd : NewtonPolygonData K) : Prop :=
+  match npd.finalRay, npd.segments.getLast? with
+  | some r, some s => if r.hitsInfinitelyMany = true then s.slope < r.slope
+                        else s.slope ≤ r.slope
+  | _, _ => True
+  -- this has to be ≤ as we can consider the example of 1 + x + p ∑ x^n
+
+/-- A well-formed Newton polygon satisfies all connectivity and monotonicity conditions. -/
+structure NewtonPolygonData.WellFormed (npd : NewtonPolygonData K) : Prop where
+  connected : npd.connected
+  slopes_strictlyIncreasing : npd.slopes_strictlyIncreasing
+  ray_connected : npd.ray_connected
+  ray_slope_valid : npd.ray_slope_valid
+
+/-- The empty Newton polygon (for the zero series or constant series). -/
+def emptyPolygon : NewtonPolygonData K where
+  segments := []
+  finalRay := none
+
+/-- The empty polygon is well-formed. -/
+theorem emptyPolygon_wellFormed : (emptyPolygon K).WellFormed where
+  connected _ hk := by simp [emptyPolygon] at hk
+  slopes_strictlyIncreasing _ hk := by simp [emptyPolygon] at hk
+  ray_connected := by simp [emptyPolygon, NewtonPolygonData.ray_connected]
+  ray_slope_valid := by simp [emptyPolygon, NewtonPolygonData.ray_slope_valid]
+
+end NPStructure
+
+section ComputingNP
+
+variable {R : Type*} [Semiring R]
 
 noncomputable
-def NextPoint_potential_isFinset (i : ℕ) : Finset ℕ :=
-  Set.Finite.toFinset (NextPoint_potential_isFinite N f_x f_y i)
+def toValSeq (f : PowerSeries R) (v : R → WithTop K) : ValSeq K :=
+  fun i => v (PowerSeries.coeff i f)
 
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_potential_list_length (i : ℕ) (hi : i < N - 1) :
-    0 < ((Finset.sort (· ≤ ·) (NextPoint_potential_isFinset N f_x f_y i))).length := by
-  simp only [Finset.length_sort, Finset.card_pos, NextPoint_potential_isFinset]
-  convert NextPoint_potential_nonempty N f_x f_y i hi
-  aesop
+/-- Create a single segment given valid data. -/
+def mkSegment (i₀ j₀ : ℕ) (i₁ j₁ : K) (hlt : i₀ < j₀) : Segment K :=
+  {i₀ := i₀, i₁ := i₁, j₀ := j₀, j₁ := j₁, lt := hlt}
 
+lemma mem_segmentSlope_slopeSet (s : Segment K) (a₀ : ℕ) (a₁ : K) (h : s.i₀ < a₀)
+    (h_fin : finite K v a₀) (ha₁ : v a₀ = a₁) : Segment.slope K (mkSegment K s.i₀ a₀ s.i₁ a₁ h) ∈
+    slopeSet K v s.i₀ s.i₁ := by
+  simp_rw [slopeSet, Segment.slope]
+  simp only [gt_iff_lt, Set.mem_setOf_eq]
+  use a₀
+  refine ⟨h, h_fin, ?_⟩
+  use a₁
+  exact ⟨ha₁, rfl⟩
+
+/-- Create a final ray. -/
+def mkFinalRay (i₀ : ℕ) (i₁ : K) (slope : ℝ) (infinite : Bool) : FinalRay K :=
+  {i₀ := i₀, i₁ := i₁, slope := slope, hitsInfinitelyMany := infinite}
+
+/-- Configuration for polygon computation to handle termination. -/
+structure ComputeConfig (n : ℕ) where
+  /-- Maximum number of segments to compute (for termination). -/
+  maxSegments : ℕ := n
+
+/-- Find the first index with finite valuation, starting from a given position. -/
 noncomputable
-def NextPoint (i : ℕ) : ℕ :=
-  ((Finset.sort (· ≤ ·) (NextPoint_potential_isFinset N f_x f_y i)).getD 0 (N - 1))
-  -- this gives the minimum x value which gives arise to the MinSlope
-  -- if there are no j this corresponds to there being no slope... so we want to remain at our
-  -- final point; that is N - 1
+def findFirstFinite (startIdx : ℕ) : Option (ℕ × K) := open Classical in
+  if h : ∃ i ≥ startIdx, finite K v i then
+    let i := Nat.find h
+    match v i with
+    | ⊤ => none  -- contradicts finiteness
+    | (val : K) => some (i, val)
+  else
+    none
 
-lemma NextPoint_element (i : ℕ) (hi : i < N - 1) :
-    NextPoint N f_x f_y i ∈ NextPoint_potential N f_x f_y i := by
-  simp_rw [NextPoint]
-  have := NextPoint_potential_nonempty N f_x f_y i hi
-  convert Finset.sort.getElem_mem (fun x1 x2 ↦ x1 ≤ x2) (NextPoint_potential_isFinset N f_x f_y i)
-      (N - 1) 0 (NextPoint_potential_list_length N f_x f_y i hi)
-  simp_rw [NextPoint_potential_isFinset]
+/-- Result of iteratively building the Newton polygon. -/
+inductive BuildResult where
+  /-- Successfully built the polygon. -/
+  | complete (npd : NewtonPolygonData K)
+  /-- Hit the segment limit before completing. -/
+  | incomplete (npd : NewtonPolygonData K) (reason : String)
+
+/-- Build the Newton polygon by iterating the nextStep algorithm.
+    This is the main computational function.
+
+    The algorithm follows Gouvêa Section 7.4:
+    1. Start at the first nonzero coefficient (i₀, v₀)
+    2. Rotate the line counterclockwise to find minimum slope
+    3. Move to the rightmost point achieving minimum slope
+    4. Repeat until termination (polynomial tail, infinite ray, or limiting ray)
+-/
+noncomputable def buildNewtonPolygon {n : ℕ} (cfg : ComputeConfig n := {}) : BuildResult K :=
+  open Classical in
+  -- Find the starting point (first finite valuation)
+  match findFirstFinite K v 0 with
+  | none => BuildResult.complete (emptyPolygon K)
+  | some (i, v_i) =>
+    -- Iteratively build segments
+    let rec build (currentIdx : ℕ) (currentVal : K) (segments : List (Segment K)) (fuel : ℕ) :
+        BuildResult K :=
+      if fuel = 0 then
+        BuildResult.incomplete ⟨segments, none⟩ "reached segment limit"
+      else
+        match nextStep K v currentIdx currentVal with
+        | StepResult.Tail =>
+            -- No more nonzero coefficients: series is essentially a polynomial
+            BuildResult.complete ⟨segments, none⟩
+        | StepResult.unboundedBelow =>
+            -- No more segments: valuation is unbounded below
+            BuildResult.complete ⟨segments, none⟩
+        | StepResult.infiniteRay m =>
+            -- Infinitely many points on a line of slope m
+            let ray := mkFinalRay K currentIdx currentVal m true
+            BuildResult.complete ⟨segments, some ray⟩
+        | StepResult.limitingRay m =>
+            -- Limiting slope not achieved by any point
+            let ray := mkFinalRay K currentIdx currentVal m false
+            BuildResult.complete ⟨segments, some ray⟩
+        | StepResult.nextVertex j v_j =>
+            if h : currentIdx < j then
+              let seg := mkSegment K currentIdx j currentVal v_j h
+              build j v_j (segments ++ [seg]) (fuel - 1)
+            else
+              -- Shouldn't happen
+              BuildResult.incomplete ⟨segments, none⟩ "invalid vertex ordering"
+    build i v_i [] cfg.maxSegments
+
+/-- Extract the Newton polygon data, of the first n segments. -/
+noncomputable
+def newtonPolygon {n : ℕ} (cfg : ComputeConfig n := {}) : NewtonPolygonData K :=
+  match buildNewtonPolygon K v cfg with
+  | BuildResult.complete npd => npd
+  | BuildResult.incomplete npd _ => npd
+
+end ComputingNP
+
+section API
+
+/-- Get all slopes of the Newton polygon (the "Newton slopes"). -/
+noncomputable
+def NewtonPolygonData.slopes (npd : NewtonPolygonData K) : List ℝ :=
+  npd.segments.map (Segment.slope K)
+
+/-- Get the length of each segment (projection onto x-axis). -/
+def NewtonPolygonData.lengths (npd : NewtonPolygonData K) : List ℕ :=
+  npd.segments.map (Segment.length K)
+
+/-- Get the vertices (break points) of the polygon as (index, valuation) pairs. -/
+def NewtonPolygonData.vertices (npd : NewtonPolygonData K) : List (ℕ × K) :=
+  match npd.segments with
+  | [] => []
+  | seg :: rest =>
+    (seg.i₀, seg.i₁) :: rest.foldl (fun acc s => acc ++ [(s.j₀, s.j₁)]) [(seg.j₀, seg.j₁)]
+
+/-- Get slopes paired with their lengths (useful for root counting). -/
+noncomputable
+def NewtonPolygonData.slopesWithLengths (npd : NewtonPolygonData K) : List (ℝ × ℕ) :=
+  npd.segments.map fun seg => (seg.slope, seg.length)
+
+/-- Total horizontal extent of the polygon. -/
+def NewtonPolygonData.totalLength (npd : NewtonPolygonData K) : ℕ :=
+  npd.lengths.foldl (· + ·) 0
+
+/-- Check if the polygon is pure (has only one slope).
+    Following Gouvêa Definition 7.4.1: A polynomial is pure if its Newton
+    polygon has only one slope. -/
+def NewtonPolygonData.isPure (npd : NewtonPolygonData K) : Bool :=
+  npd.segments.length ≤ 1 && npd.finalRay.isNone
+
+/-- Get the unique slope if the polygon is pure, otherwise none. -/
+noncomputable
+def NewtonPolygonData.pureSlope (npd : NewtonPolygonData K) : Option ℝ :=
+  if npd.isPure then npd.slopes.head? else none
+
+end API
+
+section isWellFormed
+
+def getSegments : BuildResult K → List (Segment K)
+  | BuildResult.complete npd => npd.segments
+  | BuildResult.incomplete npd _ => npd.segments
+
+lemma getSegments_eq (n : ℕ) (cfg : ComputeConfig n := {}) (i₀ : ℕ) (i₁ : K)
+    (h : findFirstFinite K v 0 = some (i₀, i₁)) :
+    getSegments K (buildNewtonPolygon.build K v i₀ i₁ [] cfg.maxSegments) =
+    (newtonPolygon K v cfg).segments := by
+  unfold getSegments newtonPolygon buildNewtonPolygon
   aesop
 
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_subset (i : ℕ) (hi : i < N - 1) : NextPoint N f_x f_y i ∈ {j | j < N ∧ i < j} := by
-  simp_rw [NextPoint]
-  have h := Finset.sort.getElem_mem (· ≤ ·) (NextPoint_potential_isFinset N f_x f_y i)
-    i 0 (NextPoint_potential_list_length N f_x f_y i hi)
-  have : NextPoint_potential N f_x f_y i ⊆ {j | j < N ∧ i < j} := by
-    simp_rw [NextPoint_potential]
+def segments_connected (segs : List (Segment K)) : Prop :=
+  ∀ k : ℕ, ∀ hk : k + 1 < segs.length,
+    (segs[k]'(Nat.lt_of_succ_lt hk)).j₀ = (segs[k + 1]'hk).i₀ ∧
+    (segs[k]'(Nat.lt_of_succ_lt hk)).j₁ = (segs[k + 1]'hk).i₁
+
+def ends_at (segs : List (Segment K)) (j₀ : ℕ) (j₁ : K) : Prop :=
+  match segs.getLast? with
+  | some s => s.j₀ = j₀ ∧ s.j₁ = j₁
+  | none => True
+
+theorem build_connected (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (segs : List (Segment K)) (fuel : ℕ)
+    (h_conn : segments_connected K segs) (h_end : ends_at K segs i₀ i₁) :
+    segments_connected K (getSegments K (buildNewtonPolygon.build K v i₀ i₁ segs fuel)) := by
+  induction' fuel with fuel ih generalizing i₀ i₁ segs h_conn h_end
+  · simp [getSegments, buildNewtonPolygon.build, h_conn]
+  · unfold buildNewtonPolygon.build
+    rcases h : nextStep K v i₀ i₁ with ( _ | _ | _ | ⟨j₀, j₁⟩ | _ )
+    all_goals try exact h_conn
+    simp_all only [Nat.add_eq_zero_iff, one_ne_zero, and_false, ↓reduceIte, add_tsub_cancel_right,
+      segments_connected, ends_at]
+    split_ifs with hij
+    · convert ih _ _ _ _ _ using 1
+      · intro k hk
+        rcases lt_trichotomy k (segs.length - 1) with hk' | rfl | hk'
+        all_goals try grind
+        simp only [List.length_append, List.length_cons, List.length_nil, zero_add,
+          Order.lt_add_one_iff, Order.add_one_le_iff, tsub_lt_self_iff] at hk
+        have : ¬ (segs.length - 1 + 1 < segs.length) := by
+          grind
+        simp only [List.getElem_append, List.getElem_singleton, tsub_lt_self_iff, hk, this]
+        simp only [List.getLast?_eq_getElem?, tsub_lt_self_iff, hk, and_self, getElem?_pos] at h_end
+        exact h_end
+      · simp [mkSegment]
+    · exact h_conn
+
+lemma newtonPolygon.connected (n : ℕ) (cfg : ComputeConfig n := {}) :
+    NewtonPolygonData.connected K (newtonPolygon K v cfg) := by
+  rcases h : findFirstFinite K v 0 with _ | ⟨i₀, i₁⟩
+  · simpa [newtonPolygon, buildNewtonPolygon, h] using (emptyPolygon_wellFormed K).connected
+  · convert build_connected K v i₀ i₁ [] cfg.maxSegments (emptyPolygon_wellFormed K).connected
+      (by simp only [ends_at, List.getLast?_nil])
+    rw [getSegments_eq K v n cfg i₀ i₁ h]
+    rfl
+
+def getResult : BuildResult K → NewtonPolygonData K
+  | BuildResult.complete npd => npd
+  | BuildResult.incomplete npd _ => npd
+
+lemma getResult_eq (n : ℕ) (cfg : ComputeConfig n := {}) (i₀ : ℕ) (i₁ : K)
+    (h : findFirstFinite K v 0 = some (i₀, i₁)) : newtonPolygon K v cfg =
+    getResult K (buildNewtonPolygon.build K v i₀ i₁ [] cfg.maxSegments) := by
+  unfold getResult newtonPolygon buildNewtonPolygon
+  aesop
+
+theorem build_ray_connected (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (segs : List (Segment K)) (fuel : ℕ)
+    (h_end : ends_at K segs i₀ i₁) :
+    (getResult K (buildNewtonPolygon.build K v i₀ i₁ segs fuel)).ray_connected := by
+  induction' fuel with fuel ih generalizing i₀ i₁ segs
+  all_goals unfold buildNewtonPolygon.build
+  · trivial
+  · rw [ends_at] at h_end
+    simp only [getResult, NewtonPolygonData.ray_connected, mkFinalRay]
+    rcases h : nextStep K v i₀ i₁ with ( _ | _ | _ | ⟨j₀, j₁⟩ | _ )
+    all_goals try grind
+    simp only [Nat.add_eq_zero_iff, one_ne_zero, and_false, ↓reduceIte, add_tsub_cancel_right]
+    split_ifs with hij
+    · refine ih _ _ _ ?_
+      simp_rw [ends_at]
+      aesop
+    · trivial
+
+lemma newtonPolygon.ray_connected (n : ℕ) (cfg : ComputeConfig n := {}) :
+    NewtonPolygonData.ray_connected K (newtonPolygon K v cfg) := by
+  rcases h : findFirstFinite K v 0 with _ | ⟨i₀, i₁⟩
+  · simpa [newtonPolygon, buildNewtonPolygon, h] using (emptyPolygon_wellFormed K).ray_connected
+  · convert build_ray_connected K v i₀ i₁ [] cfg.maxSegments
+      (emptyPolygon_wellFormed K).ray_connected
+    exact getResult_eq K v n cfg i₀ i₁ h
+
+def slopes_strictlyIncreasing (segs : List (Segment K)) : Prop :=
+  ∀ k : ℕ, ∀ hk : k + 1 < segs.length,
+    (segs[k]'(Nat.lt_of_succ_lt hk)).slope < (segs[k + 1]'hk).slope
+
+lemma nextStep_inf_eq_slope (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h_step : nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) :
+    slopeReal K i₀ j₀ i₁ j₁ = sInf (slopeSet K v i₀ i₁) := by
+  unfold nextStep at h_step
+  split_ifs at h_step with h_nonempty h_bdd hm h
+  convert (Classical.choose_spec hm).2
+  cases h_step' : v (Finset.sup' (Set.Finite.toFinset (Classical.not_not.mp h)) (by grind) id)
+  · aesop
+  · simp_all only [id_eq, StepResult.nextVertex.injEq]
+    have h_sup : j₀ ∈ achievingSet K v i₀ i₁ (Classical.choose hm) := by
+      simp_rw [← h_step.1]
+      apply (Set.Finite.mem_toFinset (Classical.not_not.mp h)).mp
+      exact Finset.max'_mem _ _
+    obtain ⟨_, _, _, _, final⟩ := h_sup
     aesop
-  simp_rw [NextPoint_potential_isFinset, Set.Finite.mem_toFinset] at h ⊢
+
+lemma segment_append_singleton_slopes_strictlyIncreasing (segs : List (Segment K)) (seg : Segment K)
+    (h_sorted : slopes_strictlyIncreasing K segs) (h_le : ∀ s ∈ segs.getLast?, s.slope < seg.slope)
+    : slopes_strictlyIncreasing K (segs ++ [seg]) := by
+  intro k hk
+  by_cases hk' : k < segs.length
+  · by_cases hk'' : k + 1 < segs.length
+    · aesop
+    · grind
+  · grind
+
+section nextVertexAPI
+
+lemma aaa (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h :  nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) :
+    BddBelow (slopeSet K v i₀ i₁) := by
+  simp_rw [nextStep] at h
   grind
 
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_increasing (i : ℕ) (hi : i < N - 1) : i < NextPoint N f_x f_y i := by
-  have := NextPoint_subset N f_x f_y i hi
+lemma foo (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h :  nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) :
+    (achievingSet K v i₀ i₁ (slopeReal K i₀ j₀ i₁ j₁)).Nonempty := by
+  have := nextStep_inf_eq_slope K v i₀ j₀ i₁ j₁ h
+  simp_rw [nextStep] at h
+  split_ifs at h
   aesop
 
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_max (i : ℕ) : NextPoint N f_x f_y i ≤ N - 1 := by
-  simp_rw [NextPoint]
-  rcases (Finset.sort.range (· ≤ ·) (NextPoint_potential_isFinset N f_x f_y i) (N - 1) 0) with h | h
-  · aesop
-  · have : NextPoint_potential N f_x f_y i ⊆ {j | j < N ∧ i < j} := by
-      simp_rw [NextPoint_potential]
-      aesop
-    simp_rw [NextPoint_potential_isFinset, Set.Finite.mem_toFinset] at h ⊢
-    grind --- note this is the same method as what was used in NextPoint_subset, extract?
-
-omit [IsStrictOrderedRing K] hx in
-lemma NextPoint_max' (i : ℕ) : Nat.iterate (NextPoint N f_x f_y) i 0 ≤ N -1 := by
-  induction' i with n hn
-  · aesop
-  · simp only [Function.iterate_succ', Function.comp_apply]
-    exact NextPoint_max N f_x f_y ((NextPoint N f_x f_y)^[n] 0)
-
-noncomputable
-def LCH_x : ℕ → K :=
-  fun i => f_x (Nat.iterate (NextPoint N f_x f_y) i 0)
-
-omit [IsStrictOrderedRing K] hx in
--- we are eventually at our final point.
-lemma FinalIndex : ∃ a : ℕ, Nat.iterate (NextPoint N f_x f_y) a 0 = N - 1 := by
-  /- This is true by construction. If we are not at our final point we have to choose a later point
-    which gives the minimum slope, this is further along the x-axis.
-    The size of the set of potenial next points is strictly decreasing (until empty), so eventually
-    we will be left with the empty set (note in reality one will eventually choose the final point
-    as the next point - but we can argue this with Nat.find instead).
-    -/
-  by_cases triv1 : N = 0
-  · use 0; aesop
-  by_cases triv2 : N = 1
-  · use 0; aesop
-  by_contra h
-  simp only [not_exists, ← ne_eq] at h
-  have h : ∀ x, (NextPoint N f_x f_y)^[x] 0 < N - 1 := by -- why we need 2 ≤ N
-    intro a
-    specialize h a
-    have := NextPoint_max' N f_x f_y a
-    grind
-  have inc (i : ℕ) : (NextPoint N f_x f_y)^[i] 0 < (NextPoint N f_x f_y)^[i+1] 0 := by
-    simp only [Function.iterate_succ', Function.comp_apply]
-    exact NextPoint_increasing N f_x f_y ((NextPoint N f_x f_y)^[i] 0) (h i)
-  apply strictMono_nat_of_lt_succ at inc
-  have := StrictMono.not_bddAbove_range_of_wellFoundedLT inc
-  have : BddAbove (Set.range fun n ↦ (NextPoint N f_x f_y)^[n] 0) := by
-    refine bddAbove_def.mpr ?_
-    use N-1
-    simp only [Set.mem_range, forall_exists_index, forall_apply_eq_imp_iff]
-    exact fun a ↦ NextPoint_max' N f_x f_y a
+lemma bar (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h :  nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) :
+    (achievingSet K v i₀ i₁ (slopeReal K i₀ j₀ i₁ j₁)).Finite := by
+  have := nextStep_inf_eq_slope K v i₀ j₀ i₁ j₁ h
+  simp_rw [nextStep] at h
+  split_ifs at h
+  rename_i _ _ c d
+  simp_rw [(Classical.choose_spec c).2] at d
   aesop
 
-lemma test (i : ℕ) (hi : i < (Nat.find (FinalIndex N f_x f_y))) :
-    (NextPoint N f_x f_y)^[i] 0 < N - 1 := by
-  contrapose hi
-  simp only [Nat.lt_find_iff, not_forall, Decidable.not_not, exists_prop]
-  simp only [not_lt] at hi
-  use i
-  simp only [le_refl, true_and]
-  exact Nat.le_antisymm (NextPoint_max' N f_x f_y i) hi
+lemma err (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h :  nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) :
+    (bar K v _ _ _ _ h).toFinset.sup'
+    ((bar K v _ _ _ _ h).toFinset_nonempty.mpr (foo K v _ _ _ _ h)) id = j₀ := by
+  have := nextStep_inf_eq_slope K v i₀ j₀ i₁ j₁ h
+  simp_rw [nextStep] at h
+  split_ifs at h with a b c d
+  split at h
+  · trivial
+  · simp_all only [StepResult.nextVertex.injEq]
+    convert h.1
+    exact (Classical.choose_spec c).2.symm
 
-lemma NextPoint_increasing' (i : ℕ) (hi : i < (Nat.find (FinalIndex N f_x f_y))) :
-    (NextPoint N f_x f_y)^[i] 0 < (NextPoint N f_x f_y)^[i+1] 0 := by
-  simp only [Function.iterate_succ', Function.comp_apply]
-  refine NextPoint_increasing N f_x f_y ((NextPoint N f_x f_y)^[i] 0) ?_
-  exact test N f_x f_y i (by grind)
+lemma umm (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h :  nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) : finite K v j₀ := by
+  simp_rw [nextStep] at h
+  have h' := h
+  split_ifs at h with _ _ c _
+  split at h
+  · trivial
+  · rename_i _ _ final
+    simp_rw [(Classical.choose_spec c).2, ← nextStep_inf_eq_slope K v _ _ _ _ h',
+      err K v _ _ _ _ h'] at final
+    simp_all [finite]
 
-lemma LCH_increasing : StrictMonoOn (LCH_x N f_x f_y)
-    (Set.Ico 0 (Nat.find (FinalIndex N f_x f_y) + 1)) := by
-  by_cases t : N = 0
-  · have : Nat.find (FinalIndex N f_x f_y) = 0 := by
-      aesop
+lemma ahh (v : ValSeq K) (i₀ j₀ : ℕ) (i₁ j₁ : K)
+    (h :  nextStep K v i₀ i₁ = StepResult.nextVertex j₀ j₁) : v j₀ = j₁ := by
+  simp_rw [nextStep] at h
+  have := err K v i₀ j₀ i₁ j₁ h
+  split_ifs at h
+  split at h
+  · trivial
+  · aesop
+
+end nextVertexAPI
+
+
+lemma test (a₀ a₁ a₂ : ℝ) (b₀ b₁ b₂ : ℝ) (ha1 : a₀ < a₁) (hb2 : a₁ < a₂)
+    (hab : (b₂ - b₁) / (a₂ - a₁) ≤ (b₁ - b₀) / (a₁ - a₀)) :
+    (b₂ - b₀) / (a₂ - a₀) ≤ (b₁ - b₀) / (a₁ - a₀) := by
+  let m := (b₂ - b₁) / (a₂ - a₁)
+  let l := (b₁ - b₀) / (a₁ - a₀)
+  let n := (b₂ - b₀) / (a₂ - a₀)
+  let x := b₀ + l * (a₂ - a₀)
+  have x' : x = b₁ + l * (a₂ - a₁) := by grind
+  have leq' : m ≤ l := by grind
+  have fin : b₂ ≤ x := by
+    have : b₂ = b₁ + m * (a₂ - a₁) := by grind
     simp_rw [this]
-    have : (Set.Ico 0 1) = {0} := by
-      aesop
-    simp only [this, Set.strictMonoOn_singleton]
-  by_cases h : Nat.find (FinalIndex N f_x f_y) = 0
-  · simp_rw [h]
-    have : (Set.Ico 0 1) = {0} := by
-      grind
-    simp only [this, Set.strictMonoOn_singleton]
-  unfold LCH_x
-  suffices h : ∀ i : (Set.Ico 0 (Nat.find (FinalIndex N f_x f_y))),
-      (NextPoint N f_x f_y)^[i] 0 < (NextPoint N f_x f_y)^[i + 1] 0 by
-    have max := NextPoint_max N f_x f_y
-    refine strictMonoOn_of_lt_succ (Set.ordConnected_Ico) ?_
-    intro a ha ha' ha''
-    have : a ∈ Set.Ico 0 (Nat.find (FinalIndex N f_x f_y)) := by
-      simp only [Nat.succ_eq_succ, Nat.succ_eq_add_one] at ha''
-      aesop
-    specialize h ⟨a, this⟩
-    simp only [Nat.succ_eq_succ, Nat.succ_eq_add_one]
-    have Final := hx.out
-    simp_rw [StrictMonoOn] at Final
-    have (i : ℕ) : ((NextPoint N f_x f_y)^[i] 0) ∈ Set.Ico 0 N := by
-      have := NextPoint_max' N f_x f_y i
-      grind
-    have h1 := this a
-    have h2 := this (a+1)
+    simp_rw [x']
+    simp only [add_le_add_iff_left, ge_iff_le]
+    exact mul_le_mul_of_nonneg_right (a := a₂ - a₁) leq' (by grind)
+  simp_rw [x, l] at fin
+  rw [add_comm, ← tsub_le_iff_right] at fin
+  have : a₂ - a₀ > 0 := by grind
+  rw [div_le_iff₀' this, mul_comm]
+  exact fin
+
+theorem build_slopes_strictlyIncreasing (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (segs : List (Segment K))
+    (fuel : ℕ) (h_sorted : slopes_strictlyIncreasing K segs) (h_conn : ends_at K segs i₀ i₁)
+    (h_bdd :  ∀ s ∈ segs.getLast?, BddBelow (slopeSet K v s.i₀ s.i₁))
+    (h_final1 : ∀ s ∈ segs.getLast?, s.slope = sInf (slopeSet K v s.i₀ s.i₁))
+    (h_final2 : ∀ s ∈ segs.getLast?, Set.Finite (achievingSet K v s.i₀ s.i₁ s.slope))
+    (h_final3 : ∀ s ∈ segs.getLast?, Set.Nonempty (achievingSet K v s.i₀ s.i₁ s.slope))
+    (h_final4 : ∀ s (hs : s ∈ segs.getLast?), s.j₀ = (Set.Finite.toFinset (h_final2 s hs)).sup'
+      ((h_final2 s hs).toFinset_nonempty.mpr (h_final3 s hs)) id) :
+    slopes_strictlyIncreasing K (getSegments K (buildNewtonPolygon.build K v i₀ i₁ segs fuel)) := by
+  induction' fuel with fuel ih generalizing i₀ i₁ segs h_sorted h_conn
+  · simpa [buildNewtonPolygon.build] using h_sorted
+  · unfold buildNewtonPolygon.build
+    split_ifs
+    all_goals try trivial
+    rcases h : nextStep K v i₀ i₁ with ( _ | _ | _ | ⟨j₀, j₁⟩ | _ )
+    all_goals try trivial
+    simp only [add_tsub_cancel_right]
+    split_ifs with hij
+    · unfold getSegments
+      convert ih j₀ j₁ (segs ++ [mkSegment K i₀ j₀ i₁ j₁ hij]) _ _ _ _ _ _ _
+      · refine segment_append_singleton_slopes_strictlyIncreasing K segs ?_ h_sorted ?_
+        intro s hs
+        simp_rw [h_final1 s hs]
+        by_contra
+        simp only [not_lt] at this
+        have help : s.i₀ < j₀ := by
+          have t : s.i₀ < s.j₀ := s.lt
+          have tt : s.j₀ = i₀ := by
+            simp_rw [ends_at] at h_conn
+            split at h_conn
+            · grind
+            · grind
+          grind
+        suffices Segment.slope K (mkSegment K s.i₀ j₀ s.i₁ j₁ help) ≤ sInf (slopeSet K v s.i₀ s.i₁) by
+          specialize h_final4 s hs
+          have tt : s.j₀ = i₀ := by
+            simp_rw [ends_at] at h_conn
+            split at h_conn
+            · grind
+            · grind
+          simp_rw [tt] at h_final4
+          have leq : Segment.slope K (mkSegment K s.i₀ j₀ s.i₁ j₁ help) = sInf (slopeSet K v s.i₀ s.i₁) := by
+            have int : Segment.slope K (mkSegment K s.i₀ j₀ s.i₁ j₁ help) ∈ (slopeSet K v s.i₀ s.i₁) := by
+              simp_rw [slopeSet]
+              simp only [gt_iff_lt, Set.mem_setOf_eq]
+              use j₀
+              refine ⟨help, umm K v i₀ j₀ i₁ j₁ h, ?_⟩
+              use j₁
+              exact ⟨ahh K v i₀ j₀ i₁ j₁ h, rfl⟩
+            have : Segment.slope K (mkSegment K s.i₀ j₀ s.i₁ j₁ help) ≥
+                sInf (slopeSet K v s.i₀ s.i₁) := by
+              exact csInf_le (h_bdd s hs) int
+            grind
+          have : j₀ ∈ (achievingSet K v s.i₀ s.i₁ (Segment.slope K s)) := by
+            simp_rw [achievingSet]
+            simp only [gt_iff_lt, Set.mem_setOf_eq]
+            refine ⟨help, umm K v i₀ j₀ i₁ j₁ h, ?_⟩
+            use j₁
+            refine ⟨ahh K v i₀ j₀ i₁ j₁ h, ?_⟩
+            rw [h_final1 s hs]
+            exact leq.symm
+          simp_rw [h_final4] at hij
+          have : j₀ ∈ (h_final2 s hs).toFinset := by
+            simpa using this
+          have : j₀ ≤ (h_final2 s hs).toFinset.sup'
+              ((Set.Finite.toFinset_nonempty (h_final2 s hs)).mpr (h_final3 s hs)) id := by
+            exact Finset.le_sup' (s := (h_final2 s hs).toFinset) id this
+            --exact Finset.le_max (s := (h_final2 s hs).toFinset) this -- when move to Finset.max'
+          grind
+        specialize h_final1 s hs
+        simp_rw [← h_final1] at *
+        simp_rw [Segment.slope, slopeReal, mkSegment] at *
+        have e : s.j₁ = i₁ := by
+          simp_rw [ends_at] at h_conn
+          split at h_conn
+          · grind
+          · grind
+        have e' : s.j₀ = i₀ := by
+          simp_rw [ends_at] at h_conn
+          split at h_conn
+          · grind
+          · grind
+        rw [e, e'] at this ⊢
+        exact test s.i₀ i₀ j₀ ((algebraMap K ℝ) s.i₁) ((algebraMap K ℝ) i₁) ((algebraMap K ℝ) j₁)
+          (by rw [← e']; exact Nat.cast_lt.mpr s.lt) (Nat.cast_lt.mpr hij) this
+      · simp_rw [ends_at, List.getLast?_append, List.getLast?_singleton, Option.some_or]
+        exact ⟨rfl, rfl⟩
+      · simpa [mkSegment] using (aaa K v i₀ j₀ i₁ j₁ h)
+      · simpa using nextStep_inf_eq_slope K v i₀ j₀ i₁ j₁ h
+      all_goals intro s hs
+      all_goals simp only [List.getLast?_append, List.getLast?_singleton, Option.some_or,
+        Option.mem_def, Option.some.injEq] at hs
+      · simp [← hs]
+        exact bar K v _ _ _ _ h
+      · simp_rw [← hs]
+        exact foo K v _ _ _ _ h
+      · simp_rw [← hs, err K v _ _ _ _ h]
+        rfl
+    · trivial
+
+lemma newtonPolygon.slopes_strictlyIncreasing (n : ℕ) (cfg : ComputeConfig n := {}) :
+    (newtonPolygon K v cfg).slopes_strictlyIncreasing := by
+  rcases h : findFirstFinite K v 0 with _ | ⟨i₀, i₁⟩
+  · simpa [newtonPolygon, buildNewtonPolygon, h] using
+      (emptyPolygon_wellFormed K).slopes_strictlyIncreasing
+  · convert build_slopes_strictlyIncreasing K v i₀ i₁ [] cfg.maxSegments
+      (emptyPolygon_wellFormed K).slopes_strictlyIncreasing (by trivial)
+    rw [getSegments_eq K v n cfg i₀ i₁]
+    all_goals aesop
+
+
+---- ray slope:
+
+section infiniteRayAPI
+
+lemma aaa' (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.infiniteRay m) :
+    BddBelow (slopeSet K v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  grind
+
+lemma foo' (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.infiniteRay m) :
+    (achievingSet K v i₀ i₁ m).Nonempty := by
+  simp_rw [nextStep] at h
+  split_ifs at h
+  · simp_all only [StepResult.infiniteRay.injEq]
+    rename_i _ _ _ fin
+    exact Set.Infinite.nonempty fin
+  · aesop
+
+lemma wee (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.infiniteRay m) :
+    m = sInf (slopeSet K v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  split_ifs at h
+  · simp only [StepResult.infiniteRay.injEq] at h
+    rename_i _ _ t _
+    convert Classical.choose_spec t
     aesop
-  intro i
-  exact NextPoint_increasing' N f_x f_y i (by grind)
+  · aesop
 
-noncomputable
-def LCH_y : ℕ → K :=
-  fun i => f_y (Nat.iterate (NextPoint N f_x f_y) i 0)
+lemma ex (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.infiniteRay m) :
+    ∃ j₀ : ℕ, j₀ > i₀ ∧ finite K v j₀ ∧ ∃ j₁ : K, v j₀ = j₁ ∧  m = slopeReal K i₀ j₀ i₁ j₁ := by
+  obtain ⟨a, b⟩ := foo' K v i₀ i₁ m h
+  simp_rw [achievingSet] at b
+  aesop
 
-lemma test1 (j : ℕ) (hj : j < (Nat.find (FinalIndex N f_x f_y))) :
-    (f_y ((NextPoint N f_x f_y)^[j + 1] 0) - f_y ((NextPoint N f_x f_y)^[j] 0)) /
-    (f_x ((NextPoint N f_x f_y)^[j + 1] 0) - f_x ((NextPoint N f_x f_y)^[j] 0)) =
-    MinSlope N f_x f_y ((NextPoint N f_x f_y)^[j] 0) := by
-  have := NextPoint_element N f_x f_y (((NextPoint N f_x f_y)^[j] 0)) (test N f_x f_y j hj)
-  simp_rw [NextPoint_potential] at this
-  have := Set.mem_of_mem_inter_left this
-  simp only [Set.mem_setOf_eq] at this
-  simp only [Function.iterate_succ', Function.comp_apply, this]
+end infiniteRayAPI
 
-lemma hmm : 0 / 0 = 0 := by
-  exact rfl
-  -- note this means that in test1 I can actually remove the hj assumption!
-  -- as NextPoint is set to remain at N-1 after this region!!
-  -- Perhaps want to decide if it is worth proving this or not
-  -- there is probably a lot of extra (pointless?) API I could make if wanted.
-  -- e.g. Lemma saying that NextPoint is constant outside of region
+section limitingRayAPI
 
-lemma bar : ∀ (j : ℕ), j + 2 < Nat.find (FinalIndex N f_x f_y) + 1 →
-    LCH_x N f_x f_y j * LCH_y N f_x f_y (j + 2) + LCH_x N f_x f_y (j + 1) * LCH_y N f_x f_y j +
-      LCH_x N f_x f_y (j + 2) * LCH_y N f_x f_y (j + 1) ≤
-    LCH_x N f_x f_y j * LCH_y N f_x f_y (j + 1) + LCH_x N f_x f_y (j + 1) * LCH_y N f_x f_y (j + 2) +
-      LCH_x N f_x f_y (j + 2) * LCH_y N f_x f_y j := by
-  by_cases H : N = 0
-  · have : Nat.find (FinalIndex N f_x f_y) = 0 := by
-      aesop
-    grind
-  by_cases H' : N = 1
-  · have : Nat.find (FinalIndex N f_x f_y) = 0 := by
-      aesop
-    grind
-  -- Want to break apart into N at least 2 so that we can have prove hj1 and hj2
-  -- perhaps a better/different way to do this
-  intro j hj
-  simp_rw [LCH_x, LCH_y]
-  suffices ((f_y ((NextPoint N f_x f_y)^[j+1] 0)) - (f_y ((NextPoint N f_x f_y)^[j] 0))) /
-      ((f_x ((NextPoint N f_x f_y)^[j+1] 0)) - (f_x ((NextPoint N f_x f_y)^[j] 0))) ≤
-      ((f_y ((NextPoint N f_x f_y)^[j+2] 0)) - (f_y ((NextPoint N f_x f_y)^[j] 0))) /
-      ((f_x ((NextPoint N f_x f_y)^[j+2] 0)) - (f_x ((NextPoint N f_x f_y)^[j] 0))) by
-    have t1 : 0 < (f_x ((NextPoint N f_x f_y)^[j + 1] 0) - f_x ((NextPoint N f_x f_y)^[j] 0)) := by
-      simp only [sub_pos]
-      have hj1 : ((NextPoint N f_x f_y)^[j] 0) ∈ Set.Ico 0 N := by
-        have := NextPoint_max' N f_x f_y j
-        grind
-      have hj2 : ((NextPoint N f_x f_y)^[j+1] 0) ∈ Set.Ico 0 N := by
-        have := NextPoint_max' N f_x f_y (j+1)
-        grind
-      exact hx.out hj1 hj2 (NextPoint_increasing' N f_x f_y j (by grind))
-    have t2 : 0 < (f_x ((NextPoint N f_x f_y)^[j + 2] 0) - f_x ((NextPoint N f_x f_y)^[j] 0)) := by
-      simp only [sub_pos]
-      have hj1 : ((NextPoint N f_x f_y)^[j] 0) ∈ Set.Ico 0 N := by
-        have := NextPoint_max' N f_x f_y j
-        grind
-      have hj3 : ((NextPoint N f_x f_y)^[j+2] 0) ∈ Set.Ico 0 N := by
-        have := NextPoint_max' N f_x f_y (j+2)
-        grind
-        -- can almost certainly extract this as I have used it 5 times!!
-        -- Need a decision on whether it replaces NextPoint_max etc?
-      refine hx.out hj1 hj3 ?_
-      trans (NextPoint N f_x f_y)^[j+1] 0
-      · exact NextPoint_increasing' N f_x f_y j (by grind)
-      · exact NextPoint_increasing' N f_x f_y (j+1) (by grind)
-    field_simp at this -- clears denominators
-    linarith -- :D very happy this just works
-  have minslope : ((f_y ((NextPoint N f_x f_y)^[j+1] 0)) - (f_y ((NextPoint N f_x f_y)^[j] 0))) /
-      ((f_x ((NextPoint N f_x f_y)^[j+1] 0)) - (f_x ((NextPoint N f_x f_y)^[j] 0))) =
-      MinSlope N f_x f_y ((NextPoint N f_x f_y)^[j] 0) := by
-    exact test1 N f_x f_y j (by grind)
-  rw [minslope]
-  refine MinSlope_min N f_x f_y ((NextPoint N f_x f_y)^[j] 0)
-    ((f_y ((NextPoint N f_x f_y)^[j + 2] 0) - f_y ((NextPoint N f_x f_y)^[j] 0)) /
-    (f_x ((NextPoint N f_x f_y)^[j + 2] 0) - f_x ((NextPoint N f_x f_y)^[j] 0))) ?_
-  simp_rw [Set_of_Slopes]
-  simp only [Set.mem_image, Set.mem_setOf_eq]
-  use (NextPoint N f_x f_y)^[j+2] 0
-  constructor
-  · constructor
-    · have := NextPoint_max' N f_x f_y (j+2)
-      grind
-    · have h1 := NextPoint_increasing N f_x f_y ((NextPoint N f_x f_y)^[j+1] 0)
-      have : (NextPoint N f_x f_y)^[j+1] 0 < N - 1 := by
-        exact test N f_x f_y (j+1) (by grind)
-      specialize h1 this
-      have h2 := NextPoint_increasing N f_x f_y ((NextPoint N f_x f_y)^[j] 0)
-      have : (NextPoint N f_x f_y)^[j] 0 < N - 1 := by
-        exact test N f_x f_y j (by grind)
-      specialize h2 this
-      simp_rw [Function.iterate_succ', Function.comp_apply] at *
-      grind
-  · rfl
+lemma aaa'' (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.limitingRay m) :
+    BddBelow (slopeSet K v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  grind
 
-noncomputable
-def LowerConvexHull_ofSet : LowerConvexHull K where
-  n := Nat.find (FinalIndex N f_x f_y) + 1 -- note the + 1 so that we include the last point
-  x := LCH_x N f_x f_y
-  y := LCH_y N f_x f_y
-  increasing := LCH_increasing N f_x f_y
-  convex := bar N f_x f_y
+lemma grr (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.limitingRay m) : (slopeSet K v i₀ i₁).Nonempty := by
+  simp_rw [nextStep] at h
+  split at h
+  · trivial
+  · rename_i fin
+    exact Set.nonempty_iff_ne_empty.mpr fin
 
-end fun2
+lemma wee' (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (m : ℝ)
+    (h :  nextStep K v i₀ i₁ = StepResult.limitingRay m) : m = sInf (slopeSet K v i₀ i₁) := by
+  simp_rw [nextStep] at h
+  split_ifs at h
+  all_goals aesop
 
-variable  (M F : Type*) [Field M] [LinearOrder M] [IsStrictOrderedRing M] [FunLike F M K] (v : F)
+end limitingRayAPI
 
+lemma test' (a₀ a₁ a₂ : ℝ) (b₀ b₁ b₂ : ℝ) (ha1 : a₀ < a₁) (hb2 : a₁ < a₂)
+    (hab : (b₂ - b₁) / (a₂ - a₁) < (b₁ - b₀) / (a₁ - a₀)) :
+    (b₂ - b₀) / (a₂ - a₀) < (b₁ - b₀) / (a₁ - a₀) := by
+  let m := (b₂ - b₁) / (a₂ - a₁)
+  let l := (b₁ - b₀) / (a₁ - a₀)
+  let n := (b₂ - b₀) / (a₂ - a₀)
+  let x := b₀ + l * (a₂ - a₀)
+  have x' : x = b₁ + l * (a₂ - a₁) := by grind
+  have leq' : m < l := by grind
+  have fin : b₂ < x := by
+    have : b₂ = b₁ + m * (a₂ - a₁) := by grind
+    simp_rw [this]
+    simp_rw [x']
+    simp only [add_lt_add_iff_left, gt_iff_lt]
+    exact mul_lt_mul_of_pos_right (a := a₂ - a₁) leq' (by grind)
+  simp_rw [x, l] at fin
+  rw [add_comm] at fin
+  have : a₂ - a₀ > 0 := by grind
+  rw [div_lt_iff₀' this, mul_comm]
+  exact sub_right_lt_of_lt_add fin
+
+theorem build_ray_slope_valid (v : ValSeq K) (i₀ : ℕ) (i₁ : K) (segs : List (Segment K)) (fuel : ℕ)
+    (h_end : ends_at K segs i₀ i₁)
+    (h_bdd :  ∀ s ∈ segs.getLast?, BddBelow (slopeSet K v s.i₀ s.i₁))
+    (h_final1 : ∀ s ∈ segs.getLast?, s.slope = sInf (slopeSet K v s.i₀ s.i₁))
+    (h_final2 : ∀ s ∈ segs.getLast?, Set.Finite (achievingSet K v s.i₀ s.i₁ s.slope))
+    (h_final3 : ∀ s ∈ segs.getLast?, Set.Nonempty (achievingSet K v s.i₀ s.i₁ s.slope))
+    (h_final4 : ∀ s (hs : s ∈ segs.getLast?), s.j₀ = (Set.Finite.toFinset (h_final2 s hs)).sup'
+      ((h_final2 s hs).toFinset_nonempty.mpr (h_final3 s hs)) id) :
+    (getResult K (buildNewtonPolygon.build K v i₀ i₁ segs fuel)).ray_slope_valid := by
+  induction' fuel with fuel ih generalizing i₀ i₁ segs
+  all_goals unfold buildNewtonPolygon.build
+  · trivial
+  · rw [ends_at] at h_end
+    simp only [getResult]
+    rcases h : nextStep K v i₀ i₁ with ( _ | _ | _ | ⟨j₀, j₁⟩ | _ )
+    all_goals try trivial
+    all_goals simp only [Nat.add_eq_zero_iff, one_ne_zero, and_false, ↓reduceIte]
+    · unfold NewtonPolygonData.ray_slope_valid
+      simp only
+      split
+      · simp_all only [Option.mem_def, id_eq, Option.some.injEq, forall_eq']
+        rename_i _ _ _ _ m _ _ r s hs hr t
+        simp_rw [← hr]
+        split_ifs
+        · have : (mkFinalRay K i₀ i₁ m true).slope = m := by rfl
+          simp_rw [this]
+          obtain ⟨k₀, hk₀1, hk₀2, k₁, hk₁, hkeq⟩ := ex K v i₀ i₁ m h
+          simp_rw [hkeq]
+          by_contra
+          have help : s.i₀ < k₀ := by
+            calc
+              _ ≤ s.j₀ := s.lt
+              _ = i₀ := by grind
+              _ ≤ k₀ := by grind
+          suffices Segment.slope K (mkSegment K s.i₀ k₀ s.i₁ k₁ help) ≤
+              sInf (slopeSet K v s.i₀ s.i₁) by
+            -- literally the same proof as in slopesIncreasing ... but with different notation
+            -- do this after I decide how I can clean the above up!
+            sorry
+          simp only [gt_iff_lt, not_lt] at this
+          have foo : s.j₀ = i₀ := by
+            grind
+          simp_rw [← h_final1, Segment.slope, slopeReal, h_end, foo] at *
+          have foo : s.j₀ = i₀ := by
+            grind
+          exact test s.i₀ i₀ k₀ (algebraMap K ℝ s.i₁) (algebraMap K ℝ i₁) (algebraMap K ℝ k₁)
+            (by rw [← foo]; exact Nat.cast_lt.mpr s.lt) (Nat.cast_lt.mpr hk₀1) this
+        · trivial
+      · trivial
+    · split_ifs with hij
+      · convert ih j₀ j₁ (segs ++ [mkSegment K i₀ j₀ i₁ j₁ hij]) (by simp [ends_at, mkSegment])
+           _ _ _ _ _
+        all_goals intro s hs
+        all_goals simp only [List.getLast?_append, List.getLast?_singleton, Option.some_or,
+          Option.mem_def, Option.some.injEq] at hs
+        all_goals simp_rw [← hs]
+        · exact aaa _ _ _ _ _ _ h
+        · exact nextStep_inf_eq_slope _ _ _ _ _ _ h
+          -- note as Chris mentioned this means I can supress a lot of the informatio in the API!
+        · exact bar K v _ _ _ _ h
+        · exact foo _ _ _ _ _ _ h
+        · simpa [mkSegment] using (err _ _ _ _ _ _ h).symm
+      · trivial
+    · unfold NewtonPolygonData.ray_slope_valid
+      simp only
+      split
+      · simp_all only [Option.mem_def, id_eq, Option.some.injEq, forall_eq']
+        rename_i m _ _ r s hs hr heq
+        simp_rw [← hr]
+        split_ifs with t
+        · trivial
+        · have : (mkFinalRay K i₀ i₁ m false).slope = m := by rfl
+          simp_rw [this]
+          simp_rw [wee' _ _ _ _ _ h]
+          refine le_csInf (grr _ _ _ _ _ h) ?_
+          by_contra
+          simp only [not_forall, not_le] at this
+          obtain ⟨m', hm', m'_lt⟩ := this
+          simp_rw [slopeSet] at hm'
+          obtain ⟨a₀, ha₀, a₀_fin, a₁, ha₁, hm'⟩ := hm'
+          have help : s.i₀ < a₀ := by
+            calc
+              _ ≤ s.j₀ := s.lt
+              _ = i₀ := by grind
+              _ ≤ _ := by grind
+          suffices Segment.slope K (mkSegment K s.i₀ a₀ s.i₁ a₁ help) <
+              sInf (slopeSet K v s.i₀ s.i₁) by
+            have contra := csInf_le h_bdd (mem_segmentSlope_slopeSet K v s a₀ a₁ help a₀_fin ha₁)
+            grind
+          have foo : s.j₀ = i₀ := by
+            grind
+          simp_rw [← h_final1, Segment.slope, slopeReal, h_end, foo] at *
+          simp_rw [hm'] at m'_lt
+          have foo : s.j₀ = i₀ := by
+            grind
+          exact test' s.i₀ i₀ a₀ (algebraMap K ℝ s.i₁) (algebraMap K ℝ i₁) (algebraMap K ℝ a₁)
+            (by rw [← foo]; exact Nat.cast_lt.mpr s.lt) (Nat.cast_lt.mpr ha₀) m'_lt
+      · trivial
+      -- how to work with the limits?
+      -- do I want to say that the limit from s.i₀ would also be smaller??
+
+lemma newtonPolygon.ray_slope_valid (n : ℕ) (cfg : ComputeConfig n := {}) :
+    (newtonPolygon K v cfg).ray_slope_valid := by
+  rcases h : findFirstFinite K v 0 with _ | ⟨i₀, i₁⟩
+  · simpa [newtonPolygon, buildNewtonPolygon, h] using
+      (emptyPolygon_wellFormed K).ray_slope_valid
+  · convert build_ray_slope_valid K v i₀ i₁ [] cfg.maxSegments
+      (emptyPolygon_wellFormed K).ray_slope_valid
+    simp_rw [getResult_eq K v _ _ _ _ h]
+    all_goals aesop
+
+
+--- and finally:
+
+lemma newtonPolygon.wellFormed (n : ℕ) (cfg : ComputeConfig n := {}) :
+    (newtonPolygon K v cfg).WellFormed where
+  connected := newtonPolygon.connected K v n cfg
+  slopes_strictlyIncreasing := newtonPolygon.slopes_strictlyIncreasing K v n cfg
+  ray_connected := newtonPolygon.ray_connected K v n cfg
+  ray_slope_valid := newtonPolygon.ray_slope_valid K v n cfg
+
+--- Idea: Create a function giving a list of segments
+--- the segment i is the ith-segment of newtonPolygonData after running build with maxSlopes = i
+--- include option of final slope or not...
+
+
+
+def newtonPolygon_fullSegments : ℕ → (Segment K) :=
+  fun n => List.getD (newtonPolygon K v _).segments n (sorry)
+  -- so I really do need to rework this cfg problem
+  --
+
+
+  -- the idea is that at each step `n` we build the newtonPolygon with config `n` and take the
+  -- `n`-th segment
+  -- this returns a sequence of segments
+  -- Note if we pair this with a final slope ... we can tell when to stop caring about the list
+  -- if there is a final slope we know the segments after this point will not be relevant
+
+  -- Question is how to do this?
+  -- Do I want this as a structure?
+
+
+
+
+-- Other API I want...
 /-
-The goal is to give a function that sends a Polynomial R to a lower convexhull.
-To do this I want to write this as a composition of two functions.
-Function 1. Sends a Polynomial to a finite set of points
-         2. Sends a finite set of points to its lower convex hull
-
-Function 1 should be straight forward... just do i ↦ (i, v(a_i))
-  -- can probably leave it as a general function v for now
+  For polynomials we can use cfg (degree) to get build_result complete
+  Every step is also a next vertex (until tail)
 -/
-
-noncomputable
-def setOfPoly (f : Polynomial M) : finset_Prod K := Poly_set M F v f
-
-noncomputable
-def setToLCH (S : finset_Prod K) : LowerConvexHull K :=
-  LowerConvexHull_ofSet S.n S.x S.y (hx := ⟨S.increasing⟩)
-
-noncomputable
-def NewtonPolygon (f : Polynomial M) : LowerConvexHull K :=
-  setToLCH ((setOfPoly M F v) f)
