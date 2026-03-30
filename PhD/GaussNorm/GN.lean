@@ -556,7 +556,6 @@ example [NormedRing R] [IsUltrametricDist R] (hc : ∀ i, 0 < c i) : Dist (Restr
   letI : NormedRing (Restricted R c) := isNormedRing (R := R) (c := c) hc
   infer_instance
 
-
 noncomputable
 instance (priority := high) isUltrametricDist
     [NormedRing R] [IsUltrametricDist R] (hc : ∀ i, 0 < c i) :

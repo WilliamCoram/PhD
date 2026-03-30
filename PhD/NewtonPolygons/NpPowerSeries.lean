@@ -587,7 +587,7 @@ theorem build_slopes_strictlyIncreasing (v : ValSeq Γ) {i₀ : ℕ} {i₁ : Γ}
         specialize h_final1 s hs
         have e' : s.j₀ = i₀ := by grind
         have e : s.j₁ = i₁ := by grind
-        simp_rw [← h_final1, Segment.slope, slopeReal, mkSegment, gt_iff_lt, not_lt, e, e'] at ⊢ this
+        simp_rw [← h_final1, Segment.slope, slopeReal, mkSegment, not_lt, e, e'] at ⊢ this
         exact succSlope_le_Slope (by simpa [← e'] using Nat.cast_lt.mpr s.lt)
           (Nat.cast_lt.mpr hij) this
       · simp [ends_at, mkSegment]
