@@ -131,13 +131,20 @@ theorem gaussNorm_add_le_max [Semiring R] (f g : MvPowerSeries σ R) (hc : 0 ≤
     left
     exact gaussNorm_nonneg v c f vNonneg
 
-lemma foo (hc : 0 ≤ c) (t : σ →₀ ℕ) : 0 ≤ t.prod (c · ^ ·) :=
+private lemma foo (hc : 0 ≤ c) (t : σ →₀ ℕ) : 0 ≤ t.prod (c · ^ ·) :=
   Finset.prod_nonneg (fun i _ ↦ pow_nonneg (hc i) (t i))
 
 -- The following three are allowing me to state a version of `exists_norm_finset_prod_le` where
 -- we weaken the need of Seminormedcommgroup
 
 -- I could probably weaken R from a semiRing too...
+
+
+-- not fully sure where this should be going; the problem is I should not be generalising the results
+-- in Analysis.Normed.Group.Ultra by changing norm to a function ...
+-- but perhaps there is some general file this can belong in
+-- finset?
+-- maybe I can then golf the proof in the existing file by calling this?
 
 -- this is a weakening of `Finset.Nonempty.norm_sum_le_sup'_norm`
 lemma help'' [Semiring R] {ι : Type*} {s : Finset ι} (hs : s.Nonempty) (f : ι → R)
@@ -166,26 +173,25 @@ lemma help [Semiring R] {ι : Type*} (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥
   · simp [vZero, vNonneg]
   exact (fun ⟨i, h, h'⟩ => ⟨i, fun _ ↦ h, h'⟩) <| help' v vUltra ht f
 
+-- this proof is just disgusting... surely there is a way to clean it up, but right now a lot of the
+-- haves feel like they are needed
 lemma gaussNorm_le_mul [Semiring R] (f g : MvPowerSeries σ R) (hc : 0 ≤ c)  (vNonneg : ∀ a, v a ≥ 0)
     (vMul : ∀ a b, v (a * b) ≤ v a * v b) (vUltra : ∀ a b, v (a + b) ≤ max (v a) (v b))
     (vZero : v 0 = 0) (hbfd : HasGaussNorm v c f) (hbgd : HasGaussNorm v c g) :
     gaussNorm v c (f * g) ≤ gaussNorm v c f * gaussNorm v c g := by
   classical
-  simp_rw [gaussNorm]
   refine Real.iSup_le ?_ ?_
   · intro t
     change (v (coeff t (f * g)) * t.prod fun x1 x2 ↦ c x1 ^ x2) ≤
       (⨆ t, v (coeff t f) * t.prod fun x1 x2 ↦ c x1 ^ x2) *
       ⨆ t, v (coeff t g) * t.prod fun x1 x2 ↦ c x1 ^ x2
-    rw [coeff_mul]
     obtain ⟨k, hk, hsum⟩ := help v vZero vNonneg vUltra (Finset.antidiagonal t)
       (fun a ↦ coeff a.1 f * coeff a.2 g)
     have hk' : k.1 + k.2 = t := by
       simpa [Finset.mem_antidiagonal] using hk
         (Finset.nonempty_def.mpr ⟨(t, 0), by simp⟩)
     have hprod : t.prod (c · ^ ·) = k.1.prod (c · ^ ·) * k.2.prod (c · ^ ·) := by
-      simp_rw [← hk']
-      simp [Finsupp.prod_add_index', pow_add]
+      simp only [← hk', pow_zero, implies_true, pow_add, Finsupp.prod_add_index']
     simp_rw [hprod]
     have : v (∑ p ∈ Finset.antidiagonal t, (coeff p.1) f * (coeff p.2) g) *
         (k.1.prod (c · ^ ·) * k.2.prod (c · ^ ·)) ≤
@@ -199,13 +205,12 @@ lemma gaussNorm_le_mul [Semiring R] (f g : MvPowerSeries σ R) (hc : 0 ≤ c)  (
         mul_le_mul (vMul _ _) (by rfl) (mul_nonneg (foo c hc k.1) (foo c hc k.2))
           (mul_nonneg (vNonneg _) (vNonneg _))
       _ = _ := by ring
-    refine this.trans ?_
-    refine mul_le_mul ?_ ?_ ?_ ?_
+    refine this.trans (mul_le_mul ?_ ?_ ?_ ?_)
     · exact le_gaussNorm v c f hbfd k.1
     · exact le_gaussNorm v c g hbgd k.2
     · exact mul_nonneg (vNonneg _) (foo c hc k.2)
     · exact gaussNorm_nonneg v c f vNonneg
-  exact mul_nonneg (gaussNorm_nonneg v c f vNonneg) (gaussNorm_nonneg v c g vNonneg)
+  · exact mul_nonneg (gaussNorm_nonneg v c f vNonneg) (gaussNorm_nonneg v c g vNonneg)
 
 lemma restricted.HasGaussNorm [NormedRing R] [IsUltrametricDist R] (c : σ → ℝ) (f : Restricted R c) :
     HasGaussNorm norm c f.1 := by
@@ -215,38 +220,56 @@ lemma ultrametric_strict [Ring R] (vUltra : ∀ a b, v (a + b) ≤ max (v a) (v 
     (vNeg : ∀ a, v a = v (-a)) {a b : R}
     (hne : v a ≠ v b) : v (a + b) = max (v a) (v b) := by
   wlog hab : v a > v b generalizing a b with H
-  · have hba : v b > v a := (not_lt.mp hab).lt_of_ne hne
-    rw [add_comm, max_comm]
-    exact H hne.symm hba
+  · simpa [add_comm, max_comm] using (H hne.symm ((not_lt.mp hab).lt_of_ne hne))
   apply le_antisymm (vUltra a b)
-  rw [max_eq_left (le_of_lt hab)]
-  have h1 : a = (a + b) + (-b) := by abel
-  have h2 : v ((a + b) + (-b)) ≤ max (v (a + b)) (v (-b)) := vUltra _ _
-  rw [← h1, ← vNeg b] at h2
-  rcases le_max_iff.mp h2 with h | h
-  · exact h
-  · exact absurd h (not_le.mpr hab)
+  rcases le_max_iff.mp (vUltra (a + b) (-b)) with h | h
+  · simpa [max_eq_left (le_of_lt hab)] using h
+  · exact absurd h (not_le.mpr (by simpa [vNeg b] using hab))
 
 /-- An index achieves the Gauss norm supremum -/
 def AchievesGaussNorm [Semiring R] (i : σ →₀ ℕ) : Prop :=
   v (coeff i f) * i.prod (c · ^ ·) = gaussNorm v c f
 
+-- this might be in Fabrizios PR?
+
+/-
+-- I think this might be the simplest form of the result that I want...
+lemma antidiagonal_dominant [Ring R] [DecidableEq σ] (f g : MvPowerSeries σ R) (i j : σ →₀ ℕ)
+    (hc : 0 ≤ c) (vUltra : ∀ a b, v (a + b) ≤ max (v a) (v b))
+    (vMulEq : ∀ a b, v (a * b) = v a * v b) (vNeg : ∀ a, v a = v (-a))
+    (hdom : ∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
+        v (coeff p.1 f * coeff p.2 g) < v (coeff i f) * v (coeff j g)) :
+    v (coeff (i + j) (f * g)) = v (coeff i f * coeff j g) := by
+  by_cases zero : (i + j) = 0
+  · simp [eq_zero_of_add_right zero, eq_zero_of_add_left zero]
+  · have hmem : (i, j) ∈ Finset.antidiagonal (i + j) := by simp [Finset.mem_antidiagonal]
+    rw [coeff_mul, ← Finset.add_sum_erase _ _ hmem]
+    suffices max (v ((coeff (i, j).1) f * (coeff (i, j).2) g))
+        (v (∑ x ∈ (Finset.antidiagonal (i + j)).erase (i, j), (coeff x.1) f * (coeff x.2) g)) =
+        v ((coeff i) f * (coeff j) g) by
+      rw [← this]
+      refine ultrametric_strict v vUltra vNeg ?_
+      -- suffices the RHS is < ... which is below
+      -- so maybe I am setting the work up wrong? ... or I can work on this result above?
+      sorry
+    refine max_eq_left ?_
+    -- this will be by trans with hdom as the second part
+    -- and the ultrametric property giving the first part
+    sorry
+-/
+
 lemma antidiagonal_dominant' [Ring R] [DecidableEq σ] (f g : MvPowerSeries σ R) (i j : σ →₀ ℕ)
     (hc : 0 ≤ c) (vUltra : ∀ a b, v (a + b) ≤ max (v a) (v b))
-    (vMulEq : ∀ a b, v (a * b) = v a * v b)
-    (vNeg : ∀ a, v a = v (-a))
+    (vMulEq : ∀ a b, v (a * b) = v a * v b) (vNeg : ∀ a, v a = v (-a))
     (hdom : ∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
         v (coeff p.1 f * coeff p.2 g) * (p.1 + p.2).prod (c · ^ ·) <
         v (coeff i f) * v (coeff j g) * (i + j).prod (c · ^ ·)) :
     v (coeff (i + j) (f * g)) * (i + j).prod (c · ^ ·) =
     v (coeff i f * coeff j g) * (i + j).prod (c · ^ ·) := by
   let K : ℝ := (i + j).prod (c · ^ ·)
-  have hKnonneg : 0 ≤ K := by
-    simpa [K] using foo c hc (i + j)
   by_cases hK0 : K = 0
   · simp [K, hK0]
-  · have hKpos : 0 < K := lt_of_le_of_ne hKnonneg (Ne.symm hK0)
-    have hdom' : ∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
+  · have hdom' : ∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
         v (coeff p.1 f * coeff p.2 g) < v (coeff i f * coeff j g) := by
       intro p hp hpne
       have hsump : p.1 + p.2 = i + j := by
@@ -254,9 +277,8 @@ lemma antidiagonal_dominant' [Ring R] [DecidableEq σ] (f g : MvPowerSeries σ R
       have hltK : v (coeff p.1 f * coeff p.2 g) * K <
           (v (coeff i f) * v (coeff j g)) * K := by
         simpa [K, hsump] using hdom p hp hpne
-      have hlt : v (coeff p.1 f * coeff p.2 g) < v (coeff i f) * v (coeff j g) :=
-        lt_of_mul_lt_mul_right hltK (le_of_lt hKpos)
-      simpa [vMulEq] using hlt
+      simpa [vMulEq] using (lt_of_mul_lt_mul_right hltK (le_of_lt (lt_of_le_of_ne
+        (by simpa [K] using foo c hc (i + j)) (Ne.symm hK0))))
     have hcoeff :  v (coeff (i + j) (f * g)) = v (coeff i f * coeff j g) := by
       rw [coeff_mul]
       have hmem : (i, j) ∈ Finset.antidiagonal (i + j) := by simp [Finset.mem_antidiagonal]
@@ -513,7 +535,6 @@ lemma bar [NormedRing R] [IsUltrametricDist R] [LinearOrder σ]
             ring
   exact hfinal
 
-
 section norm
 
 noncomputable
@@ -541,28 +562,24 @@ instance isRingNorm [NormedRing R] [IsUltrametricDist R] (hc : ∀ (i : σ), 0 <
 
 noncomputable
 instance isNormedRing  [NormedRing R] [IsUltrametricDist R] (hc : ∀ i, 0 < c i) :
-    NormedRing (Restricted R c) :=
-  RingNorm.toNormedRing (isRingNorm c hc)
+  NormedRing (Restricted R c) := RingNorm.toNormedRing (isRingNorm c hc)
 
 noncomputable
 instance isNonarchimedean [NormedRing R] [IsUltrametricDist R] (hc : ∀ i, 0 < c i) :
-    letI : NormedRing (Restricted R c) := isNormedRing (R := R) (c := c) hc
+    letI := isNormedRing (R := R) c hc
     IsNonarchimedean (R := ℝ) (α := Restricted R c) norm :=
   fun f g => gaussNorm_add_le_max norm c f.1 g.1 (test c hc) norm_nonneg
     IsUltrametricDist.norm_add_le_max (restricted.HasGaussNorm c f) (restricted.HasGaussNorm c g)
 
-noncomputable -- ie it does work but its not able to infer below??
-example [NormedRing R] [IsUltrametricDist R] (hc : ∀ i, 0 < c i) : Dist (Restricted R c) := by
-  letI : NormedRing (Restricted R c) := isNormedRing (R := R) (c := c) hc
-  infer_instance
 
 noncomputable
-instance (priority := high) isUltrametricDist
+instance isUltrametricDist
     [NormedRing R] [IsUltrametricDist R] (hc : ∀ i, 0 < c i) :
-    IsUltrametricDist (Restricted R c) where
-  dist_triangle_max f g :=
-    IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
-      (isNonarchimedean (R := R) (c := c) hc)
+    letI := isNormedRing (R := R) c hc
+    IsUltrametricDist (Restricted R c) :=
+  letI : NormedRing (Restricted R c) := isNormedRing (R := R) c hc
+  IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
+    (isNonarchimedean (R := R) c hc)
 
 -- not sure what the correct assumption on hnorm should be
 -- valued ring?? ... I need the norm to be mulitplicative (i.e. an absolute value)

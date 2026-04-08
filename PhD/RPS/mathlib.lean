@@ -215,6 +215,8 @@ instance [IsUltrametricDist R] (c : σ → ℝ) : Ring (Restricted R c) :=
 def TateAlgebra [IsUltrametricDist R] [CompleteSpace R] (c : σ → ℝ) := Restricted R c
 
 
+-- t sum divisors antidiagonal (potential file for the test file lemma)
+
 
 
 
