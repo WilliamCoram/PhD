@@ -1,0 +1,185 @@
+\section{Compact Operators}
+
+
+
+%% Will rewrite all of this in terms of Kevins Eigenvariety or Bellaiche's Eigenbook (probably the latter)
+
+In this section we introduce the theory of comapct operators over Banach spaces and work towards
+defining the Fredholmd determinant.
+
+Let $p$ be a prime and $K$ a complete subfield of $\mathbb{C}_p$ with absolute value $|\cdot|_p$.
+Write $\mathcal{O}$ for the valuation ring of $K$ and $m$ its maximal ideal and let $\nu_p$ denote
+the valuation on $K$.
+
+\begin{definition}
+    A Banach space over $K$ is a complete, normed vector space over $K$ whose norm $|\cdot|$
+    satisfies the non-archimedean property.
+\end{definition}
+
+\begin{remark}
+    By our assumptions this means $K$ itself is a Banach space with norm $|\cdot| = | \cdot |_p.$
+\end{remark}
+
+\begin{definition}
+    Given an index set $I$ and a set of elements $x_i \in K$, we say $x_i$ tends to $0$ and write
+    $x_i \to 0$ if for all $\varepsilon > 0$, there exists finitely many $i \in I$ such that
+    $|x_i| > \varepsilon.$
+
+    We write $c(I)$ the set of sequences $x = (x_i)_{i \in I}$ with $x_i \in K$ such that
+    $x_i \to 0$.
+\end{definition}
+
+\begin{remark}
+    If $I$ is finite it is trivial that all sets of elements tends to $0$; thus
+    $c(I) \simeq K^{|I|}$.
+\end{remark}
+
+\begin{lemma}\label{Norm}
+    If we define a function $|\cdot|_{c(I)} : c(I) \to \R$ by
+    \[
+    |x|_{c(I)} = \sup_{i \in I} |x_i|_p
+    \]
+    then this is a norm and gives $c(I)$ the structure of a Banach space.
+\end{lemma}
+
+\begin{proof}
+    It is not hard to see that $|x|_{c(I)}$ is a non-archimedean norm; every property follows from the fact $|x|_p$ is a non-archimedean norm and taking supremums.
+    To be a Banach space it remains to show $c(I)$ is complete. So consider a Cauchy sequence $x_j = ((x_{j,i})_{i \in I})$, by which me mean
+    \[
+    \forall \varepsilon > 0, \; \exists M > 0 \text{ such that } \forall k,j > M \text{ we have }
+    |x_j - x_k |_{c(I)} \leq \varepsilon.
+    \]
+    That is
+    \[
+    \sup_{i \in I} |x_{j,i} - x_{k,i} |_p \leq \varepsilon
+    \]
+    and so we have $\forall i$, $|x_{j,i} - x_{k,i} |_p \leq \varepsilon$. Thus $(x_{j,i})_{j \in \N}$ are Cauchy sequences in $K$ and since $K$ is complete they converge.
+    So consider
+    \[
+    x = (x_i)_{i \in I}
+    \]
+    where $x_i = \lim_{j \to \infty} x_{j,i}$. We want to show this is the limit of the $x_j$ and is also in $c(I)$.
+    Recall for all $j,k > M$ we have $|x_{j,i} - x_{k,i}|_p \leq \varepsilon$, letting $j \to \infty$ we see $|x_i - x_{k,i} | \leq \varepsilon$ for all $i$. Therefore,
+    \[
+    |x - x_j |_{c(I)} = \sup_i |x_i - x_{j.i}|_p < \varepsilon
+    \]
+    and indeed $x$ is the limit. Finally, they belong in $c(I)$ as $x_{j,i} \to 0$ for a fixed $j$, and taking limits on $j$ preserves inequalities, and so we also have $x_i \to 0$. We thus conclude the proof.
+\end{proof}
+
+We now want to give a basis to our Banach space.
+
+\begin{definition}
+    Let $E$ be a Banach space over $K$ and suppose there exists $\{ e_i : i \in I \}$ such that every $x \in E$ can be written uniquely as $\sum_{i \in I} x_i e_i$ with $x_i \to 0$ and $|x| = \sup_{i \in I} | x_i |$. Then we call $\{e_i\}_{i \in I}$ an orthonormal basis for $E$.
+\end{definition}
+
+Moreover, we can always find a basis.
+
+\begin{lemma}
+    For any Banach space $E$ over $K$ there exists an index set $I$ such that $E  \cong c(I)$ and we can identify an orthonormal basis $\{ e_i\}_{i \in I}$ of $E$.
+\end{lemma}
+
+This follows from \cite[Proposition~1]{Serre} and \cite[Lemma~1]{Serre}.
+
+As Banach spaces are vector spaces, we can consider (continuous) linear maps from one space to another. From now on let us suppose $E$ and $F$ are Banach spaces over $K$.
+
+\begin{definition}
+     Write $\mathcal{L}(E,F)$ for the vector space of continuous linear maps from $E$ to $F$.
+\end{definition}
+
+\begin{remark}
+    We call this a vector space; and indeed it is not hard to show it actually is. If $f,g \in \mathcal{L}(E,F)$ then by linearity of linear maps $f + g$ is a linear map, and continuous via addition of continuous of maps, hence $f + g \in \mathcal{L}(E,F)$. Scalar multiplication is equally straightforward, and it is not hard to see that we can complete the argument easily.
+\end{remark}
+
+\begin{lemma}
+   Consider the following function, $| \cdot | : \mathcal{L}(E,F) \to \mathcal{L}(E,F)$
+    \[
+    |u| = \sup_{x\neq 0} \frac{|u(x)|}{|x|}.
+    \]
+    This function acts as a norm on $\mathcal{L}(E,F)$ and gives it the structure of a Banach space.
+\end{lemma}
+
+We omit the proof, as it follows similar to that of Lemma~\ref{Norm}.
+
+Let us consider a basis of $E$ and $F$, respectively $\{e_i : i \in I \}$ and $\{ f_j : j \in J \}$ for indexing sets $I$ and $J$. That is $E \cong c(I)$ and $F \cong c(J)$. Consider $u \in \mathcal{L}(E,F)$, we can write this as a matrix $(n_{ji})$ with entries in $K$. This follows from writing $u(e) = u(\sum_{i \in I} a_i e_i) = \sum_{i \in I} a_i u(e_i)$ and noting $u(e_i) \in F$, that is $u(e_i) = \sum_{j \in J} b_j f_j$. Thus
+\[
+u(e) = \sum_{i \in I} \sum_{b \in J} a_i b_j f_j
+\]
+and we see $n_{ji} = a_i b_j$.
+We now note the following proposition, \cite[Proposition~3]{Serre}.
+
+\begin{prop}
+The map $u \mapsto (u(e_i))_{i \in I}$ is an isomorphism of $\mathcal{L}(E,F)$ to the vector space of sequences $(f_i)_{i \in I}$ of $F$, equipped with the norm $\sup_{i \in I} |f_i|$.
+\end{prop}
+
+This implies for a fixed $i$ the $|b_j|$ is bounded, and since they form coefficients of an orthonormal basis they tend to 0. That is, we have $|n_{ji}|$ is bounded and $n_{ji} \to 0$ for fixed $i$. Moreover, we have
+\[
+| u | = \sup_{i,j} |n_{ji}|. %% may need more explanation
+\]
+
+\begin{remark}
+    Note nowhere we have required $I,J$ to be finite indexing sets, therefore $n_{ji}$ could be an infinite matrix - this is where we will use the previous section.
+\end{remark}
+
+\begin{definition}
+    Let $\mathcal{F}(E,F)$ denote the subspace of $\mathcal{L}(E,F)$ consisting of the continuous, linear maps that are of finite rank.
+
+    We say a map $u$ is compact if $u$ belongs to the closure of $\mathcal{F}(E,F)$. Write $\mathcal{C}(E,F)$ for this closure.
+\end{definition}
+
+We then have the following lemma which relates the compact property of a linear map to our work above.
+
+\begin{lemma}
+    Define $r_j (u) = \sup_{i \in I} |n_{ji} |$. We have
+    \[
+    u \text{ is compact} \quad \Longleftrightarrow \quad r_j(u) \to 0.
+    \]
+\end{lemma}
+
+\begin{proof}
+    Immediate by the following equivalences.
+    \begin{align*}
+        u \text{ compact } \iff &u \in \mathcal{C}(E,F) \\
+        \iff &\text{isomorphic to a matrix } (n_{ji}) \text{ such that for fixed $i$} \\ & (n_{ji}) \to 0 \text{ under the norm } \sup_i |n_{ji}| := r_j (u)
+    \end{align*} \qedhere
+\end{proof}
+
+From this we have the following useful corollary.
+
+\begin{cor}
+    Suppose the matrix $(n_{ji})$ of $u$ has all its entries in $\mathcal{O}_K$. If $D(\frac{1}{p}) \cdot(n_{ji})$ has all entries in $\mathcal{O}_K$ then $u$ is compact. Recall $D(\frac{1}{p})$ is the infinite matrix with $(\frac{1}{p})^n$ on the diagonal; and note we can extend $n_{ji}$ to an infinite matrix with zeroes outside of its defined range such that the multiplication makes sense.
+\end{cor}
+
+\begin{proof}
+    Write $D(1/p)(n_{ji})$ as $\sum n_{ji} (1/p)^j x^jy^i$. If all its entries are in $\mathcal{O}_K$ then $n_{ji} (1/p)^j \in \mathcal{O}_K$. Let us fix $j$. Then for all $i$, we have $p^j | n_{ji}$ by definition of $\mathcal{O}_K$. Thus $|n_{ji}| < p^{-j}$, and therefore
+    \[
+    r_j (u) = \sup_{i} |n_{ji}| < p^{-j}
+    \]
+    and clearly this goes to zero as $j \to \infty$. Therefore by the above lemma we conclude that $u$ is compact.
+\end{proof}
+
+We will say a matrix is compact if it is the matrix of a compact operator.
+
+\subsection{Characteristic power series of an operator}
+
+Let $E$ be a Banach space isomorphic to $c(I)$ for some indexing set $I$.
+We now state the following, \cite[Proposition~7]{Serre}.
+
+\begin{prop}
+    Let $u : E \to E$ be a compact operator.
+    \begin{enumerate}
+        \item If the matrix of $u$ with respect to an orthonormal basis $\{e_i : i \in I \}$ for some index set $I$ is $(n_{ji})$ then
+        \[
+        \det (1 - t u) = \sum_{m = 0}^{\infty} c_m t^m
+        \]
+        where
+        \[
+        c_m = (-1)^m \sum_{ S \subset I, \; |S| = m} \sum_{\sigma \in \text{Sym}(S)} \text{sgn}(\sigma) \prod_{i \in S} n_{\sigma(i)i}
+        \]
+        \item The series $\det(1-tu)$ is an entire function of $t$, that is it has infinite radius of convergence.
+        \item If $u_n \to u$ with $u_n \in \mathcal{C}(E,E)$ for all $n$, then $\det (1 - tu_n)$ tends to $\det(1-tu)$.
+    \end{enumerate}
+\end{prop}
+
+\begin{definition}
+    We call the power series $\det(1 - tu)$ the characteristic power series of $u$. We can also refer to it as the characteristic power series of the matrix $(n_{ji}).$
+\end{definition}

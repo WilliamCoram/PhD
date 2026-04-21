@@ -1,0 +1,66 @@
+\chapter{Rigid Analytic Geometry}
+
+\section{Affiniod algebras}
+
+In this section we aim to begin an exposition on rigid analytic geometry following on from our
+work on restricted power series.
+
+\begin{definition}
+  Let $k$ be a field complete with respect to a non-trivial non-archimedean valuation
+  $\lvert \cdot \rvert_k$. A $k$-Banach algebra is a commutive $k$-algebra equipped with a function
+  $\lvert \cdot \rvert : A \to \mathbb{R}$ satisfying:
+  \begin{itemize}
+    \item $\lvert 1 \rvert \leq 1$, and $\lvert a \rvert = 0 \iff a = 0 $;
+    \item $\lvert a + b \rvert \leq \max \left\{ \lvert a \rvert, \lvert b \rvert \right\}$;
+    \item $\lvert a b \rvert \leq \lvert a \rvert \lvert b \rvert$;
+    \item $\lvert \lambda a \rvert = \lvert \lamba \rvert_k \lvert a \rvert$;
+  \end{itemize}
+  and such that $A$ is compelte with respect to the metric induced by $\lvert \cdot \rvert$.
+\end{definition}
+%% Could rewrite this definition in a nicer way
+
+Recall the Tate algebra, $T_n$ is defined as the algebra of all power series in $n$ variables over
+$k$ whose coefficients form a zero sequence.
+%% This has to be adapted to what ever form I choose in my other section.
+
+\begin{definition}
+  A $k$-Banach algebra $A$ is called affinod ($k$-affiniod) if there exists an integer $n \geq 0$
+  and a continuous epimorphism $\alpha : T_n \to A$.
+\end{definition}
+
+By Banach's theorem %(find reference in BGR)
+$\alpha$ is open; hence $A$ is isomorphic tas $k$-Banach algebra to the residue algebra
+$T_n / \ker \alpha$
+
+\section{Affiniod sets}
+
+$T_n$ can be viewed in two ways: $k_a$-valued functions on $B^n(k_a)$; and the algebra of functions
+on $\max T_n$.
+%% Note this assumes c = 1 ... BGR has Tate algebra only defined for c = 1, and shows for more
+%% general polydiscs they are an affiniod algebra.
+
+The second case comes from the following. For $f \in T_n$ and $\mathfrak{m} \in \max T_n$, we can
+define $f (\mathfrak{m})$ as the residue class of $f$ in $T_n / \mathfrak{m}$. Since
+$T_n / \mathfrak{m}$ is a finite algeraic extension of $k$, it can be embedded as a subfield of
+$k_a$, and thus $f (\mathfrak{m})$ can be viewed as an element of $k_a$. However, this embedding is
+not unique, in general, thus $f (\mathfrak{m})$ is only determined up to conjugation over $k$.
+Therefore, setting $\Gamma = \text{Gal}(k_a/k)$, any $f \in T_n$ can be viewed as a function on
+$\max T_n$ taking values in $k_a / \Gamma$.
+
+\begin{definition}
+  Let $F$ be a subset of $T_n$. We denote by
+  \begin{align*}
+    V_a(F) & := \left\{ x \in B^n(k_a) | f(x) = 0 \forall f \in F \right\} \\
+    V(F) & := \left\{ \mathfrak{m} \in \max T_n | f (\mathfrak{m}) = 0 \forall f \in F \right\}
+  \end{align*}
+  the zero sets for $F$, and call these \emph{affiniod subsets} of $B^n (k_a)$ and $\max T_n$, respectively.
+\end{definition}
+
+These sets are interchangeable, $V(F)$ is the quotient of $V_a(F) by \Gamma$, and $V_a(F)$ is the
+image of $V(F)$ with respect to the projection $B^n(k_a) \to \max T_n$.
+
+%% Decide what else I want to include from BGR
+
+\begin{definition}
+  A $k$-affiniod variety is a pair $\text{Sp} A = (\max A, A)$ where $A$ is a $k$-affiniod algebra.
+\end{definition}

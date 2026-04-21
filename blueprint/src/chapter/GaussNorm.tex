@@ -1,20 +1,80 @@
 \chapter{Gauss Norm}
 
-Thus far we have shown restricted power series over a non-archimedean normed ring $R$ for a
-parameter $c$ forms a ring. Let us again denote this ring by $\mathcal{F}$. 
+Thus far we have shown multivariate restricted power series with paramter $c$ over a non-archimedean
+normed ring $R$ in $n$ variables form a ring. Let us again denote this ring by
+$R_c [ \! [ x_1, \dots, x_n ] \! ]$.
 
-We consider the following function $| \cdot |_c :  \mathcal{F} \to \R$ with $f = \sum a_n x^n$
+\begin{definition}
+Consider the following function $\lvert \cdot \rvert _c :  R_c [ \! [ x_1, \dots, x_n ] \! ] \to \R$
+defined by
 \[
-    |f|_c = \sup_{i \in \N} |a_n|c^n.
+    \lvert f \rvert _c = \sup_{i \in \mathbb{N}^n} \lvert a_{(i_1, \cdots, i_n)} \rvert
+    \prod_n \lvert c \rvert _n^{i_n}.
 \]
+for $f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$ and call this the Gauss norm
+with parameter $c$.
+\end{definition}
+
+We want to prove that this is in fact a norm and is non-archimedean.
 
 \begin{lemma}
-  The pair $(\mathcal{F}, | \cdot |_c)$ is a non-archimedean normed ring.
+  Let $c$ be strictly positive, that is for all $i, 0 < c i$, then the pair
+  $( R_c [ \! [ x_1, \dots, x_n ] \! ], | \cdot |_c)$ is a non-archimedean normed ring.
 \end{lemma}
+
+\section{The proof}
+
+We break this statement up into small lemmas that together prove our goal.
+
+\begin{lemma}
+  \[
+    \lvert 0 \rvert _c = 0.
+  \]
+\end{lemma}
+
+\begin{proof}
+  Immediate.
+\end{proof}
+
+\begin{lemma}
+  Gauss norm is non-negative.
+\end{lemma}
+
+\begin{proof}
+  Consider when $i = (0, \cdots, 0) = 0$, then $\lvert a_0 \rvert \leq \lvert f \rvert _c.$
+  We have the LHS is greater than or equal to 0 since $R$ is a normed ring. So we are done.
+\end{proof}
+
+\begin{lemma}
+  If $c$ is strictly positive, then
+  \[
+    \lvert f \rvert _c 0 \iff f = 0.
+  \]
+\end{lemma}
+
+\begin{proof}
+  We only need the only if part. Prove this by contradiction, that is want to show $f \neq 0
+    \implies \lvert f \rvert _c \neq 0.$ This is immediate from noticing $f$ has a non-zero
+    coeffecient and since $c$ strictly positive, evaluating at the monomial with non-zero coeff, we
+    get a positive value of $\lvert a_{(i_1, \cdots, i_n)} \rvert \prod_n \lvert c \rvert _n^{i_n}$
+    and so we are done.
+\end{proof}
+
+\begin{lemma}
+  Gauss norm is non-archimedean.
+\end{lemma}
+
+\begin{proof}
+
+\end{proof}
+
+\section{Polynomials}
 
 Moreover, if we restrict ourselves to polynomials we can strenghten this.
 
 \begin{lemma}
-  The pair $(R[x], | \cdot |_c)$ is a non-archimedean valued ring. That is, $| \cdot |_c$ is an
-  absolute value.
+  The pair $(R[x], | \cdot |_c)$ is a non-archimedean valued ring. That is, $\lvert \cdot \rvert _c$
+  is an absolute value.
 \end{lemma}
+
+%% Note BGR actually shows that it is a an absolute value -- so probably should just show that first
