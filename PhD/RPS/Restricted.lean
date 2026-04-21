@@ -55,10 +55,9 @@ lemma isRestricted_iff_abs (f : PowerSeries R) : IsRestricted c f ↔ IsRestrict
 instance isAddSubgroup : AddSubgroup (PowerSeries R) where
   carrier := IsRestricted c
   zero_mem' := (IsRestricted_iff_isRestrictedMv c 0).mpr (MvPowerSeries.isRestricted_zero R (Finsupp.single () c))
-  add_mem' := by
-    intro a b ha hb
-    exact (IsRestricted_iff_isRestrictedMv c (a + b)).mpr (MvPowerSeries.isRestricted.add R (Finsupp.single () c)
-      ((IsRestricted_iff_isRestrictedMv c a).mp ha) ((IsRestricted_iff_isRestrictedMv c b).mp hb))
+  add_mem' a b := 
+    (IsRestricted_iff_isRestrictedMv c _).mpr (MvPowerSeries.isRestricted.add R (Finsupp.single () c)
+      ((IsRestricted_iff_isRestrictedMv c _).mp a) ((IsRestricted_iff_isRestrictedMv c _).mp b))
   neg_mem' := by
     intro f hf
     exact (IsRestricted_iff_isRestrictedMv c (-f)).mpr (MvPowerSeries.isRestricted.neg R (Finsupp.single () c)

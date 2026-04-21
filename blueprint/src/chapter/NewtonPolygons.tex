@@ -61,7 +61,7 @@ Consider a polynomial $f$ over $K$, we can define the Newton polygon of $f$ in t
     Here by convex hull we mean the smallest convex polygon that contains all points.
 \end{definition}
 
-This is easily constructable by the following algoritheorem, \cite[Pages~210-211]{Gouvea} .
+This is easily constructable by the following algorithm, \cite[Pages~210-211]{Gouvea} .
 
 \begin{enumerate}
     \item Plot the points $\{(i,\nu (i) )\}$.
@@ -100,7 +100,7 @@ We give the following definitions which will be relevant.
 \end{definition}
 
 \begin{theorem}
-  The slopes of a Newton polgyon form an increasing sequence.
+  The slopes of a Newton polygon form an increasing sequence.
 \end{theorem}
 
 \begin{proof}
@@ -140,11 +140,11 @@ For example, consider the following power series, \cite[Page~260]{Gouvea}.
 \[
 f(x) = 1 + a x + ax^2 + \cdots +a x^d +\cdots \quad \text{for some } a \text{ with } \nu_p(a) > 0.
 \]
-Our set of interest is $\{(0,0),(n,\nu (a))  : \forall n \in \mathbb{N} \}.$ Doing the algoritheorem
+Our set of interest is $\{(0,0),(n,\nu (a))  : \forall n \in \mathbb{N} \}.$ Doing the algorithm
 gives a line that sweeps unbroken along the horizontal axis. Importantly, none of our points
 $(i, \nu (a))$ lies on the line, and any increase in the slope will mean some points lie below the
 line.
-To solve this issue we adjust the algoritheorem slightly. As before, start with the vertical half-line
+To solve this issue we adjust the algorithm slightly. As before, start with the vertical half-line
 down from the origin. Then rotate this line counter-clockwise until one of the following happens:
 \begin{enumerate}
     \item The line simultaneously hits infinitely many of the points we have plotted.

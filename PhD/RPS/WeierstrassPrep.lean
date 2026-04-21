@@ -1,10 +1,11 @@
 import PhD.RPS.mathlib
 import PhD.GaussNorm.GN
 import PhD.RPS.Restricted
+import PhD.GaussNorm.GNPS
 
 open MvPowerSeries
 
-variable (R : Type*) [NormedRing R] [IsUltrametricDist R] (v : R → ℝ)
+variable {R : Type*} [NormedRing R] [IsUltrametricDist R] (v : R → ℝ)
 
 noncomputable
 instance isNormedRing (n : ℕ) : NormedRing (Restricted R (σ := Fin n) 1) :=
@@ -14,19 +15,12 @@ def coeff_isUnit {n : ℕ} (f : PowerSeries.Restricted 1 (R := Restricted R (σ 
     Prop :=
   IsUnit (PowerSeries.coeff s f.1)
 
--- for now, but Ricardo may suggest not doing this and just using gaussNorm as prev but using
--- unit as σ!
-noncomputable def
-gaussNorm_powerSeries (T : Type*) [Semiring T] (v' : T → ℝ) (g : PowerSeries T) (d : ℝ) : ℝ :=
-  ⨆ t : ℕ, v' (PowerSeries.coeff t g) * d ^ t
-
 def gaussNorm_eq_gaussNorm {n : ℕ} (f : PowerSeries.Restricted 1 (R := Restricted R (σ := Fin n) 1))
     (s : ℕ) : Prop :=
   -- gaussNorm of the coefficient gₛ in Tₙ
   gaussNorm v 1 (PowerSeries.coeff s f.1).1 =
   -- gaussNorm of g in Tₙ<X>
-  gaussNorm_powerSeries (Restricted R (σ := Fin n) 1)
-    (fun a : Restricted R (σ := Fin n)  1 => gaussNorm v 1 a.1) f.1 1
+  PowerSeries.gaussNorm ((fun a : Restricted R (σ := Fin n)  1 => gaussNorm v 1 a.1)) 1 f.1
 
 def gaussNorm_max_achiever {n : ℕ} (f : PowerSeries.Restricted 1 (R := Restricted R (σ := Fin n) 1))
     (s : ℕ) : Prop :=
@@ -39,12 +33,12 @@ def gaussNorm_max_achiever {n : ℕ} (f : PowerSeries.Restricted 1 (R := Restric
 -- X n-1 distinguished??
 def Xₙ_distinguised {n : ℕ} (f : PowerSeries.Restricted 1 (R := Restricted R (σ := Fin n) 1)) (s : ℕ)
     : Prop :=
-  coeff_isUnit R f s ∧
-  gaussNorm_eq_gaussNorm R v f s ∧
-  gaussNorm_max_achiever R v f s
+  coeff_isUnit f s ∧
+  gaussNorm_eq_gaussNorm v f s ∧
+  gaussNorm_max_achiever v f s
 
 -- note I should probably introduce notation for all of this
--- e.g. Restricted = R<X_σ> c
+-- e.g. Restricted = R<n> c -- where n from σ = Fin n
 -- PowerSeries.Restricted -> R<X> c
 
 
@@ -63,7 +57,6 @@ lemma isRestricted_MvPolynomial {σ : Type*} [NormedCommRing R] (f : MvPolynomia
   sorry
 
 -- but doing this removes Comm so keep using this for now
-variable {R} in
 lemma isRestricted_polynomial [NormedRing R] (f : Polynomial R) (c : ℝ) :
     PowerSeries.IsRestricted c (f : PowerSeries R) := by
   -- this is becoming a mess
@@ -75,7 +68,7 @@ lemma isRestricted_polynomial [NormedRing R] (f : Polynomial R) (c : ℝ) :
 
 lemma Weierstrass_division {n : ℕ}
     (g : PowerSeries.Restricted 1 (R := Restricted R (σ := Fin n) 1))
-    (s : ℕ) (h : Xₙ_distinguised _ v g s)
+    (s : ℕ) (h : Xₙ_distinguised v g s)
     (f : PowerSeries.Restricted 1 (R := Restricted R (σ := Fin n) 1)) :
     ∃! (q : PowerSeries.Restricted 1 (R := Restricted R (σ := Fin n) 1)),
     ∃! (r : Polynomial (Restricted R (σ := Fin n) 1)), Polynomial.degree r < s ∧

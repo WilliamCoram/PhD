@@ -581,6 +581,10 @@ instance isUltrametricDist
   IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
     (isNonarchimedean (R := R) c hc)
 
+
+-- think I actually want to make a theorem of IsAbsoluteValue
+-- then use IsAbsoluteValue.toAbsoluteValue
+
 -- not sure what the correct assumption on hnorm should be
 -- valued ring?? ... I need the norm to be mulitplicative (i.e. an absolute value)
 noncomputable

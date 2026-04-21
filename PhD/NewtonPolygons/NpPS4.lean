@@ -20,24 +20,28 @@ inductive Step where
 
 variable (v : ℕ → WithTop Γ)
 
-/-- Predicate: the i-th coefficient is nonzero (has finite valuation). -/
+/-- Predicate saying the valuation of the `i`-th coefficient is not `⊤`. -/
 def finite (i : ℕ) : Prop := v i ≠ ⊤
 
-/-- The set of indices with nonzero coefficients. -/
+/-- The set of indices with finite coefficients. -/
 def support : Set ℕ := {i | finite v i}
 
 section Slopes
 
+/-- The slope from a point `(x₀, y₀)` to `(x₁, y₁)` as a real number. -/
 noncomputable
 def slopeReal (x₀ x₁ : ℕ) (y₀ y₁ : Γ) : ℝ :=
   (algebraMap Γ ℝ y₁ - algebraMap Γ ℝ y₀) / (x₁ - x₀)
 
+/-- The set of slopes out of a point `(i₀, i₁)`. -/
 def slopeSet (i₀ : ℕ) (i₁ : Γ) : Set ℝ :=
   {m | ∃ j₀ : ℕ, j₀ > i₀ ∧ finite v j₀ ∧ ∃ j₁ : Γ, v j₀ = j₁ ∧ m = slopeReal i₀ j₀ i₁ j₁}
 
+/-- The set of points that achieves a slope of `m` from a point `(i₀, i₁)`. -/
 def achievingSet (i₀ : ℕ) (i₁ : Γ) (m : ℝ) : Set ℕ :=
   {j : ℕ | j > i₀ ∧ finite v j ∧ ∃ j₁ : Γ, v j = j₁ ∧ m = slopeReal i₀ j i₁ j₁}
 
+/-- Given a point `(i₀, i₁)` returns the result of applying the Newton polygon algorithm. -/
 noncomputable
 def nextStep (i₀ : ℕ) (i₁ : Γ) : Step Γ :=
   open Classical in
@@ -72,6 +76,7 @@ def findFirstFinite (startIdx : ℕ) : Option (ℕ × Γ) := open Classical in
   else
     none
 
+/-- The full Newton Polygon. -/
 noncomputable
 def newtonPolygon : Stream' (Option (Step Γ))
   | 0 => match findFirstFinite v 0 with
@@ -120,40 +125,12 @@ lemma nextStep_infiniteRay' {a : ℕ} {m : ℝ} (ha : newtonPolygon v (a + 1) = 
     grind
   · trivial
 
--- this should be prefered to above; as it gives me exactly what the i₀ i₁ correspond to
--- i.e. they will match in our slope calculations
 lemma nextStep_infiniteRay'' {a i₀ l : ℕ} {i₁ : Γ} {m n: ℝ}
     (ha : newtonPolygon v (a + 1) = some (.infiniteRay m))
     (h : newtonPolygon v a = some (.nextVertex i₀ i₁ l n)) : nextStep v i₀ i₁ = .infiniteRay m := by
   unfold newtonPolygon at ha
   simp_rw [h, Option.some.injEq] at ha
   exact ha
-
-lemma nextStep_unboundedBelow (a : ℕ) (ha : newtonPolygon v a = some .unboundedBelow) :
-    newtonPolygon v (a + 1) = none := by
-  simp [newtonPolygon, ha]
-
-lemma unboundedBelow  {i₀ : ℕ} {i₁ : Γ} (h : nextStep v i₀ i₁ = Step.unboundedBelow) :
-    ¬ (BddBelow (slopeSet v i₀ i₁)) := by
-  simp_rw [nextStep] at h
-  split at h
-  · trivial
-  split at h
-  · rename_i _ fin
-    exact fin
-  ·
-    sorry
-
-lemma nextStep_unboundedBelow' (a : ℕ) : newtonPolygon v (a + 1) ≠ some (.unboundedBelow) := by
-  unfold newtonPolygon
-  split
-  · rename_i _ i₀ i₁ l m h
-    by_contra
-    simp only [Option.some.injEq] at this
-    have := unboundedBelow v this
-    have h := nextStep_nextVertex v h -- move down
-    sorry
-  · simp
 
 lemma nextStep_tail (a : ℕ) (ha : newtonPolygon v a = some .tail) :
     newtonPolygon v (a + 1) = none := by
@@ -200,6 +177,7 @@ lemma nextStep_nextVertex'' {a i₀ j₀ l l' : ℕ} {i₁ j₁ : Γ} {m m' : �
 
 end newtonPolygonAPI
 
+/-- Corresponding slopes to `Step Γ`. -/
 def slopes : Step Γ → WithTopBot ℝ
   | .tail => ⊤
   | .unboundedBelow => ⊥
@@ -207,16 +185,19 @@ def slopes : Step Γ → WithTopBot ℝ
   | .infiniteRay m => m
   | .nextVertex _ _ _ m => m
 
+/-- Raising slopes to `Option (Step Γ)`. -/
 def slopes' : Option (Step Γ) → WithTopBot ℝ
   | some S => slopes S
   | none => ⊥
 
+/-- The sequence of slopes of a Newton polygon. -/
 noncomputable
-def newtonPolygon_slopes : ℕ → WithTopBot ℝ := -- perhaps there is a better way to be doing this?
+def newtonPolygon_slopes : ℕ → WithTopBot ℝ :=
   fun a => slopes' (newtonPolygon (Γ := Γ) v a)
 
+/-- The sequence of lengths of a Newton polygon. -/
 noncomputable
-def newtonPolygon_length : ℕ → WithTop ℕ :=
+def newtonPolygon_lengths : ℕ → WithTop ℕ :=
   fun a => match newtonPolygon v a with
     | none => 0
     | some step => match step with
@@ -226,7 +207,11 @@ def newtonPolygon_length : ℕ → WithTop ℕ :=
       | .infiniteRay _ => ⊤
       | .nextVertex _ _ l _ => l
 
+
 open Classical in
+/-- The sequence of slopes of a Newton polygon are strictly increasing - except when the final output
+  is a limiting ray, then equality is possible: e.g.
+  f(x) = 1 + x + p⁻¹ ∑_{n = 2}^∞ x^n. -/
 def newtonPolygon_slopes_increasing : Prop :=
   ∀ a : ℕ, if newtonPolygon v (a + 1) = none then
     true
@@ -411,21 +396,6 @@ lemma succSlope_lt_Slope {a₀ a₁ a₂ : ℝ} {b₀ b₁ b₂ : ℝ} (ha1 : a�
   rw [div_lt_iff₀' (by grind), mul_comm]
   grind
 
--- in hindsight it looks like this may not really be neccesary and needed
-lemma slopes_increasing_suffices {i₀ j₀ k₀ : ℕ} {i₁ j₁ k₁: Γ} {m m' : ℝ}
-    (hik : i₀ < k₀) (hjk : k₀ > j₀) (hk_fin : finite v k₀) (hk_eq : v k₀ = ↑k₁)
-    (hbbd : BddBelow (slopeSet v i₀ i₁))
-    (h : slopeReal i₀ k₀ i₁ k₁ ≤ sInf (slopeSet v i₀ i₁)) : false := by
-  have k₀_in : k₀ ∈ achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁)) := by
-    refine ⟨hik, hk_fin, k₁, hk_eq, ?_⟩
-    have : slopeReal i₀ k₀ i₁ k₁ ∈ (slopeSet v i₀ i₁) := by
-      exact ⟨k₀, hik, hk_fin, k₁, hk_eq, rfl⟩
-    grind [csInf_le hbbd this]
-  have : k₀ ≤ j₀ := by
-
-    sorry
-  grind
-
 lemma slopes_increasing_limitingRay  {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' : ℝ}
     (h1 : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m)
     (h2 : nextStep v j₀ j₁ = .limitingRay m') : m ≤ m':= by
@@ -434,8 +404,6 @@ lemma slopes_increasing_limitingRay  {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' 
   by_contra
   simp only [not_forall, not_le] at this
   obtain ⟨n, ⟨k₀, hk₀, k₀_fin, k₁, hk₁, hn⟩, n_lt⟩ := this
-  -- note this suffices is used in the below (with lt)
-  -- perhaps it can be extracted completely...
   suffices slopeReal i₀ k₀ i₁ k₁ < sInf (slopeSet v i₀ i₁) by
     have k₀_in : k₀ ∈ achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁)) := by
       refine ⟨(nextVertex_lt v h1).trans hk₀, k₀_fin, k₁, hk₁, ?_⟩
@@ -456,7 +424,6 @@ lemma slopes_increasing_infiniteRay  {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' 
   simp_rw [nextVertex_slope_eq_sInf' v h1, slopeReal]
   by_contra
   simp only [not_lt] at this
-  -- again a very similar suffices
   suffices h : slopeReal i₀ k₀ i₁ k₁ ≤ sInf (slopeSet v i₀ i₁) by
     have k₀_in : k₀ ∈ achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁)) := by
       refine ⟨(nextVertex_lt v h1).trans hk₀, k₀_fin, k₁, hk₁, ?_⟩
@@ -474,9 +441,6 @@ lemma slopes_increasing_nextVertex {i₀ j₀ k₀ l l' : ℕ} {i₁ j₁ k₁ :
     (h1 : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m)
     (h2 : nextStep v j₀ j₁ = .nextVertex k₀ k₁ l' m') : m < m' := by
   by_contra
-  -- again a very similar suffices
-  -- the hypothesis could just be conditions on k₀ k₁ etc
-  -- so it is enough to provide them to finish the proof
   suffices slopeReal i₀ k₀ i₁ k₁ ≤ sInf (slopeSet v i₀ i₁) by
     have k₀_in : k₀ ∈ achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁)) := by
       refine ⟨(nextVertex_lt v h1).trans (Nat.cast_lt.mpr (nextVertex_lt v h2)),
@@ -493,6 +457,39 @@ lemma slopes_increasing_nextVertex {i₀ j₀ k₀ l l' : ℕ} {i₁ j₁ k₁ :
     nextVertex_slope_eq_sInf' v h2, slopeReal] at ⊢ this
   exact succSlope_le_Slope (Nat.cast_lt.mpr (nextVertex_lt v h1))
     (Nat.cast_lt.mpr (nextVertex_lt v h2)) this
+
+section unboundedBelowAPI
+
+lemma nextStep_unboundedBelow (a : ℕ) (ha : newtonPolygon v a = some .unboundedBelow) :
+    newtonPolygon v (a + 1) = none := by
+  simp [newtonPolygon, ha]
+
+lemma unboundedBelow  {i₀ : ℕ} {i₁ : Γ} (h : nextStep v i₀ i₁ = Step.unboundedBelow) :
+    ¬ (BddBelow (slopeSet v i₀ i₁)) := by
+  simp_rw [nextStep] at h
+  split at h
+  · trivial
+  split at h
+  · rename_i _ fin
+    exact fin
+  · split_ifs at h
+    grind
+
+lemma nextStep_unboundedBelow' (a : ℕ) : newtonPolygon v (a + 1) ≠ some (.unboundedBelow) := by
+  unfold newtonPolygon
+  split
+  · rename_i _ i₀ i₁ l m h
+    by_contra
+    simp only [Option.some.injEq] at this
+    have := unboundedBelow v this
+    have h := nextStep_nextVertex v h
+    obtain ⟨_, _, T⟩ := h
+    have contra := nextVertex_bddBelow v T
+
+    sorry
+  · simp
+
+end unboundedBelowAPI
 
 lemma newtonPolygon_slopes_increasing' : newtonPolygon_slopes_increasing v := by
   simp_rw [newtonPolygon_slopes_increasing]
@@ -520,3 +517,78 @@ lemma newtonPolygon_slopes_increasing' : newtonPolygon_slopes_increasing v := by
         obtain ⟨_, _, h1⟩ := nextStep_nextVertex v hm
         simp_rw [slopes', hm, slopes, WithTop.coe_lt_coe, WithBot.coe_lt_coe]
         exact slopes_increasing_nextVertex v h1 (nextStep_nextVertex'' v t hm)
+
+
+section PowerSeries
+
+variable {R : Type*} [Semiring R]
+
+noncomputable
+def coeff_seq (f : PowerSeries R) (v : R → WithTop Γ) : ℕ → WithTop Γ :=
+  fun i => v (PowerSeries.coeff i f)
+
+variable (f : PowerSeries ℚ_[3])
+
+#check newtonPolygon (coeff_seq f Padic.addValuation)
+
+end PowerSeries
+
+
+--- Post Zulip discussion this show be the main definition, my algorithm will compute
+--- something of type NewtonPolygon
+
+def newtonPolygon_IsSeq : Stream'.IsSeq (newtonPolygon v) := fun _ ↦ by grind [newtonPolygon]
+
+noncomputable
+def newtonPolygon_seq : Stream'.Seq (Step Γ) := ⟨newtonPolygon v, newtonPolygon_IsSeq v⟩
+
+class FiniteNewtonPolygon where
+  Terminates : Stream'.Seq.Terminates (newtonPolygon_seq v)
+
+noncomputable
+def finite_newtonPolygon (h : FiniteNewtonPolygon v) : List (Step Γ) :=
+    Stream'.Seq.toList (newtonPolygon_seq v) h.Terminates
+
+structure NewtonPolygon where
+  support : WithTop ℕ
+  slopes : ℕ → WithTopBot ℝ
+  lengths : ℕ → WithTop ℕ
+  increasing : ∀ n : ℕ, n + 1 < support → slopes n ≤ slopes (n + 1)
+
+lemma newtonPolygon_ge_length_none (n : ℕ) (h : ↑n + 1 < (newtonPolygon_seq v).length') :
+    newtonPolygon v (n + 1) ≠ none := by
+  by_contra
+  suffices (newtonPolygon_seq v).length' ≤ n + 1 by
+    grind
+  have h : (newtonPolygon_seq v).Terminates := by
+    use n + 1
+    aesop
+  simp only [Stream'.Seq.length', h, ↓reduceDIte, ge_iff_le]
+  suffices (newtonPolygon_seq v).length h ≤ n + 1 by
+    rw [← Nat.cast_one, ← Nat.cast_add]
+    exact ENat.coe_le_coe.mpr this
+  exact Stream'.Seq.length_le_iff.mpr this
+
+noncomputable
+def NP' : NewtonPolygon where
+  support := Stream'.Seq.length' (newtonPolygon_seq v)
+  slopes := newtonPolygon_slopes v
+  lengths := newtonPolygon_lengths v
+  increasing := by
+    intro n hn
+    have := newtonPolygon_slopes_increasing' v
+    simp_rw [newtonPolygon_slopes_increasing] at this
+    specialize this n
+    simp [(newtonPolygon_ge_length_none v n hn)] at this
+    split_ifs at this
+    · exact this
+    · exact le_of_lt this
+
+#min_imports
+
+/-
+TODO:
+* Want API to say that Stream'.Seg.length' ...  is a natuarl number exactly when we have
+  FiniteNewtonPolygon (newtonPolygon v)
+
+-/
