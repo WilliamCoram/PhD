@@ -5,19 +5,322 @@ calculating zeroes of a polynomial. This turns out to be possible for restricted
 the $p$-adic Weierstrass preparation. This section is dedicated to proving this classical result. We
 will follow \ref{BGR}.
 
-% \check{_}
-% \widetilde{_}
-% \overset{_}
+\newcommand{\pb}[1]{\overset{\circ}{#1}}
+\newcommand{\tn}[1]{\check{#1}}
+\newcommand{\res}[1]{\widetilde{#1}}
+\newcommand{\quot}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 
 \section{Notation}
 
 Before we state the theorem we first need to set some notation. Let $R$ be a semi-normed ring.
 
 \begin{definition}
-  We say an element $r$ is topolically nilpotent if
-  \[
-    \lim r^n = 0.
-  \]
-  We denote the set of all topolically nilpotent elements of $R$ as $\check{R}$.
-
+  We say an element $r$ is \emph{topologically nilpotent} if
+    \[
+     \lim r^n = 0.
+    \]
+    Denote the set of all topologically nilpotent elements of $R$ as $\tn{R}$.
 \end{definition}
+
+Unfortunately, the set $\tn{R}$ is not, in general, an ideal of $R$. However, we can define a
+subring of $R$, that has it an ideal.
+
+\begin{definition}
+  We say an element $r$ is \emph{power-bounded} if the set
+  \[
+  \left\{ \lvert r^n \rvert : n \in \N \right\}
+  \]
+  is bounded.
+  Denote the set of all power-bounded elements of $R$ as $\pb{R}$.
+\end{definition}
+
+\begin{lemma}
+  $\pb{R}$ is a clopen subring of $R$, and $\tn{R}$ is an ideal in $\pb{R}$.
+\end{lemma}
+
+\begin{proof}
+  Let $a, b \in \pb{R}$. Let $M$ be an upper bound for $\lvert a^n \rvert$ and $\lvert b^n \rvert$
+  for all $n$. Then
+  \[
+  \lvert (a b )^n \rvert \leq \lvert a^n \rvert \lvert b^n \rvert \leq M^2,
+  \]
+  similarly we can use triangle inequality for closure of addition.
+  For negation since, $R$ is a seminormed ring
+  \[
+  \lvert (- a)^n \rvert = \lvert a^n \rvert \leq M
+  \]
+  and thus since $1 \in \pb{R}$, we see it is a subring.
+
+  If $a \in \nt{R}$ and $b \in \pb{R}$, then
+  \[
+  \lvert (a b)^n \rvert \leq \lvert a^n \rvert \lvert b^n \rvert \leq \lvert a^n \rvert M \to 0
+  \]
+  that is $ a b \in \tn{R}$, and we have shown $\tn{R}$ is an ideal.
+
+  Finally, since $\pb{R}$ is a subgroup and contains $\tn{R}$, which is open in $R$, we have $\pb{R}$
+  is clopen in $R$.
+\end{proof}
+
+Given these we can then define their quotient, $\res{R} = \pb{R} / \tn{R}$.
+
+\section{Weierstrass division}
+
+Weierstrass preparation will follow as an application of Weierstrass division, so we first prove that.
+To do this we need to introduce the following terminology.
+
+
+\begin{definition}
+  Let $s$ be a natural number, we say a strictly convergent power series
+  $g \in R \langle x_1 \dots, x_n \rangle >$ is $x_n$-distinguished
+  of degree $s$ if, when writing $g = \sum_{v = 0}^\infty g_v(x_1, \dots, x_{n-1}) x_n^v$:
+  \begin{itemize}
+    \item $g_s$ is a unit; and
+    \item $ \lvert g_s \rvert = \lvert g \rvert$ and $\lvert g_s \rvert > \lvert g_v \rvert \; \forall
+      v > s$.
+  \end{itemize}
+\end{definition}
+
+That is, $g_s$ achieves the gauss norm of $g$ and is the last index to do so.
+
+\begin{theorem}
+  Let $s$ be a natural number and $g \in T_n$ be $x_n$-distinguished of degree $s$. Then for each
+  $f \in T_n$, there exists a unique $ q \in T_n$ and a unique $r \in T_{n-1}[x_n]$ with degree
+  $r < s$ such that
+  \[
+    f = q g + r.
+  \]
+  Moreover, we have the following estimate
+  \[
+    \lvert f \rvert = \max \left\{ \lvert q \rvert \lvert g \rvert, \lvert r \rvert \right\},
+  \]
+  that is
+  \[
+    \lvert q \rvert \leq \lvert g \rvert^{-1} \quad \text{and} \quad \lvert r \rvert \leq \lvert f \rvert.
+  \]
+\end{theorem}
+
+We break the proof up into the following steps.
+
+\begin{definition}
+  We say a subgroup $H$ of $G$ is $\epsilon$-dense if there is a real number $\epsilon < 1$ such that
+  for each $g \in G$ there exists an $h \in H$ with
+  \[
+    \lvert g + h \rvert \leq \epsilon \lvert g \rvert.
+  \]
+\end{definition}
+
+\begin{lemma}
+  Let $(G, \lvert \cdot \rvert)$ be a normed group and $H$ a subgroup of $G$ $\epsilon$-dense in $G$.
+  Then $H$ is dense in $G$.
+\end{lemma}
+
+To prove this we will use the following definition.
+
+\begin{definition}
+  Let $G$ be a seminormed group and let $H$ be any subgroup of $G$. For each $g \in G$, the nonnegative
+  real number
+  \[
+  \lvert g, H \rvert := \inf_{h \in H} \lvert g + h \rvert
+  \]
+  is called the distance form $g$ to $H$.
+\end{definition}
+
+Using this definition it is clear to see the following:
+\begin{itemize}
+  \item $\lvert a + h, H \rvert = \lvert a, H \rvert$ for all $h \in H$;
+  \item $\lvert g, H \rvert = \inf_{h \in H} d(a,h)$, where $d$ is the normal distance in a seminormed
+    group; and
+  \item $\overline{H} = \left\{ g \in G : \lvert g, H \rvert = 0 \right\}$.
+\end{itemize}
+
+\begin{proof}
+  By the final bullet point above it suffices to show that $\lvert g, H \rvert = 0$ for all $g \in G$
+  - as then $\overline{H} = G$, and we see $H$ is dense.
+
+  Therefore, assume there is $g \in G$ such that $\lvert g, H \rvert > 0.$ Choose $h_1 \in H$ such that
+  \[
+    \lvert g + h_1 \rvert < \epsilon^{-1} \lvert g, H \rvert,
+  \]
+  this is possible since $\epsilon^{-1} > 1.$
+  By $\epsilon$-dense, there exists $h_2$ such that
+  \[
+  \lvert (g + h_1) + h_2 \rvert \leq \epsilon \lvert g + h_1 \rvert.
+  \]
+  However, $h_1 + h_2 \in H$, thus the inequality obtained by combining the previous two,
+  \[
+    \lvert g + (h_1 + h_2) \rvert < \lvert g, H \rvert,
+  \]
+  is impossible. Therefore, $\lvert g, H \rvert = 0$ for all $g \in G$.
+\end{proof}
+
+With this we can then start proving parts of Weierstrass division.
+
+\begin{lemma}\label{WD_bounds}
+  Assume we are in the case of Weierstrass division and furthermore $\lvert g \rvert = 1$. Then, if
+  there exists a representation
+  \[
+    f = q g + r
+  \]
+  we have the estimates
+  \[
+    \lvert q \rvert \leq \lvert f \rvert \quad \text{and} \quad \lvert r \rvert \leq \lvert f \rvert.
+  \]
+\end{lemma}
+
+\begin{proof}
+  Multiplying $f = q g + r$ by a scalar, we can assume
+  \[
+    \max \left\{ \lvert q \rvert, \lvert r \rvert \right\} = 1
+  \]
+  which implies $\lvert f \rvert \leq 1$ by the nonarchimedean property and $f = q g + r$.
+  Thus, it suffices to show that $\lvert f = 1 \rvert.$ Assume the contrary, that is $\lvert f \rvert < 1$
+  and so reduction into the residue field gives
+  \[
+    0 = \tilde{f} = \tilde{q} \tilde{g} + \tilde{r}.
+  \]
+  Since
+  \[
+    \deg \tilde{g} = s > \deg r > \deg \tilde{r}
+  \]
+  this would imply $\tilde{q} = \tilde{r} = 0$, which is a contradiction to the assumption that
+  $\max {\lvert q \rvert, \lvert r \rvert} = 1$.
+\end{proof}
+
+\begin{lemma}\label{WD_uniqueness}
+  Suppose we have a valid representation for Weierstrass division, then it is unique.
+\end{lemma}
+
+\begin{proof}
+  Consider two representations
+  \[
+    f = q g + r \quad \text{and} \quad f = q' g + r',
+  \]
+  then we have
+  \[
+    0 = (q - q') g + (r - r').
+  \]
+  Applying the bounds to this new equation gives:
+  \[
+    \lvert q - q' \rvert \leq \lvert 0 \rvert = 0
+  \]
+  and similar for $r - r'$. Thus, $q - q' = 0 = r - r'$ and we see the two representations are equal.
+\end{proof}
+
+
+\begin{lemma}\label{WD_existence}
+  There exists a representation
+  \[
+    f = q g + r
+  \]
+  in Weierstrass division.
+\end{lemma}
+
+
+%% I think to make sense of the epimorphism I will need prop 2 page 193
+%% that proves \res{T}_n = \res{R}[n]... and specifically
+%% \pb{T}_n = T_n^{\circ} ( = valuation ring )
+%% \np{T}_n = T_n^\vee
+%% \res{T}_n = T_n^\tilde
+
+\begin{proof}
+  Assume $g = \lvert 1 \rvert$ and consider the set
+  \[
+    B = \left\{ qg + r : r \in T_{n-1}[x_n], \; \deg r > s, \; q \in T_n \right\},
+  \]
+  this is a closed subgroup of $T_n$ and it suffices to show $B = T_n$.
+  Writing $g = \sum g_s (x_1, \cdots, x_{n-1}) x_n^s$, define
+  \[
+    \varepsilon = \max_{s < t} \lvert g_t \rvert,
+  \]
+  since $g$ is $x_n$-distinguished of degree $s$ we must have $\varepsilon < 1$.
+
+  Consider the natural ring epimorphism
+  \[
+    \tau_\varepsilon : \pb{T}_n \to \res{R}_\varepsilon [x_1, \cdots, x_n],
+  \]
+  where $R_\epsilon = \left\{ r \in R : \lvert r \rvert \leq \varepsilon \right\}$ and $\res{R}_\varepsilon
+  = \pb{R} / R_\varepsilon$, with kernel
+  \[
+    \ker \tau_\varepsilon = \left\{ f \in T_n : \lvert f \rvert \leq \varepsilon \right\}.
+  \]
+  $\tau_\varepsilon (g)$ is a unitary polynomial in $x_n$ of degree $s$, and therefore we can apply
+  Euclidean division (in $(\res{R}_\varepsilon [x_1, \cdots, x_{n-1}]) [x_n]$) on it.
+  %% I need to work out why this is the case...?
+  This means for all $f \in \pb{T}_n$ we can find $q \in \pb{T}_n$ and $r \in \pb{T}_{n-1}[x]$ with
+  degree $ < s$ such that
+  \[
+    \tau_\varepsilon (f) = \tau_\varepsilon (q) \tau_\varepsilon (g) + \tau_\varepsilon (r)
+  \]
+  or equivalently,
+  \[
+    \lvert f - (qg + r) \rvert \leq \varepsilon
+  \]
+  since this will be in the kernel of $\tau (\varepsilon)$.
+  Hence, for all $f \in T_n$, there exists $b \in B$ such that
+  \[
+    \lvert f - b \rvert \leq \varepsilon \lvert f \rvert,
+  \]
+  meaning $B$ is $\varepsilon$ dense in $T_n$ and therefore dense.
+  This completes the proof, as $B$ closed and dense implies $B = T_n$.
+\end{proof}
+
+\section{Weierstrass preparation}
+
+Earlier we claimed that Weierstrass preparation follows from Weierstrass division. We now show that
+this is the case.
+
+\begin{lemma}
+  A series $f \in T_n$ with $\lvert f \rvert = 1$ is a unit in $T_n$ if and only if $\lvert f (0) \rvert = 1$
+  and $\lvert f - f(0) \rvert < 1$. Thus, $f$ is a unit if and only if $\tilde{f}$ is a unit;
+  i.e. a constant since $\res{T}_{n} \isom \tilde{R}[x_1, \cdots, x_{n}]$.
+\end{lemma}
+
+\begin{proof}
+  Since $\lvert \cdot \rvert$ is a valuation, $f$ is a unit if and only if it is a unit in $\pb{T}$.
+  This is equivalent to $a_{(0, \cdots, 0)}$ being a unit in $\pb{R}$ and $a_{(i_1,\cdots, i_n)} \in \tn{R}$
+  for all other indices. This is the assertion.
+\end{proof}
+
+%% This depends on Proposition 1.4.2 3; trying to work out the proofs for this right now.
+
+\begin{theorem}
+  Let $g \in T_n$ be $x_n$-distinguished of degree $s$, for some natural number $s$. Then there is a
+  unique monic polynomial $w \in T_{n-1}[x_n]$ of degree $s$ and a unique unit $e \in T_n$ such that
+  \[
+    g = e w
+  \]
+  with $\lvert w \rvert = 1$, so that $w$ is $x_n$-distinguished of degree $s$.
+\end{theorem}
+
+\begin{proof}
+  By Weierstrass division, there exists unique $e' \in T_n$ and $r' \in T_{n-1} [x_n]$ with degree $r' < s$
+  such that
+  \[
+    x_n^s = e' g + r.
+  \]
+  Then, defining
+  \[
+    w = x^s_n - r
+  \]
+  we see $w$ is monic of degree $s$ and $w = e' g$.
+
+  It thus suffices to show that $e'$ is a unit, because then $g = w e^{-1}$ with the wanted properties.
+
+  Using the estimates in Weierstrass division we have
+  \[
+    \lvert r \rvert \leq \lvert x_n^s \rvert = 1,
+  \]
+  and so we see that $\lvert w \rvert = 1$ and $x_n$ is distinguished of degree $s$.
+  Now assume $\lvert g \rvert = 1$. From $\tilde{w} = \tilde{e'} \tilde{g}$, we conclude that $\tilde{e'}$
+  is a unit in $\res{T}_{n-1}$, and since $\res{T}_{n-1} \isom \tilde{R}[x_1, \cdots, x_{n-1}]$ this means
+  $\tilde{e'}$ is a constant.
+  A fortiori this means it is a unit in $\res{T_n}$ and so invoking the above lemma it is a unit in $T_n$ and
+  we are done with the existence part.
+
+  For uniqueness, suppose $g = e w$, define $r = x^s_n - w$. Then
+  \[
+    x_n^s = e^{-1} g + r
+  \]
+  is a valid representation satisfying the conditions for Weierstrass division and therefore $e$ and
+  $w$ are unique, and moreover so is $w$.
+\end{proof}

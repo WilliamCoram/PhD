@@ -1,0 +1,184 @@
+\chapter{Restricted Power Series}
+
+\section{Definition}
+
+Recall formal multivariate power series over a set $K$ in $n$ variables, written
+$K [ \! [ x_1, \dots, x_n ] \! ]$ are infinite sums
+\[
+  f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n},
+\]
+where the sum is taken over all $n$-tuples $(i_1, \cdots i_n)$ with $i_j \in \mathbb{N}$ and
+$a_{(i_1, \cdots, i_n)} \in K$.
+
+When $K$ is a ring, formal multivariate power series in $n$ variables form a ring, and we will refer
+to them as the ring of power series over $K$ in $n$ variables. We again denote such
+rings using $K [ \! [ x_1, \dots, x_n ] \! ]$.
+
+We define a subset of $K [ \! [ x_1, \dots, x_n ] \! ]$ that consists of power series whose
+coefficeients approach zero in the cofinite filter.
+
+\begin{definition}
+  \label{IsRestricted}
+  \lean{IsRestricted}
+  \leanok
+  Let $f$ be a power series over a normed ring $R$ in one variable, write
+  $f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n},$, and let
+  $c = (c_1, \cdots, c_n)$ be an $n$-tuple of real numbers.
+  We say $f$ is a restricted power series of parameter $c$ over $R$ in $n$ variables if
+  \[
+    \lim_{n \to \infty} \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} = 0
+  \]
+  in the cofinite topology.
+
+  We denote the set of restricted power series of parameter $c$ over $R$ in $n$ variables by
+  $R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{definition}
+
+\begin{remark}
+  Note
+  \[
+    \lim \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} = 0
+  \]
+  in the cofinite topology, if for all $0 < \epsilon$ there are finitely many $n$-tuples that have
+  $\left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} \right \rvert$
+  greater than $\varepsilon$.
+\end{remark}
+
+\section{Additive Group}
+
+It turns out that restricted power series of parameter $c$ over a normed ring $R$ in $n$ variables
+are not just a set, in fact they form an additive group.
+
+\begin{theorem}
+  For any normed ring $R$, $n \in \mathbb{N}$ and $c \in \mathbb{R}^n$. Then
+  $R_c [ \! [ x_1, \dots, x_n ] \! ]$ forms an additive group.
+\end{theorem}
+
+Let $R$ be a normed ring, $n \in \N$ and $c \in \mathbb{R}^n$
+We prove this in lean using the following lemmas.
+
+\begin{lemma}
+  \label{isRestricted_iff_abs}
+  \lean{isRestricted_iff_abs}
+  \leanok
+  \uses{IsRestricted} %% Do I need to say uses in all the statements?
+  $f \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ if and only if $f \in R_{\lvert c \rvert}
+  [ \! [ x_1, \dots, x_n ] \! ]$.
+  That is we can always consider $c$ to have positive entries.
+\end{lemma}
+
+\begin{proof}
+  \[
+    \left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{j=n} c_j^{i_j} \right \rvert =
+    \left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{j=n} \lvert c \rvert _j^{i_j}
+    \right \rvert.
+  \]
+\end{proof}
+
+\begin{lemma}
+  \label{zero}
+  \lean{zero}
+  \leanok
+  $0 \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  Substitute the zero power series into the definition - every coefficient is 0, thus we are
+  immediately done.
+\end{proof}
+
+\begin{lemma}
+  \label{monomial}
+  \lean{monomial}
+  \leanok
+  Any monomial $m = a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$ is restricted.
+\end{lemma}
+
+\begin{proof}
+  Only one coefficient is non-zero.
+\end{proof}
+
+\begin{lemma}
+  \label{One}
+  \lean{One}
+  \leanok
+  \uses{monomial}
+  $1 \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  1 is a monomial.
+\end{proof}
+
+\begin{lemma}
+  \label{add}
+  \lean{add}
+  \leanok
+  \uses{IsRestricted, isRestricted_iff_abs}
+  If $f, g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ then $f+g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  Squeeze theorem.
+\end{proof}
+
+\begin{lemma}
+  \label{neg}
+  \lean{neg}
+  \leanok
+  \uses{IsRestricted, isRestricted_iff_abs}
+  If $f \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ then $-f \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\begin{proof}
+  \[
+    \left \lvert \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} \right \rvert =
+    \left \lvert \lvert - a_{(i_1, \cdots, i_n)} \rvert \prod_{j=1}^{n} c_j^{i_j} \right \rvert.
+  \]
+\end{proof}
+
+\section{Ring}
+
+Moreover, if the normed ring $R$ has the non-archimedean property, we further have that
+$R_c [ \! [ x_1, \dots, x_n ] \! ]$ is a ring.
+
+\begin{theorem}
+  For any non-archimedean normed ring $R$, $n \in \mathbb{N}$ and $n$-tuple $c \in \mathbb{R}^n$,
+  $R_c [ \! [ x_1, \dots, x_n ] \! ]$ is a ring.
+\end{theorem}
+
+To prove this we first give a more general statement.
+
+\begin{lemma}
+  \label{tendsto_antidiagonal}
+  \lean{tendsto_antidiagonal}
+  \leanok
+  Let $M$ be an additive monoid with an antidiagonal, and $S$ a non-archimedean normed ring. Let
+  $\phi : M \to \mathbb{R}$ be a function such that for all $a, b \in M, \phi(a + b) = \phi(a)
+  \phi(b)$. If two functions $f, g : M \to S$ have the property that
+  $\lim_i \lvert f i \rvert \phi (i) = 0$ in the cofinite filter and
+  $\lim_i \lvert f i \rvert \phi (i) = 0$ then
+  \[
+  \lim_i \lvert \sum_{\mathclap{\substack{(a,b) \in \\ \textrm{antidiagonal } i}}} f(a) g(b) \rvert
+  \phi(i) = 0.
+  \]
+\end{lemma}
+
+\begin{lemma}
+  \label{mul}
+  \lean{mul}
+  \leanok
+  \uses{IsRestricted, isRestricted_abs_iff, tendsto_antidiagonal}
+  If $R$ has the non-archimedean property, then if $f,g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ then
+  $fg \in R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+\end{lemma}
+
+\section{Tate Algebra}
+
+With this set up we now define a necessary component of our project.
+
+\begin{definition}
+  When $K$ is a complete non-archimedean field, we call the ring of restricted power series of
+  parameter $c$ over $K$ in $n$ variables, the \emph{Tate algebra} over $K$ of paramter $c$, denoted
+  $\mathcal{A}_c(K).$
+\end{definition}

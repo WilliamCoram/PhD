@@ -1,0 +1,160 @@
+\chapter{Newton Polygon}
+
+\section{Definitions}
+
+In this section we will determine a way to check for zeroes of a power series via the construction
+of Newton polygons. We consider power series over a non-archimedean valued field $R$ where we denote
+the \emph{additive} valuation by $v$ and the associated multiplicative valuation by $\lvert \cdot \rvert$.
+The typical example would be $\Q_p$.
+
+These are formally given by the following definition.
+
+\begin{definition}
+    The \emph{Newton polygon} of $f = \sum a_i x^i$ is the lower boundary of the convex hull
+    of the set of points $(i,\nu (a_i))$, where we ignore points with infinite $p$-adic valuation.
+    Here by convex hull we mean the smallest convex polygon that contains all points.
+\end{definition}
+
+Given a Newton polygon we can give the following information.
+
+\begin{definition}
+    \begin{enumerate}
+        \item The \emph{slopes} of the line segments appearing in the Newton polygon are called the
+        slopes of $f(x)$.
+        \item The \emph{length} of a slope is the length of the projection of the line segment with
+        that slope onto the $x$-axis.
+        \item The \emph{breaks} are the values of $i$ which are vertices of the Newton polygon.
+    \end{enumerate}
+\end{definition}
+
+It turns out when working with Newton polygons the slopes and lengths are the information we care about;
+and moreover given a starting point using this we can reconstruct all breaks. This provides motivation
+for the definition we give in Lean.
+
+\begin{definition}
+  A Newton polygon is the following information:
+  \begin{itemize}
+    \item a natural number $n$, determining the number of slopes;
+    \item a (potentially infinite) list of slopes that are strictly increasing except for the final
+      slope (which may only be equal to the previous);
+    \item a (potentially infinite) list of lengths; and
+    \item a starting point.
+  \end{itemize}
+\end{definition}
+
+It is clear that given a Newton polygon, in the formal sense, we can construct the following information;
+however the reverse also holds by using the comment above the definition and the fact the slopes are
+(strictly) increasing give the convexity condition.
+%% Perhaps I could elaborate on this further?
+
+We now want to construct a way to obtain this information given a power series, $f = \sum_{i=0}^\infty a_n x^i \in R[x]$.
+Towards this we consider the following algorithm:
+
+\begin{enumerate}
+    \item Plot the points $\{(i,\nu (a_i) )\}$.
+    \item Start with the vertical half-line down from the point with the smallest $i$.
+    \item Rotate the line until one of the following happens:
+    \subitem The line simultaneously hits infinitely many of the points we have plotted. In this
+        case don't break the line and the polygon is complete.
+    \subitem The line reaches a position where it can be rotated no further without leaving behind
+        some points. In this case, the half lines forms the final segment of the polygon.
+    \subitem The line hits a finite number of points. In this case, break at the last point that was
+        hit and repeat the procedure.
+\end{enumerate}
+
+It should be clear that by construction this constructs the lower convex hull of the set of points
+$\{(i,\nu (a_i) )\}$ and taking the slopes and lengths of the obtained segments we get our corresponding
+definition in Lean.
+
+As mentioned, the study of Newton polygons is deeply connected to studying the zeroes of $f(x)$,
+thus we will assume $f(0) \neq 0$. That is, we factor out any powers of $x$ dividing $f$, which
+means our initial vertical line starts on the $y$-axis.
+
+Moreover, we will also assume $a_0 = 1$. This is because if we factor
+$f(x) = \sum_{i = 0}^\infty a_i x^i$ as $f(x) = a_0 \cdot g(x)$, where
+$g(x) = 1 + \sum_{i=1}^\infty \frac{a_i}{a_0}x^i$, it is not hard to see that the resulting Newton
+polygon of $g(x)$ is the Newton polygon of $f(x)$ translated down by $\nu (a_0)$.
+This fact follows from observing $\nu (\frac{a_i}{a_0}) = \nu(a_i) - \nu (a_0)$.
+
+\section{Properties}
+
+In this section we will consider power series over $\Q_p$ - however, we can easily generalise to
+complete non-archimedean valued fields.
+
+The first thing we can use the Newton polygon for is to obtain the radius of convergence of the
+power series.
+
+\begin{theorem} \label{RadofCon}
+    Let $m$ be the supremum of the slopes appearing in the Newton polygon of a series
+    $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$. Then the radius of convergence of $f$ is $p^m.$
+\end{theorem}
+
+
+
+\begin{proposition}\label{NP}
+    Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$ be a power series. Let $m_1, m_2, \dots, m_k$ be the
+    first $k$ slopes of the Newton polygon of $f(x)$, and assume that $f(x)$ converges on the
+    closed ball of radius $c = p^{m_k}$ (from previous section, this means it is a restricted power
+    series for parameter $c$ if $K$ is complete). Let $N$ be the $x$-coordinate of the right
+    endpoint of the $k$-th segment of the Newton polygon. Then, there exists a polynomial
+    $g(x)$ of degree $N$ and a power series $h(x)$ such that
+    \begin{enumerate}
+        \item $f(x) = g(x) h(x)$,
+        \item $\| f(x) - g(x) \|_c < 1$,
+        \item $h(x)$ converges on the closed ball of radius $c$,
+        \item $\| h(x) - 1\|_c <1$, and
+        \item the Newton polygon of $g(x)$ is the same as the portion of the Newton polygon of
+        $f(x)$ contained in the region $0 \leq x \leq N$.
+    \end{enumerate}
+\end{proposition}
+
+This then allows us to give our connection to zeroes of the power series.
+
+\begin{corollary}
+    Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots$ be a power series which converges on the closed ball
+    of radius $c = p^m$. Let $m_1,\dots, m_k$ be the slopes of the Newton polygon of $f(x)$ which
+    are less than or equal to $m$, and let $i_1,\dots,i_k$ be their lengths. Then, for each $j$, the
+    power series $f(x)$ has $i_j$ zeros with absolute value $p^{m_j}$, and there are no other zeros
+    in the closed ball of radius $p^m.$
+\end{corollary}
+
+\begin{proof}[Proof of proposition~\ref{NP}]
+    We prove this by induction on $k$:\\
+    If $k=1$, write the break point as $(N, m_1 N)$. We know all points are on or above the line
+    $y = m x$, and the ones where $j > N$ are strictly above it. This translates to
+    \begin{itemize}
+        \item $| a_j | (p^j)^{m_1} \leq 1$ for all $j$,
+        \item $| a_N | (p^N)^{m_1} = 1$, and
+        \item $| a_j | (p^{m_1})^j$ < 1 if $j > N.$
+    \end{itemize}
+    This says that $\|f(x) \|_{p^{m_1}} = 1$ and that the maximum is last realised at the degree
+    $N$. Thus, we can apply the Weierstrass preparation theorem to conclude that there is a
+    polynomial of degree $N$ and a power series $h(x)$ satisfying
+    \[
+    \| h(x) - 1 \|_{p^m_1} < 1 \quad \|f(x) - g(x)\|_{p^m_1} < \|f(x) \|_{p^m_1} \quad \text{and} \quad f(x) = g(x) h(x).
+    \]
+    Combining the middle equation with $\| f(x) \|_{p^{m_1}} < 1$ means
+    $\| f(x) - g(x) \|_{p^{m_1}} < 1$.
+    Now, using facts about Newton polygons of polynomials, it follows that the zeros of $f(x)$ in
+    the closed ball of radius $p^m$ coincide with the those of $g(x)$. That is, we must have the
+    Newton polygon of $g(x)$ coincides with the Newton polygon of $f(x)$ on $0 \leq x \leq N$.
+    Finally, we have $f(x)$ converges on the closed ball of radius $p^{m_1}$, by Theorem
+    \ref{RadofCon}, and thus so does $h(x).$
+    \\
+    By induction, assume we have $f(x) = g_{k-1}(x)h_{k-1}(x)$ for a polynomial $g_{k-1}(x)$ and
+    power series $h_{k-1}(x)$, such that the Newton polygon of $g_{k-1}(x)$ coincides with the
+    first $k-1$ segments of the polygon for $f(x)$ and $h_{k-1}(x)$ has no zeroes in the closed ball
+    of radius $p^{m_{k-1}}$.
+    \\
+    Let us now consider the $k$-th segment. By definition, the $k$-th segment ending at $x = N$
+    means that for any $i > N$, $(i, \nu_p (a_i))$ lies above the line of slope $m_k$ through the
+    point $(N, \nu_p (a_N))$. This means that, writing $c = p^{m_k}$, $\| f(x) \|_{p^{c}} =
+    \lvert a_N \rvert c^N$ and $\lvert a_n \rvert c^N > \lvert a_i \rvert c^i $ for any $i > N$.
+    Thus, we can apply the $p$-adic Weierstrass preparation theorem to get a polynomial $g(x)$.
+    It is then easy to see $g_1 (x) \mid g(x)$, and that its Newton polygon coincides with the
+    relevant portion of the Newton polygon of $f(x).$
+\end{proof}
+
+
+%% I need to re-go over this section and the proofs... plus I need to check the difference
+%% between BGR Weierstrass prep and Gouvea's -- i.e. when I apply it do I need extra justification...

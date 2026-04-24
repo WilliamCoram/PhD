@@ -1,80 +1,113 @@
 \chapter{Gauss Norm}
 
-Thus far we have shown multivariate restricted power series with paramter $c$ over a non-archimedean
-normed ring $R$ in $n$ variables form a ring. Let us again denote this ring by
-$R_c [ \! [ x_1, \dots, x_n ] \! ]$.
+Thus, far we have shown that for a non-archimedean normed ring $R$, $R_c \langle x_1, \dots, x_n \rangle$
+is a ring for any parameter $c$. We now want to endow this with a non-archimedea absolute value.
+
+Towards this let us consider the following function on multivariate power series:
 
 \begin{definition}
-Consider the following function $\lvert \cdot \rvert _c :  R_c [ \! [ x_1, \dots, x_n ] \! ] \to \R$
-defined by
+Define $\lvert \cdot \rvert _c :  R_c \langle x_1, \dots, x_n \rangle \to \R$ where
 \[
     \lvert f \rvert _c = \sup_{i \in \mathbb{N}^n} \lvert a_{(i_1, \cdots, i_n)} \rvert
-    \prod_n \lvert c \rvert _n^{i_n}.
+    \prod_n \lvert c \rvert _n^{i_n},
 \]
 for $f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$ and call this the Gauss norm
 with parameter $c$.
 \end{definition}
 
-We want to prove that this is in fact a norm and is non-archimedean.
+We may think to ask is this a norm on the whole space of multivariate power series; but this
+has a very easy answer. Simply, for a general power series
+\[
+  \sup_{i \in \mathbb{N}^n} \lvert a_{(i_1, \cdots, i_n)} \rvert
+    \prod_n \lvert c \rvert _n^{i_n}
+\]
+need not exist - specifically, unless the set is bounded above this would be undefined in $\R$.
 
-\begin{lemma}
-  Let $c$ be strictly positive, that is for all $i, 0 < c i$, then the pair
-  $( R_c [ \! [ x_1, \dots, x_n ] \! ], | \cdot |_c)$ is a non-archimedean normed ring.
-\end{lemma}
+Moreover, even if we restrict to power series that have bounded
+\[
+  \lvert a_{(i_1, \cdots, i_n)} \rvert \prod_n \lvert c \rvert _n^{i_n},
+\]
+which we will refer to as "having gauss norm". A product of two such power series need not have gauss
+norm.
+For example, consider $c = 1$ and
+\[
+  f = \sum x^n \in \Q_p [ \! [x] \! ]
+\]
+then
+\[
+  f^2 = \sum (n + 1) x^n,
+\]
+and we have $\lvert n + 1 \rvert_p \tendsto \infty$.
 
-\section{The proof}
+Nevertheless, restricting to $R_c \langle x_1, \dots, x_n \rangle$ is sufficient to prove what we want.
 
-We break this statement up into small lemmas that together prove our goal.
+\begin{theorem}
+  For $n$ a natural number, $c$ a tuple of non-zero real numbers and $R$ a non-archimedean ring. Then
+  the gauss norm is a non-archimedean absolute value on $R_c \langle x_1, \dots, x_n \rangle$.
+\end{theorem}
 
-\begin{lemma}
+\begin{remark}
+  We could alternatively define the gauss norm without $\lvert \cdot \rvert$ around the $c$ and instead
+  require that $c$ is strictly positive in the theorem. The latter is the choice we make in Lean; this is
+  to match the definition of restricted power series - where we do not have norms around the $c$ either -
+  and to prevent having $\lvert \cdot \rvert_a = \lvert \cdot \rvert_{-a}.$
+
+  We could argue to also require $0 \leq c$ in the definition of restricted power series as well, but in
+  interest of keeping definitions the most general we opt to allow negative entries in $c$.
+\end{remark}
+
+Note we really require no entries of $c$ to be zero, as it is immediate to see that in this case we
+would have $\lvert \cdot \rvert_c \equiv 0$.
+
+\section{Lean implementation}
+
+To prove the theorem, for each property of an absolute value we actually generalise the conditions
+on $R$ and $c$ as much as possible. For example, instead of $R$ being a normed ring we only impose the
+following variables:
+
+\begin{itemize}
+  \item $R$ is a semiring; and
+  \item $v$ is a function $R \to \R$.
+\end{itemize}
+
+Then when required we strengthen can strengthen $R$ to a ring and impose properties on $v$.
+
+Moreover, although we established that the gauss norm is not a norm on the space of power series -
+some properties can still be proved, and assuming the power series "has gauss norm" we can prove
+everything except multiplicativity.
+
+We will now state the harder statements we give towards showing the gauss norm is a
+non-archimedean absolute value on $R_c \langle x_1, \dots, x_n \rangle$.
+
+First, we generalise the definition of gauss norm into and formally define what we mean by a power
+series "has gauss norm".
+
+\begin{definition}
+  We define the gauss norm of a power series $f \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ as
   \[
-    \lvert 0 \rvert _c = 0.
+    \lvert f \rvert_c = \sup_{(i_1, \cdots, i_n)} v (a_{(i_1, \cdots, i_n)})  \prod_n \lvert c \rvert _n^{i_n}
+  \]
+  where $f = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$.
+\end{definition}
+
+\begin{definition}
+  Let $R$ be a semiring. We say a power series $f = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$
+  has gauss norm if the set
+  \[
+    v (a_{(i_1, \cdots, i_n)})  \prod_n \lvert c \rvert _n^{i_n}
+  \]
+  is bounded above.
+\end{definition}
+
+Then, the non-archimedean property can be stated as.
+
+\begin{lemma}
+  If $R$ is a semiring, $c$ is non-negative and $v$ is a non-negative non-archimedean function then
+  for two power series $f, g \in R_c [ \! [ x_1, \dots, x_n ] \! ]$ that have gauss norm, then
+  \[
+    \lvert f + g \rvert_c \leq \max \left\{ \lvert f \rvert_c, \lvert g \rvert_c \right\}.
   \]
 \end{lemma}
 
-\begin{proof}
-  Immediate.
-\end{proof}
-
-\begin{lemma}
-  Gauss norm is non-negative.
-\end{lemma}
-
-\begin{proof}
-  Consider when $i = (0, \cdots, 0) = 0$, then $\lvert a_0 \rvert \leq \lvert f \rvert _c.$
-  We have the LHS is greater than or equal to 0 since $R$ is a normed ring. So we are done.
-\end{proof}
-
-\begin{lemma}
-  If $c$ is strictly positive, then
-  \[
-    \lvert f \rvert _c 0 \iff f = 0.
-  \]
-\end{lemma}
-
-\begin{proof}
-  We only need the only if part. Prove this by contradiction, that is want to show $f \neq 0
-    \implies \lvert f \rvert _c \neq 0.$ This is immediate from noticing $f$ has a non-zero
-    coeffecient and since $c$ strictly positive, evaluating at the monomial with non-zero coeff, we
-    get a positive value of $\lvert a_{(i_1, \cdots, i_n)} \rvert \prod_n \lvert c \rvert _n^{i_n}$
-    and so we are done.
-\end{proof}
-
-\begin{lemma}
-  Gauss norm is non-archimedean.
-\end{lemma}
-
-\begin{proof}
-
-\end{proof}
-
-\section{Polynomials}
-
-Moreover, if we restrict ourselves to polynomials we can strenghten this.
-
-\begin{lemma}
-  The pair $(R[x], | \cdot |_c)$ is a non-archimedean valued ring. That is, $\lvert \cdot \rvert _c$
-  is an absolute value.
-\end{lemma}
-
-%% Note BGR actually shows that it is a an absolute value -- so probably should just show that first
+%% I also want to state the gaussNorm_mul_le and gaussNorm_le_mul + antidiagonal_dominant statements
+%% But need to decide how I want to do this
