@@ -1,8 +1,19 @@
-import Mathlib
+-- This is the draft PR for Newton polygons
 
-variable {Γ : Type*} [CommSemiring Γ] [Algebra Γ ℝ]
+/-
+Copyright (c) 2026 William Coram. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: William Coram
+-/
+module
 
-variable (Γ) in
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Data.Stream.Defs
+public import Mathlib.Order.WithBotTop
+public import Mathlib.Data.Seq.Basic
+@[expose] public section
+
+variable {Γ : Type*} [CommSemiring Γ] [Algebra Γ ℝ]variable (Γ) in
 /-- The result of one step of the Newton polygon algorithm. -/
 inductive Step where
   /-- No more finite values. -/
@@ -25,8 +36,6 @@ def finite (i : ℕ) : Prop := v i ≠ ⊤
 
 /-- The set of indices with finite coefficients. -/
 def support : Set ℕ := {i | finite v i}
-
-section Slopes
 
 /-- The slope from a point `(x₀, y₀)` to `(x₁, y₁)` as a real number. -/
 noncomputable
@@ -90,7 +99,7 @@ def newtonPolygon : Stream' (Option (Step Γ))
 
 section newtonPolygonAPI
 
-lemma nextStep_none  (a : ℕ) (ha : newtonPolygon v a = none) :
+lemma nextStep_none (a : ℕ) (ha : newtonPolygon v a = none) :
     newtonPolygon v (a + 1) = none := by
   simp [newtonPolygon, ha]
 
@@ -106,7 +115,7 @@ lemma nextStep_limitingRay' {a : ℕ} {m : ℝ} (ha : newtonPolygon v (a + 1) = 
     grind
   · trivial
 
-lemma nextStep_limitingRay'' {a i₀ l : ℕ} {i₁ : Γ} {m n: ℝ}
+lemma nextStep_limitingRay'' {a i₀ l : ℕ} {i₁ : Γ} {m n : ℝ}
     (ha : newtonPolygon v (a + 1) = some (.limitingRay m))
     (h : newtonPolygon v a = some (.nextVertex i₀ i₁ l n)) : nextStep v i₀ i₁ = .limitingRay m := by
   unfold newtonPolygon at ha
@@ -125,7 +134,7 @@ lemma nextStep_infiniteRay' {a : ℕ} {m : ℝ} (ha : newtonPolygon v (a + 1) = 
     grind
   · trivial
 
-lemma nextStep_infiniteRay'' {a i₀ l : ℕ} {i₁ : Γ} {m n: ℝ}
+lemma nextStep_infiniteRay'' {a i₀ l : ℕ} {i₁ : Γ} {m n : ℝ}
     (ha : newtonPolygon v (a + 1) = some (.infiniteRay m))
     (h : newtonPolygon v a = some (.nextVertex i₀ i₁ l n)) : nextStep v i₀ i₁ = .infiniteRay m := by
   unfold newtonPolygon at ha
@@ -145,7 +154,7 @@ lemma nextStep_tail' {a : ℕ} (ha : newtonPolygon v (a + 1) = some .tail) :
   · trivial
 
 lemma nextStep_nextVertex {a j₀ l : ℕ} {j₁} {m : ℝ}
-    (ha : newtonPolygon v a = some (.nextVertex j₀ j₁ l m))  :
+    (ha : newtonPolygon v a = some (.nextVertex j₀ j₁ l m)) :
     ∃ i₀ i₁, nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m := by
   unfold newtonPolygon at ha
   split at ha
@@ -209,8 +218,8 @@ def newtonPolygon_lengths : ℕ → WithTop ℕ :=
 
 
 open Classical in
-/-- The sequence of slopes of a Newton polygon are strictly increasing - except when the final output
-  is a limiting ray, then equality is possible: e.g.
+/-- The sequence of slopes of a Newton polygon are strictly increasing - except when the final
+  output is a limiting ray, then equality is possible: e.g.
   f(x) = 1 + x + p⁻¹ ∑_{n = 2}^∞ x^n. -/
 def newtonPolygon_slopes_increasing : Prop :=
   ∀ a : ℕ, if newtonPolygon v (a + 1) = none then
@@ -223,20 +232,20 @@ def newtonPolygon_slopes_increasing : Prop :=
 section nextVertexAPI
 
 lemma nextVertex_bddBelow (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     BddBelow (slopeSet v i₀ i₁) := by
   simp_rw [nextStep] at h
   grind
 
-lemma nextVertex_finite (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
+lemma nextVertex_finite (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     (achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁))).Finite := by
   rw [nextStep] at h
   split_ifs at h with _ _ h1 h2
   grind
 
-lemma nextVertex_nonEmpty (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
+lemma nextVertex_nonEmpty (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     (achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁))).Nonempty := by
   rw [nextStep] at h
   split_ifs at h with _ _ hm
@@ -245,8 +254,8 @@ lemma nextVertex_nonEmpty (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j�
   simp_rw [achievingSet]
   grind
 
-lemma nextVertex_j₀_eq_max (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : j₀ =
+lemma nextVertex_j₀_eq_max (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : j₀ =
     (nextVertex_finite v h).toFinset.max' ((nextVertex_finite v  h).toFinset_nonempty.mpr
     (nextVertex_nonEmpty v h)) := by
   simp_rw [nextStep] at h
@@ -255,8 +264,8 @@ lemma nextVertex_j₀_eq_max (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁
   · trivial
   · grind
 
-lemma nextVertex_j₀Mem (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
+lemma nextVertex_j₀Mem (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     j₀ ∈ achievingSet v i₀ i₁ (sInf (slopeSet v i₀ i₁)) := by
   have : j₀ ∈ (nextVertex_finite v h).toFinset := by
     simp_rw [nextVertex_j₀_eq_max v h]
@@ -264,35 +273,35 @@ lemma nextVertex_j₀Mem (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j�
   simp only [Set.Finite.mem_toFinset] at this
   exact this
 
-lemma nextVertex_l_eq (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : l = j₀ - i₀ := by
+lemma nextVertex_l_eq (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : l = j₀ - i₀ := by
   simp_rw [nextStep] at h
   grind
 
 lemma nextVertex_lt (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : i₀ < j₀ := by
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : i₀ < j₀ := by
   have := nextVertex_j₀Mem v h
   simp_rw [achievingSet] at this
   grind
 
-lemma nextVertex_j₁_eq (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : v j₀ = j₁ := by
+lemma nextVertex_j₁_eq (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : v j₀ = j₁ := by
   simp_rw [nextStep] at h
   split_ifs at h
   aesop
 
-lemma nextVertex_j₀Finite (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : finite v j₀ := by
+lemma nextVertex_j₀Finite (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) : finite v j₀ := by
   have := nextVertex_j₁_eq v h
   simp_all [finite]
 
-lemma nextVertex_slope_eq_sInf (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+lemma nextVertex_slope_eq_sInf (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
     (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     slopeReal i₀ j₀ i₁ j₁ = sInf (slopeSet v i₀ i₁) := by
   obtain ⟨hij, finj, j', hj', fin⟩ := nextVertex_j₀Mem v h
   simp_all [nextVertex_j₁_eq v h]
 
-lemma nextVertex_slope_eq_sInf' (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+lemma nextVertex_slope_eq_sInf' (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
     (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     m = slopeReal i₀ j₀ i₁ j₁ := by
   have := nextVertex_slope_eq_sInf v h
@@ -300,7 +309,7 @@ lemma nextVertex_slope_eq_sInf' (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i
   split_ifs at h with _ _ H
   grind
 
-lemma nextVertex_slope_eq_sInf'' (v :  ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
+lemma nextVertex_slope_eq_sInf'' (v : ℕ → WithTop Γ) {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m : ℝ}
     (h : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) :
     m = sInf (slopeSet v i₀ i₁) := by
   simpa [← nextVertex_slope_eq_sInf v h] using nextVertex_slope_eq_sInf' v h
@@ -309,14 +318,14 @@ end nextVertexAPI
 
 section infiniteRayAPI
 
-lemma infiniteRay_bddBelow (v :  ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .infiniteRay m) :
+lemma infiniteRay_bddBelow (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .infiniteRay m) :
     BddBelow (slopeSet v i₀ i₁) := by
   simp_rw [nextStep] at h
   grind
 
 lemma infiniteRay_nonempty (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .infiniteRay m) :
+    (h : nextStep v i₀ i₁ = .infiniteRay m) :
     (achievingSet v i₀ i₁ m).Nonempty := by
   simp_rw [nextStep] at h
   split_ifs at h
@@ -325,8 +334,8 @@ lemma infiniteRay_nonempty (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m 
     exact Set.Infinite.nonempty fin
   · aesop
 
-lemma infiniteRay_slope_eq_sInf (v :  ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .infiniteRay m) :
+lemma infiniteRay_slope_eq_sInf (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .infiniteRay m) :
     m = sInf (slopeSet v i₀ i₁) := by
   simp_rw [nextStep] at h
   split_ifs at h
@@ -336,8 +345,8 @@ lemma infiniteRay_slope_eq_sInf (v :  ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : �
     aesop
   · aesop
 
-lemma infiniteRay_ex (v :  ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .infiniteRay m) :
+lemma infiniteRay_ex (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
+    (h : nextStep v i₀ i₁ = .infiniteRay m) :
     ∃ j₀ : ℕ, j₀ > i₀ ∧ finite v j₀ ∧ ∃ j₁ : Γ, v j₀ = j₁ ∧  m = slopeReal i₀ j₀ i₁ j₁ := by
   obtain ⟨_, b⟩ := infiniteRay_nonempty v h
   simp_rw [achievingSet] at b
@@ -348,13 +357,13 @@ end infiniteRayAPI
 section limitingRayAPI
 
 lemma limitingRay_bddBelow (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .limitingRay m) :
+    (h : nextStep v i₀ i₁ = .limitingRay m) :
     BddBelow (slopeSet v i₀ i₁) := by
   simp_rw [nextStep] at h
   grind
 
 lemma limitingRay_nonempty (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .limitingRay m) : (slopeSet v i₀ i₁).Nonempty := by
+    (h : nextStep v i₀ i₁ = .limitingRay m) : (slopeSet v i₀ i₁).Nonempty := by
   simp_rw [nextStep] at h
   split at h
   · trivial
@@ -362,7 +371,7 @@ lemma limitingRay_nonempty (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m 
     exact Set.nonempty_iff_ne_empty.mpr fin
 
 lemma limitingRay_slope_eq_sInf (v : ℕ → WithTop Γ) {i₀ : ℕ} {i₁ : Γ} {m : ℝ}
-    (h :  nextStep v i₀ i₁ = .limitingRay m) : m = sInf (slopeSet v i₀ i₁) := by
+    (h : nextStep v i₀ i₁ = .limitingRay m) : m = sInf (slopeSet v i₀ i₁) := by
   simp_rw [nextStep] at h
   split_ifs at h
   all_goals aesop
@@ -396,7 +405,7 @@ lemma succSlope_lt_Slope {a₀ a₁ a₂ : ℝ} {b₀ b₁ b₂ : ℝ} (ha1 : a�
   rw [div_lt_iff₀' (by grind), mul_comm]
   grind
 
-lemma slopes_increasing_limitingRay  {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' : ℝ}
+lemma slopes_increasing_limitingRay {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' : ℝ}
     (h1 : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m)
     (h2 : nextStep v j₀ j₁ = .limitingRay m') : m ≤ m':= by
   simp_rw [nextVertex_slope_eq_sInf'' v h1, limitingRay_slope_eq_sInf v h2]
@@ -417,7 +426,7 @@ lemma slopes_increasing_limitingRay  {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' 
   simp_rw [hn, ← nextVertex_slope_eq_sInf v h1, slopeReal] at n_lt ⊢
   exact succSlope_lt_Slope (Nat.cast_lt.mpr (nextVertex_lt v h1)) (Nat.cast_lt.mpr hk₀) n_lt
 
-lemma slopes_increasing_infiniteRay  {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' : ℝ}
+lemma slopes_increasing_infiniteRay {i₀ j₀ l : ℕ} {i₁ j₁ : Γ} {m m' : ℝ}
     (h1 : nextStep v i₀ i₁ = .nextVertex j₀ j₁ l m) (h2 : nextStep v j₀ j₁ = .infiniteRay m') :
     m < m' := by
   obtain ⟨k₀, hk₀, k₀_fin, k₁, hk₁, rfl⟩ := infiniteRay_ex v h2
@@ -464,7 +473,7 @@ lemma nextStep_unboundedBelow (a : ℕ) (ha : newtonPolygon v a = some .unbounde
     newtonPolygon v (a + 1) = none := by
   simp [newtonPolygon, ha]
 
-lemma unboundedBelow  {i₀ : ℕ} {i₁ : Γ} (h : nextStep v i₀ i₁ = Step.unboundedBelow) :
+lemma unboundedBelow {i₀ : ℕ} {i₁ : Γ} (h : nextStep v i₀ i₁ = Step.unboundedBelow) :
     ¬ (BddBelow (slopeSet v i₀ i₁)) := by
   simp_rw [nextStep] at h
   split at h
@@ -501,9 +510,10 @@ lemma newtonPolygon_slopes_increasing' : newtonPolygon_slopes_increasing v := by
     obtain ⟨_, _, h1⟩ := nextStep_nextVertex v hm
     exact slopes_increasing_limitingRay v h1 (nextStep_limitingRay'' v hm' hm)
   · simp_rw [newtonPolygon_slopes]
-    cases' t : (newtonPolygon v (a + 1)) with val
+    cases t : (newtonPolygon v (a + 1))
     · grind
-    · cases val
+    · rename_i val
+      cases val
       · obtain ⟨_, _, _, _, hm⟩ := nextStep_tail' v t
         simp [hm, slopes', slopes]
       · grind [nextStep_unboundedBelow' v a] -- this is sorry'd for now
@@ -519,6 +529,9 @@ lemma newtonPolygon_slopes_increasing' : newtonPolygon_slopes_increasing v := by
         exact slopes_increasing_nextVertex v h1 (nextStep_nextVertex'' v t hm)
 
 
+
+/- How we construct a `v` from a power series...
+
 section PowerSeries
 
 variable {R : Type*} [Semiring R]
@@ -527,15 +540,11 @@ noncomputable
 def coeff_seq (f : PowerSeries R) (v : R → WithTop Γ) : ℕ → WithTop Γ :=
   fun i => v (PowerSeries.coeff i f)
 
-variable (f : PowerSeries ℚ_[3])
-
-#check newtonPolygon (coeff_seq f Padic.addValuation)
-
 end PowerSeries
 
+-/
 
---- Post Zulip discussion this show be the main definition, my algorithm will compute
---- something of type NewtonPolygon
+-- Post Zulip discussion
 
 def newtonPolygon_IsSeq : Stream'.IsSeq (newtonPolygon v) := fun _ ↦ by grind [newtonPolygon]
 
@@ -552,10 +561,15 @@ def finite_newtonPolygon (h : FiniteNewtonPolygon v) : List (Step Γ) :=
 structure NewtonPolygon where
   support : WithTop ℕ
   slopes : ℕ → WithTopBot ℝ
+  slopes_junk : ∀ n : ℕ, support ≤ n → slopes n = ⊥
+  -- could choose ⊤, then increasing could just be for all n
+  -- and the proof relies on seperating cases of n + 1 < support and not
+  -- when not its _ ≤ ⊤ so true
   lengths : ℕ → WithTop ℕ
+  lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
   increasing : ∀ n : ℕ, n + 1 < support → slopes n ≤ slopes (n + 1)
 
-lemma newtonPolygon_ge_length_none (n : ℕ) (h : ↑n + 1 < (newtonPolygon_seq v).length') :
+lemma newtonPolygon_lt_length_neq_none (n : ℕ) (h : ↑n + 1 < (newtonPolygon_seq v).length') :
     newtonPolygon v (n + 1) ≠ none := by
   by_contra
   suffices (newtonPolygon_seq v).length' ≤ n + 1 by
@@ -569,26 +583,37 @@ lemma newtonPolygon_ge_length_none (n : ℕ) (h : ↑n + 1 < (newtonPolygon_seq 
     exact ENat.coe_le_coe.mpr this
   exact Stream'.Seq.length_le_iff.mpr this
 
+lemma newtonPolygon_ge_length_eq_none (n : ℕ) (h : (newtonPolygon_seq v).length' ≤ ↑n) :
+    newtonPolygon v n = none := by
+  simp_rw [Stream'.Seq.length'] at h
+  split_ifs at h
+  · simp only [Nat.cast_le] at h
+    exact Stream'.Seq.length_le_iff.mp h
+  · aesop
+
 noncomputable
 def NP' : NewtonPolygon where
   support := Stream'.Seq.length' (newtonPolygon_seq v)
   slopes := newtonPolygon_slopes v
+  slopes_junk :=
+    fun n hn ↦ by simp [newtonPolygon_slopes, slopes', newtonPolygon_ge_length_eq_none v n hn]
   lengths := newtonPolygon_lengths v
+  lengths_junk :=
+    fun n hn ↦ by simp [newtonPolygon_lengths, newtonPolygon_ge_length_eq_none v n hn]
   increasing := by
     intro n hn
     have := newtonPolygon_slopes_increasing' v
     simp_rw [newtonPolygon_slopes_increasing] at this
     specialize this n
-    simp [(newtonPolygon_ge_length_none v n hn)] at this
+    simp only [(newtonPolygon_lt_length_neq_none v n hn), ↓reduceIte] at this
     split_ifs at this
     · exact this
     · exact le_of_lt this
 
-#min_imports
+variable (Γ) in
+def IsNewtonPolygon (NP : NewtonPolygon) : Prop :=
+  ∃ (v : ℕ → WithTop Γ), NP.slopes = newtonPolygon_slopes v ∧ NP.lengths = newtonPolygon_lengths v
 
-/-
-TODO:
-* Want API to say that Stream'.Seg.length' ...  is a natuarl number exactly when we have
-  FiniteNewtonPolygon (newtonPolygon v)
-
--/
+variable (Γ) in
+def IsNewtonPolygon' (NP : NewtonPolygon) : Prop :=
+  ∃ (v : ℕ → WithTop Γ), NP = NP' v
