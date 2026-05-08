@@ -87,55 +87,78 @@ noncomputable
 abbrev gaussNorm (f : PowerSeries.Restricted R c) : ℝ :=
   MvRestricted.gaussNorm R (fun _ ↦ c) f
 
+
 lemma hasGaussNorm (f : PowerSeries.Restricted R c) :
   PowerSeries.HasGaussNorm norm c f.1 := Filter.Tendsto.bddAbove_range_of_cofinite f.2
 
+variable [StrongPos (fun _ : Unit ↦ c)]
+
 noncomputable
-instance isRingNorm (hc : 0 < c) :
-    RingNorm (PowerSeries.Restricted R c) where
+instance isRingNorm : RingNorm (PowerSeries.Restricted R c) where
   toFun f := gaussNorm R c f
-  __ := MvRestricted.isRingNorm (R := R) (σ := Unit) (fun _ ↦ c) (by grind)
+  __ := MvRestricted.isRingNorm (R := R) (σ := Unit) (fun _ ↦ c)
 
 variable (R) in
 noncomputable
-instance isNormedRing (hc : 0 < c) :
-    NormedRing (PowerSeries.Restricted R c) :=
-  RingNorm.toNormedRing (isRingNorm c hc)
+instance isNormedRing : NormedRing (PowerSeries.Restricted R c) :=
+  RingNorm.toNormedRing (isRingNorm c)
 
 noncomputable
-instance isNonarchimedean (hc : 0 < c) :
-    letI := isNormedRing (R := R) c hc
+instance isNonarchimedean :
     IsNonarchimedean (R := ℝ) (α := PowerSeries.Restricted R c) norm :=
-  fun f g => PowerSeries.gaussNorm_add_le_max norm c f.1 g.1 (Std.le_of_lt hc) norm_nonneg
+  fun f g => PowerSeries.gaussNorm_add_le_max norm c f.1 g.1
+    (Std.le_of_lt (StrongPos_pos (fun _ : Unit ↦ c) 0)) norm_nonneg
     IsUltrametricDist.norm_add_le_max (hasGaussNorm c f) (hasGaussNorm c g)
 
 noncomputable
-instance isUltrametricDist (hc : 0 < c) :
-    letI := isNormedRing (R := R) c hc
+instance isUltrametricDist :
     IsUltrametricDist (PowerSeries.Restricted R c) :=
-  letI : NormedRing (PowerSeries.Restricted R c) := isNormedRing R c hc
   IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
-    (isNonarchimedean (R := R) c hc)
+    (isNonarchimedean (R := R) c)
 
--- note this should be ∃ a, gaussNorm_achieved ... f
--- the using gaussNorm_achieved_iff I can get this as an API lemma...
--- this should probably make achievingPoints_finite immediate to prove...
+
+omit [StrongPos fun _ ↦ c] in
 lemma gaussNorm_achieved (hc : 0 ≤ c) (f : PowerSeries.Restricted R c) :
-    ∃ a, ‖PowerSeries.coeff a f.1‖ * c ^ a = gaussNorm R c f := by
-  obtain ⟨a, ha⟩ := MvRestricted.gaussNorm_achieved (σ := Unit) (fun _ ↦ c) (fun i ↦ hc) f
-  use (a PUnit.unit)
-  simp_rw [gaussNorm, ← ha, PowerSeries.coeff, Finsupp.prod_pow, Finset.univ_unique,
-    PUnit.default_eq_unit, Finset.prod_singleton,
-    show (Finsupp.single () (a PUnit.unit)) = a by aesop]
+    ∃ a, PowerSeries.achievesGaussNorm norm c f.1 a := by
+  simp_rw [PowerSeries.achievesGaussNorm]
+  obtain ⟨a, _⟩ := MvRestricted.gaussNorm_achieved (σ := Unit) (fun _ ↦ c) (fun i ↦ hc) f
+  exact ⟨(a PUnit.unit), by simpa [show Finsupp.single () (a PUnit.unit) = a by grind]⟩
 
+omit [StrongPos fun _ ↦ c] in
+lemma gaussNorm_achieved' (hc : 0 ≤ c) (f : PowerSeries.Restricted R c) :
+    ∃ a, ‖PowerSeries.coeff a f.1‖ * c ^ a = gaussNorm R c f := by
+  have := gaussNorm_achieved c hc f
+  simp [PowerSeries.achievesGaussNorm_iff] at this
+  exact this
+
+omit [StrongPos fun _ ↦ c] in
 lemma achievingPoints_finite (hc : 0 ≤ c) (f : PowerSeries.Restricted R c)
     (h : gaussNorm R c f ≠ 0) :
-    {a | ‖PowerSeries.coeff a f.1‖ * c ^ a = gaussNorm R c f}.Finite := by
-  have := MvRestricted.achievingPoints_finite (fun _ ↦ c) (fun i ↦ hc) f h
+    {a | PowerSeries.achievesGaussNorm norm c f.1 a}.Finite := by
+  have := MvRestricted.achievingPoints_finite (fun _ ↦ c) (fun _ ↦ hc) f h
 
   sorry
 
 noncomputable
-instance isAbsoluteValue (hc : 0 < c) (hnorm : ∀ a b : R, norm (a * b) = norm a * norm b) :
+instance isAbsoluteValue (hnorm : ∀ a b : R, norm (a * b) = norm a * norm b) :
     IsAbsoluteValue (gaussNorm R c) :=
-  MvRestricted.isAbsoluteValue (fun _ ↦ c) (fun _ ↦ hc) hnorm
+  MvRestricted.isAbsoluteValue (fun _ ↦ c) hnorm
+
+
+end Restricted
+
+section Polynomial
+
+lemma Polynomial.IsRestricted {R : Type*} [NormedRing R] [IsUltrametricDist R] (c : ℝ)
+    (f : Polynomial R) : PowerSeries.IsRestricted c f.toPowerSeries := by
+  rw [PowerSeries.isRestricted_iff]
+  suffices {t | ¬ (‖(PowerSeries.coeff t) f.toPowerSeries‖ * c ^ t = 0)}.Finite by
+    exact tendsto_nhds_of_eventually_eq this
+  simp only [coeff_coe, mul_eq_zero, norm_eq_zero, not_or, ← mem_support_iff]
+  exact Set.Finite.sep (Finset.finite_toSet _) _
+
+def Polynomial.toRestricted {R : Type*} [NormedRing R] [IsUltrametricDist R] (c : ℝ)
+    (f : Polynomial R) : PowerSeries.Restricted R c :=
+  ⟨f.toPowerSeries, Polynomial.IsRestricted c f⟩
+
+end Polynomial
