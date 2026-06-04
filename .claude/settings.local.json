@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(lake env *)"
+      "Bash(lake env *)",
+      "Bash(cat > *)"
+    ],
+    "additionalDirectories": [
+      "/private/tmp"
     ]
   }
 }

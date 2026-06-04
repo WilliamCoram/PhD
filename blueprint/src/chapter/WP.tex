@@ -1,5 +1,9 @@
 \chapter{Weierstrass preparation}
 
+%% We are going to reformat some of this file by generalising the topological nilpotence and
+%% Power bounded defs to as in Wedhorn (see PowerBounded file)
+%% The stuff on units etc can then be proven in generality (I think)
+
 When computing zeroes of a power series it would be convenient if we could instead reduce it to
 calculating zeroes of a polynomial. This turns out to be possible for restricted power series using
 the $p$-adic Weierstrass preparation. This section is dedicated to proving this classical result. We
@@ -314,8 +318,8 @@ this is the case.
   Now assume $\lvert g \rvert = 1$. From $\tilde{w} = \tilde{e'} \tilde{g}$, we conclude that $\tilde{e'}$
   is a unit in $\res{T}_{n-1}$, and since $\res{T}_{n-1} \isom \tilde{R}[x_1, \cdots, x_{n-1}]$ this means
   $\tilde{e'}$ is a constant.
-  A fortiori this means it is a unit in $\res{T_n}$ and so invoking the above lemma it is a unit in $T_n$ and
-  we are done with the existence part.
+  A fortiori this means it is a unit in $\res{T_n}$ and so invoking the above lemma it is a unit in $T_n$
+  and we are done with the existence part.
 
   For uniqueness, suppose $g = e w$, define $r = x^s_n - w$. Then
   \[
@@ -323,4 +327,119 @@ this is the case.
   \]
   is a valid representation satisfying the conditions for Weierstrass division and therefore $e$ and
   $w$ are unique, and moreover so is $w$.
+\end{proof}
+
+
+\section{Aside lemmas to fit in}
+
+\begin{lemma}
+  Let $A$ be a complete topological ring, then each element of the form $e = 1 - y$, where $y$ is topologically
+  nilpotent, is a unit in $A$.
+  We have $ e{-1} = \sum_{n=0}^\infty = 1 + z$, where $z$ is topologically nilpotent.
+\end{lemma}
+
+\begin{proof}
+  The ring being complete we can set
+  \[
+    v = 1 + z, \quad \text{where} \quad z = \sum_{n=1}^\infty y^n.
+  \]
+  Since topological nilpotents are closed and $y^n$ is topologically nilpotent for all $n \geq 1$, we
+  get $z$ is topologically nilpotent. We have
+  \[
+    e v = (1 - y) \sum_{n = 0}^{\infty} y^n = 1
+  \]
+  i.e. $v = e^{-1}$.
+\end{proof}
+
+
+\begin{lemma}
+  Let $A$ be a complete topological space. Then a powerbounded element $a$ is a unit if and only if
+  its residue class $\tilde{a} \in \tilde{A}$ is a unit.
+\end{lemma}
+
+\begin{proof}
+  If $a$ is a uni then it is immediate that $\tilde{a}$ is a unit (take its inverse and reduce to
+  its residue class, then they are inverses in $\tilde{A}$).
+
+  To show the converse, consider a power bounded $b$ with $\tilde{a} \tilde{b} = \tilde{1}$. This
+  means $a b = 1 - x$ for some topologically nilpotent $x$. By the previous lemma we conclude that
+  $ab$ is a unit and hence $a$ is a unit.
+\end{proof}
+
+\begin{lemma}
+  If $R$ is a complete normed space and $c$ is a positive real number. Then $R_c\lvert x \rvert$
+  (restricted power series for parameter $c$) is complete with respect to the gauss norm.
+\end{lemma}
+
+\begin{proof}
+  Let $(f_i) = (s\sum_{n = 0}^\infty a_{n,i} x^n)_i$ be a Cauchy sequence in $R\lvert x \rvert$.
+  Since
+  \[
+  \lvert a_{n,i+1} - a_{n,i} \rvert * c^n \leq \lvert f_{i+1} - f_i \rvert
+  \]
+  (by writing out the definition of gauss norm of $f_{i+1} - f_i$) for fixed $n$, we see that each
+  sequence $(a_{n,i})_i$ is a Cauchy sequence in $R$.
+
+  Let $a_n$ be a limit of this sequence and set
+  \[
+    f = \sum_{n = 0}^\infty a_n x^n.
+  \]
+  We want to show that $f$ is a restricted power series for parameter $c$ and that
+  \[
+    \lim_{i \to \infty} \lvert f - f_i \rvert = 0.
+  \]
+  We may assume $\lvert f_j - f_i \rvert \leq 1 / i$ for all $j \geq i$.
+  From all $\lvert a_{n,j} - a_{n,i} \rvert * c^n \leq 1/i$ we deduce by continuity of the norm on $R$
+  that $\lvert a_n - a_{n,i} \rvert * c^n \leq 1 / i$ for all $n \geq 0$ and all $i$. For $n$ big enough
+  we have $\lvert a_{n,i} \rvert *c^n < 1 /i$ since $f_i$ is restricted.
+  Therefore, $\lvert a_n \rvert * c^n \leq 1/i$ and we get $f$ is restricted.
+
+  Furthermore, we have
+  \[
+    \lvert f - f_i \rvert = \max \lvert a_n - a_{n,i} \rvert c^n \leq 1/i
+  \]
+  and, so we see $f$ is the limit of $f_i$.
+\end{proof}
+
+\begin{lemma}
+  If $R$ is complete so is $\pb{R}$ the ring of power bounded elements.
+\end{lemma}
+
+\begin{proof}
+  $\pb{R}$ is closed in a complete space.
+\end{proof}
+
+\begin{lemma}
+  We have $\pb{R} \langle x \rangle = \pb{R \langle x \rangle}$ and
+  $\tn{R} \langle x \rangle = \tn{R \langle x \rangle}.$
+\end{lemma}
+
+\begin{proof}
+  %% This needs to be copied out... concern is that this may need to be an isometry...
+  %% which is not hard but just more work
+  %% perhaps I can see if the proof really needs it
+  %% Otherwise perhaps I just want this as a statement saying that something in the LHS
+  %% is powerbounded or topologically nilpotent respectively in the whole space
+  %% which seems like it would be better
+  %% I can then also have this as an iff if I want
+\end{proof}
+
+
+\begin{lemma}
+  Let $R$ be complete. An element $f = \sum_{n = 0}^\infty a_n x^n \in \pb{R} \langle x \rangle$ (that
+  is every coefficient is power bounded) is a unit in $\pb{R} \langle x \rangle$ if and only if $a_0$
+  is a unit and $a_n$ is topologically nilpotent for all $n > 0$.
+\end{lemma}
+
+\begin{proof}
+  Since $\pb{R}$ is complete we have $\pb{A} \langle x \rangle$ is also complete. Then by an earlier
+  lemma we have that $f$ is a unit in $\pb{R} \langle x \rangle$ if and only if its residue class
+  $ \tilde{f} = \sum_{n=0}^\infty \tilde{a}_n x^n$ is a unit.
+  Moreover, we have that $a_0$ is a unit in $\pb{R}$ if and only if $\tilde{a_0}$ is a unit.
+
+  Therefore, it is enough to show that any unit in the residue class is a unit in $\tilde{R}$, that
+  is its a constant power series.
+  %% This statement may have some nuance...
+  %% For example, we want the reduction \tilde{R \langle x \rangle } to be \tilde{R} \langle x \rangle
+  %% This may be done seperately or see if it can be avoided.
 \end{proof}

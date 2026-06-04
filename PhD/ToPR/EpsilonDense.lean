@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Analysis.RCLike.Basic
+import Mathlib.Data.Real.StarOrdered
+import Mathlib.Topology.MetricSpace.HausdorffDistance
 
 variable (G H : Type*) [SeminormedGroup G] (H : Subgroup G)
 
@@ -14,9 +16,11 @@ namespace SeminormedGroup
 @[to_additive]
 def epsilonDense (ε : ℝ) : Prop := ∀ g : G, ∃ h : H, ‖g⁻¹ * (h : G)‖ ≤ ε * ‖g‖
 
+@[to_additive]
 lemma closure_eq : closure (H : Set G) = {x | Metric.infDist x (H : Set G) = 0} := by
   ext; exact Metric.mem_closure_iff_infDist_zero ⟨1, H.one_mem⟩
 
+@[to_additive]
 lemma dense_epsilonDense (ε : ℝ) (hε : ε ∈ Set.Ioo 0 1) (Hd : SeminormedGroup.epsilonDense G H ε) :
     Dense (H : Set G) := by
   suffices ∀ x : G, Metric.infDist x H = 0 by

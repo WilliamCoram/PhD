@@ -197,7 +197,7 @@ def slopes : Step Γ → WithTopBot ℝ
 /-- Raising slopes to `Option (Step Γ)`. -/
 def slopes' : Option (Step Γ) → WithTopBot ℝ
   | some S => slopes S
-  | none => ⊥
+  | none => ⊤
 
 /-- The sequence of slopes of a Newton polygon. -/
 noncomputable
@@ -490,12 +490,18 @@ lemma nextStep_unboundedBelow' (a : ℕ) : newtonPolygon v (a + 1) ≠ some (.un
   · rename_i _ i₀ i₁ l m h
     by_contra
     simp only [Option.some.injEq] at this
-    have := unboundedBelow v this
-    have h := nextStep_nextVertex v h
-    obtain ⟨_, _, T⟩ := h
-    have contra := nextVertex_bddBelow v T
-
-    sorry
+    obtain ⟨p₀, p₁, T⟩ := nextStep_nextVertex v h
+    apply unboundedBelow v this
+    refine ⟨m, ?_⟩
+    rintro x ⟨k₀, hk₀, k₀_fin, k₁, hk₁, rfl⟩
+    by_contra hlt
+    simp_rw [nextVertex_slope_eq_sInf' v T, not_le] at hlt
+    have : slopeReal p₀ k₀ p₁ k₁ < slopeReal p₀ i₀ p₁ i₁ :=
+      succSlope_lt_Slope (Nat.cast_lt.mpr (nextVertex_lt v T)) (Nat.cast_lt.mpr hk₀) hlt
+    have : slopeReal p₀ i₀ p₁ i₁ ≤ slopeReal p₀ k₀ p₁ k₁ := by
+      simpa [← nextVertex_slope_eq_sInf v T] using csInf_le (nextVertex_bddBelow v T)
+        ⟨k₀, (nextVertex_lt v T).trans hk₀, k₀_fin, k₁, hk₁, rfl⟩
+    grind
   · simp
 
 end unboundedBelowAPI
@@ -561,13 +567,26 @@ def finite_newtonPolygon (h : FiniteNewtonPolygon v) : List (Step Γ) :=
 structure NewtonPolygon where
   support : WithTop ℕ
   slopes : ℕ → WithTopBot ℝ
-  slopes_junk : ∀ n : ℕ, support ≤ n → slopes n = ⊥
-  -- could choose ⊤, then increasing could just be for all n
-  -- and the proof relies on seperating cases of n + 1 < support and not
-  -- when not its _ ≤ ⊤ so true
+  slopes_junk : ∀ n : ℕ, support ≤ n → slopes n = ⊤
   lengths : ℕ → WithTop ℕ
   lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
-  increasing : ∀ n : ℕ, n + 1 < support → slopes n ≤ slopes (n + 1)
+  increasing : ∀ n : ℕ, slopes n ≤ slopes (n + 1)
+
+variable (Γ) in
+structure NewtonPolygon_test where
+  starting_point : WithTopBot ℤ × WithTopBot Γ
+  -- needed for the idea justifying concept of newton polygons being "below" another
+  support : WithTop ℤ × WithTop ℤ
+  -- support will really only be WithTop ℕ, but to make slopes_junk work we require them in ℤ
+  slopes : ℤ → WithTopBot ℝ
+  -- with slopes to the right indexed from 0
+  -- slopes to the left indexed from -1
+  slopes_junk_bot : ∀ n : ℤ, n + 1 ≤ - support.1 → slopes n = ⊥
+  -- e.g. if support = (1,_) we need slopes -1 to be defined
+  slopes_junk_top : ∀ n : ℤ, support.2 ≤ n → slopes n = ⊤
+  lengths : ℤ → WithTop ℕ
+  lengths_junk : ∀ n : ℤ, (n + 1 ≤ - support.1 ∨ support.2 ≤ n) → lengths n = 0
+  increasing : ∀ n, slopes n ≤ slopes (n + 1)
 
 lemma newtonPolygon_lt_length_neq_none (n : ℕ) (h : ↑n + 1 < (newtonPolygon_seq v).length') :
     newtonPolygon v (n + 1) ≠ none := by
@@ -601,14 +620,75 @@ def NP' : NewtonPolygon where
   lengths_junk :=
     fun n hn ↦ by simp [newtonPolygon_lengths, newtonPolygon_ge_length_eq_none v n hn]
   increasing := by
-    intro n hn
-    have := newtonPolygon_slopes_increasing' v
-    simp_rw [newtonPolygon_slopes_increasing] at this
-    specialize this n
-    simp only [(newtonPolygon_lt_length_neq_none v n hn), ↓reduceIte] at this
+    intro n
+    have := (newtonPolygon_slopes_increasing' v) n
     split_ifs at this
+    · simp_all [newtonPolygon_slopes, slopes']
     · exact this
     · exact le_of_lt this
+
+open Classical in
+noncomputable
+def NP'' : NewtonPolygon_test Γ where
+  starting_point := if h : ∃ a b, findFirstFinite v 0 = some (a, b) then sorry else (0, 0)
+  support := (0, WithTop.map (fun (n : ℕ) ↦ (n : ℤ)) (Stream'.Seq.length' (newtonPolygon_seq v)))
+  slopes := fun a ↦ if a < 0 then ⊥ else newtonPolygon_slopes v a.toNat
+  slopes_junk_bot := by
+    intro n hn
+    simp at hn
+    split_ifs with h
+    · rfl
+    · simp only [not_lt] at h
+      simp_rw [WithTop.le_iff_forall, WithTop.zero_eq_coe, forall_eq] at hn
+      obtain ⟨_, ⟨⟨_, _⟩, _⟩⟩ := hn -- this seems hacky; probably can extract a general statement as API
+      grind
+  slopes_junk_top := by
+    refine fun n hn ↦ ?_
+    split_ifs with h
+    · simp_all
+      have : 0 ≤ n := by
+        -- same proof as below, should be extracted as API
+        sorry
+      grind
+    · have : (newtonPolygon_seq v).length' ≤ n.toNat := by
+        simp only at hn
+        -- extract as API
+        sorry
+      simp [newtonPolygon_slopes, slopes', newtonPolygon_ge_length_eq_none v n.toNat this]
+  lengths := fun a ↦ if a < 0 then 0 else newtonPolygon_lengths v a.toNat
+  lengths_junk := by
+    simp
+    intro n hn
+    cases hn
+    · intro
+      rename_i hn _
+      simp_rw [WithTop.le_iff_forall, WithTop.zero_eq_coe, forall_eq] at hn
+      obtain ⟨_, ⟨⟨_, _⟩, _⟩⟩ := hn -- more hacks
+      grind
+    · intro _
+      rename_i hn _
+      have : (newtonPolygon_seq v).length' ≤ n.toNat := by
+        simp only at hn
+
+        sorry
+      simp_rw [newtonPolygon_lengths, newtonPolygon_ge_length_eq_none v n.toNat this]
+  increasing := by
+    intro n
+    split_ifs
+    · rfl
+    · simp
+    · grind
+    · have := (newtonPolygon_slopes_increasing' v) n.toNat
+      split_ifs at this
+      · simp_all [newtonPolygon_slopes, slopes']
+        have : n.toNat + 1 = (n + 1).toNat := by grind
+        aesop
+      · have h : n.toNat + 1 = (n + 1).toNat := by grind
+        simp_rw [h] at *
+        exact this
+      · have h : n.toNat + 1 = (n + 1).toNat := by grind
+        simp_rw [h] at *
+        exact le_of_lt this
 
 variable (Γ) in
 def IsNewtonPolygon (NP : NewtonPolygon) : Prop :=

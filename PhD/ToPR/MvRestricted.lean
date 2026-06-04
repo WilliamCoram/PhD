@@ -55,6 +55,9 @@ noncomputable
 instance isNormedRing [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
   NormedRing (MvPowerSeries.Restricted R c) := RingNorm.toNormedRing (isRingNorm c)
 
+lemma norm_eq [NormedRing R] [IsUltrametricDist R] [StrongPos c] (f : MvPowerSeries.Restricted R c) :
+    ‖f‖ = MvPowerSeries.gaussNorm (norm : R → ℝ) c f.1 := by rfl
+
 variable (R) in
 noncomputable
 instance isNonarchimedean [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
@@ -181,12 +184,6 @@ instance isAbsoluteValue [NormedRing R] [IsUltrametricDist R] [LinearOrder σ] [
 end AbsoluteValue
 
 end MvRestricted
-
--- need to move this
-lemma Filter.Tendsto_finite_image_cofinite {α : Type u_1} {β : Type u_2} [TopologicalSpace β]
-    (f : α → β)  (a : β) (hf : {t | ¬ f t = a}.Finite) :
-    Tendsto f cofinite (nhds a) := by
-  exact tendsto_nhds_of_eventually_eq hf
 
 section MvPolynomial
 

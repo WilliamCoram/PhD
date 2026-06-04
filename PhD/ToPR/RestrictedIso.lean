@@ -146,13 +146,159 @@ lemma finSuccEquiv_restricted_image :
 
 variable (R) in
 noncomputable
-def MvRestricted.finSuccEquiv :
-    MvPowerSeries.Restricted R c ≃+*
-    PowerSeries.Restricted (MvPowerSeries.Restricted R (Fin.tail c)) (c 0) := by
-  have := RingEquiv.subringMap (s := (MvPowerSeries.isSubring (R := R) c))
-    (MvPowerSeries.finSuccEquiv R n).toRingEquiv
-  rw [finSuccEquiv_restricted_image n c] at this
-  exact (this).trans (Subring.equivMapOfInjective
+def MvRestricted.finSuccEquiv : MvPowerSeries.Restricted R c ≃+*
+    PowerSeries.Restricted (MvPowerSeries.Restricted R (Fin.tail c)) (c 0) :=
+  ((RingEquiv.subringMap (s := (MvPowerSeries.isSubring (R := R) c))
+  (MvPowerSeries.finSuccEquiv R n).toRingEquiv).trans
+  (RingEquiv.subringCongr (finSuccEquiv_restricted_image n c))).trans
+  (Subring.equivMapOfInjective _ _ (PowerSeries.map_injective _ Subtype.val_injective)).symm
+
+instance : StrongPos (fun _ : Unit ↦ c 0) where
+  pos := by simpa using StrongPos.pos 0
+
+lemma MvRestricted.map_finSuccEquiv (f : MvPowerSeries.Restricted R c) :
+    PowerSeries.map (MvPowerSeries.isSubring (R := R) (Fin.tail c)).subtype
+        (MvRestricted.finSuccEquiv R n c f).1 = MvPowerSeries.finSuccEquiv R n f.1 := by
+  let e2 := Subring.equivMapOfInjective
     (PowerSeries.isSubring (R := MvPowerSeries.Restricted R (Fin.tail c)) (c 0))
     (PowerSeries.map (MvPowerSeries.isSubring (R := R) (Fin.tail c)).subtype)
-    (PowerSeries.map_injective _ Subtype.val_injective)).symm
+    (PowerSeries.map_injective _ Subtype.val_injective)
+  show (e2 (e2.symm ((RingEquiv.subringCongr (finSuccEquiv_restricted_image n c))
+    (RingEquiv.subringMap (MvPowerSeries.finSuccEquiv R n).toRingEquiv f)))).1 = _
+  aesop -- proof done by Claude magic?
+
+-- this is an important lemma to have... perhaps I can do it without the above statement though?
+lemma MvRestricted.coeff_finSuccEquiv (f : MvPowerSeries.Restricted R c) (i : ℕ) :
+    (PowerSeries.coeff i (MvRestricted.finSuccEquiv R n c f).1).1 =
+    PowerSeries.coeff i (MvPowerSeries.finSuccEquiv R n f.1) := by
+  have := MvRestricted.map_finSuccEquiv n c f
+  apply_fun PowerSeries.coeff i at this
+  simpa using this
+
+-- Claude proof after initial simps to prompt in right direction
+variable (R) in
+lemma MvRestricted_finSuccEquiv_norm_eq_norm (f : MvPowerSeries.Restricted R c) :
+    Restricted.gaussNorm _ (c 0) (MvRestricted.finSuccEquiv R n c f) =
+    MvRestricted.gaussNorm R c f := by
+  simp_rw [Restricted.gaussNorm, MvRestricted.gaussNorm, MvPowerSeries.gaussNorm]
+  simp only [Finsupp.prod_pow, Finset.univ_unique, PUnit.default_eq_unit, Finset.prod_singleton]
+  simp_rw [MvRestricted.norm_eq, MvPowerSeries.gaussNorm]
+  simp_rw [Real.iSup_mul_of_nonneg (pow_nonneg ((StrongPos_pos c 0).le) _)]
+  -- Pointwise identity relating the LHS expression to the RHS expression under the cons bijection
+  have hpointwise : ∀ (t : Unit →₀ ℕ) (i : Fin n →₀ ℕ),
+      (‖MvPowerSeries.coeff i (MvPowerSeries.coeff t (MvRestricted.finSuccEquiv R n c f).1).1‖ *
+        i.prod (fun x1 x2 => Fin.tail c x1 ^ x2)) * c 0 ^ t PUnit.unit =
+      ‖MvPowerSeries.coeff (Finsupp.cons (t ()) i) f.1‖ *
+        ∏ a, c a ^ (Finsupp.cons (t ()) i) a := by
+    intro t i
+    have ht : MvPowerSeries.coeff t (MvRestricted.finSuccEquiv R n c f).1 =
+        PowerSeries.coeff (t ()) (MvRestricted.finSuccEquiv R n c f).1 := by
+      conv_lhs => rw [show t = Finsupp.single () (t ()) from Finsupp.unique_single t]
+      rfl
+    rw [ht, MvRestricted.coeff_finSuccEquiv, MvPowerSeries.coeff_coeff_finSuccEquiv,
+      Fin.prod_univ_succ, Finsupp.prod_pow]
+    simp only [Finsupp.cons_zero, Finsupp.cons_succ, Fin.tail]
+    ring
+  -- The LHS function (over the product) is bounded above by the gaussNorm of f
+  have hbd : BddAbove (Set.range (fun (p : (Unit →₀ ℕ) × (Fin n →₀ ℕ)) =>
+      (‖MvPowerSeries.coeff p.2
+          (MvPowerSeries.coeff p.1 (MvRestricted.finSuccEquiv R n c f).1).1‖ *
+        p.2.prod (fun x1 x2 => Fin.tail c x1 ^ x2)) * c 0 ^ p.1 PUnit.unit)) := by
+    obtain ⟨B, hB⟩ := MvRestricted.hasGaussNorm c f
+    refine ⟨B, ?_⟩
+    rintro y ⟨⟨t, i⟩, rfl⟩
+    show (‖MvPowerSeries.coeff i (MvPowerSeries.coeff t (MvRestricted.finSuccEquiv R n c f).1).1‖ *
+        i.prod (fun x1 x2 => Fin.tail c x1 ^ x2)) * c 0 ^ t PUnit.unit ≤ B
+    rw [hpointwise t i]
+    exact hB ⟨Finsupp.cons (t ()) i, by simp [Finsupp.prod_pow]⟩
+  -- Combine the iterated sup on the LHS into a single sup over the product
+  rw [← ciSup_prod hbd]
+  -- Reindex via the cons bijection
+  let e : (Unit →₀ ℕ) × (Fin n →₀ ℕ) ≃ (Fin (n + 1) →₀ ℕ) :=
+    { toFun := fun p => Finsupp.cons (p.1 ()) p.2
+      invFun := fun s => (Finsupp.single () (s 0), Finsupp.tail s)
+      left_inv := by
+        rintro ⟨t, i⟩
+        show (Finsupp.single () (Finsupp.cons (t ()) i 0),
+            Finsupp.tail (Finsupp.cons (t ()) i)) = (t, i)
+        rw [Finsupp.cons_zero, Finsupp.tail_cons, ← Finsupp.unique_single t]
+      right_inv := by
+        intro s
+        show Finsupp.cons ((Finsupp.single () (s 0)) ()) (Finsupp.tail s) = s
+        rw [Finsupp.single_eq_same, Finsupp.cons_tail] }
+  refine e.iSup_congr ?_
+  rintro ⟨t, i⟩
+  exact (hpointwise t i).symm
+
+variable (R) in
+noncomputable
+instance MvRestricted.finSuccIsometry' :
+    RingHomIsometric (MvRestricted.finSuccEquiv R n c).toRingHom where
+  norm_map := by convert MvRestricted_finSuccEquiv_norm_eq_norm R n c
+
+variable (R) in
+noncomputable
+def MvRestricted.finSuccIsometry : MvPowerSeries.Restricted R c ≃ᵢ
+    PowerSeries.Restricted (MvPowerSeries.Restricted R (Fin.tail c)) (c 0) := IsometryEquiv.mk
+  (MvRestricted.finSuccEquiv R n c).toEquiv
+  (RingHom.isometry (MvRestricted.finSuccEquiv R n c).toRingHom)
+
+variable (R) in
+noncomputable
+def foo (c : Fin 0 → ℝ) [StrongPos c] : MvPowerSeries.Restricted R c ≃+* R := by
+  have hSub : MvPowerSeries.isSubring (R := R) c = ⊤ := by
+    refine SetLike.ext fun f => ⟨fun _ => trivial, fun _ => ?_⟩
+    show MvPowerSeries.IsRestricted c f
+    rw [MvPowerSeries.IsRestricted, Filter.cofinite_eq_bot]
+    exact tendsto_bot
+  exact ((RingEquiv.subringCongr hSub).trans Subring.topEquiv).trans
+    (RingEquiv.ofBijective MvPowerSeries.C
+      ⟨MvPowerSeries.C_injective, MvPowerSeries.C_surjective⟩).symm
+
+variable (R) in
+noncomputable
+instance foo_isom' (c : Fin 0 → ℝ) [StrongPos c] :
+    RingHomIsometric (foo R c).toRingHom where
+  norm_map := by
+    intro f
+    have hSub : MvPowerSeries.isSubring (R := R) c = ⊤ := by
+      refine SetLike.ext fun g => ⟨fun _ => trivial, fun _ => ?_⟩
+      show MvPowerSeries.IsRestricted c g
+      rw [MvPowerSeries.IsRestricted, Filter.cofinite_eq_bot]
+      exact tendsto_bot
+    have hf : MvPowerSeries.C (foo R c f) = f.1 := by
+      change (RingEquiv.ofBijective MvPowerSeries.C
+          ⟨MvPowerSeries.C_injective, MvPowerSeries.C_surjective⟩)
+        ((RingEquiv.ofBijective MvPowerSeries.C
+          ⟨MvPowerSeries.C_injective, MvPowerSeries.C_surjective⟩).symm
+          (Subring.topEquiv ((RingEquiv.subringCongr hSub) f))) = f.1
+      rw [RingEquiv.apply_symm_apply]
+      rfl
+    show ‖foo R c f‖ = MvPowerSeries.gaussNorm norm c f.1
+    show ‖foo R c f‖ = ⨆ t : Fin 0 →₀ ℕ, ‖MvPowerSeries.coeff t f.1‖ * t.prod (c · ^ ·)
+    rw [ciSup_subsingleton (0 : Fin 0 →₀ ℕ), Finsupp.prod_zero_index, mul_one, ← hf,
+      MvPowerSeries.coeff_zero_C]
+
+noncomputable
+def foo_isom (c : Fin 0 → ℝ) [StrongPos c] : MvPowerSeries.Restricted R c ≃ᵢ R := IsometryEquiv.mk
+  (foo R c).toEquiv (RingHom.isometry (foo R c).toRingHom)
+
+variable (R) in
+lemma MvRestricted.isCompleteSpace' [CompleteSpace R] :
+    CompleteSpace (PowerSeries.Restricted (MvPowerSeries.Restricted R (Fin.tail c)) (c 0)) := by
+  induction n with
+  | zero =>
+    haveI : CompleteSpace (MvPowerSeries.Restricted R (Fin.tail c)) := IsometryEquiv.completeSpace
+      (foo_isom _)
+    exact Restricted.isCompleteSpace _
+  | succ n ih =>
+    haveI : CompleteSpace (MvPowerSeries.Restricted R (Fin.tail c)) :=
+      IsometryEquiv.completeSpace (MvRestricted.finSuccIsometry _ _ _)
+    exact Restricted.isCompleteSpace _
+
+
+-- this should be moved to MvRestricted!
+instance MvRestricted.isCompleteSpace [CompleteSpace R] :
+    CompleteSpace (MvPowerSeries.Restricted R c) := by
+  exact @IsometryEquiv.completeSpace _ _ _ _ (MvRestricted.isCompleteSpace' R n c)
+    (MvRestricted.finSuccIsometry R n c)
