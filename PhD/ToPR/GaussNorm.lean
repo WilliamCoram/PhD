@@ -101,6 +101,13 @@ lemma gaussNorm_eq_zero_iff (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
   MvPowerSeries.gaussNorm_eq_zero_iff v (fun _ ↦ c) f vZero vNonneg h_eq_zero
     (by grind) hbd
 
+lemma gaussNorm_pos (hf : f ≠ 0) (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+    (h_eq_zero : ∀ x : R, v x = 0 → x = 0) (hc : 0 < c) (hbd : HasGaussNorm v c f) :
+    0 < gaussNorm v c f := by
+  contrapose hf
+  exact (gaussNorm_eq_zero_iff v c f vZero vNonneg h_eq_zero hc hbd).mp (le_antisymm (by grind)
+    (gaussNorm_nonneg v c f vNonneg))
+
 lemma gaussNorm_add_le_max (g : PowerSeries R) (hc : 0 ≤ c)
     (vNonneg : ∀ a, v a ≥ 0) (hv : ∀ x y, v (x + y) ≤ max (v x) (v y))
     (hbfd : HasGaussNorm v c f) (hbgd : HasGaussNorm v c g) :

@@ -1,0 +1,123 @@
+\chapter{Restricted Power Series}
+
+Recall formal multivariate power series over a set $K$ in $n$ variables, written
+$K [ \! [ x_1, \dots, x_n ] \! ]$ are infinite sums
+\[
+  f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n},
+\]
+where the sum is taken over all $n$-tuples $(i_1, \cdots i_n)$ with $i_j \in \mathbb{N}$ and
+$a_{(i_1, \cdots, i_n)} \in K$.
+
+When $K$ is a ring, formal multivariate power series form a ring, and we shall refer to them as the
+ring of power series over $K$.  We again denote such rings using $K [ \! [ x_1, \dots, x_n ] \! ]$.
+
+Note, henceforth we shall drop the word multivariate and just say power series for simplicity.
+
+We define a subset of $K [ \! [ x_1, \dots, x_n ] \! ]$ that consists of power series whose coefficients
+approach zero in the cofinite filer.
+
+\begin{definition}
+  Let $f$ be a power series over a nonarchimedean normed ring $R$ in $n$ variables, write
+  $f(x) = \sum a_{(i_1, \cdots, i_n)} x_1^{i_1} \cdots x_n^{i_n}$, and let
+  $c = (c_1, \cdots, c_n)$ be an $n$-tuple of real numbers.
+  We say $f$ is a restricted power series of parameter $c$ over $R$ in $n$ variables if
+  \[
+    \lim_{n \to \infty} \left\lvert a_{(i_1, \cdots, i_n)} \right\rvert \prod_{j=1}^{n} c_j^{i_j} = 0
+  \]
+  in the cofinite topology.
+
+  We denote the ring of restricted power series of parameter $c$ over $R$ in $n$ variables by
+  $R_c \langle \! x_1, \dots, x_n \! \rangle$.
+\end{definition}
+
+The key specification of this will be when $c = 1$ and $R$ is a nonarchimedean normed field. We will
+call such rings the Tate algebra and denote it as $T_n$.
+
+Note there is an alternative definition \cite{...} %%Def from wikipedia for now... think Judiths
+%% notes could be used for tis
+
+\begin{definition}
+  Let $A$ be a linearly topologised ring, seperated and complete and $\{ I_\lamda \}$ the fundamental
+  system of open ideals. Then the ring of restricted power series is defined as the projective limit
+  of the polynomial rings over $A / I_\lambda$:
+  \[
+    A \langle \! x_1, \dots, x_n \! \rangle = \varprojlim_\lambda A / I_\lambda [x_1, \dots, x_n].
+  \]
+\end{definition}
+
+It is not hard to see that we can identify such rings with our initial definition since each $I_\lambda$
+contains all but finitely many coefficients. We decide to formalise the definition in Lean as the former
+as this will be more convenient for computations. But API saying it is equivalent to this projective
+limit should be added to Mathlib eventually.
+
+In literature, the ring of restricted power series are sometimes only defined for non-negative $c$-tuples,
+\cite{Gouvea}, however we note by the following lemma that this does not matter and keeping with
+Mathlib generality we allow any $c$.
+
+\begin{lemma}
+  A power series $f$ is restricted for parameter $c$ if and only if it is restricted for parameter
+  $\lvert c \rvert$.
+\end{lemma}
+
+\section{Structure}
+
+In the definition we call restricted power series a ring, so we better hope they are a ring. Most of
+the ring axioms follow immediately from the definition of being restricted, the exceptions are
+closure of the operations.
+Addition follows from the usual squeeze theorem, but multiplication is of
+more interest.
+The nuance comes from coefficients of the product being antidiagonal sums of coefficients
+of the two power series, and it may not be immediately clear that we will get the wanted restricted
+condition.
+
+To prove closure of multiplication we will use the two more general lemmas.
+
+We first give the definition of the antidiagonal property on additive monoids.
+
+\begin{definition} % HasAntidiagonal Algebra.Order.Antidiag
+  An additive monoid, $M$ is said to have the antidiagonal property if there exists a function
+  $ \phi : M \to {S | S \subset M \times M, \; S \text{ finite}}$ such that for $(s_1, s_2) \in \phi (m)$
+  $s_1 + s_2 = m$.
+\end{definition}
+
+A typical example of a monoid having the antidiagonal property is $\mathbb{N}$, but it should be
+immediate to see that $\mathbb{Z}$ does not. This property's importance can be seen in definitions
+of Laurent series and Hahn series. %% Could explain what I mean by this
+
+
+%% I think I may need a few definitions discussing how Lean handles filters and convergence
+%% It is worth remarking that with Leans vast filter library we rarely need to resort to hard
+%% analysis
+\begin{lemma}
+  Let $M$ be an additive monoid that has the antidiagonal property and $f : M \times M \to R$ be
+  a function to a linearly ordered set, that has a filter $F$. If for every neighbourhood
+  $a$ in $F$, the preimage of $a$ under $f$ is a neighbourhood hood in the cofinite filter,
+  %% If I give a definition of tendsto I can avoid this
+  then for every neighbourhood of $a$ in $F$, the primeage of $a$ under the image of the supremum of the
+  antidiagonal of $a$ under $f$ is a neighbourhood in the cofinite filter.
+\end{lemma}
+
+\begin{lemma}
+  Let $M$ be an additive monoid with the antidiagonal property; $S$ a nonarchimedean normed
+  ring; $C : M \to \R$ be a function such that $C (a + b) = C (a) * C (b)$; and $f, g : M \to S$.
+  Then if we have the functions $i \mapsto \lvert f(i)  \rvert * C(i)$ and
+  $i \mapsto \lvert g(i) \rvert * C(i)$ tend to zero under the cofinite filter (that is for all
+  neighbourhoods of 0 the preimage of the function is a neighbourhood in the cofinite filter). Then
+  the function $a \mapsto \lvert \sum_{p \in \text{antidiagonal} a} f (p.1) g (p.2) \rvert * C (a)$
+  tends to zero under the cofinite filter.
+\end{lemma}
+
+The closure of multiplication is then immediate taking $C$ to be $i \mapsto \prod c_i^i$ and $f, g$
+the coefficient function mapping a power series to its coefficients, since the conditions about tending
+to zero are just the definition of $f,g$ being restricted power series.
+
+\section{Remarks}
+
+As with many things there are decisions on typing in Mathlib, because we want to work with the ring
+of restricted power series as their own thing, and not just power series that are restricted, we
+first show the structure properties on power series with a predicate saying that they are restricted.
+%% e.g. add the IsRestricted def here
+After we show they are a subring of power series we then promote them to their own type. However,
+note this means given something of type power series we have a tuple of information: a power series;
+and a proof that it is restricted. Therefore, if we want to apply results on power series to the
+type of restricted power series we can just apply them on the first term.

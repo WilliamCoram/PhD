@@ -4,6 +4,9 @@ import Mathlib.Analysis.Normed.Ring.Lemmas
 import Mathlib.Analysis.SpecificLimits.Basic
 import PhD.PR'd.TopologicallyNilpotent
 
+import Mathlib.Analysis.Normed.Group.Ultra
+import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
+
 open Filter Topology Pointwise Polynomial
 
 namespace IsTopologicallyNilpotent
@@ -35,6 +38,19 @@ lemma norm_lt_one {x : R} (hx : IsTopologicallyNilpotent x) : ‖x‖ < 1 := by
 
 lemma iff_norm_lt_one {x : R} : IsTopologicallyNilpotent x ↔ ‖x‖ < 1 :=
   ⟨norm_lt_one, of_norm_lt_one⟩
+
+end SemiormedRing
+
+section NormedRing
+
+variable {R : Type*} [NormedRing R] [IsUltrametricDist R] [CompleteSpace R]
+
+lemma isUnit_one_sub_of_isTopologicallyNilpotent {y : R} (hy : IsTopologicallyNilpotent y) :
+    IsUnit (1 - y) := by
+  have := NonarchimedeanAddGroup.summable_of_tendsto_cofinite_zero (by rwa [Nat.cofinite_eq_atTop])
+  exact ⟨⟨1 - y, ∑' n, y ^ n, this.one_sub_mul_tsum_pow, this.tsum_pow_mul_one_sub⟩, rfl⟩
+
+end NormedRing
 
 section NormedCommRing
 

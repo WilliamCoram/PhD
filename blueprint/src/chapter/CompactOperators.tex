@@ -1,4 +1,4 @@
-\section{Compact Operators}
+\chapter{Compact Operators}
 
 
 
@@ -107,9 +107,9 @@ u(e) = \sum_{i \in I} \sum_{b \in J} a_i b_j f_j
 and we see $n_{ji} = a_i b_j$.
 We now note the following proposition, \cite[Proposition~3]{Serre}.
 
-\begin{prop}
+\begin{proposition}
 The map $u \mapsto (u(e_i))_{i \in I}$ is an isomorphism of $\mathcal{L}(E,F)$ to the vector space of sequences $(f_i)_{i \in I}$ of $F$, equipped with the norm $\sup_{i \in I} |f_i|$.
-\end{prop}
+\end{proposition}
 
 This implies for a fixed $i$ the $|b_j|$ is bounded, and since they form coefficients of an orthonormal basis they tend to 0. That is, we have $|n_{ji}|$ is bounded and $n_{ji} \to 0$ for fixed $i$. Moreover, we have
 \[
@@ -145,9 +145,9 @@ We then have the following lemma which relates the compact property of a linear 
 
 From this we have the following useful corollary.
 
-\begin{cor}
+\begin{corollary}
     Suppose the matrix $(n_{ji})$ of $u$ has all its entries in $\mathcal{O}_K$. If $D(\frac{1}{p}) \cdot(n_{ji})$ has all entries in $\mathcal{O}_K$ then $u$ is compact. Recall $D(\frac{1}{p})$ is the infinite matrix with $(\frac{1}{p})^n$ on the diagonal; and note we can extend $n_{ji}$ to an infinite matrix with zeroes outside of its defined range such that the multiplication makes sense.
-\end{cor}
+\end{corollary}
 
 \begin{proof}
     Write $D(1/p)(n_{ji})$ as $\sum n_{ji} (1/p)^j x^jy^i$. If all its entries are in $\mathcal{O}_K$ then $n_{ji} (1/p)^j \in \mathcal{O}_K$. Let us fix $j$. Then for all $i$, we have $p^j | n_{ji}$ by definition of $\mathcal{O}_K$. Thus $|n_{ji}| < p^{-j}$, and therefore
@@ -164,7 +164,7 @@ We will say a matrix is compact if it is the matrix of a compact operator.
 Let $E$ be a Banach space isomorphic to $c(I)$ for some indexing set $I$.
 We now state the following, \cite[Proposition~7]{Serre}.
 
-\begin{prop}
+\begin{proposition}
     Let $u : E \to E$ be a compact operator.
     \begin{enumerate}
         \item If the matrix of $u$ with respect to an orthonormal basis $\{e_i : i \in I \}$ for some index set $I$ is $(n_{ji})$ then
@@ -178,7 +178,7 @@ We now state the following, \cite[Proposition~7]{Serre}.
         \item The series $\det(1-tu)$ is an entire function of $t$, that is it has infinite radius of convergence.
         \item If $u_n \to u$ with $u_n \in \mathcal{C}(E,E)$ for all $n$, then $\det (1 - tu_n)$ tends to $\det(1-tu)$.
     \end{enumerate}
-\end{prop}
+\end{proposition}
 
 \begin{definition}
     We call the power series $\det(1 - tu)$ the characteristic power series of $u$. We can also refer to it as the characteristic power series of the matrix $(n_{ji}).$

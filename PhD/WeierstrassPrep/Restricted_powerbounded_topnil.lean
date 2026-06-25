@@ -276,23 +276,6 @@ lemma foo (f : PowerSeries.Restricted R 1)
 end TopologicallyNilpotent
 
 
--- TODO as I do not believe this is neccesary for the proof as of right now; more will be nice
--- for general api
-
-/-
-New idea? For MvRestricted version:
-For R a normed ring (+ properties) show that this implies
-PowerBounded iff ‖·‖ ≤ 1
-since we can convert to all coeff being power bounded and this is if ≤ 1
-then use gauss norm
-
-then use induction to get for general MvPowerSeries
-
-PowerSeries (PowerSeries ...)
-If powerseries coeff is bounded iff norm is ≤ 1
-but this implies the norm of the full powerseries is ≤ 1 by gauss norm!
-
-i.e. we still need to use the above
-but we can pass along nicely only assuming normed ring on the base ring
-to get what we need
--/
+-- Note I could potentially push these to isomorphisms / equivalences
+-- but I think it should be fine to ignore this
+-- and rather just use this for API

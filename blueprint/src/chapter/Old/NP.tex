@@ -78,160 +78,11 @@ This fact follows from observing $\nu (\frac{a_i}{a_0}) = \nu(a_i) - \nu (a_0)$.
 
 \section{Properties}
 
-Let $K$ be a $p$-adic field, either a finite extension of $\mathbb{Q}_p$ or $\mathbb{C}_p$.
-%% can this be generalised to any nonarch-valued field (probably?)
+In this section we will consider power series over $\Q_p$ - however, we can easily generalise to
+complete non-archimedean valued fields.
 
-We want to consider a power series and consider its norms $\lvert f(x) \rvert_c$ for many different
-$c$.
-
-It is easy to see that
-\[
-c_1 > c_2 \implies \lvert f(x) \rvert_{c_1} \geq \lvert f(x) \rvert_{c_2}.
-\]
-
-Let us consider $f = 1 + a_1 x + \cdots a_n x^n$ a polynomial and consider its first segment. If this
-segment has slope $m$, it connects the point $(0,0)$ to some other point $(i, mi)$ (i.e. slope $m$,
-length $i$). Then we get the following properties:
-\begin{itemize}
-  \item $\lvert a_j \rvert \leq p^{-mj} = (p^{-m})^j$  for all $j$;
-  \item $\lvert a_i \rvert = p^{-mi}$; and
-  \item $\lvert a_j \rvert < p^{-mj}$ if $j > i$.
-\end{itemize}
-
-If we let $c = p^m$, we can read these conditions as
-\begin{itemize}
-  \item $\lvert f(x) \rvert_c = 1$; and
-  \item $i$ is the largest integer such that $\lvert f(x) \rvert_c = \lvert a_i \rvert c^i.$
-\end{itemize}
-
-That is we see that $f$ is $i$-distinguished. In particular, this means, by Weierstrass preparation
-that if $i$ is less than the degree of $f$ then, $f$ is divisible by a polynomial of degree $i$.
-
-%% Note I actually need to formalise the statements about weirstrass div and prep that focuses on
-%% if they are only polynomials now!
-
-\begin{definition}
-  A polynomial $f(x)$ is pure if its Newton polygon has only one slope. If this slope is $m$, we say
-  $f$ is pure of slope $m$.
-\end{definition}
-
-\begin{proposition}
-  Irreducible polynomials are pure.
-\end{proposition}
-
-\begin{proof}
-  A break at $(i,mi)$ means a factor of degree $i$; hence, if there is a break at $i \neq 0, n$
-  (so not pure) and hence the polynomial is reducible.
-\end{proof}
-
-\begin{proposition}
-  A polynomial, of degree $n$, will be pure of slope $m$ if and only if it has the property that for
-  $c = p^m$
-  \[
-  \lvert f(x) \rvert_c = \lvert b_n \rvert c^n = 1,
-  \]
-  i.e. it is $n$-distinguished.
-\end{proposition}
-
-\begin{theorem}
-  Let $f(x) = 1 + a_1 x + \cdots + a_n x^n \in K[x],$ and assume the newton polygon of $f$ has its
-  first break at $(i,mi)$. Then there exist polynomials $g(x), h(x) \in K[x]$ satisfying:
-  \begin{itemize}
-    \item $f(x) = g(x) h(x)$;
-    \item $g(x)$ has degree $i$ and is pure of slope $m$; and
-    \item $h(x)$ has no zeros in the closed ball of radius $p^m$ around 0.
-  \end{itemize}
-\end{theorem}
-
-\begin{proof}
-  Put everything above together.
-\end{proof}
-
-\begin{lemma}
-  Let $f(x) = 1 + a_1 x + \cdots a_n x^n$, and assume the first break of the Newton polygon occurs
-  at $(i,mi)$. Let $c$ be any positive real number less than $p^m$. Then we have
-  \[
-    \lvert f(x) \rvert_c = 1 \quad \text{and} \quad \lvert f(x) - 1 \rvert_c < 1.
-  \]
-\end{lemma}
-
-\begin{proof}
-  If $\lvert f(x) - 1 \rvert_c < 1$, then we must have $\lvert f (x) \rvert_c = 1$ by the usual all
-  triangles are isosceles argument. Thus, we only need to prove the inequality.
-  A line through the origin with slope $m_1 < m$ passes below all points on the polygon, touching it
-  only at $(0,0)$. This means that $v_p(a_j) > m_1 j$ for every $j > 0$. Or in terms of absolute
-  values $\lvert a_j \rvert < p^{-m_1 j}.$ Since $a_0 = 1$, the zeroth coefficient of $f(x) - 1$ is
-  zero, and therefore also $\lvert a_0 - 1 \rvert < 1.$ It follows that $\lvert f(x) - 1 \rvert_c < 1$
-  for $c < p^{m_1}$.
-\end{proof}
-
-\begin{lemma}
-  Let $f(x) = 1 + a_1 x + \cdots + a_n x^n$, and assume that the first break of the newton polygon
-  occurs at the point $(i,mi)$. Let $c$ be any positive real number less than $p^m$. Then $f$ has no
-  zeros in the closed ball in $\mathbb{C}_p$ of radius $c$ around 0.
-\end{lemma}
-
-\begin{proof}
-  The previous lemma says that $\lvert f(x) - 1 \rvert_c < 1$. From that, it follows for any $x$ such
-  that $\lvert x \rvert \leq c$, we have $\lvert f(x) - 1 \rvert < 1$, which means $f(x) \neq 0$.
-  Thus, $f(x)$ has no zeros in $\overline{B}(0,c)$.
-\end{proof}
-
-%% the reason we have C_p and just just Q_p bar is that we eventually want to talk about
-%% convergence of power series... which requires completeness
-
-%% Therefore, in Lean this can be changed. But the later will have to be in C_p
-%% For generality this will be algebraic closure of an ultrametric normed ring (field?)
-%% We then want its completion later on (see how C_p is defined by Maria Ines)
-
-\begin{proposition}
-  Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots a_n x^n$, and assume that the first break of the newton
-  polygon occurs at the points $(i,mi)$. Then $f(x)$ has no roots with absolute value less than $p^m$
-  and has exactly $i$ roots (counting multiplicity, in $\mathbb{C}_p$) with absolute value $p^m$.
-\end{proposition}
-
-\begin{proof}
-  If the first break is at $(i,mi)$ then
-  \begin{itemize}
-    \item if $c < p^m$, $f(x)$ has no roots in the closed ball of radius $c$; and
-    \item $f(x)$ factors as the product of a pure polynomial $g(x)$ of slope of $m$ and a polynomial
-      which has no roots in the closed ball of radius $p^m$.
-  \end{itemize}
-  Any root of $g$ is a root of $f$, and therefore has no roots of absolute value less than $p^m$. On
-  the other hand, if $\alpha_1, \cdots, \alpha_i$ are the roots of $g$, then we must have
-  \[
-    g(x) = (1 - \alpha_1^{-1}x) (1 - \alpha_2^{-1}x) \cdots (1 - \alpha_i^{-1}x),
-  \]
-  and hence the $i$-th coefficient is equal to $(\prod_i \alpha_i)^{-1}$. Since $g$ is pure, this
-  must have valuation $mi$, and as $\lvert (a_j) \rvert \geq p^m$, it follows that all $a_j$ have
-  absolute value $p^m$.
-\end{proof}
-
-\begin{theorem}
-  Let $f(x) = 1 + a_1 x + \cdots + a_n x^n$ be a polynomial, let $m_1, \cdots, m_r$ be the slopes
-  of its Newton polygon (in increasing order), and let $i_1, \cdots, i_r$ be their corresponding
-  projected lengths. Then, for each $k$, $1 \leq k \leq r$, $f$ has exactly $i_k$ roots
-  (in $\mathbb{C}_p$, counting multiplicity) of absolute value $p^{m_k}$.
-\end{theorem}
-
-\begin{proof}
-  We have already seen this for the first segment. So let us move onto the second. Note this suffices
-  to complete the proof as the same argument will yield the result for consecutive segments.
-
-  Therefore, let us assume there are breaks at $(i_1,mi)$ and $(i_1 + i_2, m_1 i + m_2 i_2)$. We
-  will set $k := i_1 + i_2$. Similar to the first slope we can conclude the following:
-  \begin{itemize}
-    \item $\lvert a_k \rvert = p^{-m_2 i_2 - m_1 i_1} = p^{-m_2 k} p^{(m_2 - m_1)i}$;
-    \item for $i_1 \leq j \leq k$, $\lvert a_j \rvert \leq p^{-m_2 (j - i_1) - m_1 i_1}$; and
-    \item for $j < i_1$ and $ j > k$, we have $\lvert a_j \rvert < p^{-m_2 (j - i_1)- m_1 i_1}.$
-  \end{itemize}
-  In other words, we get for $c = p^{m_2}$ that $\lvert f \rvert_c = p^{(m_2 - m_1)i_1}$, i.e. $f$
-  is $k$-distinguished. Therefore, we can go through a completely analogous proof to before to get
-  $f$ has exactly $k$ roots in the closed ball of radius $p^{m_2}$, $i_1$ of which have absolute
-  value $p^{m_1}$ and $k-i_1 = i_2$ of which have absolute value $p^{m_2}$,
-\end{proof}
-
-With this we can now move onto considering power series and give the key theorem.
+The first thing we can use the Newton polygon for is to obtain the radius of convergence of the
+power series.
 
 \begin{theorem} \label{RadofCon}
     Let $m$ be the supremum of the slopes appearing in the Newton polygon of a series
@@ -302,9 +153,50 @@ This then allows us to give our connection to zeroes of the power series.
     relevant portion of the Newton polygon of $f(x).$
 \end{proof}
 
+%% Okay so we actually need the polynomial theorem here (which requires a lot of work)
+
+\begin{definition}
+    A polynomial $f(x) \in K[x]$ is called pure if its Newton polygon has only one slope. If this
+    slope is $m$, we will say $f(x)$ is pure of slope $m$.
+\end{definition}
+
+\begin{theorem}
+    A break at $(i,mi)$ yields a factor of degree $i$; hence, if there is a break at $i \neq 0, n$
+    then the polynomial is reducible.
+\end{theorem}
+
 \begin{proof}[Proof of corollary]
     Assume we know this statement for polynomials, and the proposition says that the relevant
     part of the Newton polygon of $f(x)$ \emph{is} the Newton polygon of the polynomial $g(x)$.
     Since $g(x)$ is a factor of $f(x)$ and the quotient $h(x)$ clearly has no zeroes in the closed
     ball of radius $p^m$, the conclusion follows.
 \end{proof}
+
+In the above we claimed we knew this for polynomials, we now prove this here:
+
+\begin{theorem}
+    Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots + a_n x^n \in K[x]$, and assume that the first break of
+    the Newton polygon occurs at the points $(i, m_i)$. Then $f(x)$ has no roots with absolute value
+    less than $p^m$ and has exactly $i$ roots (counting multiplicities, in $\mathbb{C}_p$) with
+    absolute value $p^m$.
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{theorem}
+    Let $f(x) = 1 + a_1 x + a_2 x^2 + \cdots + a_n x^n \in K[x]$ be a polynomial and let $m_1, \cdots,
+    m_r$ be the slopes of its Newton polygon in ascending order. Let $i_1, \cdots, i_r$ be the
+    corresponding lengths. Then, for each $k, \; 1 \leq k \leq r,$ $f(x)$ has exactly $i_k$ roots
+    (in $\mathbb{C}_p$, counting multiplicities) of absolute value $p^{m_k}$.
+\end{theorem}
+
+\begin{proof}
+
+\end{proof}
+
+
+
+%% I need to re-go over this section and the proofs... plus I need to check the difference
+%% between BGR Weierstrass prep and Gouvea's -- i.e. when I apply it do I need extra justification...

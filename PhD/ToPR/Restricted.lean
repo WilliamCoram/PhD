@@ -30,6 +30,10 @@ lemma isRestricted_iff (c :  ℝ) (f : PowerSeries R) :
     fun H => H.comp Equiv.finsuppUnique.injective.tendsto_cofinite⟩
   simp
 
+lemma isRestricted_iff' (c : ℝ) (f : PowerSeries R) :
+    IsRestricted c f ↔ Tendsto (fun (t : ℕ) ↦ ‖coeff t f‖ * c ^ t) atTop (𝓝 0) := by
+  simp_rw [isRestricted_iff, Nat.cofinite_eq_atTop]
+
 @[simp]
 lemma isRestricted_abs_iff (c :  ℝ) (f : PowerSeries R) :
     IsRestricted |c| f ↔ IsRestricted c f :=
@@ -311,6 +315,7 @@ end Polynomial
 
 section Monomial
 
+-- note this is literally done above ... so need to remove this as duplication in my PR's
 lemma isRestricted_monomial {R : Type*} [NormedRing R] [IsUltrametricDist R] (c : ℝ)
     (n : ℕ) (r : R) : PowerSeries.IsRestricted c (PowerSeries.monomial n r) := by
   rw [PowerSeries.isRestricted_iff]

@@ -13,7 +13,9 @@ public import Mathlib.Order.WithBotTop
 public import Mathlib.Data.Seq.Basic
 @[expose] public section
 
-variable {Γ : Type*} [CommSemiring Γ] [Algebra Γ ℝ]variable (Γ) in
+variable {Γ : Type*} [CommSemiring Γ] [Algebra Γ ℝ]
+
+variable (Γ) in
 /-- The result of one step of the Newton polygon algorithm. -/
 inductive Step where
   /-- No more finite values. -/
@@ -46,6 +48,7 @@ def slopeReal (x₀ x₁ : ℕ) (y₀ y₁ : Γ) : ℝ :=
 def slopeSet (i₀ : ℕ) (i₁ : Γ) : Set ℝ :=
   {m | ∃ j₀ : ℕ, j₀ > i₀ ∧ finite v j₀ ∧ ∃ j₁ : Γ, v j₀ = j₁ ∧ m = slopeReal i₀ j₀ i₁ j₁}
 
+
 /-- The set of points that achieves a slope of `m` from a point `(i₀, i₁)`. -/
 def achievingSet (i₀ : ℕ) (i₁ : Γ) (m : ℝ) : Set ℕ :=
   {j : ℕ | j > i₀ ∧ finite v j ∧ ∃ j₁ : Γ, v j = j₁ ∧ m = slopeReal i₀ j i₁ j₁}
@@ -60,28 +63,24 @@ def nextStep (i₀ : ℕ) (i₁ : Γ) : Step Γ :=
     .unboundedBelow
   else if hm : ¬ ∃ m ∈ slopeSet v i₀ i₁, m = sInf (slopeSet v i₀ i₁) then
     .limitingRay (sInf (slopeSet v i₀ i₁))
-  else if hInf : (achievingSet v i₀ i₁ (Classical.choose (of_not_not hm))).Infinite then
-    .infiniteRay (Classical.choose (of_not_not hm))
+  else if hInf : (achievingSet v i₀ i₁ (of_not_not hm).choose).Infinite then
+    .infiniteRay (of_not_not hm).choose
   else
-    have hNonempty : (achievingSet v i₀ i₁ (Classical.choose (of_not_not hm))).Nonempty := by
+    have hNonempty : (achievingSet v i₀ i₁ (of_not_not hm).choose).Nonempty := by
       simp only [↓existsAndEq, and_true] at hm
-      use Classical.choose (of_not_not hm)
-      simp_rw [achievingSet]
-      grind
+      use (of_not_not hm).choose
+      grind [achievingSet]
     let j₀ := (Set.not_infinite.mp hInf).toFinset.max'
       ((Set.not_infinite.mp hInf).toFinset_nonempty.mpr hNonempty)
     match v j₀ with
       | ⊤ => .tail
-      | (j₁ : Γ) => .nextVertex j₀ j₁ (j₀ - i₀) (Classical.choose (of_not_not hm))
+      | (j₁ : Γ) => .nextVertex j₀ j₁ (j₀ - i₀) ((of_not_not hm).choose)
 
 /-- Find the first index with finite valuation, starting from a given position. -/
 noncomputable
 def findFirstFinite (startIdx : ℕ) : Option (ℕ × Γ) := open Classical in
   if h : ∃ i ≥ startIdx, finite v i then
-    let i := Nat.find h
-    match v i with
-    | ⊤ => none  -- contradicts finiteness
-    | (val : Γ) => some (i, val)
+    some (Nat.find h, (Option.ne_none_iff_exists.mp (Nat.find_spec h).2).choose)
   else
     none
 
@@ -572,6 +571,7 @@ structure NewtonPolygon where
   lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
   increasing : ∀ n : ℕ, slopes n ≤ slopes (n + 1)
 
+/-
 variable (Γ) in
 structure NewtonPolygon_test where
   starting_point : WithTopBot ℤ × WithTopBot Γ
@@ -587,6 +587,7 @@ structure NewtonPolygon_test where
   lengths : ℤ → WithTop ℕ
   lengths_junk : ∀ n : ℤ, (n + 1 ≤ - support.1 ∨ support.2 ≤ n) → lengths n = 0
   increasing : ∀ n, slopes n ≤ slopes (n + 1)
+-/
 
 lemma newtonPolygon_lt_length_neq_none (n : ℕ) (h : ↑n + 1 < (newtonPolygon_seq v).length') :
     newtonPolygon v (n + 1) ≠ none := by
@@ -627,6 +628,7 @@ def NP' : NewtonPolygon where
     · exact this
     · exact le_of_lt this
 
+/-
 open Classical in
 noncomputable
 def NP'' : NewtonPolygon_test Γ where
@@ -689,11 +691,8 @@ def NP'' : NewtonPolygon_test Γ where
       · have h : n.toNat + 1 = (n + 1).toNat := by grind
         simp_rw [h] at *
         exact le_of_lt this
+-/
 
 variable (Γ) in
 def IsNewtonPolygon (NP : NewtonPolygon) : Prop :=
-  ∃ (v : ℕ → WithTop Γ), NP.slopes = newtonPolygon_slopes v ∧ NP.lengths = newtonPolygon_lengths v
-
-variable (Γ) in
-def IsNewtonPolygon' (NP : NewtonPolygon) : Prop :=
   ∃ (v : ℕ → WithTop Γ), NP = NP' v

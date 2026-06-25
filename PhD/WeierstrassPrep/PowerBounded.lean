@@ -117,3 +117,48 @@ lemma subring_isClosed (S : Type*) [Ring S] [Module S R] [IsLinearTopology S R] 
   (subring R (S := S)).toAddSubgroup.isClosed_of_isOpen (subring_isOpen S)
 
 end NormedCommRing
+
+section Complete
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [CompleteSpace R]
+
+local instance {S : Type*} [NormedCommRing S] [IsUltrametricDist S] :
+    NonarchimedeanRing S where
+  is_nonarchimedean := (IsUltrametricDist.nonarchimedeanAddGroup).is_nonarchimedean
+
+local instance (S : Type*) [Ring S] [TopologicalSpace S] [NonarchimedeanRing S] :
+    IsLinearTopology ℤ S := by
+  apply IsLinearTopology.mk_of_hasBasis' (R := ℤ)
+    (p := fun U : AddSubgroup S => (U : Set S) ∈ nhds 0)
+    (s := fun U : AddSubgroup S => U)
+  · refine ⟨fun U => ⟨fun hU => ?_,
+      fun ⟨_, hN_mem, hN⟩ => Filter.mem_of_superset hN_mem hN⟩⟩
+    obtain ⟨V, hV⟩ := NonarchimedeanRing.is_nonarchimedean U hU
+    exact ⟨V.toAddSubgroup, V.mem_nhds_zero, hV⟩
+  · intro _ n _ hm
+    exact zsmul_mem hm n
+
+
+lemma PowerBounded_isUnit_iff_res_isUnit (a : PowerBounded.subring (S := ℤ) R) :
+    IsUnit a ↔ IsUnit (Ideal.Quotient.mk (PowerBounded.topologicalNilradical ℤ) a) := by
+  constructor
+  <;> intro h
+  · exact h.map _
+  · --
+    haveI : IsClosed ((PowerBounded.subring R (S := ℤ)) : Set R) := subring_isClosed ℤ
+    haveI : CompleteSpace ↥(PowerBounded.subring (S := ℤ) R) := IsClosed.completeSpace_coe
+    -- I think this CompleteSpace lemma should be extracted as an instance
+    obtain ⟨b, hbr, _⟩ := isUnit_iff_exists.mp h
+    obtain ⟨_, hz, hz_eq⟩ : ∃ z, IsTopologicallyNilpotent z ∧ a * (Quotient.out b) = 1 - z := by
+      refine ⟨1 - a * Quotient.out b, ?_, by ring⟩
+      have : (1 - a * Quotient.out b) ∈ PowerBounded.topologicalNilradical ℤ := by
+        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_one, map_mul, Ideal.Quotient.mk_out, hbr,
+          sub_self]
+      rw [IsTopologicallyNilpotent, tendsto_subtype_rng]
+      simpa using ((IsTopologicallyNilpotent.mem_PowerBounded.topologicalNilradical_iff ℤ
+        (1 - a * Quotient.out b)).mp this)
+    have : IsUnit (a * (Quotient.out b)) := by
+      simpa [hz_eq] using IsTopologicallyNilpotent.isUnit_one_sub_of_isTopologicallyNilpotent hz
+    exact isUnit_of_mul_isUnit_left this
+
+end Complete
