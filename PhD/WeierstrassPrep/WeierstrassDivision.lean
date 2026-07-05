@@ -767,6 +767,26 @@ lemma weierstrassDivision_existance (g : PowerSeries.Restricted R 1) (s : ℕ)
   grind
 
 
+/-- The quotient in a Weierstrass division is unique: any two decompositions of `f` as
+`g * q + r` with `deg r < s` share the same quotient `q`. -/
+lemma weierstrassDivision_q_unique (g : PowerSeries.Restricted R 1) (s : ℕ)
+    (gd : distinguished norm 1 g.1 s) (f : PowerSeries.Restricted R 1)
+    {q₁ q₂ : PowerSeries.Restricted R 1} {r₁ r₂ : Polynomial R}
+    (hr₁ : Polynomial.degree r₁ < s) (hf₁ : f = g * q₁ + Polynomial.toRestricted 1 r₁)
+    (hr₂ : Polynomial.degree r₂ < s) (hf₂ : f = g * q₂ + Polynomial.toRestricted 1 r₂) :
+    q₁ = q₂ := by
+  have h0 : g * (q₁ - q₂) + Polynomial.toRestricted 1 (r₁ - r₂) = 0 := by
+    calc
+      _ = g * q₁ - g * q₂ + (Polynomial.toRestricted 1 r₁ - Polynomial.toRestricted 1 r₂) := by
+        rw [mul_sub, Polynomial.toRestricted_sub]
+      _ = (g * q₁ + Polynomial.toRestricted 1 r₁) - (g * q₂ + Polynomial.toRestricted 1 r₂) := by
+        ring
+      _ = _ := by rw [← hf₁, ← hf₂, sub_self]
+  have h_bd := weierstrassDivision_bounds_q g s gd 0 (q₁ - q₂) (r₁ - r₂)
+    (lt_of_le_of_lt (Polynomial.degree_sub_le _ _) (max_lt hr₁ hr₂)) h0.symm
+  simp only [norm_zero, mul_zero, norm_le_zero_iff] at h_bd
+  grind
+
 lemma weierstrassDivision_uniqueness (g : PowerSeries.Restricted R 1) (s : ℕ)
     (gd : distinguished norm 1 g.1 s) (f : PowerSeries.Restricted R 1)
     (h : ∃ a : R, ‖a‖ = ‖g‖⁻¹  ∧ IsUnit a)
@@ -778,23 +798,91 @@ lemma weierstrassDivision_uniqueness (g : PowerSeries.Restricted R 1) (s : ℕ)
   · rintro r' ⟨hr', hf'⟩
     exact Polynomial.coe_inj.mp (congr_arg Subtype.val (add_left_cancel (hf'.symm.trans hf₀)))
   · rintro q' ⟨r', ⟨hr', hf'⟩, _⟩
-    have : g * (q' - q₀) + Polynomial.toRestricted 1 (r' - r₀) = 0 := by
-      calc
-        _ = g * q' - g * q₀ + (Polynomial.toRestricted 1 r' - Polynomial.toRestricted 1 r₀) := by
-          rw [mul_sub, Polynomial.toRestricted_sub]
-        _ = (g * q' + Polynomial.toRestricted 1 r') - (g * q₀ + Polynomial.toRestricted 1 r₀) := by
-          ring
-        _ = _ := by rw [hf'.symm.trans hf₀, sub_self]
-    have h_bd := weierstrassDivision_bounds_q g s gd 0 (q' - q₀) (r' - r₀)
-      (lt_of_le_of_lt (Polynomial.degree_sub_le _ _) (max_lt hr' hr₀)) this.symm
-    simp only [norm_zero, mul_zero, norm_le_zero_iff] at h_bd
-    grind
+    exact weierstrassDivision_q_unique g s gd f hr' hf' hr₀ hf₀
 
--- I then want to pull everything across to MvPowerSeries
--- e.g. do this for Restricted (MvRestricted ...)
--- then pass across to MvRestricted via iso
--- then scale up c's by the same logic as in hunit
--- e.g. when there exists values that can be used
+-- hdef should be its own API lemma
 
+-- Note on the form of this statement: two natural phrasings exist and it is unclear which is
+-- better.
+-- (1) The current form, `∃! q : Polynomial R, ...`, mirrors `weierstrassDivision_uniqueness` but
+--     quantifies only over polynomials. Read in isolation it is silent on whether some
+--     non-polynomial `q : PowerSeries.Restricted R 1` might also solve the division — uniqueness
+--     over the subring of polynomials cannot rule out solutions outside it.
+-- (2) The previous form took any `q : PowerSeries.Restricted R 1` solving the division and
+--     concluded `∃ q₀ : Polynomial R, q = Polynomial.toRestricted 1 q₀`, i.e. it directly said
+--     "the restricted quotient is a polynomial", but the statement was less idiomatic.
+-- Nothing is lost with (1): combining it with `weierstrassDivision_uniqueness` (uniqueness over
+-- the whole restricted ring) recovers (2), since the unique restricted quotient must then equal
+-- the polynomial one. See the proof of `weierstrassPreparation_polynomial` in WPrep.lean, where
+-- this bridging is carried out to show the unit `e` (a priori only a restricted power series)
+-- equals the polynomial quotient. If form (2) is needed repeatedly, it can be restated as a
+-- one-line corollary of (1) and `weierstrassDivision_uniqueness`.
+/-- **Weierstrass division for polynomials.** If `f` and `g` are polynomials, with `g` of degree
+`s`, then the Weierstrass division of `f` by `g` holds with the quotient `q` ranging over
+polynomials: the quotient of `weierstrassDivision_uniqueness` is itself a polynomial.
+
+The hypothesis `hgs` is necessary: over `ℤ_p` the polynomial `g = X ^ s + p • X ^ (s + 1)` is
+distinguished of degree `s`, but dividing `f = X ^ s` by it gives `q = (1 + p • X)⁻¹`, which is
+not a polynomial. -/
+lemma weierstrassDivision_polynomial (g₀ : Polynomial R) (s : ℕ)
+    (gd : distinguished norm 1 (Polynomial.toRestricted 1 g₀).1 s) (hgs : g₀.degree ≤ s)
+    (f₀ : Polynomial R) (h : ∃ a : R, ‖a‖ = ‖Polynomial.toRestricted 1 g₀‖⁻¹ ∧ IsUnit a)
+    (hunit : ∀ f : PowerSeries.Restricted R 1, f ≠ 0 → ∃ a : R, ‖a‖ = ‖f‖⁻¹ ∧ IsUnit a) :
+    ∃! q : Polynomial R, ∃! r : Polynomial R, Polynomial.degree r < s ∧
+    Polynomial.toRestricted 1 f₀ = Polynomial.toRestricted 1 g₀ * Polynomial.toRestricted 1 q +
+      Polynomial.toRestricted 1 r := by
+  -- `g₀` has degree exactly `s` with unit leading coefficient, so rescaling by the inverse of
+  -- that unit gives a monic polynomial and we can divide `f₀` by it in `R[X]`.
+  have hgu : IsUnit (g₀.coeff s) := by
+    have h1 : IsUnit (PowerSeries.coeff s (g₀ : PowerSeries R)) := gd.unit
+    rwa [Polynomial.coeff_coe] at h1
+  obtain ⟨u, hu⟩ := hgu
+  have hdeg : g₀.degree = s :=
+    le_antisymm hgs (Polynomial.le_degree_of_ne_zero (hu ▸ u.ne_zero))
+  have hlead : g₀.leadingCoeff = g₀.coeff s :=
+    congrArg g₀.coeff (Polynomial.natDegree_eq_of_degree_eq_some hdeg)
+  have hmonic : (Polynomial.C (↑u⁻¹ : R) * g₀).Monic :=
+    Polynomial.monic_C_mul_of_mul_leadingCoeff_eq_one (by rw [hlead, ← hu, Units.inv_mul])
+  have hdeg₁ : (Polynomial.C (↑u⁻¹ : R) * g₀).degree = s := by
+    refine le_antisymm ?_ (Polynomial.le_degree_of_ne_zero ?_)
+    · calc (Polynomial.C (↑u⁻¹ : R) * g₀).degree
+          ≤ (Polynomial.C (↑u⁻¹ : R)).degree + g₀.degree := Polynomial.degree_mul_le _ _
+        _ ≤ 0 + (s : WithBot ℕ) := add_le_add Polynomial.degree_C_le hdeg.le
+        _ = s := zero_add _
+    · rw [Polynomial.coeff_C_mul, ← hu, Units.inv_mul]
+      exact one_ne_zero
+  -- The polynomial division of `f₀` by the monic rescaling gives a polynomial solution of the
+  -- Weierstrass division problem.
+  have hpoly : f₀ = g₀ * (Polynomial.C (↑u⁻¹ : R) * (f₀ /ₘ (Polynomial.C (↑u⁻¹ : R) * g₀))) +
+      f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀) := by
+    conv_lhs => rw [← Polynomial.modByMonic_add_div f₀ (Polynomial.C (↑u⁻¹ : R) * g₀)]
+    ring
+  have hr₁ : (f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)).degree < s := by
+    have h2 := Polynomial.degree_modByMonic_lt f₀ hmonic
+    rwa [hdeg₁] at h2
+  have hf₁ : Polynomial.toRestricted 1 f₀ = Polynomial.toRestricted 1 g₀ *
+      Polynomial.toRestricted 1 (Polynomial.C (↑u⁻¹ : R) *
+        (f₀ /ₘ (Polynomial.C (↑u⁻¹ : R) * g₀))) +
+      Polynomial.toRestricted 1 (f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)) := by
+    rw [← Polynomial.toRestricted_mul, ← Polynomial.toRestricted_add]
+    exact congrArg _ hpoly
+  -- By uniqueness any solution equals the unique Weierstrass quotient `Q`, so any polynomial
+  -- solution equals the one just constructed.
+  obtain ⟨Q, -, hQ⟩ := weierstrassDivision_uniqueness (Polynomial.toRestricted 1 g₀) s gd
+    (Polynomial.toRestricted 1 f₀) h hunit
+  have key : ∀ (q' : PowerSeries.Restricted R 1) (r' : Polynomial R), Polynomial.degree r' < s →
+      Polynomial.toRestricted 1 f₀ = Polynomial.toRestricted 1 g₀ * q' +
+        Polynomial.toRestricted 1 r' → q' = Q := by
+    intro q' r' hr' hf'
+    refine hQ q' ⟨r', ⟨hr', hf'⟩, ?_⟩
+    rintro r'' ⟨-, hf''⟩
+    exact Polynomial.coe_inj.mp (congr_arg Subtype.val (add_left_cancel (hf''.symm.trans hf')))
+  refine ⟨Polynomial.C (↑u⁻¹ : R) * (f₀ /ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)),
+    ⟨f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀), ⟨hr₁, hf₁⟩, ?_⟩, ?_⟩
+  · rintro r'' ⟨-, hf''⟩
+    exact Polynomial.coe_inj.mp (congr_arg Subtype.val (add_left_cancel (hf''.symm.trans hf₁)))
+  · rintro q' ⟨r', ⟨hr', hf'⟩, -⟩
+    exact Polynomial.coe_inj.mp (congrArg Subtype.val
+      ((key _ _ hr' hf').trans (key _ _ hr₁ hf₁).symm))
 
 end WeierstrassDivision

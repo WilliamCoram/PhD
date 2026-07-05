@@ -571,6 +571,12 @@ structure NewtonPolygon where
   lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
   increasing : ∀ n : ℕ, slopes n ≤ slopes (n + 1)
 
+-- fix slopes and lengths to be not junk except at the last point in the support?
+
+  -- i.e. only final entry of support can be ⊤ 0
+  -- slopes_junk' : ∀ n : ℕ, n + 2 ≤ support → slopes n ≠ ⊤
+  -- lengths_junk' : ∀ n : ℕ, n + 2 ≤ support → lengths n ≠ 0
+
 /-
 variable (Γ) in
 structure NewtonPolygon_test where

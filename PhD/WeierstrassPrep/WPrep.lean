@@ -153,7 +153,7 @@ lemma test5 (s : ℕ) (r : Polynomial R) (rd : r.degree < s) (h : ‖Polynomial.
       (Restricted.monomial 1 s 1) (- Polynomial.toRestricted 1 r)
     rw [← sub_eq_add_neg, norm_neg] at this
     exact this.trans (max_le (Restricted.monomial_one_norm s).le h)
-  · have := PowerSeries.le_gaussNorm norm 1 
+  · have := PowerSeries.le_gaussNorm norm 1
       (Polynomial.toRestricted 1 (Polynomial.monomial s 1 - r)).1 (Restricted.hasGaussNorm 1 _) s
     rwa [one_pow, mul_one, ← Restricted.norm_eq, Restricted.polynomial_coeff_coe _ s,
       test2 s r rd, norm_one, Polynomial.toRestricted_sub, ← Restricted.coe_monomial] at this
@@ -187,11 +187,11 @@ lemma weierstrassPreparation_exists_norm_one (g : PowerSeries.Restricted R 1) (h
   have e'n : ‖e'‖ = 1 := by
     simp_rw [← test5 _ _ rd rn] -- Ideally I want these both on one line... but alas
     rw [← h, norm_mul, hg, one_mul]
-  
+
   -- maybe I need to toPowerBounded definitions but this also works
   set G : ↥T° := ⟨g, IsPowerBounded.isPowerBounded_of_norm_le_one hg.le⟩
   set E : ↥T° := ⟨e', IsPowerBounded.isPowerBounded_of_norm_le_one e'n.le⟩
-  set W : ↥T° := ⟨Polynomial.toRestricted 1 ω, IsPowerBounded.isPowerBounded_of_norm_le_one 
+  set W : ↥T° := ⟨Polynomial.toRestricted 1 ω, IsPowerBounded.isPowerBounded_of_norm_le_one
     (test5 s _ rd rn).le⟩
 
   have h_res : Restricted.openBall_residueRingHom 1 zero_lt_one G *
@@ -353,3 +353,88 @@ lemma weierstrassPreparation_unique (g : PowerSeries.Restricted R 1) (s : ℕ)
     exact Polynomial.coe_inj.mp (congrArg Subtype.val (norm_le_zero_iff
       (a := Polynomial.toRestricted 1 (ω' - ω)).mp (by simpa [norm_zero] using
       (weierstrassDivision_bounds_r g s gd 0 _ _ rd this))))
+
+/-- A monic polynomial `ω` of degree `s` with `‖ω‖ = 1` is distinguished of degree `s`. -/
+lemma distinguished_of_monic (ω : Polynomial R) (s : ℕ) (ωm : ω.Monic) (ωd : ω.degree = s)
+    (ωn : ‖Polynomial.toRestricted 1 ω‖ = 1) :
+    distinguished norm 1 (Polynomial.toRestricted 1 ω).1 s := by
+  have hnat : ω.natDegree = s := Polynomial.natDegree_eq_of_degree_eq_some ωd
+  have hcs : ω.coeff s = 1 := by rw [← hnat]; exact ωm.coeff_natDegree
+  have hcoe : ∀ v, PowerSeries.coeff v (Polynomial.toRestricted 1 ω).1 = ω.coeff v :=
+    Restricted.polynomial_coeff_coe ω
+  refine ⟨?_, ?_, fun t ht => ?_⟩
+  · show IsUnit (PowerSeries.coeff s (Polynomial.toRestricted 1 ω).1)
+    rw [hcoe, hcs]
+    exact isUnit_one
+  · show PowerSeries.gaussNorm norm 1 (Polynomial.toRestricted 1 ω).1 =
+      ‖PowerSeries.coeff s (Polynomial.toRestricted 1 ω).1‖
+    rw [← Restricted.norm_eq, ωn, hcoe, hcs, norm_one]
+  · show ‖PowerSeries.coeff t (Polynomial.toRestricted 1 ω).1‖ <
+      ‖PowerSeries.coeff s (Polynomial.toRestricted 1 ω).1‖
+    rw [hcoe, hcoe, hcs, norm_one,
+      Polynomial.coeff_eq_zero_of_natDegree_lt (hnat.trans_lt ht), norm_zero]
+    exact zero_lt_one
+
+-- Note on the form of this statement (cf. the analogous note above
+-- `weierstrassDivision_polynomial` in WeierstrassDivision.lean): two natural phrasings exist and
+-- it is unclear which is better.
+-- (1) The current form, `∃! ω : Polynomial R, ∃! e : Polynomial R, ...`, mirrors
+--     `weierstrassPreparation_unique` but quantifies `e` only over polynomials. Read in isolation
+--     it is silent on whether some non-polynomial `e : PowerSeries.Restricted R 1` might also
+--     appear in a preparation of `g` — uniqueness over the subring of polynomials cannot rule out
+--     units outside it.
+-- (2) The previous form took any preparation `g = e · ω` with
+--     `e : PowerSeries.Restricted R 1` and concluded `∃ e₀ : Polynomial R,
+--     e = Polynomial.toRestricted 1 e₀`, i.e. it directly said "the restricted unit is a
+--     polynomial". It also needed no distinguishedness hypothesis on `g`: since it received the
+--     preparation as input, `ω` being monic of degree `s` with `‖ω‖ = 1` made `ω` distinguished
+--     for free. The current form must construct the preparation, so `gd` reappears.
+-- Nothing is lost with (1): combining it with `weierstrassPreparation_unique` (uniqueness over
+-- the whole restricted ring) recovers (2), since the unique restricted unit must then equal the
+-- polynomial one — this bridging happens inside the proof below, in the `he₀` step.
+-- If form (2) is needed repeatedly, it can be restated as a corollary of (1) and
+-- `weierstrassPreparation_unique`.
+
+-- also not sure if the equality should be in terms of only polynomials now?
+
+/-- **Weierstrass preparation for polynomials.** If `g` is a polynomial, then its Weierstrass
+preparation holds with the unit `e` ranging over polynomials: the unit of
+`weierstrassPreparation_unique` is itself a polynomial.
+
+Note `IsUnit (Polynomial.toRestricted 1 e)` is unit-ness in the restricted power series ring, not
+in `R[X]`: over `ℤ_p` the unit `e = 1 + p • X` is a polynomial but not a unit of `ℤ_p[X]`. -/
+lemma weierstrassPreparation_polynomial (g₀ : Polynomial R) (s : ℕ)
+    (gd : distinguished norm 1 (Polynomial.toRestricted 1 g₀).1 s)
+    (hunit : ∀ f : PowerSeries.Restricted R 1, f ≠ 0 → ∃ a : R, ‖a‖ = ‖f‖⁻¹ ∧ IsUnit a) :
+    ∃! ω : Polynomial R, ∃! e : Polynomial R, ω.Monic ∧ ω.degree = s ∧
+    ‖(Polynomial.toRestricted 1 ω)‖ = 1 ∧ IsUnit (Polynomial.toRestricted 1 e) ∧
+    Polynomial.toRestricted 1 g₀ =
+      Polynomial.toRestricted 1 e * (Polynomial.toRestricted 1 ω) := by
+  obtain ⟨ω, ⟨e, ⟨ωm, ωd, ωn, he, hg⟩, he_uniq⟩, hω_uniq⟩ :=
+    weierstrassPreparation_unique (Polynomial.toRestricted 1 g₀) s gd hunit
+  have h0 : (0 : Polynomial R).degree < (s : WithBot ℕ) := by
+    rw [Polynomial.degree_zero]
+    exact WithBot.bot_lt_coe s
+  -- the only new content over `weierstrassPreparation_unique`: `e` is a polynomial, since
+  -- `g₀ = ω · e + 0` is a Weierstrass division of `g₀` by the distinguished polynomial `ω` and
+  -- the quotient of such a division is a polynomial by `weierstrassDivision_polynomial`.
+  obtain ⟨e₀, ⟨r₀, ⟨hr₀, hf₀⟩, -⟩, -⟩ := weierstrassDivision_polynomial ω s
+    (distinguished_of_monic ω s ωm ωd ωn) ωd.le g₀
+    ⟨1, by rw [norm_one, ωn, inv_one], isUnit_one⟩ hunit
+  have he₀ : e = Polynomial.toRestricted 1 e₀ :=
+    weierstrassDivision_q_unique (Polynomial.toRestricted 1 ω) s
+      (distinguished_of_monic ω s ωm ωd ωn) (Polynomial.toRestricted 1 g₀) h0
+      (by rw [Polynomial.toRestricted_zero, add_zero, hg, mul_comm]) hr₀ hf₀
+  have hg₀ : Polynomial.toRestricted 1 g₀ =
+      Polynomial.toRestricted 1 e₀ * Polynomial.toRestricted 1 ω := he₀ ▸ hg
+  refine ⟨ω, ⟨e₀, ⟨ωm, ωd, ωn, he₀ ▸ he, hg₀⟩, ?_⟩, ?_⟩
+  · rintro e' ⟨-, -, -, hu', hg'⟩
+    exact Polynomial.coe_inj.mp (congrArg Subtype.val
+      ((he_uniq _ ⟨ωm, ωd, ωn, hu', hg'⟩).trans he₀))
+  · rintro ω' ⟨e', ⟨ω'm, ω'd, ω'n, hu', hg'⟩, -⟩
+    refine hω_uniq ω' ⟨Polynomial.toRestricted 1 e', ⟨ω'm, ω'd, ω'n, hu', hg'⟩, ?_⟩
+    rintro e'' ⟨-, -, -, -, hg''⟩
+    exact weierstrassDivision_q_unique (Polynomial.toRestricted 1 ω') s
+      (distinguished_of_monic ω' s ω'm ω'd ω'n) (Polynomial.toRestricted 1 g₀) h0
+      (by rw [Polynomial.toRestricted_zero, add_zero, hg'', mul_comm]) h0
+      (by rw [Polynomial.toRestricted_zero, add_zero, hg', mul_comm])

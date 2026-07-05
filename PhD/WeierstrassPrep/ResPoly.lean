@@ -24,4 +24,8 @@ variable {S : Type*} [NormedRing S] [IsUltrametricDist S]
     toRestricted c (p - q) = toRestricted c p - toRestricted c q := by
   rw [sub_eq_add_neg, toRestricted_add, toRestricted_neg, sub_eq_add_neg]
 
+@[simp] lemma toRestricted_mul (c : ℝ) (p q : Polynomial S) :
+    toRestricted c (p * q) = toRestricted c p * toRestricted c q :=
+  Subtype.ext (coe_mul p q)
+
 end Polynomial
