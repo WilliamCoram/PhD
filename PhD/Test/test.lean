@@ -3,6 +3,7 @@ import PhD.ToPR.GaussNorm
 import PhD.ToPR.Restricted
 import PhD.WeierstrassPrep.WPrep_gen
 import PhD.Test.addVals2
+import PhD.Test.DivValueGroup
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
@@ -69,7 +70,7 @@ the inclusion chain `WithTop ℤ → WithTop ℚ → WithTop ℝ` set up in `add
 Mathlib's `vₚ` (`normAddValZ_padic`).
 -/
 
-open Valuation NormedField
+open Valuation NormedField DivisibleValueGroup
 
 namespace NewtonPolygon
 
@@ -639,7 +640,9 @@ The proof is assembled from four pieces, of which three are proved below:
 2. `weierstrassPreparation_polynomial_divisible` (**proved**, imported from
    `PhD/WeierstrassPrep/WPrep_gen.lean`): polynomial Weierstrass preparation *at Gauss-norm
    parameter `c`*, for any `c` in the **divisible closure of the value group** of `K`
-   (`MemDivisibleValueGroup`, imported from the same file).  It is threaded into the proofs
+   (`MemDivisibleValueGroup`, imported from the same file; see `PhD/Test/DivValueGroup.lean`
+   for its structural description as the divisible hull of the exponent group, used to
+   construct memberships below).  It is threaded into the proofs
    below through the private `exists_factor_aux`, which unbundles it into coefficient norms
    (with `dominant_const_of_isUnit_toRestricted` translating unit-ness of the factor `e`).
    This step requires `[CompleteSpace K]` — genuinely: over the *incomplete* `ℚ` with the
@@ -913,11 +916,15 @@ private lemma eq_of_prod_eq_pow_card {S : Multiset NNReal} {c : NNReal} (hc : 0 
   rw [hprod] at h1
   exact lt_irrefl _ h1
 
--- `MemDivisibleValueGroup K c` is imported from `PhD.WeierstrassPrep.WPrep_gen`: `c` lies in
--- the **divisible closure of the value group** of `K` (some positive power of `c` is a
--- realised norm).  Over `ℚ_p` this is `p^ℚ` — it contains every slope radius `exp m`
--- (`memDivisibleValueGroup_exp_slope`) and is dense in the positive reals
--- (`exists_memDivisibleValueGroup_between`), neither of which holds for `p^ℤ` itself.
+-- `MemDivisibleValueGroup K c` is imported from `PhD.WeierstrassPrep.WPrep_gen`; its
+-- structural home is `PhD.Test.DivValueGroup`: `c` lies in the **divisible closure of the
+-- value group** of `K`, i.e. its exponent `log c` lies in the divisible hull
+-- `(logValueGroup K).divisibleHull` of the exponent group
+-- (`memDivisibleValueGroup_iff_log`, with the witness form
+-- `memDivisibleValueGroup_iff_exists_log` used below).  Over `ℚ_p` this is `p^ℚ` — it
+-- contains every slope radius `exp m` (`memDivisibleValueGroup_exp_slope`) and is dense in
+-- the positive reals (`exists_memDivisibleValueGroup_between`), neither of which holds for
+-- `p^ℤ` itself.
 
 /-- **Slope radii lie in the divisible closure of the value group**: if the `k`-th segment of
 the polygon of `f` has slope `m` and runs from `(i₀, ν(a_{i₀}))` to `(j₀, ν(a_{j₀}))`, then
@@ -952,12 +959,12 @@ theorem memDivisibleValueGroup_exp_slope (f : Polynomial K) (hf0 : f.coeff 0 = 1
   have hmn : m * ((j₀ : ℝ) - i₀) = j₁ - i₁ := by
     rw [eq_div_iff hijR.ne'] at hslope
     linarith
-  refine ⟨j₀ - i₀, by omega, f.coeff i₀ / f.coeff j₀, ?_⟩
-  rw [norm_div, ← Real.exp_nat_mul, Nat.cast_sub hij.le, mul_comm ((j₀ : ℝ) - i₀) m, hmn,
-    hj₁val, hi₁val,
-    show - Real.log ‖f.coeff j₀‖ - - Real.log ‖f.coeff i₀‖
-      = Real.log ‖f.coeff i₀‖ - Real.log ‖f.coeff j₀‖ by ring,
-    Real.exp_sub, Real.exp_log (norm_pos_iff.mpr hci₀), Real.exp_log (norm_pos_iff.mpr hcj₀)]
+  rw [memDivisibleValueGroup_iff_exists_log (Real.exp_pos m)]
+  refine ⟨j₀ - i₀, by omega, f.coeff i₀ / f.coeff j₀, div_ne_zero hci₀ hcj₀, ?_⟩
+  rw [norm_div, Real.log_div (norm_ne_zero_iff.mpr hci₀) (norm_ne_zero_iff.mpr hcj₀),
+    Real.log_exp, nsmul_eq_mul, Nat.cast_sub hij.le]
+  rw [hj₁val, hi₁val] at hmn
+  linarith [hmn]
 
 omit [IsUltrametricDist K] in
 /-- **The divisible closure of the value group is dense in the positive reals**: between any
@@ -973,13 +980,13 @@ theorem exists_memDivisibleValueGroup_between {a b : ℝ} (ha : 0 ≤ a) (hab : 
   have ha'0 : 0 < a' := lt_of_lt_of_le (half_pos hb0) (le_max_right _ _)
   have ha'b : a' < b := max_lt hab (half_lt_self hb0)
   obtain ⟨q, hq1, hq2⟩ := exists_rat_btwn (Real.logb_lt_logb ht ha'0 ha'b)
-  refine ⟨‖t‖ ^ (q : ℝ), ⟨q.den, q.den_pos.ne', t ^ q.num, ?_⟩, ?_, ?_⟩
-  · rw [norm_zpow, ← Real.rpow_natCast (‖t‖ ^ (q : ℝ)) q.den, ← Real.rpow_mul ht0.le,
-      ← Real.rpow_intCast ‖t‖ q.num]
-    congr 1
+  refine ⟨‖t‖ ^ (q : ℝ), ?_, ?_, ?_⟩
+  · rw [memDivisibleValueGroup_iff_exists_log (Real.rpow_pos_of_pos ht0 _)]
+    refine ⟨q.den, q.den_pos.ne', t ^ q.num,
+      zpow_ne_zero _ (norm_pos_iff.mp ht0), ?_⟩
+    rw [norm_zpow, Real.log_zpow, Real.log_rpow ht0, nsmul_eq_mul, Rat.cast_def]
     have hden : ((q.den : ℝ)) ≠ 0 := Nat.cast_ne_zero.mpr q.den_pos.ne'
-    rw [Rat.cast_def]
-    exact (div_mul_cancel₀ _ hden).symm
+    field_simp
   · have h1 := (Real.rpow_lt_rpow_left_iff ht).mpr hq1
     rw [Real.rpow_logb ht0 (ne_of_gt ht) ha'0] at h1
     exact lt_of_le_of_lt (le_max_left _ _) h1
@@ -2568,12 +2575,13 @@ theorem memDivisibleValueGroup_exp_slope' (f : PowerSeries K)
   have hmn : m * ((j₀ : ℝ) - i₀) = j₁ - i₁ := by
     rw [eq_div_iff hijR.ne'] at hslope
     linarith
-  refine ⟨j₀ - i₀, by omega, PowerSeries.coeff i₀ f / PowerSeries.coeff j₀ f, ?_⟩
-  rw [norm_div, ← Real.exp_nat_mul, Nat.cast_sub hij.le, mul_comm ((j₀ : ℝ) - i₀) m, hmn,
-    hj₁val, hi₁val,
-    show - Real.log ‖PowerSeries.coeff j₀ f‖ - - Real.log ‖PowerSeries.coeff i₀ f‖
-      = Real.log ‖PowerSeries.coeff i₀ f‖ - Real.log ‖PowerSeries.coeff j₀ f‖ by ring,
-    Real.exp_sub, Real.exp_log (norm_pos_iff.mpr hci₀), Real.exp_log (norm_pos_iff.mpr hcj₀)]
+  rw [memDivisibleValueGroup_iff_exists_log (Real.exp_pos m)]
+  refine ⟨j₀ - i₀, by omega, PowerSeries.coeff i₀ f / PowerSeries.coeff j₀ f,
+    div_ne_zero hci₀ hcj₀, ?_⟩
+  rw [norm_div, Real.log_div (norm_ne_zero_iff.mpr hci₀) (norm_ne_zero_iff.mpr hcj₀),
+    Real.log_exp, nsmul_eq_mul, Nat.cast_sub hij.le]
+  rw [hj₁val, hi₁val] at hmn
+  linarith [hmn]
 
 /-- Series form of `vertex_line_le`: every finite point lies on/above the line through the
 `a`-th vertex with the `a`-th slope. -/

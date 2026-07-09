@@ -854,6 +854,11 @@ complete field bottom (radius tuple, distinguished in one chosen variable); the
 univariate-over-`Restricted S` case then follows via `RestrictedIso` exactly as at `c = 1`,
 and the one-variable statements below become its `σ = Unit` case. -/
 
+
+-- not convinced this should be the divisble value group
+-- may want it to be like c * n = ‖x‖
+-- e.g. we  can multiply out denominators of c
+
 /-- `c` lies in the divisible closure of the value group: some positive power of `c` is a
 realised norm.  This is the canonical home of the definition; the Newton-polygon theory
 (`PhD/Test/test.lean`) imports it from here. -/
