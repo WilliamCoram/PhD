@@ -11,6 +11,8 @@ import PhD.WeierstrassPrep.ResC
 import PhD.WeierstrassPrep.idealBalls
 import PhD.WeierstrassPrep.Polylift
 
+set_option backward.isDefEq.respectTransparency false
+
 section Distinguished
 
 variable {R : Type*} [Semiring R] (v : R → ℝ) (c : ℝ) (f : PowerSeries R) (s : ℕ)
@@ -343,9 +345,9 @@ lemma closedBall_residueRingHom_monic_of_distinguished {ε : ℝ} (hε0 : 0 < ε
     ((Polynomial.degree_le_iff_coeff_zero _ _).mpr fun m hm => this m (mod_cast hm))
     (Polynomial.le_degree_of_ne_zero (by rw [hs]; exact one_ne_zero))
   refine ⟨?_, hdeg⟩
-  rw [Polynomial.Monic, Polynomial.leadingCoeff]
-  convert hs
-  exact Polynomial.natDegree_eq_of_degree_eq_some hdeg
+  rw [Polynomial.Monic, Polynomial.leadingCoeff, Restricted.closedBall_residueRingHom_apply,
+    Polynomial.natDegree_eq_of_degree_eq_some hdeg]
+  exact hs
 
 omit [CompleteSpace R] [Nontrivial R] in
 /- If `τ_ε(g)` is monic, then every `f ∈ T°` can be Euclidean-divided by `g` modulo `ε`:
@@ -593,7 +595,7 @@ lemma ext1 (g : PowerSeries.Restricted R 1) (s : ℕ) (gd : distinguished norm 1
     rw [norm_eq, ← Restricted.norm_eq, norm_mul, PowerSeries.Restricted.norm_C,
       PowerSeries.Restricted.coeff_C_mul, norm_mul]
     congr 1
-    simpa [Restricted.norm_eq] using gd.norm_eq
+    simpa [norm_eq, Restricted.norm_eq] using gd.norm_eq
   norm_max t ht := by
     rw [PowerSeries.Restricted.coeff_C_mul, PowerSeries.Restricted.coeff_C_mul, norm_mul, norm_mul]
     exact mul_lt_mul_of_pos_left (gd.norm_max t ht) (norm_pos_iff.mpr ha2.ne_zero)

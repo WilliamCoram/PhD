@@ -7,6 +7,12 @@ import PhD.ToPR.RestrictedIso
 import PhD.ToPR.GaussNorm
 import PhD.ToPR.MvGaussNorm
 
+-- see `PhD/ToPR/RestrictedIso.lean` for why this is needed since the v4.33 bump: the
+-- instance diamond between `Subring.toRing`/`Subring.toCommRing` (used to build the
+-- `Ring`/`CommRing` instances on `Restricted`) and the generic `SubringClass`-derived
+-- instances is only resolved at `default` transparency.
+set_option backward.isDefEq.respectTransparency false
+
 -- I want here the statements that
 
 -- Rᵒ<x> = (R<x>)ᵒ
@@ -54,7 +60,7 @@ lemma Restricted.monomial_partial_sums_coeff {R : Type*} [NormedCommRing R] [IsU
       PowerSeries.Restricted R 1).1
     = ∑ i ∈ Finset.range n, PowerSeries.monomial i (PowerSeries.coeff i f.1) := by
   induction n with
-    | zero => simp; rfl
+    | zero => simp
     | succ k ih =>
       rw [Finset.sum_range_succ, Finset.sum_range_succ]
       show (_ + _ : PowerSeries R) = _

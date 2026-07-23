@@ -1,19 +1,19 @@
 /-
 Copyright (c) 2026 Bingyu Xia. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Bingyu Xia
+Authors: Bingyu Xia, Wenrong Zou
 -/
+module
 
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+public import Mathlib.RingTheory.MvPowerSeries.Trunc
+public import Mathlib.RingTheory.MvPowerSeries.Rename
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import PhD.Bryce.Basic
 
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Mathlib.RingTheory.MvPolynomial.Ideal
-import Mathlib.RingTheory.MvPowerSeries.Trunc
-import Mathlib.RingTheory.PowerSeries.Trunc
-import Mathlib.RingTheory.MvPowerSeries.Rename
-
-import PhD.Bryce.Basic
-
+import Mathlib.RingTheory.PowerSeries.Ideal
 
 /-!
 # Equivalences related to power series rings
@@ -24,25 +24,8 @@ is patterned after `Mathlib/Algebra/MvPolynomial/Equiv.lean`.
 * `MvPowerSeries.isEmptyEquiv` : The isomorphism between multivariable power series
   in no variables and the ground ring.
 
-* `MvPowerSeries.uniqueEquiv` : The isomorphism between multivariable power series
-  in a single variable and power series over the ground ring.
-
-* `MvPowerSeries.congrRingEquiv`, `MvPowerSeries.congrAlgEquiv` : The isomorhism between
-  multivariable power series induced by an isomorphism between the coefficient rings.
-
-* `MvPowerSeries.sumAlgEquiv` : The isomorphism between multivariable power series
-  in a sum of two types, and multivariable power series in one of the types,
-  with coefficients in multivariable power series in the other type.
-
-* `MvPowerSeries.commAlgEquiv` : The isomorphism between multivariable power series
-  in variables `σ` of multivariable power series in variables `τ` and multivariable power series
-  in variables `τ` of multivariable power series in variables `σ`.
-
 * `MvPowerSeries.optionEquivLeft` : The isomorphism between multivariable power series
   in `Option σ` and power series with coefficients in `MvPowerSeries σ R`.
-
-* `MvPowerSeries.optionEquivRight` : The isomorphism between multivariable power series
-  in `Option σ` and multivariable power series in `σ` with coefficients in `PowerSeries R`.
 
 * `MvPowerSeries.finSuccEquiv` : The isomorphism between multivariable power series
   in `Fin (n + 1)` and power series over multivariable power series in `Fin n`.
@@ -63,15 +46,13 @@ is patterned after `Mathlib/Algebra/MvPolynomial/Equiv.lean`.
 
 noncomputable section
 
+open Finsupp Finset Function
+
 namespace MvPowerSeries
-
-variable {σ τ R S : Type*}
-
-open Finsupp Function
 
 section CommSemiring
 
-variable [CommSemiring R]
+variable {σ τ R S : Type*} [CommSemiring R]
 
 section isEmptyEquiv
 
@@ -81,9 +62,7 @@ variable (σ R) in
 def isEmptyEquiv [IsEmpty σ] : MvPowerSeries σ R ≃ₐ[R] R where
   __ := constantCoeff
   invFun := C
-  left_inv _ := by
-    ext x; rw [Subsingleton.eq_zero x]
-    simp
+  left_inv _ := by ext x; simp [Subsingleton.eq_zero x]
   commutes' _ := rfl
 
 end isEmptyEquiv
@@ -158,9 +137,8 @@ end Map
 
 section sum
 
-variable (R σ τ) in
 /-- Implementation detail for `sumToIter`. Use `MvPowerSeries.sumToIter` instead. -/
-def sumToIterFun (p : MvPowerSeries (σ ⊕ τ) R) :
+private def sumToIterFun (σ τ R : Type*) [CommSemiring R] (p : MvPowerSeries (σ ⊕ τ) R) :
     MvPowerSeries σ (MvPowerSeries τ R) := fun x ↦ fun y ↦ coeff (x.sumElim y) p
 
 private lemma coeff_sumToIterFun (x : σ →₀ ℕ) (y : τ →₀ ℕ) (p : MvPowerSeries (σ ⊕ τ) R) :
@@ -175,11 +153,10 @@ private lemma sumToIterFun_monomial (x : σ ⊕ τ →₀ ℕ) (r : R) :
     Sum.elim_inl, Sum.elim_inr, comapDomain_apply]
   split_ifs
   · rw [coeff_monomial, if_pos (by ext; grind [comapDomain_apply])]
-  · grind
+  · tauto
   · rw [coeff_monomial, if_neg (by simp [Finsupp.ext_iff]; grind)]
-  · simp
+  · rw [coeff_zero]
 
-open Finset in
 private lemma sumToIterFun_mul (p q) : sumToIterFun σ τ R (p * q) =
     sumToIterFun σ τ R p * sumToIterFun σ τ R q := by
   classical
@@ -190,14 +167,14 @@ private lemma sumToIterFun_mul (p q) : sumToIterFun σ τ R (p * q) =
     y.comapDomain Sum.inl Sum.inl_injective.injOn), x.comapDomain Sum.inr Sum.inr_injective.injOn,
     y.comapDomain Sum.inr Sum.inr_injective.injOn)) (fun _ ↦ by simp)).injOn]
 
-variable (R σ τ) in
 /-- The map from multivariable power series in the sum of the two types to
 multivariable power peries in one type with coefficients in
 multivariable power series in another type.
 
 See `sumToIterEquiv` for the isomorphism. -/
 @[no_expose]
-def sumToIter : MvPowerSeries (σ ⊕ τ) R →ₐ[R] MvPowerSeries σ (MvPowerSeries τ R) where
+def sumToIter (σ τ R : Type*) [CommSemiring R] :
+    MvPowerSeries (σ ⊕ τ) R →ₐ[R] MvPowerSeries σ (MvPowerSeries τ R) where
   toFun := sumToIterFun σ τ R
   map_one' := by simpa using sumToIterFun_monomial (0 : σ ⊕ τ →₀ ℕ) (1 : R)
   map_mul' := sumToIterFun_mul
@@ -224,22 +201,22 @@ theorem sumToIter_Xl (b : σ) : sumToIter σ τ R (X (Sum.inl b)) = X b := by
 theorem sumToIter_Xr (b : τ) : sumToIter σ τ R (X (Sum.inr b)) = C (X b) := by
   simpa [X_def] using sumToIter_monomial ((0 : σ →₀ ℕ).sumElim (single b 1)) 1
 
-variable (R σ τ) in
 /-- An inverse function of `sumToIter`. -/
-def iterToSumFun (p : MvPowerSeries σ (MvPowerSeries τ R)) :
-    MvPowerSeries (σ ⊕ τ) R := fun x ↦ coeff (comapDomain Sum.inr x Sum.inr_injective.injOn)
-  (coeff (comapDomain Sum.inl x Sum.inl_injective.injOn) p)
+private def iterToSumFun (σ τ R : Type*) [CommSemiring R]
+    (p : MvPowerSeries σ (MvPowerSeries τ R)) : MvPowerSeries (σ ⊕ τ) R := fun x ↦
+  coeff (comapDomain Sum.inr x Sum.inr_injective.injOn)
+    (coeff (comapDomain Sum.inl x Sum.inl_injective.injOn) p)
 
 private lemma coeff_iterToSumFun (p : MvPowerSeries σ (MvPowerSeries τ R)) (x : σ ⊕ τ →₀ ℕ) :
     coeff x (iterToSumFun σ τ R p) = coeff (comapDomain Sum.inr x Sum.inr_injective.injOn)
       (coeff (comapDomain Sum.inl x Sum.inl_injective.injOn) p) := rfl
 
-variable (R σ τ) in
 /-- The isomorphism between multivariable power series in a sum of two types,
 and multivariable power series in one of the types,
 with coefficients in multivariable power series in the other type. -/
-@[simps! apply]
-def sumAlgEquiv : MvPowerSeries (σ ⊕ τ) R ≃ₐ[R] MvPowerSeries σ (MvPowerSeries τ R) where
+@[no_expose]
+def sumAlgEquiv (σ τ R : Type*) [CommSemiring R] :
+    MvPowerSeries (σ ⊕ τ) R ≃ₐ[R] MvPowerSeries σ (MvPowerSeries τ R) where
   __ := sumToIter σ τ R
   invFun := iterToSumFun σ τ R
   left_inv _ := by
@@ -247,6 +224,10 @@ def sumAlgEquiv : MvPowerSeries (σ ⊕ τ) R ≃ₐ[R] MvPowerSeries σ (MvPowe
   right_inv _ := by
     ext; simp [coeff_sumToIter, coeff_iterToSumFun, comapDomain_inr_sumElim,
       comapDomain_inl_sumElim]
+
+@[simp]
+theorem sumAlgEquiv_apply (p : MvPowerSeries (σ ⊕ τ) R) :
+    (sumAlgEquiv σ τ R) p = (sumToIter σ τ R) p := by rfl
 
 theorem coeff_sumAlgEquiv_symm_apply (p : MvPowerSeries σ (MvPowerSeries τ R)) (x : σ ⊕ τ →₀ ℕ) :
     coeff x ((sumAlgEquiv σ τ R).symm p) = coeff (comapDomain Sum.inr x Sum.inr_injective.injOn)
@@ -268,10 +249,9 @@ theorem sumAlgEquiv_comp_rename_inr : (sumAlgEquiv σ τ R).toAlgHom.comp
     (rename Embedding.inr) = IsScalarTower.toAlgHom R (MvPowerSeries τ R)
       (MvPowerSeries σ (MvPowerSeries τ R)) := by
   classical
-  ext _ x y
-  simp only [AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_comp, AlgHom.coe_coe, comp_apply,
-    sumAlgEquiv_apply, coeff_sumToIter, IsScalarTower.coe_toAlgHom', algebraMap_apply,
-    Algebra.algebraMap_self, RingHom.id_apply, coeff_C]
+  ext p x y
+  suffices coeff (x.sumElim y) ((rename Embedding.inr) p) = coeff y (if x = 0 then p else 0) by
+    simpa [coeff_sumToIter, algebraMap_apply, coeff_C]
   split_ifs with h
   · simp [h, ← embDomain_inr]
   · replace h : x.sumElim y ∉ Set.range (mapDomain Embedding.inr) := by
@@ -283,9 +263,8 @@ theorem sumAlgEquiv_comp_rename_inl : (sumAlgEquiv σ τ R).toAlgHom.comp
     (rename Embedding.inl) = mapAlgHom (Algebra.ofId ..) := by
   classical
   ext p x y
-  simp only [AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_comp, AlgHom.coe_coe, comp_apply,
-    sumAlgEquiv_apply, coeff_sumToIter,
-    show (coeff x) ((mapAlgHom (Algebra.ofId R (MvPowerSeries τ R))) p) = C (coeff x p) from rfl]
+  suffices coeff (x.sumElim y) ((rename Embedding.inl) p) = coeff y (C ((coeff x) p)) by
+    simpa [sumAlgEquiv_apply, coeff_sumToIter]
   by_cases h : y = 0
   · simp [h, ← embDomain_inl]
   · have : x.sumElim y ∉ Set.range (mapDomain Embedding.inl) := by
@@ -293,11 +272,10 @@ theorem sumAlgEquiv_comp_rename_inl : (sumAlgEquiv σ τ R).toAlgHom.comp
       revert h; simp [Finsupp.ext_iff]
     rw [coeff_rename_eq_zero _ _ this, coeff_C, if_neg h]
 
-variable (R σ τ) in
 /-- The algebra isomorphism between multivariable power series in variables `σ` of multivariable
 power series in variables `τ` and multivariable power series in variables `τ` of multivariable
 power series in variables `σ`. -/
-def commAlgEquiv :
+def commAlgEquiv (σ τ R : Type*) [CommSemiring R] :
     MvPowerSeries σ (MvPowerSeries τ R) ≃ₐ[R] MvPowerSeries τ (MvPowerSeries σ R) :=
   (sumAlgEquiv σ τ R).symm.trans <| (renameEquiv _ (.sumComm σ τ)).trans (sumAlgEquiv τ σ R)
 
@@ -305,17 +283,15 @@ def commAlgEquiv :
 lemma commAlgEquiv_C (p : MvPowerSeries τ R) : commAlgEquiv σ τ R (C p) = map C p := by
   classical
   ext y x
-  simp only [commAlgEquiv, AlgEquiv.trans_apply, renameEquiv_apply,
-    AlgHom.toRingHom_eq_coe, RingHom.toMonoidHom_eq_coe, AlgHom.toRingHom_toMonoidHom,
-    OneHom.toFun_eq_coe, MonoidHom.toOneHom_coe, MonoidHom.coe_coe, sumAlgEquiv_apply,
-    coeff_sumToIter, coeff_map, coeff_C]
+  suffices coeff (y.sumElim x) (rename (Equiv.sumComm σ τ) ((sumAlgEquiv σ τ R).symm (C p))) =
+    if x = 0 then (coeff y) p else 0 by simpa [commAlgEquiv, coeff_sumToIter, coeff_C]
   by_cases h : y.sumElim x ∈ Set.range (mapDomain (Equiv.sumComm σ τ).toEmbedding)
   · rw [← funext_iff.mpr (embDomain_eq_mapDomain _)] at h
     rcases h with ⟨z, hz⟩
     simp_rw [← hz, ← Equiv.coe_toEmbedding, coeff_embDomain_rename, coeff_sumAlgEquiv_symm_apply]
     rw [embDomain_eq_mapDomain, Equiv.coe_toEmbedding, Equiv.sumComm_apply,
-      ← mapDomain_swap_sumElim (M := ℕ), (mapDomain_injective
-        Sum.swap_leftInverse.injective).eq_iff] at hz
+      ← mapDomain_swap_sumElim (M := ℕ),
+      (mapDomain_injective Sum.swap_leftInverse.injective).eq_iff] at hz
     rw [hz, comapDomain_inr_sumElim, comapDomain_inl_sumElim, coeff_C]
     split <;> simp
   · simp_rw [← Equiv.coe_toEmbedding, coeff_rename_eq_zero _ _ h]
@@ -330,68 +306,61 @@ end sum
 
 section optionEquivLeft
 
-private lemma embDomain_finSuccEquiv_cons {M : Type*} [AddCommMonoid M] {n : ℕ} (i : M)
-    (x : Fin n →₀ M) : embDomain (finSuccEquiv n).toEmbedding (cons i x) = optionElim i x := by
-  ext a; cases a <;> simp [embDomain_eq_mapDomain]
-
-open Finset in
-private theorem image_optionElim_product_antidiagonal [DecidableEq σ]
-    {x : σ →₀ ℕ} {n : ℕ} : image (fun ((x, y), z, w) ↦
-      (z.optionElim x, w.optionElim y)) (antidiagonal n ×ˢ antidiagonal x) =
-    antidiagonal (x.optionElim n) := by
-  symm; ext ⟨u, v⟩
-  simp only [mem_antidiagonal, mem_image, mem_product, Prod.mk.injEq, Prod.exists]
-  refine ⟨fun h ↦ ⟨u none, v none, u.some, v.some, ⟨?_, ?_⟩, by simp⟩,
-    fun ⟨a, b, i, j, h1, h2, h3⟩ ↦ ?_⟩
-  · rw [← add_apply, h, optionElim_apply_none]
-  · rw [← some_add, h, some_optionElim]
-  · rw [← h2, ← h3, ← optionElim_add, h1.left, h1.right]
-
-variable (R σ) in
 /-- Implementation detail for `optionEquivLeft`. Use `MvPowerSeries.optionEquivLeft` instead. -/
-def optionFunLeft (p : MvPowerSeries (Option σ) R) : PowerSeries (MvPowerSeries σ R) :=
-  .mk fun n ↦ fun x ↦ p.coeff (x.optionElim n)
+private def optionFunLeft (σ R : Type*) [CommSemiring R] (p : MvPowerSeries (Option σ) R) :
+    PowerSeries (MvPowerSeries σ R) := .mk fun n ↦ fun x ↦ p.coeff (x.optionElim n)
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma coeff_coeff_optionFunLeft (p : MvPowerSeries (Option σ) R) (n : ℕ) (x : σ →₀ ℕ) :
     coeff x (PowerSeries.coeff n (optionFunLeft σ R p)) = coeff (x.optionElim n) p := by
   rw [optionFunLeft, PowerSeries.coeff_mk]
-  rfl
+  exact LinearMap.proj_apply ..
 
 private theorem optionFunLeft_monomial (x : Option σ →₀ ℕ) (r : R) :
     optionFunLeft σ R (monomial x r) = PowerSeries.monomial (x none) (monomial x.some r) := by
   classical
-  ext1 n; rw [PowerSeries.coeff_monomial]
-  split_ifs with h
-  · ext y; rw [h, coeff_coeff_optionFunLeft, coeff_monomial]
-    split_ifs with h'
-    · rw [← h']; simp
-    refine (coeff_monomial_ne ?_ _).symm
-    intro h''; simp [h''] at h'
-  · ext y; rw [coeff_coeff_optionFunLeft, map_zero]
-    exact coeff_monomial_ne (by simpa [Finsupp.ext_iff] using ⟨none, by simpa⟩) r
+  ext n y
+  rw [PowerSeries.coeff_monomial, coeff_coeff_optionFunLeft, coeff_monomial]
+  split_ifs with h1 h2 h3
+  · simp [← h1]
+  · absurd h2
+    rw [← optionElim_apply_none n, h1]
+  · replace h1 : ¬ y = x.some := fun h ↦ by
+      absurd h1; ext u
+      cases u <;> simp_all
+    rw [coeff_monomial, if_neg h1]
+  · rw [coeff_zero]
 
-open Finset in
 private lemma optionFunLeft_mul (p q : MvPowerSeries (Option σ) R) :
     optionFunLeft σ R (p * q) = optionFunLeft σ R p * optionFunLeft σ R q := by
   classical
-  ext
-  simpa [coeff_coeff_optionFunLeft, coeff_mul, PowerSeries.coeff_mul, map_sum, ← sum_product',
-    ← image_optionElim_product_antidiagonal] using sum_image (LeftInverse.injective
-      (g := fun (x, y) ↦ ((x none, y none), x.some, y.some)) (fun _ ↦ by simp)).injOn
+  ext k x
+  simp only [coeff_coeff_optionFunLeft, coeff_mul, PowerSeries.coeff_mul, map_sum, sum_sigma']
+  refine sum_bij (fun y _ ↦ ⟨(y.1 none, y.2 none), (y.1.some, y.2.some)⟩) ?_ ?_ ?_ ?_
+  · intros; simp_all [Finsupp.ext_iff]
+  · intros; ext t <;> cases t
+    all_goals simp_all [Finsupp.ext_iff]
+  · rintro ⟨⟨m, n⟩, ⟨u, v⟩⟩ h
+    suffices ∃ a b, (a none = m ∧ b none = n) ∧ a.some = u ∧ a + b = optionElim k x ∧
+      b.some = v by simpa
+    use u.optionElim m, v.optionElim n
+    suffices optionElim m u + optionElim n v = optionElim k x by simp_all
+    ext t; cases t <;> simp_all [Finsupp.ext_iff]
+  · intros; simp_all [Finsupp.ext_iff]
 
 variable (R σ) in
 /-- An inverse function of `optionFunLeft`. -/
-def optionInvFunLeft (p : PowerSeries (MvPowerSeries σ R)) : MvPowerSeries (Option σ) R :=
-  fun x ↦ (p.coeff (x none)).coeff x.some
+private def optionInvFunLeft (σ R : Type*) [CommSemiring R] (p : PowerSeries (MvPowerSeries σ R)) :
+    MvPowerSeries (Option σ) R := fun x ↦ (p.coeff (x none)).coeff x.some
 
-lemma coeff_optionInvFunLeft (p : PowerSeries (MvPowerSeries σ R)) (x : Option σ →₀ ℕ) :
+private lemma coeff_optionInvFunLeft (p : PowerSeries (MvPowerSeries σ R)) (x : Option σ →₀ ℕ) :
     coeff x (optionInvFunLeft σ R p) = (p.coeff (x none)).coeff x.some := rfl
 
-variable (R σ) in
 /-- The algebra isomorphism between multivariable power series in `Option σ` and
   power series with coefficients in `MvPowerSeries σ R`. -/
 @[no_expose]
-def optionEquivLeft : MvPowerSeries (Option σ) R ≃ₐ[R] PowerSeries (MvPowerSeries σ R) where
+def optionEquivLeft (σ R : Type*) [CommSemiring R] :
+    MvPowerSeries (Option σ) R ≃ₐ[R] PowerSeries (MvPowerSeries σ R) where
   toFun := optionFunLeft σ R
   invFun := optionInvFunLeft σ R
   left_inv _ := by ext; simp [coeff_optionInvFunLeft, coeff_coeff_optionFunLeft]
@@ -399,7 +368,7 @@ def optionEquivLeft : MvPowerSeries (Option σ) R ≃ₐ[R] PowerSeries (MvPower
   map_mul' := optionFunLeft_mul
   map_add' _ _ := by ext; simp [coeff_coeff_optionFunLeft]
   commutes' := by
-    simpa [MvPowerSeries.algebraMap_apply, PowerSeries.algebraMap_apply] using
+    simpa [MvPowerSeries.algebraMap_apply, PowerSeries.C] using
       optionFunLeft_monomial (0 : Option σ →₀ ℕ)
 
 lemma coeff_coeff_optionEquivLeft (p : MvPowerSeries (Option σ) R) (n : ℕ) (x : σ →₀ ℕ) :
@@ -432,10 +401,9 @@ end optionEquivLeft
 
 section optionEquivRight
 
-variable (R σ) in
 /-- Implementation detail for `optionEquivRight`. Use `MvPowerSeries.optionEquivRight` instead. -/
-def optionFunRight (p : MvPowerSeries (Option σ) R) : MvPowerSeries σ (PowerSeries R) :=
-  fun x ↦ .mk fun n ↦ p.coeff (x.optionElim n)
+private def optionFunRight (σ R : Type*) [CommSemiring R] (p : MvPowerSeries (Option σ) R) :
+    MvPowerSeries σ (PowerSeries R) := fun x ↦ .mk fun n ↦ p.coeff (x.optionElim n)
 
 set_option backward.isDefEq.respectTransparency false in
 private theorem coeff_coeff_optionFunRight (p : MvPowerSeries (Option σ) R) (x : σ →₀ ℕ) (n : ℕ) :
@@ -451,35 +419,42 @@ private theorem optionFunRight_monomial (x : Option σ →₀ ℕ) (r : R) :
   · rw [PowerSeries.coeff_monomial, eq_comm, ite_eq_left_iff]
     suffices h : n = x none by simp [h]
     simpa using DFunLike.congr_fun h none
-  · exfalso; revert h'; rw [imp_false, not_not]
-    ext i; rw [← optionElim_apply_some n, h, some_apply]
+  · absurd h'; ext i
+    rw [← optionElim_apply_some n, h, some_apply]
   · rw [PowerSeries.coeff_monomial, eq_comm, ite_eq_right_iff]
-    intro h'; exfalso; revert h
-    simp [h', h'']
+    intro h'; absurd h; simp [h', h'']
   · simp
 
-open Finset in
 private lemma optionFunRight_mul (p q : MvPowerSeries (Option σ) R) :
     optionFunRight σ R (p * q) = optionFunRight σ R p * optionFunRight σ R q := by
   classical
-  ext
-  simpa [coeff_coeff_optionFunRight, coeff_mul, ← image_optionElim_product_antidiagonal,
-    map_sum, PowerSeries.coeff_mul, ← sum_product_right'] using sum_image (LeftInverse.injective
-      (g := fun (x, y) ↦ ((x none, y none), x.some, y.some)) (fun _ ↦ by simp)).injOn
+  ext x k
+  simp only [coeff_coeff_optionFunRight, coeff_mul, PowerSeries.coeff_mul, map_sum, sum_sigma']
+  refine sum_bij (fun y _ ↦ ⟨(y.1.some, y.2.some), (y.1 none, y.2 none)⟩) ?_ ?_ ?_ ?_
+  · intros; simp_all [Finsupp.ext_iff]
+  · intros; ext t <;> cases t
+    all_goals simp_all [Finsupp.ext_iff]
+  · rintro ⟨⟨u, v⟩, ⟨m, n⟩⟩ h
+    suffices ∃ a b, (a.some = u ∧ b.some = v) ∧ a none = m ∧ a + b = optionElim k x ∧
+      b none = n by simpa
+    use u.optionElim m, v.optionElim n
+    suffices optionElim m u + optionElim n v = optionElim k x by simp_all
+    ext t; cases t <;> simp_all [Finsupp.ext_iff]
+  · intros; simp_all [Finsupp.ext_iff]
 
-variable (R σ) in
 /-- An inverse function of `optionFunRight`. -/
-def optionInvFunRight (p : MvPowerSeries σ (PowerSeries R)) : MvPowerSeries (Option σ) R :=
+private def optionInvFunRight (σ R : Type*) [CommSemiring R]
+    (p : MvPowerSeries σ (PowerSeries R)) : MvPowerSeries (Option σ) R :=
   fun x ↦ (p.coeff x.some).coeff (x none)
 
-lemma coeff_optionInvFunRight (p : MvPowerSeries σ (PowerSeries R)) (x : Option σ →₀ ℕ) :
+private lemma coeff_optionInvFunRight (p : MvPowerSeries σ (PowerSeries R)) (x : Option σ →₀ ℕ) :
     coeff x (optionInvFunRight σ R p) = (p.coeff x.some).coeff (x none) := rfl
 
-variable (R σ) in
 /-- The algebra isomorphism between multivariable power series in `Option σ` and
   multivariable power series in `σ` with coefficients in `PowerSeries R`. -/
 @[no_expose]
-def optionEquivRight : MvPowerSeries (Option σ) R ≃ₐ[R] MvPowerSeries σ (PowerSeries R) where
+def optionEquivRight (σ R : Type*) [CommSemiring R] :
+    MvPowerSeries (Option σ) R ≃ₐ[R] MvPowerSeries σ (PowerSeries R) where
   toFun := optionFunRight σ R
   invFun := optionInvFunRight σ R
   left_inv _ := by ext; simp [coeff_optionInvFunRight, coeff_coeff_optionFunRight]
@@ -500,7 +475,8 @@ lemma optionEquivRight_X_some (i : σ) : optionEquivRight σ R (X (some i)) = X 
   simpa [← X_def] using optionEquivRight_monomial (single (some i) 1) (1 : R)
 
 lemma optionEquivRight_X_none : optionEquivRight σ R (X none) = C PowerSeries.X := by
-  simpa [← X_def] using optionEquivRight_monomial (single none 1) (1 : R)
+  simpa [← X_def, PowerSeries.monomial_eq_C_mul_X_pow] using
+    optionEquivRight_monomial (single none 1) (1 : R)
 
 lemma optionEquivRight_C (r : R) : optionEquivRight σ R (C r) = C (PowerSeries.C r) := by
   simpa using optionEquivRight_monomial 0 (r : R)
@@ -511,50 +487,58 @@ section finSuccEquiv
 
 variable {n : ℕ}
 
+private lemma embDomain_finSuccEquiv_cons {M : Type*} [AddCommMonoid M] {n : ℕ} (i : M)
+    (x : Fin n →₀ M) :
+    embDomain (_root_.finSuccEquiv n).toEmbedding (cons i x) = optionElim i x := by
+  ext a; cases a <;> simp [embDomain_eq_mapDomain]
+
 variable (n R) in
 /-- The algebra isomorphism between multivariable power series in `Fin (n + 1)` and
 power series over multivariable power series in `Fin n`. -/
 def finSuccEquiv : MvPowerSeries (Fin (n + 1)) R ≃ₐ[R] PowerSeries (MvPowerSeries (Fin n) R) :=
   (renameEquiv R (_root_.finSuccEquiv n)).trans (optionEquivLeft (Fin n) R)
 
-theorem coeff_coeff_finSuccEquiv (p : MvPowerSeries (Fin (n + 1)) R) {k x} :
+theorem coeff_coeff_finSuccEquiv (p : MvPowerSeries (Fin (n + 1)) R) {k : ℕ} {x : Fin n →₀ ℕ} :
     coeff x (PowerSeries.coeff k (finSuccEquiv R n p)) = coeff (x.cons k) p := by
-  suffices (coeff x) ((PowerSeries.coeff k) ((optionEquivLeft (Fin n) R)
-    ((rename (_root_.finSuccEquiv n)) p))) = (coeff (Finsupp.cons k x)) p by simpa [finSuccEquiv]
-  simp_rw [← Equiv.coe_toEmbedding, coeff_coeff_optionEquivLeft,
-    ← embDomain_finSuccEquiv_cons, coeff_embDomain_rename]
+  suffices coeff x (PowerSeries.coeff k (optionEquivLeft (Fin n) R
+    (rename (_root_.finSuccEquiv n) p))) = coeff (Finsupp.cons k x) p by simpa [finSuccEquiv]
+  simp_rw [← Equiv.coe_toEmbedding, coeff_coeff_optionEquivLeft, ← embDomain_finSuccEquiv_cons,
+    coeff_embDomain_rename]
 
+@[simp]
 theorem finSuccEquiv_X_zero : finSuccEquiv R n (X 0) = .X := by
   ext k x
-  rw [coeff_coeff_finSuccEquiv, PowerSeries.coeff_X, coeff_X]
+  simp_rw [coeff_coeff_finSuccEquiv, PowerSeries.coeff_X, coeff_X, cons_eq_single_zero_iff]
   split_ifs with h1 h2 h3
-  · rw [cons_eq_single_zero_iff] at h1
-    simp [h1.left]
-  · grind [cons_eq_single_zero_iff]
-  · rw [cons_eq_single_zero_iff, not_and'] at h1
-    rw [coeff_one, if_neg (h1 h3)]
+  · simp [h1.left]
+  · tauto
+  · rw [coeff_one, if_neg (by tauto)]
   · rw [coeff_zero]
 
-theorem finSuccEquiv_X_succ {j : Fin n} : finSuccEquiv R n (X j.succ) = .C (X j) := by
+@[simp]
+theorem finSuccEquiv_X_succ (j : Fin n) : finSuccEquiv R n (X j.succ) = .C (X j) := by
   ext k x
-  rw [coeff_coeff_finSuccEquiv, PowerSeries.coeff_C, coeff_X]
+  simp_rw [coeff_coeff_finSuccEquiv, PowerSeries.coeff_C, coeff_X, cons_eq_single_succ_iff]
   split_ifs with h1 h2 h3
-  · rw [cons_eq_single_succ_iff] at h1
-    simp [h1.left]
-  · grind [cons_eq_single_succ_iff]
-  · rw [cons_eq_single_succ_iff, not_and'] at h1
-    rw [coeff_X, if_neg (h1 h3)]
+  · simp [h1.left]
+  · tauto
+  · rw [coeff_X, if_neg (by tauto)]
+  · rw [coeff_zero]
+
+@[simp]
+theorem finSuccEquiv_C (r : R) : (finSuccEquiv R n) (C r) = PowerSeries.C (C r) := by
+  ext k x
+  simp_rw [coeff_coeff_finSuccEquiv, PowerSeries.coeff_C, coeff_C, ← cons_zero_zero,
+    cons_injective2.eq_iff]
+  split_ifs with h1 h2 h3
+  · simp [h1.right]
+  · tauto
+  · rw [coeff_C, if_neg (by tauto)]
   · rw [coeff_zero]
 
 theorem finSuccEquiv_comp_C : (MvPowerSeries.finSuccEquiv R n).symm.toRingHom.comp
-    (PowerSeries.C.comp MvPowerSeries.C) = MvPowerSeries.C := RingHom.ext fun r ↦ by
-  classical
-  rw [AlgEquiv.symm_toRingEquiv, RingEquiv.toRingHom_eq_coe, RingHom.coe_comp,
-    RingHom.coe_coe, comp_apply, RingEquiv.symm_apply_eq]
-  ext; simp only [RingHom.coe_comp, comp_apply, PowerSeries.coeff_C,
-    AlgEquiv.coe_ringEquiv, coeff_coeff_finSuccEquiv, coeff_C]
-  rw [← single_zero 0]
-  grind [coeff_C, cons_eq_single_zero_iff]
+    (PowerSeries.C.comp MvPowerSeries.C) = MvPowerSeries.C := by
+  ext1; simp [AlgEquiv.symm_apply_eq]
 
 /-- Consider a multivariate power series `p` whose variables are indexed by `Option σ`,
 and suppose that `σ ≃ Fin n`.
@@ -571,9 +555,9 @@ lemma finSuccEquiv_renameEquiv_finSuccEquiv (e : σ ≃ Fin n) (p) :
       (finSuccEquiv R n) p = PowerSeries.map (rename e).toRingHom
         (optionEquivLeft σ R p) := by
   ext k x
-  simp only [AlgEquiv.trans_apply, renameEquiv_apply, Equiv.coe_trans, AlgHom.toRingHom_eq_coe,
-    RingHom.toMonoidHom_eq_coe, AlgHom.toRingHom_toMonoidHom, OneHom.toFun_eq_coe,
-    MonoidHom.toOneHom_coe, MonoidHom.coe_coe, PowerSeries.coeff_map, RingHom.coe_coe]
+  suffices coeff x (PowerSeries.coeff k ((finSuccEquiv R n) (rename
+    ((_root_.finSuccEquiv n).symm ∘ e.optionCongr) p))) =
+      coeff x (rename e (PowerSeries.coeff k (optionEquivLeft σ R p))) by simpa
   have aux : x.cons k = embDomain (e.optionCongr.toEmbedding.trans
     (_root_.finSuccEquiv n).symm.toEmbedding) ((x.mapDomain e.symm).optionElim k) := by
     rw [embDomain_eq_mapDomain, ← Equiv.trans_toEmbedding, Equiv.coe_toEmbedding,
@@ -588,9 +572,27 @@ lemma finSuccEquiv_renameEquiv_finSuccEquiv (e : σ ≃ Fin n) (p) :
   nth_rw 2 [aux']
   rw [coeff_embDomain_rename, ← coeff_coeff_optionEquivLeft, Equiv.coe_toEmbedding]
 
+variable (S : Type*) [CommRing S] [IsNoetherianRing S]
+
+private lemma isNoetherianRing_fin (n : ℕ) : IsNoetherianRing (MvPowerSeries (Fin n) S) := by
+  induction n with
+  | zero =>
+    exact isNoetherianRing_of_ringEquiv S (isEmptyEquiv (Fin 0) S).toRingEquiv.symm
+  | succ n _ =>
+    exact isNoetherianRing_of_ringEquiv (PowerSeries (MvPowerSeries (Fin n) S))
+      (finSuccEquiv S n).toRingEquiv.symm
+
+instance isNoetherianRing [Finite σ] : IsNoetherianRing (MvPowerSeries σ S) := by
+  cases nonempty_fintype σ
+  have := isNoetherianRing_fin S (Fintype.card σ)
+  exact isNoetherianRing_of_ringEquiv (MvPowerSeries (Fin (Fintype.card σ)) S)
+    (renameEquiv S (Fintype.equivFin σ)).toRingEquiv.symm
+
 end finSuccEquiv
 
 end CommSemiring
+
+section toAdicCompletion
 
 section CommRing
 
@@ -660,6 +662,7 @@ theorem coeff_toAdicCompletion_val_apply_out {x : σ →₀ ℕ} {p : MvPowerSer
       Ideal.Quotient.mk_out]
   exact hx
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem toAdicCompletion_coe (p : MvPolynomial σ R) :
     toAdicCompletion σ R p = .of (MvPolynomial.idealOfVars σ R) (MvPolynomial σ R) p := by
   symm; ext n
@@ -692,7 +695,7 @@ theorem mk_truncTotal_toAdicCompletionInv {n : ℕ}
       ← smul_eq_mul, ← Ideal.Quotient.eq]
     simp only [Submodule.mapQ_eq_factor, Submodule.factor_eq_factor, Ideal.Quotient.mk_out]
     rw [← AdicCompletion.transitionMap_ideal_mk _ (Nat.lt_iff_add_one_le.mp h), eq_comm]
-    convert f.prop h; simp
+    convert! f.prop h; simp
   simp
 
 /-- The isomorphism from multivariate power series to the adic completion of
@@ -705,7 +708,7 @@ def toAdicCompletionAlgEquiv (σ R : Type*) [Finite σ] [CommRing R] :
   invFun := toAdicCompletionInv σ R
   left_inv _ := by
     ext; simp [coeff_toAdicCompletionInv, coeff_toAdicCompletion_val_apply_out]
-  right_inv _ := by ext; simpa using mk_truncTotal_toAdicCompletionInv
+  right_inv _ := by ext; simpa using! mk_truncTotal_toAdicCompletionInv
 
 @[simp]
 lemma toAdicCompletionAlgEquiv_apply (p : MvPowerSeries σ R) :
@@ -719,4 +722,83 @@ lemma toAdicCompletionAlgEquiv_symm_apply
 
 end CommRing
 
-end MvPowerSeries
+end MvPowerSeries.toAdicCompletion
+
+section toMvPowerSeries
+
+variable {R σ τ : Type*} [CommSemiring R] {f : PowerSeries R} (i : σ) (r : R)
+
+open PowerSeries Filter
+namespace PowerSeries
+
+/-- Given a power series `p : R⟦X⟧` and an index `i`, we may view it as a
+multivariate power series `toMvPowerSeries i p : MvPowerSeries σ R`. -/
+noncomputable
+def toMvPowerSeries : PowerSeries R →ₐ[R] MvPowerSeries σ R :=
+  MvPowerSeries.rename (fun _ ↦ i)
+
+theorem toMvPowerSeries_apply : f.toMvPowerSeries i = f.rename (fun _ ↦ i) := rfl
+
+@[simp]
+theorem toMvPowerSeries_C : (C r).toMvPowerSeries i = MvPowerSeries.C r := by
+  rw [toMvPowerSeries_apply, C_apply, MvPowerSeries.rename_C]
+
+@[simp]
+theorem toMvPowerSeries_X : X.toMvPowerSeries i = MvPowerSeries.X i (R := R) := by
+  rw [toMvPowerSeries_apply, X_apply, MvPowerSeries.rename_X]
+
+theorem toMvPowerSeries_injective (i : σ) : Function.Injective (toMvPowerSeries (R := R) i) :=
+  MvPowerSeries.rename_injective (Embedding.punit i)
+
+theorem toMvPowerSeries_inj (i : σ) {p q : R⟦X⟧} :
+    p.toMvPowerSeries i = q.toMvPowerSeries i ↔ p = q :=
+  (toMvPowerSeries_injective i).eq_iff
+
+section CommRing
+
+variable {R : Type*} [CommRing R] {f : R⟦X⟧} {i : σ}
+
+theorem toMvPowerSeries_eq_subst : f.toMvPowerSeries i = f.subst (MvPowerSeries.X i) := by
+  rw [toMvPowerSeries_apply, MvPowerSeries.rename_eq_subst, comp_def, subst]
+
+theorem subst_toMvPowerSeries {a : σ → MvPowerSeries τ R} (ha : MvPowerSeries.HasSubst a) :
+    (f.toMvPowerSeries i).subst a = f.subst (a i) := by
+  rw [toMvPowerSeries_eq_subst, subst, MvPowerSeries.subst_comp_subst_apply
+    (HasSubst.const (HasSubst.X _)) ha, MvPowerSeries.subst_X ha, subst]
+
+lemma toMvPowerSeries_coeff_eq_zero {d : σ →₀ ℕ} (hd : d i = 0) (hf : f.constantCoeff = 0) :
+    (f.toMvPowerSeries i).coeff d = 0 := by classical
+  rw [toMvPowerSeries_apply, MvPowerSeries.rename_eq_subst, subst_X_comp_const,
+    coeff_subst (HasSubst.X _), finsum_eq_zero_of_forall_eq_zero]
+  simp only [MvPowerSeries.X_pow_eq, MvPowerSeries.coeff_monomial, smul_eq_mul, mul_ite, mul_one,
+    mul_zero, ite_eq_right_iff]
+  intro _ a
+  subst a
+  simp_all
+
+theorem _root_.MvPowerSeries.HasSubst.toMvPowerSeries (hf : f.constantCoeff = 0) :
+    MvPowerSeries.HasSubst (f.toMvPowerSeries · (σ := σ)) (S := R) where
+  const_coeff := by simp_all [constantCoeff, toMvPowerSeries_apply]
+  coeff_zero d := Set.Finite.subset (Finite.of_fintype d.support) fun s => by
+    contrapose
+    simpa using fun hd ↦ toMvPowerSeries_coeff_eq_zero hd hf
+
+end CommRing
+
+end PowerSeries
+
+variable (f : σ → τ) [TendstoCofinite f] (a : σ) (p : R⟦X⟧)
+
+@[simp]
+lemma MvPowerSeries.rename_comp_toMvPowerSeries :
+    (rename (R := R) f).comp (PowerSeries.toMvPowerSeries a) =
+      PowerSeries.toMvPowerSeries (f a) := by
+  ext
+  simp [toMvPowerSeries_apply, comp_def]
+
+@[simp]
+lemma MvPowerSeries.rename_toMvPowerSeries :
+    (p.toMvPowerSeries a).rename f = p.toMvPowerSeries (f a) :=
+  DFunLike.congr_fun (rename_comp_toMvPowerSeries ..) p
+
+end toMvPowerSeries

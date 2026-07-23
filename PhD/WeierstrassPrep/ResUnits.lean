@@ -13,6 +13,8 @@ import PhD.WeierstrassPrep.Polylift
 
 import Mathlib.RingTheory.Polynomial.Nilpotent
 
+set_option backward.isDefEq.respectTransparency false
+
 open Topology
 
 -- I should probably add my local notation for PowerBounded subring of res power series
@@ -209,7 +211,7 @@ lemma Restricted.series_sub_first_term_norm_neZero_coeffs (f : PowerSeries.Restr
   set g := f - PowerSeries.Restricted.C 1 (PowerSeries.coeff 0 f.1)
   have := Restricted.series_sub_first_term_coeffs (f := f) (g := g) (by rfl) v
   simp [hv] at this
-  exact LE.le.trans_lt (by simpa [← this] using
+  exact LE.le.trans_lt (by rw [Restricted.norm_eq]; simpa [← this] using
     PowerSeries.le_gaussNorm _ 1 _ (Restricted.hasGaussNorm 1 g) v) hg
 
 omit [CompleteSpace R] [NormMulClass R] [NormOneClass R] [Filter.NeBot (𝓝[≠] (0 : R))]

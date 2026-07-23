@@ -1,23 +1,27 @@
-import Mathlib.RingTheory.MvPowerSeries.Basic
+/-
+Copyright (c) 2019 Johan Commelin. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Johan Commelin, Kenny Lau, Bingyu Xia
+-/
+module
 
-open Finset (antidiagonal mem_antidiagonal)
+public import Mathlib.RingTheory.MvPowerSeries.Basic
+
+/-!
+# Additional `MvPowerSeries.map` lemmas
+
+These are the additions to `Mathlib/RingTheory/MvPowerSeries/Basic.lean` introduced in
+mathlib PR #36507 (not yet in the pinned mathlib). Once that PR lands they can be dropped
+and this file replaced by the upstream import.
+-/
+
+@[expose] public section
 
 namespace MvPowerSeries
 
-open Finsupp
-
-variable {σ R : Type*}
-
-variable [Semiring R]
-
-variable (m n : σ →₀ ℕ) (φ ψ : MvPowerSeries σ R)
-
-variable {S T : Type*}  [Semiring S] [Semiring T]
-variable (f : R →+* S) (g : S →+* T)
-
 open Function
 
-variable {f}
+variable {σ R S : Type*} [Semiring R] [Semiring S] {f : R →+* S}
 
 theorem map_injective (hf : Injective f) :
     Injective (map f : MvPowerSeries σ R → MvPowerSeries σ S) := by
@@ -31,15 +35,14 @@ theorem map_injective_iff : Injective (map (σ := σ) f) ↔ Injective f := by
   rw [← constantCoeff_C r, ← constantCoeff_C r', h]
 
 theorem map_surjective (hf : Surjective f) :
-    Surjective (map f : MvPowerSeries σ R → MvPowerSeries σ S) := by
-  intro p; choose q _ using fun _ ↦ hf (coeff _ p)
-  use q; simpa [MvPowerSeries.ext_iff]
+    Surjective (map f : MvPowerSeries σ R → MvPowerSeries σ S) := fun p ↦ by
+  choose q _ using fun _ ↦ hf (coeff _ p)
+  exact ⟨q, by simpa [MvPowerSeries.ext_iff]⟩
 
 theorem map_surjective_iff : Surjective (map (σ := σ) f) ↔ Surjective f := by
-  refine ⟨fun h ↦ ?_, map_surjective⟩
-  intro s; obtain ⟨p, hp⟩ := h (C s)
-  rw [MvPowerSeries.ext_iff] at hp
-  use constantCoeff p; simpa using hp 0
+  refine ⟨fun h s ↦ ?_, map_surjective⟩
+  obtain ⟨p, hp⟩ := h (C s)
+  exact ⟨constantCoeff p, MvPowerSeries.ext_iff.mp hp 0⟩
 
 /-- If `f` is a left-inverse of `g` then `map f` is a left-inverse of `map g`. -/
 theorem map_leftInverse {g : S →+* R} (hf : LeftInverse f g) :
@@ -50,3 +53,5 @@ theorem map_leftInverse {g : S →+* R} (hf : LeftInverse f g) :
 theorem map_rightInverse {g : S →+* R} (hf : RightInverse f g) :
     RightInverse (map f : MvPowerSeries σ R →  MvPowerSeries σ S) (map g) :=
   (map_leftInverse hf.leftInverse).rightInverse
+
+end MvPowerSeries

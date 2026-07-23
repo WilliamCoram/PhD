@@ -11,6 +11,13 @@ import PhD.WeierstrassPrep.ResC
 
 open Filter Topology
 
+-- the instance diamond between `Subring.toRing`/`Subring.toCommRing` (used to build the
+-- `Ring`/`CommRing` instances on `Restricted`/`MvPowerSeries.Restricted`) and the generic
+-- `SubringClass`-derived instances is only resolved at `default` transparency; since Lean
+-- v4.33 backward-reasoning `isDefEq` checks default to `.instances` transparency for
+-- instance-implicit arguments, we opt back into the old behaviour for this file.
+set_option backward.isDefEq.respectTransparency false
+
 variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormMulClass R] [NormOneClass R]
   [Filter.NeBot (𝓝[≠] (0 : R))]
 
@@ -128,10 +135,7 @@ lemma pbCoeff_one_zero : pbCoeff (1 : ↥T°) 0 = 1 := by
 @[simp]
 lemma pbCoeff_one_pos {v : ℕ} (hv : 0 < v) : pbCoeff (1 : ↥T°) v = 0 := by
   apply Subtype.ext
-  -- missing API
-  have : (1 : PowerSeries.Restricted R 1).1 = 1 := by rfl
-  simp [this]
-  grind
+  simp [PowerSeries.coeff_one, hv.ne']
 
 -- maybe there is a way to deduplicate the work?
 
@@ -170,14 +174,14 @@ lemma openBall_residueCoeff_support_finite (ε : ℝ) (hε : 0 < ε) (f : ↥T°
 /-- The residue of `f ∈ T°` modulo `R_ε`, as a polynomial in `(R° ⧸ R_ε)[X]`. -/
 noncomputable def closedBall_residuePolynomial (ε : ℝ) (hε : 0 < ε) (f : ↥T°) :
     Polynomial (↥R° ⧸ closedBall_ideal ε hε.le) :=
-  ⟨Finsupp.ofSupportFinite (fun v => Ideal.Quotient.mk (closedBall_ideal ε hε.le) (pbCoeff f v))
-    (closedBall_residueCoeff_support_finite ε hε f)⟩
+  ⟨⟨Finsupp.ofSupportFinite (fun v => Ideal.Quotient.mk (closedBall_ideal ε hε.le) (pbCoeff f v))
+    (closedBall_residueCoeff_support_finite ε hε f)⟩⟩
 
 /-- The residue of `f ∈ T°` modulo `R_ε`, as a polynomial in `(R° ⧸ R_ε)[X]`. -/
 noncomputable def openBall_residuePolynomial (ε : ℝ) (hε : 0 < ε) (f : ↥T°) :
     Polynomial (↥R° ⧸ openBall_ideal ε hε) :=
-  ⟨Finsupp.ofSupportFinite (fun v => Ideal.Quotient.mk (openBall_ideal ε hε) (pbCoeff f v))
-    (openBall_residueCoeff_support_finite ε hε f)⟩
+  ⟨⟨Finsupp.ofSupportFinite (fun v => Ideal.Quotient.mk (openBall_ideal ε hε) (pbCoeff f v))
+    (openBall_residueCoeff_support_finite ε hε f)⟩⟩
 
 @[simp]
 lemma closedBall_residuePolynomial_coeff (ε : ℝ) (hε : 0 < ε) (f : ↥T°) (v : ℕ) :

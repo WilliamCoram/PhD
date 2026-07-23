@@ -9,6 +9,13 @@ import PhD.Bryce.Equiv
 open Filter
 open scoped Topology
 
+-- the instance diamond between `Subring.toRing`/`Subring.toCommRing` (used to build the
+-- `Ring`/`CommRing` instances on `Restricted`/`MvPowerSeries.Restricted`) and the generic
+-- `SubringClass`-derived instances is only resolved at `default` transparency; since Lean
+-- v4.33 backward-reasoning `isDefEq` checks default to `.instances` transparency for
+-- instance-implicit arguments, we opt back into the old behaviour for this file.
+set_option backward.isDefEq.respectTransparency false
+
 variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] (n : ℕ) (c : Fin (n + 1) → ℝ)
   [StrongPos c]
 
@@ -151,7 +158,10 @@ def MvRestricted.finSuccEquiv : MvPowerSeries.Restricted R c ≃+*
   ((RingEquiv.subringMap (s := (MvPowerSeries.isSubring (R := R) c))
   (MvPowerSeries.finSuccEquiv R n).toRingEquiv).trans
   (RingEquiv.subringCongr (finSuccEquiv_restricted_image n c))).trans
-  (Subring.equivMapOfInjective _ _ (PowerSeries.map_injective _ Subtype.val_injective)).symm
+  (Subring.equivMapOfInjective
+    (PowerSeries.isSubring (R := MvPowerSeries.Restricted R (Fin.tail c)) (c 0))
+    (PowerSeries.map (MvPowerSeries.isSubring (R := R) (Fin.tail c)).subtype)
+    (PowerSeries.map_injective _ Subtype.val_injective)).symm
 
 instance : StrongPos (fun _ : Unit ↦ c 0) where
   pos := by simpa using StrongPos.pos 0
@@ -165,7 +175,8 @@ lemma MvRestricted.map_finSuccEquiv (f : MvPowerSeries.Restricted R c) :
     (PowerSeries.map_injective _ Subtype.val_injective)
   show (e2 (e2.symm ((RingEquiv.subringCongr (finSuccEquiv_restricted_image n c))
     (RingEquiv.subringMap (MvPowerSeries.finSuccEquiv R n).toRingEquiv f)))).1 = _
-  aesop -- proof done by Claude magic?
+  rw [RingEquiv.apply_symm_apply]
+  rfl
 
 -- this is an important lemma to have... perhaps I can do it without the above statement though?
 lemma MvRestricted.coeff_finSuccEquiv (f : MvPowerSeries.Restricted R c) (i : ℕ) :
@@ -173,7 +184,8 @@ lemma MvRestricted.coeff_finSuccEquiv (f : MvPowerSeries.Restricted R c) (i : �
     PowerSeries.coeff i (MvPowerSeries.finSuccEquiv R n f.1) := by
   have := MvRestricted.map_finSuccEquiv n c f
   apply_fun PowerSeries.coeff i at this
-  simpa using this
+  simp only [PowerSeries.coeff_map] at this
+  exact this
 
 -- Claude proof after initial simps to prompt in right direction
 variable (R) in
@@ -234,7 +246,11 @@ variable (R) in
 noncomputable
 instance MvRestricted.finSuccIsometry' :
     RingHomIsometric (MvRestricted.finSuccEquiv R n c).toRingHom where
-  norm_map := by convert MvRestricted_finSuccEquiv_norm_eq_norm R n c
+  norm_map := by
+    intro x
+    show ‖(MvRestricted.finSuccEquiv R n c) x‖ = ‖x‖
+    rw [Restricted.norm_eq, MvRestricted.norm_eq]
+    exact MvRestricted_finSuccEquiv_norm_eq_norm R n c x
 
 variable (R) in
 noncomputable

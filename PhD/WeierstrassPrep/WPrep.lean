@@ -13,6 +13,10 @@ import PhD.WeierstrassPrep.Polylift
 import PhD.WeierstrassPrep.ResUnits
 import PhD.WeierstrassPrep.WeierstrassDivision
 
+-- see `PhD/ToPR/RestrictedIso.lean`: needed since the v4.33 bump for the `Restricted`
+-- `Subring.toRing`/`toCommRing` instance diamond.
+set_option backward.isDefEq.respectTransparency false
+
 open Topology
 
 variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [CompleteSpace R] [NormMulClass R]
@@ -228,7 +232,7 @@ lemma weierstrassPreparation_exists_norm_one (g : PowerSeries.Restricted R 1) (h
       IsUnit ((Restricted.openBall_residueRingHom (R := R) 1 zero_lt_one G).coeff s) := by
     rw [Restricted.openBall_residueRingHom_apply, Restricted.openBall_residuePolynomial_coeff]
     have : IsUnit (Restricted.pbCoeff G s) := by
-      simpa [Restricted.isUnit_subring_iff (Restricted.pbCoeff G s)
+      simpa [coeff_isUnit, Restricted.isUnit_subring_iff (Restricted.pbCoeff G s)
         (by rw [Restricted.pbCoeff_coe, ← gd.norm_eq, ← Restricted.norm_eq, hg])] using gd.unit
     exact this.map _
   have hσG_gt : ∀ v, s < v →

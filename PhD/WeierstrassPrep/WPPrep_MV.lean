@@ -1,5 +1,9 @@
 import PhD.WeierstrassPrep.WPrep_gen
 
+-- see `PhD/ToPR/RestrictedIso.lean`: needed since the v4.33 bump for the `Restricted`
+-- `Subring.toRing`/`toCommRing` instance diamond.
+set_option backward.isDefEq.respectTransparency false
+
 /-!
 # Weierstrass division and preparation over `MvRestricted` (blueprint)
 

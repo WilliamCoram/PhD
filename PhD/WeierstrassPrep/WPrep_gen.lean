@@ -4,6 +4,10 @@ import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import PhD.WeierstrassPrep.WPrep
 
+-- see `PhD/ToPR/RestrictedIso.lean`: needed since the v4.33 bump for the `Restricted`
+-- `Subring.toRing`/`toCommRing` instance diamond.
+set_option backward.isDefEq.respectTransparency false
+
 /-!
 # Weierstrass division and preparation at a general Gauss-norm parameter (roadmap)
 
@@ -1059,9 +1063,11 @@ lemma weierstrassDivision_descend [Module.Finite K L]
     show f.1 = g.1 * PowerSeries.mk (fun n => π (PowerSeries.coeff n q.1)) +
       ((∑ n ∈ r.support, Polynomial.monomial n (π (r.coeff n)) : Polynomial K) :
         PowerSeries K)
-    have h2 := congrArg
-      (fun h : PowerSeries L => PowerSeries.mk fun n => π (PowerSeries.coeff n h)) hf1
-    dsimp only at h2
+    have h2 : PowerSeries.mk (fun n => π (PowerSeries.coeff n
+          (PowerSeries.map (algebraMap K L) f.1)))
+        = PowerSeries.mk (fun n => π (PowerSeries.coeff n
+            (PowerSeries.map (algebraMap K L) g.1 * q.1 + (r : PowerSeries L)))) :=
+      congrArg (fun h : PowerSeries L => PowerSeries.mk fun n => π (PowerSeries.coeff n h)) hf1
     rwa [show (PowerSeries.mk fun n => π (PowerSeries.coeff n
           (PowerSeries.map (algebraMap K L) f.1))) = f.1 from by
         ext n; rw [PowerSeries.coeff_mk, PowerSeries.coeff_map, hπ],
@@ -1153,9 +1159,12 @@ private lemma isUnit_of_isUnit_mapAlgebra [Module.Finite K L]
   have hone : q * Einv = 1 := by
     apply Subtype.ext
     show q.1 * PowerSeries.mk (fun n => π (PowerSeries.coeff n _)) = 1
-    have h2 := congrArg (fun h : PowerSeries L =>
-      PowerSeries.mk fun n => π (PowerSeries.coeff n h)) hqv1
-    dsimp only at h2
+    have h2 : PowerSeries.mk (fun n => π (PowerSeries.coeff n
+          (PowerSeries.map (algebraMap K L) q.1 *
+            (((v⁻¹ : (PowerSeries.Restricted L c)ˣ) : PowerSeries.Restricted L c)).1)))
+        = PowerSeries.mk (fun n => π (PowerSeries.coeff n (1 : PowerSeries L))) :=
+      congrArg (fun h : PowerSeries L =>
+        PowerSeries.mk fun n => π (PowerSeries.coeff n h)) hqv1
     rwa [lmap_mul, show (PowerSeries.mk fun n =>
         π (PowerSeries.coeff n (1 : PowerSeries L))) = 1 from by
       ext n
