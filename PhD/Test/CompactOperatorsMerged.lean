@@ -1,4 +1,5 @@
 import PhD.TateFredholm.BaseChange
+import PhD.TateFredholm.Noetherian
 
 /-!
 # Moved: the merged compact-operator development now lives in `PhD/TateFredholm/`

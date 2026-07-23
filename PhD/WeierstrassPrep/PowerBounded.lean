@@ -155,8 +155,9 @@ lemma PowerBounded_isUnit_iff_res_isUnit (a : PowerBounded.subring (S := ℤ) R)
         rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_one, map_mul, Ideal.Quotient.mk_out, hbr,
           sub_self]
       rw [IsTopologicallyNilpotent, tendsto_subtype_rng]
-      simpa using ((IsTopologicallyNilpotent.mem_PowerBounded.topologicalNilradical_iff ℤ
-        (1 - a * Quotient.out b)).mp this)
+      simpa [IsTopologicallyNilpotent] using
+        ((IsTopologicallyNilpotent.mem_PowerBounded.topologicalNilradical_iff ℤ
+          (1 - a * Quotient.out b)).mp this)
     have : IsUnit (a * (Quotient.out b)) := by
       simpa [hz_eq] using IsTopologicallyNilpotent.isUnit_one_sub_of_isTopologicallyNilpotent hz
     exact isUnit_of_mul_isUnit_left this

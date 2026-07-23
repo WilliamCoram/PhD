@@ -59,13 +59,12 @@ lemma le_gaussNorm (hbd : HasGaussNorm v c f) (t : σ →₀ ℕ) :
   apply le_ciSup hbd
 
 lemma gaussNorm_nonneg (vNonneg : ∀ a, v a ≥ 0) : 0 ≤ gaussNorm v c f := by
-  rw [gaussNorm]
   by_cases h : HasGaussNorm v c f
   · trans v (constantCoeff f)
     · simp [vNonneg]
     · convert (le_gaussNorm v c f h 0)
       simp
-  · simp [h]
+  · simp [gaussNorm, h]
 
 lemma gaussNorm_eq_zero_iff (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
     (h_eq_zero : ∀ x : R, v x = 0 → x = 0) (hc : ∀ i, 0 < c i) (hbd : HasGaussNorm v c f) :
@@ -115,9 +114,9 @@ lemma gaussNorm_add_le_max (f g : MvPowerSeries σ R) (hc : 0 ≤ c)
       rcases max_choice (v ((coeff t) f) * ∏ i ∈ t.support, c i ^ t i)
         (v ((coeff t) g) * ∏ i ∈ t.support, c i ^ t i) with h | h
       · left
-        simpa [h] using le_gaussNorm v c f hbfd t
+        simpa [h, Finsupp.prod] using le_gaussNorm v c f hbfd t
       · right
-        simpa [h] using le_gaussNorm v c g hbgd t
+        simpa [h, Finsupp.prod] using le_gaussNorm v c g hbgd t
   · simp only [le_sup_iff]
     left
     exact gaussNorm_nonneg v c f vNonneg

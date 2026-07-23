@@ -11,9 +11,9 @@ class StrongPos (c : σ → ℝ) : Prop where pos : ∀ i, 0 < c i
 
 lemma StrongPos_pos [StrongPos c] : ∀ i, 0 < c i := by expose_names; exact inst.pos
 
-instance (hc : ∀ i, 0 < c i) : StrongPos c := {pos := hc}
+lemma StrongPos_of_forall (hc : ∀ i, 0 < c i) : StrongPos c := {pos := hc}
 
-instance (c : ℝ) (hc : 0 < c) : StrongPos (fun _ : Unit ↦ c) := {pos := by grind}
+lemma StrongPos_of_pos (c : ℝ) (hc : 0 < c) : StrongPos (fun _ : Unit ↦ c) := {pos := by grind}
 
 lemma StrongPos_unit_iff (c : ℝ) : StrongPos (fun _ : Unit ↦ c) ↔ 0 < c := by
   constructor
@@ -30,7 +30,7 @@ lemma hasGaussNorm [NormedRing R] [IsUltrametricDist R] (f : MvPowerSeries.Restr
   MvPowerSeries.HasGaussNorm norm c f.1 := Filter.Tendsto.bddAbove_range_of_cofinite f.2
 
 noncomputable
-instance isRingNorm [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
+def isRingNorm [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
     RingNorm (MvPowerSeries.Restricted R c) where
   toFun f := gaussNorm R c f
   map_zero' := MvPowerSeries.gaussNorm_zero norm c norm_zero
@@ -46,9 +46,9 @@ instance isRingNorm [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
   mul_le' f g := MvPowerSeries.gaussNorm_mul_le norm c f.1 g.1 (StrongLT.le (StrongPos_pos c))
     norm_nonneg norm_mul_le IsUltrametricDist.norm_add_le_max norm_zero (hasGaussNorm c f)
     (hasGaussNorm c g)
-  eq_zero_of_map_eq_zero' f := by
-    simpa using (MvPowerSeries.gaussNorm_eq_zero_iff norm c f.1 norm_zero norm_nonneg (by aesop)
-      (StrongPos_pos c) (hasGaussNorm c f)).mp
+  eq_zero_of_map_eq_zero' f := fun h => Subtype.ext <|
+    (MvPowerSeries.gaussNorm_eq_zero_iff norm c f.1 norm_zero norm_nonneg (by aesop)
+      (StrongPos_pos c) (hasGaussNorm c f)).mp h
 
 variable (R) in
 noncomputable
@@ -59,8 +59,7 @@ lemma norm_eq [NormedRing R] [IsUltrametricDist R] [StrongPos c] (f : MvPowerSer
     ‖f‖ = MvPowerSeries.gaussNorm (norm : R → ℝ) c f.1 := by rfl
 
 variable (R) in
-noncomputable
-instance isNonarchimedean [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
+lemma isNonarchimedean [NormedRing R] [IsUltrametricDist R] [StrongPos c] :
     IsNonarchimedean (R := ℝ) (α := MvPowerSeries.Restricted R c) norm :=
   fun f g => MvPowerSeries.gaussNorm_add_le_max norm c f.1 g.1 (StrongLT.le (StrongPos_pos c))
     norm_nonneg IsUltrametricDist.norm_add_le_max (hasGaussNorm c f) (hasGaussNorm c g)
@@ -93,8 +92,9 @@ lemma gaussNorm_achieved [NormedRing R] [IsUltrametricDist R] (hc : 0 ≤ c)
       simp_rw [MvPowerSeries.IsRestricted, NormedAddGroup.tendsto_nhds_zero] at this
       have := this (gaussNorm R c f / 2) (by aesop)
       simp only [norm_mul, Real.norm_eq_abs, Filter.eventually_cofinite, not_lt, abs_norm] at this
-      convert this with t
-      grind [foo c hc t]
+      simp only [show ∀ t : σ →₀ ℕ, |t.prod (c · ^ ·)| = t.prod (c · ^ ·) from
+        fun t => abs_of_nonneg (foo c hc t)] at this
+      exact this
     have hne : {t | gaussNorm R c f / 2 ≤ ‖MvPowerSeries.coeff t f.1‖ * t.prod (c · ^ ·)}.Nonempty := by
       by_contra hemp
       rw [Set.not_nonempty_iff_eq_empty] at hemp
@@ -126,8 +126,9 @@ lemma achievingPoints_finite [NormedRing R] [IsUltrametricDist R] (hc : 0 ≤ c)
       simp_rw [MvPowerSeries.IsRestricted, NormedAddGroup.tendsto_nhds_zero] at this
       have := this (gaussNorm R c f / 2) (by aesop)
       simp only [norm_mul, Real.norm_eq_abs, Filter.eventually_cofinite, not_lt, abs_norm] at this
-      convert this with t
-      grind [foo c hc t]
+      simp only [show ∀ t : σ →₀ ℕ, |t.prod (c · ^ ·)| = t.prod (c · ^ ·) from
+        fun t => abs_of_nonneg (foo c hc t)] at this
+      exact this
   refine Set.Finite.subset hfin ?_
   grind
 
@@ -145,15 +146,17 @@ lemma bar [NormedRing R] [IsUltrametricDist R] [LinearOrder σ] (hc : ∀ i, 0 <
   -- need to work out how to convert and clean the proof from before
   sorry
 
-noncomputable
-instance isAbsoluteValue [NormedRing R] [IsUltrametricDist R] [LinearOrder σ] [StrongPos c]
+theorem isAbsoluteValue [NormedRing R] [IsUltrametricDist R] [LinearOrder σ] [StrongPos c]
     (hnorm : ∀ a b : R, norm (a * b) = norm a * norm b) : IsAbsoluteValue (gaussNorm R c) where
   abv_nonneg' g := MvPowerSeries.gaussNorm_nonneg norm c g.1 norm_nonneg
   abv_eq_zero' := by
     intro g
-    convert MvPowerSeries.gaussNorm_eq_zero_iff norm c g.1 norm_zero norm_nonneg (by aesop)
-      (StrongPos_pos c) (hasGaussNorm c g)
-    aesop
+    constructor
+    · intro h
+      exact Subtype.ext ((MvPowerSeries.gaussNorm_eq_zero_iff norm c g.1 norm_zero norm_nonneg
+        (by aesop) (StrongPos_pos c) (hasGaussNorm c g)).mp h)
+    · rintro rfl
+      exact MvPowerSeries.gaussNorm_zero norm c norm_zero
   abv_add' f g := (MvPowerSeries.gaussNorm_add_le_max norm c f.1 g.1 (StrongLT.le (StrongPos_pos c))
     norm_nonneg IsUltrametricDist.norm_add_le_max (hasGaussNorm c f) (hasGaussNorm c g)).trans
     (max_le_add_of_nonneg (MvPowerSeries.gaussNorm_nonneg norm c _ norm_nonneg)
@@ -162,21 +165,19 @@ instance isAbsoluteValue [NormedRing R] [IsUltrametricDist R] [LinearOrder σ] [
     by_cases h1 : gaussNorm R c f = 0
     · simp [h1]
       suffices f * g = 0 by
-        simpa [this] using MvPowerSeries.gaussNorm_zero norm c norm_zero
+        rw [this]; exact MvPowerSeries.gaussNorm_zero norm c norm_zero
       suffices f = 0 by
         grind
-      convert (MvPowerSeries.gaussNorm_eq_zero_iff norm c f.1 norm_zero norm_nonneg (by aesop)
-        (StrongPos_pos c) (hasGaussNorm c f)).mp h1
-      aesop
+      exact Subtype.ext ((MvPowerSeries.gaussNorm_eq_zero_iff norm c f.1 norm_zero norm_nonneg
+        (by aesop) (StrongPos_pos c) (hasGaussNorm c f)).mp h1)
     by_cases h2 : gaussNorm R c g = 0
     · simp [h2]
       suffices f * g = 0 by
-        simpa [this] using MvPowerSeries.gaussNorm_zero norm c norm_zero
+        rw [this]; exact MvPowerSeries.gaussNorm_zero norm c norm_zero
       suffices g = 0 by
         grind
-      convert (MvPowerSeries.gaussNorm_eq_zero_iff norm c g.1 norm_zero norm_nonneg (by aesop)
-        (StrongPos_pos c) (hasGaussNorm c g)).mp h2
-      aesop
+      exact Subtype.ext ((MvPowerSeries.gaussNorm_eq_zero_iff norm c g.1 norm_zero norm_nonneg
+        (by aesop) (StrongPos_pos c) (hasGaussNorm c g)).mp h2)
     exact MvPowerSeries.gaussNorm_mul_eq_mul norm c f.1 g.1 (hasGaussNorm c f) (hasGaussNorm c g)
       (hasGaussNorm c (f * g)) norm_nonneg norm_zero IsUltrametricDist.isNonarchimedean_norm hnorm
       norm_neg (by aesop) (StrongPos_pos c) (bar c (StrongPos_pos c) f g h1 h2)

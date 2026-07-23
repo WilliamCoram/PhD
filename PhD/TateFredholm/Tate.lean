@@ -1,22 +1,28 @@
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+/-
+Copyright (c) 2026 William Coram. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: William Coram
+-/
+import Mathlib.Algebra.Module.Projective
+import Mathlib.Algebra.Order.Floor.Defs
+import Mathlib.Algebra.Polynomial.Basic
+import Mathlib.Algebra.Ring.Subring.Basic
+import Mathlib.Analysis.Normed.Group.Ultra
+import Mathlib.Analysis.Normed.MulAction
 import Mathlib.Analysis.Normed.Operator.Basic
 import Mathlib.Analysis.Normed.Operator.Completeness
 import Mathlib.Analysis.Normed.Operator.LinearIsometry
-import Mathlib.Analysis.Normed.MulAction
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.Finsupp.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.Noetherian.Defs
-import Mathlib.Topology.MetricSpace.Ultra.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Ring.Subring.Basic
 import Mathlib.RingTheory.Ideal.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Algebra.Order.Floor.Defs
+import Mathlib.RingTheory.Noetherian.Defs
+import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+import Mathlib.Topology.MetricSpace.Ultra.Basic
 
 /-!
 # Compact operators and Fredholm determinants over Banach–Tate rings — the merged setting
@@ -37,8 +43,11 @@ and compatible.  This development records their common refinement:
 
 > **Hypotheses**: a commutative nonarchimedean Banach–Tate ring `R` (`[IsTate R]`: there
 > is a multiplicative pseudo-uniformizer `ϖ ∈ R^×`, `‖ϖ‖ < 1`) — no ground field, and
-> **no Noetherian hypothesis** anywhere except the single isolated statement
-> `finite_projective_of_one_sub_compact_nilpotent`.
+> **no Noetherian hypothesis** anywhere except `Noetherian.lean` (the closedness of
+> finitely generated submodules, the bridge `IsCompletelyContinuous.isCompactoid`, and
+> the recovered criterion `isCompletelyContinuous_iff_rowNorm`) and the single isolated
+> statement `finite_projective_of_one_sub_compact_nilpotent`.  The determinant theory
+> itself runs on `IsCompactoid` (cofinite row decay) and is Noetherian-free.
 >
 > **Proof architecture**: Bellaïche's — coordinate truncations `π_S`, the quantitative
 > Open Mapping Theorem, the Lipschitz bound for the determinant's coefficients, and the
@@ -61,6 +70,9 @@ and compatible.  This development records their common refinement:
 * `Residue.lean` — residue machinery for Serre's theorem
 * `BaseChange.lean` — norm comparison, equivalent-norm invariance, bounded base change,
   and the classical (field) specialisations
+* `Noetherian.lean` — closedness of finitely generated submodules over Noetherian bases
+  ([FvdP] 1.2.3, [Buz07] Lemma 2.3) and the bridge from `IsCompletelyContinuous` to
+  `IsCompactoid`
 
 ## How the three blueprints are recovered
 
@@ -110,9 +122,12 @@ merged ones.
 | `cSpace` (`c(I, R)`), `single`           | Ex II.1.7    | Def 2.1.5   | 6.3–6.5   |
 | `IsONable`, `IsPotentiallyONable`, `HasPr` | Def II.1.5–6, §II.1.6 | Def 2.1.5 | 6.6 |
 | `matrixCoeff`, `norm_eq_iSup_matrixCoeff`, `exists_coeffEquiv` | §II.1.3 | p.65 | 6.11 |
-| `truncation`, `exists_truncation_near`   | Lem II.1.8   | —           | —         |
-| `isCompletelyContinuous_iff_rowNorm` (**no Noetherian**) | Prop II.1.9 | Def 2.1.5 | 6.14 |
-| `tendsto_truncation_comp`                | Schol II.1.10| —           | —         |
+| `truncation`, `exists_truncation_near` (+ `IsClosed`, see b2 log) | Lem II.1.8 | — | — |
+| `IsCompactoid` (row decay; the working notion, **no Noetherian**) | — | §2.2 usage | 6.14 |
+| `IsCompactoid.isCompletelyContinuous` (**no Noetherian**) | Prop II.1.9 ⇐ | — | — |
+| `IsCompletelyContinuous.isCompactoid`, `isCompletelyContinuous_iff_rowNorm` (**Noetherian**, `Noetherian.lean`) | Prop II.1.9 ⇒ | Def 2.1.5 | 6.14 |
+| `tendsto_truncation_comp`, `IsCompactoid.comp_left/right` | Schol II.1.10, Lem II.1.4 | — | — |
+| `isClosed_of_finite`, `isClosed_of_fg` (`Noetherian.lean`) | — | p. 7 remark | — |
 | `minor`, `summable_minor`, `charCoeff`, `charPowerSeries` | §II.1.5 | p.67 recipe | 6.16–6.17 |
 | `IsEntire`, `charPowerSeries_isEntire`   | Lem II.1.14  | `R{{T}}`    | 6.16(2)   |
 | `norm_charCoeff_sub_le` (quantitative)   | Lem II.1.15  | —           | 6.16(3)   |
@@ -136,40 +151,30 @@ products and the `⊗̂`-form of base change; spectral varieties ([JN] §2.3).
 
 open Filter Topology
 
--- Blueprint development: hypotheses are stated at final generality even where a
--- particular `sorry`ed statement does not yet use them.
-set_option linter.unusedSectionVars false
-
 noncomputable section
 
 namespace TateFredholm
 
-/-! ## The index type -/
-
-/-- `Ix I` is `I` regarded as a discrete topological space (the index set of an orthonormal
-basis). -/
-def Ix (I : Type*) : Type _ := I
+/-- A copy of `I` equipped with the discrete topology (the index set of an orthonormal basis). -/
+def Ix (I : Type*) := I
 
 instance {I : Type*} : TopologicalSpace (Ix I) := ⊥
 instance {I : Type*} : DiscreteTopology (Ix I) := ⟨rfl⟩
-instance {I : Type*} [DecidableEq I] : DecidableEq (Ix I) := inferInstanceAs (DecidableEq I)
-
-/-! ## Banach–Tate rings and the bridge from Banach algebras
-([JN] Definitions 2.1.1–2.1.2) -/
+instance {I : Type*} [h : DecidableEq I] : DecidableEq (Ix I) := h
 
 section Tate
 
 variable {A : Type*} [NormedRing A]
 
-/-- An element `a` of a normed ring is *multiplicative* if `‖ax‖ = ‖a‖‖x‖` for all `x`
-([JN] Definition 2.1.1). -/
-def IsMultiplicative (a : A) : Prop :=
-  ∀ x : A, ‖a * x‖ = ‖a‖ * ‖x‖
+omit [NormedRing A] in
+/-- An element `a` is *multiplicative* if `‖ax‖ = ‖a‖‖x‖` for all `x` — the single-element
+form of `NormMulClass` ([JN] Definition 2.1.1). -/
+def IsMultiplicative [Norm A] [Mul A] (a : A) : Prop := ∀ x : A, ‖a * x‖ = ‖a‖ * ‖x‖
 
 /-- A *multiplicative pseudo-uniformizer*: a multiplicative unit `ϖ` with `‖ϖ‖ < 1`
 ([JN] Definition 2.1.2).  The scaling element that replaces the ground field of the
 Buzzard/Bellaïche settings. -/
-structure PseudoUniformizer (A : Type*) [NormedRing A] where
+structure PseudoUniformizer (A : Type*) [Norm A] [Monoid A] where
   /-- the underlying unit -/
   unit : Aˣ
   /-- topological nilpotence: `‖ϖ‖ < 1` -/
@@ -177,23 +182,19 @@ structure PseudoUniformizer (A : Type*) [NormedRing A] where
   /-- multiplicativity: `‖ϖ x‖ = ‖ϖ‖ ‖x‖` -/
   isMultiplicative : IsMultiplicative (unit : A)
 
-instance : CoeHead (PseudoUniformizer A) A := ⟨fun ϖ => ϖ.unit⟩
+omit [NormedRing A] in
+instance [Norm A] [Monoid A] : CoeHead (PseudoUniformizer A) A := ⟨fun ϖ ↦ ϖ.unit⟩
 
+omit [NormedRing A] in
 /-- The coercion of a pseudo-uniformizer is its underlying unit. -/
-@[simp] theorem PseudoUniformizer.coe_eq (ϖ : PseudoUniformizer A) :
+@[simp] theorem PseudoUniformizer.coe_eq [Norm A] [Monoid A] (ϖ : PseudoUniformizer A) :
     (ϖ : A) = ϖ.unit := rfl
 
 /-- A pseudo-uniformizer has positive norm.  (`[Nontrivial A]` is necessary: in the
 trivial ring the unit `0 = 1` is a pseudo-uniformizer of norm `0`; [JN]'s Def 2.1.1
 bakes nontriviality in via the axiom `‖1‖ = 1`.) -/
-theorem PseudoUniformizer.norm_pos [Nontrivial A] (ϖ : PseudoUniformizer A) :
-    0 < ‖(ϖ : A)‖ := by
-  rw [PseudoUniformizer.coe_eq, norm_pos_iff]
-  intro h
-  apply one_ne_zero (α := A)
-  calc (1 : A) = ↑ϖ.unit⁻¹ * ↑ϖ.unit := ϖ.unit.inv_mul.symm
-  _ = ↑ϖ.unit⁻¹ * 0 := by rw [h]
-  _ = 0 := mul_zero _
+theorem PseudoUniformizer.norm_pos [Nontrivial A] (ϖ : PseudoUniformizer A) : 0 < ‖(ϖ : A)‖ :=
+  ϖ.unit.norm_pos
 
 /-- The norm of the inverse of a pseudo-uniformizer: `‖ϖ⁻¹‖ = ‖ϖ‖⁻¹` ([JN], remark
 after Definition 2.1.2 — the characterisation of multiplicative units). -/
@@ -248,6 +249,71 @@ theorem isTate_of_normedAlgebra (K : Type*) [NontriviallyNormedField K]
   · intro x
     show ‖algebraMap K A lam * x‖ = ‖algebraMap K A lam‖ * ‖x‖
     rw [hnorm x, h1]
+
+section UltrametricSummability
+
+open Filter
+
+variable {ι E : Type*} [NormedAddCommGroup E] [IsUltrametricDist E] [CompleteSpace E]
+  {f : ι → E}
+
+/-- In a complete ultrametric group, a family tending to `0` along the cofinite filter is
+summable ([Bel] §II.1.5 footnote) — the convergence principle behind every `tsum` in this
+development.  Not in Mathlib; a candidate for upstreaming. -/
+theorem summable_of_tendsto_cofinite (hf : Tendsto f cofinite (𝓝 0)) : Summable f := by
+  rw [summable_iff_vanishing_norm]
+  intro ε hε
+  have hev : ∀ᶠ i in cofinite, ‖f i‖ < ε := by
+    have := Metric.tendsto_nhds.1 hf ε hε
+    simpa [dist_zero_right] using this
+  refine ⟨(Filter.eventually_cofinite.1 hev).toFinset, fun t ht => ?_⟩
+  rcases t.eq_empty_or_nonempty with rfl | hne
+  · simpa using hε
+  · refine lt_of_le_of_lt (hne.norm_sum_le_sup'_norm f) ?_
+    rw [Finset.sup'_lt_iff]
+    intro i hi
+    have hi' : i ∉ (Filter.eventually_cofinite.1 hev).toFinset :=
+      Finset.disjoint_left.1 ht hi
+    rw [Set.Finite.mem_toFinset] at hi'
+    exact not_not.1 hi'
+
+omit [IsUltrametricDist E] [CompleteSpace E] in
+/-- A cofinitely-vanishing family has bounded norms. -/
+theorem bddAbove_range_norm_of_tendsto_cofinite (hf : Tendsto f cofinite (𝓝 0)) :
+    BddAbove (Set.range fun i => ‖f i‖) := by
+  have hev : ∀ᶠ i in cofinite, ‖f i‖ < 1 := by
+    have := Metric.tendsto_nhds.1 hf 1 zero_lt_one
+    simpa [dist_zero_right] using this
+  set s := (Filter.eventually_cofinite.1 hev).toFinset with hs
+  have hout : ∀ i, i ∉ s → ‖f i‖ < 1 := by
+    intro i hi
+    rw [hs, Set.Finite.mem_toFinset] at hi
+    exact not_not.1 hi
+  rcases s.eq_empty_or_nonempty with hemp | hne
+  · refine ⟨1, ?_⟩
+    rintro y ⟨i, rfl⟩
+    exact (hout i (hemp ▸ Finset.notMem_empty i)).le
+  · refine ⟨max 1 (s.sup' hne (‖f ·‖)), ?_⟩
+    rintro y ⟨i, rfl⟩
+    by_cases hi : i ∈ s
+    · exact le_max_of_le_right (Finset.le_sup' (fun i => ‖f i‖) hi)
+    · exact le_max_of_le_left (hout i hi).le
+
+/-- The ultrametric bound on infinite sums: `‖∑' f‖ ≤ ⨆ ‖f i‖`. -/
+theorem norm_tsum_le_iSup (hf : Tendsto f cofinite (𝓝 0)) :
+    ‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖ := by
+  rcases isEmpty_or_nonempty ι with hι | hι
+  · rw [tsum_eq_sum (s := (∅ : Finset ι)) fun i _ => (IsEmpty.false i).elim]
+    simp [Real.iSup_of_isEmpty]
+  · have hbdd := bddAbove_range_norm_of_tendsto_cofinite hf
+    refine le_of_tendsto (summable_of_tendsto_cofinite hf).hasSum.norm
+      (Filter.Eventually.of_forall fun S => ?_)
+    rcases S.eq_empty_or_nonempty with rfl | hS
+    · simpa using (norm_nonneg (f hι.some)).trans (le_ciSup hbdd hι.some)
+    · exact (hS.norm_sum_le_sup'_norm f).trans
+        (Finset.sup'_le hS _ fun i _ => le_ciSup hbdd i)
+
+end UltrametricSummability
 
 end TateFredholm
 

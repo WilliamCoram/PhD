@@ -60,6 +60,7 @@ by `Polynomial.C a`. -/
 lemma C_mul_toRestricted (c : ℝ) (a : S) (r : Polynomial S) :
     C c a * Polynomial.toRestricted c r = Polynomial.toRestricted c (Polynomial.C a * r) := by
   apply Subtype.ext
+  rw [C_mul_series, C_val]
   simp [Polynomial.toRestricted]
 -- maybe should be in ResPoly instead... can decide when I clean Restricted/MvRestricted files
 

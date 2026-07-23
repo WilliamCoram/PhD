@@ -119,7 +119,7 @@ lemma hasGaussNorm (f : PowerSeries.Restricted R c) :
 variable [StrongPos (fun _ : Unit ↦ c)]
 
 noncomputable
-instance isRingNorm : RingNorm (PowerSeries.Restricted R c) where
+def isRingNorm : RingNorm (PowerSeries.Restricted R c) where
   toFun f := gaussNorm R c f
   __ := MvRestricted.isRingNorm (R := R) (σ := Unit) (fun _ ↦ c)
 
@@ -137,8 +137,7 @@ instance isNormedCommRing (S : Type*) [NormedCommRing S] [IsUltrametricDist S] :
 lemma norm_eq (f : PowerSeries.Restricted R c) :
   ‖f‖ = PowerSeries.gaussNorm (norm : R → ℝ) c f.1 := by rfl
 
-noncomputable
-instance isNonarchimedean :
+lemma isNonarchimedean :
     IsNonarchimedean (R := ℝ) (α := PowerSeries.Restricted R c) norm :=
   fun f g => PowerSeries.gaussNorm_add_le_max norm c f.1 g.1
     (Std.le_of_lt (StrongPos_pos (fun _ : Unit ↦ c) 0)) norm_nonneg
@@ -172,8 +171,7 @@ lemma achievingPoints_finite (hc : 0 ≤ c) (f : PowerSeries.Restricted R c)
 
   sorry
 
-noncomputable
-instance isAbsoluteValue (hnorm : ∀ a b : R, norm (a * b) = norm a * norm b) :
+theorem isAbsoluteValue (hnorm : ∀ a b : R, norm (a * b) = norm a * norm b) :
     IsAbsoluteValue (gaussNorm R c) :=
   MvRestricted.isAbsoluteValue (fun _ ↦ c) hnorm
 
@@ -251,7 +249,7 @@ instance isCompleteSpace : CompleteSpace (PowerSeries.Restricted R c) := by
     have h_uN1' := h_uN1 (ε / 2) (by linarith)
     rw [Filter.eventually_cofinite] at h_uN1' ⊢
     refine h_uN1'.subset fun n hn => ?_
-    simp only [Set.mem_setOf_eq, dist_zero_right, Real.norm_eq_abs, not_lt] at hn ⊢
+    simp only [Set.mem_ofPred_eq, dist_zero_right, Real.norm_eq_abs, not_lt] at hn ⊢
     rw [coeff_f] at hn
     have hp1 : 0 ≤ ‖a n‖ * c ^ n := mul_nonneg (norm_nonneg _) (hcn n).le
     have hp2 : 0 ≤ ‖PowerSeries.coeff n (u N₁).1‖ * c ^ n :=
@@ -275,22 +273,23 @@ instance isCompleteSpace : CompleteSpace (PowerSeries.Restricted R c) := by
     rcases le_max_iff.mp h_max_bd with h | h
     · linarith
     · linarith
-  -- Step 6: `u i` converges to `⟨f, hf⟩` in the Gauss norm.
-  refine ⟨⟨f, hf⟩, ?_⟩
+  -- Step 6: `u i` converges to `F = ⟨f, hf⟩` in the Gauss norm.
+  set F : PowerSeries.Restricted R c := ⟨f, hf⟩ with hF_def
+  refine ⟨F, ?_⟩
   rw [Metric.tendsto_atTop]
   intro ε hε
   obtain ⟨N, hN⟩ := unif_conv (ε / 2) (by linarith)
   refine ⟨N, fun i hi => ?_⟩
   rw [dist_eq_norm]
-  show MvPowerSeries.gaussNorm norm (fun _ ↦ c) (u i - ⟨f, hf⟩).1 < ε
-  have hdiff : ∀ n, PowerSeries.coeff n (u i - ⟨f, hf⟩).1 =
+  show MvPowerSeries.gaussNorm norm (fun _ ↦ c) (u i - F).1 < ε
+  have hdiff : ∀ n, PowerSeries.coeff n (u i - F).1 =
       PowerSeries.coeff n (u i).1 - a n := fun n => by
     show PowerSeries.coeff n ((u i).1 - f) = _
     rw [map_sub, coeff_f]
-  have hbd : ∀ n, ‖PowerSeries.coeff n (u i - ⟨f, hf⟩).1‖ * c ^ n ≤ ε / 2 := fun n => by
+  have hbd : ∀ n, ‖PowerSeries.coeff n (u i - F).1‖ * c ^ n ≤ ε / 2 := fun n => by
     rw [hdiff]; exact hN i hi n
-  have h_gauss_le : MvPowerSeries.gaussNorm norm (fun _ : Unit ↦ c) (u i - ⟨f, hf⟩).1 ≤ ε / 2 := by
-    show PowerSeries.gaussNorm norm c (u i - ⟨f, hf⟩).1 ≤ ε / 2
+  have h_gauss_le : MvPowerSeries.gaussNorm norm (fun _ : Unit ↦ c) (u i - F).1 ≤ ε / 2 := by
+    show PowerSeries.gaussNorm norm c (u i - F).1 ≤ ε / 2
     rw [PowerSeries.gaussNorm_eq]
     exact ciSup_le hbd
   linarith
