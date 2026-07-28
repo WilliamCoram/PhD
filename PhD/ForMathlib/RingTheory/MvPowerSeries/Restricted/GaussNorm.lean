@@ -191,6 +191,15 @@ noncomputable instance : NormedRing (Restricted R c) := RingNorm.toNormedRing (g
 /-- The norm on `Restricted R c` is by definition the Gauss norm of the underlying power series. -/
 lemma norm_def (f : Restricted R c) : ‖f‖ = MvPowerSeries.gaussNorm (norm : R → ℝ) c f.1 := rfl
 
+/-- The Gauss norm of a nonzero restricted multivariate power series is realised by a nonzero
+coefficient: some exponent `t` satisfies `coeff t f ≠ 0` and
+`‖f‖ = ‖coeff t f‖ * ∏ᵢ (c i) ^ (t i)`. -/
+lemma exists_coeff_ne_zero_norm_eq (f : Restricted R c) (hf : f ≠ 0) :
+    ∃ t, coeff t f.1 ≠ 0 ∧ ‖f‖ = ‖coeff t f.1‖ * t.prod (fun i e ↦ c i ^ e) := by
+  obtain ⟨t, ht⟩ := exists_achievesGaussNorm c f
+  have hnorm : ‖f‖ = ‖coeff t f.1‖ * t.prod (fun i e ↦ c i ^ e) := (norm_def c f).trans ht.symm
+  exact ⟨t, norm_ne_zero_iff.mp (left_ne_zero_of_mul (hnorm ▸ norm_ne_zero_iff.mpr hf)), hnorm⟩
+
 /-- The Gauss norm is at most `ε` if and only if every term `‖coeff t f.1‖ * ∏ᵢ (c i) ^ (t i)`
 is. -/
 lemma norm_le_iff {ε : ℝ} (f : Restricted R c) :

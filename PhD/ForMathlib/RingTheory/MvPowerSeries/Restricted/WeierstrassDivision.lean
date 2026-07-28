@@ -35,7 +35,7 @@ variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormMulClass R] {
   {c : Fin (n + 1) → ℝ} [Fact (∀ i, 0 < c i)]
 
 omit [NormMulClass R] in
-private lemma finSuccEquiv_division_eq {g : Restricted R c} {f q : Restricted R c}
+private lemma finSuccEquiv_division_eq {g f q : Restricted R c}
     {r : Polynomial (Restricted R (Fin.tail c))}
     (hf : f = g * q + Polynomial.toMvRestrictedX0 c r) :
     finSuccEquiv R c f = finSuccEquiv R c g * finSuccEquiv R c q
@@ -48,9 +48,8 @@ lemma norm_q_le_of_eq_mul_add {g : Restricted R c} {s : ℕ} (hg : IsDistinguish
     {f q : Restricted R c} {r : Polynomial (Restricted R (Fin.tail c))}
     (hr : r.degree < s) (hf : f = g * q + Polynomial.toMvRestrictedX0 c r) :
     ‖q‖ ≤ ‖g‖⁻¹ * ‖f‖ := by
-  have h := PowerSeries.Restricted.norm_q_le_of_eq_mul_add (c 0) hg hr
-    (finSuccEquiv_division_eq hf)
-  simpa only [norm_finSuccEquiv c] using h
+  simpa only [norm_finSuccEquiv c] using
+    PowerSeries.Restricted.norm_q_le_of_eq_mul_add (c 0) hg hr (finSuccEquiv_division_eq hf)
 
 /-- **Division bound for the remainder** (unit-free): for any witness of a multivariate
 Weierstrass division by a series distinguished in `X 0`, `‖r‖ ≤ ‖f‖`. -/
@@ -74,6 +73,18 @@ lemma weierstrassDivision_q_unique {g : Restricted R c} {s : ℕ}
     (PowerSeries.Restricted.weierstrassDivision_q_unique (c 0) hg hr₁
       (finSuccEquiv_division_eq hf₁) hr₂ (finSuccEquiv_division_eq hf₂))
 
+/-- **Uniqueness of the remainder** in multivariate Weierstrass division (unit-free).
+Transport of `PowerSeries.Restricted.weierstrassDivision_r_unique` along `finSuccEquiv`; the
+remainder type is already the univariate one, so no back-transport is needed. -/
+lemma weierstrassDivision_r_unique {g : Restricted R c} {s : ℕ}
+    (hg : IsDistinguishedX0 g s) {f : Restricted R c} {q₁ q₂ : Restricted R c}
+    {r₁ r₂ : Polynomial (Restricted R (Fin.tail c))}
+    (hr₁ : r₁.degree < s) (hf₁ : f = g * q₁ + Polynomial.toMvRestrictedX0 c r₁)
+    (hr₂ : r₂.degree < s) (hf₂ : f = g * q₂ + Polynomial.toMvRestrictedX0 c r₂) :
+    r₁ = r₂ :=
+  PowerSeries.Restricted.weierstrassDivision_r_unique (c 0) hg hr₁
+    (finSuccEquiv_division_eq hf₁) hr₂ (finSuccEquiv_division_eq hf₂)
+
 end Bounds
 
 section ScalingHypothesis
@@ -89,42 +100,22 @@ lemma exists_norm_inv_isUnit (hc : ∀ i, ∃ u : Kˣ, ‖(u : K)‖ = c i)
     (F : PowerSeries.Restricted (Restricted K (Fin.tail c)) (c 0)) (hF : F ≠ 0) :
     ∃ a : Restricted K (Fin.tail c), ‖a‖ = ‖F‖⁻¹ ∧ IsUnit a := by
   choose x hx using hc
-  obtain ⟨k, hk⟩ := PowerSeries.Restricted.exists_achievesGaussNorm (c 0) F
-  have hnormF : ‖F‖ = ‖PowerSeries.coeff k F.1‖ * (c 0) ^ k :=
-    (PowerSeries.Restricted.norm_def (c 0) F).trans hk.symm
-  have hcoeffk : PowerSeries.coeff k F.1 ≠ 0 := by
-    intro h0
-    rw [h0, norm_zero, zero_mul] at hnormF
-    exact (norm_pos_iff.mpr hF).ne' hnormF
-  obtain ⟨t, ht⟩ :=
-    MvPowerSeries.IsRestricted.exists_achievesGaussNorm (PowerSeries.coeff k F.1).2
-  have hnormT : ‖PowerSeries.coeff k F.1‖
-      = ‖MvPowerSeries.coeff t (PowerSeries.coeff k F.1).1‖
-        * t.prod (fun i e ↦ Fin.tail c i ^ e) :=
-    (norm_def (c := Fin.tail c) (PowerSeries.coeff k F.1)).trans ht.symm
-  have hlam : MvPowerSeries.coeff t (PowerSeries.coeff k F.1).1 ≠ 0 := by
-    intro h0
-    rw [h0, norm_zero, zero_mul] at hnormT
-    exact hcoeffk (norm_eq_zero.mp hnormT)
+  obtain ⟨k, hcoeffk, hnormF⟩ := PowerSeries.Restricted.exists_coeff_ne_zero_norm_eq (c 0) F hF
+  obtain ⟨t, hlam, hnormT⟩ :=
+    exists_coeff_ne_zero_norm_eq (Fin.tail c) (PowerSeries.coeff k F.1) hcoeffk
   have hprod : ‖∏ i ∈ t.support, (x i.succ : K) ^ t i‖
       = t.prod (fun i e ↦ Fin.tail c i ^ e) := by
-    rw [show ‖∏ i ∈ t.support, (x i.succ : K) ^ t i‖
-        = ∏ i ∈ t.support, ‖(x i.succ : K) ^ t i‖ from map_prod (normHom : K →*₀ ℝ) _ _]
-    exact Finset.prod_congr rfl fun i _ ↦ by
-      rw [norm_pow, hx i.succ]
-      rfl
-  have hna : ‖MvPowerSeries.coeff t (PowerSeries.coeff k F.1).1 * (x 0 : K) ^ k
-      * ∏ i ∈ t.support, (x i.succ : K) ^ t i‖ = ‖F‖ := by
-    rw [norm_mul, norm_mul, norm_pow, hx 0, hprod, hnormF, hnormT]
+    simp only [norm_prod, norm_pow, hx, Finsupp.prod, Fin.tail]
+  set b := MvPowerSeries.coeff t (PowerSeries.coeff k F.1).1 * (x 0 : K) ^ k
+    * ∏ i ∈ t.support, (x i.succ : K) ^ t i with hb
+  have hna : ‖b‖ = ‖F‖ := by
+    rw [hb, norm_mul, norm_mul, norm_pow, hx 0, hprod, hnormF, hnormT]
     ring
-  have ha_ne : MvPowerSeries.coeff t (PowerSeries.coeff k F.1).1 * (x 0 : K) ^ k
-      * ∏ i ∈ t.support, (x i.succ : K) ^ t i ≠ 0 :=
+  have ha_ne : b ≠ 0 :=
     mul_ne_zero (mul_ne_zero hlam (pow_ne_zero _ (x 0).ne_zero))
       (Finset.prod_ne_zero_iff.mpr fun i _ ↦ pow_ne_zero _ (x i.succ).ne_zero)
-  refine ⟨C (Fin.tail c) (MvPowerSeries.coeff t (PowerSeries.coeff k F.1).1 * (x 0 : K) ^ k
-      * ∏ i ∈ t.support, (x i.succ : K) ^ t i)⁻¹, ?_,
+  exact ⟨C (Fin.tail c) b⁻¹, by rw [norm_C, norm_inv, hna],
     (C (Fin.tail c)).isUnit_map (isUnit_iff_ne_zero.mpr (inv_ne_zero ha_ne))⟩
-  rw [norm_C, norm_inv, hna]
 
 end ScalingHypothesis
 

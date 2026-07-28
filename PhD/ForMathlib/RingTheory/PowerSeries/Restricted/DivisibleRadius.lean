@@ -127,12 +127,7 @@ coefficient, so `‖f‖ = ‖aₖ‖ cᵏ = ‖aₖ uᵏ‖` is a realised norm
 lemma exists_norm_inv_isUnit (hα : ∃ u : Kˣ, ‖(u : K)‖ = c) (f : Restricted K c)
     (hf : f ≠ 0) : ∃ a : K, ‖a‖ = ‖f‖⁻¹ ∧ IsUnit a := by
   obtain ⟨u, hu⟩ := hα
-  obtain ⟨k, hk⟩ := exists_achievesGaussNorm c f
-  have hnorm : ‖f‖ = ‖coeff k f.1‖ * c ^ k := (norm_def c f).trans hk.symm
-  have hcoeff : coeff k f.1 ≠ 0 := by
-    intro h0
-    rw [h0, norm_zero, zero_mul] at hnorm
-    exact (norm_pos_iff.mpr hf).ne' hnorm
+  obtain ⟨k, hcoeff, hnorm⟩ := exists_coeff_ne_zero_norm_eq c f hf
   have hx : coeff k f.1 * (u : K) ^ k ≠ 0 :=
     mul_ne_zero hcoeff (pow_ne_zero _ u.ne_zero)
   refine ⟨(coeff k f.1 * (u : K) ^ k)⁻¹, ?_, isUnit_iff_ne_zero.mpr (inv_ne_zero hx)⟩

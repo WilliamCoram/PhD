@@ -55,6 +55,21 @@ section Bounds
 variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormMulClass R] (c : ℝ)
   [Fact (0 < c)]
 
+private lemma norm_coeff_mul_pow_eq_of_dominant {g q : Restricted R c} {s j : ℕ}
+    (hg : IsDistinguished norm c g.1 s) (hj : AchievesGaussNorm norm c q.1 j)
+    (hdom : ∀ p ∈ Finset.antidiagonal (s + j), p ≠ (s, j) →
+        ‖coeff p.1 g.1 * coeff p.2 q.1‖ < ‖coeff s g.1‖ * ‖coeff j q.1‖) :
+    ‖coeff (s + j) (g * q).1‖ * c ^ (s + j) = ‖g‖ * ‖q‖ := by
+  change ‖coeff (s + j) (g.1 * q.1)‖ * c ^ (s + j) = ‖g‖ * ‖q‖
+  calc ‖coeff (s + j) (g.1 * q.1)‖ * c ^ (s + j)
+      = ‖coeff s g.1 * coeff j q.1‖ * c ^ (s + j) := by
+        rw [PowerSeries.coeff_mul, IsNonarchimedean.apply_sum_eq_of_lt
+          (fun x y ↦ IsUltrametricDist.norm_add_le_max x y) (fun a ↦ (norm_neg a).symm)
+          (k := (s, j)) (Finset.mem_antidiagonal.mpr rfl)
+          (fun p hp hpne ↦ (hdom p hp hpne).trans_eq (norm_mul _ _).symm)]
+    _ = (‖coeff s g.1‖ * c ^ s) * (‖coeff j q.1‖ * c ^ j) := by rw [norm_mul, pow_add]; ring
+    _ = ‖g‖ * ‖q‖ := by rw [hg.norm_coeff_mul_pow_eq, hj.trans (norm_def c q).symm]
+
 /-- The core estimate behind the division bounds: in a Weierstrass division `f = g * q + r`,
 the norm of `f` dominates both `‖g * q‖` and `‖r‖`.  This is the Gauss-term form of the
 reduction argument of BGR 5.2.1/2: at the dominant pair of achieving indices of `(g, q)` —
@@ -70,52 +85,34 @@ theorem max_le_norm_of_eq_mul_add {g : Restricted R c} {s : ℕ}
     rw [mul_zero, zero_add] at hf
     rw [hf, mul_zero, norm_zero]
     exact max_le (norm_nonneg _) le_rfl
-  have hc0 : (0 : ℝ) < c := Fact.out
-  have hq_pos : (0 : ℝ) < ‖q‖ := norm_pos_iff.mpr hq0
   obtain ⟨i, j, hi, hj, hdom, hi_max, -⟩ :=
-    exists_achievesGaussNorm_dominant_max c hc0.le g q hg.norm_pos.ne' hq_pos.ne'
+    exists_achievesGaussNorm_dominant_max c (Fact.out : (0 : ℝ) < c).le g q hg.norm_pos.ne'
+      (norm_pos_iff.mpr hq0).ne'
   obtain rfl : s = i :=
     le_antisymm (hi_max s hg.achievesGaussNorm) (hg.le_of_achievesGaussNorm hi)
-  have h_peak : ‖coeff (s + j) (g * q).1‖ * c ^ (s + j) = ‖g‖ * ‖q‖ := by
-    change ‖coeff (s + j) (g.1 * q.1)‖ * c ^ (s + j) = ‖g‖ * ‖q‖
-    have hdom' : ∀ p ∈ Finset.antidiagonal (s + j), p ≠ (s, j) →
-        ‖coeff p.1 g.1 * coeff p.2 q.1‖ < ‖coeff s g.1 * coeff j q.1‖ :=
-      fun p hp hpne ↦ (hdom p hp hpne).trans_eq (norm_mul _ _).symm
-    calc ‖coeff (s + j) (g.1 * q.1)‖ * c ^ (s + j)
-        = ‖coeff s g.1 * coeff j q.1‖ * c ^ (s + j) := by
-          rw [PowerSeries.coeff_mul, IsNonarchimedean.apply_sum_eq_of_lt
-            (fun x y ↦ IsUltrametricDist.norm_add_le_max x y) (fun a ↦ (norm_neg a).symm)
-            (k := (s, j)) (Finset.mem_antidiagonal.mpr rfl) hdom']
-      _ = (‖coeff s g.1‖ * c ^ s) * (‖coeff j q.1‖ * c ^ j) := by rw [norm_mul, pow_add]; ring
-      _ = ‖g‖ * ‖q‖ := by rw [hg.norm_coeff_mul_pow_eq, hj.trans (norm_def c q).symm]
+  have h_peak := norm_coeff_mul_pow_eq_of_dominant c hg hj hdom
   have h_toR_zero : coeff (s + j) (Polynomial.toRestricted c r).1 = 0 := by
     rw [Polynomial.val_toRestricted, Polynomial.coeff_coe]
-    exact Polynomial.coeff_eq_zero_of_degree_lt
-      (hr.trans_le (by exact_mod_cast Nat.le_add_right s j))
+    exact Polynomial.coeff_eq_zero_of_degree_lt (hr.trans_le (mod_cast Nat.le_add_right s j))
   have h_coeff_f : ‖coeff (s + j) f.1‖ * c ^ (s + j) = ‖g‖ * ‖q‖ := by
-    have hval : f.1 = (g * q).1 + (Polynomial.toRestricted c r).1 := by rw [hf]; rfl
-    rw [hval, map_add, h_toR_zero, add_zero]
+    rw [show f.1 = (g * q).1 + (Polynomial.toRestricted c r).1 from by rw [hf]; rfl,
+      map_add, h_toR_zero, add_zero]
     exact h_peak
   have h_gq_bd : ‖g * q‖ ≤ ‖f‖ := by
     rw [norm_mul, ← h_coeff_f]
     exact norm_coeff_mul_pow_le c f (s + j)
   refine max_le h_gq_bd ?_
-  have heq : Polynomial.toRestricted c r = f - g * q := by rw [hf]; abel
-  rw [heq]
+  rw [show Polynomial.toRestricted c r = f - g * q from by rw [hf]; abel]
   refine (?_ : ‖f - g * q‖ ≤ max ‖f‖ ‖g * q‖).trans (max_le le_rfl h_gq_bd)
-  have h1 := IsUltrametricDist.norm_add_le_max f (-(g * q))
-  rwa [← sub_eq_add_neg, norm_neg] at h1
+  simpa [norm_neg, sub_eq_add_neg] using IsUltrametricDist.norm_add_le_max f (-(g * q))
 
 /-- The quotient bound in a Weierstrass division: `‖q‖ ≤ ‖g‖⁻¹ * ‖f‖`. -/
 theorem norm_q_le_of_eq_mul_add {g : Restricted R c} {s : ℕ}
     (hg : IsDistinguished norm c g.1 s) {f q : Restricted R c} {r : Polynomial R}
     (hr : r.degree < s) (hf : f = g * q + Polynomial.toRestricted c r) :
     ‖q‖ ≤ ‖g‖⁻¹ * ‖f‖ := by
-  by_contra hlt
-  have h1 : ‖f‖ < ‖g * q‖ := by
-    rw [norm_mul]
-    exact (inv_mul_lt_iff₀ hg.norm_pos).mp (not_le.mp hlt)
-  exact absurd ((le_max_left _ _).trans (max_le_norm_of_eq_mul_add c hg hr hf)) (not_le.mpr h1)
+  rw [le_inv_mul_iff₀ hg.norm_pos, ← norm_mul]
+  exact (le_max_left _ _).trans (max_le_norm_of_eq_mul_add c hg hr hf)
 
 /-- The remainder bound in a Weierstrass division: `‖r‖ ≤ ‖f‖`. -/
 theorem norm_r_le_of_eq_mul_add {g : Restricted R c} {s : ℕ}
@@ -131,24 +128,30 @@ theorem weierstrassDivision_q_unique {g : Restricted R c} {s : ℕ}
     (hr₁ : r₁.degree < s) (hf₁ : f = g * q₁ + Polynomial.toRestricted c r₁)
     (hr₂ : r₂.degree < s) (hf₂ : f = g * q₂ + Polynomial.toRestricted c r₂) : q₁ = q₂ := by
   have h0 : (0 : Restricted R c) = g * (q₁ - q₂) + Polynomial.toRestricted c (r₁ - r₂) := by
-    rw [map_sub, mul_sub]
-    calc (0 : Restricted R c)
-        = (g * q₁ + Polynomial.toRestricted c r₁) - (g * q₂ + Polynomial.toRestricted c r₂) := by
-          rw [← hf₁, ← hf₂, sub_self]
-      _ = _ := by ring
+    rw [map_sub]
+    linear_combination hf₁ - hf₂
   have h_bd := norm_q_le_of_eq_mul_add c hg
     ((Polynomial.degree_sub_le _ _).trans_lt (max_lt hr₁ hr₂)) h0
-  rw [norm_zero, mul_zero, norm_le_zero_iff] at h_bd
-  exact sub_eq_zero.mp h_bd
+  rwa [norm_zero, mul_zero, norm_le_zero_iff, sub_eq_zero] at h_bd
+
+/-- The remainder in a Weierstrass division is unique: it is determined by the quotient
+uniqueness (`weierstrassDivision_q_unique`) together with injectivity of the polynomial
+embedding. -/
+theorem weierstrassDivision_r_unique {g : Restricted R c} {s : ℕ}
+    (hg : IsDistinguished norm c g.1 s) {f : Restricted R c}
+    {q₁ q₂ : Restricted R c} {r₁ r₂ : Polynomial R}
+    (hr₁ : r₁.degree < s) (hf₁ : f = g * q₁ + Polynomial.toRestricted c r₁)
+    (hr₂ : r₂.degree < s) (hf₂ : f = g * q₂ + Polynomial.toRestricted c r₂) : r₁ = r₂ := by
+  obtain rfl : q₁ = q₂ := weierstrassDivision_q_unique c hg hr₁ hf₁ hr₂ hf₂
+  exact Polynomial.toRestricted_injective c (add_left_cancel (hf₁.symm.trans hf₂))
 
 private lemma exists_pos_lt_forall_le_of_tendsto_zero {a : ℕ → ℝ}
     (ha : Tendsto a atTop (𝓝 0)) (h0 : ∀ t, 0 ≤ a t) {M : ℝ} (hM : 0 < M)
     {S : ℕ → Prop} [DecidablePred S] (hS : ∀ t, S t → a t < M) :
     ∃ ε : ℝ, 0 < ε ∧ ε < M ∧ ∀ t, S t → a t ≤ ε := by
-  obtain ⟨N, hN⟩ : ∃ N, ∀ t ≥ N, a t < M / 2 := by
-    obtain ⟨N, hN⟩ := Metric.tendsto_atTop.mp ha (M / 2) (half_pos hM)
-    exact ⟨N, fun t ht ↦ by simpa [Real.dist_eq, abs_of_nonneg (h0 t)] using hN t ht⟩
-  set F : Finset ℝ := insert (M / 2) (((Finset.range N).filter S).image a) with hF_def
+  obtain ⟨N, hN⟩ := Metric.tendsto_atTop.mp ha (M / 2) (half_pos hM)
+  simp only [Real.dist_eq, sub_zero, abs_of_nonneg (h0 _)] at hN
+  set F : Finset ℝ := insert (M / 2) (((Finset.range N).filter S).image a)
   have hFne : F.Nonempty := ⟨M / 2, Finset.mem_insert_self _ _⟩
   refine ⟨F.max' hFne, (half_pos hM).trans_le (F.le_max' _ (Finset.mem_insert_self _ _)),
     (F.max'_lt_iff hFne).mpr fun x hx ↦ ?_, fun t ht ↦ ?_⟩
@@ -170,9 +173,7 @@ lemma exists_lt_one_forall_norm_coeff_mul_pow_le {g : Restricted R c} {s : ℕ}
     ∃ θ : ℝ, 0 ≤ θ ∧ θ < 1 ∧
       ∀ t, t ≠ s → ‖coeff t g.1‖ * c ^ t ≤ θ * (‖coeff s g.1‖ * c ^ s) := by
   have hc0 : (0 : ℝ) < c := Fact.out
-  have hM : (0 : ℝ) < ‖coeff s g.1‖ * c ^ s := by
-    rw [hg.norm_coeff_mul_pow_eq]
-    exact hg.norm_pos
+  have hM : (0 : ℝ) < ‖coeff s g.1‖ * c ^ s := hg.norm_coeff_mul_pow_eq.symm ▸ hg.norm_pos
   obtain ⟨ε, hε0, hεM, hε⟩ := exists_pos_lt_forall_le_of_tendsto_zero
     ((isRestricted_iff' c g.1).mp g.2)
     (fun t ↦ mul_nonneg (norm_nonneg _) (pow_nonneg hc0.le t)) hM hstrict
@@ -373,6 +374,23 @@ lemma exists_mem_divisionSet_norm_le_of_forall_le {g : Restricted R c} {s : ℕ}
           (norm_nonneg _) (mul_nonneg hθ0 hM.le)
     _ = θ * ‖f‖ := by rw [mul_assoc, mul_inv_cancel_left₀ hM.ne']
 
+omit [NormMulClass R] in
+private lemma dense_divisionSet_of_forall_exists_norm_le {g : Restricted R c} {s : ℕ}
+    {k : ℝ} (hk0 : 0 < k) (hk1 : k < 1)
+    (happrox : ∀ f : Restricted R c, f ≠ 0 → ∃ b ∈ divisionSet g s, ‖-f + b‖ ≤ k * ‖f‖) :
+    Dense (divisionSet g s) := by
+  refine AddSubgroup.dense_of_infDist_le (divisionAddSubgroup g s) k hk0 hk1 fun f ↦ ?_
+  by_cases hf : f = 0
+  · subst hf
+    rw [Metric.infDist_zero_of_mem (divisionAddSubgroup g s).zero_mem]
+    exact mul_nonneg hk0.le dist_nonneg
+  · obtain ⟨b, hb, hbnorm⟩ := happrox f hf
+    calc Metric.infDist f (divisionAddSubgroup g s)
+        ≤ dist f b := Metric.infDist_le_dist_of_mem hb
+      _ = ‖-f + b‖ := by rw [dist_eq_norm, ← norm_neg, neg_sub, sub_eq_neg_add]
+      _ ≤ k * ‖f‖ := hbnorm
+      _ = k * dist f 0 := by rw [dist_zero_right]
+
 /-- The division set of a strictly-dominated distinguished series is dense, by
 `AddSubgroup.dense_of_infDist_le` applied to the one-step approximate division. -/
 lemma dense_divisionSet_of_forall_lt {g : Restricted R c} {s : ℕ}
@@ -380,19 +398,10 @@ lemma dense_divisionSet_of_forall_lt {g : Restricted R c} {s : ℕ}
     (hstrict : ∀ t, t ≠ s → ‖coeff t g.1‖ * c ^ t < ‖coeff s g.1‖ * c ^ s) :
     Dense (divisionSet g s) := by
   obtain ⟨θ, hθ0, hθ1, hθ_bd⟩ := exists_lt_one_forall_norm_coeff_mul_pow_le c hg hstrict
-  refine AddSubgroup.dense_of_infDist_le (divisionAddSubgroup g s) (max θ (1 / 2))
-    (lt_of_lt_of_le one_half_pos (le_max_right _ _)) (max_lt hθ1 one_half_lt_one) fun f ↦ ?_
-  by_cases hf : f = 0
-  · subst hf
-    rw [Metric.infDist_zero_of_mem (divisionAddSubgroup g s).zero_mem]
-    exact mul_nonneg (le_max_of_le_right one_half_pos.le) dist_nonneg
-  · obtain ⟨b, hb, hbnorm⟩ := exists_mem_divisionSet_norm_le_of_forall_le hg hθ0 hθ_bd f
-    calc Metric.infDist f (divisionAddSubgroup g s)
-        ≤ dist f b := Metric.infDist_le_dist_of_mem hb
-      _ = ‖-f + b‖ := by rw [dist_eq_norm, ← norm_neg, neg_sub, sub_eq_neg_add]
-      _ ≤ θ * ‖f‖ := hbnorm
-      _ ≤ max θ (1 / 2) * ‖f‖ := mul_le_mul_of_nonneg_right (le_max_left _ _) (norm_nonneg _)
-      _ = max θ (1 / 2) * dist f 0 := by rw [dist_zero_right]
+  refine dense_divisionSet_of_forall_exists_norm_le
+    (lt_of_lt_of_le one_half_pos (le_max_right _ _)) (max_lt hθ1 one_half_lt_one) fun f _ ↦ ?_
+  obtain ⟨b, hb, hbnorm⟩ := exists_mem_divisionSet_norm_le_of_forall_le hg hθ0 hθ_bd f
+  exact ⟨b, hb, hbnorm.trans (mul_le_mul_of_nonneg_right (le_max_left _ _) (norm_nonneg _))⟩
 
 /-- **Weierstrass division, existence, for strictly-dominated divisors**: if the `s`-th
 Gauss term of `g` strictly dominates every other, every `f` divides as `f = g * q + r` with
@@ -451,36 +460,26 @@ theorem weierstrassDivision_polynomial {g₀ : Polynomial R}
       Polynomial.toRestricted c f₀ = Polynomial.toRestricted c g₀ * Polynomial.toRestricted c q
         + Polynomial.toRestricted c r := by
   have hnt : Nontrivial R := hg.nontrivial
-  have hgu : IsUnit (g₀.coeff s) := by
+  obtain ⟨u, hu⟩ : IsUnit (g₀.coeff s) := by
     have h1 := hg.isUnit_coeff
     rwa [Polynomial.val_toRestricted, Polynomial.coeff_coe] at h1
-  obtain ⟨u, hu⟩ := hgu
   have hdeg : g₀.degree = s := le_antisymm hgs (Polynomial.le_degree_of_ne_zero (hu ▸ u.ne_zero))
   have hlead : g₀.leadingCoeff = g₀.coeff s :=
     congrArg g₀.coeff (Polynomial.natDegree_eq_of_degree_eq_some hdeg)
   have hmonic : (Polynomial.C (↑u⁻¹ : R) * g₀).Monic :=
     Polynomial.monic_C_mul_of_mul_leadingCoeff_eq_one (by rw [hlead, ← hu, Units.inv_mul])
-  have hdeg₁ : (Polynomial.C (↑u⁻¹ : R) * g₀).degree = s := by
-    refine le_antisymm ?_ (Polynomial.le_degree_of_ne_zero ?_)
-    · calc (Polynomial.C (↑u⁻¹ : R) * g₀).degree
-          ≤ (Polynomial.C (↑u⁻¹ : R)).degree + g₀.degree := Polynomial.degree_mul_le _ _
-        _ ≤ 0 + (s : WithBot ℕ) := add_le_add Polynomial.degree_C_le hdeg.le
-        _ = s := zero_add _
-    · rw [Polynomial.coeff_C_mul, ← hu, Units.inv_mul]
-      exact one_ne_zero
-  have hpoly : f₀ = g₀ * (Polynomial.C (↑u⁻¹ : R) * (f₀ /ₘ (Polynomial.C (↑u⁻¹ : R) * g₀))) +
-      f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀) := by
-    conv_lhs => rw [← Polynomial.modByMonic_add_div f₀ (Polynomial.C (↑u⁻¹ : R) * g₀)]
-    ring
-  have hr₁ : (f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)).degree < s := by
-    have h2 := Polynomial.degree_modByMonic_lt f₀ hmonic
-    rwa [hdeg₁] at h2
+  have hdeg₁ : (Polynomial.C (↑u⁻¹ : R) * g₀).degree = s :=
+    (Polynomial.degree_C_mul_of_isUnit (u⁻¹).isUnit g₀).trans hdeg
+  have hr₁ : (f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)).degree < s :=
+    hdeg₁ ▸ Polynomial.degree_modByMonic_lt f₀ hmonic
   have hf₁ : Polynomial.toRestricted c f₀ = Polynomial.toRestricted c g₀ *
       Polynomial.toRestricted c (Polynomial.C (↑u⁻¹ : R) *
         (f₀ /ₘ (Polynomial.C (↑u⁻¹ : R) * g₀))) +
       Polynomial.toRestricted c (f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)) := by
     rw [← map_mul, ← map_add]
-    exact congrArg _ hpoly
+    congr 1
+    conv_lhs => rw [← Polynomial.modByMonic_add_div f₀ (Polynomial.C (↑u⁻¹ : R) * g₀)]
+    ring
   refine ⟨Polynomial.C (↑u⁻¹ : R) * (f₀ /ₘ (Polynomial.C (↑u⁻¹ : R) * g₀)),
     ⟨f₀ %ₘ (Polynomial.C (↑u⁻¹ : R) * g₀), ⟨hr₁, hf₁⟩, ?_⟩, ?_⟩
   · rintro r'' ⟨-, hf''⟩
@@ -522,12 +521,9 @@ omit [CompleteSpace R] in
 /-- For `0 < ε < 1` the residue ring `R° ⧸ closedBall ε` is nontrivial. -/
 lemma nontrivial_quotient_closedBall_ideal {ε : ℝ} (hε0 : 0 < ε) (hε1 : ε < 1) :
     Nontrivial (↥R° ⧸ closedBall_ideal (R := R) hε0.le) := by
-  refine Ideal.Quotient.nontrivial_iff.mpr fun h ↦ ?_
-  have h1 : (1 : ↥R°) ∈ closedBall_ideal (R := R) hε0.le := by
-    rw [h]
-    exact Submodule.mem_top
-  rw [mem_closedBall_ideal, OneMemClass.coe_one, norm_one] at h1
-  exact absurd (h1.trans_lt hε1) (lt_irrefl 1)
+  refine Ideal.Quotient.nontrivial_iff.mpr fun h ↦ absurd hε1 (not_lt.mpr ?_)
+  have h1 : (1 : ↥R°) ∈ closedBall_ideal (R := R) hε0.le := h ▸ Submodule.mem_top
+  rwa [mem_closedBall_ideal, OneMemClass.coe_one, norm_one] at h1
 
 omit [CompleteSpace R] in
 /-- When `g ∈ T°` has degree-`s` coefficient equal to `1` and `ε ∈ (0, 1)` dominates every
@@ -549,9 +545,7 @@ lemma monic_residueRingHom_of_isDistinguished {ε : ℝ} (hε0 : 0 < ε) (hε1 :
   have hdeg := le_antisymm
     ((Polynomial.degree_le_iff_coeff_zero _ _).mpr fun m hm ↦ hzero m (mod_cast hm))
     (Polynomial.le_degree_of_ne_zero (by rw [hs]; exact one_ne_zero))
-  refine ⟨?_, hdeg⟩
-  rw [Polynomial.Monic, Polynomial.leadingCoeff, Polynomial.natDegree_eq_of_degree_eq_some hdeg]
-  exact hs
+  exact ⟨Polynomial.monic_of_degree_le s hdeg.le hs, hdeg⟩
 
 omit [CompleteSpace R] in
 /-- If the reduction of `g` modulo the closed ball of radius `ε` is monic, every `f ∈ T°`
@@ -565,18 +559,16 @@ lemma exists_approx_div_of_monic_residue {ε : ℝ} (hε0 : 0 < ε) (hε1 : ε <
   have hnt := nontrivial_quotient_closedBall_ideal (R := R) hε0 hε1
   set τ := residueRingHom (closedBall_ideal (R := R) hε0.le) (isOpen_closedBall_ideal hε0)
     with hτdef
-  have hdiv := Polynomial.modByMonic_add_div (τ f) (τ g)
   have hrdeg := Polynomial.degree_modByMonic_lt (τ f) hτg
   obtain ⟨Q, hQ⟩ := Polynomial.map_surjective _ Ideal.Quotient.mk_surjective (τ f /ₘ τ g)
   have hmem : (τ f %ₘ τ g)
-      ∈ Polynomial.lifts (Ideal.Quotient.mk (closedBall_ideal (R := R) hε0.le)) := by
-    rw [Polynomial.lifts_iff_set_range]
-    exact Polynomial.map_surjective _ Ideal.Quotient.mk_surjective _
+      ∈ Polynomial.lifts (Ideal.Quotient.mk (closedBall_ideal (R := R) hε0.le)) :=
+    Polynomial.mem_lifts_of_surjective Ideal.Quotient.mk_surjective _
   obtain ⟨P, hP_map, hP_deg⟩ := Polynomial.exists_degree_eq_of_mem_lifts hmem
   have hres : τ (f - g * toPowerBounded Q - toPowerBounded P) = 0 := by
     rw [map_sub, map_sub, map_mul, hτdef, residueRingHom_toPowerBounded,
       residueRingHom_toPowerBounded, ← hτdef, hQ, hP_map]
-    linear_combination -hdiv
+    linear_combination -Polynomial.modByMonic_add_div (τ f) (τ g)
   refine ⟨toPowerBounded Q, P.map (PowerBounded.subring R (S := ℤ)).subtype,
     Polynomial.degree_map_le.trans_lt (hP_deg.trans_lt hrdeg), ?_⟩
   simpa [sub_sub] using (residueRingHom_closedBall_ideal_eq_zero_iff hε0 _).mp hres
@@ -662,17 +654,8 @@ lemma dense_divisionSet {g : Restricted R 1} (hgn : ‖g‖ = 1) {s : ℕ}
     Dense (divisionSet g s) := by
   have hg1 : ‖coeff s g.1‖ = 1 := by simpa [hgn] using hg.norm_coeff_mul_pow_eq
   obtain ⟨ε, hε0, hε1, hε_bd⟩ := exists_lt_one_forall_norm_coeff_le hg hg1
-  refine AddSubgroup.dense_of_infDist_le (divisionAddSubgroup g s) ε hε0 hε1 fun f ↦ ?_
-  by_cases hf : f = 0
-  · subst hf
-    rw [Metric.infDist_zero_of_mem (divisionAddSubgroup g s).zero_mem]
-    positivity
-  · obtain ⟨b, hb, hbnorm⟩ := exists_mem_divisionSet_norm_le hgn hg hε0 hε1 hε_bd f (hunit f hf)
-    calc Metric.infDist f (divisionAddSubgroup g s)
-        ≤ dist f b := Metric.infDist_le_dist_of_mem hb
-      _ = ‖-f + b‖ := by rw [dist_eq_norm, ← norm_neg, neg_sub, sub_eq_neg_add]
-      _ ≤ ε * ‖f‖ := hbnorm
-      _ = ε * dist f 0 := by rw [dist_zero_right]
+  exact dense_divisionSet_of_forall_exists_norm_le hε0 hε1
+    fun f hf ↦ exists_mem_divisionSet_norm_le hgn hg hε0 hε1 hε_bd f (hunit f hf)
 
 /-- **Weierstrass division at radius `1`, normalised case `‖g‖ = 1`**: the division set is
 closed and dense, hence everything. -/
@@ -719,21 +702,20 @@ theorem weierstrassDivision_exists {g : Restricted R c} {s : ℕ}
     ∃ (q : Restricted R c) (r : Polynomial R), r.degree < s ∧
       f = g * q + Polynomial.toRestricted c r := by
   have hntR : Nontrivial R := hg.nontrivial
-  have hgne : g ≠ 0 := fun h0 ↦ hg.ne_zero (congrArg Subtype.val h0)
   obtain ⟨u, hu⟩ := exists_units_norm_eq hunit
-  have hu' : ‖(u : R)‖ * 1 = c := by rw [mul_one]; exact hu
+  have hu' : ‖(u : R)‖ * 1 = c := (mul_one _).trans hu
   have hg₁ : IsDistinguished norm 1 (rescaleEquiv u hu' g).1 s :=
     (isDistinguished_rescaleEquiv_iff u hu' g s).mpr hg
   obtain ⟨a, ha1, ha2⟩ : ∃ a : R, ‖a‖ = ‖rescaleEquiv u hu' g‖⁻¹ ∧ IsUnit a := by
     rw [norm_rescaleEquiv u hu' g]
-    exact hunit g hgne
+    exact hunit g fun h0 ↦ hg.ne_zero (congrArg Subtype.val h0)
   have hga : ‖C 1 a * rescaleEquiv u hu' g‖ = 1 := by
     rw [norm_mul, norm_C, ha1, inv_mul_cancel₀ hg₁.norm_pos.ne']
   obtain ⟨q₀, r₀, hr₀, hf₀⟩ := weierstrassDivision_exists_of_norm_eq_one hga (hg₁.C_mul ha2)
     (rescaleEquiv u hu' f) (hunit_transport u hu' hunit)
   have hf₁ : rescaleEquiv u hu' f
       = rescaleEquiv u hu' g * (C 1 a * q₀) + Polynomial.toRestricted 1 r₀ := by
-    rw [hf₀]; ring
+    linear_combination hf₀
   have h2 := congrArg (rescaleEquiv u hu').symm hf₁
   rw [RingEquiv.symm_apply_apply, map_add, map_mul, RingEquiv.symm_apply_apply,
     rescaleEquiv_symm_toRestricted] at h2

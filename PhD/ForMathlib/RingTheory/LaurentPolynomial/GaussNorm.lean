@@ -52,15 +52,16 @@ omit [Fact (0 < r)] in
 lemma le_gaussNorm (p : R[T;T⁻¹]) (m : ℤ) : ‖p.coeff m‖ * r ^ m ≤ gaussNorm r p :=
   le_ciSup (bddAbove_range_gaussTerm r p) m
 
+omit [Fact (0 < r)] in
+private lemma coeff_support_nonempty {p : R[T;T⁻¹]} (hp : p ≠ 0) : p.coeff.support.Nonempty :=
+  Finsupp.support_nonempty_iff.mpr fun h0 ↦
+    hp (LaurentPolynomial.ext fun a ↦ by simp [h0, AddMonoidAlgebra.coeff_zero])
+
 /-- The Gauss norm of a nonzero Laurent polynomial is attained. -/
 lemma exists_gaussNorm_eq {p : R[T;T⁻¹]} (hp : p ≠ 0) :
     ∃ m : ℤ, gaussNorm r p = ‖p.coeff m‖ * r ^ m := by
-  have hne : p.coeff.support.Nonempty := by
-    rw [Finsupp.support_nonempty_iff]
-    intro h0
-    exact hp (LaurentPolynomial.ext fun a ↦ by simp [h0, AddMonoidAlgebra.coeff_zero])
   obtain ⟨m₀, -, hmax⟩ :=
-    p.coeff.support.exists_max_image (fun m ↦ ‖p.coeff m‖ * r ^ m) hne
+    p.coeff.support.exists_max_image (fun m ↦ ‖p.coeff m‖ * r ^ m) (coeff_support_nonempty hp)
   refine ⟨m₀, le_antisymm (ciSup_le fun m ↦ ?_) (le_gaussNorm r p m₀)⟩
   by_cases hm : p.coeff m = 0
   · rw [hm, norm_zero, zero_mul]
@@ -74,13 +75,11 @@ lemma gaussNorm_neg (p : R[T;T⁻¹]) : gaussNorm r (-p) = gaussNorm r p := by
 
 omit [Fact (0 < r)] in
 lemma coeff_add_apply (p q : R[T;T⁻¹]) (m : ℤ) :
-    (p + q).coeff m = p.coeff m + q.coeff m := by
-  rw [AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
+    (p + q).coeff m = p.coeff m + q.coeff m := rfl
 
 omit [Fact (0 < r)] in
 lemma coeff_sub_apply (p q : R[T;T⁻¹]) (m : ℤ) :
-    (p - q).coeff m = p.coeff m - q.coeff m := by
-  rw [AddMonoidAlgebra.coeff_sub, Finsupp.sub_apply]
+    (p - q).coeff m = p.coeff m - q.coeff m := rfl
 
 omit [Fact (0 < r)] in
 @[simp]
@@ -92,8 +91,7 @@ lemma gaussNorm_zero : gaussNorm r (0 : R[T;T⁻¹]) = 0 := by
 lemma gaussNorm_eq_zero_iff {p : R[T;T⁻¹]} : gaussNorm r p = 0 ↔ p = 0 := by
   refine ⟨fun h ↦ ?_, fun h ↦ h ▸ gaussNorm_zero r⟩
   by_contra hp
-  obtain ⟨m, hm⟩ := Finsupp.support_nonempty_iff.mpr fun h0 : p.coeff = 0 ↦
-    hp (LaurentPolynomial.ext fun a ↦ by simp [h0, AddMonoidAlgebra.coeff_zero])
+  obtain ⟨m, hm⟩ := coeff_support_nonempty hp
   have h1 := le_gaussNorm r p m
   rw [h] at h1
   have h2 := mul_pos (norm_pos_iff.mpr (Finsupp.mem_support_iff.mp hm))
@@ -133,15 +131,19 @@ lemma gaussNorm_add_le [IsUltrametricDist R] (p q : R[T;T⁻¹]) :
     _ ≤ max (gaussNorm r p) (gaussNorm r q) :=
         max_le_max (le_gaussNorm r p m) (le_gaussNorm r q m)
 
+omit [Fact (0 < r)] in
+private lemma coeff_mul_eq_sum (p q : R[T;T⁻¹]) (m : ℤ) :
+    (p * q).coeff m = ∑ ij ∈ p.coeff.support ×ˢ q.coeff.support,
+      if ij.1 + ij.2 = m then p.coeff ij.1 * q.coeff ij.2 else 0 := by
+  rw [AddMonoidAlgebra.coeff_mul, Finset.sum_product]
+  rfl
+
 lemma gaussNorm_mul_le [IsUltrametricDist R] (p q : R[T;T⁻¹]) :
     gaussNorm r (p * q) ≤ gaussNorm r p * gaussNorm r q := by
   have hr0 : (0 : ℝ) < r := Fact.out
   refine Real.iSup_le (fun m ↦ ?_)
     (mul_nonneg (gaussNorm_nonneg r p) (gaussNorm_nonneg r q))
-  have hcoeff : (p * q).coeff m = ∑ ij ∈ p.coeff.support ×ˢ q.coeff.support,
-      (if ij.1 + ij.2 = m then p.coeff ij.1 * q.coeff ij.2 else 0) := by
-    rw [AddMonoidAlgebra.coeff_mul, Finset.sum_product]
-    rfl
+  have hcoeff := coeff_mul_eq_sum p q m
   obtain ⟨k, -, hsum⟩ := IsNonarchimedean.finset_image_add norm_zero
     (fun a ↦ norm_nonneg a) IsUltrametricDist.isNonarchimedean_norm
     (fun ij : ℤ × ℤ ↦ if ij.1 + ij.2 = m then p.coeff ij.1 * q.coeff ij.2 else 0)
@@ -212,10 +214,7 @@ lemma gaussNorm_mul (hr : ¬MemDivisibleValueGroup K r) (p q : K[T;T⁻¹]) :
   have hmem : (i₀, j₀) ∈ p.coeff.support ×ˢ q.coeff.support :=
     Finset.mem_product.mpr
       ⟨Finsupp.mem_support_iff.mpr hpi₀, Finsupp.mem_support_iff.mpr hqj₀⟩
-  have hcoeff : (p * q).coeff (i₀ + j₀) = ∑ ij ∈ p.coeff.support ×ˢ q.coeff.support,
-      (if ij.1 + ij.2 = i₀ + j₀ then p.coeff ij.1 * q.coeff ij.2 else 0) := by
-    rw [AddMonoidAlgebra.coeff_mul, Finset.sum_product]
-    rfl
+  have hcoeff := coeff_mul_eq_sum p q (i₀ + j₀)
   have hstrict : ∀ ij ∈ p.coeff.support ×ˢ q.coeff.support, ij ≠ (i₀, j₀) →
       ‖if ij.1 + ij.2 = i₀ + j₀ then p.coeff ij.1 * q.coeff ij.2 else 0‖
         < ‖if i₀ + j₀ = i₀ + j₀ then p.coeff i₀ * q.coeff j₀ else 0‖ := by
@@ -359,11 +358,85 @@ lemma norm_coeffZero_le (p : GaussLaurent K r) : ‖coeffZero p‖ ≤ ‖p‖ :
 
 section Field
 
-variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] {r : ℝ}
+variable {K : Type*} [NormedField K] [IsUltrametricDist K] {r : ℝ}
   [Fact (0 < r)] [Fact (¬MemDivisibleValueGroup K r)]
 
 instance : NormMulClass (GaussLaurent K r) where
   norm_mul p q := LaurentPolynomial.gaussNorm_mul Fact.out p q
+
+/-- The tail left after subtracting the dominant monomial has strictly smaller Gauss norm:
+if `q` agrees coefficient-wise with `single m (p.coeff m)` at the norm-attaining index `m`,
+then `‖p - q‖ < ‖p‖`, because off the divisible closure every other exponent contributes a
+strictly smaller Gauss term. -/
+private lemma norm_sub_lt_of_coeff_eq_single {p q : GaussLaurent K r} {m : ℤ}
+    (ham : (p : LaurentPolynomial K).coeff m ≠ 0)
+    (hm : LaurentPolynomial.gaussNorm r (p : LaurentPolynomial K)
+      = ‖(p : LaurentPolynomial K).coeff m‖ * r ^ m)
+    (hqc : ∀ j, (q : LaurentPolynomial K).coeff j
+      = Finsupp.single m ((p : LaurentPolynomial K).coeff m) j) :
+    ‖(p - q : GaussLaurent K r)‖ < ‖(p : GaussLaurent K r)‖ := by
+  have hppos : 0 < ‖(p : GaussLaurent K r)‖ := by
+    rw [norm_def, hm]
+    exact mul_pos (norm_pos_iff.mpr ham) (zpow_pos Fact.out m)
+  rcases eq_or_ne (p - q : GaussLaurent K r) 0 with h0 | h0
+  · rwa [h0, norm_zero]
+  have h0' : ((p - q : GaussLaurent K r) : LaurentPolynomial K) ≠ 0 := h0
+  obtain ⟨k, hk⟩ := LaurentPolynomial.exists_gaussNorm_eq r h0'
+  have hcoeffk : ((p - q : GaussLaurent K r) : LaurentPolynomial K).coeff k
+      = (p : LaurentPolynomial K).coeff k
+        - Finsupp.single m ((p : LaurentPolynomial K).coeff m) k := by
+    have h3 := LaurentPolynomial.coeff_sub_apply (p : LaurentPolynomial K)
+      (q : LaurentPolynomial K) k
+    rwa [hqc k] at h3
+  have hkm : k ≠ m := by
+    rintro rfl
+    rw [hcoeffk, Finsupp.single_eq_same, sub_self, norm_zero, zero_mul] at hk
+    exact h0 ((LaurentPolynomial.gaussNorm_eq_zero_iff r).mp hk)
+  have hck : ((p - q : GaussLaurent K r) : LaurentPolynomial K).coeff k
+      = (p : LaurentPolynomial K).coeff k := by
+    rw [hcoeffk, Finsupp.single_apply, if_neg (fun h : m = k ↦ hkm h.symm), sub_zero]
+  rw [norm_def, hk, hck, norm_def]
+  rcases eq_or_ne ((p : LaurentPolynomial K).coeff k) 0 with hc0 | hc0
+  · rw [hc0, norm_zero, zero_mul, ← norm_def]
+    exact hppos
+  · refine lt_of_le_of_ne (LaurentPolynomial.le_gaussNorm r _ k) fun heq ↦ hkm ?_
+    exact LaurentPolynomial.gaussTerm_injOn_of_not_memDivisibleValueGroup Fact.out hc0 ham
+      (heq.trans hm)
+
+/-- Off the divisible closure, every nonzero element of the Gauss-normed Laurent algebra is
+within its own norm of a unit — its dominant monomial `q = single m (p.coeff m)`, which
+satisfies `‖q‖ = ‖p‖` and `‖p - q‖ < ‖p‖`. This is the algebraic input to the completeness
+argument that makes the Gauss extension (the completion) a field. -/
+lemma exists_isUnit_norm_sub_lt {p : GaussLaurent K r} (hp : p ≠ 0) :
+    ∃ q : GaussLaurent K r, IsUnit q ∧ ‖q‖ = ‖p‖ ∧ ‖p - q‖ < ‖p‖ := by
+  have hp0 : (p : LaurentPolynomial K) ≠ 0 := hp
+  obtain ⟨m, hm⟩ := LaurentPolynomial.exists_gaussNorm_eq r hp0
+  have ham : (p : LaurentPolynomial K).coeff m ≠ 0 := by
+    intro h0
+    rw [h0, norm_zero, zero_mul] at hm
+    exact hp0 ((LaurentPolynomial.gaussNorm_eq_zero_iff r).mp hm)
+  set q : GaussLaurent K r :=
+    (AddMonoidAlgebra.single m ((p : LaurentPolynomial K).coeff m) : LaurentPolynomial K)
+    with hqdef
+  have hqu : IsUnit q := by
+    have h1 : IsUnit (LaurentPolynomial.C ((p : LaurentPolynomial K).coeff m)
+        * LaurentPolynomial.T m) :=
+      ((LaurentPolynomial.C).isUnit_map (isUnit_iff_ne_zero.mpr ham)).mul
+        (LaurentPolynomial.isUnit_T m)
+    have h2 : (q : LaurentPolynomial K)
+        = LaurentPolynomial.C ((p : LaurentPolynomial K).coeff m) * LaurentPolynomial.T m :=
+      LaurentPolynomial.single_eq_C_mul_T _ _
+    exact (h2.symm ▸ h1 : IsUnit (q : LaurentPolynomial K))
+  have hqn : ‖q‖ = ‖p‖ := by
+    rw [norm_def, hqdef]
+    have hsingle : LaurentPolynomial.gaussNorm r
+        (AddMonoidAlgebra.single m ((p : LaurentPolynomial K).coeff m) : LaurentPolynomial K)
+        = ‖(p : LaurentPolynomial K).coeff m‖ * r ^ m := by
+      rw [LaurentPolynomial.single_eq_C_mul_T _ _,
+        LaurentPolynomial.gaussNorm_mul Fact.out, LaurentPolynomial.gaussNorm_C,
+        LaurentPolynomial.gaussNorm_T]
+    rw [hsingle, ← hm, ← norm_def]
+  exact ⟨q, hqu, hqn, norm_sub_lt_of_coeff_eq_single ham hm fun j ↦ by rw [hqdef]; rfl⟩
 
 end Field
 

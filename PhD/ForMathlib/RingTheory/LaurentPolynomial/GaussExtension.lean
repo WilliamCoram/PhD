@@ -192,123 +192,37 @@ instance : NormMulClass (GaussExtension K r) where
 omit [CompleteSpace K] [Fact (¬MemDivisibleValueGroup K r)] in
 private lemma norm_add_eq_left_of_norm_lt {a b : GaussExtension K r} (hab : ‖b‖ < ‖a‖) :
     ‖a + b‖ = ‖a‖ := by
-  refine le_antisymm ((IsUltrametricDist.norm_add_le_max a b).trans (max_le le_rfl hab.le)) ?_
-  have h5 : ‖a‖ ≤ max ‖a + b‖ ‖b‖ := by
-    calc ‖a‖ = ‖a + b + -b‖ := (congrArg norm (add_neg_cancel_right a b)).symm
-      _ ≤ max ‖a + b‖ ‖-b‖ := IsUltrametricDist.norm_add_le_max _ _
-      _ = max ‖a + b‖ ‖b‖ := by rw [norm_neg]
-  rcases max_cases ‖a + b‖ ‖b‖ with ⟨heq, -⟩ | ⟨heq, -⟩
-  · rwa [heq] at h5
-  · rw [heq] at h5
-    linarith
+  rw [IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hab.ne', max_eq_left hab.le]
 
 omit [CompleteSpace K] in
 /-- Off the divisible closure, every nonzero element of the Gauss extension is a unit:
-approximate by a Laurent polynomial of the same norm, invert its dominant monomial, and sum
-the geometric series in the completion. -/
+approximate by a Laurent polynomial of the same norm, whose dominant monomial is a nearby
+unit, then conclude by `Units.ofNearby` in the completion. -/
 private lemma isUnit_of_ne_zero {x : GaussExtension K r} (hx : x ≠ 0) : IsUnit x := by
   have hxn : (0 : ℝ) < ‖x‖ := norm_pos_iff.mpr hx
   obtain ⟨p, hp⟩ :=
     Metric.denseRange_iff.mp (denseRange_ofLaurent (K := K) (r := r)) x ‖x‖ hxn
   rw [dist_eq_norm] at hp
-  have hpn : ‖(ofLaurent p : GaussExtension K r)‖ = ‖x‖ := by
-    have h1 : (ofLaurent p : GaussExtension K r) = x + (ofLaurent p - x) := by ring
-    rw [h1, norm_add_eq_left_of_norm_lt]
-    rwa [show (ofLaurent p : GaussExtension K r) - x = -(x - ofLaurent p) by ring, norm_neg]
-  have hpGL : ‖(p : GaussLaurent K r)‖ = ‖x‖ := by rw [← norm_ofLaurent]; exact hpn
-  have hp0 : (p : LaurentPolynomial K) ≠ 0 := by
-    rintro h0
-    rw [show p = (0 : GaussLaurent K r) from h0, norm_zero] at hpGL
-    exact hxn.ne hpGL
-  obtain ⟨m, hm⟩ := LaurentPolynomial.exists_gaussNorm_eq r hp0
-  have ham : (p : LaurentPolynomial K).coeff m ≠ 0 := by
-    intro h0
-    rw [h0, norm_zero, zero_mul] at hm
-    exact hp0 ((LaurentPolynomial.gaussNorm_eq_zero_iff r).mp hm)
-  -- the dominant monomial, as a unit of the Laurent algebra
-  set q : GaussLaurent K r :=
-    (AddMonoidAlgebra.single m ((p : LaurentPolynomial K).coeff m) : LaurentPolynomial K)
-    with hqdef
-  have hqu : IsUnit q := by
-    have h1 : IsUnit (LaurentPolynomial.C ((p : LaurentPolynomial K).coeff m)
-        * LaurentPolynomial.T m) :=
-      ((LaurentPolynomial.C).isUnit_map (isUnit_iff_ne_zero.mpr ham)).mul
-        (LaurentPolynomial.isUnit_T m)
-    have h2 : (q : LaurentPolynomial K)
-        = LaurentPolynomial.C ((p : LaurentPolynomial K).coeff m) * LaurentPolynomial.T m :=
-      LaurentPolynomial.single_eq_C_mul_T _ _
-    exact (h2.symm ▸ h1 : IsUnit (q : LaurentPolynomial K))
-  have hqn : ‖q‖ = ‖x‖ := by
-    rw [GaussLaurent.norm_def, hqdef]
-    have hsingle : LaurentPolynomial.gaussNorm r
-        (AddMonoidAlgebra.single m ((p : LaurentPolynomial K).coeff m) : LaurentPolynomial K)
-        = ‖(p : LaurentPolynomial K).coeff m‖ * r ^ m := by
-      rw [LaurentPolynomial.single_eq_C_mul_T _ _,
-        LaurentPolynomial.gaussNorm_mul Fact.out, LaurentPolynomial.gaussNorm_C,
-        LaurentPolynomial.gaussNorm_T]
-    rw [hsingle, ← hm, ← GaussLaurent.norm_def]
-    exact hpGL
-  -- the tail is strictly smaller
-  have hd : ‖(p - q : GaussLaurent K r)‖ < ‖x‖ := by
-    rcases eq_or_ne (p - q : GaussLaurent K r) 0 with h0 | h0
-    · rw [h0, norm_zero]
-      exact hxn
-    have h0' : ((p - q : GaussLaurent K r) : LaurentPolynomial K) ≠ 0 := h0
-    obtain ⟨k, hk⟩ := LaurentPolynomial.exists_gaussNorm_eq r h0'
-    have hqc : ∀ j, (q : LaurentPolynomial K).coeff j
-        = Finsupp.single m ((p : LaurentPolynomial K).coeff m) j := fun j ↦ by
-      rw [hqdef]
-      rfl
-    have hcoeffk : ((p - q : GaussLaurent K r) : LaurentPolynomial K).coeff k
-        = (p : LaurentPolynomial K).coeff k
-          - Finsupp.single m ((p : LaurentPolynomial K).coeff m) k := by
-      have h3 := LaurentPolynomial.coeff_sub_apply (p : LaurentPolynomial K)
-        (q : LaurentPolynomial K) k
-      rw [hqc k] at h3
-      exact h3
-    have hkm : k ≠ m := by
-      rintro rfl
-      rw [hcoeffk, Finsupp.single_eq_same, sub_self, norm_zero, zero_mul] at hk
-      exact h0 ((LaurentPolynomial.gaussNorm_eq_zero_iff r).mp hk)
-    have hck : ((p - q : GaussLaurent K r) : LaurentPolynomial K).coeff k
-        = (p : LaurentPolynomial K).coeff k := by
-      rw [hcoeffk, Finsupp.single_apply, if_neg (fun h : m = k ↦ hkm h.symm), sub_zero]
-    rw [GaussLaurent.norm_def, hk, hck, ← hpGL, GaussLaurent.norm_def]
-    rcases eq_or_ne ((p : LaurentPolynomial K).coeff k) 0 with hc0 | hc0
-    · rw [hc0, norm_zero, zero_mul, ← GaussLaurent.norm_def, hpGL]
-      exact hxn
-    · refine lt_of_le_of_ne (LaurentPolynomial.le_gaussNorm r _ k) fun heq ↦ hkm ?_
-      exact LaurentPolynomial.gaussTerm_injOn_of_not_memDivisibleValueGroup Fact.out hc0 ham
-        (heq.trans hm)
-  -- assemble the unit over the completion
+  have hp' : ‖(ofLaurent p - x : GaussExtension K r)‖ < ‖x‖ := by rwa [norm_sub_rev]
+  have hpGL : ‖(p : GaussLaurent K r)‖ = ‖x‖ := by
+    rw [← norm_ofLaurent, show (ofLaurent p : GaussExtension K r) = x + (ofLaurent p - x) by ring,
+      norm_add_eq_left_of_norm_lt hp']
+  have hp0 : (p : GaussLaurent K r) ≠ 0 := norm_pos_iff.mp (by rw [hpGL]; exact hxn)
+  obtain ⟨q, hqu, hqn, hd⟩ := GaussLaurent.exists_isUnit_norm_sub_lt hp0
   obtain ⟨U, hU⟩ := (ofLaurent (K := K) (r := r)).isUnit_map hqu
-  have hUn : ‖(U : GaussExtension K r)‖ = ‖x‖ := by rw [hU, norm_ofLaurent]; exact hqn
-  have hUx : ‖(U : GaussExtension K r) - x‖ < ‖x‖ := by
-    have hsplit : (U : GaussExtension K r) - x
-        = -(ofLaurent (p - q)) + (ofLaurent p - x) := by
-      rw [hU, map_sub]
-      ring
-    rw [hsplit]
+  have hUn : ‖(U : GaussExtension K r)‖ = ‖x‖ := by rw [hU, norm_ofLaurent, hqn, hpGL]
+  have hUx : ‖x - (U : GaussExtension K r)‖ < ‖x‖ := by
+    rw [show x - (U : GaussExtension K r) = (x - ofLaurent p) + ofLaurent (p - q) by
+      rw [hU, map_sub]; ring]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ?_ ?_)
-    · rw [norm_neg, norm_ofLaurent]
-      exact hd
-    · rwa [show (ofLaurent p : GaussExtension K r) - x = -(x - ofLaurent p) by ring, norm_neg]
-  have hUne : ‖(U : GaussExtension K r)‖ ≠ 0 := by rw [hUn]; exact hxn.ne'
-  have hUinv : ‖((U⁻¹ : (GaussExtension K r)ˣ) : GaussExtension K r)‖
-      = ‖(U : GaussExtension K r)‖⁻¹ := by
-    refine (inv_eq_of_mul_eq_one_right ?_).symm
-    rw [← norm_mul, Units.mul_inv, norm_one]
-  set t : GaussExtension K r := ((U⁻¹ : (GaussExtension K r)ˣ) : GaussExtension K r)
-    * ((U : GaussExtension K r) - x) with htdef
-  have ht : ‖t‖ < 1 := by
-    rw [htdef, norm_mul, hUinv, hUn]
-    calc ‖x‖⁻¹ * ‖(U : GaussExtension K r) - x‖ < ‖x‖⁻¹ * ‖x‖ := by
-          exact mul_lt_mul_of_pos_left hUx (by positivity)
-      _ = 1 := inv_mul_cancel₀ hxn.ne'
-  refine ⟨U * Units.oneSub t ht, ?_⟩
-  show (U : GaussExtension K r) * (1 - t) = x
-  rw [htdef, mul_sub, mul_one, ← mul_assoc, Units.mul_inv, one_mul]
-  ring
+    · exact hp
+    · rw [norm_ofLaurent]; rwa [hpGL] at hd
+  refine (U.ofNearby x ?_).isUnit
+  have hUinv : ‖((U⁻¹ : (GaussExtension K r)ˣ) : GaussExtension K r)‖ = ‖x‖⁻¹ := by
+    rw [← hUn]
+    exact (inv_eq_of_mul_eq_one_right (by rw [← norm_mul, Units.mul_inv, norm_one])).symm
+  rw [hUinv, inv_inv]
+  exact hUx
 
 noncomputable instance : Field (GaussExtension K r) :=
   IsField.toField

@@ -208,6 +208,14 @@ noncomputable example : NormedRing (Restricted R c) := inferInstance
 series. -/
 lemma norm_def (f : Restricted R c) : ‖f‖ = PowerSeries.gaussNorm (norm : R → ℝ) c f.1 := rfl
 
+/-- The Gauss norm of a nonzero restricted power series is realised by a nonzero coefficient:
+some index `k` satisfies `coeff k f ≠ 0` and `‖f‖ = ‖coeff k f‖ * c ^ k`. -/
+lemma exists_coeff_ne_zero_norm_eq (f : Restricted R c) (hf : f ≠ 0) :
+    ∃ k, coeff k f.1 ≠ 0 ∧ ‖f‖ = ‖coeff k f.1‖ * c ^ k := by
+  obtain ⟨k, hk⟩ := exists_achievesGaussNorm c f
+  have hnorm : ‖f‖ = ‖coeff k f.1‖ * c ^ k := (norm_def c f).trans hk.symm
+  exact ⟨k, norm_ne_zero_iff.mp (left_ne_zero_of_mul (hnorm ▸ norm_ne_zero_iff.mpr hf)), hnorm⟩
+
 /-- Every weighted coefficient norm `‖coeff n f.1‖ * c ^ n` is at most the norm. -/
 lemma norm_coeff_mul_pow_le (f : Restricted R c) (n : ℕ) : ‖coeff n f.1‖ * c ^ n ≤ ‖f‖ := by
   rw [norm_def]

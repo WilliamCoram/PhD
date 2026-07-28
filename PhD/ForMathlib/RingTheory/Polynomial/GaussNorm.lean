@@ -88,7 +88,7 @@ lemma gaussNorm_X (vZero : v 0 = 0) : (X : R[X]).gaussNorm v c = v 1 * c := by
   simpa using gaussNorm_monomial v c vZero 1 1
 
 variable {c} in
-lemma gaussNorm_nonneg (vNonneg : ∀ a, v a ≥ 0) (hc : 0 ≤ c) : 0 ≤ p.gaussNorm v c := by
+lemma gaussNorm_nonneg (vNonneg : ∀ a, 0 ≤ v a) (hc : 0 ≤ c) : 0 ≤ p.gaussNorm v c := by
   by_cases h : p.support.Nonempty
   · rw [gaussNorm, dif_pos h]
     obtain ⟨i, hi⟩ := h
@@ -110,8 +110,6 @@ lemma finite_setOfPred_achievesGaussNorm (vZero : v 0 = 0) (h0 : p.gaussNorm v c
   p.support.finite_toSet.subset fun i hi ↦ Finset.mem_coe.mpr <| mem_support_iff.mpr fun h ↦
     h0 <| by rw [← hi, h, vZero, zero_mul]
 
-/-! ### The bridge to power series -/
-
 /-- A polynomial, coerced to a power series, has a finite Gauss norm. -/
 lemma hasGaussNorm_toPowerSeries (vZero : v 0 = 0) :
     PowerSeries.HasGaussNorm v c (p : PowerSeries R) :=
@@ -119,7 +117,7 @@ lemma hasGaussNorm_toPowerSeries (vZero : v 0 = 0) :
     fun n hn ↦ by simpa [mem_support_iff, coeff_coe] using Function.mem_support.mp hn
 
 /-- The Gauss norm of a polynomial is equal to its Gauss norm as a power series. -/
-theorem gaussNorm_coe_powerSeries (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hc : 0 ≤ c) :
+theorem gaussNorm_coe_powerSeries (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a) (hc : 0 ≤ c) :
     (p : PowerSeries R).gaussNorm v c = p.gaussNorm v c := by
   rcases eq_or_ne p 0 with rfl | hp
   · rw [coe_zero, gaussNorm_zero, PowerSeries.gaussNorm_zero v c vZero]
@@ -137,19 +135,19 @@ theorem gaussNorm_coe_powerSeries (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
       exact le_ciSup (p.hasGaussNorm_toPowerSeries v c vZero) i
 
 variable {c} in
-lemma le_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hc : 0 ≤ c) (i : ℕ) :
+lemma le_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a) (hc : 0 ≤ c) (i : ℕ) :
     v (p.coeff i) * c ^ i ≤ p.gaussNorm v c := by
   rw [← p.gaussNorm_coe_powerSeries v c vZero vNonneg hc, ← coeff_coe]
   exact PowerSeries.le_gaussNorm v c _ (p.hasGaussNorm_toPowerSeries v c vZero) i
 
 /-- For the zero radius, the Gauss norm is the value of `v` on the constant coefficient. -/
-lemma gaussNorm_zero_right (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) :
+lemma gaussNorm_zero_right (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a) :
     p.gaussNorm v 0 = v (p.coeff 0) := by
   rw [← p.gaussNorm_coe_powerSeries v 0 vZero vNonneg le_rfl,
     PowerSeries.gaussNorm_zero_right v vNonneg, coeff_coe]
 
 /-- For positive radii, the Gauss norm of a polynomial is zero iff the polynomial is zero. -/
-theorem gaussNorm_eq_zero_iff (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+theorem gaussNorm_eq_zero_iff (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a)
     (h_eq_zero : ∀ x : R, v x = 0 → x = 0) (hc : 0 < c) :
     p.gaussNorm v c = 0 ↔ p = 0 := by
   rw [← p.gaussNorm_coe_powerSeries v c vZero vNonneg hc.le,
@@ -159,11 +157,10 @@ theorem gaussNorm_eq_zero_iff (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
 
 variable {c} in
 /-- There is a minimal index at which the Gauss norm of `p` is attained. -/
-lemma exists_min_eq_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hc : 0 ≤ c) :
+lemma exists_min_eq_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a) (hc : 0 ≤ c) :
     ∃ i, p.gaussNorm v c = v (p.coeff i) * c ^ i ∧
       ∀ j, j < i → v (p.coeff j) * c ^ j < p.gaussNorm v c := by
-  have h_nonempty : ∃ i, gaussNorm v c p = v (p.coeff i) * c ^ i :=
-    p.exists_eq_gaussNorm v c vZero
+  have h_nonempty := p.exists_eq_gaussNorm v c vZero
   refine ⟨Nat.find h_nonempty, Nat.find_spec h_nonempty, fun j hj_lt ↦ ?_⟩
   simp only [Nat.lt_find_iff] at hj_lt
   exact lt_of_le_of_ne (p.le_gaussNorm v vZero vNonneg hc j) fun a ↦ hj_lt j le_rfl a.symm
@@ -171,7 +168,7 @@ lemma exists_min_eq_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hc
 variable {c} in
 /-- If `v` is a nonnegative nonarchimedean function with `v 0 = 0` and `c` is nonnegative, the
 Gauss norm is nonarchimedean. -/
-theorem isNonarchimedean_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+theorem isNonarchimedean_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a)
     (hna : IsNonarchimedean v) (hc : 0 ≤ c) :
     IsNonarchimedean fun p : R[X] ↦ p.gaussNorm v c := by
   intro p q
@@ -184,7 +181,7 @@ theorem isNonarchimedean_gaussNorm (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0
 variable {c} in
 /-- If `v` is a nonnegative nonarchimedean submultiplicative function with `v 0 = 0` and `c` is
 nonnegative, then the Gauss norm is submultiplicative. -/
-theorem gaussNorm_mul_le (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+theorem gaussNorm_mul_le (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a)
     (vMul : ∀ a b, v (a * b) ≤ v a * v b) (hna : IsNonarchimedean v) (hc : 0 ≤ c)
     (p q : R[X]) : (p * q).gaussNorm v c ≤ p.gaussNorm v c * q.gaussNorm v c := by
   rw [← gaussNorm_coe_powerSeries v c _ vZero vNonneg hc,
@@ -195,13 +192,6 @@ theorem gaussNorm_mul_le (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
     (q.hasGaussNorm_toPowerSeries v c vZero).hasMvGaussNorm
 
 end Semiring
-
-/-! ### Multiplicativity
-
-As in the multivariate polynomial file, multiplicativity is inherited from
-`MvPowerSeries.gaussNorm_mul_eq_mul` (with `σ := Unit`); the attainment hypotheses of
-`MvPowerSeries.exists_achievesGaussNorm_dominant` are discharged using that a polynomial has
-finite support.  No commutativity of `R` is needed. -/
 
 section Ring
 
@@ -216,13 +206,13 @@ lemma gaussNorm_neg (vNeg : ∀ a, v (-a) = v a) : (-p).gaussNorm v c = p.gaussN
     rw [gaussNorm, gaussNorm, dif_neg hs, dif_neg hs']
 
 /-- A polynomial achieves its Gauss norm at an index iff the associated power series does. -/
-lemma achievesGaussNorm_iff_coe (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hc : 0 ≤ c)
+lemma achievesGaussNorm_iff_coe (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a) (hc : 0 ≤ c)
     (i : ℕ) : p.AchievesGaussNorm v c i ↔
       PowerSeries.AchievesGaussNorm v c (p : PowerSeries R) i := by
   unfold AchievesGaussNorm PowerSeries.AchievesGaussNorm
   rw [coeff_coe, p.gaussNorm_coe_powerSeries v c vZero vNonneg hc]
 
-private lemma exists_achievesGaussNorm_dominant_aux (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+private lemma exists_achievesGaussNorm_dominant_aux (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a)
     (vMul : ∀ a b, v (a * b) ≤ v a * v b) (hc : 0 ≤ c) (p q : R[X])
     (hp0 : p.gaussNorm v c ≠ 0) (hq0 : q.gaussNorm v c ≠ 0) :
     ∃ i j, MvPowerSeries.AchievesGaussNorm v (fun _ ↦ c) (p : PowerSeries R) i ∧
@@ -246,9 +236,9 @@ private lemma exists_achievesGaussNorm_dominant_aux (vZero : v 0 = 0) (vNonneg :
       exact ⟨n, (r.achievesGaussNorm_iff_coe v c vZero vNonneg hc n).mpr
         ((PowerSeries.achievesGaussNorm_iff_single v c _ n).mpr ha), rfl⟩
   have hp0' : PowerSeries.gaussNorm v c (p : PowerSeries R) ≠ 0 := by
-    rw [p.gaussNorm_coe_powerSeries v c vZero vNonneg hc]; exact hp0
+    rwa [p.gaussNorm_coe_powerSeries v c vZero vNonneg hc]
   have hq0' : PowerSeries.gaussNorm v c (q : PowerSeries R) ≠ 0 := by
-    rw [q.gaussNorm_coe_powerSeries v c vZero vNonneg hc]; exact hq0
+    rwa [q.gaussNorm_coe_powerSeries v c vZero vNonneg hc]
   obtain ⟨i, j, hi, hj, hdom, -⟩ :=
     MvPowerSeries.exists_achievesGaussNorm_dominant v (fun _ ↦ c) vNonneg vMul (fun _ ↦ hc)
       (p.hasGaussNorm_toPowerSeries v c vZero).hasMvGaussNorm
@@ -259,7 +249,7 @@ private lemma exists_achievesGaussNorm_dominant_aux (vZero : v 0 = 0) (vNonneg :
 /-- If `p` and `q` have nonzero Gauss norm, there are indices `i`, `j` achieving the Gauss norms
 of `p` and `q` such that the term of `p * q` at `(i, j)` strictly dominates all other terms on
 the antidiagonal of `i + j`. -/
-lemma exists_achievesGaussNorm_dominant (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+lemma exists_achievesGaussNorm_dominant (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a)
     (vMul : ∀ a b, v (a * b) ≤ v a * v b) (hc : 0 ≤ c) (p q : R[X])
     (hp0 : p.gaussNorm v c ≠ 0) (hq0 : q.gaussNorm v c ≠ 0) :
     ∃ i j, p.AchievesGaussNorm v c i ∧ q.AchievesGaussNorm v c j ∧
@@ -281,7 +271,7 @@ lemma exists_achievesGaussNorm_dominant (vZero : v 0 = 0) (vNonneg : ∀ a, v a 
   simpa only [PowerSeries.coeff_coeToMvPowerSeries, coeff_coe] using h
 
 /-- If `v` is a nonarchimedean absolute value, then the Gauss norm is multiplicative. -/
-theorem gaussNorm_mul (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hna : IsNonarchimedean v)
+theorem gaussNorm_mul (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a) (hna : IsNonarchimedean v)
     (vMulEq : ∀ a b, v (a * b) = v a * v b) (vNeg : ∀ a, v (-a) = v a)
     (h_eq_zero : ∀ x : R, v x = 0 → x = 0) (hc : 0 < c) (p q : R[X]) :
     (p * q).gaussNorm v c = p.gaussNorm v c * q.gaussNorm v c := by
@@ -305,7 +295,7 @@ theorem gaussNorm_mul (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0) (hna : IsNo
       p q hp0 hq0)
 
 /-- If `v` is a nonarchimedean absolute value, then the Gauss norm is an absolute value. -/
-theorem gaussNorm_isAbsoluteValue (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
+theorem gaussNorm_isAbsoluteValue (vZero : v 0 = 0) (vNonneg : ∀ a, 0 ≤ v a)
     (hna : IsNonarchimedean v) (vMulEq : ∀ a b, v (a * b) = v a * v b)
     (vNeg : ∀ a, v (-a) = v a) (h_eq_zero : ∀ x : R, v x = 0 → x = 0) (hc : 0 < c) :
     IsAbsoluteValue fun p : R[X] ↦ p.gaussNorm v c where
@@ -318,8 +308,6 @@ theorem gaussNorm_isAbsoluteValue (vZero : v 0 = 0) (vNonneg : ∀ a, v a ≥ 0)
   abv_mul' p q := gaussNorm_mul v c vZero vNonneg hna vMulEq vNeg h_eq_zero hc p q
 
 end Ring
-
-/-! ### Compatibility with multivariate polynomials in a single variable -/
 
 section UniqueAlgEquiv
 

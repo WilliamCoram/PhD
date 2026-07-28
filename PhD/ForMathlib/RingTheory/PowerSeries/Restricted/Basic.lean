@@ -113,6 +113,17 @@ lemma isRestricted_map {S : Type*} [NormedRing S] {φ : R →+* S} (hφ : ∀ x,
     (hf : IsRestricted c f) : IsRestricted c (map φ f) :=
   MvPowerSeries.isRestricted_map (fun _ ↦ c) hφ hf
 
+variable {f} in
+/-- Applying a norm-bounded map `π : R → S` (`‖π x‖ ≤ Cπ * ‖x‖`, not assumed a homomorphism)
+coefficientwise sends restricted power series to restricted power series. -/
+lemma isRestricted_mk {S : Type*} [NormedRing S] (hc : 0 ≤ c) (π : R → S) {Cπ : ℝ}
+    (hCπ : ∀ x, ‖π x‖ ≤ Cπ * ‖x‖) (hf : IsRestricted c f) :
+    IsRestricted c (PowerSeries.mk fun n ↦ π (coeff n f)) := by
+  rw [isRestricted_iff]
+  refine squeeze_zero (fun n ↦ mul_nonneg (norm_nonneg _) (pow_nonneg hc n))
+    (fun n ↦ ?_) (by simpa using ((isRestricted_iff c f).mp hf).const_mul Cπ)
+  simpa [coeff_mk, ← mul_assoc] using mul_le_mul_of_nonneg_right (hCπ _) (pow_nonneg hc n)
+
 namespace IsRestricted
 
 /-- Restricted power series as an additive subgroup of `PowerSeries R`. -/

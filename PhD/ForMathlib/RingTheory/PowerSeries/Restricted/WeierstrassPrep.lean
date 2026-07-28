@@ -75,6 +75,62 @@ private lemma monic_and_degree_of_coeff {A : Type*} [Semiring A] [Nontrivial A]
   exact hs
 
 omit [CompleteSpace R] [(𝓝[≠] (0 : R)).NeBot] in
+private lemma exists_monic_mul_eq_of_isDistinguished {c : ℝ} [Fact (0 < c)]
+    (hdiv : ∀ (g : Restricted R c) (s : ℕ), IsDistinguished norm c g.1 s →
+      ∀ f : Restricted R c, ∃ (q : Restricted R c) (r : Polynomial R), r.degree < s ∧
+        f = g * q + Polynomial.toRestricted c r)
+    {g : Restricted R c} {s : ℕ} (hg : IsDistinguished norm c g.1 s) :
+    ∃ (ω : Polynomial R) (q : Restricted R c), ω.Monic ∧ ω.degree = s ∧
+      ‖Polynomial.toRestricted c ω‖ = c ^ s ∧
+      IsDistinguished norm c (Polynomial.toRestricted c ω).1 s ∧
+      g * q = Polynomial.toRestricted c ω := by
+  have hntR : Nontrivial R := hg.nontrivial
+  obtain ⟨q, r, rd, hXdiv⟩ := hdiv g s hg (Polynomial.toRestricted c (Polynomial.X ^ s))
+  have hω_gt : ∀ v, s < v → (Polynomial.X ^ s - r : Polynomial R).coeff v = 0 := fun v hv ↦ by
+    rw [Polynomial.coeff_sub, Polynomial.coeff_X_pow, if_neg (by omega),
+      Polynomial.coeff_eq_zero_of_degree_lt (rd.trans_le (by exact_mod_cast hv.le)), sub_zero]
+  have hω_s : (Polynomial.X ^ s - r : Polynomial R).coeff s = 1 := by
+    rw [Polynomial.coeff_sub, Polynomial.coeff_X_pow, if_pos rfl,
+      Polynomial.coeff_eq_zero_of_degree_lt rd, sub_zero]
+  obtain ⟨hω_monic, hω_deg⟩ := monic_and_degree_of_coeff hω_s hω_gt
+  have hXn : ‖Polynomial.toRestricted c (Polynomial.X ^ s : Polynomial R)‖ = c ^ s := by
+    rw [← Polynomial.monomial_one_right_eq_X_pow, Polynomial.toRestricted_monomial,
+      norm_monomial, norm_one, one_mul]
+  have rn : ‖Polynomial.toRestricted c r‖ ≤ c ^ s := by
+    rw [← hXn]
+    exact norm_r_le_of_eq_mul_add c hg rd hXdiv
+  have ωn := norm_toRestricted_X_pow_sub c rd rn
+  refine ⟨Polynomial.X ^ s - r, q, hω_monic, hω_deg, ωn,
+    isDistinguished_toRestricted_of_monic hω_monic hω_deg ωn, ?_⟩
+  rw [map_sub, hXdiv]
+  abel
+
+omit [CompleteSpace R] [NormOneClass R] [(𝓝[≠] (0 : R)).NeBot] in
+private lemma monic_eq_of_isUnit_mul_eq {c : ℝ} [Fact (0 < c)] {g : Restricted R c} {s : ℕ}
+    (hg : IsDistinguished norm c g.1 s) {ω ω' : Polynomial R} {e e' : Restricted R c}
+    (ωm : ω.Monic) (ωd : ω.degree = s) (ω'm : ω'.Monic) (ω'd : ω'.degree = s)
+    (he : IsUnit e) (he' : IsUnit e') (hg1 : g = e * Polynomial.toRestricted c ω)
+    (hg1' : g = e' * Polynomial.toRestricted c ω') : ω' = ω := by
+  have hntR : Nontrivial R := hg.nontrivial
+  obtain ⟨ue, hue⟩ := he
+  obtain ⟨ue', hue'⟩ := he'
+  have rd : (ω' - ω).degree < (s : WithBot ℕ) := by
+    simpa [ω'd] using Polynomial.degree_sub_lt (ω'd.trans ωd.symm) ω'm.ne_zero
+      (by rw [ω'm.leadingCoeff, ωm.leadingCoeff])
+  have h_e : g * (↑ue⁻¹ : Restricted R c) = Polynomial.toRestricted c ω := by
+    rw [hg1, ← hue, mul_comm (↑ue : Restricted R c) _, mul_assoc, ue.mul_inv, mul_one]
+  have h_e' : g * (↑ue'⁻¹ : Restricted R c) = Polynomial.toRestricted c ω' := by
+    rw [hg1', ← hue', mul_comm (↑ue' : Restricted R c) _, mul_assoc, ue'.mul_inv, mul_one]
+  have hzero : (0 : Restricted R c) = g * ((↑ue⁻¹ : Restricted R c) - ↑ue'⁻¹)
+      + Polynomial.toRestricted c (ω' - ω) := by
+    rw [mul_sub, map_sub, h_e, h_e']
+    abel
+  have h_bd := norm_r_le_of_eq_mul_add c hg rd hzero
+  rw [norm_zero] at h_bd
+  exact sub_eq_zero.mp (Polynomial.toRestricted_injective c
+    (by rw [map_zero]; exact norm_le_zero_iff.mp h_bd))
+
+omit [CompleteSpace R] [(𝓝[≠] (0 : R)).NeBot] in
 /-- **Weierstrass preparation is a corollary of Weierstrass division**: if every `f` divides
 by every distinguished series at radius `c`, then every `g` distinguished of degree `s`
 factors as a unit times a monic polynomial of degree `s` and norm `c ^ s`.
@@ -91,27 +147,8 @@ theorem weierstrassPreparation_exists_of_forall_exists {c : ℝ} [Fact (0 < c)]
     ∃ (ω : Polynomial R) (e : Restricted R c), ω.Monic ∧ ω.degree = s ∧
       ‖Polynomial.toRestricted c ω‖ = c ^ s ∧ IsUnit e ∧
       g = e * Polynomial.toRestricted c ω := by
-  have hntR : Nontrivial R := hg.nontrivial
-  obtain ⟨q, r, rd, hXdiv⟩ := hdiv g s hg (Polynomial.toRestricted c (Polynomial.X ^ s))
-  set ω : Polynomial R := Polynomial.X ^ s - r with hω_def
-  have hω_gt : ∀ v, s < v → ω.coeff v = 0 := fun v hv ↦ by
-    rw [hω_def, Polynomial.coeff_sub, Polynomial.coeff_X_pow, if_neg (by omega),
-      Polynomial.coeff_eq_zero_of_degree_lt (rd.trans_le (by exact_mod_cast hv.le)), sub_zero]
-  have hω_s : ω.coeff s = 1 := by
-    rw [hω_def, Polynomial.coeff_sub, Polynomial.coeff_X_pow, if_pos rfl,
-      Polynomial.coeff_eq_zero_of_degree_lt rd, sub_zero]
-  obtain ⟨hω_monic, hω_deg⟩ := monic_and_degree_of_coeff hω_s hω_gt
-  have hXn : ‖Polynomial.toRestricted c (Polynomial.X ^ s : Polynomial R)‖ = c ^ s := by
-    rw [← Polynomial.monomial_one_right_eq_X_pow, Polynomial.toRestricted_monomial,
-      norm_monomial, norm_one, one_mul]
-  have rn : ‖Polynomial.toRestricted c r‖ ≤ c ^ s := by
-    have h1 := norm_r_le_of_eq_mul_add c hg rd hXdiv
-    rwa [hXn] at h1
-  have ωn : ‖Polynomial.toRestricted c ω‖ = c ^ s := norm_toRestricted_X_pow_sub c rd rn
-  have hgq : g * q = Polynomial.toRestricted c ω := by
-    rw [hω_def, map_sub, hXdiv]
-    abel
-  have hω_dist := isDistinguished_toRestricted_of_monic hω_monic hω_deg ωn
+  obtain ⟨ω, q, hω_monic, hω_deg, ωn, hω_dist, hgq⟩ :=
+    exists_monic_mul_eq_of_isDistinguished hdiv hg
   obtain ⟨P, S, hS, hgP⟩ := hdiv (Polynomial.toRestricted c ω) s hω_dist g
   have hgqP : g = g * (q * P) + Polynomial.toRestricted c S := by
     rw [← mul_assoc, hgq]
@@ -139,7 +176,8 @@ theorem weierstrassPreparation_unique_of_forall_exists {c : ℝ} [Fact (0 < c)]
       ‖Polynomial.toRestricted c ω‖ = c ^ s ∧ IsUnit e ∧
       g = e * Polynomial.toRestricted c ω := by
   have hntR : Nontrivial R := hg.nontrivial
-  obtain ⟨ω, e, ωm, ωd, ωn, he, hg1⟩ := weierstrassPreparation_exists_of_forall_exists hdiv hg
+  obtain ⟨ω, e, ωm, ωd, ωn, he, hg1⟩ :=
+    weierstrassPreparation_exists_of_forall_exists hdiv hg
   have hc0 : (0 : ℝ) < c := Fact.out
   refine ⟨ω, ⟨e, ⟨ωm, ωd, ωn, he, hg1⟩, ?_⟩, ?_⟩
   · rintro e' ⟨-, -, -, -, hge'⟩
@@ -150,23 +188,7 @@ theorem weierstrassPreparation_unique_of_forall_exists {c : ℝ} [Fact (0 < c)]
     exact sub_eq_zero.mp (norm_eq_zero.mp
       ((mul_eq_zero.mp hnorm0).resolve_right (pow_pos hc0 s).ne'))
   · rintro ω' ⟨e', ⟨ω'm, ω'd, ω'n, he', hg1'⟩, -⟩
-    obtain ⟨ue, hue⟩ := he
-    obtain ⟨ue', hue'⟩ := he'
-    have rd : (ω' - ω).degree < (s : WithBot ℕ) := by
-      simpa [ω'd] using Polynomial.degree_sub_lt (ω'd.trans ωd.symm) ω'm.ne_zero
-        (by rw [ω'm.leadingCoeff, ωm.leadingCoeff])
-    have h_e : g * (↑ue⁻¹ : Restricted R c) = Polynomial.toRestricted c ω := by
-      rw [hg1, ← hue, mul_comm (↑ue : Restricted R c) _, mul_assoc, ue.mul_inv, mul_one]
-    have h_e' : g * (↑ue'⁻¹ : Restricted R c) = Polynomial.toRestricted c ω' := by
-      rw [hg1', ← hue', mul_comm (↑ue' : Restricted R c) _, mul_assoc, ue'.mul_inv, mul_one]
-    have hzero : (0 : Restricted R c) = g * ((↑ue⁻¹ : Restricted R c) - ↑ue'⁻¹)
-        + Polynomial.toRestricted c (ω' - ω) := by
-      rw [mul_sub, map_sub, h_e, h_e']
-      abel
-    have h_bd := norm_r_le_of_eq_mul_add c hg rd hzero
-    rw [norm_zero] at h_bd
-    exact sub_eq_zero.mp (Polynomial.toRestricted_injective c
-      (by rw [map_zero]; exact norm_le_zero_iff.mp h_bd))
+    exact monic_eq_of_isUnit_mul_eq hg ωm ωd ω'm ω'd he he' hg1 hg1'
 
 omit [CompleteSpace R] [(𝓝[≠] (0 : R)).NeBot] in
 /-- **Weierstrass preparation for polynomials is a corollary of division existence**: if `g`
@@ -187,20 +209,20 @@ theorem weierstrassPreparation_polynomial_of_forall_exists {c : ℝ} [Fact (0 < 
         Polynomial.toRestricted c e * Polynomial.toRestricted c ω := by
   obtain ⟨ω, ⟨e, ⟨ωm, ωd, ωn, he, hgeq⟩, he_uniq⟩, hω_uniq⟩ :=
     weierstrassPreparation_unique_of_forall_exists hdiv hg
+  have hωdist := isDistinguished_toRestricted_of_monic ωm ωd ωn
   have h0 : (0 : Polynomial R).degree < (s : WithBot ℕ) := by
     rw [Polynomial.degree_zero]
     exact WithBot.bot_lt_coe s
-  obtain ⟨e₀, ⟨r₀, ⟨hr₀, hf₀⟩, -⟩, -⟩ := weierstrassDivision_polynomial
-    (isDistinguished_toRestricted_of_monic ωm ωd ωn) ωd.le g₀
+  obtain ⟨e₀, ⟨r₀, ⟨hr₀, hf₀⟩, -⟩, -⟩ := weierstrassDivision_polynomial hωdist ωd.le g₀
   have he₀ : e = Polynomial.toRestricted c e₀ :=
-    weierstrassDivision_q_unique c (isDistinguished_toRestricted_of_monic ωm ωd ωn)
-      (f := Polynomial.toRestricted c g₀) h0
+    weierstrassDivision_q_unique c hωdist (f := Polynomial.toRestricted c g₀) h0
       (by rw [map_zero, add_zero, hgeq, mul_comm]) hr₀ hf₀
   have hg₀ : Polynomial.toRestricted c g₀ =
       Polynomial.toRestricted c e₀ * Polynomial.toRestricted c ω := he₀ ▸ hgeq
   refine ⟨ω, ⟨e₀, ⟨ωm, ωd, ωn, he₀ ▸ he, hg₀⟩, ?_⟩, ?_⟩
   · rintro e' ⟨-, -, -, hu', hg'⟩
-    exact Polynomial.toRestricted_injective c ((he_uniq _ ⟨ωm, ωd, ωn, hu', hg'⟩).trans he₀)
+    exact Polynomial.toRestricted_injective c
+      ((he_uniq _ ⟨ωm, ωd, ωn, hu', hg'⟩).trans he₀)
   · rintro ω' ⟨e', ⟨ω'm, ω'd, ω'n, hu', hg'⟩, -⟩
     refine hω_uniq ω' ⟨Polynomial.toRestricted c e', ⟨ω'm, ω'd, ω'n, hu', hg'⟩, ?_⟩
     rintro e'' ⟨-, -, -, -, hg''⟩
@@ -208,8 +230,6 @@ theorem weierstrassPreparation_polynomial_of_forall_exists {c : ℝ} [Fact (0 < 
       (f := Polynomial.toRestricted c g₀) h0
       (by rw [map_zero, add_zero, hg'', mul_comm]) h0
       (by rw [map_zero, add_zero, hg', mul_comm])
-
-/-! ## Weierstrass preparation, at radius `c = ‖u‖` -/
 
 section General
 

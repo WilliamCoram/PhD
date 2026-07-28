@@ -80,6 +80,17 @@ lemma isRestricted_map {S : Type*} [NormedRing S] (c : σ → ℝ) {φ : R →+*
   · rw [coeff_map]
     exact mul_le_mul_of_nonneg_right (hφ _) (by dsimp [Finsupp.prod]; positivity)
 
+/-- Applying a norm-bounded map `π : R → S` (`‖π x‖ ≤ Cπ * ‖x‖`, not assumed a homomorphism)
+coefficientwise sends restricted power series to restricted power series. -/
+lemma isRestricted_mk {S : Type*} [NormedRing S] {c : σ → ℝ} (hc : ∀ i, 0 ≤ c i) (π : R → S)
+    {Cπ : ℝ} (hCπ : ∀ x, ‖π x‖ ≤ Cπ * ‖x‖) {f : MvPowerSeries σ R} (hf : IsRestricted c f) :
+    IsRestricted c (fun t ↦ π (coeff t f) : MvPowerSeries σ S) := by
+  rw [IsRestricted] at hf
+  refine tendsto_const_nhds.squeeze (mul_zero Cπ ▸ hf.const_mul Cπ) (fun t ↦ ?_) fun t ↦ ?_
+  · exact mul_nonneg (norm_nonneg _) (Finset.prod_nonneg fun i _ ↦ pow_nonneg (hc i) _)
+  · rw [coeff_apply, ← mul_assoc]
+    exact mul_le_mul_of_nonneg_right (hCπ _) (Finset.prod_nonneg fun i _ ↦ pow_nonneg (hc i) _)
+
 /-! ### The ring of restricted power series -/
 
 variable [IsUltrametricDist R]
