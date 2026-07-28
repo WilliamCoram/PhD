@@ -89,6 +89,7 @@ lemma coeff_finSuccEquiv_mapAlgebra (hiso : ∀ a : K, ‖algebraMap K L a‖ = 
         congrArg (MvPowerSeries.map (algebraMap K L)) (coeff_finSuccEquiv c f j).symm
 
 /-- Base change commutes with the `X 0`-polynomial embedding. -/
+@[simp]
 lemma mapAlgebra_toMvRestrictedX0 (hiso : ∀ a : K, ‖algebraMap K L a‖ = ‖a‖)
     (ω : Polynomial (Restricted K (Fin.tail c))) :
     mapAlgebra c hiso (Polynomial.toMvRestrictedX0 c ω) =
@@ -147,16 +148,8 @@ lemma weierstrassDivision_descend_of_retraction
       r₀.degree < s ∧ f = g * q₀ + Polynomial.toMvRestrictedX0 c r₀ ∧
       mapAlgebra c hiso q₀ = q ∧ r₀.map (mapAlgebra (Fin.tail c) hiso) = r := by
   have hc0 : ∀ i, (0 : ℝ) < c i := Fact.out
-  let ρ : ZeroHom (Restricted L (Fin.tail c)) (Restricted K (Fin.tail c)) :=
-    { toFun A := ⟨fun t ↦ π (MvPowerSeries.coeff t A.1),
-        MvPowerSeries.isRestricted_mk (c := Fin.tail c) (fun i ↦ (hc0 i.succ).le) ⇑π hCπ A.2⟩
-      map_zero' := by
-        refine Subtype.ext (MvPowerSeries.ext fun t ↦ ?_)
-        change π (MvPowerSeries.coeff t (0 : Restricted L (Fin.tail c)).1)
-          = MvPowerSeries.coeff t (0 : Restricted K (Fin.tail c)).1
-        simp }
-  set q₀ : Restricted K c := ⟨fun t ↦ π (MvPowerSeries.coeff t q.1),
-    MvPowerSeries.isRestricted_mk (c := c) (fun i ↦ (hc0 i).le) ⇑π hCπ q.2⟩
+  let ρ := mapRetraction (Fin.tail c) (fun i ↦ (hc0 i.succ).le) π.toAddMonoidHom hCπ
+  set q₀ : Restricted K c := mapRetraction c (fun i ↦ (hc0 i).le) π.toAddMonoidHom hCπ q
   set r₀ : Polynomial (Restricted K (Fin.tail c)) :=
     ∑ m ∈ r.support, Polynomial.monomial m (ρ (r.coeff m)) with hr₀
   have hr₀deg : r₀.degree < s := Polynomial.degree_finsetSum_monomial_apply_lt ρ hr

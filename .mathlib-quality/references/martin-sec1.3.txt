@@ -1,0 +1,356 @@
+F. Martin, Overconvergent subanalytic subsets in the framework of Berkovich spaces,
+J. Eur. Math. Soc. 18 (2016), 2405-2457. arXiv:1211.6684.
+Section 1.3 (Weierstrass preparation), paper pages 11-15 = pdf pages 11-15.
+Text extracted via pypdf for line-locator citations; math garbling from extraction
+is cosmetic - cross-check against references/martin-overconvergent-subanalytic.pdf.
+==============================================================================
+---- pdf page index 10 (paper page 11) ----
+OVERCONVERGENT SUBANALYTIC SUBSETS IN THE FRAMEWORK OF BER KOVICH SPACES 11
+identiﬁes Br with the Zariski closed subset V (ym −λt) and moreover, since s ≤ 1
+Bs → B2
+x ↦→ (x, xm
+λ )
+identiﬁes Bs with the Zariski-closed subset of B2,V (ym −λt). Taking the ﬁbre product with X we
+then obtain:
+X × Br
+≃ →→V (ym −λt)↘↙ α →→X × B(r,( r
+s )
+m
+)
+X × Bs
+↗↘
+↑↑
+≃ →→
+π
+↘↘◆◆◆◆◆◆◆◆◆◆◆◆ V (ym −λt)
+↗↘
+↑↑
+↘↙ β →→X × B2↗↘
+↑↑
+π
+←←♠♠♠♠♠♠♠♠♠♠♠♠♠♠
+X
+Hence if S ⊆ X × Br is semianalytic, S′ := α(S) is also semianalytic in X × B(r,( r
+s )m) and
+α(S) ∩ (X × B2) = β(S ∩ (X × Bs)). So π(S ∩ (X × Bs)) = π(S′ ∩ (X × B2) is well overconvergent
+subanalytic in the sense of deﬁnition 1.16. □
+1.3. Weierstrass preparation. In this section, A will be an ultrametric complete normed ring
+i.e. satisﬁes the inequality ∥ab∥ ≤ ∥a∥∥b∥ and ∥a +b∥ ≤ max(∥a∥, ∥b∥) [BGR84, 1.2.1.1].
+If r >0, on A{r−1T } we will consider the following norm: if g = ∑
+n∈N
+anTn ∈ A{r−1X} then
+∥g∥ = max
+n≥0
+∥an∥rn.
+If m ∈ N, we will denote by Am[T ] the subset of A[T ] made of the polynomials of degree less
+or equal to m.
+Deﬁnition 1.20. An element u ∈ A is a multiplicative unit if u is invertible and for all a ∈ A,
+∥ua∥ = ∥u∥∥a∥.
+Note that if u and v are multiplicative units, so is uv.
+Lemma 1.21. An element u ∈A is a multiplicative unit if and only if u ∈A∗ and ∥u−1∥ = ∥u∥−1.
+Proof. If u is a multiplicative unit, 1 = ∥uu−1∥ = ∥u∥∥u−1∥, so ∥u−1∥ = ∥u∥−1.
+Conversely let us assume that u is invertible and that ∥u−1∥ = ∥u∥−1. Let then a ∈ A. The
+following holds:
+∥a∥ = ∥u−1(ua)∥ ≤ ∥u−1∥∥ua∥ = ∥u∥−1∥ua∥.
+So ∥ua∥ ≥ ∥u∥∥a∥. Since in any case the reverse inequality ∥ua∥ ≤ ∥u∥∥a∥ holds, we conclude that
+∥ua∥ = ∥u∥∥a∥. □
+Remark 1.22. As a consequence, if u ∈ A and ∥u∥ < 1, then (1 + u) is a multiplicative unit
+because
+∥1 +u∥ = 1 = ∥
+∑
+n≥0
+(−u)n∥ = ∥(1 +u)−1∥
+Let us note also that if u is a multiplicative unit, for all x ∈ M (A), |u(x)| = ∥u∥. Indeed, the
+deﬁnition of M(A) implies that
+(1.2) |u(x)| ≤ ∥u∥,
+hence 1 = |u(x)||u−1(x)| ≤ ∥u∥∥u−1∥ = 1. So the inequality (1.2) could not be strict, thus |u(x)| =
+∥u∥.
+Remark 1.23. If ϕ : A →B is a contractive morphism of normed rings (i.e. ∥ϕ(a)∥ ≤ ∥a∥ for
+all a in A), then ϕ sends multiplicative units to multiplicative units. Indee d we have the sequence
+of inequalities:
+1 = ∥ϕ(u)ϕ(u)−1∥ ≤ ∥ϕ(u)∥∥ϕ(u−1)∥ ≤ ∥u∥∥u−1∥ = 1.
+So there were only equalities and ϕ(u) is a multiplicative unit because ∥ϕ(u)∥ = ∥u∥, and ∥ϕ(u)−1∥ =
+∥u−1∥ = ∥u∥−1 = ∥ϕ(u)∥−1.
+---- pdf page index 11 (paper page 12) ----
+12 FLORENT MARTIN
+This remark will apply in the following context: when A is a strictly k-aﬃnoid algebra and
+we look at a morphism ϕ : A → B = A{r−1T }/I with I any ideal, and B is equipped with the
+quotient norm inherited from A{r−1T }. In this situation, ϕ is contractive. This is the case when
+we consider ϕ the morphism of a constructible datum (Y,S )
+ϕ
+/axisshort/axisshort/arrowaxisrightX.
+Note that if ϕ is not contractive, multiplicative units are not necessari ly preserved. For instance
+consider A = k{t} and B = k{2−1x,y }/(y −x2) that we equip with the residue norm. These k-
+aﬃnoid algebras are isomorphic through ϕ :t ↦→x, and if we choose π ∈k such that 1
+2 < |π|< 1,
+then u := 1 + πt is a multiplicative unit of A, but not ϕ(u).
+Note however that if the ﬁeld k is stable (for instance in our situation, where k is a non-
+archimedean complete ﬁeld, k is stable if char(˜k) = 0 , or if it is algebraically closed, or a discrete
+valuation ﬁeld [BGR84, 3.6.2]), for a suitable choice of nor m, any morphism of reduced aﬃnoid
+algebras is contractive. Indeed, if k is stable, and A is a reduced aﬃnoid algebra, then it is a
+distinguished aﬃnoid algebra [BGR84, 6.4.3], i.e. the supr emum seminorm is a residue norm on
+A. If B is reduced, for the same reason, the supremum seminorm is an a dmissible norm on it. So
+if we equip A and B with the supremum norm, any morphism of aﬃnoid algebras ϕ : A → B is
+contractive.
+Deﬁnition 1.24. Let r >0 be a real number and s ∈ N. An element g = ∑
+n≥0
+gnTn of A{r−1T }
+is called T -distinguished of order s if gs is a multiplicative unit, ∥gs∥rs = ∥g∥ and for all n > s,
+∥gn∥rn < ∥gs∥rs. Note that in that case, g is necessarily a non zero element since gs ̸= 0.
+Remark 1.25. We can extend the previous remark saying that if ϕ : A → B is a contractive
+morphism and g = ∑
+n∈N
+gnTn ∈A{r−1T } is T -distinguished of order s, then ϕ(g) = ∑
+n∈N
+ϕ(gn)Tn ∈
+B{r−1T } and it is an T -distinguished element of B{r−1T } of order s. This applies in particular
+when ϕ is the morphism of a constructible datum (Y,S )
+ϕ
+/axisshort/axisshort/arrowaxisrightX.
+Lemma 1.26. Letg = ∑
+m∈N
+gmTm ∈A{r−1T } beT -distinguished of order s.
+(1) Then for all q = ∑
+k∈N
+qkTk ∈A{r−1T }, ∥gq∥ = ∥g∥∥q∥.
+(2) Let us set gq = ∑
+l∈N
+clTl, and let us assume that q ̸= 0 . Let us denote by k0 the greatest
+rank such that ∥qk0∥rk0 = ∥q∥. Then ∥gq∥ = ∥cs+k0 ∥rs+k0 and ∥cs+k0 ∥ = ∥gs∥∥qk0∥.
+Proof. First, without any hypothesis, it is true that
+(1.3) ∥gq∥ ≤ ∥g∥∥q∥.
+Conversely, by deﬁnition,
+(1.4) cs+k0 =
+∑
+m+k=s+k0
+gmqk.
+Let then m and k be two integers such that m +k =s +k0.
+If k >k0, by deﬁnition of k0, ∥qk∥rk < ∥qk0∥rk0 . So, using that gs is a multiplicative unit, we
+obtain:
+∥gmqk∥rs+k0 = ∥gmqk∥rm+k ≤ ∥gm∥rm∥qk∥rk < ∥gs∥rs∥qk0∥rk0 = ∥gsqk0 ∥rs+k0.
+Thus,
+(1.5) ∥gmqk∥< ∥gsqk0 ∥.
+If k < k0, then m > s, and since ∥gm∥rm < ∥gs∥rs (because g is T -distinguished of order s),
+we obtain with the same reasoning, that
+(1.6) ∥gmqk∥< ∥gsqk0 ∥.
+Thus, (1.4)–(1.6) and the ultrametric inequality imply that ∥cs+k0∥ = ∥gsqk0 ∥. And since gs is
+a multiplicative unit, ∥gsqk0∥ = ∥gs∥∥qk0∥.
+Finally we obtain that ∥gq∥ ≥ ∥gs∥rs∥qk0 ∥rk0 = ∥q∥∥g∥, which with (1.3) ends the proof. □
+---- pdf page index 12 (paper page 13) ----
+OVERCONVERGENT SUBANALYTIC SUBSETS IN THE FRAMEWORK OF BER KOVICH SPACES 13
+Proposition 1.27. Weierstrass Division. Let g ∈ A{r−1T } be T -distinguished of order s. If
+f = ∑
+n∈N
+fnTn ∈A{r−1T } there exists an unique couple (q,R ) ∈A{r−1T } ×As−1[T ] such that
+(1.7) f =gq +R.
+Moreover
+(1.8) ∥f ∥ = max(∥g∥∥q∥, ∥R∥).
+Proof. First, let us show that if a couple ( q,R ) satisﬁes (1.7), then it must satisfy the equality
+(1.8). Because of the ultrametric inequality, ∥f ∥ ≤ max(∥g∥∥q∥, ∥R∥). For the reverse inequality,
+we distinguish two cases.
+If ∥gq∥ ̸= ∥R∥, then ∥f ∥ = max(∥gq∥, ∥R∥) = max( ∥g∥∥q∥, ∥R∥) according to lemma 1.26.
+Otherwise ∥gq∥ = ∥g∥∥q∥ = ∥R∥, and we use again lemma 1.26 and its notation (so gq =∑
+l∈N
+clTl). We get ∥gq∥ = ∥cs+k0 ∥rs+k0 . Since R is a polynomial of degree d with d <s, and since
+f =gq +R, and d<s +k0, the coeﬃcient fs+k0 off iscs+k0 , hence ∥f ∥ ≥ ∥cs+k0∥rs+k0 = ∥g∥∥q∥.
+This ﬁnally proves that ∥f ∥ = max(∥g∥∥q∥, ∥R∥).
+From this we can conclude that the couple ( q,R ) is unique because if f =gq ′ +R′ is another
+decomposition, we have 0 = g(q −q′) + (R −R′) and since ∥g∥ ̸= 0, ∥q −q′∥ = ∥R −R′∥ = 0, i.e.
+R =R′ and q =q′.
+Let us now show the existence of such a decomposition. Let us set
+g′ :=
+s∑
+m=0
+gmTm.
+In particular, ∥g∥ = ∥g′∥ because g is T -distinguished of degree s. Let us set
+κ :=
+max
+m>s
+(∥gm∥rm)
+∥gs∥rs =
+max
+m>s
+(∥gm∥rm)
+∥g∥ .
+Since g is T -distinguished of order s, κ <1. Actually, if κ = 0 (which would mean that g = g′),
+replace κ by 1
+2 . In any case ∥g −g′∥ ≤ κ∥g∥ and κ ∈]0, 1[.
+Next, let N ∈ N and let us set
+f ′ :=
+N∑
+k=0
+fkTk.
+Let us assume that N is big enough to satisfy ∥f −f ′∥ ≤ κ∥f ∥. In particular, ∥f ′∥ = ∥f ∥.
+By deﬁnition and hypothesis, g′ ∈ A[T ] is of degree s and possesses an invertible dominant
+coeﬃcient, which is gs. Hence in A[T ], one can carry out euclidean division by g′ [Lan02, 4.1.1],
+which gives f ′ =g′q +R, with R ∈As−1[T ] and q ∈A[T ]. We can then apply the norm equality
+(1.8) that we have shown in the ﬁrst part of the proof, (because g′ is also T -distinguished of order
+s): ∥f ′∥ = max(∥g′∥∥q∥, ∥R∥). In particular ∥q∥ ≤ ∥f ′∥
+∥g′∥ = ∥f ∥
+∥g∥ so that
+∥g∥∥q∥ ≤ ∥f ∥.
+Moreover ∥R∥ ≤ ∥f ′∥ = ∥f ∥. Thus the following holds:
+f =f ′ + (f −f ′) = g′q +R + (f −f ′) = gq +R + (f −f ′) + (g′ −g)q.
+By deﬁnition of g′ and of κ, ∥g′ −g∥ ≤ κ∥g∥, so
+(1.9) ∥(g′ −g)q∥ ≤ ∥g∥∥q∥κ ≤κ∥f ∥
+In addition, by hypothesis,
+(1.10) ∥f −f ′∥ ≤ κ∥f ∥.
+Hence if we set
+h :=f −f ′ + (g′ −g)q =f − (gq +R),
+according to (1.9) and (1.10), we obtain that ∥h∥ ≤ κ∥f ∥.
+To sum up, we have found some κ ∈]0, 1[ such that
+(1.11) ∀f ∈A{r−1T }, ∃q′ ∈A{r−1T }, ∃R′ ∈As−1[T ] such that ∥f − (gq ′ +R′)∥ ≤ κ∥f ∥.
+---- pdf page index 13 (paper page 14) ----
+14 FLORENT MARTIN
+This allows us to deﬁne by induction two Cauchy sequences ( qi) ∈A{r−1T } and (Ri) ∈As−1[T ]
+such that ∥f − (gqi +Ri)∥ ≤ κi∥f ∥ in the following way.
+We start with (q0,R 0) = (0, 0).
+In order to perform the induction step, let i > 0 be given and let us assume that ( qi,Ri) is
+deﬁned. We set hi :=f − (gqi +Ri), which by induction hypothesis fulﬁls ∥hi∥ ≤ κi∥f ∥. According
+to (1.11), we can deﬁne q′ ∈ A{r−1T } and R′ ∈ As−1[T ] such that hi = gq ′ +R′ +h′ with
+∥q′∥ ≤ ∥hi∥
+∥g∥ ≤ κi ∥f ∥
+∥g∥ , and ∥R′∥ ≤ ∥ hi∥ ≤ κi∥f ∥ and ∥h′∥ ≤ κ∥hi∥ ≤ κi+1∥f ∥. Then we set
+qi+1 :=qi +q′ and Ri+1 :=Ri +R′.
+Then ∥f − (gqi+1 +Ri+1)∥ = ∥hi − (gq +R)∥ = ∥h′∥ ≤ κi+1∥f ∥. By construction ∥qi+1 −qi∥ =
+∥q′∥ ≤ κi ∥f ∥
+∥g∥ and ∥Ri+1 −Ri∥ = ∥R′∥ ≤ κi∥f ∥, so these sequences are well Cauchy sequences.
+This ends our induction.
+Now, by completeness of A{r−1T } andAs−1[T ] the sequences ( qi) and (Ri) have a limit, that
+we denote by q ∈A{r−1T } and R ∈As−1[T ], which satisfy f =gq +R as we wanted. □
+Corollary 1.28. Weierstrass Preparation. Let g ∈A{r−1T } be a T -distinguished element of
+orders. There exists an unique couple (w,e ) ∈As[T ]×A{r−1T } such that w is a monic polynomial
+of degree s, e is a multiplicative unit of A{r−1T }, and g =ew.
+Proof. Using Weierstrass division, we can write Ts =gq +R with ∥Ts∥ = max(∥g∥∥q∥, ∥R∥), and
+R ∈A[T ]s−1. Let us set
+w :=Ts −R =gq.
+So w ∈ As[T ] is a monic polynomial. Since g is T -distinguished of order s, according to lemma
+1.26, and if we denote by k0 the greatest index such that ∥qk0∥rk0 = ∥q∥, and w =
+s∑
+l=0
+wlTl, we
+obtain
+∥w∥ = ∥gq∥ = ∥(gq)s+k0 ∥rs+k0 = ∥ws+k0 ∥rs+k0.
+But since w ∈As[T ], necessarily, s +k0 =s and k0 = 0. Hence, by deﬁnition of k0, for all k >0,
+∥q0∥> ∥qk∥rk.
+The coeﬃcient of degree s in gq being 1, (because gq =Ts −R), we have the equality
+1 = g0qs +g1qs−1 +... +gsq0
+and since k0 = 0, and g is T -distinguished of order s, we obtain, with the same reasoning that we
+have already used in the course of the proof of lemma 1.26, that ∥gsq0∥> ∥gs−iqi∥ for i = 1...s .
+So ∥gsq0∥ = ∥1∥ = 1, and gsq0 = 1 − (gs−1q1 +...g 0qs), with ∥gsq1 +...g 0qs∥< 1. Thus, gsq0 is a
+multiplicative unit. Moreover, since gs is also a multiplicative unit, q0 is also a multiplicative unit,
+and ∥q0∥ = ∥gs∥−1. Hence
+(1.12) q =q0(1 + q1
+q0
+T +... + qk
+q0
+Tk +... )
+and since k0 = 0 (so ∥qi∥ri < ∥q0∥ for i >0) and q0 is a multiplicative unit, ∥qi
+q0
+∥ri < 1 for all
+i> 0. Hence
+1 + q1
+q0
+T +... + qk
+q0
+Tk +...
+is a multiplicative unit of A{r−1T }, and according to (1.12), q is also a multiplicative unit. So
+g =q−1(Ts −R), with q−1 a multiplicative unit and Ts −R a monic polynomial of degree s. So if
+we set e :=q−1, and w =Ts −R we have the expected result: g =ew.
+As for the uniqueness of this decomposition, if g = ew, e and w being as in the statement of
+the corollary, then w =Ts +R with R ∈As−1[T ], and Ts =w −R = e−1g + (−R) which is the
+Weierstrass division of Ts byg. Hence e and R are unique and w too because w =Ts +R. □
+Let us assume that A is a k-aﬃnoid algebra, let ( r1,...,r n) be a polyradius, and let us set
+A := A{r−1
+1 T1,...,r −1
+n−1Tn−1}. Then if we set r = rn, A{r−1
+1 T1,...,r −1
+n Tn} = A{r−1T }, and we
+can introduce the notion of an element T -distinguished, apply Weierstrass theory to them, which
+corresponds to the classical one, especially if A = k, where we ﬁnd the classical Tate algebra
+k{r−1
+1 T1,...,r −1
+n Tn}.
+Now we state a result that we will need in the next section.
+---- pdf page index 14 (paper page 15) ----
+OVERCONVERGENT SUBANALYTIC SUBSETS IN THE FRAMEWORK OF BER KOVICH SPACES 15
+Lemma 1.29. Letε> 0 be given and r> 0 be a polyradius. Let us assume that A is Noetherian,
+and let us consider
+f =
+∑
+ν∈Nn
+fνTν ∈A{r−1T }.
+Then there exists a ﬁnite subset J ⊆ Nn, and for all ν ∈ J, a series φν ∈ A{r−1T } satisfying
+∥φν∥<ε , such that
+f =
+∑
+ν∈J
+fν(Tν +φν)
+and such that in the φν’s, no terms Tµ with µ ∈ J appear. Moreover, if we ﬁx some µ ∈ Nn, we
+can assume that µ ∈J.
+Proof. Let us denote by I the ideal generated by the family {fν}ν∈Nn . Since A is Noetherian,
+there exists J a ﬁnite subset of Nn such that I = A.(fν)ν∈J . So for all µ ∈ Nn \J one can ﬁnd
+a decomposition fµ = ∑
+ν∈J
+fνaν
+µ with aν
+µ ∈ A. In fact, using [BGR84, 3.7.3], we can even assume 4
+that there exists a real constant C >0 such that
+(1.13) ∀µ ∈ Nn, ∀ν ∈J, ∥aν
+µ∥ ≤ C∥fµ∥.
+Then, let us deﬁne for ν ∈J
+φν =
+∑
+µ∈Nn\J
+aν
+µTµ.
+Since ∥aν
+µ∥ ≤ C∥fµ∥,φν ∈ A{r
+−1T }. Hence, in A{r−1T }, the following equality is satisﬁed:
+(1.14) f =
+∑
+ν∈J
+fν(Tν +
+∑
+µNn\J
+aν
+µTµ) =
+∑
+ν∈J
+fν(Tν +φν ).
+Now, if ν0 /∈J we set J ′ =J ∪ {ν0},φ′
+ν0 := 0, and for ν ∈J,φ′
+ν := ∑
+µ∈Nn\J ′
+aν
+µTµ. One checks that
+the properties mentioned above still hold, namely ∥aµ
+ν ∥ ≤ C∥fµ∥, where the constant C has not
+been changed, and
+f =
+∑
+ν∈J ′
+fν(Tν +φ′
+ν ).
+Moreover,
+C∥fµ∥r
+µ − − − − − − →
+|µ|→+∞
+0,
+so there exists a ﬁnite set K ⊂ Nn such that
+∀ν ∈J, ∀µ ∈Nn \K, ∥aν
+µ∥<ε.
+Hence if we increase J adding the elements of K \J toJ, we will manage to obtain a decomposition
+f =
+∑
+ν∈J
+fν(Tν +φν)
+such that ∥φν∥<ε for all ν ∈J. □
+4Indeed, consider
+ψ : AJ → I
+(aν )ν ∈ J →
+∑
+ν ∈ J
+aνfν
+According to [BGR84, 3.7.3.1], I is a complete normed A-module, and ψ is a continuous map of normed A-modules.
+Hence there exists a constant C such that ∥ψ (x)∥ ≤ C∥x∥ for all x ∈AJ .

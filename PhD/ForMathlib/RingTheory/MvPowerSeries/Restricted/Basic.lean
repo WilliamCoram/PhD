@@ -177,6 +177,25 @@ lemma map_injective {φ : R →+* S} (hφ : ∀ x, ‖φ x‖ ≤ ‖x‖) (hφi
     simpa only [val_map, MvPowerSeries.coeff_map] using
       congrArg (fun r : Restricted S c ↦ MvPowerSeries.coeff t r.1) h
 
+/-- Coefficientwise application of a norm-bounded additive map `π : S →+ R` (`‖π x‖ ≤ Cπ * ‖x‖`,
+not assumed multiplicative) to a restricted power series over `S`, as an additive homomorphism
+`Restricted S c →+ Restricted R c`.  This is the coefficientwise retraction used to descend
+base-changed data along a bounded retraction of the structure map; unlike `Restricted.map` it
+requires no multiplicativity, only the norm bound. -/
+noncomputable def mapRetraction (hc : ∀ i, 0 ≤ c i) (π : S →+ R) {Cπ : ℝ}
+    (hCπ : ∀ x, ‖π x‖ ≤ Cπ * ‖x‖) : Restricted S c →+ Restricted R c where
+  toFun A := ⟨fun t ↦ π (coeff t A.1), isRestricted_mk hc π hCπ A.2⟩
+  map_zero' := Restricted.ext (MvPowerSeries.ext fun t ↦ by
+    change π (coeff t (0 : Restricted S c).1) = coeff t (0 : Restricted R c).1
+    simp)
+  map_add' A B := Restricted.ext (MvPowerSeries.ext fun t ↦ by
+    change π (coeff t (A + B).1) = π (coeff t A.1) + π (coeff t B.1)
+    simp)
+
+@[simp] lemma val_mapRetraction (hc : ∀ i, 0 ≤ c i) (π : S →+ R) {Cπ : ℝ}
+    (hCπ : ∀ x, ‖π x‖ ≤ Cπ * ‖x‖) (A : Restricted S c) :
+    (mapRetraction c hc π hCπ A).1 = fun t ↦ π (coeff t A.1) := rfl
+
 end Restricted
 
 end MvPowerSeries
