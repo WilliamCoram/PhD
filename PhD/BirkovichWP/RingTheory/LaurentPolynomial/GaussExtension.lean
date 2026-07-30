@@ -6,7 +6,7 @@ Authors: William Coram
 import Mathlib.Analysis.Normed.Group.Completion
 import Mathlib.Analysis.Normed.Ring.Units
 import Mathlib.Topology.Algebra.UniformRing
-import PhD.ForMathlib.RingTheory.LaurentPolynomial.GaussNorm
+import PhD.BirkovichWP.RingTheory.LaurentPolynomial.GaussNorm
 
 /-! # The Gauss extension of a normed field
 

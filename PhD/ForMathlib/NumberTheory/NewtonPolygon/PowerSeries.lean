@@ -25,36 +25,35 @@ noncomputable def coeffSeq (val : R → WithTop Γ) (f : PowerSeries R) : ℕ �
 
 variable [CommSemiring Γ] [Algebra Γ ℝ]
 
-/-- The Newton polygon (as a `NewtonPolygon` from `Basic.lean`) of a power series `f`, built from
-its coefficient-valuation sequence `coeffSeq val f` via the construction in `Construction.lean`.
+/-- The one-sided Newton polygon (`NewtonPolygon₀`) attached to a coefficient-valuation sequence
+`v : ℕ → WithTop Γ` by the algorithm in `Construction.lean`: `newtonPolygon_numSegments v` many
+segments carrying the constructed slopes and lengths, anchored at the first coefficient of finite
+valuation (with the junk anchor `(0, 0)` if there is none). All structure obligations are
+discharged by the `numSegments` API from `Construction.lean`. -/
+noncomputable def newtonPolygon₀OfSeq (v : ℕ → WithTop Γ) : NewtonPolygon₀ (Γ := Γ) where
+  support := newtonPolygon_numSegments v
+  slopes := newtonPolygon_slopes v
+  slopes_junk := fun _ h => newtonPolygon_slopes_junk v h
+  slopes_nonFinal := fun _ h => newtonPolygon_slopes_nonFinal v h
+  slopes_final := fun _ h => newtonPolygon_slopes_final v h.1 h.2
+  slopes_increasing := newtonPolygon_slopes_mono v
+  lengths := newtonPolygon_lengths v
+  lengths_junk := fun _ h => newtonPolygon_lengths_junk v h
+  lengths_nonFinal := fun _ h => newtonPolygon_lengths_nonFinal v h
+  lengths_final := fun _ h => newtonPolygon_lengths_final v h.1 h.2
+  starting_point :=
+    match findFirstFinite v 0 with
+    | some (i, c) => ((i : ℤ), c)
+    | none => (0, 0)
 
-The construction is one-sided: it begins at the first coefficient of finite valuation
-(`findFirstFinite`) and only produces segments to the *right*, indexed `0, 1, 2, …`. We embed that
-`ℕ`-indexed data into the bi-infinite `ℤ`-indexed `NewtonPolygon` by filling everything to the left
-(`n < 0`) with the junk values — `⊥` for slopes, `0` for lengths — and taking `support = (0, m-1)`
-where `m` is the number of segments (`newtonPolygon_seq`'s length). If the series has no finite
-coefficient at all, the starting point defaults to the junk value `(0, 0)`.
+/-- The one-sided Newton polygon of a power series `f`: the polygon of its coefficient-valuation
+sequence `coeffSeq val f`. -/
+noncomputable def newtonPolygon₀OfPowerSeries (val : R → WithTop Γ) (f : PowerSeries R) :
+    NewtonPolygon₀ (Γ := Γ) :=
+  newtonPolygon₀OfSeq (coeffSeq val f)
 
-The `Prop` obligations (`support_consistent`, the six junk conditions, `increasing`) are left as
-`sorry` for now, to be discharged from the `Construction.lean` API in a follow-up. -/
+/-- The (doubly-infinite) Newton polygon of a power series: its one-sided polygon embedded via
+`NewtonPolygon₀.toNewtonPolygon`. -/
 noncomputable def newtonPolygonOfPowerSeries (val : R → WithTop Γ) (f : PowerSeries R) :
     NewtonPolygon (Γ := Γ) :=
-  let v := coeffSeq val f
-  { support :=
-      (0, match (newtonPolygon_seq v).length' with
-          | ⊤ => ⊤
-          | (m : ℕ) => ((m - 1 : ℕ) : WithTop ℕ))
-    support_left := Or.inl rfl
-    slopes := fun n => if n < 0 then ⊥ else newtonPolygon_slopes v n.toNat
-    slopes_junk_top := by sorry
-    slopes_junk_bot := by sorry
-    slopes_junk_interior := by sorry
-    lengths := fun n => if n < 0 then 0 else newtonPolygon_lengths v n.toNat
-    lengths_junk_top := by sorry
-    lengths_junk_bot := by sorry
-    lengths_junk_interior := by sorry
-    increasing := by sorry
-    starting_point :=
-      match findFirstFinite v 0 with
-      | some (i, c) => ((i : ℤ), c)
-      | none => (0, 0) }
+  (newtonPolygon₀OfPowerSeries val f).toNewtonPolygon

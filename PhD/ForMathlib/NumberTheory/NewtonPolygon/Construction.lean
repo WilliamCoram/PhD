@@ -565,3 +565,206 @@ lemma newtonPolygon_ge_length_eq_none (n : ℕ) (h : (newtonPolygon_seq v).lengt
   · simp only [Nat.cast_le] at h
     exact Stream'.Seq.length_le_iff.mp h
   · aesop
+
+section numSegmentsAPI
+
+open Classical
+
+/-- Once the Newton polygon stream hits `none` it stays `none`. -/
+lemma newtonPolygon_none_of_le {a b : ℕ} (hab : a ≤ b) (ha : newtonPolygon v a = none) :
+    newtonPolygon v b = none := by
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hab
+  clear hab
+  induction k with
+  | zero => exact ha
+  | succ k ih => exact nextStep_none v (a + k) ih
+
+/-- Being a `some` entry is downward closed. -/
+lemma newtonPolygon_ne_none_of_le {a b : ℕ} (hab : a ≤ b) (hb : newtonPolygon v b ≠ none) :
+    newtonPolygon v a ≠ none :=
+  fun ha => hb (newtonPolygon_none_of_le v hab ha)
+
+/-- An entry whose successor entry has not yet terminated is a `nextVertex`: every other kind of
+step is terminal (its successor is `none`), and `unboundedBelow` cannot occur past index `0`. -/
+lemma newtonPolygon_nextVertex_of_succ_ne_none {a : ℕ} (ha : newtonPolygon v (a + 1) ≠ none) :
+    ∃ i₀ i₁ l m, newtonPolygon v a = some (.nextVertex i₀ i₁ l m) := by
+  cases t : newtonPolygon v (a + 1) with
+  | none => exact absurd t ha
+  | some S =>
+    cases S with
+    | tail => exact nextStep_tail' v t
+    | unboundedBelow => exact absurd t (nextStep_unboundedBelow' v a)
+    | limitingRay m => exact nextStep_limitingRay' v t
+    | infiniteRay m => exact nextStep_infiniteRay' v t
+    | nextVertex j₀ j₁ l m => exact nextStep_nextVertex' v t
+
+/-- Every entry strictly below a non-`none` entry is a `nextVertex`. -/
+lemma newtonPolygon_nextVertex_of_lt {b a : ℕ} (hb : b < a) (ha : newtonPolygon v a ≠ none) :
+    ∃ i₀ i₁ l m, newtonPolygon v b = some (.nextVertex i₀ i₁ l m) :=
+  newtonPolygon_nextVertex_of_succ_ne_none v (newtonPolygon_ne_none_of_le v hb ha)
+
+open Classical in
+/-- The number of genuine segments of the Newton polygon. A terminating `tail` entry records
+"no further finite coefficients" rather than a segment, so when one occurs (necessarily as the
+last entry) the count is its index; otherwise every entry is a segment and the count is the index
+of the first `none` (the sequence length), or `⊤` for an infinite polygon. -/
+noncomputable def newtonPolygon_numSegments : WithTop ℕ :=
+  if h : ∃ a, newtonPolygon v a = some .tail then (Nat.find h : WithTop ℕ)
+  else if h' : ∃ a, newtonPolygon v a = none then (Nat.find h' : WithTop ℕ)
+  else ⊤
+
+/-- Strictly interior indices (`n + 1 < numSegments`) carry `nextVertex` entries. -/
+lemma newtonPolygon_nextVertex_of_lt_numSegments {n : ℕ}
+    (h : (n : WithTop ℕ) + 1 < newtonPolygon_numSegments v) :
+    ∃ i₀ i₁ l m, newtonPolygon v n = some (.nextVertex i₀ i₁ l m) := by
+  unfold newtonPolygon_numSegments at h
+  split_ifs at h with ht hn
+  · have hfn : n + 1 < Nat.find ht := by exact_mod_cast h
+    exact newtonPolygon_nextVertex_of_lt v (show n < Nat.find ht by omega)
+      (by simp [Nat.find_spec ht])
+  · have hfn : n + 1 < Nat.find hn := by exact_mod_cast h
+    exact newtonPolygon_nextVertex_of_succ_ne_none v
+      (Nat.find_min hn (show n + 1 < Nat.find hn by omega))
+  · exact newtonPolygon_nextVertex_of_succ_ne_none v (fun hh => hn ⟨n + 1, hh⟩)
+
+/-- Past the segment count the slopes are the junk value `⊤`. -/
+lemma newtonPolygon_slopes_junk {n : ℕ} (h : newtonPolygon_numSegments v ≤ (n : WithTop ℕ)) :
+    newtonPolygon_slopes v n = ⊤ := by
+  unfold newtonPolygon_numSegments at h
+  split_ifs at h with ht hn
+  · have hfn : Nat.find ht ≤ n := by exact_mod_cast h
+    rcases eq_or_lt_of_le hfn with heq | hlt
+    · subst heq
+      simp [newtonPolygon_slopes, Nat.find_spec ht, slopes', slopes]
+    · have hnone := newtonPolygon_none_of_le v hlt (nextStep_tail v _ (Nat.find_spec ht))
+      simp [newtonPolygon_slopes, hnone, slopes']
+  · have hfn : Nat.find hn ≤ n := by exact_mod_cast h
+    have hnone := newtonPolygon_none_of_le v hfn (Nat.find_spec hn)
+    simp [newtonPolygon_slopes, hnone, slopes']
+  · exact absurd (top_le_iff.mp h) WithTop.coe_ne_top
+
+/-- Past the segment count the lengths are the junk value `0`. -/
+lemma newtonPolygon_lengths_junk {n : ℕ} (h : newtonPolygon_numSegments v ≤ (n : WithTop ℕ)) :
+    newtonPolygon_lengths v n = 0 := by
+  unfold newtonPolygon_numSegments at h
+  split_ifs at h with ht hn
+  · have hfn : Nat.find ht ≤ n := by exact_mod_cast h
+    rcases eq_or_lt_of_le hfn with heq | hlt
+    · subst heq
+      simp [newtonPolygon_lengths, Nat.find_spec ht]
+    · have hnone := newtonPolygon_none_of_le v hlt (nextStep_tail v _ (Nat.find_spec ht))
+      simp [newtonPolygon_lengths, hnone]
+  · have hfn : Nat.find hn ≤ n := by exact_mod_cast h
+    have hnone := newtonPolygon_none_of_le v hfn (Nat.find_spec hn)
+    simp [newtonPolygon_lengths, hnone]
+  · exact absurd (top_le_iff.mp h) WithTop.coe_ne_top
+
+/-- Strictly interior slopes are honest reals. -/
+lemma newtonPolygon_slopes_nonFinal {n : ℕ}
+    (h : (n : WithTop ℕ) + 1 < newtonPolygon_numSegments v) :
+    ∃ a : ℝ, newtonPolygon_slopes v n = some (some a) := by
+  obtain ⟨i₀, i₁, l, m, hm⟩ := newtonPolygon_nextVertex_of_lt_numSegments v h
+  exact ⟨m, by unfold newtonPolygon_slopes; rw [hm]; rfl⟩
+
+/-- Strictly interior lengths are finite and non-zero. -/
+lemma newtonPolygon_lengths_nonFinal {n : ℕ}
+    (h : (n : WithTop ℕ) + 1 < newtonPolygon_numSegments v) :
+    ∃ a : ℕ, a ≠ 0 ∧ newtonPolygon_lengths v n = some a := by
+  obtain ⟨i₀, i₁, l, m, hm⟩ := newtonPolygon_nextVertex_of_lt_numSegments v h
+  obtain ⟨p₀, p₁, hp⟩ := nextStep_nextVertex v hm
+  have hl1 := nextVertex_l_eq v hp
+  have hl2 := nextVertex_lt v hp
+  exact ⟨l, by omega, by unfold newtonPolygon_lengths; rw [hm]; rfl⟩
+
+/-- A final slope of `⊤` or `⊥` forces a single-segment polygon: interior entries are
+`nextVertex` steps with real slopes, and the only step producing `⊥` (`unboundedBelow`) can
+occur only at index `0`. -/
+lemma newtonPolygon_slopes_final {n : ℕ}
+    (h1 : (n : WithTop ℕ) + 1 = newtonPolygon_numSegments v)
+    (h2 : newtonPolygon_slopes v n = ⊤ ∨ newtonPolygon_slopes v n = ⊥) :
+    newtonPolygon_numSegments v = 1 := by
+  rw [← h1]
+  suffices hn0 : n = 0 by subst hn0; simp
+  unfold newtonPolygon_numSegments at h1
+  split_ifs at h1 with ht hn
+  · have hfn : n + 1 = Nat.find ht := by exact_mod_cast h1
+    obtain ⟨i₀, i₁, l, m, hm⟩ := newtonPolygon_nextVertex_of_lt v
+      (show n < Nat.find ht by omega) (by simp [Nat.find_spec ht])
+    simp [newtonPolygon_slopes, hm, slopes', slopes] at h2
+  · have hfn : n + 1 = Nat.find hn := by exact_mod_cast h1
+    have hne : newtonPolygon v n ≠ none :=
+      Nat.find_min hn (show n < Nat.find hn by omega)
+    cases t : newtonPolygon v n with
+    | none => exact absurd t hne
+    | some S =>
+      cases S with
+      | tail => exact absurd ⟨n, t⟩ ht
+      | unboundedBelow =>
+        cases n with
+        | zero => rfl
+        | succ a => exact absurd t (nextStep_unboundedBelow' v a)
+      | limitingRay m => simp [newtonPolygon_slopes, t, slopes', slopes] at h2
+      | infiniteRay m => simp [newtonPolygon_slopes, t, slopes', slopes] at h2
+      | nextVertex i₀ i₁ l m => simp [newtonPolygon_slopes, t, slopes', slopes] at h2
+  · simp at h1
+
+/-- A final length of `0` forces a single-segment polygon. -/
+lemma newtonPolygon_lengths_final {n : ℕ}
+    (h1 : (n : WithTop ℕ) + 1 = newtonPolygon_numSegments v)
+    (h2 : newtonPolygon_lengths v n = 0) :
+    newtonPolygon_numSegments v = 1 := by
+  rw [← h1]
+  suffices hn0 : n = 0 by subst hn0; simp
+  unfold newtonPolygon_numSegments at h1
+  split_ifs at h1 with ht hn
+  · have hfn : n + 1 = Nat.find ht := by exact_mod_cast h1
+    obtain ⟨i₀, i₁, l, m, hm⟩ := newtonPolygon_nextVertex_of_lt v
+      (show n < Nat.find ht by omega) (by simp [Nat.find_spec ht])
+    obtain ⟨p₀, p₁, hp⟩ := nextStep_nextVertex v hm
+    have hl1 := nextVertex_l_eq v hp
+    have hl2 := nextVertex_lt v hp
+    simp only [newtonPolygon_lengths, hm] at h2
+    have : l = 0 := by exact_mod_cast h2
+    omega
+  · have hfn : n + 1 = Nat.find hn := by exact_mod_cast h1
+    have hne : newtonPolygon v n ≠ none :=
+      Nat.find_min hn (show n < Nat.find hn by omega)
+    cases t : newtonPolygon v n with
+    | none => exact absurd t hne
+    | some S =>
+      cases S with
+      | tail => exact absurd ⟨n, t⟩ ht
+      | unboundedBelow =>
+        cases n with
+        | zero => rfl
+        | succ a => exact absurd t (nextStep_unboundedBelow' v a)
+      | limitingRay m =>
+        simp only [newtonPolygon_lengths, t] at h2
+        exact absurd h2 (by decide)
+      | infiniteRay m =>
+        simp only [newtonPolygon_lengths, t] at h2
+        exact absurd h2 (by decide)
+      | nextVertex i₀ i₁ l m =>
+        obtain ⟨p₀, p₁, hp⟩ := nextStep_nextVertex v t
+        have hl1 := nextVertex_l_eq v hp
+        have hl2 := nextVertex_lt v hp
+        simp only [newtonPolygon_lengths, t] at h2
+        have : l = 0 := by exact_mod_cast h2
+        omega
+  · simp at h1
+
+/-- The slope sequence is monotone: `newtonPolygon_slopes_increasing'` gives strictness except
+into a `limitingRay`, and a terminated successor has the junk value `⊤`. -/
+lemma newtonPolygon_slopes_mono (n : ℕ) :
+    newtonPolygon_slopes v n ≤ newtonPolygon_slopes v (n + 1) := by
+  have h := newtonPolygon_slopes_increasing' v
+  unfold newtonPolygon_slopes_increasing at h
+  have h := h n
+  split_ifs at h with h1 h2
+  · unfold newtonPolygon_slopes
+    rw [h1]
+    exact le_top
+  · exact h
+  · exact le_of_lt h
+
+end numSegmentsAPI

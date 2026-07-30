@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.ForMathlib.RingTheory.LaurentPolynomial.GaussExtension
-import PhD.ForMathlib.RingTheory.MvPowerSeries.Restricted.BaseChange
-import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.WeierstrassPrep
+import PhD.BirkovichWP.RingTheory.LaurentPolynomial.GaussExtension
+import PhD.BirkovichWP.RingTheory.MvPowerSeries.Restricted.BaseChange
+import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.WeierstrassPrep
 
 /-! # Multivariate Weierstrass division and preparation at every radius
 

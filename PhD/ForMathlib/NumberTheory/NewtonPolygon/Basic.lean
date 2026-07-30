@@ -15,30 +15,74 @@ def ofRight : WithTop ℕ → WithBotTop ℤ
   | ⊤ => ⊤
   | (k : ℕ) => ((k : ℤ) : WithBotTop ℤ)
 
-/-- A (doubly-infinite) Newton polygon.
+/-- An integer `n` to the right of `ofRight s` is nonnegative (as `s` only embeds naturals) and
+satisfies the corresponding `WithTop ℕ` bound `s ≤ n.toNat`. -/
+lemma ofRight_le_coe {s : WithTop ℕ} {n : ℤ} (h : ofRight s ≤ (n : WithBotTop ℤ)) :
+    0 ≤ n ∧ s ≤ (n.toNat : WithTop ℕ) := by
+  rcases s with _ | k
+  · exact absurd (top_le_iff.mp h) (WithBotTop.coe_ne_top n)
+  · have hk : (k : ℤ) ≤ n := WithBotTop.coe_le_coe.mp h
+    exact ⟨by omega, WithTop.coe_le_coe.mpr (show k ≤ n.toNat by omega)⟩
 
-The segments are indexed by `ℤ`. The support records which indices carry a genuine segment: the
-left end `support.1` is pinned to `0` (the polygon starts at the leftmost vertex, indexed `0`) or
-`⊥` (the polygon is infinite to the left, where there is no canonical leftmost vertex); the right
-end `support.2 : WithTop ℕ` is the index of the rightmost segment, or `⊤` if the polygon extends
-right forever. Outside the support the data is junk: slopes are `⊤` past the right end and `⊥` past
-the left end, and lengths are `0`. Fixing `support.1 = 0` cuts out the one-sided polygons (e.g. those
-coming from power series), for which a simpler API can be developed. -/
+/-- If the vertex one step right of an integer `n ≥ 0` is still strictly left of `ofRight s`,
+then the corresponding `WithTop ℕ` bound `n.toNat + 1 < s` holds. -/
+lemma coe_add_one_lt_ofRight {s : WithTop ℕ} {n : ℤ} (h0 : 0 ≤ n)
+    (h : (n : WithBotTop ℤ) + 1 < ofRight s) : (n.toNat : WithTop ℕ) + 1 < s := by
+  rcases s with _ | k
+  · exact WithTop.coe_lt_top (n.toNat + 1)
+  · have hk : n + 1 < (k : ℤ) := WithBotTop.coe_lt_coe.mp h
+    exact WithTop.coe_lt_coe.mpr (show n.toNat + 1 < k by omega)
+
+/-- Converse to `ofRight_le_coe` at natural indices: a `WithTop ℕ` bound `s ≤ m` pushes forward
+to `ofRight s ≤ m` in `WithBotTop ℤ`. -/
+lemma ofRight_le_natCast {s : WithTop ℕ} {m : ℕ} (h : s ≤ (m : WithTop ℕ)) :
+    ofRight s ≤ ((m : ℤ) : WithBotTop ℤ) := by
+  rcases s with _ | k
+  · exact absurd (top_le_iff.mp h) WithTop.coe_ne_top
+  · have hk : k ≤ m := WithTop.coe_le_coe.mp h
+    exact WithBotTop.coe_le_coe.mpr (show (k : ℤ) ≤ (m : ℤ) by omega)
+
+/-- Converse to `coe_add_one_lt_ofRight` at natural indices: a strict `WithTop ℕ` bound
+`m + 1 < s` pushes forward to `m + 1 < ofRight s` in `WithBotTop ℤ`. -/
+lemma natCast_add_one_lt_ofRight {s : WithTop ℕ} {m : ℕ} (h : (m : WithTop ℕ) + 1 < s) :
+    ((m : ℤ) : WithBotTop ℤ) + 1 < ofRight s := by
+  rcases s with _ | k
+  · exact (WithBotTop.coe_ne_top ((m : ℤ) + 1)).lt_top
+  · have hk : m + 1 < k := WithTop.coe_lt_coe.mp h
+    exact WithBotTop.coe_lt_coe.mpr (show (m : ℤ) + 1 < (k : ℤ) by omega)
+
+/-- A doubly-infinite Newton polygon. Where we either have infinite segments on the left or none. -/
 structure NewtonPolygon where
-  support : WithBotTop ℤ × WithTop ℕ
-  support_left : support.1 = 0 ∨ support.1 = ⊥
+  /-- Support indexing how many segments we have; `support.1` gives number of segments to the right
+    and `support.2` indicates if there are 0 or infinitely many segments to the left. -/
+  support : WithTop ℕ × ({0, ⊥} : Set (WithBotTop ℤ))
+  /-- A function indexing the slopes of the segments; we care about the indices inside the support. -/
   slopes : ℤ → WithBotTop ℝ
-  slopes_junk_top : ∀ n : ℤ, ofRight support.2 < (n : WithBotTop ℤ) → slopes n = ⊤
-  slopes_junk_bot : ∀ n : ℤ, (n : WithBotTop ℤ) < support.1 → slopes n = ⊥
-  slopes_junk_interior : ∀ n : ℤ,
-    ((n : WithBotTop ℤ) < ofRight support.2 → slopes n ≠ ⊤) ∧ (support.1 < (n : WithBotTop ℤ) → slopes n ≠ ⊥)
+  /-- Past the right end the slopes are junk, fixed to `⊤`. -/
+  slopes_junkRight : ∀ n : ℤ, ofRight support.1 ≤ n → slopes n = ⊤
+  /-- Past the left end the slopes are junk, fixed to `⊥`. -/
+  slopes_junkLeft : ∀ n : ℤ, n < (support.2 : WithBotTop ℤ) → slopes n = ⊥
+  /-- Any non final slope is finite -/
+  slopes_nonFinal : ∀ n : ℤ, (support.2 : WithBotTop ℤ) ≤ n ∧ n + 1 < ofRight support.1 →
+    ∃ a : ℝ, slopes n = some (some a)
+  /-- Final slopes are only ⊤/⊥ if the support is (1,0). -/
+  slopes_final : ∀ n : ℕ, n + 1 = support.1 ∧ (slopes n = ⊤ ∨ slopes n = ⊥) → support.1 = 1 ∧
+    (support.2 : WithBotTop ℤ) = 0
+  /-- Slopes are increasing. -/
+  slopes_increasing : ∀ n, slopes n ≤ slopes (n + 1)
+  /-- A function indexing the lengths of the segments. -/
   lengths : ℤ → WithTop ℕ
-  lengths_junk_top : ∀ n : ℤ, ofRight support.2 < (n : WithBotTop ℤ) → lengths n = 0
-  lengths_junk_bot : ∀ n : ℤ, (n : WithBotTop ℤ) < support.1 → lengths n = 0
-  lengths_junk_interior : ∀ n : ℤ,
-    support.1 < (n : WithBotTop ℤ) ∧ (n : WithBotTop ℤ) < ofRight support.2 →
-      0 < lengths n ∧ lengths n ≠ ⊤
-  increasing : ∀ n, slopes n ≤ slopes (n + 1)
+  /-- Past the right end the lengths are junk; fixed to be 0. -/
+  lengths_junkRight : ∀ n : ℤ, ofRight support.1 ≤ n → lengths n = 0
+  /-- Past the left end the lengths are junk; fixed to be 0. -/
+  lengths_junkLeft : ∀ n : ℤ, n < (support.2 : WithBotTop ℤ) → lengths n = 0
+  /-- Any non final length is finite and non-zero. -/
+  lengths_nonFinal : ∀ n : ℤ, (support.2 : WithBotTop ℤ) ≤ n ∧ n + 1 < ofRight support.1 →
+    ∃ a : ℕ, a ≠ 0 ∧ lengths n = some a
+  /-- Final lengths are only 0 if the support is (1,0). -/
+  lengths_final : ∀ n : ℕ, n + 1 = support.1 ∧ lengths n = 0 → support.1 = 1 ∧
+    (support.2 : WithBotTop ℤ) = 0
+  /-- Starting point of the Newton polygon. -/
   starting_point : ℤ × Γ
 
 namespace NewtonPolygon
@@ -195,62 +239,280 @@ lemma IsBelow.trans {NP₁ NP₂ NP₃ : NewtonPolygon (Γ := Γ)}
   fun x => (h₁ x).trans (h₂ x)
 
 /-- A Newton polygon is *one-sided* (left-finite) when it starts at its leftmost vertex, i.e.
-`support.1 = 0`: no segments lie to the left of the starting vertex. These are the polygons of
-power series, and they admit the simpler `NewtonPolygon₀` description below. -/
-def IsOneSided (NP : NewtonPolygon (Γ := Γ)) : Prop := NP.support.1 = 0
+the left indicator `support.2` is `0` rather than `⊥`: no segments lie to the left of the
+starting vertex. These are the polygons of power series, and they admit the simpler
+`NewtonPolygon₀` description below. -/
+def IsOneSided (NP : NewtonPolygon (Γ := Γ)) : Prop := (NP.support.2 : WithBotTop ℤ) = 0
 
 end NewtonPolygon
 
-/-- A **one-sided** Newton polygon, given by a simpler `ℕ`-indexed structure. Segments are indexed
-by `ℕ` starting at the leftmost vertex, so there is *no* left-hand junk to record and no `⊥`-vs-`0`
-left endpoint to track: `support : WithTop ℕ` is just the number of segments (`⊤` if the polygon
-extends to the right forever), and everything at index `≥ support` is junk. -/
+/-- A one-sided `NewtonPolygon`. -/
 structure NewtonPolygon₀ where
+  /-- Number of segments we have. -/
   support : WithTop ℕ
+  /-- A function indexing the slopes of the segments, we care about the indexes < support. -/
   slopes : ℕ → WithBotTop ℝ
-  slopes_junk : ∀ n : ℕ, support ≤ (n : WithTop ℕ) → slopes n = ⊤
-  slopes_ne_top : ∀ n : ℕ, (n + 1 : WithTop ℕ) < support → slopes n ≠ ⊤
+  /-- Outside the support the slopes are fixed to be ⊤ -/
+  slopes_junk : ∀ n : ℕ, support ≤ n → slopes n = ⊤
+  /-- Any non final slope is finite -/
+  slopes_nonFinal : ∀ n : ℕ, n + 1 < support → ∃ a : ℝ, slopes n = some (some a)
+  /-- Final slopes are only ⊤/⊥ if the support is 1 -/
+  slopes_final : ∀ n : ℕ, n + 1 = support ∧ (slopes n = ⊤ ∨ slopes n = ⊥) → support = 1
+  /-- Slopes are increasing. -/
+  slopes_increasing : ∀ n : ℕ, slopes n ≤ slopes (n + 1)
+  /-- A function indexing the lengths of the segments. -/
   lengths : ℕ → WithTop ℕ
-  lengths_junk : ∀ n : ℕ, support ≤ (n : WithTop ℕ) → lengths n = 0
-  lengths_pos : ∀ n : ℕ, (n + 1 : WithTop ℕ) < support → 0 < lengths n ∧ lengths n ≠ ⊤
-  -- The last length may be `⊤` (a ray) but not `0` — *unless* it is the only segment, since a
-  -- single segment may have length `0` (e.g. constants). `n + 1 = support` picks out the last
-  -- segment, `2 ≤ support` excludes the single-segment case. Disjoint from `lengths_pos` (`=` vs `<`).
-  lengths_final : ∀ n : ℕ, (2 : WithTop ℕ) ≤ support → (n + 1 : WithTop ℕ) = support → lengths n ≠ 0
-  increasing : ∀ n : ℕ, slopes n ≤ slopes (n + 1)
+  /-- Outside the support the slopes are fixed to be 0. -/
+  lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
+  /-- Any non final length is finite and non-zero. -/
+  lengths_nonFinal : ∀ n : ℕ, n + 1 < support → ∃ a : ℕ, a ≠ 0 ∧ lengths n = some a
+  /-- Final lengths are only 0 if the support is 1. -/
+  lengths_final : ∀ n : ℕ, n + 1 = support ∧ lengths n = 0 → support = 1
+  /-- Starting point of the Newton polygon. -/
   starting_point : ℤ × Γ
 
 namespace NewtonPolygon₀
 
 variable (P : NewtonPolygon₀ (Γ := Γ))
 
-/-- The index of the rightmost segment of `P` (`length - 1`, with `⊤ ↦ ⊤` and `0 ↦ 0`); this is the
-right-hand support bound `support.2` of the associated `NewtonPolygon`. -/
-def rightIndex : WithTop ℕ :=
-  match P.support with
-  | ⊤ => ⊤
-  | (m : ℕ) => ((m - 1 : ℕ) : WithTop ℕ)
-
 /-- Realise a one-sided polygon `P` as a genuine `NewtonPolygon`, embedding its `ℕ`-indexed data
 into the bi-infinite `ℤ`-indexed structure: everything at `n < 0` is junk (`⊥` slopes, `0`
-lengths), and `support = (0, P.rightIndex)`. The non-trivial obligations are left as `sorry` for
-now; only `support_left` is discharged (it holds definitionally). -/
-noncomputable def toNewtonPolygon : NewtonPolygon (Γ := Γ) where
-  support := (0, P.rightIndex)
-  support_left := Or.inl rfl
+lengths), the right-hand support is the segment count `P.support`, and the left indicator is `0`
+(no segments to the left). -/
+def toNewtonPolygon : NewtonPolygon (Γ := Γ) where
+  support := (P.support, ⟨0, Set.mem_insert 0 {⊥}⟩)
   slopes := fun n => if n < 0 then ⊥ else P.slopes n.toNat
-  slopes_junk_top := by sorry
-  slopes_junk_bot := by sorry
-  slopes_junk_interior := by sorry
+  slopes_junkRight := by
+    intro n hn
+    obtain ⟨h0, hs⟩ := ofRight_le_coe hn
+    rw [if_neg (not_lt.2 h0)]
+    exact P.slopes_junk _ hs
+  slopes_junkLeft := fun n hn => if_pos (WithBotTop.coe_lt_coe.mp hn)
+  slopes_nonFinal := by
+    rintro n ⟨h1, h2⟩
+    have h0 : (0 : ℤ) ≤ n := WithBotTop.coe_le_coe.mp h1
+    rw [if_neg (not_lt.2 h0)]
+    exact P.slopes_nonFinal _ (coe_add_one_lt_ofRight h0 h2)
+  slopes_final := by
+    rintro n ⟨h1, h2⟩
+    rw [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast] at h2
+    exact ⟨P.slopes_final n ⟨h1, h2⟩, rfl⟩
+  slopes_increasing := by
+    intro n
+    by_cases hn : n < 0
+    · rw [if_pos hn]
+      exact bot_le
+    · rw [if_neg hn, if_neg (show ¬ n + 1 < 0 by omega),
+        show (n + 1).toNat = n.toNat + 1 by omega]
+      exact P.slopes_increasing n.toNat
   lengths := fun n => if n < 0 then 0 else P.lengths n.toNat
-  lengths_junk_top := by sorry
-  lengths_junk_bot := by sorry
-  lengths_junk_interior := by sorry
-  increasing := by sorry
+  lengths_junkRight := by
+    intro n hn
+    obtain ⟨h0, hs⟩ := ofRight_le_coe hn
+    rw [if_neg (not_lt.2 h0)]
+    exact P.lengths_junk _ hs
+  lengths_junkLeft := fun n hn => if_pos (WithBotTop.coe_lt_coe.mp hn)
+  lengths_nonFinal := by
+    rintro n ⟨h1, h2⟩
+    have h0 : (0 : ℤ) ≤ n := WithBotTop.coe_le_coe.mp h1
+    rw [if_neg (not_lt.2 h0)]
+    exact P.lengths_nonFinal _ (coe_add_one_lt_ofRight h0 h2)
+  lengths_final := by
+    rintro n ⟨h1, h2⟩
+    rw [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast] at h2
+    exact ⟨P.lengths_final n ⟨h1, h2⟩, rfl⟩
   starting_point := P.starting_point
 
 omit [CommSemiring Γ] [Algebra Γ ℝ] in
 /-- The `NewtonPolygon` underlying a one-sided polygon is indeed one-sided. -/
 lemma toNewtonPolygon_isOneSided : NewtonPolygon.IsOneSided P.toNewtonPolygon := rfl
 
+/-! The embedding `toNewtonPolygon` is transparent over the natural indices: the following simp
+lemmas strip it away, so the doubly-infinite `height`/`IsBelow` theory can be used for one-sided
+polygons directly, with nothing lost. -/
+
+section
+omit [CommSemiring Γ] [Algebra Γ ℝ]
+
+@[simp] lemma toNewtonPolygon_support_fst : P.toNewtonPolygon.support.1 = P.support := rfl
+
+@[simp] lemma toNewtonPolygon_startingPoint :
+    P.toNewtonPolygon.starting_point = P.starting_point := rfl
+
+@[simp] lemma toNewtonPolygon_slopes_natCast (n : ℕ) :
+    P.toNewtonPolygon.slopes (n : ℤ) = P.slopes n := by
+  show (if (n : ℤ) < 0 then ⊥ else P.slopes (n : ℤ).toNat) = P.slopes n
+  rw [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast]
+
+@[simp] lemma toNewtonPolygon_slopes_of_neg {x : ℤ} (hx : x < 0) :
+    P.toNewtonPolygon.slopes x = ⊥ := if_pos hx
+
+@[simp] lemma toNewtonPolygon_lengths_natCast (n : ℕ) :
+    P.toNewtonPolygon.lengths (n : ℤ) = P.lengths n := by
+  show (if (n : ℤ) < 0 then 0 else P.lengths (n : ℤ).toNat) = P.lengths n
+  rw [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast]
+
+@[simp] lemma toNewtonPolygon_lengths_of_neg {x : ℤ} (hx : x < 0) :
+    P.toNewtonPolygon.lengths x = 0 := if_pos hx
+
+end
+
+/-- The height of a one-sided polygon at an integer `x`, through the embedding into
+doubly-infinite polygons. Right of the starting vertex this is the walked value; strictly left of
+it the polygon is junk and the height is `⊥` (so `IsBelow` constrains nothing there). -/
+noncomputable def height (x : ℤ) : WithBotTop ℝ := P.toNewtonPolygon.height x
+
+@[simp] lemma height_toNewtonPolygon (x : ℤ) : P.toNewtonPolygon.height x = P.height x := rfl
+
+/-- `IsBelow P₁ P₂` says the one-sided polygon `P₁` lies (weakly) below `P₂` at every integer
+`x`-coordinate, defined by pulling `NewtonPolygon.IsBelow` back along `toNewtonPolygon` — so
+agreement with the doubly-infinite notion is definitional (`isBelow_iff`). -/
+def IsBelow (P₁ P₂ : NewtonPolygon₀ (Γ := Γ)) : Prop :=
+  NewtonPolygon.IsBelow P₁.toNewtonPolygon P₂.toNewtonPolygon
+
+/-- The one-sided `IsBelow` agrees, definitionally, with the doubly-infinite one under the
+embedding. -/
+lemma isBelow_iff {P₁ P₂ : NewtonPolygon₀ (Γ := Γ)} :
+    IsBelow P₁ P₂ ↔ NewtonPolygon.IsBelow P₁.toNewtonPolygon P₂.toNewtonPolygon := Iff.rfl
+
+lemma isBelow_iff_height {P₁ P₂ : NewtonPolygon₀ (Γ := Γ)} :
+    IsBelow P₁ P₂ ↔ ∀ x : ℤ, P₁.height x ≤ P₂.height x := Iff.rfl
+
+@[refl]
+lemma IsBelow.refl (P : NewtonPolygon₀ (Γ := Γ)) : IsBelow P P := NewtonPolygon.IsBelow.refl _
+
+lemma IsBelow.rfl {P : NewtonPolygon₀ (Γ := Γ)} : IsBelow P P := IsBelow.refl P
+
+lemma IsBelow.trans {P₁ P₂ P₃ : NewtonPolygon₀ (Γ := Γ)} (h₁ : IsBelow P₁ P₂)
+    (h₂ : IsBelow P₂ P₃) : IsBelow P₁ P₃ :=
+  NewtonPolygon.IsBelow.trans h₁ h₂
+
 end NewtonPolygon₀
+
+namespace NewtonPolygon.IsOneSided
+
+/-- Strip a one-sided `NewtonPolygon` back down to a `NewtonPolygon₀`: restrict the `ℤ`-indexed
+data to the natural indices, with `support` the right-hand segment count `support.1`. Everything
+discarded was junk (`support.2 = 0` pins the junk region to the negative indices). Converse to
+`NewtonPolygon₀.toNewtonPolygon`. -/
+def toNewtonPolygon₀ {NP : NewtonPolygon (Γ := Γ)} (h : NP.IsOneSided) :
+    NewtonPolygon₀ (Γ := Γ) where
+  support := NP.support.1
+  slopes := fun n => NP.slopes n
+  slopes_junk := fun n hn => NP.slopes_junkRight n (ofRight_le_natCast hn)
+  slopes_nonFinal := by
+    intro n hn
+    have h0 : (NP.support.2 : WithBotTop ℤ) = 0 := h
+    refine NP.slopes_nonFinal n ⟨?_, natCast_add_one_lt_ofRight hn⟩
+    rw [h0]
+    exact WithBotTop.coe_le_coe.mpr (Int.natCast_nonneg n)
+  slopes_final := fun n hn => (NP.slopes_final n hn).1
+  slopes_increasing := fun n => NP.slopes_increasing n
+  lengths := fun n => NP.lengths n
+  lengths_junk := fun n hn => NP.lengths_junkRight n (ofRight_le_natCast hn)
+  lengths_nonFinal := by
+    intro n hn
+    have h0 : (NP.support.2 : WithBotTop ℤ) = 0 := h
+    refine NP.lengths_nonFinal n ⟨?_, natCast_add_one_lt_ofRight hn⟩
+    rw [h0]
+    exact WithBotTop.coe_le_coe.mpr (Int.natCast_nonneg n)
+  lengths_final := fun n hn => (NP.lengths_final n hn).1
+  starting_point := NP.starting_point
+
+end NewtonPolygon.IsOneSided
+
+/-! ### Finite Newton polygons
+
+A polygon is *finite* when it has finitely many segments (their lengths may still be infinite: a
+final ray counts as one segment). Finite polygons are in particular one-sided, and the one-sided
+polygons are exactly the image of `NewtonPolygon₀.toNewtonPolygon` — re-embedding the extracted
+one-sided data recovers the original polygon on the nose. -/
+
+section IsFinite
+
+omit [CommSemiring Γ] [Algebra Γ ℝ]
+
+/-- Two doubly-infinite Newton polygons agree once their data fields agree (the `Prop` fields
+carry no information). -/
+@[ext] lemma NewtonPolygon.ext {NP₁ NP₂ : NewtonPolygon (Γ := Γ)}
+    (hsupport : NP₁.support = NP₂.support) (hslopes : NP₁.slopes = NP₂.slopes)
+    (hlengths : NP₁.lengths = NP₂.lengths)
+    (hstart : NP₁.starting_point = NP₂.starting_point) : NP₁ = NP₂ := by
+  obtain ⟨s₁, sl₁, _, _, _, _, _, l₁, _, _, _, _, sp₁⟩ := NP₁
+  obtain ⟨s₂, sl₂, _, _, _, _, _, l₂, _, _, _, _, sp₂⟩ := NP₂
+  have e1 : s₁ = s₂ := hsupport
+  have e2 : sl₁ = sl₂ := hslopes
+  have e3 : l₁ = l₂ := hlengths
+  have e4 : sp₁ = sp₂ := hstart
+  subst e1; subst e2; subst e3; subst e4
+  rfl
+
+/-- Two one-sided Newton polygons agree once their data fields agree. -/
+@[ext] lemma NewtonPolygon₀.ext {P₁ P₂ : NewtonPolygon₀ (Γ := Γ)}
+    (hsupport : P₁.support = P₂.support) (hslopes : P₁.slopes = P₂.slopes)
+    (hlengths : P₁.lengths = P₂.lengths)
+    (hstart : P₁.starting_point = P₂.starting_point) : P₁ = P₂ := by
+  obtain ⟨s₁, sl₁, _, _, _, _, l₁, _, _, _, sp₁⟩ := P₁
+  obtain ⟨s₂, sl₂, _, _, _, _, l₂, _, _, _, sp₂⟩ := P₂
+  have e1 : s₁ = s₂ := hsupport
+  have e2 : sl₁ = sl₂ := hslopes
+  have e3 : l₁ = l₂ := hlengths
+  have e4 : sp₁ = sp₂ := hstart
+  subst e1; subst e2; subst e3; subst e4
+  rfl
+
+/-- A doubly-infinite Newton polygon is *finite* when it has finitely many segments: none to the
+left (it is one-sided) and finitely many to the right (`support.1 ≠ ⊤`). -/
+def NewtonPolygon.IsFinite (NP : NewtonPolygon (Γ := Γ)) : Prop :=
+  NP.IsOneSided ∧ NP.support.1 ≠ ⊤
+
+/-- A one-sided Newton polygon is *finite* when its segment count is finite. -/
+def NewtonPolygon₀.IsFinite (P : NewtonPolygon₀ (Γ := Γ)) : Prop :=
+  P.support ≠ ⊤
+
+/-- Re-embedding the one-sided data extracted from a one-sided polygon recovers the polygon:
+the one-sided polygons are exactly the image of `NewtonPolygon₀.toNewtonPolygon`. -/
+lemma NewtonPolygon.IsOneSided.toNewtonPolygon₀_toNewtonPolygon {NP : NewtonPolygon (Γ := Γ)}
+    (h : NP.IsOneSided) : h.toNewtonPolygon₀.toNewtonPolygon = NP := by
+  have h' : (NP.support.2 : WithBotTop ℤ) = 0 := h
+  refine NewtonPolygon.ext (Prod.ext rfl (Subtype.ext h'.symm)) ?_ ?_ rfl
+  · funext x
+    show (if x < 0 then (⊥ : WithBotTop ℝ) else NP.slopes (x.toNat : ℤ)) = NP.slopes x
+    by_cases hx : x < 0
+    · rw [if_pos hx]
+      exact (NP.slopes_junkLeft x (by rw [h']; exact WithBotTop.coe_lt_coe.mpr hx)).symm
+    · rw [if_neg hx, Int.toNat_of_nonneg (not_lt.1 hx)]
+  · funext x
+    show (if x < 0 then (0 : WithTop ℕ) else NP.lengths (x.toNat : ℤ)) = NP.lengths x
+    by_cases hx : x < 0
+    · rw [if_pos hx]
+      exact (NP.lengths_junkLeft x (by rw [h']; exact WithBotTop.coe_lt_coe.mpr hx)).symm
+    · rw [if_neg hx, Int.toNat_of_nonneg (not_lt.1 hx)]
+
+/-- Extracting the one-sided data back out of the embedding recovers the original polygon. -/
+lemma NewtonPolygon₀.toNewtonPolygon_toNewtonPolygon₀ (P : NewtonPolygon₀ (Γ := Γ))
+    (h : P.toNewtonPolygon.IsOneSided) : h.toNewtonPolygon₀ = P := by
+  refine NewtonPolygon₀.ext rfl ?_ ?_ rfl
+  · funext n
+    exact P.toNewtonPolygon_slopes_natCast n
+  · funext n
+    exact P.toNewtonPolygon_lengths_natCast n
+
+/-- The embedding of a one-sided polygon is finite iff the polygon is. -/
+@[simp] lemma NewtonPolygon₀.toNewtonPolygon_isFinite {P : NewtonPolygon₀ (Γ := Γ)} :
+    P.toNewtonPolygon.IsFinite ↔ P.IsFinite :=
+  ⟨fun h => h.2, fun h => ⟨P.toNewtonPolygon_isOneSided, h⟩⟩
+
+/-- Every one-sided Newton polygon is represented by a `NewtonPolygon₀`. -/
+lemma NewtonPolygon.IsOneSided.exists_newtonPolygon₀ {NP : NewtonPolygon (Γ := Γ)}
+    (h : NP.IsOneSided) : ∃ P : NewtonPolygon₀ (Γ := Γ), P.toNewtonPolygon = NP :=
+  ⟨h.toNewtonPolygon₀, h.toNewtonPolygon₀_toNewtonPolygon⟩
+
+/-- Every finite Newton polygon is represented by a `NewtonPolygon₀`, necessarily with finitely
+many segments. -/
+lemma NewtonPolygon.IsFinite.exists_newtonPolygon₀ {NP : NewtonPolygon (Γ := Γ)}
+    (h : NP.IsFinite) :
+    ∃ P : NewtonPolygon₀ (Γ := Γ), P.IsFinite ∧ P.toNewtonPolygon = NP :=
+  ⟨h.1.toNewtonPolygon₀, h.2, h.1.toNewtonPolygon₀_toNewtonPolygon⟩
+
+end IsFinite

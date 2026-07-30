@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.Martin.WeierstrassDivision
+import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.MulWeierstrassDivision
 
 /-! # Weierstrass preparation at every radius over an ultrametric Banach ring
 
@@ -85,7 +85,7 @@ private lemma greatest_achieves_eq_zero {g q : Restricted A c} {s : ℕ} {r : Po
     (hg : IsMulDistinguished c g.1 s) (hr : r.degree < s)
     (hEq : Polynomial.toRestricted c (Polynomial.X ^ s) = g * q + Polynomial.toRestricted c r) :
     AchievesGaussNorm norm c q.1 0 ∧ ∀ k, 0 < k → ‖coeff k q.1‖ * c ^ k < ‖q‖ := by
-  haveI hntr : Nontrivial A := hg.toIsDistinguished.nontrivial
+  haveI hntr : Nontrivial A := hg.nontrivial
   have hq0 : q ≠ 0 := q_ne_zero_of_eq_pow hr hEq
   obtain ⟨k₀, hk, hkmax⟩ := exists_greatest_achievesGaussNorm q hq0
   have hq_pos : 0 < ‖q‖ := norm_pos_iff.mpr hq0
@@ -156,7 +156,7 @@ private lemma isNormMulUnit_coeff_zero_of_eq_pow [CompleteSpace A] {g q : Restri
     {s : ℕ} {r : Polynomial A} (hg : IsMulDistinguished c g.1 s) (hr : r.degree < s)
     (hEq : Polynomial.toRestricted c (Polynomial.X ^ s) = g * q + Polynomial.toRestricted c r) :
     IsNormMulUnit (coeff 0 q.1) := by
-  haveI : Nontrivial A := hg.toIsDistinguished.nontrivial
+  haveI : Nontrivial A := hg.nontrivial
   have hc : (0 : ℝ) < c := Fact.out
   have hprod : ‖coeff s g.1‖ * ‖coeff 0 q.1‖ = 1 :=
     norm_coeff_mul_norm_coeff_zero_of_eq_pow hg hr hEq
@@ -188,7 +188,7 @@ private lemma isNormMulUnit_coeff_zero_of_eq_pow [CompleteSpace A] {g q : Restri
       have hk1 : 0 < k := Nat.pos_of_ne_zero fun hk0 => hne (Prod.ext (show m = s by omega) hk0)
       refine hbound.trans_lt ((norm_mul_le _ _).trans_lt ?_)
       have hgm : ‖coeff m g.1‖ * c ^ m ≤ ‖coeff s g.1‖ * c ^ s :=
-        (norm_coeff_mul_pow_le c g m).trans hg.toIsDistinguished.norm_coeff_mul_pow_eq.ge
+        (norm_coeff_mul_pow_le c g m).trans hg.norm_coeff_mul_pow_eq.ge
       have hqk : ‖coeff k q.1‖ * c ^ k < ‖coeff 0 q.1‖ :=
         gaussTerm_lt_norm_coeff_zero_of_eq_pow hg hr hEq k hk1
       have hA₂ : 0 < ‖coeff s g.1‖ * c ^ s := mul_pos hgs_pos (pow_pos hc s)
@@ -219,7 +219,7 @@ lemma isNormMulUnit_of_eq_pow [CompleteSpace A] {g q : Restricted A c} {s : ℕ}
     {r : Polynomial A} (hg : IsMulDistinguished c g.1 s) (hr : r.degree < s)
     (hEq : Polynomial.toRestricted c (Polynomial.X ^ s) = g * q + Polynomial.toRestricted c r) :
     IsNormMulUnit q := by
-  haveI : Nontrivial A := hg.toIsDistinguished.nontrivial
+  haveI : Nontrivial A := hg.nontrivial
   have hq0_unit : IsNormMulUnit (coeff 0 q.1) := isNormMulUnit_coeff_zero_of_eq_pow hg hr hEq
   have hd : IsNormMulUnit (C c (coeff 0 q.1)) := isNormMulUnit_C hq0_unit
   set d : Restricted A c := C c (coeff 0 q.1) with hd_def
@@ -286,7 +286,7 @@ theorem weierstrassPreparation_exists_of_isMulDistinguished [CompleteSpace A]
     ∃ (ω : Polynomial A) (e : Restricted A c), ω.Monic ∧ ω.degree = s ∧
       ‖Polynomial.toRestricted c ω‖ = c ^ s ∧ IsNormMulUnit e ∧
       g = e * Polynomial.toRestricted c ω := by
-  haveI : Nontrivial A := hg.toIsDistinguished.nontrivial
+  haveI : Nontrivial A := hg.nontrivial
   obtain ⟨q, r, hr, hEq⟩ :=
     weierstrassDivision_exists_of_isMulDistinguished hg
       (Polynomial.toRestricted c (Polynomial.X ^ s))
@@ -344,7 +344,7 @@ theorem weierstrassPreparation_omega_unique_of_isMulDistinguished
     (hm₂ : ω₂.Monic) (hd₂ : ω₂.degree = s) (he₂ : IsUnit e₂)
     (hg₂ : g = e₂ * Polynomial.toRestricted c ω₂) :
     ω₁ = ω₂ := by
-  haveI : Nontrivial A := hg.toIsDistinguished.nontrivial
+  haveI : Nontrivial A := hg.nontrivial
   obtain ⟨u₁, hu₁⟩ := he₁
   obtain ⟨u₂, hu₂⟩ := he₂
   obtain ⟨hρ₁, hEq₁⟩ := toRestricted_X_pow_eq_of_isUnit_mul hm₁ hd₁ hu₁ hg₁
@@ -361,7 +361,7 @@ theorem weierstrassPreparation_e_unique_of_isMulDistinguished
     (hm₂ : ω₂.Monic) (hd₂ : ω₂.degree = s) (he₂ : IsUnit e₂)
     (hg₂ : g = e₂ * Polynomial.toRestricted c ω₂) :
     e₁ = e₂ := by
-  haveI : Nontrivial A := hg.toIsDistinguished.nontrivial
+  haveI : Nontrivial A := hg.nontrivial
   obtain ⟨u₁, hu₁⟩ := he₁
   obtain ⟨u₂, hu₂⟩ := he₂
   obtain ⟨hρ₁, hEq₁⟩ := toRestricted_X_pow_eq_of_isUnit_mul hm₁ hd₁ hu₁ hg₁
@@ -369,28 +369,60 @@ theorem weierstrassPreparation_e_unique_of_isMulDistinguished
   have hq := weierstrassDivision_q_unique_of_isMulDistinguished hg hρ₁ hEq₁ hρ₂ hEq₂
   rw [← hu₁, ← hu₂, inv_injective (Units.ext hq)]
 
-/-! ## Bridge: over a multiplicatively normed ring, Martin subsumes the project's
-oracle-free statements -/
-
-/-- Weierstrass division over a `NormMulClass` coefficient ring, with the project's
-`IsDistinguished` hypothesis — an oracle-free specialisation of Martin's theorem. -/
-theorem weierstrassDivision_exists_of_normMulClass [NormMulClass A] [CompleteSpace A]
-    {g : Restricted A c} {s : ℕ} (hg : IsDistinguished norm c g.1 s) (f : Restricted A c) :
-    ∃ (q : Restricted A c) (r : Polynomial A), r.degree < s ∧
-      f = g * q + Polynomial.toRestricted c r :=
-  weierstrassDivision_exists_of_isMulDistinguished
-    (isMulDistinguished_iff_isDistinguished.mpr hg) f
-
-/-- Weierstrass preparation over a `NormMulClass` coefficient ring, with the project's
-`IsDistinguished` hypothesis. -/
-theorem weierstrassPreparation_exists_of_normMulClass [NormMulClass A] [NormOneClass A]
-    [CompleteSpace A] {g : Restricted A c} {s : ℕ} (hg : IsDistinguished norm c g.1 s) :
-    ∃ (ω : Polynomial A) (e : Restricted A c), ω.Monic ∧ ω.degree = s ∧
+/-- **Weierstrass preparation, uniqueness** (nested `∃!` form): the factorisation `g = e * ω`
+of `weierstrassPreparation_exists_of_isMulDistinguished` is unique. -/
+theorem weierstrassPreparation_unique_of_isMulDistinguished [CompleteSpace A] [NormOneClass A]
+    {g : Restricted A c} {s : ℕ} (hg : IsMulDistinguished c g.1 s) :
+    ∃! ω : Polynomial A, ∃! e : Restricted A c, ω.Monic ∧ ω.degree = s ∧
       ‖Polynomial.toRestricted c ω‖ = c ^ s ∧ IsUnit e ∧
       g = e * Polynomial.toRestricted c ω := by
-  obtain ⟨ω, e, hmon, hdeg, hnorm, hunit, heq⟩ :=
-    weierstrassPreparation_exists_of_isMulDistinguished
-      (isMulDistinguished_iff_isDistinguished.mpr hg)
-  exact ⟨ω, e, hmon, hdeg, hnorm, hunit.isUnit, heq⟩
+  obtain ⟨ω, e, ωm, ωd, ωn, he, hg1⟩ := weierstrassPreparation_exists_of_isMulDistinguished hg
+  refine ⟨ω, ⟨e, ⟨ωm, ωd, ωn, he.isUnit, hg1⟩, ?_⟩, ?_⟩
+  · rintro e' ⟨-, -, -, he', hge'⟩
+    exact weierstrassPreparation_e_unique_of_isMulDistinguished hg ωm ωd he' hge' ωm ωd
+      he.isUnit hg1
+  · rintro ω' ⟨e', ⟨ω'm, ω'd, ω'n, he'', hg1'⟩, -⟩
+    exact weierstrassPreparation_omega_unique_of_isMulDistinguished hg ω'm ω'd he'' hg1' ωm ωd
+      he.isUnit hg1
+
+/-- **Weierstrass preparation for polynomials** (Martin hypothesis): if `g` is a polynomial,
+the unit `e` of its preparation is itself a polynomial.
+
+Note `IsUnit (Polynomial.toRestricted c e)` is unit-ness in the restricted power series ring,
+not in `A[X]`: over `ℤ_p` at radius `1` the unit `e = 1 + p • X` is a polynomial but not a
+unit of `ℤ_p[X]`. -/
+theorem weierstrassPreparation_polynomial_of_isMulDistinguished [CompleteSpace A] [NormOneClass A]
+    {g₀ : Polynomial A} {s : ℕ}
+    (hg : IsMulDistinguished c (Polynomial.toRestricted c g₀).1 s) :
+    ∃! ω : Polynomial A, ∃! e : Polynomial A, ω.Monic ∧ ω.degree = s ∧
+      ‖Polynomial.toRestricted c ω‖ = c ^ s ∧ IsUnit (Polynomial.toRestricted c e) ∧
+      Polynomial.toRestricted c g₀ =
+        Polynomial.toRestricted c e * Polynomial.toRestricted c ω := by
+  obtain ⟨ω, ⟨e, ⟨ωm, ωd, ωn, he, hgeq⟩, he_uniq⟩, hω_uniq⟩ :=
+    weierstrassPreparation_unique_of_isMulDistinguished hg
+  have hωdist := isMulDistinguished_toRestricted_of_monic ωm ωd ωn
+  have h0 : (0 : Polynomial A).degree < (s : WithBot ℕ) := by
+    rw [Polynomial.degree_zero]
+    exact WithBot.bot_lt_coe s
+  obtain ⟨e₀, ⟨r₀, ⟨hr₀, hf₀⟩, -⟩, -⟩ :=
+    weierstrassDivision_polynomial_of_isMulDistinguished hωdist ωd.le g₀
+  have he₀ : e = Polynomial.toRestricted c e₀ :=
+    weierstrassDivision_q_unique_of_isMulDistinguished hωdist
+      (f := Polynomial.toRestricted c g₀) h0
+      (by rw [map_zero, add_zero, hgeq, mul_comm]) hr₀ hf₀
+  have hg₀ : Polynomial.toRestricted c g₀ =
+      Polynomial.toRestricted c e₀ * Polynomial.toRestricted c ω := he₀ ▸ hgeq
+  refine ⟨ω, ⟨e₀, ⟨ωm, ωd, ωn, he₀ ▸ he, hg₀⟩, ?_⟩, ?_⟩
+  · rintro e' ⟨-, -, -, hu', hg'⟩
+    exact Polynomial.toRestricted_injective c
+      ((he_uniq _ ⟨ωm, ωd, ωn, hu', hg'⟩).trans he₀)
+  · rintro ω' ⟨e', ⟨ω'm, ω'd, ω'n, hu', hg'⟩, -⟩
+    refine hω_uniq ω' ⟨Polynomial.toRestricted c e', ⟨ω'm, ω'd, ω'n, hu', hg'⟩, ?_⟩
+    rintro e'' ⟨-, -, -, -, hg''⟩
+    exact weierstrassDivision_q_unique_of_isMulDistinguished
+      (isMulDistinguished_toRestricted_of_monic ω'm ω'd ω'n)
+      (f := Polynomial.toRestricted c g₀) h0
+      (by rw [map_zero, add_zero, hg'', mul_comm]) h0
+      (by rw [map_zero, add_zero, hg', mul_comm])
 
 end PowerSeries.Restricted

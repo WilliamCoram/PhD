@@ -8,7 +8,7 @@ import Mathlib.LinearAlgebra.Basis.VectorSpace
 
 import PhD.ForMathlib.Algebra.Polynomial.Coeff
 import PhD.ForMathlib.RingTheory.MvPowerSeries.Basic
-import PhD.ForMathlib.RingTheory.MvPowerSeries.Restricted.WeierstrassDivision
+import PhD.BirkovichWP.RingTheory.MvPowerSeries.Restricted.WeierstrassDivision
 
 /-! # Base change and descent for multivariate restricted power series
 

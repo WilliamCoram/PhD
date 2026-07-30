@@ -5,7 +5,7 @@ Authors: William Coram
 -/
 import Mathlib.Algebra.Polynomial.Laurent
 import Mathlib.Analysis.Normed.Ring.Ultra
-import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.DivisibleRadius
+import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.DivisibleRadius
 
 /-! # The Gauss norm on Laurent polynomials
 

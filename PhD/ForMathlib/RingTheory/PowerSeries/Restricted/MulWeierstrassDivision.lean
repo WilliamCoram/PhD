@@ -3,8 +3,11 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.Martin.Distinguished
-import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.WeierstrassDivision
+import Mathlib.Algebra.Polynomial.Div
+import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.MulDistinguished
+import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.DivisionSet
+import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Complete
+import PhD.ForMathlib.Topology.MetricSpace.HausdorffDistance
 
 /-! # Weierstrass division at every radius over an ultrametric Banach ring
 
@@ -46,7 +49,7 @@ theorem max_norm_le_of_eq_mul_add_of_isMulDistinguished {g : Restricted A c} {s 
           rw [norm_coeff_add_mul_of_isMulDistinguished hg hk hkmax]
       _ = (‖coeff s g.1‖ * c ^ s) * (‖coeff k₀ q.1‖ * c ^ k₀) := by rw [pow_add]; ring
       _ = ‖g‖ * ‖q‖ := by
-          rw [hg.toIsDistinguished.norm_coeff_mul_pow_eq, hk.trans (norm_def c q).symm]
+          rw [hg.norm_coeff_mul_pow_eq, hk.trans (norm_def c q).symm]
   have h_toR_zero : coeff (s + k₀) (Polynomial.toRestricted c r).1 = 0 := by
     rw [Polynomial.val_toRestricted, Polynomial.coeff_coe]
     exact Polynomial.coeff_eq_zero_of_degree_lt (hr.trans_le (mod_cast Nat.le_add_right s k₀))
@@ -78,7 +81,7 @@ theorem norm_q_le_of_eq_mul_add_of_isMulDistinguished {g : Restricted A c} {s : 
     (hg : IsMulDistinguished c g.1 s) {f q : Restricted A c} {r : Polynomial A}
     (hr : r.degree < s) (hf : f = g * q + Polynomial.toRestricted c r) :
     ‖q‖ ≤ ‖g‖⁻¹ * ‖f‖ := by
-  rw [le_inv_mul_iff₀ hg.toIsDistinguished.norm_pos]
+  rw [le_inv_mul_iff₀ hg.norm_pos]
   exact (le_max_left _ _).trans (max_norm_le_of_eq_mul_add_of_isMulDistinguished hg hr hf)
 
 /-- The remainder bound: `‖r‖ ≤ ‖f‖`. -/
@@ -143,7 +146,7 @@ lemma exists_lt_one_norm_sub_toRestricted_trunc_le_of_isMulDistinguished
     ∃ θ : ℝ, 0 < θ ∧ θ < 1 ∧
       ‖g - Polynomial.toRestricted c (trunc (s + 1) g.1)‖ ≤ θ * ‖g‖ := by
   set d := g - Polynomial.toRestricted c (trunc (s + 1) g.1) with hd_def
-  have hg_pos : 0 < ‖g‖ := hg.toIsDistinguished.norm_pos
+  have hg_pos : 0 < ‖g‖ := hg.norm_pos
   have hd_coeff : ∀ k, coeff k d.1 = if k < s + 1 then 0 else coeff k g.1 := by
     intro k
     rw [hd_def, show (g - Polynomial.toRestricted c (trunc (s + 1) g.1)).1
@@ -162,7 +165,7 @@ lemma exists_lt_one_norm_sub_toRestricted_trunc_le_of_isMulDistinguished
     have ht_coeff : coeff t d.1 = coeff t g.1 := by rw [hd_coeff t, if_neg (by omega)]
     have hd_lt : ‖d‖ < ‖g‖ := by
       rw [ht_eq, ht_coeff]
-      exact (hg.gaussTerm_lt t ht_gt).trans_eq hg.toIsDistinguished.norm_coeff_mul_pow_eq
+      exact (hg.gaussTerm_lt t ht_gt).trans_eq hg.norm_coeff_mul_pow_eq
     refine ⟨max (1 / 2) (‖d‖ / ‖g‖), lt_of_lt_of_le (by norm_num) (le_max_left _ _),
       max_lt (by norm_num) ((div_lt_one hg_pos).mpr hd_lt), ?_⟩
     calc ‖d‖ = ‖d‖ / ‖g‖ * ‖g‖ := (div_mul_cancel₀ ‖d‖ hg_pos.ne').symm
@@ -178,8 +181,8 @@ lemma exists_approx_div_of_isMulDistinguished {g : Restricted A c} {s : ℕ}
     ∃ (q : Restricted A c) (r : Polynomial A), r.degree < s ∧
       ‖q‖ ≤ ‖g‖⁻¹ * ‖f‖ ∧
       ‖f - (g * q + Polynomial.toRestricted c r)‖ ≤ θ * ‖f‖ := by
-  haveI hntA : Nontrivial A := hg.toIsDistinguished.nontrivial
-  have hg_pos : 0 < ‖g‖ := hg.toIsDistinguished.norm_pos
+  haveI hntA : Nontrivial A := hg.nontrivial
+  have hg_pos : 0 < ‖g‖ := hg.norm_pos
   by_cases hf0 : f = 0
   · refine ⟨0, 0, ?_, ?_, ?_⟩
     · simp
@@ -210,8 +213,8 @@ lemma exists_approx_div_of_isMulDistinguished {g : Restricted A c} {s : ℕ}
       have hcoeff_s : coeff s g'.1 = coeff s g.1 := by
         rw [hg'_def, hg'p_def, Polynomial.val_toRestricted, Polynomial.coeff_coe,
           PowerSeries.coeff_trunc, if_pos (Nat.lt_succ_self s)]
-      rw [← hg'_dist.toIsDistinguished.norm_coeff_mul_pow_eq, hcoeff_s,
-        hg.toIsDistinguished.norm_coeff_mul_pow_eq]
+      rw [← hg'_dist.norm_coeff_mul_pow_eq, hcoeff_s,
+        hg.norm_coeff_mul_pow_eq]
     -- Truncate the dividend to a polynomial `f'p` close to `f` in Gauss norm.
     obtain ⟨N, hN⟩ := exists_norm_sub_toRestricted_trunc_le f (mul_pos hθ0 hf_pos)
     set f'p : Polynomial A := trunc N f.1 with hf'p_def
@@ -314,7 +317,7 @@ lemma isClosed_divisionSet_of_isMulDistinguished [CompleteSpace A]
   have diff_deg : ∀ n m, (r_seq n - r_seq m).degree < s := fun n m ↦
     (Polynomial.degree_sub_le _ _).trans_lt (max_lt (hr_seq n) (hr_seq m))
   have hq_cauchy : CauchySeq q_seq :=
-    cauchySeq_of_norm_sub_le hb_lim.cauchySeq (inv_nonneg.mpr hg.toIsDistinguished.norm_pos.le)
+    cauchySeq_of_norm_sub_le hb_lim.cauchySeq (inv_nonneg.mpr hg.norm_pos.le)
       fun n m ↦ norm_q_le_of_eq_mul_add_of_isMulDistinguished hg (diff_deg n m) (diff_eq n m)
   have hr_cauchy : CauchySeq fun n ↦ Polynomial.toRestricted c (r_seq n) :=
     cauchySeq_of_norm_sub_le hb_lim.cauchySeq zero_le_one fun n m ↦ by
@@ -343,5 +346,49 @@ theorem weierstrassDivision_exists_of_isMulDistinguished [CompleteSpace A]
       f = g * q + Polynomial.toRestricted c r :=
   (isClosed_divisionSet_of_isMulDistinguished hg).closure_subset
     (mem_closure_divisionSet_of_isMulDistinguished hg f)
+
+/-- **Weierstrass division for polynomials** (Martin hypothesis): if `f` and `g` are
+polynomials, with `g` Martin-distinguished of degree `s`, the Weierstrass quotient is itself
+a polynomial — no completeness or scaling hypotheses: the division is Euclidean division by
+the unit-rescaled monic divisor, and agreement with any other witness is quotient
+uniqueness.
+
+The hypothesis `hgs` is necessary: over `ℤ_p` at radius `1` the polynomial
+`g = X ^ s + p • X ^ (s + 1)` is distinguished of degree `s`, but dividing `f = X ^ s` by it
+gives `q = (1 + p • X)⁻¹`, which is not a polynomial. -/
+theorem weierstrassDivision_polynomial_of_isMulDistinguished {g₀ : Polynomial A} {s : ℕ}
+    (hg : IsMulDistinguished c (Polynomial.toRestricted c g₀).1 s) (hgs : g₀.degree ≤ s)
+    (f₀ : Polynomial A) :
+    ∃! q : Polynomial A, ∃! r : Polynomial A, r.degree < s ∧
+      Polynomial.toRestricted c f₀ = Polynomial.toRestricted c g₀ * Polynomial.toRestricted c q
+        + Polynomial.toRestricted c r := by
+  have hnt : Nontrivial A := hg.nontrivial
+  obtain ⟨u, hu⟩ : IsUnit (g₀.coeff s) := by
+    have h1 := hg.isNormMulUnit_coeff.isUnit
+    rwa [Polynomial.val_toRestricted, Polynomial.coeff_coe] at h1
+  have hdeg : g₀.degree = s := le_antisymm hgs (Polynomial.le_degree_of_ne_zero (hu ▸ u.ne_zero))
+  have hlead : g₀.leadingCoeff = g₀.coeff s :=
+    congrArg g₀.coeff (Polynomial.natDegree_eq_of_degree_eq_some hdeg)
+  have hmonic : (Polynomial.C (↑u⁻¹ : A) * g₀).Monic :=
+    Polynomial.monic_C_mul_of_mul_leadingCoeff_eq_one (by rw [hlead, ← hu, Units.inv_mul])
+  have hdeg₁ : (Polynomial.C (↑u⁻¹ : A) * g₀).degree = s :=
+    (Polynomial.degree_C_mul_of_isUnit (u⁻¹).isUnit g₀).trans hdeg
+  have hr₁ : (f₀ %ₘ (Polynomial.C (↑u⁻¹ : A) * g₀)).degree < s :=
+    hdeg₁ ▸ Polynomial.degree_modByMonic_lt f₀ hmonic
+  have hf₁ : Polynomial.toRestricted c f₀ = Polynomial.toRestricted c g₀ *
+      Polynomial.toRestricted c (Polynomial.C (↑u⁻¹ : A) *
+        (f₀ /ₘ (Polynomial.C (↑u⁻¹ : A) * g₀))) +
+      Polynomial.toRestricted c (f₀ %ₘ (Polynomial.C (↑u⁻¹ : A) * g₀)) := by
+    rw [← map_mul, ← map_add]
+    congr 1
+    conv_lhs => rw [← Polynomial.modByMonic_add_div f₀ (Polynomial.C (↑u⁻¹ : A) * g₀)]
+    ring
+  refine ⟨Polynomial.C (↑u⁻¹ : A) * (f₀ /ₘ (Polynomial.C (↑u⁻¹ : A) * g₀)),
+    ⟨f₀ %ₘ (Polynomial.C (↑u⁻¹ : A) * g₀), ⟨hr₁, hf₁⟩, ?_⟩, ?_⟩
+  · rintro r'' ⟨-, hf''⟩
+    exact Polynomial.toRestricted_injective c (add_left_cancel (hf''.symm.trans hf₁))
+  · rintro q' ⟨r', ⟨hr', hf'⟩, -⟩
+    exact Polynomial.toRestricted_injective c
+      (weierstrassDivision_q_unique_of_isMulDistinguished hg hr' hf' hr₁ hf₁)
 
 end PowerSeries.Restricted

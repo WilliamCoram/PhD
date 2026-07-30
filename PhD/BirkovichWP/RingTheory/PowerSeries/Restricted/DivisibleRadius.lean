@@ -5,8 +5,9 @@ Authors: William Coram
 -/
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.BaseChange
-import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.WeierstrassPrep
+import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.BaseChange
+import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.WeierstrassPrep
+import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.WeierstrassDivisionOracle
 
 /-! # Weierstrass division and preparation at every radius
 

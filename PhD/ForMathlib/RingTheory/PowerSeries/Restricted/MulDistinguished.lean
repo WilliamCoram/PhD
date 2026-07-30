@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.Martin.NormMulUnit
-import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Distinguished
+import PhD.ForMathlib.Analysis.Normed.Ring.NormMulUnit
+import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.GaussNorm
 import Mathlib.RingTheory.PowerSeries.Trunc
 
 /-! # `T`-distinguished series in Martin's sense, and his Lemma 1.26
@@ -42,23 +42,34 @@ structure IsMulDistinguished (c : ℝ) (f : PowerSeries A) (s : ℕ) : Prop wher
 
 variable {c : ℝ} {f : PowerSeries A} {s : ℕ}
 
-/-- Martin-distinguished series are distinguished in the project's sense. -/
-lemma IsMulDistinguished.toIsDistinguished (h : IsMulDistinguished c f s) :
-    IsDistinguished norm c f s :=
-  ⟨h.isNormMulUnit_coeff.isUnit, h.gaussNorm_eq, h.gaussTerm_lt⟩
+/-- A Martin-distinguished series forces the coefficient ring to be nontrivial.  (Native
+version, independent of `IsDistinguished`.) -/
+lemma IsMulDistinguished.nontrivial (hf : IsMulDistinguished c f s) : Nontrivial A :=
+  not_subsingleton_iff_nontrivial.mp fun _ ↦ by
+    simpa [Subsingleton.elim (coeff (s + 1) f) 0, Subsingleton.elim (coeff s f) 0] using
+      hf.gaussTerm_lt (s + 1) (lt_add_one s)
 
-/-- Over a multiplicatively-normed coefficient ring the two notions of distinguished
-coincide: every unit is a multiplicative unit. -/
-lemma isMulDistinguished_iff_isDistinguished [NormMulClass A] :
-    IsMulDistinguished c f s ↔ IsDistinguished norm c f s :=
-  ⟨fun h => h.toIsDistinguished,
-    fun h => ⟨h.isUnit_coeff.isNormMulUnit, h.gaussNorm_eq, h.gaussTerm_lt⟩⟩
+/-- A Martin-distinguished series is nonzero. -/
+lemma IsMulDistinguished.ne_zero [Nontrivial A] (hf : IsMulDistinguished c f s) : f ≠ 0 :=
+  fun h0 ↦ hf.isNormMulUnit_coeff.isUnit.ne_zero (by rw [h0, map_zero])
 
 end Def
 
 namespace Restricted
 
 variable {A : Type*} [NormedCommRing A] [IsUltrametricDist A] {c : ℝ} [Fact (0 < c)]
+
+/-- The `s`-th weighted coefficient norm of a Martin-distinguished restricted power series
+is its norm.  (Native version, independent of `IsDistinguished`.) -/
+lemma _root_.PowerSeries.IsMulDistinguished.norm_coeff_mul_pow_eq {s : ℕ} {l : Restricted A c}
+    (hl : IsMulDistinguished c l.1 s) : ‖coeff s l.1‖ * c ^ s = ‖l‖ :=
+  hl.gaussNorm_eq.symm.trans (norm_def c l).symm
+
+/-- A Martin-distinguished restricted power series has positive norm. -/
+lemma _root_.PowerSeries.IsMulDistinguished.norm_pos {s : ℕ} {l : Restricted A c}
+    (hl : IsMulDistinguished c l.1 s) : 0 < ‖l‖ :=
+  have : Nontrivial A := hl.nontrivial
+  norm_pos_iff.mpr fun h ↦ hl.ne_zero (congrArg Subtype.val h)
 
 /-- A nonzero restricted power series has a **greatest** index achieving its Gauss norm:
 the achieving set is nonempty (`exists_coeff_ne_zero_norm_eq`) and the Gauss terms tend
@@ -164,9 +175,9 @@ theorem norm_coeff_add_mul_of_isMulDistinguished {g q : Restricted A c} {s k₀ 
   by_cases hq0 : q = 0
   · simp [hq0]
   · have hq_pos : 0 < ‖q‖ := norm_pos_iff.mpr hq0
-    have hg_eq : ‖coeff s g.1‖ * c ^ s = ‖g‖ := hg.toIsDistinguished.norm_coeff_mul_pow_eq
+    have hg_eq : ‖coeff s g.1‖ * c ^ s = ‖g‖ := hg.norm_coeff_mul_pow_eq
     have hg_pos' : 0 < ‖coeff s g.1‖ * c ^ s :=
-      hg.toIsDistinguished.norm_pos.trans_eq hg_eq.symm
+      hg.norm_pos.trans_eq hg_eq.symm
     have hq_eq : ‖coeff k₀ q.1‖ * c ^ k₀ = ‖q‖ := hk.trans (norm_def c q).symm
     have hq_pos' : 0 < ‖coeff k₀ q.1‖ * c ^ k₀ := hq_pos.trans_eq hq_eq.symm
     have hdom : ∀ p ∈ Finset.antidiagonal (s + k₀), p ≠ (s, k₀) →
@@ -216,11 +227,28 @@ theorem norm_mul_of_isMulDistinguished {g : Restricted A c} {s : ℕ}
     refine le_antisymm (norm_mul_le g q) ?_
     calc ‖g‖ * ‖q‖
         = (‖coeff s g.1‖ * c ^ s) * (‖coeff k₀ q.1‖ * c ^ k₀) := by
-          rw [hg.toIsDistinguished.norm_coeff_mul_pow_eq, hk.trans (norm_def c q).symm]
+          rw [hg.norm_coeff_mul_pow_eq, hk.trans (norm_def c q).symm]
       _ = (‖coeff s g.1‖ * ‖coeff k₀ q.1‖) * c ^ (s + k₀) := by rw [pow_add]; ring
       _ = ‖coeff (s + k₀) (g * q).1‖ * c ^ (s + k₀) := by
           rw [norm_coeff_add_mul_of_isMulDistinguished hg hk hkmax]
       _ ≤ ‖g * q‖ := norm_coeff_mul_pow_le c (g * q) (s + k₀)
+
+/-- A monic polynomial of degree `s` whose restricted power series has norm `c ^ s` — its
+top Gauss term — is Martin-distinguished of degree `s` (its leading coefficient `1` is a
+multiplicative unit). -/
+lemma isMulDistinguished_toRestricted_of_monic [NormOneClass A] {ω : Polynomial A} {s : ℕ}
+    (ωm : ω.Monic) (ωd : ω.degree = s) (ωn : ‖Polynomial.toRestricted c ω‖ = c ^ s) :
+    IsMulDistinguished c (Polynomial.toRestricted c ω).1 s := by
+  have hcoeff : ∀ k, coeff k (Polynomial.toRestricted c ω).1 = ω.coeff k :=
+    Polynomial.coeff_coe ω
+  have h1 : coeff s (Polynomial.toRestricted c ω).1 = 1 := by
+    rw [hcoeff, ← Polynomial.natDegree_eq_of_degree_eq_some ωd]
+    exact ωm.coeff_natDegree
+  refine ⟨h1 ▸ isNormMulUnit_one, ?_, fun t ht ↦ ?_⟩
+  · rw [← norm_def, ωn, h1, norm_one, one_mul]
+  · rw [hcoeff, Polynomial.coeff_eq_zero_of_degree_lt (ωd ▸ Nat.cast_lt.mpr ht), norm_zero,
+      zero_mul, h1, norm_one, one_mul]
+    exact pow_pos Fact.out s
 
 end Restricted
 
