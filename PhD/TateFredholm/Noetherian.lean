@@ -14,8 +14,15 @@ submodules of the model space `c(I, R)` via Buzzard's injective-truncation trick
 
 This file quarantines every Noetherian hypothesis of the development; everything
 upstream is Noetherian-free.  Its headline is the bridge
-`IsCompletelyContinuous.isCompactoid`, which will make
-`isCompletelyContinuous_iff_rowNorm` unconditional on Noetherian bases.
+`IsCompletelyContinuous.isCompactoid`, which yields the compactness criterion
+`isCompletelyContinuous_iff_rowNorm` over Noetherian bases.
+
+What `isClosed_of_fg` supplies is exactly [Bel] Hypothesis 3.1.8 — "every finitely
+generated submodule of an ON-able Banach `A`-module is closed" — which the published
+*Eigenbook* assumes outright (noting it can fail) in order to drop Noetherianity, and
+which [Lud24, Remark 2.25] identifies as all that Buzzard's Lemma 2.3(3) needs.  So a
+reader who prefers Bellaïche's axiomatic route can bypass this file and hypothesise its
+conclusion; over a Noetherian Banach–Tate ring it is a theorem, proved here.
 -/
 
 open Filter Topology
@@ -511,10 +518,10 @@ theorem IsCompletelyContinuous.isCompactoid [IsTate R] [IsNoetherianRing R]
 
 /-- **The compactness criterion over a Noetherian Banach–Tate ring** ([JN]'s statement;
 [Bel] Proposition II.1.9): `u` is compact iff its row sups tend to `0` cofinitely.
-(Statement corrected 2026-07-10, b2 log: gained `[IsNoetherianRing R]` — the
-Noetherian-free version is refuted at the II.1.8 step; the Noetherian-free content
-lives in the split pair `IsCompactoid.isCompletelyContinuous` /
-`IsCompletelyContinuous.isCompactoid`.) -/
+
+The Noetherian hypothesis buys exactly [Bel] Hypothesis 3.1.8 (closedness of finitely
+generated submodules) via `isClosed_of_fg`; without it the `⇒` direction fails, while `⇐`
+(`IsCompactoid.isCompletelyContinuous`) holds over any Banach–Tate ring. -/
 theorem isCompletelyContinuous_iff_rowNorm [IsTate R] [IsNoetherianRing R]
     (u : c(I, R) →L[R] c(J, R)) :
     IsCompletelyContinuous u ↔ Tendsto (rowNorm u) cofinite (𝓝 0) :=

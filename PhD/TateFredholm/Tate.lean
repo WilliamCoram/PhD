@@ -3,6 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
+import PhD.ForMathlib.Analysis.Normed.Ring.NegLogNorm
 import Mathlib.Algebra.Module.Projective
 import Mathlib.Algebra.Order.Floor.Defs
 import Mathlib.Algebra.Polynomial.Basic
@@ -73,6 +74,8 @@ and compatible.  This development records their common refinement:
 * `Noetherian.lean` — closedness of finitely generated submodules over Noetherian bases
   ([FvdP] 1.2.3, [Buz07] Lemma 2.3) and the bridge from `IsCompletelyContinuous` to
   `IsCompactoid`
+* `AddVal.lean` — the seam between `v_ϖ` and `ForMathlib`'s additive-valuation API: over an
+  ultrametric normed field the two agree up to the normalisation `-log ‖ϖ‖`
 
 ## How the three blueprints are recovered
 
@@ -114,7 +117,9 @@ merged ones.
 | ---------------------------------------- | ------------ | ----------- | --------- |
 | `IsMultiplicative`, `PseudoUniformizer`, `IsTate` | —    | Def 2.1.1–2 | —         |
 | `isTate_of_normedAlgebra` (the bridge)   | —            | —           | —         |
-| `PseudoUniformizer.val`                  | —            | Def 2.1.2   | ch. 5     |
+| `negLogNorm` (`ForMathlib`)              | —            | —           | —         |
+| `PseudoUniformizer.val` (`WithTop ℝ`, `v_ϖ`) | —        | Def 2.1.2   | ch. 5     |
+| `PseudoUniformizer.val_eq_map_normAddVal` (`AddVal.lean`) | — | —      | —         |
 | `instNorm`, `le_opNorm`, `norm_add_le`   | II.1.1       | Def 2.1.4   | 6.8–6.10  |
 | `exists_preimage_norm_le` (OMT)          | II.1.1       | Def 2.1.4   | —         |
 | `IsFiniteRank`, `IsCompletelyContinuous` | Def II.1.3   | Def 2.1.5   | 6.13      |
@@ -122,7 +127,7 @@ merged ones.
 | `cSpace` (`c(I, R)`), `single`           | Ex II.1.7    | Def 2.1.5   | 6.3–6.5   |
 | `IsONable`, `IsPotentiallyONable`, `HasPr` | Def II.1.5–6, §II.1.6 | Def 2.1.5 | 6.6 |
 | `matrixCoeff`, `norm_eq_iSup_matrixCoeff`, `exists_coeffEquiv` | §II.1.3 | p.65 | 6.11 |
-| `truncation`, `exists_truncation_near` (+ `IsClosed`, see b2 log) | Lem II.1.8 | — | — |
+| `truncation`, `exists_truncation_near` (+ `IsClosed` = Hyp 3.1.8) | Lem 3.1.12 / II.1.8 | — | — |
 | `IsCompactoid` (row decay; the working notion, **no Noetherian**) | — | §2.2 usage | 6.14 |
 | `IsCompactoid.isCompletelyContinuous` (**no Noetherian**) | Prop II.1.9 ⇐ | — | — |
 | `IsCompletelyContinuous.isCompactoid`, `isCompletelyContinuous_iff_rowNorm` (**Noetherian**, `Noetherian.lean`) | Prop II.1.9 ⇒ | Def 2.1.5 | 6.14 |
@@ -210,18 +215,138 @@ development, replacing `[NormedAlgebra K R]` of the field-based blueprints. -/
 class IsTate (A : Type*) [NormedRing A] : Prop where
   nonempty_pseudoUniformizer : Nonempty (PseudoUniformizer A)
 
-/-- The additive valuation `v_ϖ(r) = −log_a ‖r‖`, `a = ‖ϖ‖⁻¹`, normalised so
-`v_ϖ(ϖ) = 1` ([JN] Definition 2.1.2) — the bridge to Newton polygons and slopes. -/
-def PseudoUniformizer.val (ϖ : PseudoUniformizer A) (r : A) : ℝ :=
-  -(Real.log ‖r‖ / Real.log ‖(ϖ : A)‖⁻¹)
+/-- Every nontrivially normed field is Tate: an element of norm in `(0, 1)` is a unit, and
+multiplicativity of the field norm makes it a pseudo-uniformizer.  This is the instance
+that exhibits the Banach–Tate results as generalisations of their Mathlib counterparts —
+see `TateFredholm.exists_preimage_norm_le`. -/
+instance (K : Type*) [NontriviallyNormedField K] : IsTate K :=
+  let ⟨x, hx_pos, hx_lt⟩ := NormedField.exists_norm_lt_one K
+  ⟨⟨Units.mk0 x (by simpa using hx_pos.ne'), hx_lt, fun y => norm_mul _ _⟩⟩
 
-/-- The valuation is normalised so that `v_ϖ(ϖ) = 1`. -/
-@[simp] theorem PseudoUniformizer.val_self [Nontrivial A] (ϖ : PseudoUniformizer A) :
-    ϖ.val (ϖ : A) = 1 := by
-  have hlog : Real.log ‖(ϖ : A)‖ < 0 :=
-    Real.log_neg ϖ.norm_pos (by rw [PseudoUniformizer.coe_eq]; exact ϖ.norm_lt_one)
-  show -(Real.log ‖(ϖ : A)‖ / Real.log ‖(ϖ : A)‖⁻¹) = 1
-  rw [Real.log_inv, div_neg, div_self hlog.ne, neg_neg]
+/-- The logarithm of `‖ϖ‖` is negative — the normalising constant of `PseudoUniformizer.val`. -/
+theorem PseudoUniformizer.log_norm_neg [Nontrivial A] (ϖ : PseudoUniformizer A) :
+    Real.log ‖(ϖ : A)‖ < 0 :=
+  Real.log_neg ϖ.norm_pos (by rw [PseudoUniformizer.coe_eq]; exact ϖ.norm_lt_one)
+
+/-- The additive valuation `v_ϖ(r) = −log_a ‖r‖`, `a = ‖ϖ‖⁻¹`, normalised so `v_ϖ(ϖ) = 1`
+([JN] Definition 2.1.2) — the bridge to Newton polygons and slopes.
+
+Valued in `WithTop ℝ = ℝ ∪ {∞}` with `∞` at `0`.  Both halves of that matter: it is the shape
+`ForMathlib.NumberTheory.NewtonPolygon` consumes (`v : ℕ → WithTop Γ`), and the `∞` is what
+makes a vanishing coefficient drop out of the lower convex hull instead of sitting at height
+`0` — the generic situation for `charPowerSeries` of a finite-rank operator.
+
+**This is not an `AddValuation`.**  The norm of a Banach–Tate ring is only submultiplicative,
+so `v_ϖ` is only *super*additive on products (`val_mul_le`), with equality exactly under
+`[NormMulClass A]` (`val_mul`).  Over an ultrametric normed field it is
+`NormedField.normAddVal` rescaled by `-log ‖ϖ‖`; see `PhD/TateFredholm/AddVal.lean`. -/
+def PseudoUniformizer.val (ϖ : PseudoUniformizer A) (r : A) : WithTop ℝ :=
+  (AddMonoidHom.mulRight (-Real.log ‖(ϖ : A)‖)⁻¹).withTopMap (negLogNorm r)
+
+namespace PseudoUniformizer
+
+variable (ϖ : PseudoUniformizer A) {r s : A}
+
+theorem val_def (r : A) :
+    ϖ.val r = WithTop.map (· * (-Real.log ‖(ϖ : A)‖)⁻¹) (negLogNorm r) := rfl
+
+theorem val_strictMono [Nontrivial A] :
+    StrictMono (WithTop.map (· * (-Real.log ‖(ϖ : A)‖)⁻¹)) :=
+  StrictMono.withTop_map fun _ _ h ↦
+    mul_lt_mul_of_pos_right h (inv_pos.mpr (neg_pos.mpr ϖ.log_norm_neg))
+
+theorem val_monotone [Nontrivial A] :
+    Monotone (WithTop.map (· * (-Real.log ‖(ϖ : A)‖)⁻¹)) :=
+  ϖ.val_strictMono.monotone
+
+@[simp] theorem val_zero : ϖ.val 0 = ⊤ := by rw [val_def, negLogNorm_zero, WithTop.map_top]
+
+theorem val_of_ne_zero (h : r ≠ 0) :
+    ϖ.val r = ((Real.log ‖r‖ / Real.log ‖(ϖ : A)‖ : ℝ) : WithTop ℝ) := by
+  rw [val_def, negLogNorm_of_ne_zero h, WithTop.map_coe]
+  rw [show ∀ a b : ℝ, -a * (-b)⁻¹ = a / b from fun a b ↦ by
+    rw [← neg_inv, neg_mul_neg, div_eq_mul_inv]]
+
+@[simp] theorem val_eq_top : ϖ.val r = ⊤ ↔ r = 0 := by
+  rcases eq_or_ne r 0 with rfl | h
+  · simp
+  · simp [val_of_ne_zero ϖ h, h]
+
+theorem val_ne_top (h : r ≠ 0) : ϖ.val r ≠ ⊤ := by simpa using h
+
+/-- **The normalisation**: `v_ϖ(ϖ) = 1`. -/
+@[simp] theorem val_self [Nontrivial A] : ϖ.val (ϖ : A) = 1 := by
+  rw [val_of_ne_zero ϖ (norm_ne_zero_iff.mp ϖ.norm_pos.ne'), div_self ϖ.log_norm_neg.ne,
+    WithTop.coe_one]
+
+@[simp] theorem val_one [NormOneClass A] : ϖ.val (1 : A) = 0 := by
+  rw [val, negLogNorm_one A, map_zero]
+
+/-- **The order reversal.**  Larger norm means smaller valuation; valid at `0` with no side
+condition.  The workhorse of every slope comparison. -/
+theorem val_le_val_iff [Nontrivial A] : ϖ.val r ≤ ϖ.val s ↔ ‖s‖ ≤ ‖r‖ := by
+  rw [val_def, val_def, ϖ.val_strictMono.le_iff_le, negLogNorm_le_negLogNorm]
+
+theorem val_lt_val_iff [Nontrivial A] : ϖ.val r < ϖ.val s ↔ ‖s‖ < ‖r‖ :=
+  lt_iff_lt_of_le_iff_le ϖ.val_le_val_iff
+
+/-- **Submultiplicativity, additively.**  Only an inequality; see `val_mul`. -/
+theorem val_mul_le [Nontrivial A] (r s : A) : ϖ.val r + ϖ.val s ≤ ϖ.val (r * s) := by
+  rw [val, val, val, ← map_add]
+  exact ϖ.val_monotone add_negLogNorm_le_negLogNorm_mul
+
+/-- When the norm is multiplicative, `v_ϖ` is an honest additive valuation. -/
+theorem val_mul [NormMulClass A] (r s : A) : ϖ.val (r * s) = ϖ.val r + ϖ.val s := by
+  rw [val, val, val, negLogNorm_mul, map_add]
+
+/-- **The ultrametric bound.** -/
+theorem le_val_add [IsUltrametricDist A] [Nontrivial A] (r s : A) :
+    min (ϖ.val r) (ϖ.val s) ≤ ϖ.val (r + s) := by
+  rw [val_def, val_def, val_def, ← ϖ.val_monotone.map_min]
+  exact ϖ.val_monotone le_negLogNorm_add
+
+/-- The valuation is nonnegative exactly on the elements of norm at most one. -/
+theorem val_nonneg_iff [NormOneClass A] [Nontrivial A] : 0 ≤ ϖ.val r ↔ ‖r‖ ≤ 1 := by
+  rw [← ϖ.val_one, ϖ.val_le_val_iff, norm_one]
+
+/-- Inverse scaling: `‖ϖ⁻¹ r‖ = ‖ϖ‖⁻¹‖r‖`. -/
+theorem norm_inv_mul [NormOneClass A] [Nontrivial A] (r : A) :
+    ‖((ϖ.unit⁻¹ : Aˣ) : A) * r‖ = ‖(ϖ : A)‖⁻¹ * ‖r‖ := by
+  have h := ϖ.isMultiplicative (((ϖ.unit⁻¹ : Aˣ) : A) * r)
+  rw [← mul_assoc, PseudoUniformizer.coe_eq, Units.mul_inv, one_mul] at h
+  rw [h, ← mul_assoc, inv_mul_cancel₀ ϖ.norm_pos.ne', one_mul]
+
+/-- Integer powers of `ϖ` scale the norm exactly: `‖ϖⁿ‖ = ‖ϖ‖ⁿ`. -/
+theorem norm_zpow [NormOneClass A] [Nontrivial A] (n : ℤ) :
+    ‖((ϖ.unit ^ n : Aˣ) : A)‖ = ‖(ϖ : A)‖ ^ n := by
+  induction n using Int.induction_on with
+  | zero => simp
+  | succ k ih =>
+      rw [add_comm (k : ℤ) 1, zpow_one_add, Units.val_mul, ← PseudoUniformizer.coe_eq,
+        ϖ.isMultiplicative, ih, zpow_one_add₀ ϖ.norm_pos.ne']
+  | pred k ih =>
+      rw [show (-(k : ℤ) - 1) = -1 + -(k : ℤ) by ring, zpow_add, zpow_neg, zpow_one,
+        Units.val_mul, ϖ.norm_inv_mul, ih, zpow_add₀ ϖ.norm_pos.ne']
+      simp
+
+/-- **`v_ϖ` attains every integer**, on the integer powers of `ϖ`.  This is what makes the value
+set unbounded in both directions, and is the source of the vertices of a Newton polygon. -/
+@[simp] theorem val_zpow_self [NormOneClass A] [Nontrivial A] (n : ℤ) :
+    ϖ.val ((ϖ.unit ^ n : Aˣ) : A) = (n : ℝ) := by
+  rw [val_of_ne_zero ϖ (Units.ne_zero _), ϖ.norm_zpow, Real.log_zpow,
+    mul_div_assoc, div_self ϖ.log_norm_neg.ne, mul_one]
+
+/-- **`‖r‖ = ‖ϖ‖ ^ q`.**  The inverse dictionary: the norm is `‖ϖ‖` raised to the valuation.
+Mirrors `NormedField.norm_eq_norm_rpow_normAddValQ`. -/
+theorem norm_eq_rpow_val [Nontrivial A] {q : ℝ} (h : ϖ.val r = (q : WithTop ℝ)) :
+    ‖r‖ = ‖(ϖ : A)‖ ^ q := by
+  have hr : r ≠ 0 := fun hr ↦ by simp [hr] at h
+  have hrpos : (0 : ℝ) < ‖r‖ := (norm_nonneg r).lt_of_ne' (norm_ne_zero_iff.mpr hr)
+  rw [val_of_ne_zero ϖ hr, WithTop.coe_inj] at h
+  rw [Real.rpow_def_of_pos ϖ.norm_pos, ← h, mul_div_cancel₀ _ ϖ.log_norm_neg.ne,
+    Real.exp_log hrpos]
+
+end PseudoUniformizer
 
 end Tate
 
@@ -240,7 +365,7 @@ theorem isTate_of_normedAlgebra (K : Type*) [NontriviallyNormedField K]
   have hnorm : ∀ x : A, ‖algebraMap K A lam * x‖ = ‖lam‖ * ‖x‖ := fun x => by
     rw [← Algebra.smul_def, norm_smul]
   have h1 : ‖algebraMap K A lam‖ = ‖lam‖ := by
-    simpa using hnorm 1
+    simp
   refine ⟨⟨⟨⟨algebraMap K A lam, algebraMap K A lam⁻¹, ?_, ?_⟩, ?_, ?_⟩⟩⟩
   · rw [← map_mul, mul_inv_cancel₀ hlamne, map_one]
   · rw [← map_mul, inv_mul_cancel₀ hlamne, map_one]

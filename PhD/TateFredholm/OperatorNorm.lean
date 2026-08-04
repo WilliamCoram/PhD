@@ -15,14 +15,66 @@ Boundedness of continuous maps and the Open Mapping Theorem are powered by `ϖ`-
 
 open Filter Topology
 
-set_option linter.unusedSectionVars false
-
 noncomputable section
 
 namespace TateFredholm
 
-variable (R : Type*) [NormedCommRing R] [IsUltrametricDist R] [CompleteSpace R]
-  [NormOneClass R]
+/-! ### The operator norm, in minimal generality
+
+The `sInf` formula and the facts that follow from it by pure order theory need no
+scalar norm, no boundedness of `•`, and no completeness: a semiring of scalars and
+seminorms on the modules suffice.  Everything from `le_opNorm` onwards genuinely needs
+the Banach–Tate hypotheses, and is stated in the `Modules` section below. -/
+
+section OperatorNorm
+
+section SemiringScalars
+
+variable {R : Type*} [Semiring R] {M N : Type*}
+  [SeminormedAddCommGroup M] [Module R M] [SeminormedAddCommGroup N] [Module R N]
+
+/-- The operator norm on `Hom_R(M, N)` — scoped instance, `K`- and `ϖ`-free as a
+definition ([Bel] II.1.1, [JN] Definition 2.1.4, blueprint 6.8/6.10). -/
+scoped instance instNorm : Norm (M →L[R] N) :=
+  ⟨fun u => sInf {c : ℝ | 0 ≤ c ∧ ∀ x, ‖u x‖ ≤ c * ‖x‖}⟩
+
+theorem norm_def (u : M →L[R] N) :
+    ‖u‖ = sInf {c : ℝ | 0 ≤ c ∧ ∀ x, ‖u x‖ ≤ c * ‖x‖} := rfl
+
+/-- The operator norm is nonnegative (with the convention `sInf ∅ = 0` this needs no
+boundedness). -/
+theorem opNorm_nonneg (u : M →L[R] N) : 0 ≤ ‖u‖ :=
+  Real.sInf_nonneg fun _ hc => hc.1
+
+/-- Any uniform bound witnesses an upper bound for the operator norm. -/
+theorem opNorm_le_of_forall (u : M →L[R] N) {C : ℝ} (h0 : 0 ≤ C)
+    (h : ∀ x, ‖u x‖ ≤ C * ‖x‖) : ‖u‖ ≤ C :=
+  csInf_le ⟨0, fun _ hc => hc.1⟩ ⟨h0, h⟩
+
+@[simp] theorem opNorm_zero : ‖(0 : M →L[R] N)‖ = 0 :=
+  le_antisymm (opNorm_le_of_forall _ le_rfl fun x => by simp) (opNorm_nonneg _)
+
+end SemiringScalars
+
+section RingScalars
+
+/-! Negation and subtraction of continuous linear maps are `Ring`-scalar notions in
+Mathlib, so the two lemmas that mention them ask for that much and no more. -/
+
+variable {R : Type*} [Ring R] {M N : Type*}
+  [SeminormedAddCommGroup M] [Module R M] [SeminormedAddCommGroup N] [Module R N]
+
+@[simp] theorem opNorm_neg (u : M →L[R] N) : ‖-u‖ = ‖u‖ := by
+  simp only [norm_def, neg_apply, norm_neg]
+
+theorem opNorm_sub_comm (u v : M →L[R] N) : ‖u - v‖ = ‖v - u‖ := by
+  rw [← opNorm_neg, neg_sub]
+
+end RingScalars
+
+end OperatorNorm
+
+variable (R : Type*) [NormedCommRing R] [NormOneClass R]
 
 section Modules
 
@@ -72,33 +124,6 @@ theorem norm_pseudoUniformizer_zpow_smul (ϖ : PseudoUniformizer R) (n : ℤ) (m
       rw [zpow_sub_one, Units.val_mul, mul_smul, ih, norm_pseudoUniformizer_inv_smul,
         zpow_sub_one₀ ϖ.norm_pos.ne']
       ring
-
-/-- The operator norm on `Hom_R(M, N)` — scoped instance, `K`- and `ϖ`-free as a
-definition ([Bel] II.1.1, [JN] Definition 2.1.4, blueprint 6.8/6.10). -/
-scoped instance instNorm : Norm (M →L[R] N) :=
-  ⟨fun u => sInf {c : ℝ | 0 ≤ c ∧ ∀ x, ‖u x‖ ≤ c * ‖x‖}⟩
-
-theorem norm_def (u : M →L[R] N) :
-    ‖u‖ = sInf {c : ℝ | 0 ≤ c ∧ ∀ x, ‖u x‖ ≤ c * ‖x‖} := rfl
-
-/-- The operator norm is nonnegative (with the convention `sInf ∅ = 0` this needs no
-boundedness). -/
-theorem opNorm_nonneg (u : M →L[R] N) : 0 ≤ ‖u‖ :=
-  Real.sInf_nonneg fun _ hc => hc.1
-
-/-- Any uniform bound witnesses an upper bound for the operator norm. -/
-theorem opNorm_le_of_forall (u : M →L[R] N) {C : ℝ} (h0 : 0 ≤ C)
-    (h : ∀ x, ‖u x‖ ≤ C * ‖x‖) : ‖u‖ ≤ C :=
-  csInf_le ⟨0, fun _ hc => hc.1⟩ ⟨h0, h⟩
-
-@[simp] theorem opNorm_zero : ‖(0 : M →L[R] N)‖ = 0 :=
-  le_antisymm (opNorm_le_of_forall _ le_rfl fun x => by simp) (opNorm_nonneg _)
-
-@[simp] theorem opNorm_neg (u : M →L[R] N) : ‖-u‖ = ‖u‖ := by
-  simp only [norm_def, ContinuousLinearMap.neg_apply, norm_neg]
-
-theorem opNorm_sub_comm (u v : M →L[R] N) : ‖u - v‖ = ‖v - u‖ := by
-  rw [← opNorm_neg, neg_sub]
 
 variable [IsTate R]
 
@@ -258,6 +283,7 @@ theorem exists_lim_of_cauchySeq [CompleteSpace N] (u : ℕ → M →L[R] N)
   _ ≤ ε / 2 := hle
   _ < ε := by linarith
 
+omit [IsTate R] in
 /-- Rescaling to a shell by an integer power of `ϖ` — the pseudo-uniformizer analogue of
 Mathlib's `rescale_to_shell` (which rescales by a field scalar `c` with `1 < ‖c‖`).  Given
 `ε > 0` and `y ≠ 0`, some power `ϖ ^ j` scales `y` into the annulus `(ε‖ϖ‖, ε]`.  The
@@ -412,9 +438,13 @@ private theorem exists_approx_preimage_norm_le [CompleteSpace N]
     exact ⟨x', by rw [dist_eq_norm]; exact hJ, hK⟩
 
 /-- **Quantitative Open Mapping Theorem over a Banach–Tate ring** ([Bel] II.1.1 over a
-field; [JN] Definition 2.1.4 citing [Hub94, Lemma 2.4(i)] in this generality).  A genuine
-Mathlib gap: Mathlib's Banach theorem requires `NontriviallyNormedField` scalars; the
-Tate proof is Baire + `ϖ`-scaling. -/
+field; [JN] Definition 2.1.4 citing [Hub94, Lemma 2.4(i)] in this generality).
+
+This generalises Mathlib's `ContinuousLinearMap.exists_preimage_norm_le` in the scalar
+direction: Mathlib's version needs `NontriviallyNormedField` scalars, whereas Baire plus
+`ϖ`-scaling only needs a pseudo-uniformizer.  Every nontrivially normed field is `IsTate`,
+so specialising `R` to one recovers Mathlib's statement for `σ = RingHom.id`; the
+`σ`-semilinear case is the part Mathlib covers and this does not. -/
 theorem exists_preimage_norm_le [CompleteSpace M] [CompleteSpace N]
     (f : M →L[R] N) (hf : Function.Surjective f) :
     ∃ C > 0, ∀ n : N, ∃ m : M, f m = n ∧ ‖m‖ ≤ C * ‖n‖ := by
@@ -503,6 +533,7 @@ theorem opNorm_mul_le (f g : M →L[R] M) : ‖f * g‖ ≤ ‖f‖ * ‖g‖ :=
   _ ≤ ‖f‖ * (‖g‖ * ‖x‖) := mul_le_mul_of_nonneg_left (le_opNorm g x) (opNorm_nonneg f)
   _ = ‖f‖ * ‖g‖ * ‖x‖ := (mul_assoc _ _ _).symm
 
+omit [NormOneClass R] [IsBoundedSMul R M] [IsTate R] in
 /-- The identity operator has operator norm at most `1` (`‖id x‖ = ‖x‖ = 1·‖x‖`). -/
 theorem opNorm_one_le : ‖(1 : M →L[R] M)‖ ≤ 1 :=
   opNorm_le_of_forall _ zero_le_one fun x =>

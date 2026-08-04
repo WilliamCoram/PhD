@@ -166,10 +166,9 @@ theorem isMaximal_span_pi (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π‖ < 1)
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace K E] [IsUltrametricDist E]
   [CompleteSpace E]
 
--- **R5** (`exists_residue_approx`) is stated below `exists_residueBasis`, which proves it:
--- the original `∃ (ι : Type _)` phrasing bound a fresh universe independent of `E` and was
--- unprovable as written (b2 log, 2026-07-10); the corrected statement indexes by a subset
--- of `E`, as Serre's residue-basis construction produces.
+-- **R5** (`exists_residue_approx`) is stated below `exists_residueBasis`, which proves it.
+-- It indexes by a subset of `E`, as Serre's residue-basis construction produces: an
+-- `∃ (ι : Type _)` phrasing would bind a universe independent of `E` and be unprovable.
 
 /-- Private helper for **R6a**: the unit-ball case.  Iterating the one-step approximation
 `happrox` on the successively rescaled residuals `F n` (with `‖F n‖ ≤ 1`) produces cumulative
@@ -760,8 +759,8 @@ private theorem exists_residueBasis (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π
 
 /-- **R5.**  Residue-basis interface (quotient-free phrasing): there is a family of
 norm-one vectors whose residues mod `π` form a basis — spanning = one-step approximation,
-independence = norms detect residues.  Indexed by a subset of `E` (statement corrected
-2026-07-10, b2 log: the original `∃ ι : Type _` bound a universe independent of `E`). -/
+independence = norms detect residues.  The index is a subset of `E` rather than an
+existentially quantified type: `∃ ι : Type _` would bind a universe independent of `E`. -/
 theorem exists_residue_approx (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π‖ < 1)
     (hπmax : ∀ x : K, ‖x‖ < 1 → ‖x‖ ≤ ‖π‖)
     (hE : ∀ m : E, m ≠ 0 → ∃ n : ℤ, ‖m‖ = ‖π‖ ^ n) :

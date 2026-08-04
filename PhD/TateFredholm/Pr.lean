@@ -23,9 +23,9 @@ section Pr
 variable {R}
 variable {P : Type*} [NormedAddCommGroup P] [Module R P] [IsBoundedSMul R P]
 
-/-- Sub-ticket T030a: the lifting property for the model space itself — lift each basis
-vector with norm control (`exists_preimage_norm_le`) and assemble the bounded family into
-an operator via `exists_coeffEquiv`. -/
+-- The lifting property for the model space itself: lift each basis vector with norm
+-- control (`exists_preimage_norm_le`), then assemble the bounded family into an operator
+-- via `exists_coeffEquiv`.
 private theorem exists_lift_cSpace [IsTate R] {I : Type*} [DecidableEq I]
     {M N : Type*}
     [NormedAddCommGroup M] [Module R M] [IsBoundedSMul R M] [IsUltrametricDist M]
