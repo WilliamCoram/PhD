@@ -96,7 +96,7 @@ theorem mem_integralMatrices_iff {g : Matrix (Fin 2) (Fin 2) K₃} :
 instance path (`DivisionRing.toRatAlgebra` versus the adic-completion one — they are equal
 by `Subsingleton.elim`, but not syntactically) so downstream statements do not have to
 re-synthesise it. -/
-noncomputable def theta3 : (D ⊗[ℚ] K₃) →+* Matrix (Fin 2) (Fin 2) K₃ :=
+noncomputable def theta3 :=
   RingEquivClass.toRingEquiv (RigidificationAt.equiv (F := ℚ) (D := D) (v := v₃))
 
 /-- **B07a**: `θ₃` carries the local order into the integral matrices. -/
