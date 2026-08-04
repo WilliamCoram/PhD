@@ -134,7 +134,7 @@ merged ones.
 | `tendsto_truncation_comp`, `IsCompactoid.comp_left/right` | Schol II.1.10, Lem II.1.4 | — | — |
 | `isClosed_of_finite`, `isClosed_of_fg` (`Noetherian.lean`) | — | p. 7 remark | — |
 | `minor`, `summable_minor`, `charCoeff`, `charPowerSeries` | §II.1.5 | p.67 recipe | 6.16–6.17 |
-| `IsEntire`, `charPowerSeries_isEntire`   | Lem II.1.14  | `R{{T}}`    | 6.16(2)   |
+| `charPowerSeries_isEntire` (`PowerSeries.IsRestricted` at every radius) | Lem II.1.14 | `R{{T}}` | 6.16(2) |
 | `norm_charCoeff_sub_le` (quantitative)   | Lem II.1.15  | —           | 6.16(3)   |
 | `charCoeff_eq_det_coeff`                 | (II.1.2)     | —           | —         |
 | `charPowerSeries_comm` (trace property)  | Prop II.1.17 | —           | —         |
@@ -215,13 +215,30 @@ development, replacing `[NormedAlgebra K R]` of the field-based blueprints. -/
 class IsTate (A : Type*) [NormedRing A] : Prop where
   nonempty_pseudoUniformizer : Nonempty (PseudoUniformizer A)
 
+/-- In a normed division ring every nonzero element of norm `< 1` is a pseudo-uniformizer:
+`Units.mk0` supplies the unit and multiplicativity of the norm is automatic.
+
+Reach for this whenever the scaling element is a *specific* element of the field rather than
+an abstract parameter.  It turns the pseudo-uniformizer from a hypothesis into a definition,
+so the normalisation of `PseudoUniformizer.val` is a choice made once instead of a
+`(ϖ : PseudoUniformizer K) (hϖ : (ϖ : K) = …)` pair threaded through every statement. -/
+def PseudoUniformizer.ofNormLtOne {K : Type*} [NormedDivisionRing K] {x : K} (hx : x ≠ 0)
+    (h : ‖x‖ < 1) : PseudoUniformizer K where
+  unit := Units.mk0 x hx
+  norm_lt_one := h
+  isMultiplicative _ := norm_mul _ _
+
+@[simp] theorem PseudoUniformizer.coe_ofNormLtOne {K : Type*} [NormedDivisionRing K] {x : K}
+    (hx : x ≠ 0) (h : ‖x‖ < 1) :
+    ((PseudoUniformizer.ofNormLtOne hx h : PseudoUniformizer K) : K) = x := rfl
+
 /-- Every nontrivially normed field is Tate: an element of norm in `(0, 1)` is a unit, and
 multiplicativity of the field norm makes it a pseudo-uniformizer.  This is the instance
 that exhibits the Banach–Tate results as generalisations of their Mathlib counterparts —
 see `TateFredholm.exists_preimage_norm_le`. -/
 instance (K : Type*) [NontriviallyNormedField K] : IsTate K :=
   let ⟨x, hx_pos, hx_lt⟩ := NormedField.exists_norm_lt_one K
-  ⟨⟨Units.mk0 x (by simpa using hx_pos.ne'), hx_lt, fun y => norm_mul _ _⟩⟩
+  ⟨⟨PseudoUniformizer.ofNormLtOne (by simpa using hx_pos.ne') hx_lt⟩⟩
 
 /-- The logarithm of `‖ϖ‖` is negative — the normalising constant of `PseudoUniformizer.val`. -/
 theorem PseudoUniformizer.log_norm_neg [Nontrivial A] (ϖ : PseudoUniformizer A) :

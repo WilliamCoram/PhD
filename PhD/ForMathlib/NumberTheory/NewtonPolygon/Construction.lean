@@ -753,6 +753,30 @@ lemma newtonPolygon_lengths_final {n : ℕ}
         omega
   · simp at h1
 
+/-- A zero length in the constructed sequence forces a junk slope (`⊤`/`⊥`) at the same index:
+the only zero-length outputs are `tail` (slope `⊤`), `unboundedBelow` (slope `⊥`) and the
+terminated junk region (slope `⊤`); a `nextVertex` has nonzero length and the rays have
+length `⊤`. -/
+lemma newtonPolygon_slopes_of_lengths_eq_zero {n : ℕ} (h : newtonPolygon_lengths v n = 0) :
+    newtonPolygon_slopes v n = ⊤ ∨ newtonPolygon_slopes v n = ⊥ := by
+  unfold newtonPolygon_lengths at h
+  cases t : newtonPolygon v n with
+  | none => exact Or.inl (by simp [newtonPolygon_slopes, t, slopes'])
+  | some S =>
+    rw [t] at h
+    cases S with
+    | tail => exact Or.inl (by simp [newtonPolygon_slopes, t, slopes', slopes])
+    | unboundedBelow => exact Or.inr (by simp [newtonPolygon_slopes, t, slopes', slopes])
+    | limitingRay m => simp at h
+    | infiniteRay m => simp at h
+    | nextVertex j₀ j₁ l m =>
+      obtain ⟨i₀, i₁, hp⟩ := nextStep_nextVertex v t
+      have hl := nextVertex_l_eq v hp
+      have hlt := nextVertex_lt v hp
+      have h' : (l : WithTop ℕ) = 0 := h
+      have hl0 : l = 0 := by exact_mod_cast h'
+      omega
+
 /-- The slope sequence is monotone: `newtonPolygon_slopes_increasing'` gives strictness except
 into a `limitingRay`, and a terminated successor has the junk value `⊤`. -/
 lemma newtonPolygon_slopes_mono (n : ℕ) :

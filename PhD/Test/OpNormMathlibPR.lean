@@ -74,6 +74,29 @@ theorem opNorm_nonneg (f : E →SL[σ] F) : 0 ≤ ‖f‖ :=
 @[simp] theorem opNorm_zero : ‖(0 : E →SL[σ] F)‖ = 0 :=
   le_antisymm (opNorm_le_bound _ le_rfl fun _ => by simp) (opNorm_nonneg _)
 
+theorem opNorm_eq_of_bounds {φ : E →SL[σ] F} {M : ℝ} (M_nonneg : 0 ≤ M)
+    (h_above : ∀ x, ‖φ x‖ ≤ M * ‖x‖) (h_below : ∀ N ≥ 0, (∀ x, ‖φ x‖ ≤ N * ‖x‖) → M ≤ N) :
+    ‖φ‖ = M :=
+  le_antisymm (opNorm_le_bound φ M_nonneg h_above)
+    ((le_csInf_iff bounds_bddBelow ⟨M, M_nonneg, h_above⟩).mpr
+      fun N ⟨N_nonneg, hN⟩ => h_below N N_nonneg hN)
+
+/-- If `‖x‖ = 0` and `f` is continuous then `‖f x‖ = 0`.  Mathlib's proof is pure topology
+(`mem_closure_zero_iff_norm` + `map_zero`), so it never needed the field either — this is
+what lets the degenerate case of a *seminorm* be handled without any scaling. -/
+theorem norm_image_of_norm_eq_zero (f : E →SL[σ] F) {x : E} (hx : ‖x‖ = 0) : ‖f x‖ = 0 := by
+  rw [← mem_closure_zero_iff_norm, ← specializes_iff_mem_closure, ← map_zero f] at *
+  exact hx.map f.continuous
+
+theorem opNorm_le_bound' (f : E →SL[σ] F) {M : ℝ} (hMp : 0 ≤ M)
+    (hM : ∀ x, ‖x‖ ≠ 0 → ‖f x‖ ≤ M * ‖x‖) : ‖f‖ ≤ M :=
+  opNorm_le_bound f hMp fun x =>
+    (ne_or_eq ‖x‖ 0).elim (hM x) fun h => by
+      simp only [h, mul_zero, norm_image_of_norm_eq_zero f h, le_refl]
+
+theorem norm_id_le : ‖ContinuousLinearMap.id R E‖ ≤ 1 :=
+  opNorm_le_bound _ zero_le_one fun x => by simp
+
 end SemiringScalars
 
 /-! ### Ring scalars
@@ -97,16 +120,39 @@ theorem opNorm_sub_rev (f g : E →SL[σ] F) : ‖f - g‖ = ‖g - f‖ := by
 
 end RingScalars
 
-/-! ### What stays behind
+/-! ### The next tier: continuity ⇒ boundedness
 
 `bounds_nonempty` is where the scalars start to matter: it says the bound set is
 inhabited, i.e. that a continuous linear map is bounded.  Over a normed field that is
 `ContinuousLinearMap.bound`; over a Banach–Tate ring it is `TateFredholm.le_opNorm`,
-proved by `ϖ`-scaling.  There is no common generalisation, so this lemma and everything
-downstream of it (`isLeast_opNorm`, the `SeminormedAddCommGroup` structure on the hom
-space, …) keep their present hypotheses in the PR.
+proved by `ϖ`-scaling.
 
-The two instantiations below are the point of the exercise. -/
+These are *not* two parallel arguments.  Both scale a vector into a shell by a unit of
+controlled norm and unscale afterwards, and the field case is an instance of the Tate
+one: every `NontriviallyNormedField` is `IsTate` (the instance `TateFredholm.instIsTate`), so
+`le_opNorm` applies verbatim to a normed space over a normed field — see the `example`
+in the `Field` section below, which is a proof of Mathlib's statement.  So this tier
+generalises too, on hypotheses `[NormedRing R] [NormOneClass R] [IsTate R]` together
+with `[Module R M] [IsBoundedSMul R M]`: no commutativity (verified by rebuilding
+`OperatorNorm.lean` with `NormedRing` in place of `NormedCommRing`), and `IsBoundedSMul`
+in place of `NormedSpace`, exactly as in the tiers above.
+
+Two gaps remain before this tier could replace Mathlib's:
+
+* **Seminormed modules.**  `le_opNorm` currently needs `NormedAddCommGroup`, because it
+  argues by cases on `‖y‖ = 0` via `norm_pos_iff`.  This is a small edit rather than new
+  mathematics: the degenerate case needs no scaling at all, since
+  `norm_image_of_norm_eq_zero` above gives `‖u y‖ = 0` from continuity alone (pure
+  topology, tier 1), leaving the shell argument to handle only `0 < ‖y‖`.
+* **Semilinearity.**  For `f : M →SL[σ] N` the unscaling happens in `N` against
+  `σ(ϖ)`, and one needs `‖σ(ϖ)⁻¹ • w‖ = ‖σ(ϖ)‖⁻¹ ‖w‖`.  Submultiplicativity gives only
+  `‖a⁻¹‖ ≥ ‖a‖⁻¹`, the wrong direction, so `RingHomIsometric σ` alone is not enough:
+  one needs `σ` to carry pseudo-uniformizers to pseudo-uniformizers.  Over a field that
+  is automatic (the norm is multiplicative); over a Tate ring it is an extra hypothesis.
+
+So the honest scope of the PR is: tiers 1 and 2 generalise, tier 2 modulo the two gaps
+above; `isLeast_opNorm` and the `SeminormedAddCommGroup` structure on the hom space
+follow tier 2. -/
 
 section Field
 
@@ -124,6 +170,13 @@ example (f : E →SL[σ] F) : opNorm f = ContinuousLinearMap.opNorm f := rfl
 example (f : E →SL[σ] F) : ∃ c, c ∈ {c | 0 ≤ c ∧ ∀ x, ‖f x‖ ≤ c * ‖x‖} :=
   let ⟨M, hMp, hMb⟩ := f.bound
   ⟨M, hMp.le, hMb⟩
+
+/-- Tier 2 is not field-specific: the Tate `ϖ`-scaling proof *is* a proof of Mathlib's
+`le_opNorm` over a normed field, via the `IsTate` instance.  (`σ = RingHom.id` and
+normed — not seminormed — modules; those are the two gaps listed above.) -/
+example {E F : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E] [NormedAddCommGroup F]
+    [NormedSpace 𝕜 F] (f : E →L[𝕜] F) (x : E) : ‖f x‖ ≤ ‖f‖ * ‖x‖ :=
+  TateFredholm.le_opNorm f x
 
 end Field
 

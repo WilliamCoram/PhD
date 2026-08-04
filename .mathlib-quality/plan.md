@@ -1,127 +1,129 @@
-# Development Plan: Martin's Weierstrass division & preparation in full generality
+# Development Plan: test.lean refactor — blueprint §5.4–5.14 on the IsNewtonPolygonOf spec
+
+Started 2026-08-03. Predecessor board (IsNewtonPolygonOf spec, completed same day) archived in
+`archive-2026-08-newtonpolygon-spec/`.
 
 ## Goal
 
-Formalise §1.3 of [Mar16] at its stated generality — an **arbitrary ultrametric complete
-normed (commutative) ring `A`** and an **arbitrary radius `r > 0`** — in a new folder
-`PhD/Martin/`:
+Re-derive the full mathematical content of `PhD/Test/test.lean` (blueprint §5.4–5.14: Newton
+polygons of polynomials and power series over a complete ultrametric nontrivially-normed field,
+through purity, factorisation at breaks, root counting, radius of convergence, Weierstrass
+factorisation along the polygon, and power-series zero counting) in NEW files under
+`PhD/NewtonPolygons/`, with the agreed statement discipline:
 
-* **Proposition 1.27 (Weierstrass division).** For `g ∈ A{r⁻¹T}` `T`-distinguished of
-  order `s` (Def 1.24: `g_s` a *multiplicative unit*, `‖g_s‖rˢ = ‖g‖`, strict Gauss-term
-  dominance for `n > s` only), every `f` has a unique decomposition `f = gq + R` with
-  `deg R < s`, and `‖f‖ = max(‖g‖‖q‖, ‖R‖)`.
-* **Corollary 1.28 (Weierstrass preparation).** Such `g` factors uniquely as `g = e·w`,
-  `w` monic of degree `s`, `e` a multiplicative unit of `A{r⁻¹T}`.
+- **Workhorse lemmas** take a spec hypothesis: `(P : NewtonPolygon₀) (hP : IsNewtonPolygonOf
+  (coeffVal f) P)` plus structure-data hypotheses on `P` where needed (first slope, first
+  length, strictness `P.slopes 0 < P.slopes 1` for genuine-break facts).
+- **Headline results** also get construction-applied corollaries about
+  `newtonPolygon₀OfPowerSeries`, one line via `isNewtonPolygonOf_powerSeries`.
+- Facts that are genuinely representation-dependent (touching, strict-after-break) are proved
+  on the constructed polygon using the SpecConstruction walk layer, then transferred to
+  arbitrary spec'd `P` via height-uniqueness (`IsNewtonPolygonOf.height_eq`) where a spec-level
+  form is wanted.
 
-Main Lean statements (endpoints, in `PhD/Martin/`):
-
-```lean
-theorem PowerSeries.Restricted.weierstrassDivision_exists_of_isMulDistinguished
-    [NormedCommRing A] [IsUltrametricDist A] [CompleteSpace A] {c : ℝ} [Fact (0 < c)]
-    {g : Restricted A c} {s : ℕ} (hg : IsMulDistinguished c g.1 s) (f : Restricted A c) :
-    ∃ (q : Restricted A c) (r : Polynomial A), r.degree < s ∧
-      f = g * q + Polynomial.toRestricted c r
-
-theorem PowerSeries.Restricted.weierstrassPreparation_exists_of_isMulDistinguished
-    [NormedCommRing A] [IsUltrametricDist A] [CompleteSpace A] [NormOneClass A]
-    {c : ℝ} [Fact (0 < c)] {g : Restricted A c} {s : ℕ}
-    (hg : IsMulDistinguished c g.1 s) :
-    ∃ (ω : Polynomial A) (e : Restricted A c), ω.Monic ∧ ω.degree = s ∧
-      ‖Polynomial.toRestricted c ω‖ = c ^ s ∧ IsNormMulUnit e ∧
-      g = e * Polynomial.toRestricted c ω
-```
-
-plus norm equality (his (1.8)), q/r-uniqueness, and `[NormMulClass A]` bridge corollaries
-showing these subsume the project's oracle-free statements.
+**IMPORT POLICY (user-mandated, binding)**: new files import ONLY `Mathlib`,
+`PhD.ForMathlib.*`, `PhD.NewtonPolygons.*`. Specifically forbidden: `PhD.Test.*`,
+`PhD.LegacyCode.*` (= old ToPR), `PhD.WeierstrassPrep.*`, `PhD.BirkovichWP.*`.
+`PhD/Test/test.lean` is reference-only (it no longer compiles — its imports moved to
+LegacyCode/bad/).
 
 ## References
 
-- **[Mar16]** F. Martin, *Overconvergent subanalytic subsets in the framework of
-  Berkovich spaces*, J. EMS 18 (2016), 2405–2457, §1.3. Local copies:
-  `.mathlib-quality/references/martin-overconvergent-subanalytic.pdf` and text extraction
-  with line anchors `.mathlib-quality/references/martin-sec1.3.txt` (Def 1.20 @ :47,
-  Lemma 1.21 @ :50, Remark 1.22 @ :57, Def 1.24 @ :95, Lemma 1.26 @ :110,
-  Prop 1.27 @ :141, Cor 1.28 @ :221). Every leaf of the decomposition quotes this text.
-- Lang, *Algebra*, §IV.1 (Euclidean division by a polynomial with invertible leading
-  coefficient) — cited by Martin as [Lan02, 4.1.1].
+- **[BP]** `blueprint/src/chapter/NP.tex` §Properties (verbatim statements for 5.4–5.14).
+- **[T]** `PhD/Test/test.lean` — the complete, formerly-sorry-free formalisation on deprecated
+  APIs; the primary proof-route source. Line-anchored inventory in
+  `.mathlib-quality/references/test-inventory.md` (Section map: 5.4 @392, 5.5 @1175, 5.6
+  @420–626, 5.7 @627–1225, 5.8 @1226, 5.9 @1306, 5.10 @1351, 5.11 @1487–1920,
+  radius infra @1969–2099, 5.12 @2100–2550, 5.13 @2551–3228, 5.14 @3229–3553.)
+- Previous board's `decomposition.md` (archived) for the spec API's attack logs.
 
-## Mathlib/project inventory
+## Dependency map (inventoried 2026-08-03; all replacement files sorry-free)
 
-| Concept | Status | Action |
-|---------|--------|--------|
-| `A{r⁻¹T}` with Gauss sup norm | project: `PowerSeries.Restricted A c` (`[NormedRing]`/`[NormedCommRing] [IsUltrametricDist]`, `[Fact (0 < c)]`) | USE |
-| Completeness of `A{r⁻¹T}` | project: `CompleteSpace (Restricted R c)` (Complete.lean:65, from Mv) | USE |
-| `NormOneClass`, `IsUltrametricDist` instances for `Restricted` | project (GaussNorm.lean:278/285, from Mv) | USE |
-| Gauss-term attainment | project: `Restricted.exists_coeff_ne_zero_norm_eq` (GaussNorm.lean:213) | USE |
-| Coefficient bound `‖f_n‖cⁿ ≤ ‖f‖` | project: `norm_coeff_mul_pow_le` (GaussNorm.lean:220) | USE |
-| Dominant achieving pair | project: `exists_achievesGaussNorm_dominant_max` (GaussNorm.lean:188, NormMulClass-free) | USE |
-| Polynomial embedding + norm | project: `Polynomial.toRestricted`, `norm_toRestricted` (GaussNorm.lean:335+), `toRestricted_injective` | USE |
-| `divisionAddSubgroup`, `coeff_continuous`, `isClosed_setOf_coeff_eq_zero` | project WeierstrassDivision.lean:185–223, all `omit [NormMulClass R]` | USE |
-| Norm-equality/bounds/uniqueness for division | project WeierstrassDivision.lean:58–147 — **requires `[NormMulClass R]`** | RE-DERIVE under Martin's weaker hypothesis (this is Lemma 1.26's role) |
-| `isClosed_divisionSet`, `exists_toRestricted_eq_of_coeff_eq_zero` | project, but NormMulClass-bound resp. `private` | RE-DERIVE in Martin folder (same proofs, Martin bounds; note dedup for future PR) |
-| Truncation | mathlib `PowerSeries.trunc`, `coeff_trunc` (Trunc.lean:63), `degree_trunc_lt` (Trunc.lean:87) | USE |
-| Euclidean division by monic | mathlib `Polynomial.modByMonic_add_div` (Div.lean:259), `degree_modByMonic_lt` (Div.lean:147), `monic_C_mul_of_mul_leadingCoeff_eq_one` (Monic.lean:60) | USE |
-| `1 − t` invertible, `‖t‖ < 1`, complete ring | mathlib `Units.oneSub` (Analysis/Normed/Ring/Units.lean) | USE |
-| Geometric Cauchy sequences | mathlib `cauchySeq_of_le_geometric` (SpecificLimits/Basic.lean:528) | USE |
-| Multiplicative unit (Def 1.20) | **not in mathlib, not in project** | DEFINE `IsNormMulUnit` + API |
-| `T`-distinguished, Martin form (Def 1.24) | project has `IsDistinguished` (plain `IsUnit` coeff) | DEFINE `IsMulDistinguished` + bridge |
+| test.lean pillar | Replacement | Notes |
+|---|---|---|
+| ToPR.NewtonPolygon (algorithm) | `PhD.NewtonPolygons.{Height,Spec,SpecConstruction}` + `PhD.ForMathlib.NumberTheory.NewtonPolygon.*` | spec + walk layer + line bounds already proved |
+| Test.addVals2 (valuation) | `PhD.ForMathlib.RingTheory.Valuation.AddVal.*`, `PhD.ForMathlib.Analysis.Normed.Ring.NegLogNorm`, `PhD.ForMathlib.Topology.Algebra.Valued.AddVal` | exact bridge names: see §Valuation bridge below (pending final inventory) |
+| ToPR.GaussNorm | **Mathlib** `RingTheory/{Mv}PowerSeries/GaussNorm` + `PhD.ForMathlib.RingTheory.{PowerSeries,MvPowerSeries,Polynomial}.GaussNorm` | ⚠ never co-import `Mathlib.RingTheory.Polynomial.GaussNorm` (ForMathlib Polynomial/GaussNorm shadows it) |
+| ToPR.Restricted | `PhD.ForMathlib.RingTheory.PowerSeries.Restricted.{Basic,GaussNorm,Complete,Units}` | `PowerSeries.IsRestricted c f`, ring `PowerSeries.Restricted R c` |
+| WeierstrassPrep.WPrep_gen | `PhD.ForMathlib.RingTheory.PowerSeries.Restricted.{MulDistinguished,MulWeierstrassDivision,MulWeierstrassPrep}` (Martin §1.3) | `IsMulDistinguished c f s`; **`MemDivisibleValueGroup` hypothesis GONE** |
+| Test.DivValueGroup | **obsolete** | delete all uses; `memDivisibleValueGroup_exp_slope`(′), `exists_memDivisibleValueGroup_between` are dead code — NOT ported |
 
-## File structure (all new code in `PhD/Martin/`)
+Mechanical rename table (apply during porting):
+`Restricted.norm_eq → Restricted.norm_def` (c explicit) · `Restricted.gaussNorm_achieved' →
+Restricted.exists_achievesGaussNorm` · `Polynomial.toRestricted_mul/zero → map_mul/map_zero` ·
+`local instance …normMulClass → (delete; global instance under [Fact (0 < c)])` ·
+`[StrongPos …] → [Fact (0 < c)]` · `distinguishedGen → IsMulDistinguished` (field `unit`
+becomes `isNormMulUnit_coeff`; over a field build via `norm_mul`) ·
+`weierstrassPreparation_polynomial_divisible hdiv … → weierstrassPreparation_polynomial_of_isMulDistinguished`
+(drop `hdiv`) · `dominant_const_of_isUnit_toRestricted → Restricted.norm_coeff_lt_norm_constantCoeff_of_isUnit`
++ 3-line polynomial wrapper (micro-gap G1) · `PowerSeries.le_gaussNorm norm c x` → insert
+`HasGaussNorm` witness.
 
-- `PhD/Martin/NormMulUnit.lean` — `IsNormMulUnit` (Def 1.20), Lemma 1.21 characterisation,
-  inverse/product/one lemmas, Remark 1.22 (`1 + small`), `NormMulClass` bridge.
-- `PhD/Martin/Distinguished.lean` — `IsMulDistinguished` (Def 1.24), `toIsDistinguished`,
-  `NormMulClass` iff, greatest achieving index, truncation lemmas, **Lemma 1.26** (both parts).
-- `PhD/Martin/WeierstrassDivision.lean` — norm equality (1.8), bounds, uniqueness,
-  polynomial Euclidean step, one-step approximate division (1.11), density, closedness,
-  **Proposition 1.27**.
-- `PhD/Martin/WeierstrassPrep.lean` — quotient-unit chain, **Corollary 1.28**
-  (existence + uniqueness), `NormMulClass` bridge corollaries.
+Micro-gaps to fill in-board (small lemmas, not sub-developments):
+- **G1**: polynomial-flavoured `dominant_const_of_isUnit_toRestricted` wrapper (~3 lines).
+- **G2**: `Restricted.C_isUnit` / `C_one` conveniences (`IsUnit.map (Restricted.C c)`, `map_one`).
+- **G3**: everything `firstBreak`-flavoured — this board's actual subject.
 
-Imports flow: `NormMulUnit ← Distinguished ← WeierstrassDivision ← WeierstrassPrep`;
-`Distinguished` imports the project's `PowerSeries/Restricted/Distinguished.lean`;
-`WeierstrassDivision` imports the project's engine file for the reusable
-NormMulClass-free machinery. New code only in `PhD/Martin/` (user requirement); existing
-files are not modified.
+## Valuation bridge (RESOLVED)
 
-## Dependency graph
+`PhD.ForMathlib.Analysis.Normed.Ring.NegLogNorm` provides `negLogNorm : E → WithTop ℝ`
+(`[Norm E]`) with: `negLogNorm_zero : negLogNorm 0 = ⊤`, `negLogNorm_eq_top : = ⊤ ↔ r = 0`
+(norm-faithful setting), `negLogNorm_of_ne_zero : r ≠ 0 → negLogNorm r = (-Real.log ‖r‖ : ℝ)`,
+order-reversal `negLogNorm_le_negLogNorm : negLogNorm r ≤ negLogNorm s ↔ ‖s‖ ≤ ‖r‖` (+ strict),
+`le_negLogNorm_add` (ultrametric), `add_negLogNorm_le_negLogNorm_mul`, `negLogNorm_mul`
+(`[NormMulClass]`), `negLogNorm_one = 0`, `negLogNorm_nonneg_iff : 0 ≤ negLogNorm r ↔ ‖r‖ ≤ 1`.
+The bridge def is `coeffVal (f : PowerSeries K) : ℕ → WithTop ℝ := coeffSeq negLogNorm f`.
+Canonical base stays `e` ([T] lines 26–70 rationale). Admissibility: polynomials via a
+`Finset.min'` affine floor; restricted series via the Gauss-norm bound
+(`‖aₖ‖ cᵏ ≤ B ⟹ negLog aₖ ≥ k log c − log B`) through `isAdmissible_of_affine_bound`.
 
-```
-IsNormMulUnit API ──→ IsMulDistinguished ──→ Lemma 1.26(2) ──→ Lemma 1.26(1)
-                                     │                 │
-                    greatest-index, trunc lemmas       ▼
-                                     │        norm equality (1.8) ──→ bounds ──→ uniqueness
-                                     ▼                 │                  │
-                        Euclidean step ──→ one-step (1.11) ──→ density ──┐│
-                                                       closedness ───────┼┴→ Prop 1.27 (division)
-                                                                          │
-                       quotient-unit chain (needs 1.26(2), 1.22, division)┴→ Cor 1.28 (preparation)
-                                                                          → NormMulClass bridges
-```
+## File structure (all new, in PhD/NewtonPolygons/)
+
+- `CoeffVal.lean` — valuation bridge for `K` nontrivially-normed ultrametric field: `coeffVal`,
+  its API, admissibility lemmas, `isNewtonPolygonOf_coeffVal` (spec instance for polynomials /
+  restricted series), the `a₀ = 1 ⇒ anchored at origin` normalisation lemmas.
+- `FirstBreak.lean` — §5.4/5.5/5.6 + the break toolkit: `HasFirstBreak` (constructed-polygon
+  first-segment data: `slopes 0 = m ∧ lengths 0 = i`), points-on/above-line (spec-level ≤ via
+  `unitSlope_zero_mul_le`; construction-level strict via `nextStep_slope_lt`), touching,
+  `IsPureSeries`, `isPureSeries_iff_distinguished` (5.6, target predicate now
+  `IsMulDistinguished`), `distinguished_of_firstBreak`, `isPureSeries_of_irreducible` (5.5).
+- `PolynomialRoots.lean` — §5.7–5.11: factorisation at the first break (Martin WP, no
+  divisibility hypothesis), Gauss-norm bound below the first slope (5.8), no-zeros (5.9), root
+  counting at the first slope (5.10) and along the whole polygon (5.11); roots measured in
+  `AlgebraicClosure K` with an extending valuation `w`, exactly as [T].
+- `RadiusOfConvergence.lean` — [T] 1969–2099 infra: `radiusOfConvergence`, restricted ↔
+  summable, + §5.12 (`isRestricted_of_lt_slope`, `not_isRestricted_of_slopes_le`, the two
+  radius halves).
+- `PowerSeriesZeros.lean` — §5.13 (`exists_weierstrass_factorisation` along the polygon) and
+  §5.14 (zero counting via `HasSum` over a complete ultrametric extension `L`), as in [T]
+  2551–3553.
+
+Import DAG: CoeffVal → FirstBreak → PolynomialRoots → {RadiusOfConvergence → PowerSeriesZeros}.
+
+## Statement-shape decisions (binding for the decomposition)
+
+1. Spec-hypothesis form for geometry consumed downstream; hypotheses on `P`'s structure data
+   (`slopes 0`, `lengths 0`) plus `P.slopes 0 < P.slopes 1` wherever "genuine first break" is
+   mathematically required (collinear-split representations make it necessary — recorded
+   attack, previous board L2).
+2. Applied corollaries on `newtonPolygon₀OfPowerSeries (negLog…) f` for every blueprint-numbered
+   result.
+3. [T]'s hypotheses carry over: `a₀ = 1` normalisation, `0 < natDegree`, `[CompleteSpace K]`
+   where Weierstrass enters, `hdense`/infinite-support caveats in 5.12 — MINUS every
+   `MemDivisibleValueGroup`/density hypothesis (obsolete).
+4. Deletions vs [T]: `memDivisibleValueGroup_exp_slope`(′), `exists_memDivisibleValueGroup_between`,
+   the `exists_factor_aux` divisible-group plumbing — not ported. 5.7's proof simplifies:
+   Martin WP applies at radius `exp m` directly.
 
 ## Generality decisions
 
-- `A`: `[NormedCommRing A] [IsUltrametricDist A]` — Martin's "ultrametric complete normed
-  ring" per BGR 1.2.1.1 conventions (commutative with 1; `norm_mul_le` is mathlib's
-  `NormedRing` axiom). `CompleteSpace A` only where the source needs it (existence,
-  Remark 1.22); norm-equality and uniqueness are completeness-free — *more precise than
-  the source*, which assumes completeness globally.
-- `NormOneClass A` only where `‖1‖ = 1` is genuinely used (Lemma 1.21 forward direction,
-  Remark 1.22, preparation). Not needed for division existence/uniqueness.
-- Radius: `{c : ℝ} [Fact (0 < c)]` — arbitrary positive real, project convention.
-- `IsNormMulUnit` stated over `[NormedRing A]` (no commutativity) with left
-  multiplicativity, matching how it is consumed; the Weierstrass files use
-  `NormedCommRing` (Martin's setting; the preparation rearrangement `g = w q⁻¹ = q⁻¹ w`
-  is genuinely commutative).
-- Names carry the `_of_isMulDistinguished` suffix to avoid clashing with the project's
-  `NormMulClass` versions in the same `PowerSeries.Restricted` namespace; on a future
-  mathlib PR the Martin versions are the strictly more general ones and would take the
-  plain names.
-- Omitted from scope (not needed for 1.27/1.28): Martin's Remark 1.23 (contractive
-  morphisms preserve multiplicative units), Lemma 1.29 (Noetherian coefficient
-  decomposition — belongs to his §1.4), and the multivariate iteration remark (already
-  covered by the project's Mv development).
+- Base field: `[NontriviallyNormedField K] [IsUltrametricDist K]` (+ `[CompleteSpace K]` from
+  5.7 on), matching [T]. Roots in `AlgebraicClosure K` with `w : Valuation … ℝ≥0` extending the
+  norm (5.7–5.11); abstract complete ultrametric `L` for 5.12–5.14, matching [T]'s design notes.
+- Polygon side stays Γ-generic only where free; the bridge fixes Γ = ℝ.
 
-## ChatGPT validation
+## Execution
 
-`ask_chatgpt_math` not configured in this session — skipped per command spec.
+Same pattern as the previous board: `/beastmode`, parallel workers per file, cleanup cadence
+(per-file golf after every ~3 proof tickets, merged where adjacent), endpoint axiom checks.
+ChatGPT MCP not configured — validation step skipped.

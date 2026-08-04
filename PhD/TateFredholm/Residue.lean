@@ -1,4 +1,5 @@
 import PhD.TateFredholm.Pr
+import PhD.ForMathlib.Analysis.Normed.Ring.PowerBounded
 
 /-!
 # Residue machinery for Serre's theorem
@@ -72,95 +73,40 @@ theorem exists_norm_eq_zpow (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π‖ < 1)
   rw [zpow_neg]
   exact eq_inv_of_mul_eq_one_left hprod
 
-/-- **R2.**  The unit ball `K⁰ = {x : ‖x‖ ≤ 1}` is a subring ([Bel] p. 58: "`R⁰` the set
-of elements of `R` such that `|r| ≤ 1`, which is a subring of `R`"). -/
-def unitBall (K : Type*) [NontriviallyNormedField K] [IsUltrametricDist K] : Subring K where
-  carrier := {x : K | ‖x‖ ≤ 1}
-  mul_mem' := fun {a b} ha hb => by
-    show ‖a * b‖ ≤ 1
-    calc ‖a * b‖ = ‖a‖ * ‖b‖ := norm_mul a b
-    _ ≤ 1 * 1 := mul_le_mul ha hb (norm_nonneg b) zero_le_one
-    _ = 1 := one_mul 1
-  one_mem' := by
-    show ‖(1 : K)‖ ≤ 1
-    rw [norm_one]
-  add_mem' := fun {a b} ha hb => by
-    show ‖a + b‖ ≤ 1
-    exact (IsUltrametricDist.norm_add_le_max a b).trans (max_le ha hb)
-  zero_mem' := by
-    show ‖(0 : K)‖ ≤ 1
-    rw [norm_zero]
-    exact zero_le_one
-  neg_mem' := fun {a} ha => by
-    show ‖-a‖ ≤ 1
-    rwa [norm_neg]
+/-! **R2.**  The unit ball `K⁰ = {x : ‖x‖ ≤ 1}` ([Bel] p. 58: "`R⁰` the set of elements of `R`
+such that `|r| ≤ 1`, which is a subring of `R`") *is* the subring `PowerBounded.subring K (S := ℤ)`
+of power-bounded elements: over a nontrivially normed field the two descriptions agree by
+`PowerBounded.isPowerBounded_iff_norm_le_one`.  So `R2` needs no definition of its own, and `R3`,
+`R4` below are stated for the power-bounded subring, where they hold in the generality of a
+normed commutative ring with linear topology. -/
 
-/-- **R3.**  Units of the unit ball are the norm-one elements. -/
-theorem unitBall_isUnit_iff (x : unitBall K) : IsUnit x ↔ ‖(x : K)‖ = 1 := by
-  constructor
-  · rintro ⟨u, rfl⟩
-    have h1 : ‖((u : unitBall K) : K)‖ ≤ 1 := (u : unitBall K).2
-    have h2 : ‖(((u⁻¹ : (unitBall K)ˣ) : unitBall K) : K)‖ ≤ 1 :=
-      ((u⁻¹ : (unitBall K)ˣ) : unitBall K).2
-    have hprod : ((u : unitBall K) : K) * (((u⁻¹ : (unitBall K)ˣ) : unitBall K) : K) = 1 := by
-      exact_mod_cast congrArg Subtype.val u.mul_inv
-    have hnorm : ‖((u : unitBall K) : K)‖ * ‖(((u⁻¹ : (unitBall K)ˣ) : unitBall K) : K)‖
-        = 1 := by rw [← norm_mul, hprod, norm_one]
-    nlinarith [norm_nonneg ((u : unitBall K) : K),
-      norm_nonneg (((u⁻¹ : (unitBall K)ˣ) : unitBall K) : K)]
-  · intro hx
-    have hxne : (x : K) ≠ 0 := by
-      intro h
-      rw [h, norm_zero] at hx
-      exact zero_ne_one hx
-    refine ⟨⟨x, ⟨(x : K)⁻¹, ?_⟩, ?_, ?_⟩, rfl⟩
-    · show ‖(x : K)⁻¹‖ ≤ 1
-      rw [norm_inv, hx, inv_one]
-    · exact Subtype.ext (by simp [mul_inv_cancel₀ hxne])
-    · exact Subtype.ext (by simp [inv_mul_cancel₀ hxne])
+/-- **R3.**  A norm-one element of `K⁰` is a unit there: it is a unit of the field `K`, and its
+inverse again has norm one, hence is power-bounded. -/
+theorem isUnit_of_norm_eq_one {x : PowerBounded.subring K (S := ℤ)} (hx : ‖(x : K)‖ = 1) :
+    IsUnit x :=
+  (PowerBounded.isUnit_iff_isUnit_coe hx).2 <|
+    isUnit_iff_ne_zero.2 (norm_ne_zero_iff.1 (by rw [hx]; exact one_ne_zero))
 
-/-- **R4.**  `(π)` is a maximal ideal of `K⁰` (so `K⁰/(π)` is the residue *field*, via
-`Ideal.Quotient.field`) — the general-`K` form of [Bel]'s "`M̃` has a basis over `𝔽_p`". -/
-theorem isMaximal_span_pi (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π‖ < 1)
-    (hπmax : ∀ x : K, ‖x‖ < 1 → ‖x‖ ≤ ‖π‖) :
-    (Ideal.span {(⟨π, hπ1.le⟩ : unitBall K)}).IsMaximal := by
-  set πO : unitBall K := ⟨π, hπ1.le⟩ with hπO
-  have hmem : ∀ x : unitBall K, x ∈ Ideal.span {πO} ↔ ‖(x : K)‖ ≤ ‖π‖ := by
-    intro x
-    rw [Ideal.mem_span_singleton]
-    constructor
-    · rintro ⟨c, rfl⟩
-      show ‖((πO * c : unitBall K) : K)‖ ≤ ‖π‖
-      calc ‖((πO * c : unitBall K) : K)‖ = ‖π * (c : K)‖ := rfl
-      _ = ‖π‖ * ‖(c : K)‖ := norm_mul _ _
-      _ ≤ ‖π‖ * 1 := mul_le_mul_of_nonneg_left c.2 hπ0.le
-      _ = ‖π‖ := mul_one _
-    · intro hx
-      have hπne : π ≠ 0 := fun h => by simp [h] at hπ0
-      refine ⟨⟨(x : K) / π, ?_⟩, ?_⟩
-      · show ‖(x : K) / π‖ ≤ 1
-        rw [norm_div]
-        exact div_le_one_of_le₀ hx (norm_nonneg π)
-      · refine Subtype.ext ?_
-        show (x : K) = π * ((x : K) / π)
-        field_simp
+/-- **R4.**  The topological nilradical `{x ∈ K⁰ : ‖x‖ < 1}` is a maximal ideal of `K⁰`, so
+`PowerBounded.residueField (R := K) ℤ` is the residue *field* (via `Ideal.Quotient.field`) — the
+general-`K` form of [Bel]'s "`M̃` has a basis over `𝔽_p`".  Unlike the uniformizer presentation
+`(π)`, this needs neither a uniformizer nor discreteness of the value group: an element outside
+the nilradical has norm exactly `1`, hence is a unit by `R3`. -/
+theorem isMaximal_topologicalNilradical :
+    (PowerBounded.topologicalNilradical (R := K) ℤ).IsMaximal := by
   rw [Ideal.isMaximal_iff]
-  constructor
-  · intro h1
-    have := (hmem 1).1 h1
-    rw [OneMemClass.coe_one, norm_one] at this
-    exact absurd this (not_le.2 hπ1)
-  · intro J x hJ hxnot hxJ
-    have hx1 : ‖(x : K)‖ = 1 := by
-      have hxle : ‖(x : K)‖ ≤ 1 := x.2
-      rcases lt_or_eq_of_le hxle with hlt | heq
-      · exact absurd ((hmem x).2 (hπmax _ hlt)) hxnot
-      · exact heq
-    obtain ⟨u, hu⟩ := (unitBall_isUnit_iff x).2 hx1
-    have h1eq : (1 : unitBall K) = ((u⁻¹ : (unitBall K)ˣ) : unitBall K) * x := by
-      rw [← hu]
-      exact u.inv_mul.symm
-    rw [h1eq]
+  refine ⟨fun h => ?_, fun J x hJ hxnot hxJ => ?_⟩
+  · rw [PowerBounded.mem_topologicalNilradical_iff, isTopologicallyNilpotent_iff_norm_lt_one,
+      OneMemClass.coe_one, norm_one] at h
+    exact lt_irrefl 1 h
+  · have hx1 : ‖(x : K)‖ = 1 := by
+      refine le_antisymm (PowerBounded.isPowerBounded_iff_norm_le_one.1 x.2) (not_lt.1 fun h => ?_)
+      exact hxnot ((PowerBounded.mem_topologicalNilradical_iff ℤ x).2
+        (isTopologicallyNilpotent_iff_norm_lt_one.2 h))
+    obtain ⟨u, hu⟩ := isUnit_of_norm_eq_one hx1
+    rw [show (1 : PowerBounded.subring K (S := ℤ))
+        = ((u⁻¹ : (PowerBounded.subring K (S := ℤ))ˣ) : PowerBounded.subring K (S := ℤ)) * x by
+      rw [← hu]; exact u.inv_mul.symm]
     exact J.mul_mem_left _ hxJ
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace K E] [IsUltrametricDist E]
@@ -430,15 +376,12 @@ theorem expansion_unique_of_residue_indep (π : K) (hπ0 : 0 < ‖π‖) (hπ1 :
   obtain ⟨w, hw⟩ := NormedField.exists_one_lt_norm K
   have hw0 : w ≠ 0 := by rintro rfl; rw [norm_zero] at hw; exact absurd hw (by norm_num)
   have hwi : ‖w⁻¹‖ < 1 := by rw [norm_inv]; exact inv_lt_one_of_one_lt₀ hw
+  have hC0 : (0 : ℝ) ≤ C := by positivity
   obtain ⟨N, hN⟩ : ∃ N : ℕ, ‖w⁻¹‖ ^ N * C ≤ 1 := by
-    have htend : Tendsto (fun n : ℕ => ‖w⁻¹‖ ^ n * C) atTop (𝓝 (0 * C)) :=
-      (tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg _) hwi).mul_const C
-    rw [zero_mul] at htend
-    obtain ⟨N, hN'⟩ := Metric.tendsto_atTop.1 htend 1 one_pos
-    refine ⟨N, ?_⟩
-    have h := hN' N le_rfl
-    rw [dist_zero_right, Real.norm_eq_abs] at h
-    exact (le_abs_self _).trans h.le
+    obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one (by positivity : (0 : ℝ) < 1 / (C + 1)) hwi
+    refine ⟨N, (mul_le_mul_of_nonneg_right hN.le hC0).trans ?_⟩
+    rw [div_mul_eq_mul_div, one_mul]
+    exact div_le_one_of_le₀ (by linarith) (by linarith)
   set t : K := w⁻¹ ^ N with htdef
   have ht0 : t ≠ 0 := pow_ne_zero N (inv_ne_zero hw0)
   have htnorm : ‖t‖ = ‖w⁻¹‖ ^ N := by rw [htdef, norm_pow]
@@ -571,21 +514,6 @@ private theorem nonempty_isometryEquiv_of_residue (π : K) (hπ0 : 0 < ‖π‖)
     right_inv := hleft
     norm_map' := hnorm }⟩
 
-private theorem chain_fin {c : Set (Set E)} (hc : IsChain (· ⊆ ·) c) (hne : c.Nonempty)
-    (t : Finset E) (ht : (↑t : Set E) ⊆ ⋃₀ c) : ∃ T ∈ c, (↑t : Set E) ⊆ T := by
-  classical
-  revert ht
-  induction t using Finset.induction with
-  | empty => intro _; obtain ⟨T, hT⟩ := hne; exact ⟨T, hT, by simp⟩
-  | insert x t hx ih =>
-    intro ht
-    rw [Finset.coe_insert, Set.insert_subset_iff] at ht
-    obtain ⟨Tx, hTxc, hxTx⟩ := ht.1
-    obtain ⟨T, hTc, htT⟩ := ih ht.2
-    rcases hc.total hTxc hTc with h | h
-    · exact ⟨T, hTc, by rw [Finset.coe_insert, Set.insert_subset_iff]; exact ⟨h hxTx, htT⟩⟩
-    · exact ⟨Tx, hTxc, by rw [Finset.coe_insert, Set.insert_subset_iff]; exact ⟨hxTx, htT.trans h⟩⟩
-
 private theorem norm_eq_one_of_pi_lt (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π‖ < 1) {m : E}
     (hlo : ‖π‖ < ‖m‖) (hhi : ‖m‖ ≤ 1) (hE : ∀ x : E, x ≠ 0 → ∃ n : ℤ, ‖x‖ = ‖π‖ ^ n) :
     ‖m‖ = 1 := by
@@ -639,7 +567,8 @@ private theorem exists_residueBasis (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π
           rw [← Finsupp.support_eq_empty, ← Finset.coe_eq_empty]
           exact Set.subset_empty_iff.mp hAsub
         rw [hA0, Finsupp.zero_apply, norm_zero]; exact hπ0.le
-      · obtain ⟨T, hTc, hAT⟩ := chain_fin hchain hcne A.support hAsub
+      · obtain ⟨T, hTc, hAT⟩ := hchain.directedOn.exists_mem_subset_of_finite_of_subset_sUnion
+          hcne A.support.finite_toSet hAsub
         exact (hcsub hTc).2 A hAT hA1 hAL i)
   have hMP : P M := hMmax.1
   refine ⟨M, hMP.1, ?_, ?_⟩

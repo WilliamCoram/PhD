@@ -1,4 +1,5 @@
 import PhD.TateFredholm.Matrix
+import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Basic
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.LinearAlgebra.Alternating.Basic
@@ -176,15 +177,13 @@ def charPowerSeries (u : c(I, R) →L[R] c(I, R)) : PowerSeries R :=
     exact Matrix.det_isEmpty
   rw [charCoeff, htsum, hdet, pow_zero, one_mul]
 
-/-- Entire power series (`R{{T}}`): `‖aₙ‖Cⁿ → 0` for every `C > 0`. -/
-def IsEntire (F : PowerSeries R) : Prop :=
-  ∀ C : ℝ, 0 < C → Tendsto (fun n => ‖PowerSeries.coeff n F‖ * C ^ n) atTop (𝓝 0)
-
-/-- The Fredholm determinant is entire ([Bel] Lemma II.1.14): all but `b` rows have
-sup `< δ`, so an `n`-minor is bounded by `Dᵇ δ^(n−b)`, beating any geometric growth. -/
+/-- The Fredholm determinant is entire ([Bel] Lemma II.1.14): it is a restricted power series
+(`PowerSeries.IsRestricted`) at *every* radius `C > 0`, i.e. it lies in `R{{T}}`.  All but `b`
+rows have sup `< δ`, so an `n`-minor is bounded by `Dᵇ δ^(n−b)`, beating any geometric growth. -/
 theorem charPowerSeries_isEntire [IsTate R] (u : c(I, R) →L[R] c(I, R))
-    (hu : IsCompactoid u) : IsEntire (charPowerSeries u) := by
-  intro C hC
+    (hu : IsCompactoid u) (C : ℝ) (hC : 0 < C) :
+    PowerSeries.IsRestricted C (charPowerSeries u) := by
+  rw [PowerSeries.isRestricted_iff']
   simp only [charPowerSeries_coeff]
   set δ : ℝ := min (1 / (2 * C)) 1 with hδdef
   have hδ0 : 0 < δ := lt_min (by positivity) one_pos

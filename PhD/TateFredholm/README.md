@@ -159,7 +159,7 @@ hypothesis, so each strictly generalises its `[JN]` counterpart.
 | --- | --- |
 | `minor`, `summable_minor` | the principal `S × S` minors and their summability (ultrametric Hadamard bound + row decay) |
 | `charCoeff`, `charPowerSeries`, `charCoeff_zero` | `[Bel]` §II.1.5 / `[JN]` p. 67 — `cₙ = (−1)ⁿ ∑_{|S| = n} det(minor)`, and `det(1 − Tu) ∈ R⟦T⟧` with `c₀ = 1` |
-| `IsEntire`, `charPowerSeries_isEntire` | `[Bel]` Lemma II.1.14 — the determinant is entire (`R{{T}}`) |
+| `charPowerSeries_isEntire` | `[Bel]` Lemma II.1.14 — the determinant is entire (`R{{T}}`): `PowerSeries.IsRestricted C (charPowerSeries u)` for every radius `C > 0`, so it lives in `PowerSeries.Restricted R C` for all `C` |
 | `norm_charCoeff_sub_le` | `[Bel]` Lemma II.1.15 — `‖cₙ(u) − cₙ(v)‖ ≤ max(‖u‖,‖v‖)^{n−1}‖u − v‖`, the quantitative continuity powering every limit argument |
 | `charCoeff_eq_det_coeff` | `[Bel]` equation (II.1.2) — agreement with the algebraic determinant for row-supported operators. Its proof needed the principal-minors expansion `det(1 − tA) = ∑_S (−t)^{\|S\|} det(A_S)`, **missing from Mathlib** — PR candidate |
 | **`charPowerSeries_comm`** | `[Bel]` **Proposition II.1.17** — the **trace property** `det(1 − T·uv) = det(1 − T·vu)`. The primitive invariance statement: truncate, pass to the limit by `norm_charCoeff_sub_le`, conclude by the finite-matrix identity |
@@ -185,7 +185,7 @@ ultimately `[Serre]` Prop. 1. Internally labelled `R1`–`R7` by the decompositi
 | Step | Declarations | Content |
 | --- | --- | --- |
 | `R1` | `exists_norm_eq_zpow` | discreteness: the value group is `‖π‖^ℤ` (`[Bel]` p. 58) |
-| `R2`–`R4` | `unitBall`, `unitBall_isUnit_iff`, `isMaximal_span_pi` | the unit ball as a subring, and `π·unitBall` as its maximal ideal — the residue field |
+| `R2`–`R4` | `PowerBounded.subring K (S := ℤ)` (ForMathlib), `isUnit_of_norm_eq_one`, `isMaximal_topologicalNilradical` | the unit ball *is* the power-bounded subring (`PowerBounded.isPowerBounded_iff_norm_le_one`); its units are the norm-one elements, and its topological nilradical is maximal — the residue field, with no uniformizer and no discreteness needed |
 | `R5` | `exists_residue_approx` | a quotient-free "residue basis" interface: norm-one vectors whose residues form a basis. Indexed by a subset of `E` (an `∃ ι : Type _` phrasing would bind a universe independent of `E`) |
 | `R6a`–`R6b`, `R6` | `exists_expansion_of_residue_approx`, `expansion_unique_of_residue_indep`, `isONable_of_discrete_norms` | `[Bel]` Lemma II.1.12 — successive π-adic approximation (the analytic heart), uniqueness of expansions, and assembly: discrete norms ⟹ ON-able |
 | `R7` | `rescale_nonneg`, `rescale_le_rescale`, `le_rescale_and_rescale_lt`, `rescale_add_le`, `rescale_smul` | `[Bel]` Theorem II.1.13's norm-rescaling step: replace the norm by an equivalent one with values in `‖π‖^ℤ` |

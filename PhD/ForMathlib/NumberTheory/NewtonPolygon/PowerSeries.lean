@@ -40,7 +40,8 @@ noncomputable def newtonPolygon₀OfSeq (v : ℕ → WithTop Γ) : NewtonPolygon
   lengths := newtonPolygon_lengths v
   lengths_junk := fun _ h => newtonPolygon_lengths_junk v h
   lengths_nonFinal := fun _ h => newtonPolygon_lengths_nonFinal v h
-  lengths_final := fun _ h => newtonPolygon_lengths_final v h.1 h.2
+  lengths_final := fun _ h =>
+    ⟨newtonPolygon_lengths_final v h.1 h.2, newtonPolygon_slopes_of_lengths_eq_zero v h.2⟩
   starting_point :=
     match findFirstFinite v 0 with
     | some (i, c) => ((i : ℤ), c)

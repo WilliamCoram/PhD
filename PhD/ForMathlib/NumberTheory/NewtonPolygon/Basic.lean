@@ -79,9 +79,10 @@ structure NewtonPolygon where
   /-- Any non final length is finite and non-zero. -/
   lengths_nonFinal : ∀ n : ℤ, (support.2 : WithBotTop ℤ) ≤ n ∧ n + 1 < ofRight support.1 →
     ∃ a : ℕ, a ≠ 0 ∧ lengths n = some a
-  /-- Final lengths are only 0 if the support is (1,0). -/
+  /-- Final lengths are only 0 if the support is (1,0), and then the slope is junk (`⊤`/`⊥`):
+  a zero-width segment never carries an honest real slope. -/
   lengths_final : ∀ n : ℕ, n + 1 = support.1 ∧ lengths n = 0 → support.1 = 1 ∧
-    (support.2 : WithBotTop ℤ) = 0
+    (support.2 : WithBotTop ℤ) = 0 ∧ (slopes n = ⊤ ∨ slopes n = ⊥)
   /-- Starting point of the Newton polygon. -/
   starting_point : ℤ × Γ
 
@@ -266,8 +267,10 @@ structure NewtonPolygon₀ where
   lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
   /-- Any non final length is finite and non-zero. -/
   lengths_nonFinal : ∀ n : ℕ, n + 1 < support → ∃ a : ℕ, a ≠ 0 ∧ lengths n = some a
-  /-- Final lengths are only 0 if the support is 1. -/
-  lengths_final : ∀ n : ℕ, n + 1 = support ∧ lengths n = 0 → support = 1
+  /-- Final lengths are only 0 if the support is 1, and then the slope is junk (`⊤`/`⊥`):
+  a zero-width segment never carries an honest real slope. -/
+  lengths_final : ∀ n : ℕ, n + 1 = support ∧ lengths n = 0 →
+    support = 1 ∧ (slopes n = ⊤ ∨ slopes n = ⊥)
   /-- Starting point of the Newton polygon. -/
   starting_point : ℤ × Γ
 
@@ -320,7 +323,9 @@ def toNewtonPolygon : NewtonPolygon (Γ := Γ) where
   lengths_final := by
     rintro n ⟨h1, h2⟩
     rw [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast] at h2
-    exact ⟨P.lengths_final n ⟨h1, h2⟩, rfl⟩
+    obtain ⟨hs, hj⟩ := P.lengths_final n ⟨h1, h2⟩
+    refine ⟨hs, rfl, ?_⟩
+    rwa [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast]
   starting_point := P.starting_point
 
 omit [CommSemiring Γ] [Algebra Γ ℝ] in
@@ -416,7 +421,7 @@ def toNewtonPolygon₀ {NP : NewtonPolygon (Γ := Γ)} (h : NP.IsOneSided) :
     refine NP.lengths_nonFinal n ⟨?_, natCast_add_one_lt_ofRight hn⟩
     rw [h0]
     exact WithBotTop.coe_le_coe.mpr (Int.natCast_nonneg n)
-  lengths_final := fun n hn => (NP.lengths_final n hn).1
+  lengths_final := fun n hn => ⟨(NP.lengths_final n hn).1, (NP.lengths_final n hn).2.2⟩
   starting_point := NP.starting_point
 
 end NewtonPolygon.IsOneSided

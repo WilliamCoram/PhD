@@ -11,6 +11,13 @@ import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
 /-!
 # Newton polygons over an ultrametric normed field (blueprint §5.4 – §5.14)
 
+**SUPERSEDED (2026-08-04).** Every result of this file (blueprint §5.4–§5.14) has been
+re-proved on the modern `IsNewtonPolygonOf` spec architecture in `PhD/NewtonPolygons/`
+(`CoeffVal`, `FirstBreak`, `PolynomialRoots`, `RadiusOfConvergence`, `PowerSeriesZeros`),
+sorry-free on standard axioms and free of the deprecated `addVals2`/`DivValueGroup`/
+`WeierstrassPrep` dependencies.  This file is kept as reference history per the project's
+keep-PR'd-history convention; do not import it from new code.
+
 Refactor of `NPtest.lean` on top of the additive-valuation API of `addVals2.lean`.
 
 ## The base field
