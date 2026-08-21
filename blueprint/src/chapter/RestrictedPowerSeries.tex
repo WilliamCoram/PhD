@@ -1,0 +1,368 @@
+\chapter{Restricted Power Series and the Gauss Norm}
+\label{chap:rps}
+
+Everything in this thesis takes place inside rings of power series that converge on a closed
+disc.  Over $\bbC$ one would speak of holomorphic functions and take convergence for granted;
+in the nonarchimedean world convergence of $\sum a_t x^t$ on the polydisc of polyradius $c$ is
+simply the condition
+\[
+  \lVert a_t \rVert c^t \longrightarrow 0,
+\]
+because a nonarchimedean series converges exactly when its terms tend to $0$.  A power series
+satisfying this is called \emph{restricted} for $c$, and the collection of them is the ring we
+work in.  The supremum $\sup_t \lVert a_t\rVert c^t$ is then finite and is the \emph{Gauss
+norm}, which makes the ring into a Banach ring.
+
+Two design decisions shape this chapter and are worth stating at the outset.
+
+First, we work multivariate from the start and treat the one-variable case as the specialisation
+to a one-element index type.  This is not generality for its own sake: the multivariate
+Weierstrass theory of Chapter~\ref{chap:wp} is proved by splitting off one variable and applying
+the one-variable theory \emph{over the ring of restricted series in the remaining variables}, so
+the two cases must be literally the same definition rather than parallel developments.
+
+Second, the radius $c$ is an arbitrary real parameter, not $1$.  Fixing $c = 1$ would give the
+Tate algebra and nothing else; but the Newton polygon of Chapter~\ref{chap:np} reads a series at
+\emph{every} radius, and the Weierstrass theorems have to hold at each of them.
+
+Part of what follows is already in mathlib --- the predicate $\mathrm{IsRestricted}$ and the
+Gauss norm as a bare function on $\mathrm{MvPowerSeries}$ --- and we say so where that is the
+case.  What this project adds is the ring, its norm, its completeness, and the structure theory
+of its units and power-bounded elements.
+
+\section{Restricted power series}
+
+\begin{definition}
+  \label{def:isrestricted}
+  \lean{MvPowerSeries.IsRestricted}
+  \leanok
+  Let $R$ be a normed ring, $\sigma$ an index type and $c : \sigma \to \R$.  A power series
+  $f = \sum_t a_t x^t \in R[[x_i : i \in \sigma]]$ is \emph{restricted for $c$} if
+  \[
+    \lVert a_t \rVert \prod_{i} c_i^{\,t_i} \longrightarrow 0
+  \]
+  along the cofinite filter on the multidegrees $t$.
+\end{definition}
+
+Convergence along the cofinite filter, rather than along a sequence, is the right formulation:
+the index set $\sigma \to_0 \N$ has no preferred enumeration, and the cofinite filter says
+precisely ``all but finitely many terms are small'', which is what an unordered sum needs.  It
+is also what mathlib's summability API consumes, so no bespoke analysis is required.
+
+\begin{lemma}
+  \label{lem:isrestricted-abs}
+  \uses{def:isrestricted}
+  \lean{MvPowerSeries.isRestricted_abs_iff}
+  \leanok
+  $f$ is restricted for $c$ if and only if it is restricted for $\lvert c \rvert$.
+\end{lemma}
+
+Some sources define restricted series only for nonnegative radii.  Lemma~\ref{lem:isrestricted-abs}
+says nothing is lost by allowing arbitrary real $c$, and keeping the definition unconstrained
+avoids a positivity side condition in every downstream statement.  Positivity is imposed later,
+where it is genuinely needed --- for the Gauss norm to be a norm rather than a seminorm.
+
+\begin{lemma}
+  \label{lem:isrestricted-finite-support}
+  \uses{def:isrestricted}
+  \lean{MvPowerSeries.isRestricted_of_finite_support, MvPolynomial.isRestricted_toMvPowerSeries}
+  \leanok
+  A power series with finitely many nonzero coefficients is restricted for every $c$; in
+  particular every polynomial is.
+\end{lemma}
+
+\begin{proposition}
+  \label{prop:restricted-ring}
+  \uses{def:isrestricted}
+  \lean{MvPowerSeries.Restricted}
+  \leanok
+  The restricted series for a fixed $c$ form a subring of $R[[x_i]]$.  We write $R_c\langle x_i :
+  i \in \sigma\rangle$, or $\mathrm{Restricted}\ R\ c$, for it.
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  \uses{lem:isrestricted-finite-support}
+  Closure under subtraction is the usual squeeze.  Multiplication is the interesting axiom: the
+  coefficients of a product are antidiagonal sums,
+  \[
+    (fg)_t = \sum_{u + w = t} a_u b_w ,
+  \]
+  and it is not immediate that these tend to $0$.  They do, because for each $t$ the
+  antidiagonal is finite and the norm of the sum is bounded by the maximum of $\lVert a_u
+  \rVert c^u \cdot \lVert b_w \rVert c^w$ over it; given $\varepsilon$, all but finitely many
+  $u$ have $\lVert a_u\rVert c^u$ small and all but finitely many $w$ have $\lVert b_w \rVert
+  c^w$ small, and a multidegree $t$ outside a suitable finite set cannot be split with both
+  parts in the exceptional sets.
+\end{proof}
+
+%% This is where HasAntidiagonal matters: the argument needs the antidiagonal of t to be finite,
+%% which is why N-indexed multidegrees work and Z-indexed ones (Laurent series) do not.
+
+\begin{definition}
+  \label{def:restricted-elements}
+  \uses{prop:restricted-ring}
+  \lean{MvPowerSeries.Restricted.monomial, MvPowerSeries.Restricted.C,
+        MvPowerSeries.Restricted.X, MvPolynomial.toRestricted}
+  \leanok
+  Monomials, constants and variables are restricted, giving $\mathrm{monomial}$, $C$ and $X$ in
+  $R_c\langle x\rangle$, and the inclusion $\mathrm{toRestricted}$ of the polynomial ring, which
+  is an injective ring homomorphism.
+\end{definition}
+
+\begin{definition}
+  \label{def:restricted-map}
+  \uses{prop:restricted-ring}
+  \lean{MvPowerSeries.Restricted.map}
+  \leanok
+  A norm-nonincreasing ring homomorphism $R \to S$ induces $R_c\langle x\rangle \to S_c\langle
+  x\rangle$ coefficientwise.
+\end{definition}
+
+Functoriality in the coefficients is what makes base change of the Fredholm determinant work in
+Chapter~\ref{chap:qmf}: the norm-nonincreasing hypothesis is exactly what preserves
+restrictedness.
+
+\begin{definition}
+  \label{def:tate-algebra}
+  \uses{prop:restricted-ring}
+  \lean{PowerSeries.IsRestricted, PowerSeries.Restricted}
+  \leanok
+  The one-variable case is the specialisation of Definition~\ref{def:isrestricted} to a
+  one-element index type.  When moreover $R = K$ is a complete nonarchimedean field and $c = 1$,
+  the ring $K\langle x \rangle$ is the \emph{Tate algebra} $T_1$.
+\end{definition}
+
+%% In Lean, PowerSeries.Restricted R c is *by definition* MvPowerSeries.Restricted R (fun _ : Unit => c),
+%% so every instance transfers rather than being reproved. The N-indexed lemmas are restatements.
+
+\section{The Gauss norm}
+
+\begin{definition}
+  \label{def:gaussnorm}
+  \uses{def:isrestricted}
+  \lean{MvPowerSeries.gaussNorm, MvPowerSeries.HasGaussNorm}
+  \leanok
+  The \emph{Gauss norm} of $f$ at radius $c$ is
+  \[
+    \lVert f \rVert_c = \sup_t \; \lVert a_t \rVert \prod_i c_i^{\,t_i},
+  \]
+  when the supremum is finite; the predicate $\mathrm{HasGaussNorm}$ records finiteness.
+\end{definition}
+
+For a restricted series the supremum is automatically finite --- the terms tend to $0$, so all
+but finitely many are below any given bound --- and it is moreover \emph{attained}:
+
+\begin{definition}
+  \label{def:achievesgaussnorm}
+  \uses{def:gaussnorm}
+  \lean{MvPowerSeries.AchievesGaussNorm}
+  \leanok
+  $f$ \emph{achieves} its Gauss norm at $t$ if $\lVert a_t \rVert c^t = \lVert f \rVert_c$.
+\end{definition}
+
+Attainment is not a technicality; it is the property that makes the Gauss norm behave
+multiplicatively rather than merely submultiplicatively, and everything in Chapter~\ref{chap:wp}
+rests on it.  The following is the master lemma of this chapter.
+
+\begin{lemma}[Dominant terms on the antidiagonal]
+  \label{lem:gaussnorm-dominant}
+  \uses{def:achievesgaussnorm}
+  \lean{MvPowerSeries.exists_achievesGaussNorm_dominant,
+        MvPowerSeries.IsRestricted.exists_achievesGaussNorm_dominant}
+  \leanok
+  Let $f, g$ be restricted with nonzero Gauss norms.  Fix any well-order on $\sigma$ and let
+  $u$, $w$ be the achieving multidegrees of $f$ and $g$ that are largest for the induced
+  lexicographic order.  Then the term $a_u b_w$ strictly dominates every other term of the
+  antidiagonal of $u + w$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Any other splitting $u' + w' = u + w$ has $u' \neq u$, so by maximality either $u'$ is not
+  achieving --- and then its term is strictly smaller --- or $u'$ is achieving and
+  lexicographically smaller, forcing $w'$ to be lexicographically larger than $w$ and hence
+  non-achieving.  Either way one factor is strictly below its Gauss norm.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:gaussnorm-mul}
+  \uses{lem:gaussnorm-dominant}
+  \lean{MvPowerSeries.gaussNorm_mul_le, MvPowerSeries.gaussNorm_mul_eq_mul}
+  \leanok
+  The Gauss norm is always submultiplicative, and if the norm on $R$ is multiplicative and both
+  series attain their Gauss norms, then
+  \[
+    \lVert fg \rVert_c = \lVert f \rVert_c \, \lVert g \rVert_c .
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:gaussnorm-dominant}
+  Submultiplicativity is the ultrametric bound on the antidiagonal sum.  For equality, the
+  coefficient of $u + w$ from Lemma~\ref{lem:gaussnorm-dominant} is an ultrametric sum with one
+  strictly dominant term, so its norm is $\lVert a_u\rVert \lVert b_w \rVert c^{u+w}$, which is
+  the product of the two Gauss norms.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:restricted-normedring}
+  \uses{thm:gaussnorm-mul, prop:restricted-ring}
+  \lean{MvPowerSeries.Restricted.gaussNorm, MvPowerSeries.Restricted.gaussNormRingNorm,
+        MvPowerSeries.Restricted.isNonarchimedean_norm}
+  \leanok
+  For strictly positive radii the Gauss norm is a ring norm on $R_c\langle x \rangle$, and it is
+  nonarchimedean whenever the norm on $R$ is.  If the norm on $R$ is multiplicative then so is
+  the Gauss norm.
+\end{theorem}
+
+%% The NormedRing instance built from gaussNormRingNorm is the canonical source of the norm,
+%% metric, uniformity and topology on Restricted R c; downstream structure is derived from it and
+%% never rebuilt, which is what keeps the topologies definitionally equal.
+
+\begin{lemma}
+  \label{lem:gaussnorm-values}
+  \uses{thm:restricted-normedring}
+  \lean{MvPowerSeries.Restricted.norm_monomial, MvPowerSeries.Restricted.norm_C,
+        MvPowerSeries.Restricted.norm_X, MvPolynomial.norm_toRestricted}
+  \leanok
+  $\lVert a x^t \rVert_c = \lVert a \rVert c^t$, $\lVert C(a) \rVert_c = \lVert a \rVert$ and
+  $\lVert X_i \rVert_c = c_i$; and the norm of a polynomial, viewed in $R_c\langle x\rangle$, is
+  its polynomial Gauss norm --- a finite maximum.
+\end{lemma}
+
+\begin{proposition}
+  \label{prop:polynomial-gaussnorm}
+  \uses{def:gaussnorm}
+  \lean{Polynomial.gaussNorm_mul, Polynomial.gaussNorm_isAbsoluteValue}
+  \leanok
+  On polynomials over a field with multiplicative norm the Gauss norm is multiplicative, hence
+  an absolute value.  This is Gauss's lemma in its normed form, and the reason the norm carries
+  his name.
+\end{proposition}
+
+\section{Completeness}
+
+\begin{theorem}
+  \label{thm:restricted-complete}
+  \uses{thm:restricted-normedring}
+  \lean{MvPowerSeries.Restricted.cauchySeq_coeff,
+        MvPowerSeries.Restricted.tendsto_of_eventually_norm_coeff_sub_le}
+  \leanok
+  If $R$ is complete then so is $R_c \langle x \rangle$: it is a Banach ring.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  A Cauchy sequence is coefficientwise Cauchy, since each coefficient functional is
+  norm-nonincreasing, so the coefficients converge in $R$ and assemble into a candidate limit.
+  The point requiring care is that the candidate is itself restricted: the Cauchy estimate is
+  \emph{uniform} in the multidegree, so a tail of the sequence has all its coefficients within
+  $\varepsilon$ of the limit's, and restrictedness of any one member transfers to the limit.
+  Convergence in Gauss norm then follows from the same uniform estimate.
+\end{proof}
+
+Completeness is what Chapter~\ref{chap:wp} spends: the Weierstrass division algorithm produces a
+contracting sequence of approximate quotients, and the limit exists only because this ring is
+Banach.
+
+\section{Power-bounded elements, units and reduction}
+
+The last three sections of theory are what turn $R_c\langle x\rangle$ from a Banach ring into an
+object of rigid geometry: its power-bounded subring, its units, and its reduction.
+
+\begin{proposition}
+  \label{prop:powerbounded}
+  \uses{thm:restricted-normedring}
+  \lean{MvPowerSeries.Restricted.isPowerBounded_iff_forall_isPowerBounded_coeff,
+        MvPowerSeries.Restricted.isTopologicallyNilpotent_iff_forall_isTopologicallyNilpotent_coeff}
+  \leanok
+  At radius $c = 1$, a restricted power series is power bounded if and only if all its
+  coefficients are, and topologically nilpotent if and only if all its coefficients are.
+\end{proposition}
+
+Both statements fail at general radii in one direction, and the file records the two halves
+separately with their genuine hypotheses ($c \geq 1$ for one implication, $c \leq 1$ for the
+other); the clean iff is the case $c = 1$.  We write $T^\circ$ for the power-bounded subring.
+
+\begin{theorem}
+  \label{thm:restricted-units}
+  \uses{thm:restricted-complete, def:achievesgaussnorm}
+  \lean{MvPowerSeries.Restricted.constantCoeff,
+        MvPowerSeries.Restricted.isUnit_of_norm_lt_norm_constantCoeff,
+        MvPowerSeries.Restricted.isUnit_iff}
+  \leanok
+  Let $R$ be complete.  A restricted power series $f$ is a unit if and only if its constant
+  coefficient is a unit of $R$ and every other coefficient is strictly smaller in norm:
+  the Gauss norm is achieved at the constant term alone.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:restricted-complete}
+  If $\lVert f - C(f_0)\rVert_c < \lVert f_0 \rVert$ then $f = C(f_0)(1 + \delta)$ with $\lVert
+  \delta \rVert_c < 1$, and $1 + \delta$ is invertible by the geometric series, which converges
+  by Theorem~\ref{thm:restricted-complete}.  Conversely if $f$ is a unit then
+  $\lVert f \rVert_c \lVert f^{-1}\rVert_c \geq 1$ forces the norm to be attained at the
+  constant term, and no other coefficient can attain it.
+\end{proof}
+
+This description of the units is the analytic input to Weierstrass preparation: the ``unit
+factor'' produced there is recognised as a unit exactly by
+Theorem~\ref{thm:restricted-units}.
+
+\begin{proposition}
+  \label{prop:reduction}
+  \uses{prop:powerbounded}
+  \lean{MvPowerSeries.Restricted.residueRingHom, MvPowerSeries.Restricted.residueEquiv}
+  \leanok
+  For an ideal $I$ of $R^\circ$ containing the topologically nilpotent elements, reduction gives
+  a surjection $T^\circ \to (R^\circ/I)[x_i]$ onto the \emph{polynomial} ring, whose kernel is
+  the series with all coefficients in $I$.  In particular the reduction of a restricted power
+  series is a polynomial.
+\end{proposition}
+
+That the reduction is a polynomial rather than a power series is the whole content: it is the
+formal counterpart of ``a restricted series has only finitely many coefficients of size close to
+the norm'', and it is what makes the residue ring noetherian.
+
+\section{Splitting off a variable}
+
+\begin{theorem}
+  \label{thm:finsuccequiv}
+  \uses{prop:restricted-ring, thm:restricted-normedring}
+  \lean{MvPowerSeries.Restricted.finSuccEquiv, MvPowerSeries.Restricted.finSuccIsometry}
+  \leanok
+  For a polyradius $c$ on $\mathrm{Fin}(n+1)$ there is a ring isomorphism
+  \[
+    R_c\langle x_0, \dots, x_n \rangle \;\cong\;
+    \bigl(R_{(c_1,\dots,c_n)}\langle x_1, \dots, x_n\rangle\bigr)_{c_0}\!\langle x_0 \rangle,
+  \]
+  and it is an isometry for the Gauss norms.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{def:gaussnorm}
+  The underlying bijection regroups the coefficient family, and restrictedness on either side is
+  the same convergence statement grouped differently.  The isometry is immediate from
+  Definition~\ref{def:gaussnorm}, since a supremum over pairs is the supremum of the inner
+  suprema.
+\end{proof}
+
+Theorem~\ref{thm:finsuccequiv} is the engine of the multivariate theory.  It says the
+$(n+1)$-variable Tate algebra \emph{is} the one-variable Tate algebra over the $n$-variable one,
+with matching norms --- so any one-variable theorem valid over an arbitrary complete ultrametric
+normed \emph{ring} applies, and transports back.  That is exactly why Chapter~\ref{chap:wp} is
+stated at Martin's generality rather than over a field: the induction leaves the category of
+fields at the first step.
+
+\begin{lemma}
+  \label{lem:isemptyequiv}
+  \uses{prop:restricted-ring}
+  \lean{MvPowerSeries.Restricted.isEmptyEquiv, MvPowerSeries.Restricted.isEmptyIsometry}
+  \leanok
+  Over an empty index type the restricted power series are the coefficients themselves,
+  isometrically.  This is the base case of the induction.
+\end{lemma}

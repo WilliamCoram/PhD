@@ -19,8 +19,9 @@ specialise:
 * `MvPowerSeries.gaussNorm_zero_right`: for the zero radius tuple the Gauss norm is the value on
   the constant coefficient.
 * `MvPowerSeries.exists_achievesGaussNorm_dominant`: for series whose Gauss norms are nonzero and
-  achieved by finitely many indices, lex-maximal achieving indices give a strictly dominant term
-  on the antidiagonal.  This discharges the `hdom` hypothesis of
+  achieved by finitely many indices, the achieving indices that are maximal for the lex order of
+  an arbitrary well-order on `σ` give a strictly dominant term on the antidiagonal.  This
+  discharges the `hdom` hypothesis of
   `MvPowerSeries.gaussNorm_mul_eq_mul`; both `MvPolynomial` (finite support) and
   `MvPowerSeries.Restricted` (restrictedness) discharge its attainment hypotheses.
 
@@ -127,65 +128,14 @@ section Ring
 variable {R σ : Type*} [Ring R] (v : R → ℝ) (c : σ → ℝ)
 
 /-- If the Gauss norms of `f` and `g` are nonzero and are achieved by (nonempty) finite sets of
-indices, then for any linear order on `σ` the *lex-maximal* achieving indices `i`, `j` give a
-term of `f * g` at `(i, j)` strictly dominating all other terms on the antidiagonal of `i + j`.
-The last two conjuncts expose the lex-maximality of the pair; for an order-free index type see
-`exists_achievesGaussNorm_dominant`. -/
-lemma exists_achievesGaussNorm_dominant_lexMax [LinearOrder σ] [DecidableEq σ]
-    (vNonneg : ∀ a, v a ≥ 0)
-    (vMul : ∀ a b, v (a * b) ≤ v a * v b) (hc : 0 ≤ c) {f g : MvPowerSeries σ R}
-    (hbf : HasGaussNorm v c f) (hbg : HasGaussNorm v c g)
-    (hf_fin : {a | AchievesGaussNorm v c f a}.Finite)
-    (hg_fin : {a | AchievesGaussNorm v c g a}.Finite)
-    (hf_ex : ∃ a, AchievesGaussNorm v c f a) (hg_ex : ∃ a, AchievesGaussNorm v c g a)
-    (hf0 : gaussNorm v c f ≠ 0) (hg0 : gaussNorm v c g ≠ 0) :
-    ∃ i j, AchievesGaussNorm v c f i ∧ AchievesGaussNorm v c g j ∧
-      (∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
-        v (coeff p.1 f * coeff p.2 g) < v (coeff i f) * v (coeff j g)) ∧
-      (∀ t, AchievesGaussNorm v c f t → toLex t ≤ toLex i) ∧
-      ∀ t, AchievesGaussNorm v c g t → toLex t ≤ toLex j := by
-  have hpow_nonneg (t : σ →₀ ℕ) : 0 ≤ t.prod (c · ^ ·) :=
-    Finset.prod_nonneg fun i _ ↦ pow_nonneg (hc i) (t i)
-  obtain ⟨i, hi : AchievesGaussNorm v c f i, hi_max⟩ := Set.exists_max_image _ toLex hf_fin hf_ex
-  obtain ⟨j, hj : AchievesGaussNorm v c g j, hj_max⟩ := Set.exists_max_image _ toLex hg_fin hg_ex
-  refine ⟨i, j, hi, hj, fun p hp hpne ↦ ?_, hi_max, hj_max⟩
-  have hsump : p.1 + p.2 = i + j := Finset.mem_antidiagonal.1 hp
-  have hle1 : v (coeff p.1 f) * p.1.prod (c · ^ ·) ≤ v (coeff i f) * i.prod (c · ^ ·) :=
-    (le_gaussNorm v c f hbf p.1).trans_eq hi.symm
-  have hle2 : v (coeff p.2 g) * p.2.prod (c · ^ ·) ≤ v (coeff j g) * j.prod (c · ^ ·) :=
-    (le_gaussNorm v c g hbg p.2).trans_eq hj.symm
-  have hi_pos : 0 < v (coeff i f) * i.prod (c · ^ ·) :=
-    ((gaussNorm_nonneg v c f vNonneg).lt_of_ne' hf0).trans_eq hi.symm
-  have hj_pos : 0 < v (coeff j g) * j.prod (c · ^ ·) :=
-    ((gaussNorm_nonneg v c g vNonneg).lt_of_ne' hg0).trans_eq hj.symm
-  have hmul_strict :
-      (v (coeff p.1 f) * p.1.prod (c · ^ ·)) * (v (coeff p.2 g) * p.2.prod (c · ^ ·)) <
-      (v (coeff i f) * i.prod (c · ^ ·)) * (v (coeff j g) * j.prod (c · ^ ·)) := by
-    rcases hle1.lt_or_eq with h1 | h1eq
-    · exact mul_lt_mul_of_lt_of_le_of_nonneg_of_pos h1 hle2
-        (mul_nonneg (vNonneg _) (hpow_nonneg p.1)) hj_pos
-    rcases hle2.lt_or_eq with h2 | h2eq
-    · exact mul_lt_mul_of_le_of_lt_of_nonneg_of_pos hle1 h2
-        (mul_nonneg (vNonneg _) (hpow_nonneg p.2)) hi_pos
-    obtain ⟨h1, h2⟩ := (add_eq_add_iff_eq_and_eq (hi_max p.1 (h1eq.trans hi))
-      (hj_max p.2 (h2eq.trans hj))).mp (congrArg toLex hsump)
-    exact absurd (Prod.ext (toLex_inj.mp h1) (toLex_inj.mp h2)) hpne
-  have hprod : p.1.prod (c · ^ ·) * p.2.prod (c · ^ ·) = i.prod (c · ^ ·) * j.prod (c · ^ ·) := by
-    simp [← Finsupp.prod_add_index' (h := (c · ^ ·)) (fun _ ↦ pow_zero _)
-      (fun _ _ _ ↦ pow_add _ _ _), hsump]
-  rw [mul_mul_mul_comm, mul_mul_mul_comm (v (coeff i f)), hprod] at hmul_strict
-  exact (vMul _ _).trans_lt
-    (lt_of_mul_lt_mul_right hmul_strict (mul_nonneg (hpow_nonneg i) (hpow_nonneg j)))
-
-/-- If the Gauss norms of `f` and `g` are nonzero and are achieved by (nonempty) finite sets of
 indices, there are indices `i`, `j` achieving the Gauss norms of `f` and `g` such that the term
 of `f * g` at `(i, j)` strictly dominates all other terms on the antidiagonal of `i + j`.  This
 discharges the `hdom` hypothesis of `MvPowerSeries.gaussNorm_mul_eq_mul`.
 
-The pair `(i, j)` consists of the lex-maximal achieving indices for an arbitrary well-order on
-`σ` (`exists_achievesGaussNorm_dominant_lexMax`); the final conjunct records the consequence of
-maximality needed for the unit criterion of restricted power series: if `i + j = 0` then every
-achieving index of `f` and of `g` is `0`. -/
+The pair `(i, j)` consists of the maximal achieving indices for the lex order attached to an
+arbitrary well-order on `σ`; the final conjunct records the consequence of maximality needed for
+the unit criterion of restricted power series: if `i + j = 0` then every achieving index of `f`
+and of `g` is `0`. -/
 lemma exists_achievesGaussNorm_dominant [DecidableEq σ] (vNonneg : ∀ a, v a ≥ 0)
     (vMul : ∀ a b, v (a * b) ≤ v a * v b) (hc : 0 ≤ c) {f g : MvPowerSeries σ R}
     (hbf : HasGaussNorm v c f) (hbg : HasGaussNorm v c g)
@@ -200,24 +150,50 @@ lemma exists_achievesGaussNorm_dominant [DecidableEq σ] (vNonneg : ∀ a, v a �
         ∀ t, AchievesGaussNorm v c g t → t = 0) := by
   -- `σ` carries no order; fix an arbitrary well-order so that lex-maximal indices make sense
   have : LinearOrder σ := IsWellOrder.linearOrder WellOrderingRel
-  obtain ⟨i, j, hi, hj, hdom, hi_max, hj_max⟩ := exists_achievesGaussNorm_dominant_lexMax v c
-    vNonneg vMul hc hbf hbg hf_fin hg_fin hf_ex hg_ex hf0 hg0
-  refine ⟨i, j, hi, hj,
-    fun p hp ↦ hdom p (Finset.mem_antidiagonal.mpr (Finset.mem_antidiagonal.mp hp)),
-    fun hij ↦ ?_⟩
-  -- lex-maximality: if the maximal achieving indices sum to zero they are both zero, and then
-  -- every achieving index lies below `0` in the lex order, hence equals `0`
-  have hi0 : i = 0 := Finsupp.ext fun s ↦
-    (Nat.add_eq_zero_iff.mp (by simpa using DFunLike.congr_fun hij s)).1
-  have hj0 : j = 0 := Finsupp.ext fun s ↦
-    (Nat.add_eq_zero_iff.mp (by simpa using DFunLike.congr_fun hij s)).2
-  constructor
-  · intro t ht
-    exact toLex_inj.mp (le_antisymm (hi0 ▸ hi_max t ht)
-      (Finsupp.toLex_monotone ((Finsupp.le_iff _ _).mpr fun s hs ↦ by simp at hs)))
-  · intro t ht
-    exact toLex_inj.mp (le_antisymm (hj0 ▸ hj_max t ht)
-      (Finsupp.toLex_monotone ((Finsupp.le_iff _ _).mpr fun s hs ↦ by simp at hs)))
+  have hpow_nonneg (t : σ →₀ ℕ) : 0 ≤ t.prod (c · ^ ·) :=
+    Finset.prod_nonneg fun i _ ↦ pow_nonneg (hc i) (t i)
+  obtain ⟨i, hi : AchievesGaussNorm v c f i, hi_max⟩ := Set.exists_max_image _ toLex hf_fin hf_ex
+  obtain ⟨j, hj : AchievesGaussNorm v c g j, hj_max⟩ := Set.exists_max_image _ toLex hg_fin hg_ex
+  refine ⟨i, j, hi, hj, fun p hp hpne ↦ ?_, fun hij ↦ ?_⟩
+  · -- the lex-maximal pair strictly dominates every other pair on the antidiagonal
+    have hsump : p.1 + p.2 = i + j := Finset.mem_antidiagonal.1 hp
+    have hle1 : v (coeff p.1 f) * p.1.prod (c · ^ ·) ≤ v (coeff i f) * i.prod (c · ^ ·) :=
+      (le_gaussNorm v c f hbf p.1).trans_eq hi.symm
+    have hle2 : v (coeff p.2 g) * p.2.prod (c · ^ ·) ≤ v (coeff j g) * j.prod (c · ^ ·) :=
+      (le_gaussNorm v c g hbg p.2).trans_eq hj.symm
+    have hi_pos : 0 < v (coeff i f) * i.prod (c · ^ ·) :=
+      ((gaussNorm_nonneg v c f vNonneg).lt_of_ne' hf0).trans_eq hi.symm
+    have hj_pos : 0 < v (coeff j g) * j.prod (c · ^ ·) :=
+      ((gaussNorm_nonneg v c g vNonneg).lt_of_ne' hg0).trans_eq hj.symm
+    have hmul_strict :
+        (v (coeff p.1 f) * p.1.prod (c · ^ ·)) * (v (coeff p.2 g) * p.2.prod (c · ^ ·)) <
+        (v (coeff i f) * i.prod (c · ^ ·)) * (v (coeff j g) * j.prod (c · ^ ·)) := by
+      rcases hle1.lt_or_eq with h1 | h1eq
+      · exact mul_lt_mul_of_lt_of_le_of_nonneg_of_pos h1 hle2
+          (mul_nonneg (vNonneg _) (hpow_nonneg p.1)) hj_pos
+      rcases hle2.lt_or_eq with h2 | h2eq
+      · exact mul_lt_mul_of_le_of_lt_of_nonneg_of_pos hle1 h2
+          (mul_nonneg (vNonneg _) (hpow_nonneg p.2)) hi_pos
+      obtain ⟨h1, h2⟩ := (add_eq_add_iff_eq_and_eq (hi_max p.1 (h1eq.trans hi))
+        (hj_max p.2 (h2eq.trans hj))).mp (congrArg toLex hsump)
+      exact absurd (Prod.ext (toLex_inj.mp h1) (toLex_inj.mp h2)) hpne
+    have hprod :
+        p.1.prod (c · ^ ·) * p.2.prod (c · ^ ·) = i.prod (c · ^ ·) * j.prod (c · ^ ·) := by
+      simp [← Finsupp.prod_add_index' (h := (c · ^ ·)) (fun _ ↦ pow_zero _)
+        (fun _ _ _ ↦ pow_add _ _ _), hsump]
+    rw [mul_mul_mul_comm, mul_mul_mul_comm (v (coeff i f)), hprod] at hmul_strict
+    exact (vMul _ _).trans_lt
+      (lt_of_mul_lt_mul_right hmul_strict (mul_nonneg (hpow_nonneg i) (hpow_nonneg j)))
+  · -- lex-maximality: if the maximal achieving indices sum to zero they are both zero, and then
+    -- every achieving index lies below `0` in the lex order, hence equals `0`
+    have hi0 : i = 0 := Finsupp.ext fun s ↦
+      (Nat.add_eq_zero_iff.mp (by simpa using DFunLike.congr_fun hij s)).1
+    have hj0 : j = 0 := Finsupp.ext fun s ↦
+      (Nat.add_eq_zero_iff.mp (by simpa using DFunLike.congr_fun hij s)).2
+    exact ⟨fun t ht ↦ toLex_inj.mp (le_antisymm (hi0 ▸ hi_max t ht)
+        (Finsupp.toLex_monotone ((Finsupp.le_iff _ _).mpr fun s hs ↦ by simp at hs))),
+      fun t ht ↦ toLex_inj.mp (le_antisymm (hj0 ▸ hj_max t ht)
+        (Finsupp.toLex_monotone ((Finsupp.le_iff _ _).mpr fun s hs ↦ by simp at hs)))⟩
 
 end Ring
 

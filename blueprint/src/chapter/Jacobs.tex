@@ -1,0 +1,230 @@
+\chapter{The Slopes of $U_3$}
+\label{chap:jacobs}
+
+We now instantiate the general theory at the case worked out by Jacobs \cite{Jacobs}, and prove
+the theorem the thesis is aimed at: for the definite quaternion algebra over $\Q$ ramified at
+$2$ and $\infty$, at level $U_1(9)$ and at a suitable weight, the eigenvalues of $U_3$ have
+$3$-adic valuations
+\[
+  \tfrac12, \quad \tfrac32, \quad \tfrac52, \quad \dots
+\]
+--- an arithmetic progression of half-integers.  The half-integrality is not an artefact: it is
+what makes the example interesting, and it is possible only because the coefficient field is
+ramified over $\Q_3$.
+
+Everything general has been done.  What remains is to exhibit the data --- the algebra, the
+place, the level, the weight, the coset representatives --- and to compute one matrix.
+
+\section{The data}
+
+\begin{definition}
+  \label{def:jacobs-setting}
+  \lean{JacobsSlash.D, JacobsSlash.v₃, JacobsSlash.K₃, JacobsSlash.theta}
+  \leanok
+  Let $D = \bbH_{\Q}$ be Hamilton's quaternions over $\Q$, a definite quaternion algebra of
+  discriminant $2$; let $v_3$ be the place above $3$ and $K_3 = \Q_3$ its completion.  Since $3
+  \nmid 2$, $D$ splits at $v_3$, and a splitting is fixed by choosing a square root $\nu$ of
+  $-2$ in $K_3$; the resulting isomorphism $\theta_3 : D \otimes_{\Q} K_3 \cong M_2(K_3)$ is the
+  rigidification of Definition~\ref{def:rigidification}.
+\end{definition}
+
+%% ν₃ is located explicitly by Hensel at 2695 mod 3^10; the location is what makes the matrix of
+%% U₃ computable rather than merely existent.
+
+\begin{definition}
+  \label{def:hurwitz}
+  \lean{JacobsSlash.hurwitzOrder}
+  \leanok
+  The \emph{Hurwitz order} is $\calO = \Z\langle i, j, \tfrac12(1+i+j+k)\rangle \subseteq \bbH_{\Q}$,
+  the unique maximal order up to conjugacy.  We record membership by the parity condition that
+  $2x$ has integer coordinates all of the same parity.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:hurwitz-units}
+  \uses{def:hurwitz}
+  \lean{JacobsSlash.isUnit_iff_hnorm_eq_one, JacobsSlash.card_units_hurwitzOrder}
+  \leanok
+  A Hurwitz quaternion is a unit exactly when its reduced norm is $1$, and $\calO^\times$ has
+  exactly $24$ elements.
+\end{proposition}
+
+\begin{definition}
+  \label{def:jacobs-levels}
+  \uses{def:hurwitz, def:sigma0}
+  \lean{JacobsSlash.U0, JacobsSlash.U1_9}
+  \leanok
+  $U_0(1) \subseteq D_f^\times$ consists of the adelic units integral at every finite place ---
+  the unit group of $\calO \otimes \Zhat$ --- and $U_1(9)$ refines it by the congruence
+  $\theta_3(g) \equiv \left(\begin{smallmatrix} * & * \\ 0 & 1\end{smallmatrix}\right)$ modulo
+  $9$.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:jacobs-levels-compact-open}
+  \uses{def:jacobs-levels, prop:compact-open-levels}
+  \lean{JacobsSlash.isCompact_U0, JacobsSlash.isCompact_U1_9, JacobsSlash.isOpen_U1_9,
+        JacobsSlash.finite_image_doubleCoset_U1_9}
+  \leanok
+  $U_0(1)$ and $U_1(9)$ are compact open, so Theorem~\ref{thm:hecke-finiteness} applies and the
+  Hecke operators at this level are defined without exhibiting representatives.
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  \uses{prop:compact-open-levels}
+  The everywhere-integral elements of $D \otimes \A_f$ are exactly the $\Zhat$-span of the
+  Hurwitz basis $1, i, j, \omega$: one inclusion is clear, and the other extracts each coordinate
+  by a $\Q$-linear functional, extends it to the completion, and uses that a rational integral at
+  every finite place is a rational integer.  That set is compact by
+  Proposition~\ref{prop:compact-open-levels} and open because the integral adeles are open, so
+  $U_0(1)$ is compact open; $U_1(9)$ is cut out of it by a congruence condition at $3$, which is
+  clopen because closed balls in an ultrametric field are open.
+\end{proof}
+
+\section{Class number one}
+
+\begin{theorem}[{[Jacobs, Theorem 2.1]}]
+  \label{thm:jacobs-classset}
+  \uses{def:jacobs-levels, thm:fujisaki}
+  \lean{JacobsSlash.hClassNumberOne, JacobsSlash.classRep_bijective}
+  \leanok
+  $D_f^\times = D^\times \cdot U_0(1)$, and the class set at level $U_1(9)$ has exactly three
+  elements, represented by explicit adelic $c_0, c_1, c_2$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  Class number one for the Hurwitz order is classical; formalised here by the idelic dictionary,
+  reducing a global integrality statement to local approximation.  Passing from $U_0(1)$ to
+  $U_1(9)$ replaces the class set by the orbits of $\calO^\times$ on the primitive vectors of
+  $(\Z/9)^2$, which are computed to be three.
+\end{proof}
+
+\begin{lemma}[{[Jacobs, Lemma 2.2]}]
+  \label{lem:jacobs-neat}
+  \uses{thm:jacobs-classset, thm:evalatreps}
+  \lean{JacobsSlash.stabilizerAt_classRep}
+  \leanok
+  The stabilisers $\Gamma_i = c_i^{-1}D^\times c_i \cap U_1(9)$ are trivial.
+\end{lemma}
+
+So the level is neat, and Theorem~\ref{thm:evalatreps} gives $S_\kappa(U_1(9)) \cong c(\mathrm{Fin}\,3
+\times \N, K_3)$: a form is exactly a triple of elements of the Tate algebra.
+
+\section{The weight}
+
+\begin{definition}
+  \label{def:jacobs-weight}
+  \uses{def:analyticweight}
+  \lean{JacobsSlash.jacobsCharOf, JacobsSlash.jacobsWeight}
+  \leanok
+  For $t \in K_3$ with $\lVert t \rVert < 1$ let $\kappa_t(u) = u^t := \exp(t \log u)$ on the
+  $1$-units.  The expansion of $\kappa_t(cz+d)$ is the binomial series, whose coefficients
+  satisfy the decay required by Definition~\ref{def:weightseries}; the pair is an analytic weight
+  in the sense of Definition~\ref{def:analyticweight}.
+\end{definition}
+
+%% The hypothesis ‖t‖ < 1 is Jacobs' t ∈ m₃ (p. 38), not an artefact of the formalisation.
+
+\section{The operator and its matrix}
+
+\begin{definition}
+  \label{def:u3}
+  \uses{def:jacobs-weight, def:heckeoperator, def:jacobs-levels}
+  \lean{JacobsSlash.eta3, JacobsSlash.heckeU3}
+  \leanok
+  $U_3 = [U_1(9)\, \eta_3\, U_1(9)]$ where $\eta_3$ is the adelic element which is $1$ away from
+  $3$ and $\left(\begin{smallmatrix}1&0\\0&3\end{smallmatrix}\right)$ at $3$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:u3-matrix}
+  \uses{def:u3, thm:transport, lem:jacobs-neat}
+  \lean{JacobsSlash.heckeU3_apply_classRep, JacobsSlash.matrixCoeff_blockEntry}
+  \leanok
+  With respect to the three representatives, $(U_3\varphi)(c_i) = \sum_j \varepsilon_{ij}
+  (\varphi(c_j))$, and the matrix coefficients of the blocks $\varepsilon_{ij}$ are the explicit
+  coefficients of the generating functions of Proposition~\ref{prop:kappaslash-matrix} evaluated
+  at the certificate elements.
+\end{theorem}
+
+The certificate data --- four right coset representatives $v_t$ of $U_1(9)\eta_3 U_1(9)$, the
+permutation $\sigma$, and the factorisations $c_i v_t^{-1} = d\, c_{\sigma(i,t)}\, u$ --- is
+computed by hand; it is the only part of the argument that is a computation rather than a
+theorem, and it is what the general framework was built to consume.
+
+\begin{definition}
+  \label{def:u3-det}
+  \uses{thm:u3-matrix, def:heckecharpowerseries}
+  \lean{JacobsSlash.charPowerSeriesU3}
+  \leanok
+  $\det(1 - T\,U_3)$, computed in the block model through the three evaluations.
+\end{definition}
+
+\section{The eigenvalues}
+
+Over $K_3$ the matrix of $U_3$ does not have unit top-left minors, and no arithmetic progression
+of integer slopes can appear: the answer involves half-integers, so the polygon must be read over
+a ramified extension.  Adjoining a primitive cube root of unity $\omega$ gives $K_3(\omega) =
+\Q_3(\sqrt{-3})$, ramified of degree $2$, in which $v_3$ takes half-integer values; there the
+matrix splits into eigenblocks.
+
+\begin{theorem}
+  \label{thm:u3-factorisation}
+  \uses{def:u3-det, prop:qmf-basechange}
+  \lean{JacobsSlash.charPowerSeriesU3_factorisation}
+  \leanok
+  Over an isometric extension containing $\omega$, $\det(1 - TU_3)$ factors according to the
+  $\omega$-eigenspaces of the block structure, and on the relevant factor the rescaled matrix has
+  every top-left minor of norm $1$.
+\end{theorem}
+
+\begin{theorem}[The crux]
+  \label{thm:u3-eigenvalues}
+  \uses{thm:u3-factorisation, thm:unit-minors, cor:slope-reading}
+  \lean{JacobsSlash.exists_eigenvalue_U3_halfIntegral}
+  \leanok
+  For every $j \in \N$ there is an eigenvalue $a$ of $U_3$ with
+  \[
+    v_3(a) = j + \tfrac12 .
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:unit-minors, cor:slope-reading, thm:np-slope-reading}
+  Theorem~\ref{thm:u3-factorisation} puts the relevant factor in the shape of
+  Theorem~\ref{thm:unit-minors} with $\varpi = \sqrt{-3}$, whose valuation is $\tfrac12$ in the
+  normalisation $v_3(3) = 1$.  The exact coefficient valuations $\binom m2$ in that normalisation
+  become $\tfrac12\binom m2$ here, whose successive differences are $\tfrac12, \tfrac32, \dots$;
+  Corollary~\ref{cor:slope-reading} reads these off the polygon and
+  Theorem~\ref{thm:serre12} converts slopes into eigenvalues.
+\end{proof}
+
+\begin{theorem}[The crux, for forms]
+  \label{thm:u3-eigenforms}
+  \uses{thm:u3-eigenvalues, thm:qmf-eigenform-criterion, prop:qmf-basechange}
+  \lean{JacobsSlash.exists_eigenform_U3_halfIntegral}
+  \leanok
+  For every $j \in \N$ there exist $a \in \bbC_3$ and a nonzero overconvergent quaternionic
+  modular form $\varphi$ of weight $\kappa_t$ and level $U_1(9)$ over $\bbC_3$ with
+  \[
+    U_3 \varphi = a\varphi, \qquad v_3(a) = j + \tfrac12 .
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:qmf-eigenform-criterion, thm:evalatreps}
+  Theorem~\ref{thm:u3-eigenvalues} produces an eigenvector in the block model; the level is neat
+  by Lemma~\ref{lem:jacobs-neat}, so Theorem~\ref{thm:evalatreps} transports it back to a form,
+  and the transport intertwines the block operator with $U_3$ by Theorem~\ref{thm:transport}.
+  Base change along $K_3(\omega) \hookrightarrow \bbC_3$ is
+  Proposition~\ref{prop:qmf-basechange}.
+\end{proof}
+
+This is the statement announced in the introduction: the slopes of a compact Hecke operator, for
+this weight and level, form an arithmetic progression --- and one that is visibly not integral,
+so that the fibre of the ``quaternionic eigenvariety'' over this weight is not what a naive guess
+would predict.

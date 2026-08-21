@@ -1,0 +1,116 @@
+PhD/ForMathlib/Analysis/Normed/Ring/PowerBounded.lean:209:1: error: @PowerBounded.closedBall_ideal The definition `PowerBounded.closedBall_ideal` contains an underscore. This almost surely violates mathlib's naming convention; use lowerCamelCase or UpperCamelCase instead.
+PhD/ForMathlib/Analysis/Normed/Ring/PowerBounded.lean:233:1: error: @PowerBounded.ball_ideal The definition `PowerBounded.ball_ideal` contains an underscore. This almost surely violates mathlib's naming convention; use lowerCamelCase or UpperCamelCase instead.
+PhD/ForMathlib/Analysis/Normed/Ring/NegLogNorm.lean:100:1: error: @negLogNorm_eq_top simp can prove this:
+PhD/TateFredholm/Tate.lean:194:1: error: @TateFredholm.PseudoUniformizer.coe_eq LHS equals RHS syntactically
+PhD/ForMathlib/Topology/Algebra/PowerBounded.lean:82:1: error: @PowerBounded.isPowerBounded_neg 1 unused argument:
+  argument 5: [ContinuousNeg R]
+PhD/ForMathlib/Topology/Algebra/TopologicallyNilpotent.lean:60:1: error: @IsTopologicallyNilpotent.smul_of_commute 1 unused argument:
+  argument 8: [IsScalarTower S R R]
+PhD/TateFredholm/BaseChange.lean:116:1: error: @TateFredholm.norm_le_pow_of_equiv 5 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 8: [IsUltrametricDist S]
+  argument 9: [CompleteSpace S]
+  argument 15: (π : TateFredholm.PseudoUniformizer S)
+PhD/TateFredholm/BaseChange.lean:390:1: error: @TateFredholm.isCompactoid_map_equiv 2 unused arguments:
+  argument 14: [TateFredholm.IsTate S]
+  argument 17: (he' : Continuous ⇑e.symm)
+PhD/TateFredholm/BaseChange.lean:415:1: error: @TateFredholm.charPowerSeries_map_equiv 1 unused argument:
+  argument 17: (he' : Continuous ⇑e.symm)
+PhD/TateFredholm/BaseChange.lean:430:1: error: @TateFredholm.isCompactoid_baseChange 1 unused argument:
+  argument 14: [TateFredholm.IsTate S]
+PhD/TateFredholm/Compact.lean:93:1: error: @TateFredholm.opNorm_comp_le 1 unused argument:
+  argument 3: [CompleteSpace R]
+PhD/TateFredholm/Compact.lean:103:1: error: @TateFredholm.isCompletelyContinuous_of_tendsto 1 unused argument:
+  argument 3: [CompleteSpace R]
+PhD/TateFredholm/Fredholm.lean:155:1: error: @TateFredholm.charPowerSeries_coeff 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/Fredholm.lean:159:1: error: @TateFredholm.charCoeff_zero 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/Fredholm.lean:489:1: error: @TateFredholm.charCoeff_eq_det_coeff 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/Fredholm.lean:970:1: error: @TateFredholm.charPowerSeries_extendZero 1 unused argument:
+  argument 16: (hJcol : ∀ (p : I ⊕ J) (j : J), TateFredholm.matrixCoeff v p (Sum.inr j) = 0)
+PhD/TateFredholm/Matrix.lean:37:1: error: @TateFredholm.tendsto_matrixCoeff_column 1 unused argument:
+  argument 9: [DecidableEq J]
+PhD/TateFredholm/Matrix.lean:42:1: error: @TateFredholm.matrixCoeff_sub 1 unused argument:
+  argument 9: [DecidableEq J]
+PhD/TateFredholm/Matrix.lean:46:1: error: @TateFredholm.hasSum_matrixCoeff 1 unused argument:
+  argument 9: [DecidableEq J]
+PhD/TateFredholm/Matrix.lean:58:1: error: @TateFredholm.norm_eq_iSup_matrixCoeff 1 unused argument:
+  argument 9: [DecidableEq J]
+PhD/TateFredholm/Matrix.lean:384:1: error: @TateFredholm.rowNorm_nonneg 4 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+  argument 9: [DecidableEq J]
+PhD/TateFredholm/ModelSpace.lean:47:1: error: @TateFredholm.cSpace.tendsto_cofinite 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/ModelSpace.lean:52:1: error: @TateFredholm.cSpace.norm_eq_iSup 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/ModelSpace.lean:56:1: error: @TateFredholm.cSpace.norm_apply_le 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/ModelSpace.lean:112:1: error: @TateFredholm.cSpace.single_apply_self 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/ModelSpace.lean:115:1: error: @TateFredholm.cSpace.single_apply_of_ne 3 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+PhD/TateFredholm/ModelSpace.lean:180:1: error: @TateFredholm.IsONable.isPotentiallyONable 4 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+  argument 9: [IsBoundedSMul R M]
+PhD/TateFredholm/ModelSpace.lean:185:1: error: @TateFredholm.IsPotentiallyONable.hasPr 4 unused arguments:
+  argument 3: [IsUltrametricDist R]
+  argument 4: [CompleteSpace R]
+  argument 5: [NormOneClass R]
+  argument 9: [IsBoundedSMul R M]
+PhD/TateFredholm/Pr.lean:87:1: error: @TateFredholm.HasPr.exists_lift 3 unused arguments:
+  argument 9: [IsBoundedSMul R P]
+  argument 11: [IsUltrametricDist P]
+  argument 12: [CompleteSpace P]
+PhD/TateFredholm/Pr.lean:139:1: error: @TateFredholm.finite_projective_of_one_sub_compact_nilpotent 1 unused argument:
+  argument 11: [IsNoetherianRing R]
+PhD/TateFredholm/Residue.lean:28:1: error: @TateFredholm.exists_norm_eq_zpow 2 unused arguments:
+  argument 3: [IsUltrametricDist K]
+  argument 4: [CompleteSpace K]
+PhD/TateFredholm/Residue.lean:83:1: error: @TateFredholm.isUnit_of_norm_eq_one 1 unused argument:
+  argument 4: [CompleteSpace K]
+PhD/TateFredholm/Residue.lean:724:1: error: @TateFredholm.rescale_nonneg 5 unused arguments:
+  argument 3: [IsUltrametricDist K]
+  argument 4: [CompleteSpace K]
+  argument 7: [NormedSpace K E]
+  argument 8: [IsUltrametricDist E]
+  argument 9: [CompleteSpace E]
+PhD/TateFredholm/Residue.lean:731:1: error: @TateFredholm.rescale_le_rescale 5 unused arguments:
+  argument 3: [IsUltrametricDist K]
+  argument 4: [CompleteSpace K]
+  argument 7: [NormedSpace K E]
+  argument 8: [IsUltrametricDist E]
+  argument 9: [CompleteSpace E]
+PhD/TateFredholm/Residue.lean:747:1: error: @TateFredholm.le_rescale_and_rescale_lt 5 unused arguments:
+  argument 3: [IsUltrametricDist K]
+  argument 4: [CompleteSpace K]
+  argument 7: [NormedSpace K E]
+  argument 8: [IsUltrametricDist E]
+  argument 9: [CompleteSpace E]
+PhD/TateFredholm/Residue.lean:783:1: error: @TateFredholm.rescale_smul 2 unused arguments:
+  argument 8: [IsUltrametricDist E]
+  argument 9: [CompleteSpace E]
+PhD/TateFredholm/Tate.lean:329:1: error: @TateFredholm.PseudoUniformizer.norm_inv_mul 1 unused argument:
+  argument 4: [NormOneClass A]

@@ -8,6 +8,7 @@ import Mathlib.Algebra.Polynomial.Lifts
 import Mathlib.RingTheory.PowerSeries.Trunc
 import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Complete
 import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.Distinguished
+import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.GaussNorm
 import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.DivisionSet
 import PhD.BirkovichWP.RingTheory.PowerSeries.Restricted.Rescale
 import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Residue

@@ -82,13 +82,6 @@ private theorem norm_neg_one_pow (m : ℕ) : ‖(-1 : R) ^ m‖ = 1 := by
   · rw [he.neg_one_pow, norm_one]
   · rw [ho.neg_one_pow, norm_neg, norm_one]
 
-/-- Matrix coefficients are additive: `a_{ji}(u − v) = a_{ji}(u) − a_{ji}(v)`. -/
-private theorem matrixCoeff_sub (u v : c(I, R) →L[R] c(I, R)) (j i : I) :
-    matrixCoeff (u - v) j i = matrixCoeff u j i - matrixCoeff v j i := by
-  show cSpace.evalCLM j ((u - v) (cSpace.single i 1)) = _
-  rw [ContinuousLinearMap.sub_apply, map_sub]
-  rfl
-
 /-- The ultrametric Hadamard bound for a principal minor: `‖det(minor)‖ ≤ ∏_{j ∈ S} r_j`. -/
 private theorem norm_minor_le_prod [IsTate R] (u : c(I, R) →L[R] c(I, R)) (S : Finset I) :
     ‖minor u S‖ ≤ ∏ j ∈ S, rowNorm u j := by

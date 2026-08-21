@@ -51,9 +51,15 @@ active repair today; the polygon-language wrapper is a recorded seam (see AG-NP 
    `−15/14 ν₃ − 5/7`; display (2.1.7) and the PARI listing §B.3 (`5/14*(x3 + 2)*x*y`)
    give `a = −5(ν+2)/14 = −5/14 ν − 5/7`.  Hand-check via the Lemma 2.11 identity
    `16κ(1/4)h₂,₀(x, 4y/7) = (1/4)κ(−2)h₁,₂(7x/10, y)`: matching the second-term
-   denominators forces `(−8)·a·(7/10) = −2(ν+2)`, i.e. `a = −5(ν+2)/14`.  The first
+   denominators forces `(−8)·a·(7/10) = 2(ν+2)`, i.e. `a = −5(ν+2)/14`.  The first
    `ε₁,₂` matrix's `a = 15ν/14` is correct (same check on first terms).  Skeleton uses
    the corrected value (`eps12M2`, docstring records the erratum).
+   *2026-08-05 addendum (from the AG-B tranche, qmf board): independently re-confirmed a
+   third way — the nine certificates of Lemmas 2.4/2.5 were computed by exhaustive search
+   (`PhD/Jacobs/U3/certificate_search.py`) and reproduce all nine `ε` displays exactly via
+   `ε_{i,j} = θ₃(c_j⁻¹·d̄·cᵢ)`, with the corrected `a`-entry and never the printed one.
+   (Also fixed here: the hand-check line above previously wrote `= −2(ν+2)`; the forced
+   value is `+2(ν+2)`, as the Lean proof `lemma211_second` has it.)*
 2. **[Jac (2.1.6)] display vs. code sign.**  (2.1.6) as printed reads `− 4y` in the
    denominator of `h₁,₀`, while p. 28's `ε₁,₀` matrix (`b = −4`) and §B.3's code
    (`+ 4*y`) give `+4y`.  We transcribe only the p. 28 *matrices* and let all

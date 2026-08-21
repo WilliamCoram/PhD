@@ -103,22 +103,6 @@ lemma exists_achievesGaussNorm_dominant [DecidableEq σ] (hc : 0 ≤ c) (hf : Is
     (hg.finite_setOfPred_achievesGaussNorm hg0) hf.exists_achievesGaussNorm
     hg.exists_achievesGaussNorm hf0 hg0
 
-/-- Strengthening of `exists_achievesGaussNorm_dominant` for an ordered index type: the
-dominant pair `(i, j)` consists of the lex-maximal achieving indices, and the last two
-conjuncts expose this maximality. -/
-lemma exists_achievesGaussNorm_dominant_lexMax [LinearOrder σ] [DecidableEq σ] (hc : 0 ≤ c)
-    (hf : IsRestricted c f) (hg : IsRestricted c g) (hf0 : gaussNorm norm c f ≠ 0)
-    (hg0 : gaussNorm norm c g ≠ 0) :
-    ∃ i j, AchievesGaussNorm norm c f i ∧ AchievesGaussNorm norm c g j ∧
-      (∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
-        ‖coeff p.1 f * coeff p.2 g‖ < ‖coeff i f‖ * ‖coeff j g‖) ∧
-      (∀ t, AchievesGaussNorm norm c f t → toLex t ≤ toLex i) ∧
-      ∀ t, AchievesGaussNorm norm c g t → toLex t ≤ toLex j :=
-  MvPowerSeries.exists_achievesGaussNorm_dominant_lexMax norm c (fun _ ↦ norm_nonneg _)
-    norm_mul_le hc hf.hasGaussNorm hg.hasGaussNorm (hf.finite_setOfPred_achievesGaussNorm hf0)
-    (hg.finite_setOfPred_achievesGaussNorm hg0) hf.exists_achievesGaussNorm
-    hg.exists_achievesGaussNorm hf0 hg0
-
 end IsRestricted
 
 namespace Restricted

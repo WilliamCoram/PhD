@@ -113,9 +113,13 @@ variable {R}
 variable (S : Type*) [NormedCommRing S] [IsUltrametricDist S] [CompleteSpace S]
   [NormOneClass S]
 
+omit [IsUltrametricDist R] [CompleteSpace R] [IsUltrametricDist S] [CompleteSpace S] in
 /-- **[JN] Lemma 2.1.6** (the erratum lemma): two equivalent Tate norms, with possibly
 different pseudo-uniformizers, are *power*-comparable — `‖a‖ ≤ C₂‖a‖'^s` on `‖a‖' ≥ 1` —
-but in general **not** bounded-equivalent. -/
+but in general **not** bounded-equivalent.  (The target uniformizer `π` and the inverse
+continuity `he'` are part of [JN]'s "equivalent Tate norms" data, kept for faithfulness even
+though this direction does not consume them.) -/
+@[nolint unusedArguments]
 theorem norm_le_pow_of_equiv (e : R ≃+* S) (he : Continuous (e : R → S))
     (he' : Continuous (e.symm : S → R))
     (ϖ : PseudoUniformizer R) (π : PseudoUniformizer S) :
@@ -389,7 +393,9 @@ private theorem charCoeff_map_of_continuous [IsTate R] [IsTate S]
 
 /-- Norm-invariance of compactoidness ([JN] Proposition 2.1.8, genuinely
 Noetherian-free): a bicontinuous ring isomorphism relating the matrices transfers row
-decay (a topological statement). -/
+decay (a topological statement).  (`he'` and `[IsTate S]` are [JN]'s hypotheses on the pair;
+this direction of the proof does not consume them.) -/
+@[nolint unusedArguments]
 theorem isCompactoid_map_equiv [IsTate R] [IsTate S]
     (e : R ≃+* S) (he : Continuous (e : R → S)) (he' : Continuous (e.symm : S → R))
     (u : c(I, R) →L[R] c(I, R)) (hu : IsCompactoid u)
@@ -416,7 +422,8 @@ theorem isCompactoid_map_equiv [IsTate R] [IsTate S]
 Noetherian-free): `det(1 − Tv) = e(det(1 − Tu))` for a bicontinuous `e`.  Note this is a
 *topological* statement (summability transfer) — `e` is only power-comparable
 (`norm_le_pow_of_equiv`), not bounded, so it is **not** a special case of
-`charPowerSeries_baseChange`. -/
+`charPowerSeries_baseChange`.  (`he'` is part of "bicontinuous", kept for faithfulness.) -/
+@[nolint unusedArguments]
 theorem charPowerSeries_map_equiv [IsTate R] [IsTate S]
     (e : R ≃+* S) (he : Continuous (e : R → S)) (he' : Continuous (e.symm : S → R))
     (u : c(I, R) →L[R] c(I, R)) (hu : IsCompactoid u)
@@ -428,7 +435,9 @@ theorem charPowerSeries_map_equiv [IsTate R] [IsTate S]
   exact charCoeff_map_of_continuous (R := R) (S := S) (e : R →+* S) he u hu v hv n
 
 /-- Base change along a bounded homomorphism, compactoid half
-(`r_j(v) ≤ C·r_j(u) → 0`). -/
+(`r_j(v) ≤ C·r_j(u) → 0`).  (`[IsTate S]` is carried for symmetry with the determinant
+statements below, which do consume it.) -/
+@[nolint unusedArguments]
 theorem isCompactoid_baseChange [IsTate R] [IsTate S]
     (ψ : R →+* S) (C : ℝ) (hψ : ∀ r, ‖ψ r‖ ≤ C * ‖r‖)
     (u : c(I, R) →L[R] c(I, R)) (hu : IsCompactoid u)
@@ -466,6 +475,22 @@ theorem charPowerSeries_baseChange [IsTate R] [IsTate S]
     charPowerSeries v = PowerSeries.map ψ (charPowerSeries u) := by
   ext n
   simp [charCoeff_baseChange S ψ C hψ u hu v hv n, PowerSeries.coeff_map]
+
+variable {S}
+
+/-- Base change along an **isometric** homomorphism, coefficientwise: `cₙ(v) = f(cₙ(u))`. -/
+theorem charCoeff_map [IsTate R] [IsTate S] (f : R →+* S) (hf : ∀ x, ‖f x‖ = ‖x‖)
+    {u : c(I, R) →L[R] c(I, R)} {v : c(I, S) →L[S] c(I, S)} (hu : IsCompactoid u)
+    (hmatch : ∀ j i, matrixCoeff v j i = f (matrixCoeff u j i)) (n : ℕ) :
+    charCoeff v n = f (charCoeff u n) :=
+  charCoeff_baseChange S f 1 (fun r => by rw [hf, one_mul]) u hu v hmatch n
+
+/-- Base change along an **isometric** homomorphism: `det(1 − Tv) = f(det(1 − Tu))`. -/
+theorem charPowerSeries_map [IsTate R] [IsTate S] (f : R →+* S) (hf : ∀ x, ‖f x‖ = ‖x‖)
+    {u : c(I, R) →L[R] c(I, R)} {v : c(I, S) →L[S] c(I, S)} (hu : IsCompactoid u)
+    (hmatch : ∀ j i, matrixCoeff v j i = f (matrixCoeff u j i)) :
+    charPowerSeries v = PowerSeries.map f (charPowerSeries u) :=
+  charPowerSeries_baseChange S f 1 (fun r => by rw [hf, one_mul]) u hu v hmatch
 
 end NormChange
 

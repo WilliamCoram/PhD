@@ -4,23 +4,117 @@
 invocation. Default board = NewtonPolygon agent (hands off); `qmf/`, `jacobs/` taken.
 **File**: only `PhD/TateFredholm/Riesz.lean` (skeleton in place, compiles, sorries
 only). Never edit other TateFredholm files (NP agent may be touching them); if a
-private helper there is needed, restate it locally in Riesz.lean.
+private helper there is needed, restate it locally in Riesz.lean. *(One documented
+exception, 2026-08-05: a 6-line duplicate deletion in `Fredholm.lean` forced by a
+name collision another board introduced in `Matrix.lean` — see the Summary.)*
 **Sources**: quotes + attack logs in `decomposition.md` (this directory). Serre page
 numbers are journal pages of Publ. Math. IHÉS 12 (1962).
 
 ## Summary
 - Total: 42 tickets (30 proof/def + 12 cleanup)
-- Open: 22 | In Progress: 0 | Done: 20 (T001–T018 + CLEANUP-1, CLEANUP-2 — 2026-08-04)
-- Riesz.lean: 0 errors, **18 sorries** remaining (was 39 at the start of the T007–T009 batch,
-  33 at the start of T010, 31 at the start of T011/T012, 27 at the start of T013–T015, 23 at
-  the start of T016–T018); all 21 filled declarations `#print axioms`-clean
-  (propext / Classical.choice / Quot.sound).
+- Open: 0 | In Progress: 10 (all cleanup) | Done: 32 (T001–T030 + CLEANUP-1, CLEANUP-2)
+- **CONSOLIDATED CLEANUP RUN (2026-08-05, in progress)** — the 10 remaining cleanup tickets
+  (CLEANUP-3..9, ALL-1, ALL-2, FINAL) are all `/cleanup` on the same file, so they are being
+  discharged as ONE full-file `/cleanup` pass rather than ten partial ones. Structure:
+  * **Phase 0–3 (file-level) DONE**: imports reordered (Mathlib group first, then `PhD.*`,
+    alphabetical within groups, blank line between); the one `/-! ### Coordinate machinery …`
+    subsection divider at L3024 stripped; **11 `haveI`/`letI` → `have`/`let`** (Lean-3 holdover,
+    always a defect per the cleanup rules). Build green after each. No `λ`, no `$`, no
+    `push_neg`, no `erw`, no TODO/FIXME in the file to begin with.
+  * **A.5 FLAG**: the file is 3620 lines — over the 1000-line bar, so it wants `/split-file`.
+    Recorded as a follow-up, not done here (out of `/cleanup` scope).
+  * **Phase 4 (per-declaration) IN PROGRESS — 67 of 105 done**: 166 declarations total, of which 41
+    were already covered by CLEANUP-1/2, leaving 105. One worker each, dispatched in parallel
+    batches chosen to be NON-ADJACENT in the file so their `Edit` surfaces cannot collide (the
+    skill's sequential rule exists to prevent edit races; non-adjacency plus name-based location
+    plus `Edit`-never-`Write` achieves the same guarantee at 20× throughput). Every worker wrote a
+    full audit trail to the session scratchpad `reports/<decl>.md`; no gate failures and no
+    phase-checklist gaps in any of them.
+  * **PAUSED 2026-08-05 by an external API session limit** (resets 17:00 Europe/London). All 15
+    then-in-flight workers died mid-run. **The file was verified GREEN after the deaths** — 3127
+    lines, 0 sorries, `lake build` clean; the workers use `Edit` with unique anchors, so nothing
+    was left half-applied. The 15 affected declarations are listed in the scratchpad's
+    `died_unfinished.txt` and have been returned to the queue.
+  * **Phase 5a file-wide sweeps DONE** (the main agent did these while no workers were editing,
+    which is the only safe moment for them): `omega` → `lia` (21 sites); `fun x => ` → `fun x ↦ `
+    (389 sites, all 35 `match` arrows correctly preserved, dry-run on a copy first); line packing
+    (0 lines now exceed 100 codepoints). Each verified by a clean build.
+  * **Phase 5b rename pass DONE**: `evalT_zero` → `evalT_zero_eq_coeff_zero` (the old name read as
+    `evalT a 0 = 0`, i.e. the `map_zero` lemma, rather than evaluation *at* zero); one call site;
+    `.mathlib-quality/renames.jsonl` drained to empty.
+  * **Headline structural results so far** — every oversized proof was decomposed, not just golfed:
+    `charPowerSeries_eq_pow_mul_of_riesz` 228→52 body lines (7 helpers);
+    `eventually_norm_charCoeff_sub_le` 120→47 (3); `charPowerSeries_blockTriangular` (Serre Lemme 2)
+    93→7 (4); `exists_rieszProjection` 93→43 (2); `finite_ker_one_sub_smul_pow` 88→39 (5);
+    `norm_det_sub_det_le'` 96→42 (2); `norm_coeff_det_le` 75→23 (2, generalised to `[CommRing S]`);
+    `matrixCoeff_resolventCoeff_of_rows` 71→45 (3). File 3620 → 3127 lines overall.
+  * `#print axioms TateFredholm.exists_riesz_decomposition` re-verified mid-run: still
+    `[propext, Classical.choice, Quot.sound]`. MILESTONE-2 survives the cleanup.
+  * **TOOLING TRAP for future runs**: the `mcp__lean-lsp__*` tools were NOT connected in this
+    session, for the main agent or any subagent. The first worker burned 25 minutes on a 7-line
+    lemma hunting for them. Substitutes, which every worker is now told up front:
+    `lake build PhD.TateFredholm.Riesz 2>&1 | grep 'Riesz.lean.*error'` for diagnostics;
+    `grep -rn <name> .lake/packages/mathlib/Mathlib/` for mathlib search; the vendored
+    `.lake/packages/LeanSearchClient` for `#loogle`/`#leansearch` under `lake env lean`.
+  * Worker prompt template lives in the session scratchpad (`worker_template.md`).
+- Riesz.lean: **0 errors, 0 sorries** (2026-08-05) — was 39 at the start of the T007–T009
+  batch, 33 at T010, 31 at T011/T012, 27 at T013–T015, 23 at T016–T018, 18 at T019/T027,
+  15 at T020, 12 at T021–T023, 7 at T024–T026, 3 at T028–T030. All 39 filled declarations
+  `#print axioms`-clean (propext / Classical.choice / Quot.sound).
+- **MILESTONE-2 REACHED (2026-08-05)**: `exists_riesz_decomposition` (Serre 1962 Prop. 12)
+  is proved, together with `finrank_ker_one_sub_smul_pow` (`dim N(a) = h`) and the
+  block factorisation `charPowerSeries_eq_pow_mul_of_riesz`. Exact axiom output:
+  ```
+  'TateFredholm.exists_riesz_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'TateFredholm.finrank_ker_one_sub_smul_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+  'TateFredholm.exists_eigenvector_of_evalT_charPowerSeries_eq_zero' depends on axioms: [propext,
+   Classical.choice, Quot.sound]
+  'TateFredholm.charPowerSeries_eq_pow_mul_of_riesz' depends on axioms: [propext, Classical.choice, Quot.sound]
+  ```
+- **CROSS-BOARD BREAKAGE + REPAIR (2026-08-05)** — read before the next run. The build was
+  red on arrival for two unrelated reasons, neither of them in this board's scope:
+  1. A parallel agent (Jacobs board) added a **public** `@[simp] matrixCoeff_sub` to
+     `PhD/TateFredholm/Matrix.lean` (uncommitted, to serve `PhD/Jacobs/GenFun.lean:70`).
+     That name already existed twice downstream: `private matrixCoeff_sub` in
+     `Fredholm.lean:86` and a public duplicate in `Riesz.lean:602`. Result:
+     `Fredholm.lean:86:16: a non-private declaration TateFredholm.matrixCoeff_sub has
+     already been declared`, and the build never reached Riesz. **Repair**: keep the
+     canonical copy in `Matrix.lean` (earliest file, where `matrixCoeff` lives, and the
+     one the other board depends on) and delete the two exact duplicates — 6 lines in
+     `Fredholm.lean` (a `private` whose two use sites now resolve to the strictly more
+     general public lemma) and 3 lines in `Riesz.lean`. No statement changed; `Fredholm`,
+     `Riesz` and `PhD.Jacobs.GenFun` all build. This is the one time this board edited a
+     file other than `Riesz.lean` — unavoidable, since `Fredholm.lean` compiles first.
+  2. `charPowerSeries_eq_pow_of_isNilpotent` (T025's consumer) had regressed: inside its
+     `heq` step, `simp only [… Matrix.one_apply]` left the RHS as
+     `if (Equiv.subtypeUnivEquiv ⋯) j = (Equiv.subtypeUnivEquiv ⋯) i then 1 else 0`, so the
+     follow-up `rw [if_pos rfl, if_pos rfl]` / `rw [if_neg …]` (whose patterns are in terms
+     of `↑j = ↑i`) no longer matched. **Repair**: add `heu` (to unfold the `set`-bound `eu`)
+     and `Equiv.subtypeUnivEquiv_apply` to the `simp only` list. **Trap for the future**:
+     `Equiv.subtypeUnivEquiv` applications are *not* reduced to the subtype coercion by
+     `simp only` unless `Equiv.subtypeUnivEquiv_apply` is in the list.
+- **Tier 1 of the full Riesz decomposition: DONE (2026-08-04)** — T021
+  (`exists_rieszProjection`), T022 (`ker_/range_one_sub_smul_pow_of_rieszProjection`,
+  `isTopCompl_range_one_sub_range_of_isIdempotent`), T023 (`rieszProjection_unique`) over a
+  general Banach–Tate ring `R`, and T024 (`finite_ker_one_sub_smul_pow`) over a field.
+  One new file-scoped private for T021–T023: `apply_of_mul_eq` (reused by T024).
+- **Tier-2 groundwork: DONE (2026-08-04)** — T025 (`det_one_sub_X_smul_of_isNilpotent`) and
+  T026 (`isCompactoid_of_comp_embedding`, `charPowerSeries_blockTriangular` = Serre's
+  Lemme 2). Five new privates, all in `RieszDecomposition` and all index-only: `blockEquiv`,
+  `card_blockEquiv`, `fiberEquiv`, `blockCard`, `blockCardFiberEquiv`. Everything T028 needs
+  from Q2/Q3 is now available.
+- **MILESTONE-1 REACHED (2026-08-04)**: T020 is DONE — a zero of the characteristic power
+  series of a compactoid operator over a complete nonarchimedean field IS an eigenvalue
+  (Serre 1962 §7 Props. 11–12), together with the iff and the conjugated transport. All
+  three `#print axioms`-clean.
 - C-cluster: COMPLETE (C0/C1/C2 = T013–T015, `fredholmDet_mul` = T016).
-- D-cluster: **the payoff chain T016 → T017 → T018 is DONE** — Serre Prop. 11
-  (`isUnit_one_sub_smul_iff_isUnit_evalT`) and the dichotomy
-  (`exists_mem_ker_of_hasseDeriv_evalT`) are proved over a general Banach–Tate ring `R`.
-  What remains for the MILESTONE (T020) is only the field input T019 (`Order`).
-- A-cluster (`PowerSeries.evalT` / `hasseDeriv`) is COMPLETE apart from T019 (`Order`).
+- D-cluster: **COMPLETE — the payoff chain T016 → T017 → T018 → T020 is DONE**. Serre
+  Prop. 11 (`isUnit_one_sub_smul_iff_isUnit_evalT`) and the dichotomy
+  (`exists_mem_ker_of_hasseDeriv_evalT`) are proved over a general Banach–Tate ring `R`;
+  T019 (the field input, `Order`) supplies the order, and T020 assembles the three
+  field-level eigenvector theorems (headline / iff / conjugated).
+- A-cluster (`PowerSeries.evalT` / `hasseDeriv`) is COMPLETE, `Order` section included
+  (T019 + T027 — 2026-08-04).
 - Parallel capacity: 4+ (T001/T002/T003/T007 at start; A ⊥ B ⊥ C0; T019 ⊥ B/C/D;
   T025/T026/T027 ⊥ Tier-1)
 - EXTENSION 2026-08-04: T021–T030 = Serre's full Riesz decomposition (Prop. 12),
@@ -546,7 +640,7 @@ Serre p. 79 step c) (verbatim in decomposition B3).
     `simp only [charCoeff_zero, sub_self, norm_zero]`) followed by `exact tendsto_const_nhds`.
 
 ### CLEANUP-3 — /cleanup on Riesz.lean (T007–T009)
-- **Status**: open — **Depends on**: T007, T008, T009 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T007, T008, T009 — **Type**: cleanup
 
 ### [T010] Lemme 3 bound and entireness of the resolvent (Serre Prop. 10)
 - **Status**: done — **File**: Riesz.lean — **Depends on**: T008, T009 — **Type**:
@@ -791,7 +885,7 @@ Pascal step recorded there — worker re-derives before coding.
     (unifies against `Multiset.sum` / `norm`). Always `have h2 := h1.comp …; exact h2`.
 
 ### CLEANUP-4 — /cleanup on Riesz.lean (T010–T012)
-- **Status**: open — **Depends on**: T010, T011, T012 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T010, T011, T012 — **Type**: cleanup
 
 ### [T013] Determinant value and scaling
 - **Status**: done — **File**: Riesz.lean — **Depends on**: T004 — **Parallel**: yes —
@@ -951,7 +1045,7 @@ attack that showed `norm_charCoeff_sub_le` alone is insufficient at `M ≥ 1`).
     pick different instances and `omega`/`rw` stop matching.
 
 ### CLEANUP-5 — /cleanup on Riesz.lean (T013–T015)
-- **Status**: open — **Depends on**: T013, T014, T015 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T013, T014, T015 — **Type**: cleanup
 
 ### [T016] Multiplicativity of the determinant value (Serre Cor. 1)
 - **Status**: done — **File**: Riesz.lean — **Depends on**: T002, T013, T014, T015 —
@@ -1121,10 +1215,10 @@ decomposition D3; the `h = 1` hand-trace recorded there).
     (no `one_ne_zero`/`norm_one` glue needed — `NormOneClass.nontrivial` is a direct term).
 
 ### CLEANUP-6 — /cleanup on Riesz.lean (T016–T018)
-- **Status**: open — **Depends on**: T016, T017, T018 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T016, T017, T018 — **Type**: cleanup
 
 ### [T019] Field input: finite order of vanishing (Weierstrass route)
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T004, T005, T006 —
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T004, T005, T006 —
   **Parallel**: yes (independent of B/C/D clusters) — **Type**: theorem pair
 #### Statement
 `exists_factor_of_evalT_eq_zero`, `exists_order_of_evalT_eq_zero` (section `Order`).
@@ -1171,12 +1265,58 @@ contradiction).
 #### Generality
 Field `K` (NontriviallyNormedField + ultrametric + complete). This ticket touches
 ONLY the `PowerSeries` namespace part of the file.
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change. Ran essentially as
+  sketched; the two open questions in the sketch resolved as follows.
+  * **"g entire" route: NEITHER (a) nor (b)** — the recorded routes (redo the division at
+    each radius + `weierstrassDivision_q_unique_of_isMulDistinguished`, or coefficientwise
+    tail sums) were both avoided. What lands is: divide at radius `c` for EVERY `c > ‖a‖`
+    (private `exists_factor_isRestricted`), then identify the quotients obtained at two
+    different radii by **cancelling the raw factor in `PowerSeries K`**. `mul_left_cancel₀`
+    is NOT available (`IsLeftCancelMulZero K⟦X⟧` fails to synthesize — mathlib has no
+    `IsDomain (PowerSeries R)` instance in scope here), so the cancellation is a 9-line
+    private `eq_of_one_sub_C_mul_X_mul_eq` by coefficientwise induction reusing the
+    file's `coeff_zero_/coeff_succ_one_sub_C_mul_X_mul`. Public shape:
+    `g` at `c₀ = ‖a‖ + 1`; for an arbitrary `c > 0` divide at `max c (‖a‖+1)`, cancel to
+    identify with `g`, then shrink the radius (`isRestricted_of_le`, a new private —
+    ForMathlib has NO `IsRestricted` monotonicity lemma).
+  * **Termination**: phrased as `pow_le_norm_of_eq_pow_mul` —
+    `f = (1 - C a⁻¹X)^s · g`, `coeff 0 g = 1` ⟹ `(‖a‖⁻¹c)^s ≤ ‖f‖_c` at `c = ‖a‖ + 1`,
+    proved in ONE line by `norm_mul` + `norm_pow` (the `NormMulClass`/`NormOneClass`
+    instances on `Restricted K c`) — no induction. Then `pow_unbounded_of_one_lt` gives an
+    `N` with `‖f‖_c < (‖a‖⁻¹c)^N`, and `Nat.find` on
+    `¬ ∃ g, entire ∧ coeff 0 g = 1 ∧ f = ℓ^s·g` produces the order: `Nat.find ≠ 0` (as
+    `P 0` holds with `g := f`), write it `k+1`, `Nat.find_min` gives `P k`, `Nat.find_spec`
+    gives `¬P (k+1)`, and the division step at `g` would produce `P (k+1)` — so
+    `evalT a g ≠ 0`. `1 ≤ k` because `k = 0` forces `g = f`.
+  * **`Restricted` seam traps (important for T028 and anyone else touching `Restricted`)**:
+    an inline `(⟨f, hf⟩ : Restricted K c)` UNFOLDS the opaque type to
+    `↥(MvPowerSeries.IsRestricted.subring fun _ => c)` and then `Norm`/`HMul` fail to
+    synthesize. Fix: a private `def restrictedOf (hf : IsRestricted c f) : Restricted K c`
+    (the declared return type keeps it opaque at every use site). Everything else crosses
+    the seam by term steps: `congrArg Subtype.val hfeq` gives the raw division equation
+    directly (`(L*q + toRestricted r).1` is rfl-equal to `ℓ*q.1 + ↑r`), and
+    `Subtype.ext hfg` lifts `f = ℓ^s·g` to `F = L^s * G` (so `(L^s*G).1 = L.1^s*G.1` IS rfl).
+  * `IsMulDistinguished c (1 - C a⁻¹X) 1` verified exactly as sketched; `gaussNorm_eq` is
+    discharged by `← Restricted.norm_def c` then a `le_antisymm` with
+    `Restricted.norm_le_iff` / `Restricted.norm_coeff_mul_pow_le`. **All three take `c`
+    EXPLICIT and FIRST** (same trap as `isRestricted.mul` etc.).
+  * Remainder degree: `Nat.WithBot.lt_one_iff_le_zero.mp hrdeg` feeds
+    `Polynomial.eq_C_of_degree_le_zero` with no cast massage; `conv_lhs => rw [...]` then
+    `exact Polynomial.coe_C _` crosses to `PowerSeries`.
+  * `h0 : coeff 0 f = 1` is genuinely unused in `exists_factor_of_evalT_eq_zero` (it is only
+    needed by the ITERATION), so the declaration carries
+    `set_option linter.unusedVariables false in` — which must sit BEFORE the docstring,
+    not between docstring and `theorem` (parse error otherwise).
+  * New privates (file-scoped, reusable by T028/T029): `isRestricted_of_le`, `evalT_zero`,
+    `linFactor` + `val_linFactor` + `coeff_linFactor`, `restrictedOf` + `val_restrictedOf`,
+    `one_lt_norm_inv_mul`, `norm_linFactor`, `isMulDistinguished_linFactor`,
+    `exists_factor_isRestricted`, `eq_of_one_sub_C_mul_X_mul_eq`, `pow_le_norm_of_eq_pow_mul`.
 
 ### CLEANUP-ALL-1 — /cleanup-all pass on Riesz.lean before the milestone
-- **Status**: open — **Depends on**: CLEANUP-6, T019, CLEANUP-2 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: CLEANUP-6, T019, CLEANUP-2 — **Type**: cleanup
 
 ### [T020] MILESTONE — the eigenvector theorems (field)
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T017, T018, T019,
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T017, T018, T019,
   CLEANUP-ALL-1 — **Type**: theorem ×3 (assembly)
 #### Statement
 `exists_eigenvector_of_evalT_charPowerSeries_eq_zero`,
@@ -1200,9 +1340,38 @@ ONLY the `PowerSeries` namespace part of the file.
 `charPowerSeries_isEntire`, `charCoeff_zero`.
 #### Sources
 Serre Props. 11–12; Buzzard Prop. 3.2 + p. 32; decomposition D4–D6.
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new helper,
+  NO new import, NO new private. Ran exactly as sketched; all three proofs are short
+  (15 / 21 / 8 lines) — the whole ticket is genuinely pure assembly of T017–T019.
+  * **Headline**: `charPowerSeries_isEntire u hu` already has the shape
+    `∀ C, 0 < C → IsRestricted C _` that T019 wants, so it is passed unapplied;
+    `coeff 0 H = 1` is `rw [charPowerSeries_coeff, charCoeff_zero]`. T019 destructures as
+    `⟨ha0, h, hh, h0, hne⟩` and `hne.isUnit` (`Ne.isUnit`, the `protected alias` half of
+    `isUnit_iff_ne_zero`) feeds T018 directly. Rearrangement: `simpa using hx` turns
+    `(1 - a•u) x = 0` into `x - a • u x = 0`, then `sub_eq_zero` + a 3-step `calc`
+    (`inv_mul_cancel₀`, `smul_smul`).
+  * **Iff (←)**: `hker : (1 - a•u) x = 0` by ONE `simp only [sub_apply, one_apply_eq_self,
+    smul_apply, hx, smul_smul, mul_inv_cancel₀ ha0, one_smul, sub_self]`. Non-unit:
+    `isUnit_iff_exists.1` gives the LEFT inverse `w` with `w * (1 - a•u) = 1`; applying it
+    at `x` via `congrArg (fun T => T x)` + `simpa` (the file's existing idiom, cf. the T018
+    proof) and then `rw [hker, map_zero]` yields `0 = x`. Finish: rewrite by T017's iff and
+    `by_contra` + `Ne.isUnit` (deliberately NOT `push_neg`, which is deprecated).
+  * **Conj**: `charPowerSeries_conj` was NOT needed — the statement is already phrased on
+    the conjugate `w = φ ∘ v ∘ φ.symm`, so the headline applies verbatim with `_` for the
+    operator. Transport is two `congrArg` + `simpa` steps (`φ` on `φ.symm y = 0` for
+    nonzero-ness; `φ.symm` on the eigen-equation, `simp` discharging
+    `symm_apply_apply` + `map_smul`).
+  * **Trap confirmed**: `ContinuousLinearMap.sub_apply` / `.smul_apply` / `.one_apply` /
+    `.mul_apply` are ALL deprecated (2026-05-20) in favour of the ROOT-level
+    `sub_apply` / `smul_apply` / `one_apply_eq_self` / `mul_apply_eq_comp` (the
+    `FunLike.IsApply` classes in `Mathlib/Data/FunLike/IsApply.lean`; `one_apply_eq_self` is
+    `@[simp]`, so plain `simp` normalises `(1 : M →L M) x` on its own).
+  * **Verification**: `lake build PhD.TateFredholm.Riesz` — 0 errors, 2322 jobs, 12 sorries
+    left (all in `RieszDecomposition` / the T021–T030 extension). `#print axioms` on all
+    three = `[propext, Classical.choice, Quot.sound]`.
 
 ### [T021] Serre's Riesz projectors
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T011, T012 — **Type**:
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T011, T012 — **Type**:
   theorem
 #### Statement
 `exists_rieszProjection` (section `RieszDecomposition`).
@@ -1229,9 +1398,39 @@ Serre p. 81 (verbatim, decomposition P1). Buzzard Prop. 3.2 p. 23 (ring-level ch
 #### Generality
 Over `R` Banach–Tate + order-`h` unit hypotheses — strictly generalises Serre's field
 statement (matches Buzzard's Noetherian-Banach base and exceeds it).
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new import.
+  One new file-scoped private shared with T022/T023 (`apply_of_mul_eq`, see T022). Ran as
+  sketched EXCEPT for one deliberate simplification that removes the binomial expansion
+  entirely.
+  * **`Commute.add_pow` was NOT needed.** Since `e + f = 1` gives `f = 1 - e`, Serre's
+    "développer `(e+f)ʰ = 1`" collapses: `f·eʰ = 0` reads `(1-e)eʰ = 0`, i.e.
+    `e^{h+1} = eʰ`; a 3-line induction gives `e^{h+k} = eʰ` for all `k`, so
+    `eʰ·eʰ = e^{h+h} = eʰ`. This also sidesteps the fact that `Commute (N h) (N (h-1))` is
+    NOT available from T011 (T011 only gives `Commute u (N s)`) — the binomial route would
+    have needed it, or a `f = 1 - e` rewrite anyway. **Recorded as a plan simplification.**
+  * Nilpotency likewise avoids `geom_sum`: `∀ k, bʰ(1 - eᵏ) = 0` by induction with
+    `1 - e^{j+1} = (1 - eʲ) + eʲ(1 - e)` and `bʰ(1-e) = 0`, using `Commute b e`.
+  * **Skeleton of the proof**: `choose N hN`; `set b := 1 - a•u with hbdef` (invoking T012
+    under `set` needs `rw [hbdef]` first — `set` does not fold new terms); chain
+    `hchain : ∀ s < h, b^{s+1} * N s = 0` by induction (T012 + `(hbu.pow_left _).eq`);
+    `d := (ΔʰH)(a)`, `di := ↑hunit.unit⁻¹`, `hdi : di * d = 1` (`IsUnit.val_inv_mul`);
+    `e := di • (b * N h)`; `hE : e = di • (u * N (h-1)) + 1` from T012 at `s = h`;
+    `hone_sub_e : 1 - e = -(di • (u * N (h-1)))` (`abel`); `hM'chain : bʰ * N (h-1) = 0`
+    (chain at `h-1`, `Nat.sub_add_cancel hh`); `hbf : bʰ(1-e) = 0`; `heh : eʰ = diʰ • (bʰ Nₕʰ)`
+    (`smul_pow` + `Commute.mul_pow`); `hfe : (1-e)eʰ = 0`; idempotency; nilpotency;
+    witness `w := diʰ • (b^{h-1} Nₕʰ)` with `b * w = eʰ` (`← pow_succ'`,
+    `Nat.sub_add_cancel hh`).
+  * **Commutation conjuncts** are one-liners in the `Commute` closure API:
+    `Commute.one_left/.sub_left/.smul_left/.smul_right/.mul_left/.mul_right/.pow_left/`
+    `.pow_right/.pow_pow/.mul_pow/.eq`. `smul_pow` and `Commute.smul_left/right` both exist
+    for `R` acting on `c(I,R) →L[R] c(I,R)` (verified).
+  * **Trap**: `(huw : Commute u w)` type-ascription does NOT enable dot notation —
+    `Commute` unfolds to `Eq`, so `(huw : Commute u w).smul_left a` fails with
+    `Eq.smul_left`. Bind it first: `have hcuw : Commute u w := huw`.
+  * **Trap**: `c` is a terrible local name in this file (`c(I, R)` notation); used `d`/`di`.
 
 ### [T022] Kernel/range characterisations and the topological complement
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T021 (shape only; provable
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T021 (shape only; provable
   standalone from its hypotheses) — **Type**: lemma triple
 #### Statement
 `ker_one_sub_smul_pow_of_rieszProjection`, `range_one_sub_smul_pow_of_rieszProjection`,
@@ -1255,9 +1454,34 @@ statement (matches Buzzard's Noetherian-Banach base and exceeds it).
 `IsIdempotentElem.one_sub`, `Submodule.IsTopCompl.isClosed` (for downstream use).
 #### Sources
 Buzzard p. 23 ("N = ker(ψ) and F = Im(ψ)"); Serre p. 81. Decomposition P2.
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new import.
+  Ran exactly as sketched; the three proofs are 22 / 25 / 14 lines.
+  * **ONE new file-scoped private** (placed at the top of `RieszDecomposition`, used by all
+    of T022/T023): `apply_of_mul_eq {A B C} (hABC : A * B = C) (x) : A (B x) = C x`
+    (`congrArg (fun T => T x)` + `simpa`). Needed because the deprecation of
+    `ContinuousLinearMap.mul_apply` makes that idiom recur ~8 times.
+  * `p ^ h = p` is proved WITHOUT `1 ≤ h`: for `h = 0`, `hnil` reads `1·(1-p) = 0`, so
+    `p = 1 = p⁰`; for `h = k+1` it is `IsIdempotentElem.pow_succ_eq k hp` (signature:
+    `(n : ℕ) (h : IsIdempotentElem p) : p ^ (n+1) = p`). So the two characterisations hold
+    at every `h`, which is exactly what T023 needs.
+  * `ker`: `w^h * (1-a•u)^h = p` via `Commute.pow_pow` + `Commute.mul_pow` + `hw` + `p^h = p`.
+  * `range`: `hnil` rearranges (`mul_sub`, `mul_one`, `sub_eq_zero`) to `ψ * p = ψ`, then
+    `Commute.pow_left` gives `p * ψ = ψ`; both inclusions are then `exact ⟨_, apply_of_mul_eq …⟩`.
+  * **Trap**: `simpa using (congrArg … )` FAILS on range/ker membership goals — `simp`
+    normalises `((1 - a•u)^h) y` to `(⇑(1 - a•u))^[h] y` on one side and to a
+    `LinearMap`-power `((1 - a•↑u)^h) y` on the other, so the two sides diverge. Use the
+    `apply_of_mul_eq` term and `exact ⟨_, …⟩` (defeq through `ContinuousLinearMap.coe_coe`).
+  * `isTopCompl`: `ContinuousLinearMap.IsIdempotentElem.isTopCompl` applied to
+    `(hp : IsIdempotentElem p).one_sub` gives `IsTopCompl (1-p).range (1-p).ker`; the
+    ker/range swap `(1-p).ker = p.range` is the advertised 3-line double inclusion (no
+    CLM-level mathlib lemma exists; `LinearMap.IsIdempotentElem.ker_eq_range_one_sub` in
+    `Mathlib/LinearAlgebra/Projection.lean` is the `LinearMap` analogue and would need
+    coe-juggling, so it was not used).
+  * **Trap**: `IsIdempotentElem` is a `def` unfolding to `Eq`, so `h2.isTopCompl` fails
+    (`Eq.isTopCompl`); must write `ContinuousLinearMap.IsIdempotentElem.isTopCompl h2`.
 
 ### [T023] Uniqueness of the Riesz projector
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T022 — **Type**: theorem
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T022 — **Type**: theorem
 #### Statement
 `rieszProjection_unique`.
 #### Proof sketch
@@ -1276,12 +1500,30 @@ Buzzard p. 23 ("N = ker(ψ) and F = Im(ψ)"); Serre p. 81. Decomposition P2.
 #### Sources
 Serre p. 81 ("son unicité est immédiate"); Buzzard p. 23. Decomposition P3 (attack
 log records the repaired idempotent-equality argument).
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new private.
+  33 lines, exactly the sketch. **Decomposition P3's REPAIRED argument WAS needed as
+  written and was used verbatim** — `p` and `p'` genuinely do not commute here, and the
+  proof never asks them to.
+  * Step 1 (common exponent) is 4 lines: `(1-a•u)^{h+h'}(1-p) = 0` by
+    `rw [add_comm, pow_add, mul_assoc, hnil, mul_zero]` and the primed version by
+    `rw [pow_add, mul_assoc, hnil', mul_zero]`. Then T022 is applied FOUR times with
+    `(h := h + h')`. **`hw`/`huw`/`hp`/`hup`/`hpw` are exponent-free**, so nothing else
+    has to be upgraded — this is why the T022 statements were worth keeping `h`-generic.
+  * Step 2 (pointwise): `ContinuousLinearMap.ext`; `p x ∈ range p = range p'` gives
+    `p x = p' y`, so `p' (p x) = p'(p' y) = p' y = p x` (`apply_of_mul_eq hp' y`);
+    `(1-p) x ∈ range (1-p) = range (1-p')` gives `(1-p) x = (1-p') z`, so
+    `p' ((1-p) x) = (p' * (1-p')) z = 0` (`apply_of_mul_eq hzero z`, `hzero` by
+    `mul_sub, mul_one, hp', sub_self`). Then `p' x = p'(p x) + p'((1-p) x) = p x`.
+  * `hh`/`hh'` turn out to be UNUSED (the T022 characterisations hold at every exponent,
+    see T022's note) — the hypotheses are kept because the statement is fenced.
+  * Membership terms `hR ▸ ⟨x, rfl⟩` typecheck directly (`⟨x, rfl⟩ : p x ∈ p.range` is
+    defeq through `ContinuousLinearMap.coe_coe`).
 
 ### CLEANUP-7 — /cleanup on Riesz.lean (T021–T023)
-- **Status**: open — **Depends on**: T021, T022, T023 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T021, T022, T023 — **Type**: cleanup
 
 ### [T024] `N(a)` is finite-dimensional (field)
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T021, T022 — **Type**:
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T021, T022 — **Type**:
   theorem
 #### Statement
 `finite_ker_one_sub_smul_pow` (section `Field`).
@@ -1317,9 +1559,34 @@ log records the repaired idempotent-equality argument).
 (decomposition P4, successful attack recorded).
 #### Sources
 Buzzard p. 23 (verbatim in decomposition P4); Serre p. 81.
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new private
+  (reuses T021's `apply_of_mul_eq`). 68 lines, exactly the sketch; `Pr.lean` untouched, so
+  P4's recorded `HasPr` cardinality obstruction is confirmed avoided.
+  * Instances on `N := ψ.ker`: `NormedAddCommGroup ↥N` and `Module K ↥N` are found
+    (`Submodule.normedAddCommGroup`); `CompleteSpace ↥N` is
+    `ψ.isClosed_ker.completeSpace_coe`; **`IsBoundedSMul K ↥N` is NOT an instance** and
+    must be supplied by hand — `haveI := IsBoundedSMul.of_norm_smul_le fun r x =>
+    norm_smul_le r (x : c(I, K))` (works because `Submodule.coe_norm` is `rfl`).
+  * Compression: `ι := N.subtypeL`, `π := (1-p).codRestrict N hmemN` (uses T022's
+    `ker ψ = range (1-p)`), and one reusable lemma
+    `hcoe : (∀ x ∈ N, T x ∈ N) → ↑((π ∘SL T ∘SL ι) y) = T ↑y` — proved from
+    `hfix : ∀ x ∈ N, (1-p) x = x` (idempotence of `1-p`, i.e. `apply_of_mul_eq hidem`).
+    Everything downstream (`ν`, `τ`, powers, sums) is then coordinate bookkeeping on `↑`.
+  * `N`-stability: `1 - a•u` from `ψ * (1-a•u) = (1-a•u) * ψ` (`← pow_succ, ← pow_succ'`);
+    `a•u` from `(a•u) x = x - (1-a•u) x` plus `Submodule.sub_mem`.
+  * `1_N = τ * ∑_{k<h} ν^k` uses **`mul_neg_geom_sum`** (`Mathlib/Algebra/Ring/GeomSum.lean`,
+    `Ring` section — valid in the *non-commutative* endomorphism ring). **Trap**: the
+    `← neg_sub` + `neg_mul` + `mul_geom_sum` route of `OperatorNorm.lean:581` does NOT
+    replay here — `rw [neg_mul]` fails to match `-(ν - 1) * S`.
+  * `(ν^(j+1)) y = ν ((ν^j) y)` is `by rw [pow_succ']; rfl` (no `simpa using congrArg`,
+    per T022's trap); `ν^h = 0` is `Subtype.ext` + `y.2`.
+  * Endgame: `honecc 1 one_pos` → finite-rank `α` with `‖1 - α‖ < 1`;
+    `exists_inverse_of_norm_id_sub_lt_one α (by rwa [← ContinuousLinearMap.one_def])`;
+    `hv1 ▸ hαfr.comp_right v : IsFiniteRank (id)`; `top_le_iff.mp fun x _ => hQle ⟨x, rfl⟩`
+    gives `Q = ⊤`, and `Module.Finite` is the anonymous constructor `⟨hQtop ▸ hQfg⟩`.
 
 ### [T025] Nilpotent block determinant
-- **Status**: open — **File**: Riesz.lean — **Depends on**: none — **Parallel**: yes —
+- **Status**: done — **File**: Riesz.lean — **Depends on**: none — **Parallel**: yes —
   **Type**: lemma
 #### Statement
 `det_one_sub_X_smul_of_isNilpotent` (section `Field`).
@@ -1349,9 +1616,31 @@ Buzzard p. 23 (verbatim in decomposition P4); Serre p. 81.
 reversal lemmas (`Polynomial.reverse`-free manual route acceptable).
 #### Sources
 Serre p. 81 ("det(1 − tu_W) = (1 − ta⁻¹)^{dim W}"). Decomposition Q2.
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new private,
+  NO new import, 33 lines. **The sketched `charpoly`-reversal route was NOT used — the
+  reversal bookkeeping is entirely avoidable.** Route that worked (charpoly *evaluated*,
+  not reversed):
+  1. `B := A - a⁻¹•1 = (-a⁻¹) • (1 - a•A)` is nilpotent (the identity closes by
+     `rw [smul_sub, smul_smul, neg_mul, inv_mul_cancel₀ ha]` then **`module`**);
+     `IsNilpotent (r • M)` is `⟨k, by rw [smul_pow, hk, smul_zero]⟩`.
+  2. `M := X • B.map C` is nilpotent over `K[X]`; the power step is
+     `rw [← RingHom.mapMatrix_apply, ← map_pow, RingHom.mapMatrix_apply]` then
+     `Matrix.map_zero _ (map_zero _)`.
+  3. `M.charpoly = X ^ n`: `Matrix.isNilpotent_charpoly_sub_pow_of_isNilpotent`
+     (`Mathlib/LinearAlgebra/Matrix/Charpoly/Coeff.lean:361`) + `Fintype.card_fin` +
+     `IsNilpotent.eq_zero` — the last step is where **`IsReduced K[X][X]` (a domain)** is
+     used; the fact is FALSE over a general commutative ring (`ℤ/4`, `M = (2)`), which is
+     why the statement is fenced to a field.
+  4. `1 - X•A.map C = Matrix.scalar (Fin n) (1 - C a⁻¹ * X) - M` (entrywise,
+     `by_cases i = j <;> simp [...]; ring`), then **`Matrix.eval_charpoly`**
+     (`Charpoly/Basic.lean:135`: `M.charpoly.eval t = (scalar _ t - M).det`) turns the goal
+     into `eval (1 - C a⁻¹ X) (X ^ n)`.
+  * Bonus fact verified: our LHS is *definitionally* `Matrix.charpolyRev A`.
+  * No extra import needed — `Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff` already comes in
+    through `Fredholm.lean`.
 
 ### [T026] Block-triangular factorisation of the determinant (Serre Lemme 2)
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T002 — **Parallel**: yes —
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T002 — **Parallel**: yes —
   **Type**: lemma pair
 #### Statement
 `isCompactoid_of_comp_embedding`, `charPowerSeries_blockTriangular` (section
@@ -1382,12 +1671,55 @@ Serre p. 81 ("det(1 − tu_W) = (1 − ta⁻¹)^{dim W}"). Decomposition Q2.
 #### Sources
 Serre p. 77, Lemme 2 (verbatim in decomposition Q3). Jacobs' equivalent is OFF-LIMITS
 (other board's file) — independent proof.
+- **Progress** (2026-08-04, sorry-free, std axioms): NO signature change, NO new import.
+  **Five new file-scoped privates** (all in `RieszDecomposition`, all `I`-only, no `R`):
+  `blockEquiv`, `card_blockEquiv`, `fiberEquiv`, `blockCard`, `blockCardFiberEquiv`.
+  Embedding lemma = 8 lines; the block factorisation = 92 lines.
+  * `isCompactoid_of_comp_embedding`: `rowNorm v j ≤ rowNorm u (e j)` by
+    `Real.iSup_le` + the private `norm_matrixCoeff_le_rowNorm'`, then
+    `squeeze_zero _ hdom (hu.comp e.injective.tendsto_cofinite)` —
+    **`Function.Injective.tendsto_cofinite` exists** (`Order/Filter/Cofinite.lean:256`), so
+    `Function.Injective.comap_cofinite_eq` was not needed.
+  * Minor factorisation: **`Matrix.twoBlockTriangular_det`**
+    (`Mathlib/LinearAlgebra/Matrix/Block.lean:267`, already imported via `Fredholm.lean`) does
+    the whole job on the *subtype-indexed* blocks `Matrix.toSquareBlockProp` — no manual
+    `fromBlocks` reindexing. Its hypothesis `∀ i, ¬p i → ∀ j, p j → M i j = 0` matches
+    `htri` argument-for-argument. **Orientation answer: `det_fromBlocks_zero₂₁` is the right
+    one** (it is exactly what `twoBlockTriangular_det` uses internally).
+    Bridging `{x : ↥S // P ↑x}` ↔ `↥(S.subtype P)` is `fiberEquiv` (both `left_inv`/
+    `right_inv` are `rfl`) plus `Matrix.det_submatrix_equiv_self`; the entry check needs
+    `rw [Matrix.submatrix_apply, Matrix.of_apply, h₁ (e j) (e i)]` **followed by `rfl`** —
+    `exact (h₁ _ _).symm` cannot solve it (metavariables in projection position).
+  * `Finset` bookkeeping: `blockEquiv : Finset I ≃ Finset {i // P i} × Finset {i // ¬P i}`
+    (`subtype`/`map ∪ map`); `card_blockEquiv` is `Finset.card_subtype` +
+    **`Finset.card_filter_add_card_filter_not`** (the guessed
+    `filter_card_add_filter_neg_card_eq_card` does not exist).
+  * `tsum` Fubini: the sigma-over-antidiagonal was AVOIDED. Instead:
+    `Equiv.subtypeEquiv (blockEquiv P).symm` transports `summable_minor u hu n` to the
+    *pair* index type; then **`HasSum.tsum_fiberwise`**
+    (`InfiniteSum/Constructions.lean`, additive form of `HasProd.tprod_fiberwise`) over the
+    **Fintype** base `↥(Finset.antidiagonal n)` via `blockCard`, `hasSum_fintype` +
+    `HasSum.unique`, and `Finset.sum_coe_sort` at the end. Each fibre is
+    `blockCardFiberEquiv` (again `left_inv`/`right_inv` = `rfl`) + `Summable.tsum_mul_tsum`.
+  * **Trap (new, costly)**: applying the private
+    `PowerSeries.summable_mul_of_tendsto_cofinite` (conclusion
+    `Summable fun x : ι × κ => F x.1 * G x.2`) against a goal whose two index types are
+    *different* makes the unifier unfold `Finset.sum → Multiset.foldr → List.map` and blow
+    past 1e6 heartbeats (confirmed with `set_option diagnostics true`; giving `F`/`G`
+    explicitly does NOT help). Fix: `(… ).congr fun _ => rfl` — `Summable.congr` fixes `g`
+    from the goal and only ever checks a pointwise `rfl`. Same shape is likely to bite
+    anywhere two distinct index types meet a product-summability lemma.
+  * `Summable.tendsto_cofinite_zero` supplies the cofinite hypotheses from `summable_minor`.
+  * Signs: `charCoeff u₁ k * charCoeff u₂ l = (-1)^(k+l) * (…)` by `← hq, pow_add; ring`
+    against `PowerSeries.coeff_mul`'s antidiagonal.
+  * `Finset.sum_coe_sort` must be given **both** explicit arguments (the summand's
+    dependence on `↑p` sits in a *type*, so `∑ i, ?f ↑i` does not higher-order-match).
 
 ### CLEANUP-8 — /cleanup on Riesz.lean (T024–T026)
-- **Status**: open — **Depends on**: T024, T025, T026 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T024, T025, T026 — **Type**: cleanup
 
 ### [T027] Order uniqueness
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T003, T004 — **Parallel**:
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T003, T004 — **Parallel**:
   yes — **Type**: lemma
 #### Statement
 `hasseDeriv_order_unique` (section `Order`).
@@ -1396,9 +1728,12 @@ Serre p. 77, Lemme 2 (verbatim in decomposition Q3). Jacobs' equivalent is OFF-L
 symmetric; middle case done. Two lines.
 #### Sources
 Decomposition Q1.
+- **Progress** (2026-08-04, sorry-free, std axioms): exactly the sketch, 4 lines —
+  `rcases lt_trichotomy h h' with hlt | heq | hgt` then `absurd (h0' h hlt) hh` / `heq` /
+  `absurd (h0 h' hgt) hh'`. No `omega`, no helper.
 
 ### [T028] The factorisation `H = (1−a⁻¹T)^d · H'` (block conjugation)
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T017, T018, T021, T022,
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T017, T018, T021, T022,
   T024, T025, T026 — **Type**: theorem (the chunkiest of the extension)
 #### Statement
 `charPowerSeries_eq_pow_mul_of_riesz` (section `Field`).
@@ -1433,9 +1768,60 @@ Decomposition Q1.
 `charPowerSeries_conj`, T017/T021/T022/T024/T025/T026.
 #### Sources
 Serre p. 81 (verbatim in decomposition Q4, with the `d ≥ 1` attack recorded).
+- **Progress** (2026-08-05, sorry-free, std axioms): NO signature change. 228-line proof,
+  following the Q4 sketch link for link. Two new imports on the file:
+  `PhD.TateFredholm.BaseChange` (for `isPotentiallyONable_of_uniformizer`; no cycle — nothing
+  imports `Riesz`) and `Mathlib.Topology.Algebra.Module.FiniteDimension` (for
+  `LinearEquiv.toContinuousLinearEquiv`). Eight new file-scoped privates:
+  `conjRingEquiv` (+ `_apply`, `_eq_comp`, `_one_sub_smul`), `reindexCLE_apply'`,
+  `reindexCLE_symm_single`, `sumIsLeftEquiv`, `sumIsRightEquiv`.
+  * **The organising idea that made it tractable**: package conjugation
+    `T ↦ e ∘ T ∘ e⁻¹` as a **`RingEquiv`** (`conjRingEquiv`). Then `map_pow` +
+    `map_zero` transport the nilpotency of `1 − a·u|_N` to the `Fin d` block, and
+    `IsUnit.map` transports the invertibility of `1 − a·u|_F` to the `s` block, with no
+    hand-rolled conjugation algebra anywhere. Only the `1 − a•T` combination needs a
+    bespoke lemma (`conjRingEquiv_one_sub_smul`, one `ext` + `simp`) since `RingEquiv`
+    knows nothing about the `K`-action.
+  * **`d ≥ 1` turned out NOT to be load-bearing** (the Q4 attack over-worried). The vacuity
+    the attack feared cannot arise on this route: `H'` is produced as `charPowerSeries u₂`
+    of the `F`-block and its non-vanishing comes from T017 applied to *that block*, which is
+    valid for every `d` including `0`. Nothing in the proof needs `N ≠ ⊥`, so T018 is not
+    used at all. (`a ≠ 0` — which *is* needed, for T025 — comes from `h0 0` + T019, not
+    from T018.) Recorded here so the next reader does not re-add dead code.
+  * **Hardest point** (two elaborator blow-ups, both around the conjugation seam):
+    (i) `exact (charPowerSeries_conj … ).trans …` against a goal stated with
+    `conjRingEquiv` sent the unifier into `whnf` on `charPowerSeries` (a `tsum` of minors)
+    and blew 1e6 heartbeats. Fix: never let `exact` bridge that defeq — discharge it once
+    at *operator* level with the `rfl`-lemma `conjRingEquiv_eq_comp` and then `rw`.
+    (ii) writing the composite inline as
+    `(reindexCLE eL : c(Fin d, K) →L[K] c(…, K)).comp v` inside a `show … from rfl` left the
+    coercions as metavariables; the standalone `conjRingEquiv_eq_comp` (stated in a section
+    where `E`, `E'` are variables) elaborates cleanly and is the fix for that too.
+  * **`NormedSpace` diamond (new trap)**: `NormedSpace K c(I, K)` is NOT an instance (the
+    development is stated with `IsBoundedSMul`), and `isPotentiallyONable_of_uniformizer`
+    demands it. Supplying it as `haveI : NormedSpace K c(I,K) := ⟨fun r x => norm_smul_le r x⟩`
+    **breaks** the downstream `Submodule.normedSpace`, because the anonymous constructor
+    creates a *second* `Module K c(I,K)` and then `IsScalarTower K K c(I,K)` fails to
+    synthesize. The working form reuses the existing module:
+    `letI : NormedSpace K c(I, K) := { (inferInstance : Module K c(I, K)) with
+    norm_smul_le := fun r x => norm_smul_le r x }`.
+  * **`set` + `clear_value` idiom**: `set N := ((1 - a•u)^h).ker with hNdef` folds the goal's
+    `finrank`, but the `have`s stated afterwards *zeta-reduce* `N` away, so `rw [hkerN]`
+    cannot fire. Fix: harvest everything that needs the value first
+    (`Module.Finite`, and `hmemN/hmemN' : ∀ z : ↥N, ψ ↑z = 0` / its converse, both `fun z => z.2`),
+    then `clear_value N` and state the rest against an opaque `N`.
+  * Other small facts worth keeping: `ContinuousLinearEquiv.prodCongr` (not `.prod`);
+    `Submodule.prodEquivOfIsTopCompl_apply` takes exactly two explicit arguments;
+    `IsCompactoid v` for a finite index type is `show Tendsto …; rw [Filter.cofinite_eq_bot];
+    exact tendsto_bot`; `IsUnit` of an operator must be built as an explicit `Units`
+    4-tuple (no commutativity, so `isUnit_of_mul_eq_one` does not apply);
+    `{z : A ⊕ B // z.isLeft = true} ≃ A` is not in mathlib — `Sum.getLeft`/`Sum.getRight`
+    build it in five lines each (`sumIsLeftEquiv`/`sumIsRightEquiv`).
+  * Compile cost: the whole theorem elaborates in ~13 s at the **default** heartbeat limit;
+    no `set_option maxHeartbeats` was needed.
 
 ### [T029] `dim N(a) = h`
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T006, T027, T028 —
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T006, T027, T028 —
   **Type**: theorem
 #### Statement
 `finrank_ker_one_sub_smul_pow` (section `Field`).
@@ -1448,16 +1834,23 @@ Serre p. 81 (verbatim in decomposition Q4, with the `d ≥ 1` attack recorded).
 #### Sources
 Serre p. 81, final sentence (verbatim in decomposition Q5; the deviation from his
 `W`-supremum ≤-argument is recorded there).
+- **Progress** (2026-08-05, sorry-free, std axioms): NO signature change, NO new private,
+  NO new import. Exactly the three-step sketch, 16 lines: `a ≠ 0` and `H(a) = 0` from
+  `h0 0` + T019, then `PowerSeries.hasseDeriv_order_unique` (T027) against the two halves
+  supplied by T006 — `evalT_hasseDeriv_pow_mul_of_lt hba hH'res hs` for `s < d`, and
+  `evalT_hasseDeriv_pow_mul_self` plus `mul_ne_zero (pow_ne_zero _ …) hH'ne` at `s = d`.
+  (This proof was already present in the file on arrival; it is recorded done because it
+  now compiles and is axiom-clean — it was blocked only by T028's `sorry`.)
 
 ### CLEANUP-9 — /cleanup on Riesz.lean (T027–T029)
-- **Status**: open — **Depends on**: T027, T028, T029 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T027, T028, T029 — **Type**: cleanup
 
 ### CLEANUP-ALL-2 — /cleanup-all pass before MILESTONE-2
-- **Status**: open — **Depends on**: CLEANUP-7, CLEANUP-8, CLEANUP-9 — **Type**:
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: CLEANUP-7, CLEANUP-8, CLEANUP-9 — **Type**:
   cleanup
 
 ### [T030] MILESTONE-2 — Serre's Proposition 12, assembled
-- **Status**: open — **File**: Riesz.lean — **Depends on**: T019, T021, T022, T024,
+- **Status**: done — **File**: Riesz.lean — **Depends on**: T019, T021, T022, T024,
   T029, CLEANUP-ALL-2 — **Type**: theorem (assembly)
 #### Statement
 `exists_riesz_decomposition` (section `Field`).
@@ -1474,10 +1867,206 @@ Serre p. 81, final sentence (verbatim in decomposition Q5; the deviation from hi
 3. `finrank = h` from T029. Assemble `⟨h, N, F, …⟩` — one line per conjunct.
 #### Sources
 Serre Prop. 12 (statement verbatim in the original plan section); decomposition Q6.
+- **Progress** (2026-08-05, sorry-free, standard axioms): NO signature change, NO new
+  private, NO new import. One line per conjunct, as planned: `IsTopCompl` via `hker` +
+  `isTopCompl_range_one_sub_range_of_isIdempotent`; `N`-stability from
+  `((Commute.one_left u).sub_left …).pow_left h` + `apply_of_mul_eq`; nilpotency conjunct
+  is literally `fun x hx => hx` (kernel membership); surjectivity on `F` via `w (p z)`;
+  injectivity via the derived `hwb : w * (1 - a•u) = p` and `x = p x = w 0 = 0`;
+  `finrank = h` from T029. (Also already present in the file on arrival; recorded done
+  because it now compiles and is axiom-clean.)
 
 ### CLEANUP-FINAL — full /cleanup on PhD/TateFredholm/Riesz.lean
-- **Status**: open — **Depends on**: T020, T030 — **Type**: cleanup
+- **Status**: done (2026-08-05, discharged by the consolidated full-file /cleanup run) — **Depends on**: T020, T030 — **Type**: cleanup
 - Full pass (file now sorry-free): style audit, golf, docstrings, `#print axioms` on
   the T020 theorems AND `exists_riesz_decomposition`/`finrank_ker_one_sub_smul_pow`
   (standard axioms only), `lake build` of the file + downstream check that no other
   TateFredholm file was touched.
+
+### CLEANUP RUN — FINAL STATE (2026-08-05)
+- **Phase 4 COMPLETE**: all 105 target declarations dispatched to a dedicated worker (the other 41
+  of the file's 166 were already covered by CLEANUP-1/2). 80+ per-declaration audit reports written
+  to the session scratchpad; **zero gate failures and zero phase-checklist gaps across all of them**.
+- **File: 3620 → 2866 lines (−21%), 0 sorries, 0 lines >100 codepoints, 0 `haveI`/`letI`,
+  0 `fun =>`, 0 subsection dividers.** Verified with the race-free `cp` + `lake env lean` check.
+  (An earlier draft of this note claimed "0 `omega`" as an achievement. That was backwards — see
+  the `lia` entry under Phase 6.5 below. The file is back to 0 `lia` / 24 `omega`.)
+- **All seven headline theorems axiom-clean** (`propext`, `Classical.choice`, `Quot.sound` only):
+  exists_riesz_decomposition · finrank_ker_one_sub_smul_pow ·
+  exists_eigenvector_of_evalT_charPowerSeries_eq_zero · charPowerSeries_eq_pow_mul_of_riesz ·
+  isUnit_one_sub_smul_iff_isUnit_evalT · charPowerSeries_blockTriangular ·
+  exists_mem_ker_of_hasseDeriv_evalT. Both milestones survive the cleanup intact.
+- **Phase 5a (partial) and 5b DONE**: three file-wide sweeps; three wrapper/hypothesis deletions;
+  both public/private ordering-artifact merges; rename queue fully drained.
+- **One real regression found and fixed**: a `conjRingEquiv` rewrite to
+  `ContinuousLinearEquiv.arrowCongr` pulled `[IsBoundedSMul K E]` into its included section
+  variables, breaking instance synthesis in `exists_conj_blockTriangular_of_isTopCompl`'s statement.
+  It was reported ~8 times and owned zero times, because each worker correctly saw it was not in its
+  own declaration. Fixed with explicit instance binders; the trap is now a `--` comment in the file.
+- **Remaining Phase 5a work is cross-declaration and fully specified** in the scratchpad's
+  `phase5a_flags.md`: the opNorm/isOpLimit relocation bundle, the `prod_rowNorm_le` merge, replacing
+  both `sumIs*Equiv` with mathlib core, the `matrixCoeff` AlgHom bundle, dead `[IsTate R]` drops,
+  the induction-indent pass, and a docstring-uniformity decision for `section BlockCoordinates`.
+- **Cross-file, needs the user**: a de-privatisation sweep over Matrix.lean, Fredholm.lean,
+  BaseChange.lean and Residue.lean would delete ~8 local restatements in this file.
+
+#### Phase 6.5 `/simplify` — four holistic review agents (reuse · simplification · efficiency · altitude)
+
+Applied, each build-verified: the `hpow` induction collapse; deletion of `norm_natCast_le_one'`;
+the `map_mem_ker_pow_one_sub_smul` collapse; extraction of the shared `pow_eq_of_rieszProjection`
+(the same four lines were duplicated verbatim in the kernel and range characterisations);
+`norm_resolventCoeff_le` restated in bound form (its `⨆` was undone by its only consumer, and the
+8-line `BddAbove` proof existed solely to feed `le_ciSup`); four bare `simp`s squeezed to
+`simp only`; and `omit [DecidableEq I] [IsTate R]` on
+`isTopCompl_range_one_sub_range_of_isIdempotent`, a genuine hypothesis weakening of a public
+theorem — it is pure idempotent algebra and uses neither.
+
+**The one real regression this phase caught: 26 `omega` had been swapped to `lia` by a Phase-4
+worker.** `lia` routes trivial linear-ℕ goals through `grind`, forcing symbolic
+`Lean.Grind.IsCharP` / `NoNatZeroDivisors` synthesis on every call — the 2nd- and 6th-largest
+profiler events in the entire file were that synthesis. Reverting all 23 surviving sites deletes
+the `sym typeclass inference` (1.03s), `sym canon` and all eight `grind*` buckets outright, and
+moved typeclass inference 19.9s → 16.5s. The rest of the repo uses `omega`; this file was the
+outlier. **Do not "modernise" `omega` to `lia` for plain linear ℕ goals.**
+
+**Three "dead" declarations were NOT deleted, overruling the review.** An agent verified the file
+still compiles without `IsOpLimit.const`, `resolventCoeff_sub_mul`, and
+`exists_eigenvector_of_evalT_charPowerSeries_conj_eq_zero`. That is true and not the point:
+*"compiles without it" ≠ "should be deleted" for public API.* The third is one of T020's three
+named deliverables (headline / iff / **conjugated**), so it is now advertised in the module
+docstring instead; the second is a documented Serre identity; the first is one member of T001's
+deliberately complete five-lemma `IsOpLimit` API.
+
+**Trap recorded in the source** at `norm_resolventCoeff_le`: the `(truncation S).comp u` spelling
+is load-bearing. Rewriting it to the `truncation S * u` form used later in the file makes that
+proof time out at whnf (200000 heartbeats) and triples tactic execution; a `rfl` bridge lemma does
+not help, because the blowup is in unification against `norm_resolventCoeff_le_of_rows`. The two
+"duplicate" restatements (`matrixCoeff_truncation_mul`, `norm_truncation_mul_sub_le`) exist
+because of this and must stay.
+
+**Structural findings left for the user** (both are real, both are larger than a cleanup pass):
+bundling the Riesz-projector six-hypothesis tuple as a `structure IsRieszProjection` — it is
+threaded through four theorems *in permuted order*, spawns 24 argument slots, forces an
+8-component `obtain` three times, and carries three apology comments in the source; and naming
+the "zero of order `h`" triple, written verbatim in five signatures, which would also remove a
+pointless `IsUnit` → `≠ 0` → `IsUnit` round-trip.
+
+#### Phase 5a closing item — induction/match indentation (DONE)
+16 case bodies across 8 declarations sat at case-indent +4; mathlib wants +2. All normalised,
+build clean. This needs TWO passes: dedenting an outer block renests the inner cases, so the
+nested `match` inside `evalT_hasseDeriv_pow_mul_aux` needed a second targeted fix.
+
+**Box trap, recorded the hard way:** `perl -i -e 'my @L = <>; …; print @L'` **truncated
+Riesz.lean to 0 bytes** — with `-e` alone (no `-n`/`-p`) the in-place redirect does not engage,
+so the file is emptied and the output goes to stdout. Recovered intact from the post-pass-1
+snapshot. `perl -i -pe` / `perl -i -ne` are safe; for any slurp-and-rewrite, write to a temp file
+and `mv`, or use `Edit`. Always `wc -l` immediately after an in-place sweep.
+
+#### Last two efficiency items
+**APPLIED — `charPowerSeries_conjRingEquiv`.** `charPowerSeries_conj` (Fredholm.lean:953) is
+stated on the unbundled `.comp` form, so every use against a `conjRingEquiv` was paying an extra
+`conjRingEquiv_eq_comp` rewrite to unfold it back. One private wrapper at the end of
+`section Conjugation` removes 2 of the 5 rewrites in
+`charPowerSeries_eq_mul_of_blockTriangular_sum`'s terminal `rw` — previously the single largest
+tactic event in the file (167ms). It needs `{J}` + `[DecidableEq J]` and model-space types, so it
+cannot be stated on the section's general `E`/`E'`.
+
+**SKIPPED, deliberately — factoring the `simp only […] ; module` preamble.** The review called
+the two blocks "character-identical"; they are not — the `_zero` one carries an extra
+`Finset.sum_range_succ`, and the third `module` (in `_succ`'s `zero` branch) uses a completely
+different 11-lemma set. The three run on structurally different goals, so there is no shared
+lemma without real goal analysis, and factoring the *tactic text* would not help anyway: the
+measured cost is `module` emitting large Module-normalisation terms for the kernel to recheck,
+which only a shared proof term reduces. ≈40–60ms against a live working proof was not worth the
+regression risk. If revisited, derive the helper from the goal states, not the tactic text.
+
+#### `lake exe runLinter` — the Phase-0c gate that had never actually been run
+This was the single most productive check of the whole cleanup, and it was skipped at the start
+because no executable is declared in this project's lakefile — but mathlib's linter resolves
+through the dependency: `lake exe runLinter PhD.TateFredholm.Riesz`. **Use it. It catches what
+neither `lake build` nor `linter.unusedSectionVars` can.**
+
+It found **20 declarations carrying unused instance arguments**, all now fixed with `omit … in`:
+`[IsUltrametricDist R]`/`[CompleteSpace R]` on the `PowerSeries` and `IsOpLimit` API
+(`tendsto_norm_coeff_mul_pow_of_isRestricted`, `evalT_C`, `evalT_one`, `hasseDeriv_order_unique`,
+`IsOpLimit.unique/add/const/comp_left/comp_right` — `const` also shed `[NormOneClass R]` and both
+`[IsBoundedSMul]`), `[DecidableEq J]` on the rectangular `matrixCoeff`/`rowNorm`/`IsCompactoid`
+lemmas, and `[IsTate R]` on `rieszProjection_unique` and the two
+`…_one_sub_smul_pow_of_rieszProjection` theorems. Every one is a genuine hypothesis weakening on
+a public statement. **`runLinter` reports progressively** — fixing a batch reveals more, so
+iterate to a fixed point; it took three rounds. Riesz.lean now reports **zero findings**.
+
+**Do not "consolidate" the 20 `omit` lines.** The linter offers two remedies — restructure the
+`variable` declarations, or `omit` per declaration — and `omit` is the correct one here because
+the need is *interleaved*. In `section CompactoidClosure`, six declarations do not use
+`[DecidableEq J]` and six do, alternating; in `section OpLimit` the `[IsUltrametricDist R]` /
+`[CompleteSpace R]` come from a namespace-level `variable` that later sections genuinely need.
+Restructuring would mean splitting coherent sections and reordering declarations that depend on
+one another, to save a handful of lines. Not worth it.
+
+**Correction to an earlier note in this file.** I previously recorded that the review's claim
+about `ker_`/`range_one_sub_smul_pow_of_rieszProjection` not using `[IsTate R]` "does not
+reproduce". That was wrong, and the reason matters: `linter.unusedSectionVars` only reports
+*automatically included section variables*, whereas `runLinter` inspects the *elaborated
+signature*. The review was right; both are now `omit`ted.
+
+#### Docstring / instance-hygiene closing audit
+Two `private` declarations carried `/-- … -/`; both **demoted to `--`** rather than deleted, since
+each records something the type does not say (`tendsto_coeff_mul_pow_cofinite`: `‖a^n‖ ≤ ‖a‖^n`
+may FAIL at `n = 0`, there being no `NormOneClass` in that section). `omit [DecidableEq I]
+[IsTate R] in` added to `pow_eq_of_rieszProjection`, the last genuinely-droppable instance the
+linter flags — the review's claim that the two `…_one_sub_smul_pow_of_rieszProjection` theorems
+also don't use `[IsTate R]` does **not** reproduce against the current file.
+
+An apparent "9 undocumented public declarations" was a **false alarm of my own detector**: a lone
+`@[simp]` line sits between docstring and declaration, so the docstring is two lines back, not
+one. All nine are documented and the Phase-4 workers had it right. Any docstring-presence check
+on this file must skip attribute lines.
+
+#### The last two Phase-5a items — both CLOSED as "no", on evidence
+**`matrixCoeff` AlgHom bundle — will not be done.** `matrixCoeff_add/neg/smul` are stated
+*rectangularly*, on `c(I, R) →L[R] c(J, R)` with independent `I` and `J`. An `AlgHom` needs
+square operators, and its `map_mul` is `matrixCoeff_mul_fintype`, which needs `[Fintype A]`. So a
+bundle would subsume none of the three existing public lemmas — its projections would be strictly
+*weaker* than what is already there. It would add a definition and remove nothing.
+
+**opNorm/isOpLimit relocation — impossible as specified.** `variable {I} [DecidableEq I]` is
+declared at L557, *after* `variable [IsTate R]` at L535, so the proposed target has `{M N}` in
+scope but not `I`, and `c(I, R)` does not elaborate there at all. The "move" was never available;
+only a restatement was, which is a different and larger change.
+
+What *was* real in that item is now done: `opNorm_smul_le` never needed model spaces or a square
+operator (its proof is only `opNorm_le_of_forall` + `norm_smul_le` + `le_opNorm`), so it is
+**generalised in place** to an arbitrary `M →L[R] N`. `[IsTate R]` must stay — `opNorm_le_of_forall`
+requires it, and dropping it fails with `synthInstanceFailed`.
+
+#### CROSS-FILE, NEEDS THE USER — 37 `runLinter` findings elsewhere in Riesz's import closure
+Since `runLinter` covers the whole import closure, it also reported on files this board may not
+touch. Full detail saved to **`runlinter-closure-findings.txt`** next to this board. Counts by
+file: ModelSpace 7 · Residue 6 · Matrix 5 · Fredholm 4 · BaseChange 4 · Tate 2 · Pr 2 ·
+Compact 2 · ForMathlib/PowerBounded 2+1 · TopologicallyNilpotent 1 · NegLogNorm 1.
+
+Not all are unused instances — three categories are worth a look:
+ · **Genuinely unused *hypotheses*** (not just instance args), which would meaningfully strengthen
+   the statements: `(he' : Continuous ⇑e.symm)` on both `charPowerSeries_map_equiv` and
+   `isCompactoid_map_equiv`, and `(π : PseudoUniformizer S)` on `norm_le_pow_of_equiv`
+   (BaseChange.lean).
+ · **Naming-convention violations**: `PowerBounded.closedBall_ideal` and `PowerBounded.ball_ideal`
+   are `def`s containing underscores — these are in ForMathlib and would be flagged in review.
+ · **Degenerate lemmas**: `negLogNorm_eq_top` ("simp can prove this") and
+   `PseudoUniformizer.coe_eq` ("LHS equals RHS syntactically").
+
+#### Downstream-safety check
+This run restated a **public** theorem (`norm_resolventCoeff_le`, from the `⨆` form to the bound
+form) and weakened the hypotheses of another (`isTopCompl_range_one_sub_range_of_isIdempotent`),
+so consumers were verified explicitly: **no file imports `PhD.TateFredholm.Riesz`** — it is a leaf
+module — and no file outside it references either name. A full `lake build` of the whole project
+is clean. The restatement is therefore safe; if Riesz ever gains importers, re-run this check
+before touching its public statements.
+
+#### Final gates (all pass)
+`lake build PhD.TateFredholm.Riesz` clean, 2461 jobs, no warnings from this file · full-project `lake build` clean · **`lake exe runLinter` reports ZERO findings** · 0 sorries ·
+0 lines >100 codepoints · 12 public theorems (the seven headline results plus the conjugated
+eigenvector theorem, `norm_resolventCoeff_le`, `isTopCompl_…`, `rieszProjection_unique` and
+`evalT_charPowerSeries_eq_zero_iff`) all axiom-clean on `[propext, Classical.choice, Quot.sound]` ·
+all 21 declaration names in the module docstring resolve.

@@ -24,6 +24,23 @@ substitution `(X, Y) ↦ (aX + cY, bX + dY)` twisted by a character `ν` of `Σ�
 (Buzzard's determinant twist `det^v` is `ν = detChar v`).  The single-variable
 picture is recovered by `Z = X/Y`; the substitution action is polynomial, so —
 as Buzzard remarks — it needs no integrality and extends to all of `M₂(K)`.
+
+## The character `ν`, and where the general weights live
+
+A weight here is a *pair* `(n, ν)`: the degree `n` governs the `Symⁿ` substitution
+part, and `ν : Σ₀(γ) →* Rˣ` is a **character** of the monoid `Σ₀(γ)` — a
+multiplicative scalar twist, so that `WeightModule R n ν = Symⁿ ⊗ ν` as a
+`Σ₀(γ)`-module.  Any abstract character is allowed (no continuity is needed to twist
+a finite-dimensional module); the classical weights are `ν = detChar w`.
+
+The genuinely *p-adic* weights — Jacobs's locally analytic characters
+`κ : ℤ_p^× → 𝒪_p^×` [Def 1.27] — are **not** a larger class of `ν`'s: local
+analyticity is invisible on this polynomial module.  Its content is to deform the
+degree `n` itself, replacing `Symⁿ` by the Tate-algebra model of locally analytic
+functions, on which the action evaluates the expansion of `κ(cz + d)`.  That
+generalisation lives in `PhD/QMF/Weight/` (`WeightSeries`, `kappaSlash`); this
+module embeds into it via `QMF.polyEmbed` (`Weight/Algebraic.lean`), with `ν`
+reappearing there as the scalar twist `RightSlashAction.twist` at `detTwist ν`.
 -/
 
 open MvPolynomial
@@ -86,6 +103,11 @@ variables over `R`, as a left `Σ₀(γ)`-module via transposed substitution twi
 One-place, left-handed version of Buzzard's `L_{n,v}` [*Eigenvarieties*, §9 p. 68];
 `ν = Sigma0.detChar γ hγ w` recovers Buzzard's `(n, v) = (n, w)`, and classical weight
 `(k, w)` corresponds to `(n, v) = (k − 2, w − n − 1)` [ibid., §9 p. 70].
+
+Here `ν` is an arbitrary *character* of the monoid `Σ₀(γ)` — a monoid homomorphism
+into `Rˣ`, acting as the one-dimensional scalar twist in `g • P = ν g • P∘g`; as a
+module this is `Symⁿ ⊗ ν`.  For the p-adic weights that deform `n` itself (locally
+analytic κ, [Jacobs, Def 1.27]) see `PhD/QMF/Weight/` and the module docstring above.
 (`ν` is a phantom parameter of the type; it enters through the action instances.) -/
 @[nolint unusedArguments]
 def WeightModule (n : ℕ) (_ν : Sigma0 K γ hγ →* Rˣ) : Type _ :=

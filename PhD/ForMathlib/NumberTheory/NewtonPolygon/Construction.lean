@@ -676,15 +676,16 @@ lemma newtonPolygon_lengths_nonFinal {n : ℕ}
   have hl2 := nextVertex_lt v hp
   exact ⟨l, by omega, by unfold newtonPolygon_lengths; rw [hm]; rfl⟩
 
-/-- A final slope of `⊤` or `⊥` forces a single-segment polygon: interior entries are
-`nextVertex` steps with real slopes, and the only step producing `⊥` (`unboundedBelow`) can
-occur only at index `0`. -/
+/-- A final slope of `⊤` or `⊥` forces a single-segment polygon of zero length: interior
+entries are `nextVertex` steps with real slopes, and the only step producing `⊥`
+(`unboundedBelow`) can occur only at index `0`, where the length is `0`. -/
 lemma newtonPolygon_slopes_final {n : ℕ}
     (h1 : (n : WithTop ℕ) + 1 = newtonPolygon_numSegments v)
     (h2 : newtonPolygon_slopes v n = ⊤ ∨ newtonPolygon_slopes v n = ⊥) :
-    newtonPolygon_numSegments v = 1 := by
-  rw [← h1]
-  suffices hn0 : n = 0 by subst hn0; simp
+    newtonPolygon_numSegments v = 1 ∧ newtonPolygon_lengths v n = 0 := by
+  suffices hn0 : n = 0 ∧ newtonPolygon v n = some .unboundedBelow by
+    obtain ⟨rfl, ht⟩ := hn0
+    exact ⟨by rw [← h1]; simp, by simp [newtonPolygon_lengths, ht]⟩
   unfold newtonPolygon_numSegments at h1
   split_ifs at h1 with ht hn
   · have hfn : n + 1 = Nat.find ht := by exact_mod_cast h1
@@ -701,7 +702,7 @@ lemma newtonPolygon_slopes_final {n : ℕ}
       | tail => exact absurd ⟨n, t⟩ ht
       | unboundedBelow =>
         cases n with
-        | zero => rfl
+        | zero => exact ⟨rfl, rfl⟩
         | succ a => exact absurd t (nextStep_unboundedBelow' v a)
       | limitingRay m => simp [newtonPolygon_slopes, t, slopes', slopes] at h2
       | infiniteRay m => simp [newtonPolygon_slopes, t, slopes', slopes] at h2

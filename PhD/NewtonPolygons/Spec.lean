@@ -158,7 +158,7 @@ lemma IsPure.support_eq_one {P : NewtonPolygon₀ (Γ := Γ)} {m : ℝ} (h : P.I
     obtain rfl | rfl : s = 1 ∨ s = 2 := by omega
     · rfl
     · -- with two segments the `⊤` second slope is final, which forces a single segment
-      exact hs ▸ P.slopes_final 1 ⟨hs ▸ rfl, Or.inl htop⟩
+      exact hs ▸ (P.slopes_final 1 ⟨hs ▸ rfl, Or.inl htop⟩).1
 
 omit [CommSemiring Γ] [Algebra Γ ℝ] in
 /-- A single-segment polygon with real first slope is pure. -/

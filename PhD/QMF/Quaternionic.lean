@@ -101,6 +101,9 @@ noncomputable def levelMonoidToSigma0 :
   map_mul' g h := Subtype.ext (by simp)
 
 variable {R : Type*} [CommRing R] [Algebra (v.adicCompletion F) R]
+-- The weight is the pair `(n, ν)`: `n` is the polynomial degree (`Symⁿ`) and `ν` is a
+-- character of `Σ₀(γ)` — a scalar twist, `ν = detChar w` in Buzzard's classical case.
+-- The p-adic weights deforming `n` (locally analytic κ) live in `PhD/QMF/Weight/`.
 variable (n : ℕ) (ν : Sigma0 (v.adicCompletion F) γ hγ →* Rˣ)
 
 /-- The wild-level monoid acts on the weight module through its `v`-component. -/

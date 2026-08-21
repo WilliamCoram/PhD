@@ -93,42 +93,6 @@ lemma exists_achievesGaussNorm_dominant (hc : 0 ≤ c) (hf : IsRestricted c f)
     · simpa [Finsupp.single_eq_zero] using
         hzg _ ((achievesGaussNorm_iff_single norm c g k).mp hk)
 
-/-- On `Unit`-indexed finsupps the lex order compares the single values. -/
-private lemma le_of_toLex_single_le {m n : ℕ}
-    (h : toLex (Finsupp.single () m) ≤ toLex (Finsupp.single () n)) : m ≤ n := by
-  by_contra hmn
-  have hlt : Finsupp.single () n < Finsupp.single () m := by
-    refine lt_of_le_of_ne (Finsupp.le_def.mpr fun u ↦ ?_) fun heq ↦
-      hmn (Finsupp.single_injective () heq).ge
-    simpa [Finsupp.single_apply] using (not_le.mp hmn).le
-  exact absurd h (not_le.mpr (Finsupp.toLex_monotone.strictMono_of_injective toLex.injective hlt))
-
-/-- Strengthening of `exists_achievesGaussNorm_dominant`: the dominant pair `(i, j)` consists
-of the *largest* achieving indices, and the last two conjuncts expose this maximality. -/
-lemma exists_achievesGaussNorm_dominant_max (hc : 0 ≤ c) (hf : IsRestricted c f)
-    (hg : IsRestricted c g) (hf0 : gaussNorm norm c f ≠ 0) (hg0 : gaussNorm norm c g ≠ 0) :
-    ∃ i j, AchievesGaussNorm norm c f i ∧ AchievesGaussNorm norm c g j ∧
-      (∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
-        ‖coeff p.1 f * coeff p.2 g‖ < ‖coeff i f‖ * ‖coeff j g‖) ∧
-      (∀ t, AchievesGaussNorm norm c f t → t ≤ i) ∧
-      ∀ t, AchievesGaussNorm norm c g t → t ≤ j := by
-  obtain ⟨i, j, hi, hj, hdom, hi_max, hj_max⟩ :=
-    MvPowerSeries.IsRestricted.exists_achievesGaussNorm_dominant_lexMax (fun _ ↦ hc) hf hg
-      hf0 hg0
-  obtain ⟨n, rfl⟩ : ∃ n, i = Finsupp.single () n := ⟨i (), Finsupp.unique_single i⟩
-  obtain ⟨m, rfl⟩ : ∃ m, j = Finsupp.single () m := ⟨j (), Finsupp.unique_single j⟩
-  refine ⟨n, m, (achievesGaussNorm_iff_single norm c f n).mpr hi,
-    (achievesGaussNorm_iff_single norm c g m).mpr hj, fun p hp hpne ↦ ?_,
-    fun t ht ↦ le_of_toLex_single_le
-      (hi_max _ ((achievesGaussNorm_iff_single norm c f t).mp ht)),
-    fun t ht ↦ le_of_toLex_single_le
-      (hj_max _ ((achievesGaussNorm_iff_single norm c g t).mp ht))⟩
-  exact hdom (Finsupp.single () p.1, Finsupp.single () p.2)
-    (by rw [Finset.mem_antidiagonal, ← Finsupp.single_add, ← Finsupp.single_add,
-      Finset.mem_antidiagonal.mp hp])
-    fun h ↦ hpne (Prod.ext (Finsupp.single_injective () (congrArg Prod.fst h))
-      (Finsupp.single_injective () (congrArg Prod.snd h)))
-
 end IsRestricted
 
 namespace Restricted
@@ -182,17 +146,6 @@ lemma exists_achievesGaussNorm_dominant (hc : 0 ≤ c) (f g : Restricted R c)
       (i + j = 0 → (∀ n, AchievesGaussNorm norm c f.1 n → n = 0) ∧
         ∀ n, AchievesGaussNorm norm c g.1 n → n = 0) :=
   IsRestricted.exists_achievesGaussNorm_dominant hc f.2 g.2 hf hg
-
-/-- Strengthening of `exists_achievesGaussNorm_dominant`: the dominant pair `(i, j)` consists
-of the *largest* achieving indices, and the last two conjuncts expose this maximality. -/
-lemma exists_achievesGaussNorm_dominant_max (hc : 0 ≤ c) (f g : Restricted R c)
-    (hf : gaussNorm R c f ≠ 0) (hg : gaussNorm R c g ≠ 0) :
-    ∃ i j, AchievesGaussNorm norm c f.1 i ∧ AchievesGaussNorm norm c g.1 j ∧
-      (∀ p ∈ Finset.antidiagonal (i + j), p ≠ (i, j) →
-        ‖coeff p.1 f.1 * coeff p.2 g.1‖ < ‖coeff i f.1‖ * ‖coeff j g.1‖) ∧
-      (∀ t, AchievesGaussNorm norm c f.1 t → t ≤ i) ∧
-      ∀ t, AchievesGaussNorm norm c g.1 t → t ≤ j :=
-  IsRestricted.exists_achievesGaussNorm_dominant_max hc f.2 g.2 hf hg
 
 section
 

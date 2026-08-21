@@ -1,81 +1,338 @@
 \chapter{Quaternionic Modular Forms}
+\label{chap:qmf}
 
-\section{Definition}
+Let $F$ be a totally real number field and $D$ a totally definite quaternion algebra over $F$,
+split at a chosen finite place $v$.  Because $D$ is definite, $D^\times$ is discrete and
+cocompact in the finite adelic points, and the ``modular forms'' attached to $D$ are not
+functions on a symmetric space but functions on a finite set --- a double coset space.  That is
+what makes them tractable: everything analytic in the classical theory is replaced by finite
+linear algebra over the coefficients, and the only genuine analysis left is in the coefficients
+themselves.
 
-We define quaternionic modular forms over definite quaternion algebras explicitely as the following
-space.
+This chapter defines the forms at a general locally analytic weight, constructs the Hecke
+operators, proves that the $U_\varpi$-type operators are compact, and computes their Fredholm
+determinants.  The pattern throughout is: define the object adelically, transport it to a block
+model through evaluation at class-set representatives, and do the analysis in the model.
+
+\section{The adelic setting}
 
 \begin{definition}
-  Let $\kappa : \mathbb{Z}_p^\times \to \mathcal{O}_p^\times$ be a locally analytic character.
-  Given $\alpha \in \mathbb{N}$, let
-  \[
-    \Sigma_\alpha = \left\{ \gamma =  \begin{pmatrix}
-      a & b \\
-      c & d
-    \end{pmatrix}
-    \in \text{M}_2(\mathbb{Z}_p) : p^\alpha \mid c, \; p \nmid d, \; \det (\gamma) \neq 0 \right\}.
-  \]
-  The weight $\kappa$ action of $\gamma =  \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in
-  \Sigma_\alpha$ on the Tate algebra $\mathcal{A}_p$ with coefficients in $\mathbb{C}_p$ is given by
-  the continuous $\mathbb{C}_p$-linear extension of the map sending
-  \[
-    z^k \mapsto \frac{\kappa(c z + d)}{(cz + d)^2} \left( \frac{az+b}{cz+d} \right)^k
-  \]
-  and given $f(z) \in \mathcal{A}_p$ we write $(f||_\kappa \gamma)(z)$ for this action.
-
-  Fix $\alpha$ and $\kappa$ in the above, let $D$ be a definite quaternion algebra and let $U$ be
-  an open compact subgroup of $D_f^\times$, where $D_f = D  \otimes_{\mathbb{Q}} \mathbb{A}_f$ is
-  $D$ over the finite adeles, of wild level $\geq p^\alpha$; that is the projection
-  $U \to D_{p}^\times$ is contained in $\Sigma_\alpha.$
-  Now let $A$ be any right $\Sigma_\alpha$-module.
-
-  Then the level $U$, weight $\kappa$ space of automorphic forms is the space
-  \[
-    \mathcal{L}(U,A) = \{ \varphi : D_f^\times \to A  \;  | \; \varphi (dgu) = \varphi (g)
-    ||_\kappa u_p, \; \forall d \in D^\times, \; g \in D^\times_f, \; u \in U \}.
-  \]
+  \label{def:dfx}
+  \lean{QMF.Dfx, QMF.globalUnits}
+  \leanok
+  Write $D_f = D \otimes_F \A_F^\infty$ and $D_f^\times$ for its unit group.  The subgroup
+  $\Gamma = \mathrm{globalUnits}$ is the image of $D^\times$ in $D_f^\times$.
 \end{definition}
 
-\section{Finite Dimensional}
+\begin{definition}
+  \label{def:rigidification}
+  \uses{def:dfx}
+  \lean{QMF.RigidificationAt, QMF.toLocal, QMF.toMatrix}
+  \leanok
+  A \emph{rigidification at $v$} is a fixed isomorphism $D \otimes_F F_v \cong M_2(F_v)$; it
+  exists exactly when $D$ splits at $v$.  Composing the local component map $\mathrm{toLocal}_v :
+  D_f \to D \otimes_F F_v$ with it gives $\mathrm{toMatrix}_v : D_f^\times \to M_2(F_v)$.
+\end{definition}
 
-\begin{lemma}
-  Using the above notation and supposing $D_f^\times = \coprod_{i \in I} D^\times c_i U$
-  is the decomposition into finite double cosets, then
+\begin{definition}
+  \label{def:sigma0}
+  \lean{Sigma0'}
+  \leanok
+  For $\gamma < 1$ in the value group let
   \[
-    \mathcal{L}(U,A) \cong \bigoplus_{i \in I} A^{\Gamma_i}
+    \Sigma_0(\gamma) = \left\{ g = \begin{pmatrix} a & b \\ c & d\end{pmatrix} \in M_2(F_v) \;:\;
+    v(g_{ij}) \leq 1, \; v(c) \leq \gamma, \; v(d) = 1, \; \det g \neq 0 \right\},
   \]
-  as a $\mathbb{C}_p$ vector space, where $\Gamma_i = c_i^{-1} D^\times c_i \cap U$.
-\end{lemma}
+  the matrices that are integral, congruent to upper-triangular modulo $\gamma$, and with unit
+  lower-right entry.  A subgroup $U \subseteq D_f^\times$ has \emph{wild level $\geq \gamma$} if
+  $\mathrm{toMatrix}_v(U) \subseteq \Sigma_0(\gamma)$; this is Buzzard's condition
+  \cite[\S9]{Buzzard}, and $\Delta = \mathrm{toMatrix}_v^{-1}(\Sigma_0(\gamma))$ is the monoid on
+  which the weight will act.
+\end{definition}
 
-\section{Hecke Operators}
+\section{Weights}
 
-We can define Hecke operators on these automorphic forms. We will keep the notation from the above
-definitions.
-Given $\varphi \in \mathcal{L}(U,A)$ we define a right action of $U$ on $\mathcal{L}(U,A)$:
+A weight is a locally analytic character $\kappa$, and the object it produces is an action of
+$\Sigma_0(\gamma)$ on the Tate algebra:
 \[
-  (\varphi |_\kappa u) (g) := \varphi (gu^{-1}) ||_\kappa u_p.
+  (f \|_\kappa \gamma)(z) = \frac{\kappa(cz+d)}{(cz+d)^2}\, f\!\left(\frac{az+b}{cz+d}\right).
 \]
+Making this precise requires knowing that $\kappa(cz+d)$ expands as a power series in $z$ with
+suitable coefficient bounds.  Rather than assume the expansion exists abstractly --- which would
+force a choice, and a choice inside a definition propagates into every downstream statement ---
+we carry it as data.
 
-With this we have:
 \begin{definition}
-  Let $\nu \in D^\times_f$ such that $\nu_p \in \Sigma_\alpha$. Then the double coset $U\nu U$ may
-  be written as a disjoint union
+  \label{def:levelbounds}
+  \uses{def:sigma0}
+  \lean{QMF.LevelBounds}
+  \leanok
+  $\mathrm{LevelBounds}\, S\, \rho$ records the norm estimates extracted from an acting monoid
+  $S$: entries integral, $\lVert c \rVert \leq \rho$, and $\lVert d \rVert = 1$.
+\end{definition}
+
+\begin{definition}
+  \label{def:weightseries}
+  \uses{def:levelbounds}
+  \lean{QMF.WeightSeries}
+  \leanok
+  A \emph{weight datum} $W$ at $(S, \rho)$ consists of the level bounds, the expansion
+  $\kappa\mathrm{col}(c,d) \in K[[z]]$ of $\kappa(cz+d)$ as a function of the lower row, the
+  decay estimate $\lVert \mathrm{coeff}_m \rVert \leq \rho^m$, absolute summability, and the
+  cocycle identity making $\|_\kappa$ an action.
+\end{definition}
+
+\begin{definition}
+  \label{def:analyticweight}
+  \uses{def:weightseries}
+  \lean{QMF.ExpansionData, QMF.AnalyticWeight}
+  \leanok
+  An \emph{analytic weight} is a genuine character $\kappa : U_K \to K^\times$ together with an
+  expansion datum for it.  The expansion is unique on the level, so the pair is no more data than
+  the character; but carrying it makes the weight action a definition rather than a choice.
+\end{definition}
+
+\begin{definition}
+  \label{def:kappaslash}
+  \uses{def:analyticweight}
+  \lean{QMF.AnalyticWeight.kappaSlash}
+  \leanok
+  $\kappa\text{-}\mathrm{slash}(g)$ is the continuous $K$-linear operator on the Tate algebra
+  determined by $z^k \mapsto \kappa(cz+d)(cz+d)^{-2}\left(\frac{az+b}{cz+d}\right)^k$.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:kappaslash-matrix}
+  \uses{def:kappaslash, prop:tate-algebra-onable, def:matrixcoeff}
+  \lean{QMF.WeightSeries.matrixCoeff_kappaSlash, QMF.WeightSeries.norm_matrixCoeff_kappaSlash_le}
+  \leanok
+  Under the identification of Proposition~\ref{prop:tate-algebra-onable}, the matrix of
+  $\kappa\text{-}\mathrm{slash}(g)$ is the coefficient array of the two-variable generating
+  function $\kappa\mathrm{col}\cdot(cx+d)^{-1}(cx+d-axy-by)^{-1}$; and if $\lVert a \rVert \leq
+  \sigma$ with $\rho \leq \sigma$ then
   \[
-    U \nu U = \coprod_{t \in T} U \nu_t
+    \lVert \mathrm{matrixCoeff}(\kappa\text{-}\mathrm{slash}(g))_{j i} \rVert \leq \sigma^{\,j}.
   \]
-  where $T$ is a finite set, and $\nu_t \in D_f^\times$. The Hecke operator is the map
-  $[U \nu U] : \mathcal{L}(U,A) \to \mathcal{L}(U,A)$ given by
+\end{proposition}
+
+The row-decay estimate is [Jacobs, Lemma 2.7]; it is where the analysis of the weight is spent,
+and everything after it is formal.
+
+\section{The forms}
+
+\begin{definition}
+  \label{def:forms}
+  \uses{def:analyticweight, def:sigma0}
+  \lean{QMF.Weight.levelMonoidOf, QMF.Weight.Forms}
+  \leanok
+  Let $\theta$ be the component map, $S$ an acting monoid, $\kappa$ an analytic weight, $U$ a
+  subgroup with $\theta(U) \subseteq S$, and $\chi$ a twisting character.  Then
   \[
-    [U \nu U] \varphi := \sum_{t \in T} \varphi |_\kappa \nu_t.
+    S_\kappa(U) = \left\{ \varphi : D_f^\times \to K\langle z\rangle \;:\; \varphi(dgu) =
+    \chi(u_v)\, \varphi(g) \|_\kappa u_v \ \ \forall d \in \Gamma,\ u \in U \right\}.
   \]
 \end{definition}
 
 \begin{definition}
-  We set $\varpi_l$ to be the element of $\mathbb{A}_f$ which is $l$ at  $l$ and 1 at all other
-  places, and set $\eta_l = \begin{pmatrix} \varpi_l & 0 \\ 0 &1 \end{pmatrix}$.\\
-  The standard Hecke operators are then given by
-  \[
-    T_l := [U \eta_l U] \quad \text{and} \quad S_l:=[U \varpi U]
-  \]
-  and if $l = p$, we write $T_p = U_p$.
+  \label{def:heckeoperator}
+  \uses{def:forms}
+  \lean{AbstractHeckeOperatorSlash.heckeOperatorSlash, QMF.Weight.heckeOperator}
+  \leanok
+  For $\eta$ in the acting monoid, write $U \eta U = \coprod_i U x_i$ and set $[U\eta U]\varphi =
+  \sum_i \varphi \|_\kappa x_i$.  This is independent of the representatives and preserves
+  $S_\kappa(U)$.
 \end{definition}
+
+The definition presupposes that the double coset is a finite union.  That is automatic at a
+compact open level:
+
+\begin{theorem}
+  \label{thm:hecke-finiteness}
+  \uses{def:heckeoperator}
+  \lean{AbstractHeckeOperatorSlash.finite_image_doubleCoset_of_isOpen_of_isCompact}
+  \leanok
+  If $U$ is open and compact then $U \eta U$ is a finite union of right cosets of $U$.
+\end{theorem}
+
+\begin{proposition}
+  \label{prop:compact-open-levels}
+  \uses{thm:hecke-finiteness}
+  \lean{Units.isCompact_of_isCompact, QMF.isCompact_integralTensor, QMF.continuous_toMatrix}
+  \leanok
+  The standard levels are compact open.  Concretely: the units of a compact multiplicatively
+  closed set form a compact set of units, because $u \mapsto (u, u^{-1})$ is a closed embedding;
+  and the integral order $\calO_D \otimes \Zhat \subseteq D_f$ is compact, being the image of a
+  product of compact local integer rings under a continuous coordinate map.
+\end{proposition}
+
+\begin{theorem}[Fujisaki]
+  \label{thm:fujisaki}
+  \uses{def:dfx}
+  \lean{QMF.finite_classSet}
+  \leanok
+  For $U$ open the class set $\Gamma \backslash D_f^\times / U$ is finite.
+\end{theorem}
+
+\section{The block model}
+
+Fix representatives $c_1, \dots, c_n$ of the class set and let $\Gamma_i = c_i^{-1}\Gamma c_i
+\cap U$ be the stabilisers.  A form is determined by its values at the $c_i$, and those values
+are $\Gamma_i$-invariant.
+
+\begin{definition}
+  \label{def:evalatreps}
+  \uses{def:forms, thm:fujisaki}
+  \lean{QMF.Weight.evalAtReps}
+  \leanok
+  $\mathrm{evalAtReps}(\varphi) = (\varphi(c_i))_i$, a map $S_\kappa(U) \to c(\iota \times \N,
+  K)$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:evalatreps}
+  \uses{def:evalatreps}
+  \lean{QMF.Weight.evalAtReps_injective, QMF.Weight.mem_range_evalAtReps_iff,
+        QMF.Weight.bijective_evalAtReps}
+  \leanok
+  $\mathrm{evalAtReps}$ is injective, and its image is exactly the tuples whose $i$-th block is
+  $\Gamma_i$-invariant.  If the level is \emph{neat} --- every $\Gamma_i$ acts trivially on the
+  Tate algebra --- it is bijective, so $S_\kappa(U) \cong c(\iota \times \N, K)$.
+\end{theorem}
+
+Neatness is [Jacobs, Lemma 2.2] and holds in the case of interest.  Without it the forms are
+still a direct summand of the model, which is property (Pr); see \S\ref{sec:pr}.
+
+\begin{definition}
+  \label{def:heckeblock}
+  \uses{def:evalatreps, def:kappaslash}
+  \lean{QMF.Weight.heckeBlock, QMF.Weight.heckeBlockOp}
+  \leanok
+  Given right coset representatives $v_t$ of $U\eta U$ and, for each $(i,t)$, a factorisation
+  $c_i v_t^{-1} = d_{i,t}\, c_{\sigma(i,t)}\, u_{i,t}$ with $d_{i,t} \in \Gamma$, $u_{i,t} \in
+  U$, the $(i,j)$ \emph{block} is
+  \[
+    \varepsilon_{ij} = \sum_{t \,:\, \sigma(i,t) = j} \chi(w_{i,t})\,
+    \kappa\text{-}\mathrm{slash}(w_{i,t}), \qquad w_{i,t} = \theta(u_{i,t} v_t),
+  \]
+  and $\mathrm{heckeBlockOp}$ is the operator on $c(\iota \times \N, K)$ they assemble.
+\end{definition}
+
+\begin{theorem}[The transport]
+  \label{thm:transport}
+  \uses{def:heckeblock, def:heckeoperator}
+  \lean{QMF.Weight.heckeOperator_apply_rep, QMF.Weight.evalAtReps_heckeOperator}
+  \leanok
+  $\bigl([U\eta U]\varphi\bigr)(c_i) = \sum_j \varepsilon_{ij}\bigl(\varphi(c_j)\bigr)$; that is,
+  $\mathrm{evalAtReps}$ intertwines $[U\eta U]$ with $\mathrm{heckeBlockOp}$.
+\end{theorem}
+
+\section{Compactness and the Fredholm determinant}
+
+\begin{theorem}[{\cite[Lemma 12.2]{Buzzard}}, {[Jacobs, Lemma 2.7]}]
+  \label{thm:qmf-compact}
+  \uses{thm:transport, prop:kappaslash-matrix, prop:compactoid-criterion}
+  \lean{QMF.Weight.isCompactoid_heckeBlock, QMF.Weight.isCompactoid_heckeBlockOp}
+  \leanok
+  Suppose $\lVert \det \theta(\eta) \rVert \leq \sigma$ with $\rho \leq \sigma < 1$.  Then every
+  block, and hence the block operator, is compactoid.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{prop:kappaslash-matrix}
+  Each certificate element $u_{i,t}v_t$ has determinant norm at most that of $\eta$, the outer
+  factors being integral; a small determinant with integral entries and unit $d$ forces
+  $\lVert a \rVert \leq \sigma$; and then Proposition~\ref{prop:kappaslash-matrix} gives the row
+  decay $\sigma^j$, which is Proposition~\ref{prop:compactoid-criterion}'s hypothesis.  A finite
+  sum of compactoid operators is compactoid.
+\end{proof}
+
+\begin{definition}
+  \label{def:heckecharpowerseries}
+  \uses{thm:qmf-compact, def:minor}
+  \lean{QMF.Weight.heckeCharPowerSeries}
+  \leanok
+  $\det(1 - T\,[U\eta U])$, computed in the block model.
+\end{definition}
+
+\begin{theorem}[Eigenforms are reciprocal roots]
+  \label{thm:qmf-eigenform-criterion}
+  \uses{def:heckecharpowerseries, thm:serre12, thm:evalatreps}
+  \lean{QMF.Weight.evalT_heckeCharPowerSeries_eq_zero_iff}
+  \leanok
+  At a neat level, $a \neq 0$ is a zero of $\det(1 - T[U\eta U])$ if and only if $a^{-1}$ is an
+  eigenvalue of $[U\eta U]$ on $S_\kappa(U)$.
+\end{theorem}
+
+\begin{theorem}
+  \label{thm:qmf-riesz}
+  \uses{thm:qmf-eigenform-criterion, thm:riesz}
+  \lean{QMF.Weight.exists_riesz_decomposition_forms}
+  \leanok
+  Each zero $a$ of the determinant, of multiplicity $n$, gives a decomposition $S_\kappa(U) = N
+  \oplus F$ into $[U\eta U]$-stable summands with $(1 - a[U\eta U])^n = 0$ on $N$, invertible on
+  $F$, and $\dim_K N = n$.
+\end{theorem}
+
+\section{Non-neat levels}
+\label{sec:pr}
+
+\begin{proposition}
+  \label{prop:pr}
+  \uses{thm:evalatreps, def:onable}
+  \lean{QMF.Weight.stabProj, QMF.Weight.heckeCharPowerSeriesPr}
+  \leanok
+  Without neatness, averaging over the finite stabilisers gives projectors realising
+  $S_\kappa(U)$ as a direct summand of the model, so it satisfies property (Pr).  The
+  determinant of $[U\eta U]$ on the summand is well defined and independent of the projector
+  chosen \cite[Lemma 2.12]{Buzzard}.
+\end{proposition}
+
+\section{Base change and the Hecke algebra}
+
+\begin{proposition}
+  \label{prop:qmf-basechange}
+  \uses{def:heckecharpowerseries}
+  \lean{QMF.Weight.heckeCharPowerSeries_map}
+  \leanok
+  If $\kappa'$ over $L$ is compatible with $\kappa$ over $K$ along an isometric embedding $K \to
+  L$, then the two determinants correspond \cite[Lemma 2.13]{Buzzard}.  This is what lets a
+  computation made over a small field be read over $\bbC_p$.
+\end{proposition}
+
+Following Buzzard \cite[\S5]{Buzzard} we take the commuting structure of the Hecke algebra as
+data rather than proving it; for $T_w, T_{w'}$ at distinct places it is a Satake computation
+outside our scope.  What we prove is what the eigenvariety machine consumes from that datum.
+
+\begin{proposition}
+  \label{prop:hecke-comm-criterion}
+  \uses{def:heckeoperator}
+  \lean{AutomorphicFunction.heckeOperatorSlash_comm_of_reps}
+  \leanok
+  Two double coset operators commute as soon as their representative families can be matched
+  pairwise, up to the level, with the two products taken in the opposite orders.
+\end{proposition}
+
+%% The naive "disjoint support implies commuting" criterion is false here: representatives are
+%% η·u with a global u, so they do not commute elementwise.
+
+\begin{proposition}
+  \label{prop:qmf-eigensystem}
+  \uses{thm:qmf-riesz, prop:hecke-comm-criterion}
+  \lean{QMF.Weight.mapsTo_ker_of_commute, QMF.Weight.exists_eigensystem_of_riesz}
+  \leanok
+  Let $\mathbb{T}$ be a commuting family of endomorphisms of $S_\kappa(U)$, each commuting with $\varphi
+  = [U\eta U]$, and let $N$ be the finite-slope subspace of Theorem~\ref{thm:qmf-riesz}.  Then
+  every element of $\mathbb{T}$ preserves $N$, and over an algebraically closed coefficient field $N$
+  contains a nonzero simultaneous generalised eigenvector: a $\varphi$-finite system of
+  eigenvalues.
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  \uses{thm:qmf-riesz}
+  Stability is the identity $(1-a\varphi)^n t = t (1-a\varphi)^n$ applied to a vector killed by
+  the left factor.  $N$ is finite dimensional by Theorem~\ref{thm:qmf-riesz} and nonzero, and a
+  commuting family of endomorphisms of a nonzero finite-dimensional space over an algebraically
+  closed field is simultaneously triangularisable.
+\end{proof}

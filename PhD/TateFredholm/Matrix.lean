@@ -39,6 +39,53 @@ theorem tendsto_matrixCoeff_column (u : c(I, R) →L[R] c(J, R)) (i : I) :
     Tendsto (fun j => matrixCoeff u j i) cofinite (𝓝 0) :=
   cSpace.tendsto_cofinite (u (cSpace.single i 1))
 
+/-- Matrix coefficients are additive in the operator. -/
+@[simp] theorem matrixCoeff_sub (u v : c(I, R) →L[R] c(J, R)) (j : J) (i : I) :
+    matrixCoeff (u - v) j i = matrixCoeff u j i - matrixCoeff v j i := rfl
+
+/-- Matrix coefficients are homogeneous in the operator (definitional). -/
+@[simp] theorem matrixCoeff_smul (a : R) (u : c(I, R) →L[R] c(J, R)) (j : J) (i : I) :
+    matrixCoeff (a • u) j i = a * matrixCoeff u j i := rfl
+
+/-- Matrix coefficients are additive in the operator (definitional). -/
+@[simp] theorem matrixCoeff_add (u v : c(I, R) →L[R] c(J, R)) (j : J) (i : I) :
+    matrixCoeff (u + v) j i = matrixCoeff u j i + matrixCoeff v j i := rfl
+
+/-- The zero operator has zero matrix (definitional). -/
+@[simp] theorem matrixCoeff_zero (j : J) (i : I) :
+    matrixCoeff (0 : c(I, R) →L[R] c(J, R)) j i = 0 := rfl
+
+/-- **Matrix extensionality**: operators out of a model space are determined by their
+matrices, because every `f` is the unconditional sum `∑' i, f i • eᵢ`
+(`cSpace.hasSum_single`), which a continuous linear map transports term by term.
+
+Stated here — the common ancestor of the two consuming branches — rather than in either
+of them; `Jacobs.ext_matrixCoeff` (`PhD.Jacobs.GenFun`) is the norm-theoretic proof of
+the same fact over a nontrivially normed field, kept because it is the form the Tate
+algebra's `IsTate` API consumes. -/
+theorem ext_matrixCoeff {u v : c(I, R) →L[R] c(J, R)}
+    (h : ∀ j i, matrixCoeff u j i = matrixCoeff v j i) : u = v := by
+  have hsingle : ∀ i : I, u (cSpace.single i (1 : R)) = v (cSpace.single i (1 : R)) :=
+    fun i => DFunLike.ext _ _ fun j => h j i
+  refine ContinuousLinearMap.ext fun f => ?_
+  have hu : HasSum (fun i => f i • u (cSpace.single i (1 : R))) (u f) := by
+    simpa only [map_smul] using (cSpace.hasSum_single f).mapL u
+  have hv : HasSum (fun i => f i • v (cSpace.single i (1 : R))) (v f) := by
+    simpa only [map_smul] using (cSpace.hasSum_single f).mapL v
+  exact hu.unique (by simpa only [hsingle] using hv)
+
+/-- Evaluating an operator coordinatewise is the convergent matrix-times-vector sum. -/
+theorem hasSum_matrixCoeff (u : c(I, R) →L[R] c(J, R)) (f : c(I, R)) (j : J) :
+    HasSum (fun i => f i * matrixCoeff u j i) ((u f) j) := by
+  simpa only [ContinuousLinearMap.comp_apply, cSpace.evalCLM_apply, map_smul, smul_eq_mul,
+    matrixCoeff] using (cSpace.hasSum_single f).mapL ((cSpace.evalCLM j).comp u)
+
+/-- **The matrix of a composition is the (convergent) matrix product.** -/
+theorem matrixCoeff_comp {L : Type*} [DecidableEq L] (u : c(J, R) →L[R] c(L, R))
+    (v : c(I, R) →L[R] c(J, R)) (l : L) (i : I) :
+    matrixCoeff (u.comp v) l i = ∑' j : J, matrixCoeff v j i * matrixCoeff u l j :=
+  (hasSum_matrixCoeff u (v (cSpace.single i 1)) l).tsum_eq.symm
+
 /-- `‖u‖ = sup_{i,j} ‖a_{ij}‖` ([Buz07, p. 65]; [Bel] §II.1.3). -/
 theorem norm_eq_iSup_matrixCoeff [IsTate R] (u : c(I, R) →L[R] c(J, R)) :
     ‖u‖ = ⨆ j : J, ⨆ i : I, ‖matrixCoeff u j i‖ := by
@@ -140,12 +187,12 @@ theorem exists_coeffEquiv [IsTate R] (N : Type*) [NormedAddCommGroup N] [Module 
               ext i
               show (u + v) (cSpace.single i 1)
                   = u (cSpace.single i 1) + v (cSpace.single i 1)
-              rw [ContinuousLinearMap.add_apply]
+              rw [add_apply]
             map_smul' := fun r u => by
               ext i
               show (r • u) (cSpace.single i 1)
                   = (RingHom.id R) r • u (cSpace.single i 1)
-              rw [RingHom.id_apply, ContinuousLinearMap.smul_apply]
+              rw [RingHom.id_apply, smul_apply]
             invFun := inv
             left_inv := hleft_inv
             right_inv := hright_inv }, fun u => ?_⟩
@@ -339,7 +386,7 @@ theorem exists_truncation_near [IsTate R] (P : Submodule R c(I, R)) (hP : P.FG)
     refine norm_truncation_sub_le_of_forall (div_nonneg hε.le hC0.le) fun j hj => ?_
     have hjk : j ∉ (hfin k).toFinset :=
       fun h => hj (Finset.mem_biUnion.2 ⟨k, Finset.mem_univ k, h⟩)
-    rw [Set.Finite.mem_toFinset, Set.mem_setOf_eq] at hjk
+    rw [Set.Finite.mem_toFinset, Set.mem_ofPred_eq] at hjk
     exact le_of_lt (not_le.1 hjk)
   refine ⟨S, fun p hp => ?_⟩
   -- Pull `p` back through `π` and expand ultrametrically.
@@ -376,12 +423,23 @@ Noetherian bases in `Noetherian.lean`. -/
 def IsCompactoid (u : c(I, R) →L[R] c(J, R)) : Prop :=
   Tendsto (rowNorm u) cofinite (𝓝 0)
 
+/-- The zero operator is compactoid (its rows are zero). -/
+theorem isCompactoid_zero : IsCompactoid (0 : c(I, R) →L[R] c(J, R)) := by
+  have h : ∀ j, rowNorm (0 : c(I, R) →L[R] c(J, R)) j = 0 := fun j =>
+    le_antisymm (Real.iSup_le (fun i => by
+      show ‖(0 : c(J, R)) j‖ ≤ 0
+      rw [show ((0 : c(J, R)) j) = 0 from rfl, norm_zero]) le_rfl) (rowNorm_nonneg _ j)
+  have : rowNorm (0 : c(I, R) →L[R] c(J, R)) = fun _ => 0 := funext h
+  unfold IsCompactoid
+  rw [this]
+  exact tendsto_const_nhds
+
 private theorem matrixCoeff_truncation_comp_sub (u : c(I, R) →L[R] c(J, R))
     (S : Finset J) (j : J) (i : I) :
     matrixCoeff ((truncation S).comp u - u) j i
       = if j ∈ S then 0 else -(matrixCoeff u j i) := by
   show ((truncation S).comp u - u) (cSpace.single i 1) j = _
-  rw [ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply]
+  rw [sub_apply, ContinuousLinearMap.comp_apply]
   show truncation S (u (cSpace.single i 1)) j - u (cSpace.single i 1) j = _
   rw [truncation_apply]
   by_cases h : j ∈ S
@@ -605,7 +663,7 @@ theorem IsCompactoid.comp_left [IsTate R] {K : Type*} [DecidableEq K]
       refine mul_le_mul_of_nonneg_left ?_ (opNorm_nonneg w)
       have : u (cSpace.single i 1) - truncation S (u (cSpace.single i 1))
           = -(((truncation S).comp u - u) (cSpace.single i 1)) := by
-        rw [ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply, neg_sub]
+        rw [sub_apply, ContinuousLinearMap.comp_apply, neg_sub]
       rw [this, norm_neg]
       exact ((le_opNorm _ _).trans_eq
         (by rw [cSpace.norm_single_one, mul_one])).trans htail

@@ -1,0 +1,224 @@
+\chapter{Weierstrass Division and Preparation}
+\label{chap:wp}
+
+Over $\mathbb{C}$, a holomorphic function on a disc with finitely many zeros factors as a
+polynomial with those zeros times a nowhere-vanishing function.  The nonarchimedean analogue is
+Weierstrass preparation, and it is sharper: the factorisation is algebraic, it is unique, and the
+polynomial factor has degree exactly the number of zeros counted with multiplicity.
+
+The classical statement is for the Tate algebra $K \langle T \rangle$ over a complete
+nonarchimedean field, and the hypothesis on the divisor is phrased through the residue field:
+$g$ is \emph{distinguished of degree $s$} when $\lvert g_s \rvert = \lVert g \rVert$ and
+$\lvert g_i \rvert < \lVert g \rVert$ for $i > s$.  Two features of that setting are inconvenient
+for us.  First, we shall want division over the ring $R_c \langle T \rangle$ at radii $c \neq 1$;
+second, and more seriously, in the multivariate induction the coefficient ring is itself a Tate
+algebra, which is a normed \emph{ring} and not a field.
+
+The right generality is due to Martin \cite{Martin}, whose \S1.3 replaces ``unit'' by
+``multiplicative unit'' in the hypothesis and thereby removes every restriction on the
+coefficient ring and on the radius.  It is his form that we formalise, and the classical
+field-theoretic statement is recovered as a specialisation.
+
+\section{Distinguished series}
+
+Throughout $A$ is a commutative ring with a complete ultrametric norm, $c > 0$ is a radius, and
+$A_c \langle T \rangle$ denotes the restricted power series of parameter $c$ over $A$, carrying
+the Gauss norm $\lVert f \rVert_c = \sup_i \lvert f_i \rvert c^i$.  We call $\lvert f_i \rvert c^i$
+the $i$-th \emph{Gauss term} of $f$.
+
+Recall that $a \in A$ is a \emph{multiplicative unit} if it is a unit and $\lvert a x\rvert =
+\lvert a \rvert \lvert x \rvert$ for every $x$; over a field every nonzero element is one, and
+this is the only place where the field hypothesis was ever used.
+
+\begin{definition}
+  \label{def:ismuldistinguished}
+  \uses{def:gaussnorm, prop:restricted-ring, def:achievesgaussnorm}
+  \lean{PowerSeries.IsMulDistinguished}
+  \leanok
+  Let $f \in A_c\langle T \rangle$ and $s \in \N$.  We say $f$ is \emph{distinguished of order
+  $s$} if
+  \begin{enumerate}
+    \item $f_s$ is a multiplicative unit of $A$;
+    \item the $s$-th Gauss term attains the Gauss norm, $\lvert f_s \rvert c^s = \lVert f
+      \rVert_c$; and
+    \item it strictly dominates every \emph{later} Gauss term: $\lvert f_i \rvert c^i < \lvert
+      f_s \rvert c^s$ for all $i > s$.
+  \end{enumerate}
+\end{definition}
+
+Condition (iii) says nothing about the coefficients below $s$; this asymmetry is exactly what
+makes the definition usable at every radius, since only the tail has to be contracted.  Over a
+field, or more generally when every unit of $A$ is a multiplicative unit, this coincides with the
+classical notion.
+
+The whole theory rests on a single computation, which says that multiplying by a distinguished
+series is norm-multiplicative and tracks where the norm of the product is attained.  For $q \neq
+0$ write $k_0(q)$ for the greatest index at which $q$ achieves its Gauss norm; this exists
+because the Gauss terms of a restricted series tend to zero.
+
+\begin{lemma}[{\cite[Lemma 1.26]{Martin}}]
+  \label{lem:martin126}
+  \uses{def:ismuldistinguished}
+  \lean{PowerSeries.Restricted.norm_mul_of_isMulDistinguished}
+  \leanok
+  Let $g$ be distinguished of order $s$ and let $q \in A_c\langle T\rangle$ be nonzero.  Then
+  \[
+    \lVert g q \rVert_c = \lVert g \rVert_c \lVert q \rVert_c,
+  \]
+  and the product achieves its Gauss norm at the index $s + k_0(q)$, and at no larger index.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{def:ismuldistinguished}
+  The coefficient of $T^{s + k_0}$ in $gq$ is $g_s q_{k_0} + \sum_{i + j = s + k_0, \, i \neq s}
+  g_i q_j$.  In each remaining term either $i > s$, so that the $i$-th Gauss term of $g$ is
+  strictly dominated by the $s$-th, or $i < s$ and hence $j > k_0$, so that the $j$-th Gauss term
+  of $q$ is strictly dominated by the $k_0$-th by maximality of $k_0$.  Either way the term is
+  strictly smaller than $\lvert g_s q_{k_0}\rvert c^{s + k_0}$, which is $\lVert g \rVert_c
+  \lVert q \rVert_c$ because $g_s$ is a multiplicative unit.  The ultrametric equality case gives
+  the claim, and the same estimate applied at larger indices gives the maximality.
+\end{proof}
+
+\section{Division}
+
+\begin{theorem}[Weierstrass division, {\cite[Proposition 1.27]{Martin}}]
+  \label{thm:wdivision}
+  \uses{lem:martin126, thm:restricted-complete}
+  \lean{PowerSeries.Restricted.weierstrassDivision_exists_of_isMulDistinguished}
+  \leanok
+  Let $A$ be complete, $c > 0$, and let $g \in A_c\langle T\rangle$ be distinguished of order
+  $s$.  Then every $f \in A_c\langle T \rangle$ can be written
+  \[
+    f = g q + r, \qquad q \in A_c\langle T\rangle, \quad r \in A[T], \quad \deg r < s,
+  \]
+  and moreover $\lVert f \rVert_c = \max ( \lVert g \rVert_c \lVert q \rVert_c , \lVert r
+  \rVert_c )$.
+\end{theorem}
+
+\begin{theorem}[Uniqueness]
+  \label{thm:wdivision-unique}
+  \uses{thm:wdivision}
+  \lean{PowerSeries.Restricted.weierstrassDivision_q_unique_of_isMulDistinguished,
+        PowerSeries.Restricted.weierstrassDivision_r_unique_of_isMulDistinguished}
+  \leanok
+  The pair $(q, r)$ of Theorem~\ref{thm:wdivision} is unique.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:martin126}
+  Uniqueness is the norm identity: if $gq + r = gq' + r'$ then $g(q - q') = r' - r$ has degree
+  $< s$, while by Lemma~\ref{lem:martin126} the left-hand side achieves its Gauss norm at an
+  index $\geq s$ unless $q = q'$.
+\end{proof}
+
+The existence half is where the completeness is spent.  Martin's argument, which we follow, is
+a contraction:
+
+\begin{proof}[Proof of Theorem~\ref{thm:wdivision}]
+  \leanok
+  \uses{lem:martin126}
+  Truncate $g$ to a polynomial $g'$ of degree $s$ agreeing with $g$ up to $T^s$; its leading
+  coefficient $g_s$ is invertible, so Euclidean division in $A[T]$ divides any polynomial by
+  $g'$.  Applying this to a polynomial approximation of $f$ produces a one-step approximate
+  division whose error is controlled by the tail factor
+  \[
+    \theta = \sup_{i > s} \frac{\lvert g_i \rvert c^i}{\lvert g_s \rvert c^s} < 1,
+  \]
+  which is $< 1$ precisely by condition (iii) of Definition~\ref{def:ismuldistinguished}.
+  Iterating contracts the error geometrically; the limit exists by completeness and the bounds of
+  Lemma~\ref{lem:martin126} keep it inside the set of admissible pairs, which is closed.
+\end{proof}
+
+Note where the hypotheses were used: strict domination is needed \emph{above} the distinguished
+degree only, and no hypothesis on $c$ ever enters.  This is the point of Martin's formulation.
+
+\section{Preparation}
+
+\begin{theorem}[Weierstrass preparation, {\cite[Corollary 1.28]{Martin}}]
+  \label{thm:wprep}
+  \uses{thm:wdivision, thm:wdivision-unique}
+  \lean{PowerSeries.Restricted.weierstrassPreparation_exists_of_isMulDistinguished}
+  \leanok
+  Let $A$ be complete and let $g \in A_c \langle T \rangle$ be distinguished of order $s$.  Then
+  \[
+    g = e \, \omega
+  \]
+  with $\omega \in A[T]$ monic of degree $s$ and $e$ a multiplicative unit of $A_c\langle T
+  \rangle$.  The factorisation is unique.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:wdivision, lem:martin126}
+  Divide $T^s$ by $g$: $T^s = g q + r$ with $\deg r < s$, and set $\omega := T^s - r = gq$.  It
+  remains to see that $q$ is a multiplicative unit.  By Lemma~\ref{lem:martin126} the product
+  $gq = \omega$ achieves its norm at $s + k_0(q)$, and $\omega$ is monic of degree $s$, forcing
+  $k_0(q) = 0$.  Comparing coefficients of $T^s$ gives $1 = \sum_i g_i q_{s - i}$, which exhibits
+  $g_s q_0$ as $1$ minus a strictly smaller quantity, hence a multiplicative unit; and then $q =
+  q_0 (1 + \text{small})$ is a multiplicative unit of $A_c\langle T\rangle$.  Uniqueness follows
+  from uniqueness of the division.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:wprep-field}
+  \uses{thm:wprep}
+  \lean{PowerSeries.Restricted.weierstrassPreparation_polynomial_of_isMulDistinguished}
+  \leanok
+  Over a complete nontrivially normed field every nonzero element is a multiplicative unit, so
+  Definition~\ref{def:ismuldistinguished} is the classical distinguishedness condition and
+  Theorems~\ref{thm:wdivision} and \ref{thm:wprep} are the classical Weierstrass division and
+  preparation theorems in $K_c\langle T \rangle$, at every radius $c$.
+\end{corollary}
+
+\section{The multivariate theorems}
+
+Martin closes \S1.3 by remarking that the several-variable statements follow by applying the
+one-variable theorems over the Tate algebra in the remaining variables.  We make that remark
+formal.
+
+Let $c = (c_0, \dots, c_n)$ be a polyradius and split off the first variable: the splitting
+isomorphism
+\[
+  R_c \langle X_0, \dots, X_n \rangle \;\cong\; \bigl( R_{(c_1, \dots, c_n)} \langle X_1, \dots,
+  X_n \rangle \bigr)_{c_0} \langle X_0 \rangle
+\]
+identifies a multivariate restricted series with a one-variable series whose coefficients lie in
+the tail Tate algebra.  The correct hypothesis is therefore distinguishedness in $X_0$ over that
+ring.
+
+\begin{definition}
+  \label{def:ismuldistinguishedx0}
+  \uses{def:ismuldistinguished, thm:finsuccequiv}
+  \lean{MvPowerSeries.Restricted.IsMulDistinguishedX0}
+  \leanok
+  $f \in R_c\langle X_0, \dots, X_n\rangle$ is \emph{distinguished in $X_0$ of order $s$} if its
+  image under the splitting isomorphism is distinguished of order $s$ in the sense of
+  Definition~\ref{def:ismuldistinguished} over the coefficient ring $R_{(c_1, \dots, c_n)}\langle
+  X_1, \dots, X_n\rangle$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:mvweierstrass}
+  \uses{def:ismuldistinguishedx0, thm:wdivision, thm:wprep, thm:finsuccequiv}
+  \lean{MvPowerSeries.Restricted.weierstrassDivision_exists_of_isMulDistinguishedX0,
+        MvPowerSeries.Restricted.weierstrassPreparation_exists_of_isMulDistinguishedX0}
+  \leanok
+  Let $R$ be a complete ultrametric normed commutative ring, $c$ any polyradius, and $g$
+  distinguished in $X_0$ of order $s$.  Then division by $g$ with remainder of $X_0$-degree $< s$
+  exists and is unique, and $g$ factors uniquely as $e \omega$ with $\omega$ monic of degree $s$
+  in $X_0$ over the tail algebra and $e$ a multiplicative unit.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:wdivision, thm:wprep, thm:finsuccequiv}
+  The tail algebra is a complete ultrametric normed commutative ring, so
+  Theorems~\ref{thm:wdivision} and \ref{thm:wprep} apply to it verbatim; transport the
+  conclusions back along the splitting isomorphism.
+\end{proof}
+
+%% The `IsDistinguished`-flavoured field-facing corollaries, and the Gauss-extension route that
+%% preceded this development, are in PhD/BirkovichWP/. They are kept as history: the Martin route
+%% supersedes them and needs no hypothesis on the radius.

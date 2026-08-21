@@ -1,0 +1,250 @@
+\chapter{Newton Polygons}
+\label{chap:np}
+
+The Newton polygon of a power series over a nonarchimedean field records, in a single convex
+picture, the valuations of its zeros.  It is the tool that converts a statement about a
+characteristic power series into a statement about eigenvalues, and it is therefore the
+combinatorial heart of what follows.
+
+There are two ways to define it and we need both.  The first is geometric: the polygon is the
+lower boundary of the convex hull of the points $(i, v(a_i))$.  That description is the one that
+makes theorems true, but it is not something one can compute with directly.  The second is
+algorithmic: walk from the leftmost finite point, repeatedly taking the segment of least slope.
+That description computes, but proving anything about it means reasoning about the walk.
+
+We formalise both and prove they agree.  The geometric description becomes a
+\emph{specification}, a predicate $\mathrm{IsNewtonPolygonOf}$ that a candidate polygon may
+satisfy; the algorithm produces a candidate; and existence plus uniqueness say the algorithm's
+output is the unique polygon meeting the specification.  Every later theorem is then proved
+against whichever description is convenient.
+
+\section{One-sided polygons and the specification}
+
+\begin{definition}
+  \label{def:newtonpolygon0}
+  \lean{NewtonPolygon₀}
+  \leanok
+  A \emph{one-sided polygon} over an ordered value group $\Gamma$ consists of a starting vertex
+  in $\Z \times \Gamma$, a sequence of segment lengths, and a monotone sequence of slopes,
+  together with the bookkeeping that says where the polygon stops (it may be finite, may end in a
+  ray, or may continue forever).  Monotonicity of the slopes is convexity, built into the
+  structure rather than imposed afterwards.
+\end{definition}
+
+Given a sequence $v : \N \to \Gamma \cup \{\infty\}$ — think $v_i = v(a_i)$, with $\infty$ where
+the coefficient vanishes — we ask which polygon deserves to be called \emph{the} Newton polygon of
+$v$.
+
+\begin{definition}
+  \label{def:isnewtonpolygonof}
+  \uses{def:newtonpolygon0}
+  \lean{IsNewtonPolygonOf}
+  \leanok
+  A one-sided polygon $P$ is \emph{the Newton polygon of} $v$ when
+  \begin{enumerate}
+    \item there are no points of $v$ strictly left of the starting vertex, and the starting
+      vertex is itself a point of $v$;
+    \item $P$ lies on or below every point: $P(k) \leq v_k$ for all $k \in \N$; and
+    \item $P$ is the greatest such: any polygon $Q$ with the same starting abscissa lying on or
+      below every point lies on or below $P$.
+  \end{enumerate}
+\end{definition}
+
+Conditions (ii) and (iii) say ``greatest convex minorant through the anchor'', which is the lower
+convex hull; convexity is already in Definition~\ref{def:newtonpolygon0}, so it does not need
+restating.  The anchoring in (iii) is not cosmetic: a competitor starting further left is
+unconstrained at indices where $v$ is infinite and could stand arbitrarily high there, so
+maximality over unanchored competitors is unsatisfiable.
+
+\begin{theorem}[Uniqueness]
+  \label{thm:np-unique}
+  \uses{def:isnewtonpolygonof}
+  \lean{IsNewtonPolygonOf.height_eq}
+  \leanok
+  Two polygons satisfying Definition~\ref{def:isnewtonpolygonof} for the same $v$ have the same
+  height at every integer.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  Each is below the other by (iii), applied in both directions.
+\end{proof}
+
+%% Note the shape of uniqueness: the NewtonPolygon₀ *structures* need not be equal, since a
+%% segment may be split into two collinear pieces. Height equality is the geometric content.
+
+\section{Existence: the algorithm meets the specification}
+
+Not every sequence has a Newton polygon.  Two degeneracies must be excluded: if $v$ is
+identically infinite there are no points at all, and if the slopes out of the anchor are
+unbounded below then no polygon lies below every point.
+
+\begin{definition}
+  \label{def:isadmissible}
+  \lean{IsAdmissible}
+  \leanok
+  $v$ is \emph{admissible} if for every finite point of $v$ the set of slopes from that point to
+  later points is bounded below.
+\end{definition}
+
+\begin{lemma}
+  \label{lem:isadmissible-affine}
+  \uses{def:isadmissible}
+  \lean{isAdmissible_of_affine_bound}
+  \leanok
+  If the points of $v$ lie on or above a single affine line then $v$ is admissible.
+\end{lemma}
+
+\begin{theorem}[Existence]
+  \label{thm:np-exists}
+  \uses{def:isnewtonpolygonof, def:isadmissible}
+  \lean{isNewtonPolygonOf_newtonPolygon₀OfSeq}
+  \leanok
+  If $v$ has at least one finite value and is admissible, the polygon $\mathrm{newtonPolygon}_0(v)$
+  produced by the step algorithm satisfies Definition~\ref{def:isnewtonpolygonof}.
+\end{theorem}
+
+Together with Theorem~\ref{thm:np-unique} this justifies speaking of \emph{the} Newton polygon,
+and lets us prove a property of it by exhibiting any polygon with that property and checking the
+specification --- a technique we use twice below.
+
+\section{The polygon of a power series}
+
+To pass from sequences to series we need the coefficient valuation.  We use the unnormalised one:
+
+\begin{definition}
+  \label{def:coeffval}
+  \lean{coeffVal}
+  \leanok
+  For $f = \sum a_i T^i$ over an ultrametric field, $\mathrm{coeffVal}(f)_i = -\log \lVert a_i
+  \rVert$, with the value $\infty$ where $a_i = 0$.  The Newton polygon of $f$ is the Newton
+  polygon of this sequence.
+\end{definition}
+
+The base is $e$, so norms are recovered as $\lVert a \rVert = \exp(-\mathrm{coeffVal}(f)_i)$.
+Rescaling to a chosen uniformizer $\varpi$ divides every slope by $-\log\lVert \varpi \rVert$;
+we do that only when comparing with a source that normalises $v(\varpi) = 1$.
+
+\begin{lemma}
+  \label{lem:np-restricted}
+  \uses{def:coeffval, thm:np-exists, lem:isadmissible-affine, def:isrestricted}
+  \lean{isAdmissible_coeffVal_of_isRestricted, isNewtonPolygonOf_coeffVal_of_isRestricted}
+  \leanok
+  A restricted power series of parameter $c > 0$ has admissible coefficient valuations --- the
+  Gauss bound $\lVert a_k \rVert c^k \leq B$ \emph{is} an affine floor --- hence has a Newton
+  polygon.  The same holds for a nonzero polynomial.
+\end{lemma}
+
+\section{Prescribed slopes}
+
+The following construction is the ``exhibit a witness and check the specification'' technique in
+its purest form, and it is what we use to read slopes off a computed valuation sequence.
+
+\begin{definition}
+  \label{def:ofslopes}
+  \uses{def:newtonpolygon0}
+  \lean{NewtonPolygon₀.ofSlopes}
+  \leanok
+  For a monotone sequence of reals $s : \N \to \R$ and a starting height $y_0$, let
+  $\mathrm{ofSlopes}(s, y_0)$ be the polygon anchored at $(0, y_0)$ with infinitely many segments
+  of length $1$, the $j$-th having slope $s_j$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:ofslopes}
+  \uses{def:ofslopes, def:isnewtonpolygonof}
+  \lean{isNewtonPolygonOf_ofSlopes}
+  \leanok
+  If $v_m = y_0 + \sum_{i < m} s_i$ for every $m$, then $\mathrm{ofSlopes}(s, y_0)$ is the Newton
+  polygon of $v$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{def:isnewtonpolygonof}
+  The polygon passes through every point, so condition (ii) holds with equality; and any
+  competitor lying below the points lies below the polygon at every integer, which is where
+  heights are compared.  Admissibility is Lemma~\ref{lem:isadmissible-affine} through the minimum
+  slope $s_0$.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:ofslopes-transport}
+  \uses{thm:ofslopes, thm:np-unique, thm:np-exists}
+  \lean{unitSlope_newtonPolygon₀OfSeq_ofSlopes}
+  \leanok
+  Consequently the polygon built by the algorithm from such a $v$ has unit slopes exactly $s_j$.
+\end{corollary}
+
+\section{First breaks, purity, and the link to preparation}
+
+The first segment of the polygon controls the smallest zeros, and it is the object that connects
+this chapter to Chapter~\ref{chap:wp}.
+
+\begin{definition}
+  \label{def:hasfirstbreak}
+  \uses{def:coeffval}
+  \lean{HasFirstBreak, IsPureSeries}
+  \leanok
+  $f$ \emph{has first break $(i, m)$} when the first segment of its polygon has slope $m$ and
+  ends at abscissa $i$.  $f$ is \emph{pure of slope $m$} when its polygon is a single segment of
+  slope $m$.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:firstbreak-distinguished}
+  \uses{def:hasfirstbreak, def:ismuldistinguished}
+  \lean{isMulDistinguished_of_hasFirstBreak}
+  \leanok
+  A first break at $(i, m)$ makes $f$ distinguished of order $i$ at the radius $e^{m}$, in the
+  sense of Definition~\ref{def:ismuldistinguished}.
+\end{proposition}
+
+This is the bridge: the polygon locates a distinguished degree, Weierstrass preparation then
+factors the series there, and the factor is a polynomial whose roots are the zeros of $f$ on the
+corresponding disc.
+
+\begin{theorem}[Weierstrass factorisation along the polygon]
+  \label{thm:np-factorisation}
+  \uses{prop:firstbreak-distinguished, thm:wprep}
+  \lean{exists_weierstrass_factorisation}
+  \leanok
+  A power series over a complete field factors, along each break of its polygon, as a polynomial
+  of degree the break abscissa times a unit of the corresponding restricted algebra.
+\end{theorem}
+
+\section{Zeros and slopes}
+
+\begin{theorem}
+  \label{thm:np-zeros}
+  \uses{thm:np-factorisation}
+  \lean{hasSum_zero_iff_aeval_eq_zero}
+  \leanok
+  A point of the closed disc is a zero of the (convergent) series exactly when it is a root of
+  the polynomial factor supplied by Theorem~\ref{thm:np-factorisation}.
+\end{theorem}
+
+\begin{theorem}[The slope reading]
+  \label{thm:np-slope-reading}
+  \uses{thm:np-zeros}
+  \lean{norm_eq_exp_slope_of_hasSum_zero}
+  \leanok
+  If $z$ is a zero of $f$ then $\lVert z \rVert = \exp(m)$ for $m$ a slope of the Newton polygon
+  of $f$; and each slope $m$ occurs for exactly as many zeros, with multiplicity, as the
+  horizontal length of the corresponding segment.
+\end{theorem}
+
+This is the statement the rest of the thesis consumes.  Applied to a Fredholm determinant
+$\det(1 - Tu)$, whose zeros are the reciprocal eigenvalues of $u$, it converts the polygon of the
+determinant into the list of valuations of the eigenvalues of $u$; that is the subject of
+Chapter~\ref{chap:slopes}.
+
+\begin{proposition}
+  \label{prop:np-radius}
+  \uses{def:coeffval, def:isrestricted}
+  \lean{radiusOfConvergence, isRestricted_of_lt_radiusOfConvergence}
+  \leanok
+  The radius of convergence of $f$ is the supremum of the radii at which $f$ is restricted, and
+  $f$ is restricted at every smaller radius.  In polygon terms it is $\exp$ of the supremum of
+  the slopes.
+\end{proposition}

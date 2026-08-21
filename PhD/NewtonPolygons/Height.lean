@@ -600,7 +600,7 @@ private lemma eq_one_of_slopes_eq_bot {n : ℕ} (h : P.slopes n = ⊥) : P.suppo
     rw [ha] at h
     exact absurd h (by simp)
   have hsupp := P.support_eq_add_one hlt hnf
-  have h1 := P.slopes_final n ⟨hsupp, Or.inr h⟩
+  have h1 := (P.slopes_final n ⟨hsupp, Or.inr h⟩).1
   exact ⟨h1, by simpa [h1] using hsupp⟩
 
 /-- A `⊥` unit slope pins the shape of the polygon: it can only be read off the single segment of

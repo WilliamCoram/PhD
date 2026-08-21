@@ -1,185 +1,205 @@
-\chapter{Compact Operators}
+\chapter{Compact Operators and Fredholm Theory}
+\label{chap:compact}
 
+Serre's \emph{Endomorphismes compl\`etement continus des espaces de Banach $p$-adiques}
+\cite{Serre} attaches to a completely continuous operator $u$ on a $p$-adic Banach space a
+characteristic power series $\det(1 - Tu)$, entire in $T$, whose reciprocal roots are exactly the
+eigenvalues of $u$, and which controls a Riesz decomposition of the space.  That is the machine
+we need: a Hecke operator will be completely continuous, its determinant will be computable from
+a matrix, and the Newton polygon of the determinant will read off the eigenvalue valuations.
 
+Serre works over a complete nonarchimedean field.  Buzzard \cite{Buzzard} works over a Banach
+algebra over such a field, and Johansson--Newton \cite{JN} over a Banach--Tate ring with no
+ground field at all.  We formalise the last of these, since the applications need the ground
+ring to be an affinoid rather than a field, and since nothing in the arguments actually uses a
+field.  The specialisations are then corollaries.
 
-%% Will rewrite all of this in terms of Kevins Eigenvariety or Bellaiche's Eigenbook (probably the latter)
-
-In this section we introduce the theory of comapct operators over Banach spaces and work towards
-defining the Fredholmd determinant.
-
-Let $p$ be a prime and $K$ a complete subfield of $\mathbb{C}_p$ with absolute value $|\cdot|_p$.
-Write $\mathcal{O}$ for the valuation ring of $K$ and $m$ its maximal ideal and let $\nu_p$ denote
-the valuation on $K$.
-
-\begin{definition}
-    A Banach space over $K$ is a complete, normed vector space over $K$ whose norm $|\cdot|$
-    satisfies the non-archimedean property.
-\end{definition}
-
-\begin{remark}
-    By our assumptions this means $K$ itself is a Banach space with norm $|\cdot| = | \cdot |_p.$
-\end{remark}
+\section{The setting}
 
 \begin{definition}
-    Given an index set $I$ and a set of elements $x_i \in K$, we say $x_i$ tends to $0$ and write
-    $x_i \to 0$ if for all $\varepsilon > 0$, there exists finitely many $i \in I$ such that
-    $|x_i| > \varepsilon.$
-
-    We write $c(I)$ the set of sequences $x = (x_i)_{i \in I}$ with $x_i \in K$ such that
-    $x_i \to 0$.
+  \label{def:istate}
+  \lean{TateFredholm.IsTate}
+  \leanok
+  A \emph{Banach--Tate ring} is a complete normed ring $R$ possessing a
+  \emph{pseudo-uniformizer}: a unit $\varpi$ with $\lVert \varpi \rVert < 1$ whose norm is
+  multiplicative.  We write $\mathrm{IsTate}\, R$.
 \end{definition}
 
-\begin{remark}
-    If $I$ is finite it is trivial that all sets of elements tends to $0$; thus
-    $c(I) \simeq K^{|I|}$.
-\end{remark}
-
-\begin{lemma}\label{Norm}
-    If we define a function $|\cdot|_{c(I)} : c(I) \to \R$ by
-    \[
-    |x|_{c(I)} = \sup_{i \in I} |x_i|_p
-    \]
-    then this is a norm and gives $c(I)$ the structure of a Banach space.
-\end{lemma}
-
-\begin{proof}
-    It is not hard to see that $|x|_{c(I)}$ is a non-archimedean norm; every property follows from the fact $|x|_p$ is a non-archimedean norm and taking supremums.
-    To be a Banach space it remains to show $c(I)$ is complete. So consider a Cauchy sequence $x_j = ((x_{j,i})_{i \in I})$, by which me mean
-    \[
-    \forall \varepsilon > 0, \; \exists M > 0 \text{ such that } \forall k,j > M \text{ we have }
-    |x_j - x_k |_{c(I)} \leq \varepsilon.
-    \]
-    That is
-    \[
-    \sup_{i \in I} |x_{j,i} - x_{k,i} |_p \leq \varepsilon
-    \]
-    and so we have $\forall i$, $|x_{j,i} - x_{k,i} |_p \leq \varepsilon$. Thus $(x_{j,i})_{j \in \N}$ are Cauchy sequences in $K$ and since $K$ is complete they converge.
-    So consider
-    \[
-    x = (x_i)_{i \in I}
-    \]
-    where $x_i = \lim_{j \to \infty} x_{j,i}$. We want to show this is the limit of the $x_j$ and is also in $c(I)$.
-    Recall for all $j,k > M$ we have $|x_{j,i} - x_{k,i}|_p \leq \varepsilon$, letting $j \to \infty$ we see $|x_i - x_{k,i} | \leq \varepsilon$ for all $i$. Therefore,
-    \[
-    |x - x_j |_{c(I)} = \sup_i |x_i - x_{j.i}|_p < \varepsilon
-    \]
-    and indeed $x$ is the limit. Finally, they belong in $c(I)$ as $x_{j,i} \to 0$ for a fixed $j$, and taking limits on $j$ preserves inequalities, and so we also have $x_i \to 0$. We thus conclude the proof.
-\end{proof}
-
-We now want to give a basis to our Banach space.
+Note that the norm on $R$ is only submultiplicative; the pseudo-uniformizer is the one element
+whose norm behaves multiplicatively, and that turns out to be all the analysis needs.
 
 \begin{definition}
-    Let $E$ be a Banach space over $K$ and suppose there exists $\{ e_i : i \in I \}$ such that every $x \in E$ can be written uniquely as $\sum_{i \in I} x_i e_i$ with $x_i \to 0$ and $|x| = \sup_{i \in I} | x_i |$. Then we call $\{e_i\}_{i \in I}$ an orthonormal basis for $E$.
+  \label{def:cspace}
+  \lean{TateFredholm.cSpace}
+  \leanok
+  For an index type $I$ the \emph{model space} $c(I, R)$ is the space of families $(x_i)_{i \in
+  I}$ in $R$ tending to $0$ along the cofinite filter, with the supremum norm.
 \end{definition}
 
-Moreover, we can always find a basis.
-
-\begin{lemma}
-    For any Banach space $E$ over $K$ there exists an index set $I$ such that $E  \cong c(I)$ and we can identify an orthonormal basis $\{ e_i\}_{i \in I}$ of $E$.
-\end{lemma}
-
-This follows from \cite[Proposition~1]{Serre} and \cite[Lemma~1]{Serre}.
-
-As Banach spaces are vector spaces, we can consider (continuous) linear maps from one space to another. From now on let us suppose $E$ and $F$ are Banach spaces over $K$.
+Every module we care about is either $c(I,R)$ or a direct summand of one:
 
 \begin{definition}
-     Write $\mathcal{L}(E,F)$ for the vector space of continuous linear maps from $E$ to $F$.
+  \label{def:onable}
+  \uses{def:cspace}
+  \lean{TateFredholm.IsONable, TateFredholm.HasPr}
+  \leanok
+  A Banach $R$-module $M$ is \emph{orthonormalisable} if it is isometrically isomorphic to some
+  $c(I,R)$, and has \emph{property (Pr)} if it is a direct summand of an orthonormalisable
+  module.
 \end{definition}
 
-\begin{remark}
-    We call this a vector space; and indeed it is not hard to show it actually is. If $f,g \in \mathcal{L}(E,F)$ then by linearity of linear maps $f + g$ is a linear map, and continuous via addition of continuous of maps, hence $f + g \in \mathcal{L}(E,F)$. Scalar multiplication is equally straightforward, and it is not hard to see that we can complete the argument easily.
-\end{remark}
-
-\begin{lemma}
-   Consider the following function, $| \cdot | : \mathcal{L}(E,F) \to \mathcal{L}(E,F)$
-    \[
-    |u| = \sup_{x\neq 0} \frac{|u(x)|}{|x|}.
-    \]
-    This function acts as a norm on $\mathcal{L}(E,F)$ and gives it the structure of a Banach space.
-\end{lemma}
-
-We omit the proof, as it follows similar to that of Lemma~\ref{Norm}.
-
-Let us consider a basis of $E$ and $F$, respectively $\{e_i : i \in I \}$ and $\{ f_j : j \in J \}$ for indexing sets $I$ and $J$. That is $E \cong c(I)$ and $F \cong c(J)$. Consider $u \in \mathcal{L}(E,F)$, we can write this as a matrix $(n_{ji})$ with entries in $K$. This follows from writing $u(e) = u(\sum_{i \in I} a_i e_i) = \sum_{i \in I} a_i u(e_i)$ and noting $u(e_i) \in F$, that is $u(e_i) = \sum_{j \in J} b_j f_j$. Thus
-\[
-u(e) = \sum_{i \in I} \sum_{b \in J} a_i b_j f_j
-\]
-and we see $n_{ji} = a_i b_j$.
-We now note the following proposition, \cite[Proposition~3]{Serre}.
+Property (Pr) is Buzzard's hypothesis, and it is what a space of modular forms at a non-neat
+level satisfies when orthonormalisability itself fails.
 
 \begin{proposition}
-The map $u \mapsto (u(e_i))_{i \in I}$ is an isomorphism of $\mathcal{L}(E,F)$ to the vector space of sequences $(f_i)_{i \in I}$ of $F$, equipped with the norm $\sup_{i \in I} |f_i|$.
+  \label{prop:tate-algebra-onable}
+  \uses{def:onable, def:tate-algebra}
+  \lean{TateFredholm.restrictedEquivCSpace, TateFredholm.isONable_restricted}
+  \leanok
+  The Tate algebra $K\langle X \rangle$ is orthonormalisable, with the monomials $X^n$ as
+  orthonormal basis; the isometry $K\langle X\rangle \cong c(\N, K)$ sends a series to its
+  coefficient family.
 \end{proposition}
 
-This implies for a fixed $i$ the $|b_j|$ is bounded, and since they form coefficients of an orthonormal basis they tend to 0. That is, we have $|n_{ji}|$ is bounded and $n_{ji} \to 0$ for fixed $i$. Moreover, we have
-\[
-| u | = \sup_{i,j} |n_{ji}|. %% may need more explanation
-\]
+This proposition is the reason the weight-$\kappa$ action of Chapter~\ref{chap:qmf}, which acts
+on a Tate algebra, is an operator on a model space and so has matrix coefficients.
 
-\begin{remark}
-    Note nowhere we have required $I,J$ to be finite indexing sets, therefore $n_{ji}$ could be an infinite matrix - this is where we will use the previous section.
-\end{remark}
+\section{Compactness}
 
 \begin{definition}
-    Let $\mathcal{F}(E,F)$ denote the subspace of $\mathcal{L}(E,F)$ consisting of the continuous, linear maps that are of finite rank.
-
-    We say a map $u$ is compact if $u$ belongs to the closure of $\mathcal{F}(E,F)$. Write $\mathcal{C}(E,F)$ for this closure.
+  \label{def:matrixcoeff}
+  \uses{def:cspace}
+  \lean{TateFredholm.matrixCoeff, TateFredholm.rowNorm}
+  \leanok
+  For $u : c(I,R) \to c(J,R)$ continuous linear, the \emph{matrix coefficient} $u_{j i}$ is the
+  $j$-th coordinate of $u(e_i)$, where $e_i$ is the $i$-th basis vector.  The $j$-th
+  \emph{row norm} is $\sup_i \lVert u_{ji}\rVert$.
 \end{definition}
 
-We then have the following lemma which relates the compact property of a linear map to our work above.
+\begin{definition}
+  \label{def:iscompactoid}
+  \uses{def:matrixcoeff}
+  \lean{TateFredholm.IsCompletelyContinuous, TateFredholm.IsCompactoid}
+  \leanok
+  $u$ is \emph{completely continuous} if it is an operator-norm limit of finite-rank operators,
+  and \emph{compactoid} if its row norms tend to $0$ along the cofinite filter.
+\end{definition}
 
-\begin{lemma}
-    Define $r_j (u) = \sup_{i \in I} |n_{ji} |$. We have
-    \[
-    u \text{ is compact} \quad \Longleftrightarrow \quad r_j(u) \to 0.
-    \]
+\begin{proposition}
+  \label{prop:compactoid-criterion}
+  \uses{def:iscompactoid}
+  \lean{TateFredholm.isCompactoid_of_row_decay'}
+  \leanok
+  On $c(I,R)$ the two notions agree, and a row-decay estimate $\lVert u_{ji} \rVert \leq C
+  \sigma^{j}$ with $\sigma < 1$ suffices for both.
+\end{proposition}
+
+The row-decay criterion is the only form of compactness we ever verify in practice: for a Hecke
+operator the estimate falls out of the weight action, see Theorem~\ref{thm:qmf-compact}.
+
+\section{The Fredholm determinant}
+
+\begin{definition}
+  \label{def:minor}
+  \uses{def:matrixcoeff}
+  \lean{TateFredholm.minor, TateFredholm.charCoeff, TateFredholm.charPowerSeries}
+  \leanok
+  For a finite $S \subseteq I$ let $\mathrm{minor}(u, S)$ be the determinant of the $S \times S$
+  submatrix of $u$.  For compactoid $u$ the family of $n$-element minors is summable, and
+  \[
+    c_n(u) = (-1)^n \sum_{\lvert S \rvert = n} \mathrm{minor}(u, S), \qquad
+    \det(1 - Tu) = \sum_{n \geq 0} c_n(u) T^n .
+  \]
+\end{definition}
+
+\begin{lemma}[Ultrametric Hadamard bound]
+  \label{lem:hadamard}
+  \uses{def:minor}
+  \lean{TateFredholm.norm_det_le_pow_of_row_bound}
+  \leanok
+  If every entry of a square matrix satisfies $\lVert A_{ji}\rVert \leq \sigma^{w_j}$ for a row
+  weight $w$, then $\lVert \det A \rVert \leq \sigma^{\sum_j w_j}$.
 \end{lemma}
 
 \begin{proof}
-    Immediate by the following equivalences.
-    \begin{align*}
-        u \text{ compact } \iff &u \in \mathcal{C}(E,F) \\
-        \iff &\text{isomorphic to a matrix } (n_{ji}) \text{ such that for fixed $i$} \\ & (n_{ji}) \to 0 \text{ under the norm } \sup_i |n_{ji}| := r_j (u)
-    \end{align*} \qedhere
+  \leanok
+  Each Leibniz monomial picks one entry from every row, so has norm at most $\prod_j
+  \sigma^{w_j}$; the ultrametric inequality bounds the sum of the monomials by their maximum.
 \end{proof}
 
-From this we have the following useful corollary.
+Summability of the minors comes from the same bound: a minor of norm $\geq \varepsilon$ forces
+its index set inside the finite set of ``large'' rows, and there are finitely many $n$-subsets of
+a finite set.
 
-\begin{corollary}
-    Suppose the matrix $(n_{ji})$ of $u$ has all its entries in $\mathcal{O}_K$. If $D(\frac{1}{p}) \cdot(n_{ji})$ has all entries in $\mathcal{O}_K$ then $u$ is compact. Recall $D(\frac{1}{p})$ is the infinite matrix with $(\frac{1}{p})^n$ on the diagonal; and note we can extend $n_{ji}$ to an infinite matrix with zeroes outside of its defined range such that the multiplication makes sense.
-\end{corollary}
+\begin{theorem}
+  \label{thm:charpowerseries-entire}
+  \uses{def:minor}
+  \lean{TateFredholm.charPowerSeries_isEntire, TateFredholm.charCoeff_zero}
+  \leanok
+  For compactoid $u$ the series $\det(1 - Tu)$ is entire, with constant term $1$.
+\end{theorem}
 
-\begin{proof}
-    Write $D(1/p)(n_{ji})$ as $\sum n_{ji} (1/p)^j x^jy^i$. If all its entries are in $\mathcal{O}_K$ then $n_{ji} (1/p)^j \in \mathcal{O}_K$. Let us fix $j$. Then for all $i$, we have $p^j | n_{ji}$ by definition of $\mathcal{O}_K$. Thus $|n_{ji}| < p^{-j}$, and therefore
-    \[
-    r_j (u) = \sup_{i} |n_{ji}| < p^{-j}
-    \]
-    and clearly this goes to zero as $j \to \infty$. Therefore by the above lemma we conclude that $u$ is compact.
-\end{proof}
+\begin{theorem}[Invariances]
+  \label{thm:charpowerseries-inv}
+  \uses{def:minor}
+  \lean{TateFredholm.charPowerSeries_comm, TateFredholm.charPowerSeries_conj}
+  \leanok
+  $\det(1 - Tuv) = \det(1 - Tvu)$, and the determinant is invariant under conjugation by an
+  isomorphism.  Consequently it may be computed in any model of the space.
+\end{theorem}
 
-We will say a matrix is compact if it is the matrix of a compact operator.
-
-\subsection{Characteristic power series of an operator}
-
-Let $E$ be a Banach space isomorphic to $c(I)$ for some indexing set $I$.
-We now state the following, \cite[Proposition~7]{Serre}.
-
-\begin{proposition}
-    Let $u : E \to E$ be a compact operator.
-    \begin{enumerate}
-        \item If the matrix of $u$ with respect to an orthonormal basis $\{e_i : i \in I \}$ for some index set $I$ is $(n_{ji})$ then
-        \[
-        \det (1 - t u) = \sum_{m = 0}^{\infty} c_m t^m
-        \]
-        where
-        \[
-        c_m = (-1)^m \sum_{ S \subset I, \; |S| = m} \sum_{\sigma \in \text{Sym}(S)} \text{sgn}(\sigma) \prod_{i \in S} n_{\sigma(i)i}
-        \]
-        \item The series $\det(1-tu)$ is an entire function of $t$, that is it has infinite radius of convergence.
-        \item If $u_n \to u$ with $u_n \in \mathcal{C}(E,E)$ for all $n$, then $\det (1 - tu_n)$ tends to $\det(1-tu)$.
-    \end{enumerate}
+\begin{proposition}[Block operators]
+  \label{prop:blockop}
+  \uses{def:minor}
+  \lean{TateFredholm.blockOp, TateFredholm.isCompactoid_blockOp}
+  \leanok
+  An operator on $c(\sigma \times I, R)$ with $\sigma$ finite is assembled from its $\sigma
+  \times \sigma$ blocks; it is compactoid iff each block is, and its determinant is computed
+  blockwise.
 \end{proposition}
 
-\begin{definition}
-    We call the power series $\det(1 - tu)$ the characteristic power series of $u$. We can also refer to it as the characteristic power series of the matrix $(n_{ji}).$
-\end{definition}
+This is the shape a Hecke operator takes: the class set indexes $\sigma$, and each block is the
+weight action of a single certificate element.
+
+\section{Serre's theorems}
+
+\begin{theorem}[{\cite[Prop.\ 11]{Serre}}]
+  \label{thm:serre11}
+  \uses{thm:charpowerseries-entire}
+  \lean{TateFredholm.isUnit_one_sub_smul_iff_isUnit_evalT}
+  \leanok
+  For compactoid $u$ and $a \in R$, the operator $1 - a u$ is invertible if and only if
+  $\det(1-Tu)$ evaluated at $a$ is a unit.
+\end{theorem}
+
+\begin{theorem}[{\cite[Prop.\ 12]{Serre}}]
+  \label{thm:serre12}
+  \uses{thm:serre11}
+  \lean{TateFredholm.exists_eigenvector_of_evalT_charPowerSeries_eq_zero}
+  \leanok
+  Over a field, if $a \neq 0$ is a zero of $\det(1 - Tu)$ then $a^{-1}$ is an eigenvalue of $u$;
+  and conversely.
+\end{theorem}
+
+Theorem~\ref{thm:serre12} is the statement that makes the Newton polygon of the determinant say
+something about the operator, and hence the hinge of the whole thesis.
+
+\begin{theorem}[Riesz decomposition]
+  \label{thm:riesz}
+  \uses{thm:serre12}
+  \lean{TateFredholm.exists_riesz_decomposition}
+  \leanok
+  Let $u$ be compactoid on $c(I,K)$ over a discretely valued complete field, and let $a$ be a
+  zero of $\det(1 - Tu)$ of multiplicity $h$.  Then $c(I,K) = N \oplus F$ with both summands
+  $u$-stable, $(1 - au)^h$ vanishing on $N$, $(1-au)$ invertible on $F$, and
+  \[
+    \dim_K N = h .
+  \]
+\end{theorem}
+
+The subspace $N$ is the \emph{finite-slope subspace} attached to $a$; it is finite dimensional,
+which is what makes eigenvalue statements about it meaningful, and everything commuting with $u$
+preserves it, which is what makes a Hecke algebra act on it (Proposition~\ref{prop:qmf-eigensystem}).
+
+%% The projector p = e^h and Serre's Lemme 2 (block-triangular determinants) are the internal
+%% steps: TateFredholm.exists_rieszProjection, charPowerSeries_blockTriangular.

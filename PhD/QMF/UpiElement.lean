@@ -129,6 +129,16 @@ lemma toLocal_iotaV (x : D ⊗[F] v.adicCompletion F) :
   | tmul d a => rw [iotaV_tmul, toLocal_tmul, evalAlgHom_apply, singleₗ_apply_same]
   | add x y hx hy => simp only [map_add, hx, hy]
 
+/-- Away from `v`, the single-place inclusion vanishes. -/
+lemma toLocal_iotaV_ne {w : HeightOneSpectrum (RingOfIntegers F)} (hw : w ≠ v)
+    (x : D ⊗[F] v.adicCompletion F) : toLocal F D w (iotaV F D v x) = 0 := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp only [map_zero]
+  | tmul d a =>
+    rw [iotaV_tmul, toLocal_tmul, evalAlgHom_apply, singleₗ_apply_ne _ _ _ hw,
+      TensorProduct.tmul_zero]
+  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+
 /-- If `a * b = 1` in `D ⊗[F] F_v`, then `(1 + ι_v(a - 1)) * (1 + ι_v(b - 1)) = 1` in
 `D ⊗[F] 𝔸_F^∞`: single-place perturbations of `1` multiply like the local elements. -/
 lemma one_add_iotaV_mul (a b : D ⊗[F] v.adicCompletion F) (hab : a * b = 1) :
@@ -198,6 +208,22 @@ noncomputable def etaAdelic (ϖ : v.adicCompletion F) (hϖ0 : ϖ ≠ 0) : Dfx F 
     one_add_iotaV_mul F D v _ _ (etaTensor_mul_etaTensorInv F D v ϖ hϖ0),
     one_add_iotaV_mul F D v _ _ (etaTensorInv_mul_etaTensor F D v ϖ hϖ0)⟩
 
+/-- Away from `v`, `etaAdelic` has component `1`. -/
+@[simp] lemma toLocal_etaAdelic_ne (ϖ : v.adicCompletion F) (hϖ0 : ϖ ≠ 0)
+    {w : HeightOneSpectrum (RingOfIntegers F)} (hw : w ≠ v) :
+    toLocal F D w ((etaAdelic F D v ϖ hϖ0 : Dfx F D) :
+      D ⊗[F] FiniteAdeleRing (RingOfIntegers F) F) = 1 := by
+  show toLocal F D w (1 + iotaV F D v _) = 1
+  rw [map_add, map_one, toLocal_iotaV_ne _ _ _ hw, add_zero]
+
+/-- Away from `v`, the inverse of `etaAdelic` has component `1`. -/
+@[simp] lemma toLocal_etaAdelic_inv_ne (ϖ : v.adicCompletion F) (hϖ0 : ϖ ≠ 0)
+    {w : HeightOneSpectrum (RingOfIntegers F)} (hw : w ≠ v) :
+    toLocal F D w (((etaAdelic F D v ϖ hϖ0)⁻¹ : Dfx F D) :
+      D ⊗[F] FiniteAdeleRing (RingOfIntegers F) F) = 1 := by
+  show toLocal F D w (1 + iotaV F D v _) = 1
+  rw [map_add, map_one, toLocal_iotaV_ne _ _ _ hw, add_zero]
+
 /-- `toMatrix` computes as the rigidification applied to the `v`-component. -/
 lemma toMatrix_apply (u : Dfx F D) :
     toMatrix F D v u =
@@ -224,6 +250,56 @@ lemma etaAdelic_mem_levelMonoid (ϖ : v.adicCompletion F) (hϖ : Valued.v ϖ ≤
   refine Submonoid.mem_comap.mpr ?_
   rw [toMatrix_etaAdelic F D v γ hγ ϖ hϖ hϖ0]
   exact (Sigma0.eta γ hγ ϖ hϖ hϖ0).2
+
+/-- **The single-place adelic unit**: the element of `(D ⊗[F] 𝔸_F^∞)ˣ` whose `v`-component
+is `m` (through the rigidification) and whose components at every other place are `1`.
+`etaAdelic` is the case `m = (1 0; 0 ϖ)`; the class representatives of a quaternionic
+class-set computation are the diagonal cases. -/
+noncomputable def unitAt (m : (Matrix (Fin 2) (Fin 2) (v.adicCompletion F))ˣ) : Dfx F D :=
+  ⟨1 + iotaV F D v
+      ((RigidificationAt.equiv (F := F) (D := D) (v := v)).symm (m : Matrix _ _ _) - 1),
+    1 + iotaV F D v
+      ((RigidificationAt.equiv (F := F) (D := D) (v := v)).symm (↑m⁻¹ : Matrix _ _ _) - 1),
+    one_add_iotaV_mul F D v _ _ (by
+      rw [← map_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, map_one]),
+    one_add_iotaV_mul F D v _ _ (by
+      rw [← map_mul, ← Units.val_mul, inv_mul_cancel, Units.val_one, map_one])⟩
+
+/-- Away from `v`, `unitAt m` has component `1`: it is a genuinely single-place unit. -/
+@[simp] lemma toLocal_unitAt_ne (m : (Matrix (Fin 2) (Fin 2) (v.adicCompletion F))ˣ)
+    {w : HeightOneSpectrum (RingOfIntegers F)} (hw : w ≠ v) :
+    toLocal F D w ((unitAt F D v m : Dfx F D) :
+      D ⊗[F] FiniteAdeleRing (RingOfIntegers F) F) = 1 := by
+  show toLocal F D w (1 + iotaV F D v _) = 1
+  rw [map_add, map_one, toLocal_iotaV_ne _ _ _ hw, add_zero]
+
+/-- The `v`-component of `unitAt m` is `θ⁻¹ m`. -/
+lemma toLocal_unitAt (m : (Matrix (Fin 2) (Fin 2) (v.adicCompletion F))ˣ) :
+    toLocal F D v ((unitAt F D v m : Dfx F D) :
+        D ⊗[F] FiniteAdeleRing (RingOfIntegers F) F)
+      = (RigidificationAt.equiv (F := F) (D := D) (v := v)).symm (m : Matrix _ _ _) := by
+  show toLocal F D v (1 + iotaV F D v _) = _
+  rw [map_add, map_one, toLocal_iotaV]
+  abel
+
+/-- The inverse of `unitAt m` is `unitAt m⁻¹`. -/
+@[simp] lemma unitAt_inv (m : (Matrix (Fin 2) (Fin 2) (v.adicCompletion F))ˣ) :
+    (unitAt F D v m)⁻¹ = unitAt F D v m⁻¹ := by
+  refine inv_eq_of_mul_eq_one_right (Units.ext ?_)
+  show (1 + iotaV F D v _) * (1 + iotaV F D v _) = 1
+  exact one_add_iotaV_mul F D v _ _ (by
+    rw [← map_mul, ← Units.val_mul, mul_inv_cancel, Units.val_one, map_one])
+
+/-- The `v`-component matrix of `unitAt m` is `m`. -/
+@[simp] lemma toMatrix_unitAt (m : (Matrix (Fin 2) (Fin 2) (v.adicCompletion F))ˣ) :
+    toMatrix F D v (unitAt F D v m) = m := by
+  have h1 : toLocal F D v ↑(unitAt F D v m)
+      = (RigidificationAt.equiv (F := F) (D := D) (v := v)).symm (m : Matrix _ _ _) := by
+    show toLocal F D v (1 + iotaV F D v
+      ((RigidificationAt.equiv (F := F) (D := D) (v := v)).symm (m : Matrix _ _ _) - 1)) = _
+    rw [map_add, map_one, toLocal_iotaV]
+    abel
+  rw [toMatrix_apply, h1, AlgEquiv.apply_symm_apply]
 
 variable {R : Type*} [CommRing R] [Algebra (v.adicCompletion F) R]
 variable (n : ℕ) (ν : Sigma0 (v.adicCompletion F) γ hγ →* Rˣ)

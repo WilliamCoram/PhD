@@ -65,9 +65,6 @@ structure NewtonPolygon where
   /-- Any non final slope is finite -/
   slopes_nonFinal : ∀ n : ℤ, (support.2 : WithBotTop ℤ) ≤ n ∧ n + 1 < ofRight support.1 →
     ∃ a : ℝ, slopes n = some (some a)
-  /-- Final slopes are only ⊤/⊥ if the support is (1,0). -/
-  slopes_final : ∀ n : ℕ, n + 1 = support.1 ∧ (slopes n = ⊤ ∨ slopes n = ⊥) → support.1 = 1 ∧
-    (support.2 : WithBotTop ℤ) = 0
   /-- Slopes are increasing. -/
   slopes_increasing : ∀ n, slopes n ≤ slopes (n + 1)
   /-- A function indexing the lengths of the segments. -/
@@ -79,6 +76,10 @@ structure NewtonPolygon where
   /-- Any non final length is finite and non-zero. -/
   lengths_nonFinal : ∀ n : ℤ, (support.2 : WithBotTop ℤ) ≤ n ∧ n + 1 < ofRight support.1 →
     ∃ a : ℕ, a ≠ 0 ∧ lengths n = some a
+  /-- Final slopes are only ⊤/⊥ if the support is (1,0), and then the length is 0: a junk
+  slope only ever decorates a zero-width segment. -/
+  slopes_final : ∀ n : ℕ, n + 1 = support.1 ∧ (slopes n = ⊤ ∨ slopes n = ⊥) → support.1 = 1 ∧
+    (support.2 : WithBotTop ℤ) = 0 ∧ lengths n = 0
   /-- Final lengths are only 0 if the support is (1,0), and then the slope is junk (`⊤`/`⊥`):
   a zero-width segment never carries an honest real slope. -/
   lengths_final : ∀ n : ℕ, n + 1 = support.1 ∧ lengths n = 0 → support.1 = 1 ∧
@@ -257,8 +258,6 @@ structure NewtonPolygon₀ where
   slopes_junk : ∀ n : ℕ, support ≤ n → slopes n = ⊤
   /-- Any non final slope is finite -/
   slopes_nonFinal : ∀ n : ℕ, n + 1 < support → ∃ a : ℝ, slopes n = some (some a)
-  /-- Final slopes are only ⊤/⊥ if the support is 1 -/
-  slopes_final : ∀ n : ℕ, n + 1 = support ∧ (slopes n = ⊤ ∨ slopes n = ⊥) → support = 1
   /-- Slopes are increasing. -/
   slopes_increasing : ∀ n : ℕ, slopes n ≤ slopes (n + 1)
   /-- A function indexing the lengths of the segments. -/
@@ -267,6 +266,10 @@ structure NewtonPolygon₀ where
   lengths_junk : ∀ n : ℕ, support ≤ n → lengths n = 0
   /-- Any non final length is finite and non-zero. -/
   lengths_nonFinal : ∀ n : ℕ, n + 1 < support → ∃ a : ℕ, a ≠ 0 ∧ lengths n = some a
+  /-- Final slopes are only ⊤/⊥ if the support is 1, and then the length is 0: a junk slope
+  only ever decorates a zero-width segment. -/
+  slopes_final : ∀ n : ℕ, n + 1 = support ∧ (slopes n = ⊤ ∨ slopes n = ⊥) →
+    support = 1 ∧ lengths n = 0
   /-- Final lengths are only 0 if the support is 1, and then the slope is junk (`⊤`/`⊥`):
   a zero-width segment never carries an honest real slope. -/
   lengths_final : ∀ n : ℕ, n + 1 = support ∧ lengths n = 0 →
@@ -299,7 +302,9 @@ def toNewtonPolygon : NewtonPolygon (Γ := Γ) where
   slopes_final := by
     rintro n ⟨h1, h2⟩
     rw [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast] at h2
-    exact ⟨P.slopes_final n ⟨h1, h2⟩, rfl⟩
+    obtain ⟨hs, hl⟩ := P.slopes_final n ⟨h1, h2⟩
+    refine ⟨hs, rfl, ?_⟩
+    rwa [if_neg (not_lt.2 (Int.natCast_nonneg n)), Int.toNat_natCast]
   slopes_increasing := by
     intro n
     by_cases hn : n < 0
@@ -411,7 +416,7 @@ def toNewtonPolygon₀ {NP : NewtonPolygon (Γ := Γ)} (h : NP.IsOneSided) :
     refine NP.slopes_nonFinal n ⟨?_, natCast_add_one_lt_ofRight hn⟩
     rw [h0]
     exact WithBotTop.coe_le_coe.mpr (Int.natCast_nonneg n)
-  slopes_final := fun n hn => (NP.slopes_final n hn).1
+  slopes_final := fun n hn => ⟨(NP.slopes_final n hn).1, (NP.slopes_final n hn).2.2⟩
   slopes_increasing := fun n => NP.slopes_increasing n
   lengths := fun n => NP.lengths n
   lengths_junk := fun n hn => NP.lengths_junkRight n (ofRight_le_natCast hn)
@@ -443,8 +448,8 @@ carry no information). -/
     (hsupport : NP₁.support = NP₂.support) (hslopes : NP₁.slopes = NP₂.slopes)
     (hlengths : NP₁.lengths = NP₂.lengths)
     (hstart : NP₁.starting_point = NP₂.starting_point) : NP₁ = NP₂ := by
-  obtain ⟨s₁, sl₁, _, _, _, _, _, l₁, _, _, _, _, sp₁⟩ := NP₁
-  obtain ⟨s₂, sl₂, _, _, _, _, _, l₂, _, _, _, _, sp₂⟩ := NP₂
+  obtain ⟨s₁, sl₁, _, _, _, _, l₁, _, _, _, _, _, sp₁⟩ := NP₁
+  obtain ⟨s₂, sl₂, _, _, _, _, l₂, _, _, _, _, _, sp₂⟩ := NP₂
   have e1 : s₁ = s₂ := hsupport
   have e2 : sl₁ = sl₂ := hslopes
   have e3 : l₁ = l₂ := hlengths
@@ -457,8 +462,8 @@ carry no information). -/
     (hsupport : P₁.support = P₂.support) (hslopes : P₁.slopes = P₂.slopes)
     (hlengths : P₁.lengths = P₂.lengths)
     (hstart : P₁.starting_point = P₂.starting_point) : P₁ = P₂ := by
-  obtain ⟨s₁, sl₁, _, _, _, _, l₁, _, _, _, sp₁⟩ := P₁
-  obtain ⟨s₂, sl₂, _, _, _, _, l₂, _, _, _, sp₂⟩ := P₂
+  obtain ⟨s₁, sl₁, _, _, _, l₁, _, _, _, _, sp₁⟩ := P₁
+  obtain ⟨s₂, sl₂, _, _, _, l₂, _, _, _, _, sp₂⟩ := P₂
   have e1 : s₁ = s₂ := hsupport
   have e2 : sl₁ = sl₂ := hslopes
   have e3 : l₁ = l₂ := hlengths

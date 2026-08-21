@@ -688,6 +688,12 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     (4) `Commute.add_pow` exists in mathlib (verify at compile; fallback:
     `(e+f)^h = 1^h` and expand by induction). Verdict: SURVIVED.
   - Prior-B2: no match.
+  - **RESOLVED 2026-08-04 (T021, sorry-free, std axioms)**: proved, but the binomial
+    expansion was DROPPED. `e + f = 1` means `f = 1 - e`, so Serre's `f·eʰ = 0` reads
+    `e^{h+1} = eʰ`; induction gives `e^{h+k} = eʰ`, hence `p² = e^{2h} = eʰ = p` directly.
+    This is strictly better here because `Commute (N h) (N (h-1))` is NOT available
+    (T011 only gives `Commute u (N s)`), which the term-by-term binomial argument would
+    have wanted. Nilpotency similarly avoids `geom_sum` (`1 - e^{j+1} = (1-eʲ) + eʲ(1-e)`).
 
 - **P2** (leaves): `ker_one_sub_smul_pow_of_rieszProjection`,
   `range_one_sub_smul_pow_of_rieszProjection`, `isTopCompl_range_one_sub_range_of_isIdempotent`
@@ -711,6 +717,11 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     no separate leaf needed (skeleton drops the two redundant decls after the
     mathlib discharge was found — recorded). Verdict: SURVIVED.
   - Prior-B2: no match.
+  - **RESOLVED 2026-08-04 (T022, sorry-free, std axioms)**: exactly as planned. Note
+    `p^h = p` is proved WITHOUT `1 ≤ h` (for `h = 0`, `hnil` itself forces `p = 1 = p⁰`),
+    so both characterisations hold at EVERY exponent — which is what makes P3's
+    common-exponent step free. No CLM-level idempotent ker/range-swap lemma exists in
+    mathlib; the 3-line double inclusion was used, as the fallback anticipated.
 
 - **P3** (leaf): `rieszProjection_unique`
   - Source: Serre p. 81 "son unicité est immédiate" + Buzzard's characterisation
@@ -734,6 +745,11 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     — standard). So `p' x = p x` ✓ pointwise, no commuting — gap closes; proof
     recorded. Verdict: SURVIVED (one attack found and repaired a gap in the plan).
   - Prior-B2: no match.
+  - **RESOLVED 2026-08-04 (T023, sorry-free, std axioms)**: the REPAIRED argument was
+    needed as written and was used verbatim — `p` and `p'` are never assumed to commute.
+    The common-exponent step is 4 lines (`pow_add` + `mul_assoc` + `hnil`/`hnil'`), because
+    all of `hp, hup, hpw, hw, huw` are exponent-free and P2 holds at every exponent.
+    `hh`/`hh'` turned out to be unused.
 
 - **P4** (leaf, field): `finite_ker_one_sub_smul_pow`
   - Source: [Serre1962, p. 81]: "la dimension de N(a) est finie" (via his W-argument);
@@ -763,6 +779,15 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     exist, `Compact.lean:43,51`) ✓; norms compatible (induced) ✓. (3) f.g. ⟹
     `Module.Finite` over `K` ✓ (`Module.Finite.iff_fg`). Verdict: SURVIVED.
   - Prior-B2: no match.
+  - **RESOLVED 2026-08-04 (T024, sorry-free, std axioms)**: run exactly as planned on
+    `N = ker ψ`; `Pr.lean` untouched (the recorded `HasPr` obstruction stands). Attack (2)'s
+    "norms compatible (induced)" was right but incomplete: `IsBoundedSMul K ↥N` is **not** an
+    instance in mathlib and had to be supplied by `IsBoundedSMul.of_norm_smul_le`
+    (`Submodule.coe_norm` is `rfl`, so it is a one-liner); `CompleteSpace ↥N` is
+    `ψ.isClosed_ker.completeSpace_coe`. The compression `π∘T∘ι` needed one reusable
+    coordinate lemma (`↑((π ∘SL T ∘SL ι) y) = T ↑y` for `N`-stable `T`), from which
+    `ν`, `τ`, `ν^k` and `1_N = τ·Σν^k` are pure bookkeeping. `Module.Finite` came out as
+    `⟨hQtop ▸ hQfg⟩` rather than through `Module.Finite.iff_fg`.
 
 ### Cluster Q — `dim N(a) = h` (Tier 2, field + discreteness where noted)
 
@@ -795,6 +820,14 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     for `n ≥ 1` — statement safe but keep `ha`) ✓. (2) `n = 0`: empty matrix,
     `det = 1 = (…)⁰` ✓. (3) convention check: our LHS matches
     `charCoeff_eq_det_coeff`'s polynomial exactly (copied shape) ✓. SURVIVED.
+  - **RESOLVED 2026-08-04 (T025, sorry-free, std axioms)**: 33 lines, and **neither** the
+    "det of unipotent = 1" crux nor the `reverse` bookkeeping was needed. `charpoly` is used
+    *evaluated*, not reversed: `M := X·(A − a⁻¹)` is nilpotent over `K[X]`, so
+    `Matrix.isNilpotent_charpoly_sub_pow_of_isNilpotent` + `IsNilpotent.eq_zero` (valid
+    because `K[X][X]` is a **domain**, hence reduced) gives `M.charpoly = X^n`; then
+    `1 − X·A = scalar (1 − C a⁻¹ X) − M` entrywise and `Matrix.eval_charpoly` finishes.
+    The reduced-ring hypothesis is essential — the fact is false over `ℤ/4` (`M = (2)`), so
+    the field fence is not cosmetic. Bonus: the LHS is *definitionally* `Matrix.charpolyRev A`.
 - **Q3** (leaves): `isCompactoid_of_comp_embedding`, `charPowerSeries_blockTriangular`
   - Source: [Serre1962, §5 p. 77], Lemme 2, verbatim:
     > "Lemme 2. — Soit I = I′ ∪ I″ une partition de I. Soit u un endomorphisme
@@ -824,6 +857,20 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     cofinite-null ✓ true). (4) tsum Fubini: both index families summable
     (`summable_minor`) — product/sigma reindex via `Summable.tsum_sigma`-family ✓
     exists in mathlib. SURVIVED.
+  - **RESOLVED 2026-08-04 (T026, sorry-free, std axioms)**: both leaves proved
+    independently of the Jacobs board. Attack (3)'s name search resolves to
+    `Function.Injective.tendsto_cofinite` (`Order/Filter/Cofinite.lean:256`) — no
+    `comap_cofinite_eq` needed. The `fromBlocks` reindexing of step 2 was replaced wholesale
+    by mathlib's **`Matrix.twoBlockTriangular_det`**, which is already stated on the
+    subtype-indexed blocks `toSquareBlockProp` and whose triangularity hypothesis matches
+    `htri` argument-for-argument (internally it is `det_fromBlocks_zero₂₁`, confirming the
+    orientation guess). Attack (4)'s `tsum` Fubini was done WITHOUT a dependent sigma:
+    `Equiv.subtypeEquiv (blockEquiv P).symm` moves the sum to the pair index type and
+    `HasSum.tsum_fiberwise` over the **Fintype** base `↥(antidiagonal n)` does the split,
+    each fibre being a product handled by `Summable.tsum_mul_tsum`. One unforeseen
+    elaboration trap: matching a `Summable (fun x : ι × κ => F x.1 * G x.2)` lemma against a
+    goal whose two index types differ makes the unifier unfold `Finset.sum`/`Multiset.foldr`
+    and diverge — `Summable.congr … fun _ => rfl` is the fix.
 - **Q4** (leaf): `charPowerSeries_eq_pow_mul_of_riesz`
   - Source: [Serre1962, p. 81], verbatim:
     > "Appliquant encore le lemme 2, on obtient det(1−tu) = (1−ta⁻¹)^{dim N} H′(t),
@@ -857,6 +904,22 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     `BaseChange.lean`'s exact hypothesis shape (copied) ✓; general-`K` version
     deferred (would need the (Pr)-determinant — out of scope, recorded).
     SURVIVED (one attack strengthened the proof plan).
+  - **RESOLVED 2026-08-05 (T028, sorry-free, standard axioms)**: the sketch went through
+    link for link, with one correction to the attack log. **Attack (2) was a false alarm**:
+    `d ≥ 1` is *not* needed and T018 is *not* used. The feared vacuity cannot arise because
+    `H'` is not "whatever is left over" but is *constructed* as `charPowerSeries u₂` of the
+    `F`-block, and `H'(a) ≠ 0` comes from Prop. 11 applied to that block, which is valid for
+    every `d` (including `d = 0`). The `a ≠ 0` that Q2 needs comes from `h0 0` + T019, not
+    from T018. The decisive engineering move, not foreseen in the plan, was to package
+    conjugation `T ↦ e ∘ T ∘ e⁻¹` as a **`RingEquiv`** (`conjRingEquiv`): `map_pow` then
+    carries the nilpotency of `1 − a·u|_N` to the `Fin d` block and `IsUnit.map` carries the
+    invertibility of `1 − a·u|_F` to the `s` block, so no conjugation algebra is written by
+    hand. The anticipated "small conj-compactoid lemma" was not needed either:
+    `IsCompactoid u₂` follows from Q3's `isCompactoid_of_comp_embedding` applied to `u'`
+    along `Function.Embedding.subtype`, exactly as `charPowerSeries_blockTriangular` does
+    internally. Two elaboration traps are recorded in the T028 ticket (the `whnf` blow-up
+    when `exact` is asked to bridge `conjRingEquiv` under `charPowerSeries`, and the
+    `NormedSpace K c(I,K)` module diamond).
 - **Q5** (leaf): `finrank_ker_one_sub_smul_pow`
   - Source: [Serre1962, p. 81], verbatim:
     > "D'après la proposition 11, on a H′(a) ≠ 0, et comme a est zéro d'ordre h de
@@ -871,6 +934,8 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     stable `W ⊆ N`) is NOT transcribed — with `N` already finite-dimensional (P4)
     the exact factorisation route replaces it. Quote-or-delete satisfied: the
     quoted passage IS the route we take (his final sentence).
+  - **RESOLVED 2026-08-05 (T029, sorry-free, standard axioms)**: exactly the sketch, 16
+    lines, no helper. Both attacks held as predicted.
 - **Q6** (assembly): `exists_riesz_decomposition`
   - Marked assembly node: instantiates `h` (T019), `N := ker ψ`, `F := range ψ`
     (= `range p` by P2), and assembles P2/P4/Q5/T-outputs; the conjunction is the
@@ -879,6 +944,10 @@ sorries only — re-verified.  New verbatim source: Serre p. 81, extracted in fu
     lemma); the `∀ y ∈ F, ∃ x ∈ F` surjectivity conjunct comes from `w` (`x := w y`,
     `wy ∈ F` by commuting) ✓; injectivity-on-F from P2's range charac. +
     `ψ`-invertibility ✓. SURVIVED.
+  - **RESOLVED 2026-08-05 (T030 = MILESTONE-2, sorry-free, standard axioms)**: one line per
+    conjunct as planned. The one place the plan wavered (injectivity on `F`) is settled by
+    the derived identity `hwb : w * (1 - a•u) = p` — obtained from `hw` by commuting
+    `1 - a•u` past `w` — after which `x = p x = w ((1-a•u) x) = w 0 = 0`.
   - Prior-B2 (all Q): no match.
 
 ### Confidence gate re-run (extension)
