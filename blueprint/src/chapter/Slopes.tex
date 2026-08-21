@@ -1,0 +1,201 @@
+\chapter{Slopes of Compact Hecke Operators}
+\label{chap:slopes}
+
+We can now combine the two halves of the thesis.  Chapter~\ref{chap:compact} attaches to a
+compact operator its Fredholm determinant and identifies the reciprocal roots with the
+eigenvalues; Chapter~\ref{chap:np} reads the valuations of the roots of a power series off the
+slopes of its Newton polygon.  Composing:
+
+\begin{center}
+  \emph{the slopes of the Newton polygon of $\det(1 - Tu)$ are the valuations of the eigenvalues
+  of $u$.}
+\end{center}
+
+So to say something about the eigenvalues of a Hecke operator it suffices to bound the
+coefficients of its determinant.  This chapter does that in general, and the next specialises to
+the case where the bound is attained.
+
+\section{From row decay to coefficient bounds}
+
+Let $u$ be a compactoid operator whose matrix decays along a row weight $w$, meaning $\lVert
+u_{ji} \rVert \leq \sigma^{w_j}$.  A minor of $u$ picks entries from $\lvert S \rvert$ distinct
+rows, so by the Hadamard bound its norm is at most $\sigma$ to the power of the weight sum over
+$S$; the coefficient $c_n$ is an ultrametric sum of $n$-element minors, hence bounded by the
+worst such.  The content is therefore combinatorial: how small can $\sum_{j \in S} w_j$ be for
+$\lvert S \rvert = n$?
+
+\begin{lemma}
+  \label{lem:minor-bound}
+  \uses{lem:hadamard, def:iscompactoid}
+  \lean{TateFredholm.norm_minor_le_pow_sum}
+  \leanok
+  If $\lVert u_{ji}\rVert \leq \sigma^{w_j}$ for all $i, j$ then $\lVert \mathrm{minor}(u, S)
+  \rVert \leq \sigma^{\sum_{j \in S} w_j}$ for every finite $S$.
+\end{lemma}
+
+\begin{theorem}[The slope bound]
+  \label{thm:slope-bound}
+  \uses{lem:minor-bound, def:minor}
+  \lean{TateFredholm.norm_charCoeff_le_pow}
+  \leanok
+  Let $0 \leq \sigma < 1$, let $u$ be compactoid with $\lVert u_{ji}\rVert \leq \sigma^{w_j}$,
+  and let $f : \N \to \N$ satisfy $f(n) \leq \sum_{j \in S} w_j$ for every $S$ with $\lvert S
+  \rvert = n$.  Then
+  \[
+    \lVert c_n(u) \rVert \leq \sigma^{f(n)} .
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:minor-bound}
+  $c_n$ is $\pm$ the sum of the $n$-element minors, and an ultrametric infinite sum is bounded by
+  the supremum of its terms; each term is bounded by Lemma~\ref{lem:minor-bound} and then by
+  $\sigma^{f(n)}$ since $\sigma \leq 1$ and $f(n)$ is the smaller exponent.
+\end{proof}
+
+Two combinatorial inputs cover the cases we need.
+
+\begin{lemma}
+  \label{lem:choose-two}
+  \lean{TateFredholm.choose_two_le_sum, TateFredholm.choose_two_lt_sum_of_ne_range}
+  \leanok
+  Among $n$-element subsets of $\N$, the sum $\sum_{i \in S} i$ is minimised uniquely by $S =
+  \{0, 1, \dots, n-1\}$, with value $\binom{n}{2}$; every other $n$-element subset has sum at
+  least $\binom{n}{2} + 1$.
+\end{lemma}
+
+\begin{lemma}
+  \label{lem:block-weight}
+  \lean{TateFredholm.sum_div_le_sum_block}
+  \leanok
+  On $\iota \times \N$ with $\lvert \iota \rvert = d$ and weight $(i, m) \mapsto m$, an
+  $n$-element subset has weight sum at least $\sum_{k < n} \lfloor k/d \rfloor$: each value of
+  $m$ can be used at most $d$ times.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Peel off an element $M$ of maximal second coordinate.  Since $S \subseteq \iota \times \{0,
+  \dots, M_2\}$, which has $d(M_2+1)$ elements, we get $n \leq d(M_2+1)$ and hence $\lfloor
+  (n-1)/d\rfloor \leq M_2$.  Induct on the remaining $n-1$ elements.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:slope-bound-block}
+  \uses{thm:slope-bound, lem:choose-two, lem:block-weight}
+  \lean{TateFredholm.norm_charCoeff_le_pow_choose_two, TateFredholm.norm_charCoeff_le_pow_block}
+  \leanok
+  On $c(\N, K)$ with $\lVert u_{ji}\rVert \leq \sigma^j$ we get $\lVert c_n \rVert \leq
+  \sigma^{\binom{n}{2}}$; on the block model $c(\iota \times \N, K)$ we get $\lVert c_n \rVert
+  \leq \sigma^{\sum_{k<n} \lfloor k/\lvert\iota\rvert\rfloor}$.
+\end{corollary}
+
+\section{The slope theorem at a general weight}
+
+Applying this to a Hecke operator is now immediate, because
+Theorem~\ref{thm:qmf-compact} produced exactly the required row decay.
+
+\begin{proposition}
+  \label{prop:qmf-row-decay}
+  \uses{thm:qmf-compact, def:heckeblock}
+  \lean{QMF.Weight.norm_matrixCoeff_heckeBlock_le, QMF.Weight.norm_matrixCoeff_heckeBlockOp_le}
+  \leanok
+  With $\lVert \det\theta(\eta)\rVert \leq \sigma$, $\rho \leq \sigma$, and a twisting character
+  of norm at most $1$, the block operator satisfies $\lVert \mathrm{matrixCoeff}_{(i,m),(j,r)}
+  \rVert \leq \sigma^{m}$.
+\end{proposition}
+
+\begin{theorem}
+  \label{thm:qmf-slope-bound}
+  \uses{prop:qmf-row-decay, cor:slope-bound-block, def:heckecharpowerseries}
+  \lean{QMF.Weight.norm_charCoeff_heckeCharPowerSeries_le}
+  \leanok
+  The coefficients of $\det(1 - T[U\eta U])$ satisfy
+  \[
+    \lVert c_n \rVert \leq \sigma^{\sum_{k < n}\lfloor k/\lvert \iota\rvert\rfloor}.
+  \]
+\end{theorem}
+
+Translating a coefficient bound into a polygon statement is what
+Definition~\ref{def:ofslopes} was built for.
+
+\begin{definition}
+  \label{def:blockslopes}
+  \lean{QMF.Weight.blockSlopes, QMF.Weight.monotone_blockSlopes}
+  \leanok
+  The \emph{block slope sequence} is $s_k = \lfloor k/d \rfloor \cdot (-\log \sigma)$, where $d =
+  \lvert \iota \rvert$ is the size of the class set: each of the values $0, -\log\sigma,
+  -2\log\sigma, \dots$ repeated $d$ times, once per block.  It is monotone since $\sigma < 1$.
+\end{definition}
+
+\begin{theorem}[The slope theorem at a general analytic weight]
+  \label{thm:qmf-slope-theorem}
+  \uses{thm:qmf-slope-bound, def:blockslopes, def:ofslopes, def:isnewtonpolygonof}
+  \lean{QMF.Weight.isBelow_newtonPolygon_heckeCharPowerSeries}
+  \leanok
+  The Newton polygon of $\det(1 - T[U\eta U])$ lies on or above the polygon anchored at the
+  origin whose $k$-th unit slope is $\lfloor k/\lvert\iota\rvert\rfloor \cdot (-\log \sigma)$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:ofslopes, thm:np-exists, thm:qmf-slope-bound}
+  The determinant has constant coefficient $1$, so its polygon is anchored at the origin, and all
+  its coefficients have norm at most $1$, which is an affine floor and hence admissibility.  The
+  comparison polygon is $\mathrm{ofSlopes}$ of the block slope sequence, whose height at $k$ is
+  $\sum_{i<k} s_i$; the required inequality height $\leq -\log\lVert c_k\rVert$ is
+  Theorem~\ref{thm:qmf-slope-bound} after taking logarithms.  Now apply the maximality clause of
+  Definition~\ref{def:isnewtonpolygonof}.
+\end{proof}
+
+In words: on a class set of size $d$, the slopes of $U_\varpi$ at weight $\kappa$ are at least
+$0, \dots, 0, -\log\sigma, \dots$, each value repeated $d$ times.  This is the general form of
+[Jacobs, Theorem 2.12]; the theorem itself asserts equality, and equality needs a hypothesis.
+
+\section{When the bound is attained}
+
+\begin{theorem}[{[Jacobs, Theorem 2.12]}]
+  \label{thm:unit-minors}
+  \uses{thm:slope-bound, lem:choose-two}
+  \lean{JacobsSlash.norm_charCoeff_of_unit_minors}
+  \leanok
+  Let $u$ on $c(\N,K)$ satisfy $\lVert u_{ji}\rVert \leq \lVert \varpi \rVert^j$ and suppose the
+  rescaled matrix $N_{ji} = \varpi^{-j} u_{ji}$ has every top-left minor of norm $1$.  Then
+  \[
+    \lVert c_m(u) \rVert = \lVert \varpi \rVert^{\binom{m}{2}} \qquad \text{exactly}.
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:choose-two, lem:minor-bound}
+  The principal block $S = \{0,\dots,m-1\}$ contributes exactly $\lVert\varpi\rVert^{\binom
+  m2}$: factoring $\varpi^j$ out of the $j$-th row leaves the unit-minor matrix.  Every other
+  $m$-element block contributes strictly less, since its row sum exceeds $\binom m2$ by
+  Lemma~\ref{lem:choose-two}.  An ultrametric sum with one strictly dominant term has the norm of
+  that term.
+\end{proof}
+
+\begin{corollary}[The slope reading]
+  \label{cor:slope-reading}
+  \uses{thm:unit-minors, thm:ofslopes, cor:ofslopes-transport}
+  \lean{JacobsSlash.unitSlope_newtonPolygon₀OfPowerSeries_charPowerSeries}
+  \leanok
+  Under the hypotheses of Theorem~\ref{thm:unit-minors} the Newton polygon of $\det(1-Tu)$, in
+  the normalisation $v(\varpi) = 1$, has unit slopes $0, 1, 2, 3, \dots$.  Consequently the
+  eigenvalues of $u$ have valuations $0, 1, 2, \dots$: an arithmetic progression.
+\end{corollary}
+
+\begin{proof}
+  \leanok
+  \uses{thm:ofslopes}
+  The valuations $v(c_m) = \binom m2$ are the partial sums of $0,1,2,\dots$, so
+  Theorem~\ref{thm:ofslopes} identifies the polygon and
+  Corollary~\ref{cor:ofslopes-transport} reads its slopes.  Passing to eigenvalues is
+  Theorem~\ref{thm:np-slope-reading} together with Theorem~\ref{thm:serre12}.
+\end{proof}
+
+There is a second case, with slopes $\tfrac12, \tfrac32, \tfrac52, \dots$, which occurs when the
+field is ramified over $\Qp$ so that half-integers are values of the valuation.  That is what
+happens for Jacobs's $U_3$, and it is the subject of the next chapter.
