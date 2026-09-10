@@ -3,11 +3,16 @@
 Compact operators and Fredholm determinants over a **commutative nonarchimedean
 Banach–Tate ring** `R`: Bellaïche's proof architecture carried out under Johansson–Newton's
 hypotheses, so there is no ground field anywhere and no Noetherian hypothesis outside
-`Noetherian.lean` and one isolated statement in `Pr.lean`.
+`Noetherian.lean` (since 2026-09-06 `Pr.lean`'s Proposition II.1.21 is Noetherian-free too).
 
-Status (2026-07-30): **complete** — 10 modules, ~5,250 lines, sorry-free, axiom-clean
-(`propext`, `Classical.choice`, `Quot.sound` only). Build the whole tree with
-`lake build PhD.Test.CompactOperatorsMerged`.
+Status (2026-09-02): **18 top-level modules + the `HandClean/` pair, ~11,050 lines,
+sorry-free**, axiom-clean (`propext`, `Classical.choice`, `Quot.sound` only).  The core
+determinant theory (§§1–10 below, 10 modules) was completed 2026-07-30 and is built by
+`lake build PhD.Test.CompactOperatorsMerged`; the later additions (§11 — Riesz theory,
+block operators, generating functions, the slope bounds) landed through the
+`tatefredholm-eigen`, `jacobs`/`jacobs-endgame`, `forms-*` and `slopes-hecke` boards
+(2026-08-05 … 2026-09-01) and are built by their own targets, e.g.
+`lake build PhD.TateFredholm.Riesz PhD.TateFredholm.Slopes PhD.TateFredholm.BlockOp`.
 
 ## Sources
 
@@ -37,17 +42,29 @@ Tate.lean                 foundations: Banach–Tate rings, summability
   └─ OperatorNorm.lean    the operator norm; Open Mapping Theorem
        └─ Compact.lean    finite-rank, completely continuous
             └─ ModelSpace.lean       c(I,R); ON-able; property (Pr)
+                 ├─ TateAlgebra.lean      ← side branch: K⟨X⟩ ≃ c(ℕ,K) (§11)
                  └─ Matrix.lean      matrix coefficients; truncations; IsCompactoid
                       ├─ Noetherian.lean   ← side branch: closedness of f.g. submodules
+                      ├─ GenFun.lean       ← side branch: generating functions (§11)
+                      │    ├─ WeightGenFun.lean   weight-action factors (§11)
+                      │    └─ Unitriangular.lean  unitriangular perturbations (§11)
                       └─ Fredholm.lean     det(1 − Tu); the trace property
-                           └─ Pr.lean      lifting; projectivity; the Noetherian statement
+                           ├─ BlockOp.lean      ← side branch: block operators (§11)
+                           │    └─ Conjugation.lean  diagonal intertwining (§11)
+                           │         └─ BlockMap.lean  block maps between fibres (§11)
+                           ├─ Slopes.lean       ← side branch (also ← GenFun): slope bounds (§11)
+                           └─ Pr.lean      lifting; projectivity; Prop II.1.21 (Noetherian-free)
                                 └─ Residue.lean    Serre's residue machinery
                                      └─ BaseChange.lean   norm change; base change; Serre
+                                          └─ Riesz.lean    Riesz theory (§11)
 ```
 
-The leaves are `BaseChange.lean` (end of the main chain), `Noetherian.lean` and `AddVal.lean`;
-the re-export stub `PhD/Test/CompactOperatorsMerged.lean` imports the first two to pull in the
-main tree. `AddVal.lean` is optional — nothing in the development depends on it, it exists to
+Standalone: `Compose.lean` (mathlib-only imports; analytic substitution, §11) and the
+`HandClean/` pair (`TateRings.lean` → `PseudoUniformiser.lean`, the Huber seam, §11).
+
+The core chain ends at `BaseChange.lean`; the re-export stub
+`PhD/Test/CompactOperatorsMerged.lean` imports it and `Noetherian.lean` to pull in the
+core tree. `AddVal.lean` is optional — nothing in the development depends on it, it exists to
 keep `v_ϖ` pinned to `ForMathlib`'s additive-valuation API.
 
 ---
@@ -166,7 +183,7 @@ hypothesis, so each strictly generalises its `[JN]` counterpart.
 | `charPowerSeries_conj` | `[Bel]` Corollary II.1.18; `[Buz07]` Lemma 2.5 / Corollary 2.6 — conjugation invariance, formal from the trace property. This is what extends `det(1 − Tu)` to potentially ON-able modules |
 | `charPowerSeries_extendZero` | `[Buz07]` pp. 72–73; `[Bel]` §II.1.6 — extension by zero; with `_conj`, gives well-definedness on modules with property (Pr) |
 
-## 8. `Pr.lean` — lifting, projectivity, and the one Noetherian statement
+## 8. `Pr.lean` — lifting, projectivity, and [Bel] Proposition II.1.21
 
 `[Bel]` Exercise II.1.19, Propositions II.1.20–II.1.21.
 
@@ -174,7 +191,8 @@ hypothesis, so each strictly generalises its `[JN]` counterpart.
 | --- | --- |
 | `HasPr.exists_lift` | `[Bel]` Exercise II.1.19 — (Pr) as a lifting property along continuous surjections of Banach modules |
 | `HasPr.projective` | `[Bel]` Proposition II.1.20 — finitely generated (Pr) modules are projective |
-| `finite_projective_of_one_sub_compact_nilpotent` | `[Bel]` Proposition II.1.21 — **the only Noetherian statement outside `Noetherian.lean`**: if `P` has (Pr) and carries a compact `u` with `1 − u` nilpotent, then `P` is finitely generated and projective. The germ of Riesz theory |
+| `finite_of_one_sub_compact_nilpotent` | `[Bel]` Proposition II.1.21, finiteness half — **Noetherian-free since 2026-09-06** (`tate-riesz` board): a complete `P` carrying a compact `u` with `1 − u` nilpotent is finitely generated |
+| `finite_projective_of_one_sub_compact_nilpotent` | `[Bel]` Proposition II.1.21 — if `P` has (Pr) and carries a compact `u` with `1 − u` nilpotent, then `P` is finitely generated and projective. The germ of Riesz theory |
 
 ## 9. `Residue.lean` — Serre's residue machinery
 
@@ -205,12 +223,43 @@ classical (field) specialisations.
 
 ---
 
+## 11. Later additions (2026-08-05 … 2026-09-06)
+
+Modules added after the core tree was completed, each generalised out of (or built for) an
+application board.  All sorry-free.
+
+| Module | Provenance | Content |
+| --- | --- | --- |
+| `Riesz.lean` (~2,870 lines) | `tatefredholm-eigen` board, complete 2026-08-05/06 | `PowerSeries.evalT`/`hasseDeriv`, the Fredholm resolvent with Serre's recursion, `fredholmDet` and its multiplicativity.  **Ring level** (any Banach–Tate `R`): Serre Prop. 11 (`isUnit_one_sub_smul_iff_isUnit_evalT`) and the Riesz projectors (`exists_rieszProjection`).  **Field level** (complete ultrametric, discretely valued for the last three): zeros of `det(1 − Tu)` are reciprocal eigenvalues; the factorisation `H = (1 − a⁻¹T)^h · H'`; `finrank = order`; the full Riesz decomposition (Serre Prop. 12, `exists_riesz_decomposition`) |
+| `BlockOp.lean` | moved from the Jacobs fork 2026-08-18 (forms boards) | operators on `c(σ × I, R)` from a `σ × σ` matrix of operators; Serre's partition lemma `det(1 − Tu) = det(1 − Tu′)·det(1 − Tu″)` and the block-diagonal product; `restrictOp`/`reindexOp` transport |
+| `Conjugation.lean` | `lwx-seam` board, 2026-09-05 | diagonal intertwining `D·M_v = M_u·D` (unit diagonal, no inverse) preserves every principal minor, hence `charPowerSeries` with **no compactness hypothesis** (`charPowerSeries_eq_of_diag_intertwine`); `blockDiag`/`diagBlockEquiv`, the block-diagonal operators and equivalences of `c(σ × I, R)` used to conjugate `heckeBlockOp` by the Colmez basis change blockwise |
+| `GenFun.lean`, `WeightGenFun.lean`, `Compose.lean` | Jacobs application layer, generalised out of the fork | operators from two-variable generating functions `H_A(x,y)` (`ofGenFun`, row decay `RowIntAt`); the character-free weight-action factors `linSeries`/`quadSeries`; analytic substitution `compAn` of a Möbius series with nonzero constant term |
+| `TateAlgebra.lean` | forms boards | the identification `K⟨X⟩ = PowerSeries.Restricted K 1 ≃ₗᵢ c(ℕ, K)`, monomials as ON basis |
+| `Slopes.lean` | `slopes-hecke` board A1/A2 (2026-08-20); exact case 2026-09-01 | row-weight Hadamard/minor bounds; **the slope bound** `‖cₙ(u)‖ ≤ σ^{f n}` for any row weight `w` and weight-sum lower bound `f`; the combinatorial inputs (`choose_two`, block weight `Σ_{k<n}⌊k/d⌋`); **the exact case** ([Jacobs, Thm 2.12] at an arbitrary `ϖ`): unit rescaled minors force `v_ϖ(c_m) = m(m−1)/2` |
+| `HandClean/TateRings.lean`, `HandClean/PseudoUniformiser.lean` | hand-written seam | `IsTate` (the normed [JN] notion) implies Huber's topological `IsTateRing`; the `PseudoUniformizer.val` API over general normed rings |
+| `Entire.lean`, `Resultant.lean`, `Coleman.lean`, `Charpoly.lean`, `RieszColeman.lean`, `SlopeFactor.lean` | `tate-riesz` board, 2026-09-06 | the **ring-level Riesz theory** ([JN] Thm 2.2.2 = [Buz07] Thm 3.3 = [Bel] Thm II.2.18): entire series and Euclidean division (`Entire.lean`), `Res(charpoly A, g) = det g(A)` (`Resultant.lean`), Coleman's `D(B, P)` and the spectral mapping `det(1 − T·B(u)) = D(B, det(1 − Tu))` (`Coleman.lean`), `charpolyRev` base change / Sylvester / unipotent matrices (`Charpoly.lean`), the Riesz–Coleman projector and its refinements — rank `deg Q`, `det(1 − Tu \| Ker Q*(u)) = Q`, `det(1 − Tu \| N) = S`, `Ker Q*(u) = range (1 − p)`, uniqueness of the complement, [JN] 2.2.13's decomposition core (`RieszColeman.lean`) — and the vertex factorisation `F = P·G` with relatively prime factors ([Bel] Thm II.3.6, `SlopeFactor.lean`).  **No Noetherian hypothesis anywhere**; the Gelfand-spectrum form of the slope conditions and [JN] §2.3 stay out of scope (the factorisation is stated at the norm level, `IsDominantIndex ρ`) |
+| `Unitriangular.lean` | `lwx-seam-m` board, 2026-09-06 | **`IsUnitriangularPerturbation M q`** — entries of norm `≤ 1`, unit diagonal, below-diagonal entries of norm `≤ q < 1`, finitely supported columns — and the resulting **isometric** self-equivalence of `c(ℕ, R)` (`equivOfPerturbation`, `norm_ofPerturbation`).  Proved directly by a largest-index argument plus a successive-approximation surjectivity, so it needs **no discretely valued residue field**: it replaces Colmez's reduction-mod-`p` criterion (Astérisque 330, Prop 1.1.5) and works over any complete ultrametric field.  Used for Amice's theorem at analyticity level `h` |
+| `BlockMap.lean` | `lwx-seam-m` board, 2026-09-06 | block operators between *different* fibres: `blockOpMap`, the block-diagonal `blockMap f : c(σ × I, R) →L c(σ × I', R)`, its composition laws with `blockOp` on either side (`blockMap_comp_blockOp`, `blockOp_comp_blockMap`), functoriality (`blockMap_comp`), and the induced equivalence `blockMapEquiv`.  `BlockOp.lean`'s `blockDiag` is the case `I = I'` (`blockMap_eq_blockDiag`).  Needed because the disc model `c(ℤ/pʰ × ℕ, K)` and the Mahler model `c(ℕ, K)` have different fibres |
+| `TwoSidedBound.lean` | `lwx-halo` board, tranche E (2026-09-03) | minor-level **two-sided** Hadamard bound: for a matrix with `‖A_{a,b}‖ ≤ r(a)·s(b)` and `r·s`-summability, `‖minor‖ ≤ ∏ r·∏ s` (`norm_minor_le_pow_sub`), summability of the minor expansion without any `IsTate` hypothesis (`summable_minor_of_two_sided`), the characteristic-coefficient bound `norm_charCoeff_le_pow_two_sided`, and the monotone comparison `sum_comp_div_le_sum_monotone` — the engine behind [LWX] Theorem 3.16's halo estimate (`PhD/LWX/Halo.lean`) |
+
+---
+
 ## Notes for future work
 
-**Mathematics still to do** (also recorded in `Tate.lean`'s TODO): Riesz theory and slope
-factorizations/decompositions (`[Bel]` §II.2, `[JN]` §2.2) — the natural consumer of this
-project's `NewtonPolygon` and `DivValueGroup` work; completed tensor products and the
-`⊗̂`-form of base change; spectral varieties (`[JN]` §2.3).
+**Mathematics still to do** (`Tate.lean`'s TODO comment still carries the pre-Riesz version
+of this list): the single-zero Riesz theory of the 2026-07-30 note is **done** (`Riesz.lean`,
+§11), and the Newton-polygon seam is consumed by `Slopes.lean` and the fork's
+`5_EigenSlopes.lean` bridge (every finite NP slope of `det(1 − Tu)` is the valuation of a
+reciprocal eigenvalue).  The **ring-level (family) slope theory** is now done as well (2026-09-06, `tate-riesz`
+board): `[JN]` Theorem 2.2.2 — for `F = det(1 − Tu) = QS` with `Q` a multiplicative
+polynomial coprime to `S`, `ker Q*(u)` is finitely generated projective of rank `deg Q`
+with a unique `u`-stable closed complement, and `det(1 − Tu)` splits accordingly — is
+`RieszColeman.lean`, proved **without any Noetherian hypothesis**, together with the
+norm-level slope-`≤ h` factorisation (`SlopeFactor.lean`) and [JN] 2.2.13's decomposition
+core.  It is applied to the halo `U_p` over `A = Λ^{>1/p}[1/T]` in `PhD/LWX/TateRiesz.lean`.
+What remains from `[JN]` §2.2–2.3: the *Gelfand-spectrum* form of the slope conditions
+(slopes read pointwise on the Berkovich spectrum rather than through the norm), spectral
+varieties (`[JN]` §2.3), and completed tensor products / the `⊗̂`-form of base change.
 
 **Mathlib PR candidates** surfaced by this development: the Banach–Tate open mapping
 theorem; the ultrametric summability criterion (`summable_of_tendsto_cofinite`,
@@ -223,3 +272,11 @@ the ultrametric Hadamard determinant bound.
 explaining how its hypotheses differ. They are independent of this tree — do formalisation
 work here, not there. `CompactOperatorsMerged.lean` is now only a re-export stub pointing
 at this directory.
+
+- **Ultrametric `tsum` sharpening (2026-09-05, lwx-slopes board):** `PhD/LWX/Sharpness.lean` adds
+  two general lemmas in `namespace TateFredholm` next to `norm_tsum_le_iSup`:
+  `norm_tsum_lt_of_forall_lt` (a null family with every term `< B` has sum of norm `< B`) and
+  `norm_tsum_eq_of_forall_lt` (unique dominant term ⟹ the sum has exactly its norm).  Both are
+  Mathlib-free of project notions and are upstream candidates alongside
+  `summable_of_tendsto_cofinite` / `norm_tsum_le_iSup`; they should move to `Tate.lean` when that
+  batch is prepared.

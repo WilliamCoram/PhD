@@ -23,15 +23,13 @@ section Pr
 variable {R}
 variable {P : Type*} [NormedAddCommGroup P] [Module R P] [IsBoundedSMul R P]
 
--- The lifting property for the model space itself: lift each basis vector with norm
--- control (`exists_preimage_norm_le`), then assemble the bounded family into an operator
--- via `exists_coeffEquiv`.
-private theorem exists_lift_cSpace [IsTate R] {I : Type*} [DecidableEq I]
+/-- The lifting property for the model space itself: lift each basis vector with norm
+control (`exists_preimage_norm_le`), then assemble the bounded family into an operator. -/
+theorem exists_lift_cSpace [IsTate R] {I : Type*} [DecidableEq I]
     {M N : Type*}
     [NormedAddCommGroup M] [Module R M] [IsBoundedSMul R M] [IsUltrametricDist M]
     [CompleteSpace M]
-    [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N] [IsUltrametricDist N]
-    [CompleteSpace N]
+    [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N] [CompleteSpace N]
     (f : M →L[R] N) (hf : Function.Surjective f) (γ : c(I, R) →L[R] N) :
     ∃ β₀ : c(I, R) →L[R] M, f.comp β₀ = γ := by
   classical
@@ -84,18 +82,17 @@ private theorem exists_lift_cSpace [IsTate R] {I : Type*} [DecidableEq I]
   _ = γ h := by
         simpa only [map_smul] using ((cSpace.hasSum_single h).mapL γ).tsum_eq
 
+omit [IsBoundedSMul R P] in
 /-- (Pr) as a lifting property, forward direction ([Bel] Exercise II.1.19): a (Pr)
 module lifts continuous maps through continuous surjections of Banach `R`-modules.
 
 *Proof sketch.*  Reduce to `P = c_R(I)` (`exists_lift_cSpace`): a direct summand inherits
 the lifting property along its inclusion/projection pair. -/
-theorem HasPr.exists_lift [IsTate R] [IsUltrametricDist P] [CompleteSpace P]
-    (hP : HasPr R P)
+theorem HasPr.exists_lift [IsTate R] (hP : HasPr R P)
     {M N : Type*}
     [NormedAddCommGroup M] [Module R M] [IsBoundedSMul R M] [IsUltrametricDist M]
     [CompleteSpace M]
-    [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N] [IsUltrametricDist N]
-    [CompleteSpace N]
+    [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N] [CompleteSpace N]
     (f : M →L[R] N) (hf : Function.Surjective f) (α : P →L[R] N) :
     ∃ β : P →L[R] M, f.comp β = α := by
   obtain ⟨s, ι, pr, hpri⟩ := hP
@@ -111,9 +108,10 @@ theorem HasPr.exists_lift [IsTate R] [IsUltrametricDist P] [CompleteSpace P]
         simp [ContinuousLinearMap.comp_apply]
   _ = α := by rw [hpri, ContinuousLinearMap.comp_id]
 
+omit [IsUltrametricDist R] [CompleteSpace R] [NormOneClass R] in
 /-- Any linear map out of a finite free module over a normed ring is continuous:
 expand along the standard basis and use continuity of coordinates and of `smul`. -/
-private theorem continuous_linearMap_pi {n : ℕ} {M : Type*}
+theorem continuous_linearMap_pi {n : ℕ} {M : Type*}
     [NormedAddCommGroup M] [Module R M] [IsBoundedSMul R M]
     (g : (Fin n → R) →ₗ[R] M) : Continuous g := by
   have hrepr : ∀ x : Fin n → R, g x = ∑ i, x i • g fun j => if i = j then 1 else 0 := by
@@ -126,8 +124,7 @@ private theorem continuous_linearMap_pi {n : ℕ} {M : Type*}
   exact this.congr fun x => (hrepr x).symm
 
 /-- Finitely generated (Pr) modules are projective ([Bel] Proposition II.1.20). -/
-theorem HasPr.projective [IsTate R] [IsUltrametricDist P] [CompleteSpace P]
-    (hP : HasPr R P) [Module.Finite R P] :
+theorem HasPr.projective [IsTate R] [CompleteSpace P] (hP : HasPr R P) [Module.Finite R P] :
     Module.Projective R P := by
   obtain ⟨n, gsurj, hgsurj⟩ := Module.Finite.exists_fin' R P
   let F : (Fin n → R) →L[R] P := ⟨gsurj, continuous_linearMap_pi gsurj⟩
@@ -136,16 +133,13 @@ theorem HasPr.projective [IsTate R] [IsUltrametricDist P] [CompleteSpace P]
   ext p
   exact DFunLike.congr_fun hβ p
 
-/-- **The only Noetherian statement of the merged theory** ([Bel] Proposition II.1.21):
-if `P` has (Pr) and carries a compact `u` with `1 − u` nilpotent, then `P` is finitely
-generated and projective — the germ of Riesz theory. -/
-theorem finite_projective_of_one_sub_compact_nilpotent [IsTate R] [IsNoetherianRing R]
-    [IsUltrametricDist P] [CompleteSpace P]
-    (hP : HasPr R P) (u : P →L[R] P) (hu : IsCompletelyContinuous u)
-    (hnil : ∃ n : ℕ, (ContinuousLinearMap.id R P - u) ^ n = 0) :
-    Module.Finite R P ∧ Module.Projective R P := by
-  -- Note: this proof does not use `[IsNoetherianRing R]`; the hypothesis is retained for the
-  -- statement ([Bel] Prop II.1.21), but the argument runs purely through the Neumann inverse.
+omit [IsUltrametricDist R] in
+/-- **[Bel] Proposition II.1.21, finiteness part, Noetherian-free**: a Banach module carrying
+a compact `u` with `1 − u` nilpotent is finitely generated (the identity is a polynomial in
+`u`, hence compact; a finite-rank approximant within Neumann distance `1` is invertible). -/
+theorem finite_of_one_sub_compact_nilpotent [IsTate R] [CompleteSpace P] (u : P →L[R] P)
+    (hu : IsCompletelyContinuous u) (hnil : ∃ n : ℕ, (ContinuousLinearMap.id R P - u) ^ n = 0) :
+    Module.Finite R P := by
   obtain ⟨n, hn⟩ := hnil
   set t : P →L[R] P := ContinuousLinearMap.id R P - u with ht_def
   have hut : u = 1 - t := by rw [ht_def, ContinuousLinearMap.one_def]; abel
@@ -176,9 +170,18 @@ theorem finite_projective_of_one_sub_compact_nilpotent [IsTate R] [IsNoetherianR
   obtain ⟨Q, hQ_fg, hQle⟩ := hw_fr
   rw [hrange] at hQle
   have hQtop : Q = ⊤ := le_antisymm le_top hQle
-  haveI hfin : Module.Finite R P := by
-    rw [Module.finite_def, ← hQtop]; exact hQ_fg
-  exact ⟨hfin, hP.projective⟩
+  rw [Module.finite_def, ← hQtop]
+  exact hQ_fg
+
+/-- **[Bel] Proposition II.1.21** (no Noetherian hypothesis is needed): if `P` has (Pr) and
+carries a compact `u` with `1 − u` nilpotent, then `P` is finitely generated and projective —
+the germ of Riesz theory. -/
+theorem finite_projective_of_one_sub_compact_nilpotent [IsTate R] [CompleteSpace P]
+    (hP : HasPr R P) (u : P →L[R] P) (hu : IsCompletelyContinuous u)
+    (hnil : ∃ n : ℕ, (ContinuousLinearMap.id R P - u) ^ n = 0) :
+    Module.Finite R P ∧ Module.Projective R P :=
+  have := finite_of_one_sub_compact_nilpotent u hu hnil
+  ⟨this, hP.projective⟩
 
 end Pr
 

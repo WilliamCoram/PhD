@@ -454,7 +454,12 @@ handedness finding).  Board REOPENED for this tranche only — the E/EA/CLEANUP 
 above stays closed.
 
 ### [WI1] The wide acting monoid `Σ₁(3)`
-- **Status**: open | **File**: DiamondHecke.lean (γ₃, γ₃_lt_one, valued_three_eq_γ₃,
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: γ₃ / γ₃_lt_one and the Σ₁(3) level data: `PhD/JacobsSlash/U3/«1_Setting».lean`.
+  Do not pick this ticket up.
+- **Superseded header**:
+   **File**: DiamondHecke.lean (γ₃, γ₃_lt_one, valued_three_eq_γ₃,
   Sigma1₃ two fields, sigma1_le_sigma1₃, levelMonoid1₃-lemmas ×2) | **Depends**: none
 - **Parallel**: yes | **Type**: def+lemma
 - **Sketch**: γ₃ facts mirror γ₉'s (Setting.lean:457/557 pattern at exponent −1);
@@ -464,7 +469,12 @@ above stays closed.
   the ≤.
 
 ### [WI2] `μ`, the single-coset decomposition
-- **Status**: open | **File**: DiamondHecke.lean (invFour_ne_zero, toMatrix_mu3,
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: `toMatrix_mu3` and the μ-coset data: `PhD/JacobsSlash/U3/«7_DiamondHecke».lean`.
+  Do not pick this ticket up.
+- **Superseded header**:
+   **File**: DiamondHecke.lean (invFour_ne_zero, toMatrix_mu3,
   mu3_mem_levelMonoid1₃, mu3_inv_mul_mem_U1_9, cosets_mu3_finite, bijOn_muRep)
 - **Depends**: WI1 (memberships) | **Parallel**: partly | **Type**: lemma
 - **Sketch**: toMatrix_mu3: map_mul + toMatrix_unitsIncl (θ₃ central 4 = diag(4,4);
@@ -480,7 +490,12 @@ above stays closed.
   finding: μ = diag(4,1) LEFT-handed — diag(1,4) is in U₁(9), the identity-coset trap).
 
 ### [WI3] `kappaOpW`: the `γ₃`-generalisation of the κ-action
-- **Status**: open | **File**: DiamondHecke.lean (kappaOpW def-hole, kappaOpW_restrict,
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: DROPPED BY DESIGN — `kappaOpW` does not exist.  PROGRESS.md "Gap 1": the wide Σ₁(9)-indexed κ-layer was deleted, the Σ₁(3) form being the only one.
+  Do not pick this ticket up.
+- **Superseded header**:
+   **File**: DiamondHecke.lean (kappaOpW def-hole, kappaOpW_restrict,
   kappaOpW_mul, matrixCoeff_kappaOpW) + KappaAction.lean (three-lemma generalisation,
   AUTHORISED amendment: restate the three γ₉-consumers at the v(3) threshold their
   proofs already establish — lines 294/349/1312 all begin `hγ9le3 : γ₉ ≤ v(3)`;
@@ -496,7 +511,12 @@ above stays closed.
   consuming KappaAction's public pieces — worker's choice, record which.
 
 ### [WI4] `kappaFormsW`, `heckeW`, and the HEADLINE `heckeW_apply_classRep`
-- **Status**: open | **File**: DiamondHecke.lean (kappaFormsW def-hole,
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: `heckeW` and the headline `heckeW_apply_classRep`: `PhD/JacobsSlash/U3/«7_DiamondHecke».lean` (`kappaFormsW` dropped with the wide layer, as in WI3 — `kappaForms` feeds both operators).
+  Do not pick this ticket up.
+- **Superseded header**:
+   **File**: DiamondHecke.lean (kappaFormsW def-hole,
   kappaFormsW_eq_kappaForms, heckeW def-hole, heckeW_apply_classRep, uCandW_mem,
   factorisationW, dTableW_mem ✓proved, toMatrix_mu3_mul_inv_uTableW_mem_sigma1₃)
 - **Depends**: WI2, WI3 | **Type**: theorem (milestone of the tranche)
@@ -515,11 +535,21 @@ above stays closed.
 - **Sources**: heckeU3_apply_classRep (Matrix.lean:350) is the template; [Jac pp. 31–32].
 
 ### [CLEANUP-WI1] /cleanup DiamondHecke.lean (cadence after 3rd file ticket)
-- **Status**: open | **Depends**: WI1, WI2, WI3 | **Type**: cleanup (board jacobs-endgame;
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: subsumed by the fork files' own cleanup waves (all 0-sorry, linter-zero).
+  Do not pick this ticket up.
+- **Superseded header**:
+   **Depends**: WI1, WI2, WI3 | **Type**: cleanup (board jacobs-endgame;
   may merge into the final wave per the recorded precedent if importers are active)
 
 ### [WI5] The `δ`-identification
-- **Status**: open | **File**: DiamondHecke.lean (coeff_weightGenFun_diagonal,
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: `coeff_weightGenFun_diagonal`: `PhD/JacobsSlash/U3/«7_DiamondHecke».lean`; the δ-side landed as `sigmaW`, `deltaOf`, `Wop_eq_blockOp_deltaOf` in `PhD/JacobsSlash/«4_DiamondW».lean`.
+  Do not pick this ticket up.
+- **Superseded header**:
+   **File**: DiamondHecke.lean (coeff_weightGenFun_diagonal,
   actingW_eq_smul_delta) | **Depends**: WI3 | **Parallel**: with WI4 | **Type**: theorem
 - **Sketch**: diagonal wGF: kappaSeries₂ t 0 d collapses to the p=0 spike κ(d)
   (coeff_kappaSeries₂ + zero-pow); linSeries diag = C d; quadSeries diag = C d −
@@ -537,7 +567,12 @@ above stays closed.
   4κ(−1/2), 4κ(−1/2), (1/16)κ(4) at the thesis (a,d)-values).
 
 ### [WI6] Eigen-diagonalisation `B⁻¹·W·B = diag(1, ω²·1, ω·1)`
-- **Status**: open | **File**: DiamondHecke.lean (Binvop_comp_Wop_comp_Bop)
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: `Binvop_comp_Wop_comp_Bop`: `PhD/JacobsSlash/«4_DiamondW».lean`.
+  Do not pick this ticket up.
+- **Superseded header**:
+   **File**: DiamondHecke.lean (Binvop_comp_Wop_comp_Bop)
 - **Depends**: none (uses proved DiamondW only) | **Parallel**: yes | **Type**: theorem
 - **Sketch**: blockOp_comp ×2 (W008/W009 pattern) ⇒ 9 entry goals; entries are
   δ/B-block composites: diagOp-telescopes + unitPow_mul κ-reciprocals (the W007/W008
@@ -549,7 +584,12 @@ above stays closed.
   W011's M33-as-ω-block cross-check.
 
 ### [WI7] Docstring upgrades: the eigenspace reading is now formal
-- **Status**: open | **Files**: DiamondW.lean header §"What is identified" + Wop
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: the eigenspace reading is formal: `exists_eigenvalue_U3_in_W_eigenspace`, `PhD/JacobsSlash/U3/«9_EigenvaluesU3».lean`.
+  Do not pick this ticket up.
+- **Superseded header**:
+   **Files**: DiamondW.lean header §"What is identified" + Wop
   docstring; Slopes.lean §"How this connects" caveat paragraph; SlopeReading.lean
   case-B docstring; U3Data.lean M22op docstring; PROGRESS.md §3 Lemma 2.9 row + §5
 - **Depends**: WI4, WI5, WI6 | **Type**: docs (ZERO statement changes)
@@ -560,4 +600,9 @@ above stays closed.
   as a basis CHOICE (its correctness is lemma210 + WI6, no §B.2-table claim needed).
 
 ### [CLEANUP-WI-FINAL] /cleanup DiamondHecke.lean + touched files (final)
-- **Status**: open | **Depends**: WI4, WI5, WI6, WI7, CLEANUP-WI1 | **Type**: cleanup
+- **Status**: superseded (annotated 2026-09-01) — the endgame was delivered in the
+  right-slash fork `PhD/JacobsSlash/`, not against the `DiamondHecke.lean` this ticket
+  was planned for, so the ticket never closed.  Landed as: subsumed by the fork files' own cleanup waves (all 0-sorry, linter-zero).
+  Do not pick this ticket up.
+- **Superseded header**:
+   **Depends**: WI4, WI5, WI6, WI7, CLEANUP-WI1 | **Type**: cleanup

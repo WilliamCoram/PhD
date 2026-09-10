@@ -539,7 +539,7 @@ lemma height_eq_bot_iff (x : ℤ) : P.height x = ⊥ ↔ x < P.starting_point.1 
   · exact fun hx => (P.height_eq_leftHeight hx).trans (P.leftHeight_eq_bot (by omega))
 
 /-- A `⊤` height forces the junk guard of the right-hand walk. -/
-private lemma unitSlope_eq_top_of_height_eq_top {x : ℤ} (hx : P.height x = ⊤) :
+lemma unitSlope_eq_top_of_height_eq_top {x : ℤ} (hx : P.height x = ⊤) :
     P.starting_point.1 ≤ x ∧ 1 ≤ (x - P.starting_point.1).toNat ∧
       P.unitSlope ((x - P.starting_point.1).toNat - 1) = ⊤ := by
   have hxs : P.starting_point.1 ≤ x := by
@@ -655,7 +655,7 @@ private lemma exists_coe {v : WithBotTop ℝ} (hb : v ≠ ⊥) (ht : v ≠ ⊤) 
 
 /-- Below the right-hand junk region the real-valued unit slopes are monotone: `toReal` is
 order-preserving there, the `⊥` case being constant `0` by `unitSlope_eq_bot_cases`. -/
-private lemma toReal_unitSlope_le {i j : ℕ} (hij : i ≤ j) (hj : P.unitSlope j ≠ ⊤) :
+lemma toReal_unitSlope_le {i j : ℕ} (hij : i ≤ j) (hj : P.unitSlope j ≠ ⊤) :
     NewtonPolygon.toReal (P.unitSlope i) ≤ NewtonPolygon.toReal (P.unitSlope j) := by
   have hmono := P.unitSlope_mono hij
   have hi : P.unitSlope i ≠ ⊤ := by

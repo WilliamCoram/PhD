@@ -1,5 +1,10 @@
 # Jacobs formalisation — project progress
 
+> **LEGACY (moved to `PhD/LegacyCode/` on 2026-08-21).**  Frozen history of the
+> left-action original; do not develop or import from here.  The live replacement is
+> the right-slash fork `PhD/JacobsSlash/` (see its `PROGRESS.md`).  The status below
+> is preserved as written and is no longer maintained.
+
 Status as of **2026-08-06**.  Boards: Tranche A / AG-NP / AG-W on
 `.mathlib-quality/jacobs/` (COMPLETE), AG-B on `.mathlib-quality/qmf/` (COMPLETE except
 cleanup tail), endgame refactor on `.mathlib-quality/jacobs-endgame/` (ALL PROOF WORK

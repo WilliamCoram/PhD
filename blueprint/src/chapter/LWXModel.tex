@@ -1,0 +1,455 @@
+\chapter{The Integral Model and the Model Seam}
+\label{chap:lwx-model}
+
+Theorem~\ref{thm:lwx316} is an estimate about a matrix.  For it to say anything about modular
+forms one has to know two things: that the matrix really is the matrix of $U_p$ on a space of
+overconvergent automorphic forms, and that its Fredholm determinant really is the Fredholm
+determinant of that operator.  These are \cite[Proposition 3.1]{LWX} and
+\cite[Proposition 2.17]{LWX}, and they are what this chapter proves.
+
+The difficulty is that the two sides use different coordinates.  The integral side of
+Chapter~\ref{chap:lwx-halo} works in the Mahler basis $\binom{z}{n}$ of $C(\Zp, \Lhalo)$, in
+which the entries are integral but the operator is not visibly compact; the analytic side of
+Chapter~\ref{chap:qmf} works in the monomial basis of the Tate algebra, in which the operator is
+visibly compact but the entries are not integral.  \cite[proof of Proposition 2.17]{LWX} bridges
+them in one sentence: ``$P$ and $P'$ are conjugated by an infinite diagonal matrix with entries
+$\lfloor n/(q^{-1}p^{m})\rfloor!$''.  The intermediate basis is Colmez's, and the statement that
+it is orthonormal is Amice's theorem.  So the chapter is: analysis
+(\S\ref{sec:explog}--\S\ref{sec:haloweight}), the integral model (\S\ref{sec:intmodel}), Amice's
+theorem (\S\ref{sec:amice}), and the seam (\S\ref{sec:seam}).
+
+\section{$p$-adic analysis over an abstract field}
+\label{sec:explog}
+
+\begin{definition}
+  \label{def:padicexplog}
+  \lean{LWX.PadicExpLog.padicLog, LWX.PadicExpLog.padicExp, LWX.PadicExpLog.padicLog_mul,
+        LWX.PadicExpLog.padicExp_add, LWX.PadicExpLog.padicExp_padicLog,
+        LWX.PadicExpLog.padicLog_padicExp}
+  \leanok
+  Over a complete ultrametric field $K$ with $\lVert p\rVert<1$ and $p$ odd,
+  $\log u = \sum_{n\ge0}(-1)^{n}\tfrac{(u-1)^{n+1}}{n+1}$ for $\lVert u-1\rVert<1$ and
+  $\exp w = \sum_n w^{n}/n!$ for $\lVert w\rVert^{2}<\lVert p\rVert$.  On the joint disc they are
+  mutually inverse, and $\log$ is additive.
+\end{definition}
+
+The convergence discs are \cite[Chapter IV \S2]{Koblitz}.  Additivity of $\log$ is obtained from
+$\exp\circ\log = \mathrm{id}$ and injectivity rather than by rearranging series.  Odd $p$ enters
+only through two elementary inequalities on $\N$, $4v\leq p^{v}+3$ and the Legendre margin
+$2v_p(n!)\leq n-1$; both fail at $p=2$.
+
+\begin{theorem}[The $p$-adic binomial theorem at an arbitrary exponent]
+  \label{thm:padic-binomial}
+  \uses{def:padicexplog}
+  \lean{LWX.PadicExpLog.hasSum_choose_mul_pow, LWX.PadicExpLog.chooseCoeff,
+        LWX.PadicExpLog.norm_chooseCoeff_le,
+        LWX.PadicExpLog.eq_zero_of_forall_tsum_natCast_eq_zero}
+  \leanok
+  For $e, x \in K$ with $\lVert x\rVert\leq c$, $\lVert e\rVert\lVert x\rVert\leq c$ and
+  $c^{2}<\lVert p\rVert$,
+  \[
+    \sum_{r\geq 0}\binom{e}{r}x^{r} \;=\; \exp\bigl(e\log(1+x)\bigr).
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{def:padicexplog}
+  Fix $x$ and regard both sides as power series in the exponent $e$, with geometrically decaying
+  coefficients.  They agree at every $e = n \in \N$, by the finite binomial theorem on the left
+  and $\exp(n\log u) = u^{n}$ on the right.  A power series vanishing at all natural numbers
+  vanishes identically, by Strassman's theorem applied along $p^{k}\to 0$.
+\end{proof}
+
+The exponent has to be arbitrary: in the application it is either the normalised logarithm
+$\ell\langle x\rangle$ of a $1$-unit, which need not lie in $\Zp$ when $K/\Qp$ is ramified, or
+the halo exponent $s = \log(1+T_0)/p$, whose norm $p\lVert T_0\rVert$ exceeds $1$.  So the
+density-of-$\N$ proof used in Chapter~\ref{chap:jacobs} does not apply, and the identity theorem
+above replaces it.
+
+\begin{lemma}[The binomial power identity]
+  \label{lem:pow-sub-one}
+  \uses{thm:padic-binomial}
+  \lean{LWX.oneAddPow_pow_mul, LWX.norm_pow_prime_pow_sub_one_le,
+        LWX.tendsto_pow_prime_pow_sub_one, LWX.exists_sq_norm_pow_prime_pow_sub_one_lt}
+  \leanok
+  $(1+T)^{p^{h}u} = \bigl((1+T)^{p^{h}}\bigr)^{u}$ for $u\in\Zp$; and
+  $(1+T)^{p^{h}} - 1 \to 0$ as $h\to\infty$.  Hence every halo point reaches the joint
+  $\exp/\log$ disc at some analyticity level.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Both sides of the identity are continuous in $u$ and agree on $\N$, where they are the ordinary
+  binomial theorem, and $\N$ is dense in $\Zp$.  For the decay, iterate the one-step Kummer bound
+  $\lVert (1+T)^{p}-1\rVert \leq \max(\lVert p\rVert\lVert T\rVert, \lVert T\rVert^{p})$, whose
+  contraction factor is $\max(\lVert p\rVert, \lVert T\rVert^{p-1})<1$.
+\end{proof}
+
+The second half is the quantitative form of \cite[\S2.7]{LWX}'s statement that the universal
+character is $m$-locally analytic for $m$ large enough, and it is what lets
+Theorem~\ref{thm:lwx-prop217-h} cover the whole annulus.
+
+\section{The halo weight}
+\label{sec:haloweight}
+
+\begin{definition}
+  \label{def:haloweight}
+  \uses{def:univchar, thm:padic-binomial, def:analyticweight}
+  \lean{LWX.haloUnits, LWX.haloChar, LWX.M1K, LWX.haloRho, LWX.haloCol, LWX.haloExpansion,
+        LWX.haloWeight, LWX.evalAt_autFactor_haloWeight}
+  \leanok
+  The specialisation of the universal character at $T_0$ is
+  $\kappa_{T_0}(x) = \omega(\bar x)\,(1+T_0)^{\ell\langle x\rangle}
+  = \omega(\bar x)\exp\bigl(s\log\langle x\rangle\bigr)$, with halo exponent
+  $s = \log(1+T_0)/p$.  On the sub-annulus $p^{-1}<\lVert T_0\rVert$, $\lVert T_0\rVert^{2}<p^{-1}$
+  it is an analytic weight in the sense of Definition~\ref{def:analyticweight}: the group is
+  $\psi(\Zp^{\times})(1+p\calO_K)$, the level is the image of $M_1$, and the expansion of
+  $\kappa_{T_0}(cz+d)$ on the closed unit ball is
+  \[
+    (cz+d)^{2}\,\kappa_{T_0}(d)\sum_{m\geq 0}\binom{s}{m}\Bigl(\frac{c}{d}\Bigr)^{m}z^{m},
+    \qquad \text{decay } \rho = \lVert T_0\rVert\sqrt{p} .
+  \]
+\end{definition}
+
+The factor $(cz+d)^{2}$ is the normalisation of Definition~\ref{def:jacobs-weight}, chosen so
+that the automorphy factor $\kappa(cz+d)/(cz+d)^{2}$ of Definition~\ref{def:kappaslash} is
+literally \cite[(2.3.2)]{LWX}'s $\chi(cz+d)$.  The expansion is
+Theorem~\ref{thm:padic-binomial}, and the constraint $\lVert T_0\rVert^{2}<p^{-1}$, that is
+$v(T_0)>\tfrac12$, is exactly the condition for its convergence.  \cite[\S2.7]{LWX} record only
+the cruder radius and remark that ``the radius here is not optimal''.
+
+\begin{definition}[The halo weight at analyticity level $h$]
+  \label{def:haloweighth}
+  \uses{def:haloweight, lem:pow-sub-one}
+  \lean{LWX.Mh, LWX.M1Kh, LWX.TH, LWX.haloExponentH, LWX.haloCharH, LWX.haloRhoH,
+        LWX.haloWeightH, LWX.specialize_univChar_eq_padicExp,
+        LWX.evalAt_autFactor_haloWeightH}
+  \leanok
+  With $h = m-1$, $T'_h = (1+T_0)^{p^{h}}-1$ and $s_h = \log(1+T'_h)/p^{h+1}$, the character on
+  the disc of radius $p^{-(h+1)}$ about a $\Zp$-unit $a$ is
+  $x\mapsto [a](T_0)\exp\bigl(s_h\log(x/a)\bigr)$, an analytic weight at the level
+  $M_1^{(h)}$ of matrices with $p^{h+1}\mid c$, of radius
+  $\max(p^{-(h+1)}, \lVert T'_h\rVert)\sqrt p$.
+\end{definition}
+
+That the two descriptions agree, that is
+$(1+T_0)^{\log u/p} = (1+T'_h)^{\log u/p^{h+1}} = \exp(s_h\log u)$ on $1+p^{h+1}\Zp$, is
+Lemma~\ref{lem:pow-sub-one}.  This is \cite[\S2.1]{LWX}: ``$\chi(a\cdot x) =
+\chi(a)\cdot\chi(\exp(p^{m}))^{(\log x)/p^{m}}$''.
+
+\section{The integral model $S^{D}_{\mathrm{int}}$}
+\label{sec:intmodel}
+
+\cite[\S2.7]{LWX} define the space of integral $p$-adic automorphic forms as the
+$\Iw_q$-equivariant functions valued in $\Ind^{\Iw_q}_{B(\Zp)}[-]$, identified by
+\cite[(2.3.1)]{LWX} with $C(\Zp;\Lambda)$ carrying the action
+\[
+  (h\Vert_\delta)(z) \;=\; [\,cz+d\,]\cdot h\Bigl(\frac{az+b}{cz+d}\Bigr)
+  \tag{2.3.2}
+\]
+of the monoid $M_1$.  The repository's Hecke layer (Chapter~\ref{chap:qmf}) is stated over an
+arbitrary semiring, so it can be instantiated at $R = \Lhalo$ and reused rather than re-proved.
+
+\begin{definition}
+  \label{def:intforms}
+  \uses{def:univchar, def:localmat, def:forms}
+  \lean{LWX.CFun, LWX.cfunSlash, LWX.cfunSlashAction, LWX.IntForms, LWX.intAutSlashAction}
+  \leanok
+  $C(\Zp,\Lhalo)$ with the action (2.3.2) of $M_1$, and $S^{D}_{\mathrm{int}}$ the corresponding
+  space of automorphic functions at a tame level $U$ --- the same construction as
+  Definition~\ref{def:forms}, at the ring $\Lhalo$ instead of a field.
+\end{definition}
+
+\begin{proposition}[{\cite[Proposition 3.4]{LWX}}]
+  \label{prop:prop34}
+  \uses{def:intforms, def:entry}
+  \lean{LWX.mahlerON, LWX.mahlerCoeffs, LWX.cfunSlash_mahlerON, LWX.entry_eq_fwdDiff,
+        LWX.mahlerEmbed}
+  \leanok
+  The Mahler basis $\binom{z}{n}$ realises $C(\Zp,\Lhalo)$ as $c(\N,\Lhalo)$, and in these
+  coordinates the matrix of $\Vert_\delta$ is exactly the entry stream $P_{m,n}(\delta)$ of
+  Definition~\ref{def:entry}.  The $T$-rescaled submodule
+  $\widehat{\bigoplus}_n T^{n}\Lhalo\binom{z}{n}$ of \cite[(5.4.1)]{LWX} is realised by an
+  explicit embedding.
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  \uses{def:entry, def:univchar}
+  Mahler's theorem applies because $\Lhalo$ is an ultrametric $\Zp$-Banach algebra.  The Mahler
+  coefficients of a function are its iterated forward differences at $0$, so the coefficient of
+  $\binom{z}{n}$ in $\binom{z}{n'}\Vert_\delta$ is the $m$-th difference at $0$ of
+  $\binom{f(z)}{n'}[cz+d]$, which is Definition~\ref{def:entry} verbatim; the $T$-expansion of
+  $[cz+d]$ is the one performed there.
+\end{proof}
+
+So the definition of Chapter~\ref{chap:lwx-halo}, which was taken as a definition there, is a
+theorem here.  Note that the rescaling of \cite[(5.4.1)]{LWX} lives in the estimates and not in
+the model coordinates: the action (2.3.2) does not preserve $c_0$-coordinates in the rescaled
+basis.
+
+\begin{theorem}[{\cite[(2.11.1)]{LWX} and \cite[Proposition 3.1]{LWX}}]
+  \label{thm:prop31}
+  \uses{def:intforms, def:updatum, thm:evalatreps, def:heckeoperator}
+  \lean{LWX.intEvalAtReps, LWX.intEvalAtReps_comm,
+        LWX.bijective_intEvalAtReps_of_stabilizer_eq_bot, LWX.certM1, LWX.UpDatum.ofCerts,
+        LWX.isUpShape_certM1, LWX.intHeckeOperator, LWX.intEvalAtReps_intHeckeOperator}
+  \leanok
+  At a family of class representatives with trivial stabilisers, evaluation at the
+  representatives is a bijection $S^{D}_{\mathrm{int}} \to c(\iota\times\N,\Lhalo)$; and for the
+  genuine integral Hecke operator $[U\eta U]$ the diagram
+  \[
+    \mathrm{ev}\circ[U\eta U] \;=\; D.\mathrm{op}\circ\mathrm{ev}
+  \]
+  commutes, where $D$ is the $U_p$-datum assembled from right-coset certificates of $U\eta U$.
+  Its local matrices have $U_p$-shape because they lie in
+  $\Iw_q\begin{pmatrix} p&0\\0&1\end{pmatrix}\Iw_q \subseteq
+  \bigl(\begin{smallmatrix} p\Zp&\Zp\\ q\Zp&\Zp^{\times}\end{smallmatrix}\bigr)$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:evalatreps, def:heckeoperator, def:updatum}
+  \cite[Proposition 3.1]{LWX} writes $\gamma_i v_j^{-1} = \delta_{i,j}^{-1}\gamma_{\lambda_{i,j}}
+  u_{i,j}$ and finds $(U_p\varphi)(\gamma_i) = \sum_j \varphi(\gamma_{\lambda_{i,j}})
+  \Vert_{u_{i,j,p}v_j}$.  That display is already proved in the ring-generic Hecke layer
+  (Theorem~\ref{thm:evalatreps} and its companion for $[U\eta U]$), so what is left is to check
+  that any operator satisfying it intertwines evaluation with $D.\mathrm{op}$, which is a
+  computation with the block decomposition, and to verify the shape of
+  $\delta_{i,j,p} = u_{i,j,p}v_j$ from the Iwahori double coset.
+\end{proof}
+
+\section{Amice's theorem and the Colmez basis}
+\label{sec:amice}
+
+\cite[\S2.16]{LWX} quote \cite[Th\'eor\`eme 1.29]{Colmez}: the functions
+$\lfloor n/(q^{-1}p^{m})\rfloor!\binom{z}{n}$ form an orthonormal basis of the space
+$\mathcal{O}B_{qp^{-m}}$ of functions analytic on the discs $a+q^{-1}p^{m}\Zp$.  This is Amice's
+theorem \cite{Amice}.  We prove it at every level, in the form the seam needs.
+
+\begin{proposition}[Level $m=1$]
+  \label{prop:colmez-m1}
+  \uses{def:tate-algebra, def:cspace}
+  \lean{LWX.colmezToMonomial, LWX.norm_colmezToMonomial, LWX.colmezEquiv,
+        LWX.monomialToMahler, LWX.diagFactorial, LWX.monomialToMahler_eq,
+        LWX.mahlerCoeffPow, LWX.pow_eq_sum_choose_mul_mahlerCoeffPow,
+        LWX.fwdDiff_iter_evalAt_natCast}
+  \leanok
+  At $m=1$ (so $p$ odd, $q=p$) the disc is the closed unit disc and the space is the Tate algebra
+  $K\langle z\rangle = c(\N,K)$; the Colmez basis is
+  $n!\binom{z}{n} = z(z-1)\cdots(z-n+1)$, a monic integral polynomial.  Change of coordinates
+  from the Colmez basis to the monomial basis is an isometry with dense range, hence a continuous
+  linear equivalence, and
+  \[
+    \mathrm{monomialToMahler} \;=\; \mathrm{diag}(m!)\circ\mathrm{colmezEquiv}^{-1} .
+  \]
+\end{proposition}
+
+The last display is the ``conjugated by an infinite diagonal matrix'' of
+\cite[proof of Proposition 2.17]{LWX} at $m=1$.  The isometry is proved by a largest-index
+argument; the same argument at every level is Theorem~\ref{thm:unitriangular}.
+
+\begin{lemma}[{\cite[Lemme 1.4.9]{Colmez}}]
+  \label{lem:colmez-valuation}
+  \lean{LWX.colmezPoly, LWX.discPoly, LWX.discFactor, LWX.discConst, LWX.discPoly_eq,
+        LWX.norm_discConst, LWX.norm_coeff_discPoly_le, LWX.norm_coeff_discPoly_le_inv_of_lt,
+        LWX.norm_coeff_discPoly_diag}
+  \leanok
+  Let $g_n = \lfloor n/p^{h}\rfloor!\binom{z}{n}$ and let $a < p^{h}$ be a disc centre.  The
+  polynomial $g_{n,a}(w) = g_n(a+p^{h}w)$ has $\Zp$-coefficients, and factors as
+  $g_{n,a} = c_{n,a}f_{n,a}$ where $f_{n,a}$ reduces mod $p$ to a monic polynomial of degree
+  $\lvert K_{n,a}\rvert$, $K_{n,a} = \{k<n : k\equiv a \pmod{p^{h}}\}$, and
+  $v(c_{n,a}) = \sum_{\ell=1}^{h}[\,a \bmod p^{\ell} < n\bmod p^{\ell}\,] \geq 0$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Each linear factor $a-k+p^{h}w$ is $p^{h}(w-(k-a)/p^{h})$ when $p^{h}\mid k-a$, and otherwise
+  $(a-k)\bigl(1+p^{h}w/(a-k)\bigr)$; collecting the two kinds of factor gives the factorisation,
+  and the valuation of the scalar is the count of carries, which is the displayed sum.
+\end{proof}
+
+\cite{Colmez} centres the discs at $-j$ with $1\leq j\leq p^{h}$; we centre at the natural
+representative $a = n\bmod p^{h}$, which is a translation of the unit disc and changes neither
+integrality, nor vanishing mod $p$, nor degrees.
+
+\begin{theorem}[Amice's theorem at level $h$]
+  \label{thm:amice}
+  \uses{lem:colmez-valuation, thm:unitriangular, def:cspace}
+  \lean{LWX.discIdx, LWX.revIdx, LWX.colmezMatrix,
+        LWX.isUnitriangularPerturbation_colmezMatrix, LWX.colmezToDisc,
+        LWX.colmezDiscEquiv, LWX.diagFactorialH, LWX.discToMahler,
+        LWX.discToMahler_apply_eq_fwdDiff}
+  \leanok
+  Model $\mathcal{O}B_{p^{-h}}$, the functions analytic on every disc $a+p^{h}\Zp$ with the
+  maximum of the $p^{h}$ Gauss norms, by $c(\Z/p^{h}\times\N, K)$ --- the Taylor coefficients on
+  each disc in the coordinate $z = a+p^{h}w$.  Then the map sending $e_n$ to the disc model of
+  $g_n$ is an isometric equivalence $c(\N,K) \to c(\Z/p^{h}\times\N,K)$, and composing with
+  $\mathrm{diag}(\lfloor n/p^{h}\rfloor!)$ turns Colmez coordinates into Mahler coefficients.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:colmez-valuation, thm:unitriangular}
+  Order the basis by $n = (m(n)+1)p^{h} - i(n)$ with $1\leq i(n)\leq p^{h}$, and the discs by
+  their centres, as \cite{Colmez} does; in that order Lemma~\ref{lem:colmez-valuation} says the
+  reduction of the basis-change matrix is block upper triangular with each diagonal block lower
+  triangular with invertible diagonal entries.  Reindexing the columns by the involution
+  reversing each block of $p^{h}$ consecutive integers turns the matrix into a perturbed
+  unitriangular one, so Theorem~\ref{thm:unitriangular} applies.  The two reindexings cancel, so
+  the resulting map sends $e_n$ to $g_n$ on the nose.  The final clause is the level-$h$ form of
+  the statement that Mahler coefficients are forward differences of values at $\N$-points.
+\end{proof}
+
+\begin{definition}[The disc model of $S^{D,\dagger,m}$]
+  \label{def:discforms}
+  \uses{thm:amice, def:haloweighth, def:forms, thm:qmf-compact}
+  \lean{LWX.discImage, LWX.discConj, LWX.discSlash, LWX.discSlashAction, LWX.DiscForms,
+        LWX.discEvalAtReps, LWX.bijective_discEvalAtReps_of_stabilizer_eq_bot,
+        LWX.discHeckeOperator, LWX.discHeckeBlockOp, LWX.isCompactoid_discHeckeBlockOp,
+        LWX.discHeckeCharPowerSeries, LWX.evalT_discHeckeCharPowerSeries_eq_zero_iff}
+  \leanok
+  The action (2.3.2) does not preserve a single disc: it \emph{permutes} the discs.  Writing
+  $t_a(w) = a+p^{h}w$ and $a' = \delta(a)\bmod p^{h}$, the matrix identity
+  $\delta\, t_a = t_{a'}\,\delta'$ with $\delta' = t_{a'}^{-1}\delta t_a$ of level $h$ says that
+  the action carries the Taylor expansion on $a'$ to the one on $a$ through the single-disc
+  weight action of Definition~\ref{def:haloweighth}.  So the disc action is a block operator of
+  $\kappa$-slashes permuted by $a\mapsto a'$, and it is a right action because the two data
+  satisfy the cocycle rules.  Everything in Chapter~\ref{chap:qmf} then transcribes: the space
+  $S^{D,\dagger,m}$, evaluation at representatives, the Hecke operator, its compactness, its
+  Fredholm determinant, and the eigenvalue reading of the zeros.
+\end{definition}
+
+\section{Proposition 2.17: the seam}
+\label{sec:seam}
+
+\begin{theorem}[{\cite[Proposition 2.17]{LWX}} at $m=1$]
+  \label{thm:lwx-prop217}
+  \uses{prop:colmez-m1, def:haloweight, thm:prop31, lem:diag-intertwine,
+        thm:charpowerseries-inv, def:heckecharpowerseries}
+  \lean{LWX.specOp, LWX.charPowerSeries_specOp, LWX.monomialToMahler_comp_kappaSlash,
+        LWX.monomialToMahlerBlock_comp_heckeBlockOp,
+        LWX.specCharSeries_ofCerts_eq_heckeCharPowerSeries}
+  \leanok
+  On the sub-annulus $p^{-1}<\lVert T_0\rVert$, $\lVert T_0\rVert^{2}<p^{-1}$, the integral
+  characteristic series evaluated at $T_0$ is the Fredholm determinant of $U_p$ on the
+  overconvergent forms of the halo weight:
+  \[
+    \Char(P)(T_0) \;=\; \det\bigl(1 - X\,[U\eta U]\bigr)
+    \quad\text{on } S^{D,\dagger,1}_{\kappa_{T_0}}(U).
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{prop:colmez-m1, lem:diag-intertwine, thm:charpowerseries-inv, prop:prop34}
+  Four steps.  (i) The specialised operator $P(T_0)$ on $c(\iota\times\N,K)$ has
+  $c_n\bigl(P(T_0)\bigr) = c_n(P)(T_0)$, because specialisation is a continuous ring homomorphism
+  (Definition~\ref{def:halo-specialize}) and the coefficients are limits of determinants of
+  minors.  (ii) The \emph{seam identity}: monomial-to-Mahler coordinates intertwine the analytic
+  action of a certificate matrix with $P(T_0)$ --- both are $f\mapsto \chi(cz+d)f(\text{M\"ob}\,z)$
+  read at $\N$-points --- and hence blockwise for $[U\eta U]$.  (iii) By
+  Proposition~\ref{prop:colmez-m1}, $\mathrm{monomialToMahler} = \mathrm{diag}(m!)\circ
+  \mathrm{colmezEquiv}^{-1}$, so the Colmez-basis matrix $P'$ satisfies
+  $\mathrm{diag}(m!)P' = P(T_0)\mathrm{diag}(m!)$, and Lemma~\ref{lem:diag-intertwine} gives
+  $\det(1-XP') = \det(1-XP(T_0))$ --- with no inversion of the unbounded diagonal.  (iv) Basis
+  independence (Theorem~\ref{thm:charpowerseries-inv}) gives
+  $\det(1-XP') = \det(1-X[U\eta U])$.
+\end{proof}
+
+\begin{theorem}[{\cite[Proposition 2.17]{LWX}} at every level]
+  \label{thm:lwx-prop217-h}
+  \uses{thm:lwx-prop217, thm:amice, def:discforms, lem:pow-sub-one}
+  \lean{LWX.discToMahler_comp_discSlash, LWX.discToMahlerBlock_comp_discHeckeBlockOp,
+        LWX.specCharSeries_ofCerts_eq_discHeckeCharPowerSeries,
+        LWX.exists_level_specCharSeries_eq_heckeCharPowerSeries}
+  \leanok
+  The same identity holds at every analyticity level $m = h+1$, with $S^{D,\dagger,m}$ in its
+  disc model.  Consequently every point of the full boundary annulus
+  $p^{-1}<\lVert T_0\rVert<1$ is covered, at a level supplied by Lemma~\ref{lem:pow-sub-one}.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:amice, def:discforms, lem:diag-intertwine, thm:charpowerseries-inv}
+  The proof of Theorem~\ref{thm:lwx-prop217} with the disc model in place of the Tate algebra:
+  Theorem~\ref{thm:amice} supplies the Colmez equivalence and the diagonal
+  $\mathrm{diag}(\lfloor n/p^{h}\rfloor!)$, the disc action is (2.3.2) pointwise so on Mahler
+  coefficients it is the specialised entry stream, and the two determinant identities are as
+  before.
+\end{proof}
+
+\begin{corollary}[{\cite[Lemma 4]{Bu04}; \cite[Definition 2.13]{LWX}}]
+  \label{cor:level-independence}
+  \uses{thm:lwx-prop217-h}
+  \lean{LWX.discHeckeCharPowerSeries_eq_of_levels,
+        LWX.discHeckeCharPowerSeries_zero_eq_heckeCharPowerSeries}
+  \leanok
+  The characteristic power series of $U_p$ on $S^{D,\dagger,m}$ is independent of $m$: both
+  levels compute $\Char(P)(T_0)$.
+\end{corollary}
+
+This is a statement the $m=1$ seam could not even express, and it is what makes
+\cite[Definition 2.13]{LWX}'s spectral curve well defined.
+
+\section{The quaternionic case}
+
+Chapter~\ref{chap:qmf}'s quaternionic instantiation works over a number field $F$ at a place $v$
+with $K = F_v$; the integral model needs $\Zp$-entries.  At $F=\Q$, $v = (p)$ the two are
+compared by mathlib's isomorphism, once one knows it is an isometry.
+
+\begin{lemma}
+  \label{lem:adic-completion-isometry}
+  \lean{Padic.absNorm_asIdeal_primesEquiv_symm, Padic.norm_adicCompletionEquiv}
+  \leanok
+  Mathlib's continuous $\Q$-algebra isomorphism $\Qp \simeq \Q_v$ at the place $v = (p)$ is an
+  isometry for the finite-place norm.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  The absolute norm of the ideal $v$ is $p$, so $\lVert p\rVert = p^{-1}$ on both sides; and the
+  closed unit balls correspond, by mathlib's comparison of $\Zp$ with the ring of integers of the
+  completion.
+\end{proof}
+
+This generalises to every prime the computation made at $p=3$ in Chapter~\ref{chap:jacobs}.
+
+\begin{theorem}[The spectral reading at a halo point]
+  \label{thm:lwx-spectral}
+  \uses{thm:lwx-prop217, thm:lwx-prop217-h, lem:adic-completion-isometry, thm:serre12,
+        def:rigidification, thm:qmf-eigenform-criterion}
+  \lean{LWX.thetaInt, LWX.IntFormsQ, LWX.intHeckeUpQ,
+        LWX.specCharSeries_ofCerts_eq_heckeCharPowerSeriesQ,
+        LWX.evalT_specCharSeries_eq_zero_iff,
+        LWX.specCharSeries_ofCerts_eq_discHeckeCharPowerSeriesQ,
+        LWX.evalT_specCharSeries_eq_zero_iff_disc,
+        LWX.exists_level_evalT_specCharSeries_eq_zero_iff}
+  \leanok
+  Let $D$ be a definite quaternion algebra over $\Q$ split at $p$, $U$ a tame level, and suppose
+  the level is neat.  Then $S^{D}_{\mathrm{int}}$ is the integral model of
+  Definition~\ref{def:intforms} for $D$, and for every halo point $p^{-1}<\lVert T_0\rVert<1$
+  there is an analyticity level at which, for $a \neq 0$,
+  \[
+    \Char(P)(T_0)(a) = 0
+    \quad\Longleftrightarrow\quad
+    a^{-1} \text{ is a } U_p\text{-eigenvalue on } S^{D,\dagger,m}_{\kappa_{T_0}}(U).
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx-prop217-h, lem:adic-completion-isometry, thm:qmf-eigenform-criterion}
+  Lemma~\ref{lem:adic-completion-isometry} identifies the integral component map with the
+  $K$-side one of Chapter~\ref{chap:qmf}, so $S^{D}_{\mathrm{int}}$ and Buzzard's
+  $S^{D}_{\kappa}(U)$ are the two sides of Theorem~\ref{thm:lwx-prop217-h}.  Composing that
+  identity with the eigenvalue criterion of Theorem~\ref{thm:qmf-eigenform-criterion} --- itself
+  Serre's Theorem~\ref{thm:serre12} in the block model --- gives the displayed equivalence.  The
+  level is supplied by Lemma~\ref{lem:pow-sub-one}.
+\end{proof}
+
+Theorem~\ref{thm:lwx-spectral} is the fibre of \cite[Definition 2.13]{LWX}'s spectral curve over
+a halo point: from here on, every statement proved about $\Char(P)$ in
+Chapter~\ref{chap:lwx-halo} or Chapter~\ref{chap:lwx-slopes} is a statement about the genuine
+$U_p$ on a genuine space of overconvergent quaternionic forms.

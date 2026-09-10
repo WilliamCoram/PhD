@@ -260,6 +260,15 @@ def truncation (S : Finset I) : c(I, R) →L[R] c(I, R) where
 @[simp] theorem truncation_apply (S : Finset I) (f : c(I, R)) (i : I) :
     truncation S f i = if i ∈ S then f i else 0 := rfl
 
+/-- **The matrix of a coordinate truncation** is the diagonal `0/1` matrix supported on `S`. -/
+theorem matrixCoeff_truncation (S : Finset I) (j i : I) :
+    matrixCoeff (truncation (R := R) S) j i = if j = i ∧ j ∈ S then 1 else 0 := by
+  show (if j ∈ S then cSpace.single i (1 : R) j else 0) = _
+  by_cases hji : j = i
+  · subst hji
+    simp
+  · simp [cSpace.single_apply_of_ne hji, hji]
+
 /-- Truncations are contractions. -/
 theorem norm_truncation_apply_le (S : Finset I) (f : c(I, R)) :
     ‖truncation S f‖ ≤ ‖f‖ :=

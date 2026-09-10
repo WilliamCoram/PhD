@@ -1,0 +1,4 @@
+{"timestamp":"2026-09-05T15:50Z","ticket_id":"B5","kind":"statement-change","decl":"LWX.PadicExpLog.eq_zero_of_forall_tsum_natCast_eq_zero","change":"added hypothesis (hq0 : 0 ≤ q) — the geometric-decay bound needs a nonnegative ratio; both applications have q = ‖x‖·√(‖p‖⁻¹) ≥ 0"}
+{"timestamp":"2026-09-05T15:50Z","ticket_id":"B8","kind":"statement-change","decl":"LWX.PadicExpLog.padicExp_mul_eq_tsum","change":"dropped the unused hypotheses {c} (hc) (hx) (hex); now (e x : K) with no disc condition (termwise identity of tsums)"}
+{"timestamp": "2026-09-05 17:12", "ticket_id": "W13/W14", "lemma_name": "LWX.haloCharFun_mul", "change": "binder h0 renamed _h0 (unused; type unchanged, kept for the uniform (hp2 h\u03c8 h0 h1) signature)"}
+{"timestamp": "2026-09-05 17:12", "ticket_id": "W13/W14", "lemma_name": "LWX.norm_haloCharFun", "change": "binder h0 renamed _h0 (unused; type unchanged, kept for the uniform (hp2 h\u03c8 h0 h1) signature)"}

@@ -1,0 +1,2709 @@
+R. Liu, D. Wan, L. Xiao, The eigencurve over the boundary of weight space, arXiv:1412.2584v4.
+Text extracted via pypdf from ~/Desktop/Papers/'Liu, Wan, Xiao - The eigencurve over the boundary of weight space.pdf' for line-locator citations ('===== PDF PAGE n =====' markers).
+
+
+===== PDF PAGE 1 =====
+THE EIGENCURVE OVER THE BOUNDARY OF WEIGHT SPACE
+RUOCHUAN LIU, DAQING WAN, AND LIANG XIAO
+In memory of Professor Robert F. Coleman
+Abstract. We prove that the eigencurve associated to a deﬁnite quaternion algebra overQ
+satisﬁes the following properties, as conjectured by Coleman–Mazur and Buzzard–Kilford:
+(a) over the boundary annuli of weight space, the eigencurve is a disjoint union of (countably)
+inﬁnitely many connected components each ﬁnite and ﬂat over the weight annuli, (b) theUp-
+slopes of points on each ﬁxed connected component are proportional to thep-adic valuations
+of the parameter on weight space, and (c) the sequence of the slope ratios form a union of
+ﬁnitely many arithmetic progressions with the same common diﬀerence. In particular, as a
+point moves towards the boundary on an irreducible connected component of the eigencurve,
+the slope converges to zero.
+Contents
+1. Introduction 1
+2. Automorphic forms for deﬁnite quaternion algebras 8
+3. Estimation of the Newton polygon 15
+4. Distribution of Up-slopes 29
+5. Integral models of the space of overconvergent automorphic forms 32
+References 35
+1. Introduction
+1.1. Coleman–Mazur–Buzzard–Kilford Conjecture. Eigencurves were introduced in
+the groundbreaking work of R. Coleman and B. Mazur [CM98] to study the p-adic varia-
+tion of modular forms. Roughly speaking, they are rigid analytic curves that parameterize
+ﬁnite slope overconvergent normalized p-adic eigenforms, where the q-expansions of these
+overconvergent modular forms vary p-adically continuously. The study of the eigencurves
+has led to great success, for example in M. Kisin’s proof of the Fontaine–Mazur Conjecture
+for overconvergent modular forms [Kis03]. While the arithmetic properties and the local
+geometry of the eigencurves were extensively studied in the literature (see e.g. [Bel15 +] for
+a summary), their global geometry seems to be a very intriguing and diﬃcult topic. Only
+Date: November 17, 2016.
+2010 Mathematics Subject Classiﬁcation. 11F33 (primary), 11F85 11S05 (secondary).
+Key words and phrases. Eigencurves, slope of Up-operators, Newton polygon, overconvergent modular
+forms, completed cohomology, weight space.
+R.L. is partially supported by NSFC-11571017 and the Recruitment Program of Global Experts of China.
+D.W. was partially supported by Simons Fellowship. L.X. is partially supported by Simons Collaboration
+Grant #278433 and NSF grant DMS-1502147.
+1
+arXiv:1412.2584v4  [math.NT]  16 Nov 2016
+===== PDF PAGE 2 =====
+recently, in joint work of H. Diao with the ﬁrst author [DL16], they proved the “properness”
+1 of the eigencurves over weight space. In this paper, we focus on another interesting geo-
+metric property of eigencurves, namely, their behavior over the boundary annuli of weight
+space.
+Let us be more precise. Letp be a prime number. Setq =p ifp odd, andq = 4 ifp = 2. Let
+ϕ(q) denote the Euler function, namely, ϕ(q) =p− 1 if p is odd and ϕ(q) = 2 if p = 2. We
+usev(·) and|·| to denote the p-adic valuation and thep-adic norm, respectively, normalized
+so that v(p) = 1 and |p| = p−1. In particular, v(q) = 1 if q = p, and v(q) = 2 if p = 2.
+Weight spaceW is the rigid analytic space associated to the Iwasawa algebra Λ = ZpJZ×
+p K,
+which is the union of ϕ(q) open unit disks indexed by the characters of the torsion subgroup
+∆ of Z×
+p . Each closed point on weight space corresponds to a continuous ( p-adic) character
+χ of Z×
+p . We take the parameter on the weight disks to be T := Tχ := χ(exp(q))− 1. For
+r∈ (0, 1), we useW>r to denote the (union of) annuli where |T|>r ; it is referred to as the
+“halo” of weight space by Coleman.
+We ﬁx a tame level and let C denote the corresponding eigencurve, as constructed in K.
+Buzzard’s paper [Bu07] (which generalizes [CM98]). Each point of the eigencurve corresponds
+to a ﬁnite slope normalized overconvergent eigenform f =∑
+n≥0an(f)qn.2 This eigencurve
+admits a map wt to the weight space, known as the weight map, and a mapap to Grig
+m , known
+as the slope map.
+(1.1.1) C
+ap →→
+wt
+↓↓
+Grig
+m
+W
+For example, if we use zf to denote the point on C corresponding to a classical normalized
+eigenform f of weight k + 2≥ 2 and Nebentypus p-character χ : ( Z/pmZ)×→ C×
+p , then
+the image of zf under the map ap is the p-th Fourier coeﬃcient ap(f) of f, and the image
+of zf under the map wt is the point on W corresponding to the character xkχ : Z×
+p → C×
+p
+that sends u to ukχ(u). In particular, the value of the parameter T at this point is Txkχ =
+exp(kq)·χ(exp(kq))− 1.
+Forr∈ (0, 1), we useC>r to denote the preimage wt−1(W>r). The following is a folklore
+conjecture suggested by a computation of Buzzard and L. Kilford [BK05] which addresses a
+question asked by Coleman and Mazur [CM98].
+Conjecture 1.2 (Coleman–Mazur–Buzzard–Kilford). When r∈ (0, 1) is suﬃciently close
+to 1−, the following statements hold.
+(1) The spaceC>r is a disjoint union of (countably inﬁnitely many) connected components
+Z1,Z 2,... such that the weight map wt :Zn→W >r is ﬁnite and ﬂat for each n.
+(2) There exist nonnegative rational numbers α1,α 2,... ∈ Q in non-decreasing order and
+tending to inﬁnity such that, for each n and each point z∈Zn, we have
+|ap(z)| =|Twt(z)|αn.
+1Actually the ”properness” here is not in the sense of rigid analytic geometry; we refer the reader to
+[DL16] for its precise deﬁnition.
+2This is the only time in this paper q stands for e2πiz. We will not mention q-expansions again.
+2
+===== PDF PAGE 3 =====
+(3) The sequence α1,α 2,... is a disjoint union of ﬁnitely many arithmetic progressions,
+counted with multiplicity (at least when the indices are large enough).
+When the tame level is trivial and p = 2, this conjecture was veriﬁed using an explicit
+computation by Buzzard and Kilford [BK05], extending the thesis work of M. Emerton
+[Em98]. More explicit computations for small p and small tame levels have appeared in
+[Ja04, Kil08, KM12, Ro14]. A partial result that is independent of the prime p and the tame
+level was proved by J. Zhang and the second and third authors [WXZ14 +].
+The goal of this paper is to prove an analog of Conjecture 1.2 for overconvergent auto-
+morphic forms for deﬁnite quaternion algebras over Q.
+We ﬁx some notations ﬁrst. Let D be a deﬁnite quaternion algebra over Q which splits
+at p. Fix a tame level structure; we say the tame level is neat if it satisﬁes the condition
+(Neat) in Subsection 2.4. Let SpcD denote the corresponding spectral curve associated to the
+overconvergent automorphic forms for D× constructed by Buzzard in [Bu07], which admits
+maps wt and ap similar to the eigencurve as in (1.1.1). For r∈ (0, 1), we denote by Spc >r
+D
+the preimage wt−1(W>r). For each character ω : ∆ → Z×
+p , we denote by Wω andW>r
+ω
+the weight disk and annulus corresponding to ω, and by Spc D,ω and Spc>r
+D,ω the preimages
+wt−1(Wω) and wt−1(W>r
+ω ) respectively. Let ω0 : ∆→ Z×
+p denote the inclusion map.
+The ﬁrst main result is the following theorem, in which
+• the constant t is equal to the dimension of the space of weight 2 automorphic forms
+with q-Iwahori level structure at p and tame level as above, and
+• rord(ω) denotes the dimension of the ordinary subspace of automorphic forms of
+weight 2 and character ω.
+Theorem 1.3. Letω : ∆→ Z×
+p be a character. Then the space Spc>1/p
+D is a disjoint union
+Spc>1/p
+D =X0
+∐
+X(0,1)
+∐
+X1
+∐
+X(1,2)
+∐
+X2
+∐
+···
+of (possibly empty) rigid analytic spaces which are ﬁnite and ﬂat over W>1/p via wt, such
+that, for each point x∈XI with I denoting the interval n = [n,n ] or (n,n + 1), we have
+v(ap(x))∈ϕ(q)v(Twt(x))·I.
+In particular, as x varies on each irreducible component of SpcD with wt(x) approaching the
+boundary of weight space, i.e. |Twt(x)|→ 1−, the slope v(ap(x))→ 0.
+Moreover, if the tame level is neat, and we denote by Xn,ω and X(n,n+1),ω the preimages of
+W>1/p
+ω in Xn and X(n,n+1) respectively, then
+degXn,ω =
+{ rord(ω), if n = 0,
+rord(ω−1ω2n−2
+0 ) +rord(ωω−2n
+0 ), if n≥ 1,
+and
+degX(n,n+1),ω =qt−rord(ω−1ω2n
+0 )−rord(ωω−2n
+0 ).
+for all n≥ 0. In particular, we have degX(n,n+1),ω > 0 for all n≥ 0.
+This theorem will be proved in Subsection 3.23.
+3
+===== PDF PAGE 4 =====
+Corollary 1.4. If the tame level is neat, then for I = (0, 1), 1, (1, 2), 2,... , we have
+degXI,ω = degXI+1,ωω2
+0
+.
+In particular, the degree degXI,ω is periodic modulo ϕ(q)
+2 .
+In order to prove the full version of Conjecture 1.2 for SpcD, our current technique requires
+to weaken the radius bound on|T|. The following theorem will be proved in Subsection 4.2.
+Theorem 1.5. Letω : ∆→ Z×
+p be a character. Then there exists λ∈ (0, 1) such that there
+exists a sequence of rational numbers α0(ω),α 1(ω),... in increasing order and tending to
+inﬁnity such that Spc>λ
+D,ω is a disjoint union ∐
+i≥0Yi,ω of rigid analytic spaces ﬁnite and ﬂat
+overW>λ
+ω via wt, such that
+(1.5.1) v(ap(y)) =ϕ(q)v(Twt(y))αi(ω)
+for every y∈Yi,ω. More precisely, if the tame level is neat, then we can take λ =p
+− 8
+(p2−1)t+8
+for p> 2, and λ = 2− 1
+t+1 for p = 2.
+Moreover, let M be a positive integer so that p−q/pM −1(p−1) > λ; we also require M≥ 2
+if p is odd and M ≥ 4 if p = 2 . Then if we extend the sequence α0(ω),α 1(ω),... into
+˜α0(ω), ˜α1(ω),... with eachαi(ω) appearing with the multiplicity degYi,ω, then ˜α0(ω), ˜α1(ω)...
+is a disjoint union of (p−1)pM −1t
+2 arithmetic progressions with (the same) common diﬀerence
+ϕ(q)pM
+2q2 . More precisely, we have
+(1.5.2) ˜ αj+q−1pMt(ωω2
+0) = ˜αj(ω) + pM
+q2 for any j≥ 0.
+Remark 1.6. We ﬁrst remark on the content of the theorems.
+(1) It is implicit from the statements that, for each XI,ω from Theorem 1.3, XI,ω×W>1/p
+ω
+W>λ
+ω is the disjoint union of those Yi,ω in Theorem 1.5 for which αi(ω)∈I.
+(2) The bound given by Theorem 1.5 appears to depend heavily on t. It might be
+possible to release t to t¯ρ by working with each residual pseudo-representation ¯ ρ,
+where t¯ρ denotes the dimension of the space of weight 2 automorphic forms with
+Iwahori level structure at p where the tame Hecke action is determined by ¯ρ. More
+generally, we expect our argument to continue to hold for a direct summand of the
+completed homology of a modular curve or a deﬁnite quaternion algebra. We will
+revisit this idea in a future work.
+(3) For a continuous characterχ of Z×
+p , thep-adic valuation ofTχ is the same as thep-adic
+valuation of χ(c)− 1 for any topological generator c of (1 +qZp)×. Therefore, both
+theorems do not depend on our convenient choice of the generator exp(q). Moreover,
+the region|T|> 1/p is stable under the change of variable T↦→ exp(−kq)(T + 1)− 1
+that recenters the weight disks around the classical weight xk.
+(4) The radius 1/p of Theorem 1.3 seems to be optimal if p> 2. When p = 2, one might
+be able to improve the radius to 1/4 as opposed to the 1/2 given in Theorem 1.3. The
+estimate of radius λ and the positive integer M in Theorem 1.5 may not be optimal.
+We do not know whether it is reasonable to expect any optimal bound.
+(5) The proof of Theorem 1.3 gives rise to a certain integral model of the spectral curve
+near the boundary of weight space, by factoring the characteristic power series of Up
+integrally. See Remark 3.25 for an elaborated discussion.
+4
+===== PDF PAGE 5 =====
+(6) The diﬀerence between the spectral curve and the actual eigencurve is minor for
+the type of questions we consider in this paper, as the eigencurve is essentially a
+(partial) normalization of the spectral curve (and possibly changing some non-reduced
+structure).
+Remark 1.7. We remark on the relation to the literature.
+(1) By G. Chenevier’s p-adic Jacquet–Langlands correspondence [Ch05], we can translate
+results from the case of automorphic forms for deﬁnite quaternion algebras to the
+case of modular forms, and hence prove a large portion of Conjecture 1.2. The only
+connected components of the eigencurve we cannot access by this method are the
+ones whose tame part are all principal series. However, see Remark 3.26(2) for a
+discussion of potential approaches to this case.
+(2) While the main result of [WXZ14 +] has now become a corollary of our two main
+theorems (See Corollary 1.8), our proof relies on several ideas developed therein.
+The key improvement from [WXZ14 +] is that we choose a better basis to estimate
+the Newton polygon. See Remark 2.6 for a more detailed discussion.
+(3) Some related results were proved by F. Andreatta, A. Iovita, and V. Pilloni for
+the usual overconvergent (Hilbert) modular forms [AIP15+] in the sense of Coleman–
+Mazur [CM98] and Andreatta–Iovita–Pilloni–Stevens [AIS14, Pi13]; they constructed
+a certain compactiﬁcation of weight space in the category of analytic adic spaces,
+and showed that the sheaf of overconvergent modular forms extends. They also
+obtained certain results on the geometry of the eigencurve near the boundary of
+weight space. Although their technique appears diﬀerent to ours, both works have
+the same goal: realizing Coleman’s idea [Cole-A] in the corresponding context. So it
+would be interesting to compare the two approaches.
+(4) The second half of Theorem 1.5 follows from the ﬁrst half by classicality results and
+Atkin–Lehner theory. This argument was independently found by J. Bergdall and R.
+Pollack [BP15+].
+(5) Corollary 1.4 indicates a peculiar relation between the degrees of components of the
+spectral curve over one weight disk and those over another weight disk shifted by the
+square of the Teichm¨ uller character. This might be related to some observation by
+F. Calegari, known as the “theta-cycle” phenomenon: in characteristic p, there is a θ
+map on the space of mod p modular forms, increasing the weight by 2; this seems to
+have some magical eﬀect on the slope of modular forms (which are of characteristic
+zero).
+(6) In this paper, we do not touch the geometry of the eigencurves over the center of
+weight space, which is expected to be very complicated. We refer to [Wa98, Bu05,
+He05, BG15+, BP16+] for a more comprehensive discussion.
+We now turn to discussing the application of our main theorem. For a character ψ :
+(Z/pmZ)×→ C×
+p that does not factor through ( Z/pm−1Z)× (which we call p-primitive) and
+k∈ Z≥0, we use SD
+k+2(ψ) to denote the space of automorphic forms on D× of weight k + 2
+with the ﬁxed tame level, pm-Iwahori level at p, and Nebentypus character ψ. Combining
+Theorems 1.3 and 1.5 with the classicality result (Proposition 2.15), one can deduce strong
+consequences regarding the slopes of classical automorphic forms. Roughly speaking, we
+prove that knowing the slopes of weight 2 automorphic forms of ϕ(q) characters with a
+certain conductor at p is enough to determine the slopes of all automorphic forms with
+5
+===== PDF PAGE 6 =====
+larger conductors at p. The precise statement is as follows, whose proof will appear in
+Subsection 4.4.
+Corollary 1.8. (1) Let ψ be a p-primitive character of (Z/pmZ)× with m≥ 2 if p >
+2, and m≥ 4 if p = 2 . Let β0(k,ψ ),...,β q−1pm(k+1)t−1(k,ψ ) denote the sequence
+of slopes of the Up-action on SD
+k+2(ψ), in non-decreasing order and counted with
+multiplicity. Then we have
+(1.8.1) q2
+pm
+(
+⌊n/qt⌋
+)
+≤βn(k,ψ )≤ q2
+pm
+(
+⌊n/qt⌋ + 1
+)
+,
+for n = 0,...,q −1pm(k + 1)t− 1. Note the inequalities we obtained are independent
+of the weight k + 2.
+(2) LetM be a positive integer so that p−q/pM −1(p−1) >λ ; we also require M≥ 2 if p> 2
+and M≥ 4 if p = 2. For each character ω of ∆, we choose a p-primitive character
+ψ of (Z/pM Z)× as above so that ψ|∆ =ω, and let β0(ω),...,β q−1pMt−1(ω) denote the
+sequence of slopes of the Up-action on SD
+2 (ψ), in non-decreasing order and counted
+with multiplicity. (This sequence does not depend on the choice of ψ.) Then for any
+k∈ Z≥0 and any p-primitive character ψm of (Z/pmZ)× with m≥ M, the sequence
+of the slopes of the Up-action on SD
+k+2(ψm) is given by
+⋃
+n=0,...,pm−M(k+1)−1
+{
+pM−m(
+β0(ψm|∆ωk−2n
+0 ) +n
+)
+,...,p M−m(
+βq−1pMt−1(ψm|∆ωk−2n
+0 ) +n
+)}
+.
+Another application is the following result.
+Corollary 1.9. Each irreducible component of the spectral curve SpcD contains a classical
+point of weight 2 (with possibly large conductor at p).
+Proof. By [CM98, Corollary 1.3.13], each irreducible component extends to the boundary of
+weight space, where the slopes tend to zero by Theorem 1.3. So this irreducible component
+must contain a point above a classical weight 2 (of large conductor at p) and with slope
+strictly less than 1. This point must correspond to a classical automorphic form by the
+classicality result (see [Bu07, Proposition 4] or Proposition 2.15). □
+Remark 1.10. This corollary naturally appeared in the joint work of J. Pottharst and
+the third author [PX14 +]. In that paper, we studied the parity conjecture which predicts
+that the vanishing orders of the L-functions of modular forms are congruent modulo 2 to
+the dimension of the associated Selmer groups. The basic idea is that, one can prove this in
+weight 2 by applying some argument involving Heegner points. The main theorem of [PX14+]
+is roughly that, on each irreducible component of the eigencurve, if the parity conjecture
+holds for one classical point, then it holds for all classical points. So by Corollary 1.9, any
+modular form, if can be translated to an automorphic form over a deﬁnite quaternion algebra
+(split at p), is linked to a classical automorphic form of weight 2 (of slope < 1). Hence the
+parity conjecture holds for that modular form.
+We expect a similar argument can be applied to study the p-adic Gross–Zagier formula,
+to bypass the essential diﬃculty imposed by requiring slopes < 1.
+6
+===== PDF PAGE 7 =====
+1.11. Idea of the proof of Theorems 1.3 and 1.5. We point out a few key points in the
+proof of the main theorems.
+(1) In Coleman’s private note [Cole-A], he advocated the idea of viewing the weight
+space and the eigencurve as formal schemes, as opposed to (increasing unions of)
+rigid analytic spaces. He pointed out that the key to realize this is to provide a cer-
+tain “integral model” of the space of overconvergent modular forms over the “halo”
+of weight space. Although we shall be working with a context diﬀerent from what he
+suggested in [Cole-A], this viewpoint is absolutely crucial to our paper. In the case
+for deﬁnite quaternion algebra we study in this paper, Coleman’s idea amounts to
+construct a “Banach space” over the Iwasawa algebra Λ, whose base change to each
+aﬃnoid subdomain ofW is “close to” the Banach space of overconvergent automor-
+phic forms in the sense of Buzzard [Bu07], at least having the same characteristic
+power series forUp. In fact, this expected space is not mysterious: its dual is the coin-
+variant subspace of Emerton’s completed homology under the action of the unipotent
+radical of the Borel subgroup at p, which is a compact topological Λ-module (in the
+sense of [ST02]). In this paper, we present the construction using induced represen-
+tations; this gives rise to a “Banach Λ-module”, which we call the space of integral
+p-adic automorphic forms . (The action is slightly twisted to match with the conven-
+tion used by Buzzard [Bu04].) We refer to Remark 2.9 for the relation with Emerton’s
+completed homology and potential generalizations.
+(2) We choose to work with a deﬁnite quaternion algebra as opposed to the usual over-
+convergent modular forms, to circumvent the complication of the geometry of the
+modular curves, as presented in all prior works of direct computation (they all rely
+on the explicit equation that deﬁnes the modular curve, which is clearly inaccessible
+in general). In our case, the Up-action on the space of integral p-adic automorphic
+forms can be written reasonably explicitly, as explained in the ﬁrst part of Section 3.
+This was inspired by the thesis of D. Jacobs [Ja04] (a former student of Buzzard),
+and our generalization [WXZ14 +].
+(3) Using the explicit description of the space of integral p-adic automorphic forms,
+we look at the associated inﬁnite matrix ( Pi,j) with respect to a basis originated
+from the Mahler basis 1 ,z,
+(z
+2
+)
+,... on the space of p-adic continuous functions on
+Zp. A mild p-adic analysis computation (which is the core of our paper) shows that
+Pi,j ∈ mmax{0,⌊i/t⌋−⌊j/pt⌋}
+Λ , where mΛ is the ideal of Λ generated by p and T . As a
+consequence, if we write c0 +c1X +···∈ ΛJXK for the characteristic power series for
+the Up-operator, then ci belongs to
+TλiΛ>1/p,
+where λi is recursively deﬁned by λ0 = 0, and λi−λi−1 =⌊i/t⌋−⌊ i/pt⌋. This gives
+rise to a lower bound on the Newton polygon over each point of weight space with
+|T|> 1/p.
+(4) It is somewhat a lucky coincidence that, the Newton polygon lower bound obtained in
+(3) partially agrees with the actual Newton polygon at classical weights . This allows
+us to conclude the main theorems. This part of the argument was inspired by similar
+tricks used in joint work of the last two authors with C. Davis [DWX16].
+7
+===== PDF PAGE 8 =====
+1.12. Structure of the paper. Section 2 is devoted to constructing a certain integral model
+for the space of p-adic automorphic forms on a deﬁnite quaternion algebra. The action of
+Up-operator on this integral model was made explicit in the ﬁrst part of Section 3; and
+we prove Theorem 1.3 in the latter part of Section 3 using a close estimate of the Newton
+polygon. Section 4 is devoted to proving Theorem 1.5. In Section 5, we provide a variant of
+the construction given in Section 2, which can be regarded as integral models of the space
+of overconvergent automorphic forms.
+1.13. Acknowledgments. We cannot emphasize enough the importance of the ideas of
+Robert Coleman to this paper. We thank Barry Mazur for his constant encouragement and
+many suggestions. We thank Vincent Pilloni for sharing his insight into Coleman’s idea. We
+thank the anonymous referees for their impressively helpful report which greatly improved
+the exposition of the paper as well as simpliﬁed some arguments. We thank John Bergdall,
+Gaetan Chenevier, Keith Conrad, and Robert Pollack for interesting discussions. D.W. and
+L.X. thank the hospitality of Beijing International Center for Mathematical Research when
+they visited.
+1.14. Notation. Throughout this paper, N denotes the set of positive integers. We ﬁx a
+prime number p. Set q = p for p > 2, and q = 4 for p = 2. Let ϕ(q) denote the Euler
+function, namely,ϕ(q) =p− 1 if p> 2 and ϕ(q) = 2 if p = 2. Write A for the ring of adeles
+of Q, and Af (resp. A(p)
+f ) the subring of ﬁnite adeles (resp. ﬁnite prime-to- p adeles).
+ForA an aﬃnoid Qp-algebra, we useA◦ to denote the subring of power bounded elements.
+The notions A⟨z⟩ and A◦⟨z⟩ are reserved for denoting Tate algebras.
+The row and column indices of matrices always start with 0. We useIn forn∈ Z≥0 or∞
+to denote the identity n×n-matrix.
+2. Automorphic forms for definite quaternion algebras
+We ﬁrst discuss carefully various versions of (overconvergent) automorphic forms for def-
+inite quaternion algebras. In particular, we give a certain “integral model” of the space of
+p-adic automorphic forms.
+Notation 2.1. We write Z×
+p as ∆× (1 +qZp)× with ∆∼= (Z/qZ)×. We identify (1 +qZp)×
+with Zp via 1
+q log(−). Let Λ denote the Iwasawa algebra
+ZpJZ×
+p K∼= Zp[∆]⊗Zp ZpJ(1 +qZp)×K∼= Zp[∆]⊗Zp ZpJT K,
+where T corresponds to [exp(q)]− 1. Here, for a∈ Z×
+p , we use [ a] to denote its image in
+Λ×; so [−] : Z×
+p → Λ× is the universal character of Z×
+p . In particular, each continuous ring
+homomorphismχ : Λ→ Cp deﬁnes a continuous characterχ◦ [−] : Z×
+p → C×
+p (which we still
+denote by χ). Conversely, all continuous Cp-valued characters of Z×
+p may be obtained this
+way.
+We use mΛ to denote the ideal (p,T ) of Λ∼= Zp[∆]⊗Zp ZpJT K.
+LetW denote the rigid analytic space associated to Λ. For each ( Cp-valued) continuous
+characterχ of Z×
+p , we write Tχ :=χ(exp(q))− 1 for the T -coordinate of the associated point
+on weight space. For r∈ (0, 1)∩pQ, we use W≤r to denote the union of the disks where
+|T|≤ r; it is an aﬃnoid subdomain of the weight space.
+8
+===== PDF PAGE 9 =====
+Following Buzzard [Bu04, Section 5], we deﬁne for m∈ N the rigid analytic spaces
+Bp−m =
+{
+z∈O Cp
+⏐⏐|z−a|≤ p−m for some a∈ Zp
+}
+;
+B×
+p−m =
+{
+z∈O Cp
+⏐⏐|z−a|≤ p−m for some a∈ Z×
+p
+}
+.
+Form∈ N (m≥ 2 if p = 2), we say a continuous character χ : Z×
+p →A× with values in
+an aﬃnoid Qp-algebra A is m-locally analytic if for each closed point x∈ Max(A) and the
+corresponding character χx : Z×
+p
+χ
+− →A×→ k(x)×, we have v(Tχx) > q/pm(p− 1). In this
+case, χ extends to a continuous homomorphism
+κ : (Zp +pmA◦⟨z⟩)× = Z×
+p· (1 +pmA◦⟨z⟩)−→(A◦⟨z⟩)×
+a·x↦−→χ(a)·χ(exp(pm))(logx)/pm
+.
+WhenA is a ﬁnite extensionE of Qp, this means thatχ extends to a homomorphism of rigid
+group schemes χ : B×
+p−m→ Grig
+m,E. See e.g. [WXZ14 +, (3.1.2)] for more discussion.
+Form∈ N, a continuous character ψ : Z×
+p → E× (with E a ﬁnite extension over Qp) is
+called a ﬁnite character of conductorpm if it factors through (Z/pmZ)× but not (Z/pm−1Z)×.
+We say a continuous characterχ of Z×
+p is classical if it sendsx toxkψ(x) for an integerk≥ 0
+and a ﬁnite characterψ of conductorpm. We write (k,ψ ) for such a character; it ism-locally
+analytic, because
+• (when p> 2) v(T(k,ψ))≥ 1 if m = 1, and v(T(k,ψ)) = 1/pm−2(p− 1) if m≥ 2, and
+• (when p = 2) v(T(k,ψ))≥ 1 if m = 3, and v(T(k,ψ)) = 1/pm−3 if m≥ 4.
+By abuse of language, we say this ( k,ψ ) has conductor pm. In this paper, the weight of
+automorphic forms will be k + 2.
+2.2. Subgroups of GL2(Zp). We consider the following subgroups of GL2(Qp) (form∈ N):
+Iwpm∼=
+( Z×
+p Zp
+pmZp Z×
+p
+)
+⊃ B(Zp)∼=
+(Z×
+p Zp
+0 Z×
+p
+)
+⊃ N(Zp)∼=
+(
+1 Zp
+0 1
+)
+,
+T (Zp) =
+(Z×
+p 0
+0 Z×
+p
+)
+and ¯N(pmZp)∼=
+(
+1 0
+pmZp 1
+)
+.
+The Iwasawa decomposition is the isomorphism
+(2.2.1) N(Zp)×T (Zp)× ¯N(pmZp)
+∼= →→ Iwpm
+(n,t, ¯n)  →→nt¯n.
+We will often identify ¯N(qZp) with Zp by sending
+( 1 0
+qz 1
+)
+to z for z ∈ Zp. The Iwahori
+subgroup Iwq admits an anti-involution:
+(2.2.2) g =
+(a b
+c d
+)
+↦→g∗ :=
+( 1 0
+0 q
+)
+gt( 1 0
+0 q−1
+)
+=
+( a c/q
+qb d
+)
+.
+In particular, (gh)∗ =h∗g∗ for g,h∈ Iwq.
+Consider the natural homomorphismπd :B(Zp)→ Z×
+p sending
+(a b
+0 d
+)
+tod. Any continuous
+character of Z×
+p can be viewed as a character of B(Zp) by composing with πd. We will only
+consider characters of B(Zp) of this form.
+9
+===== PDF PAGE 10 =====
+2.3. Induced representation. LetA be a topological ring in whichp is topologically nilpo-
+tent; and let χ : Z×
+p → A× be a continuous character, viewed as a character of B(Zp) by
+composing with πd as above. Consider the following induced representation of Iw q:
+IndIwq
+B(Zp)(χ) :=
+{
+continuous functions f : Iwq→A|f(bg) =χ(b)f(g) for b∈B(Zp), g∈ Iwq
+}
+,
+where instead of the usual left action, we consider the right action of h∈ Iwq by sending
+f to f||χ
+h :g↦→f(gh∗). (The reason for our choice is to match with the convention used in
+Buzzard [Bu04] as shown by (2.3.2) below.) The Iwasawa decomposition (2.2.1) gives the
+following isomorphism, which made this induced representation explicit:
+(2.3.1) Ind Iwq
+B(Zp)(χ)
+∼= →→C(Zp;A) :=
+{
+continuous functions Zp→A
+}
+f  →→h(z) :=f
+((
+1 0
+qz 1
+))
+.
+Then the (right) action of
+(a b
+c d
+)
+∈ Iwq on Ind Iwq
+B(Zp)(χ) induces the following action on
+C(Zp;A):
+(2.3.2) h
+⏐⏐⏐⏐χ(
+a b
+c d
+)(z) =f
+(( 1 0
+qz 1
+)( a c/q
+qb d
+))
+=f
+(( ad−bc
+cz+d c/q
+0 cz+d
+)( 1 0
+qaz+b
+cz+d 1
+))
+=χ(cz +d)h
+(az +b
+cz +d
+)
+.
+One checks that this action extends to an action of the monoid
+(2.3.3) M1 :=
+{(a b
+c d
+)
+∈ M2(Zp)|q|c, p ∤d, and ad−bc̸= 0
+}
+.
+WhenA is an aﬃnoid Qp-algebra andχ : Z×
+p →A× ism0-locally analytic for somem0∈ N,
+for everym≥ max{m0,v (q)}, we can consider the m-locally analytic induced representation
+IndIwq
+B(Zp)(χ)m,an =
+{
+f∈ IndIwq
+B(Zp)(χ)
+⏐⏐f is an analytic function on
+( 1 0
+a+pmZp 1
+)
+, for all a∈qZp
+}
+.
+Here analytic function means that the values of the function can be given by a convergent
+Taylor series on the speciﬁed p-adic disk. The condition that χ is m-locally analytic is used
+so that the action (2.3.2) is well deﬁned.
+Similar to (2.3.1), sending f to h(z) =f
+(( 1 0
+qz 1
+))
+induces an isomorphism
+(2.3.4) Ind Iwq
+B(Zp)(χ)m,an ∼=−−→OBqp−mˆ⊗QpA.
+Here the latter space may be understood as the subspace of continuous functionsh∈C (Zp;A)
+such that h is analytic on a +q−1pmZp for all a∈ Zp.
+We write
+IndIwq
+B(Zp)(χ)l.an =
+⋃
+m≥m0
+IndIwq
+B(Zp)(χ)m,an
+for the locally analytic induced representation ; it is a subspace of Ind Iwq
+B(Zp)(χ) which, under
+the isomorphism (2.3.1), corresponds to Can(Zp;A) consisting of locally analytic functions
+on Zp with values in A.
+When χ is a classical character (k,ψ ) of conductor pm0≤ pm, IndIwq
+B(Zp)(χ)m,an contains a
+subspace Ind Iwq
+B(Zp)(χ)m,alg consisting of those functions whose restriction to a +q−1pmZp is
+a polynomial function of degree ≤ k for all a∈ Zp. The isomorphism (2.3.4) induces an
+isomorphism between Ind Iwq
+B(Zp)(χ)m,alg and the space LP m−v(q),deg≤k(Zp;E) consisting of all
+10
+===== PDF PAGE 11 =====
+functions h∈C (Zp;E) whose restriction to a +q−1pmZp is a polynomial function of degree
+≤k for all a∈ Zp.
+2.4. Buzzard’s overconvergent automorphic forms. We now recall Buzzard’s construc-
+tion of overconvergent automorphic forms following [Bu04, Section 5].
+We ﬁx a deﬁnite quaternion algebraD over Q which splits atp, and we ﬁx an isomorphism
+D⊗ Qp≃ M2(Qp) and identify them, so that the groups considered in Subsection 2.2 may
+be viewed as subgroups of ( D⊗ Qp)×. We ﬁx the tame level structure Kp to be an open
+compact subgroup of (D⊗ A(p)
+f )×. We call Kp neat if it satisﬁes the following condition (see
+[Bu04, Section 4]):
+(Neat) for any x∈ (D⊗ Af)×, we havex−1D×x∩KpIwq ={1}.
+The neat condition is coﬁnal in the direct system of all tame level structures. For instance,
+for any l≥ 3, the full l level structure is neat.
+Let χ be an m0-locally analytic character of Z×
+p with values in an aﬃnoid Qp-algebra A.
+Form≥ m0, Buzzard [Bu04] deﬁned the space of overconvergent modular forms of weight
+χ and radius of convergence p−m (with m∈ N and m≥ 2 if p = 2) to be
+SD,†,m
+χ :=
+{
+ϕ :D×\(D⊗ Af)×/Kp→ IndIwq
+B(Zp)(χ)m,an⏐⏐ϕ(xup) =ϕ(x)||χ
+up, for up∈ Iwq
+}
+.
+We put SD,†
+χ :=∪m≥m0SD,†,m
+χ . When χ = (k,ψ ) is a classical character of conductor pm0≤
+pm, SD,†,m
+χ contains the subspace of classical automorphic forms of weight k + 2:
+SD
+k+2(KpIwpm;ψ) :=
+{
+ϕ :D×\(D⊗Af)×/Kp→ IndIwq
+B(Zp)(χ)m,alg⏐⏐ϕ(xup) =ϕ(x)||χ
+up, for up∈ Iwq
+}
+.
+2.5. The Up-operator. We choose a decomposition of the double coset:
+Iwq
+(p 0
+0 1
+)
+Iwq =
+p−1∐
+j=0
+Iwqvj,
+for example with vj =
+( p 0
+jq 1
+)
+, and deﬁne
+(2.5.1) Up(ϕ) :=
+p−1∑
+j=0
+ϕ|χ
+vj, with (ϕ|χ
+vj)(g) :=ϕ(gv−1
+j )||χ
+vj.
+This deﬁnition does not depend on the choice of the coset representatives vj. The operator
+Up naturally acts on SD,†,m
+χ , and preserves the subspace SD
+k+2(KpIwpm;ψ) if χ is a classical
+character (k,ψ ) of conductor pm0≤pm.
+Remark 2.6. Buzzard [Bu04] allows variants of the construction by taking equivariant
+functions under a (smaller) Iwahori subgroup Iwpα and with values in Ind
+Iwpα
+B(Zp)(χ)β,an, namely,
+those functions that are analytic on a +pβ−αZp for all a∈ Zp (under the identiﬁcation
+h(z) = f
+(( 1 0
+pαz 1
+))
+), as long as α≥ 1 and β≥ max{α,m 0,v (q)}. But [Bu04, Lemma 4]
+says that the characteristic power series for the Up-action on the space of overconvergent
+automorphic forms does not depend on this general ﬂexibility. In [WXZ14 +], we exploit the
+construction whenα =β =m0, i.e., taking equivariant functions under the Iwahori subgroup
+Iwpm0 and having the target of ϕ to be A⟨z⟩. In contrast, we focus on the other extreme
+α =v(q) and β =m0 in this paper: letting the disks become smaller and smaller as m0 goes
+11
+===== PDF PAGE 12 =====
+to inﬁnity, while keeping the setup to take equivariant functions under the Iw q-action; this
+is adapted to the goal of ﬁnding an integral model.
+2.7. Integral model of the space ofp-adic automorphic forms. Consider the universal
+character [−] : Z×
+p → Λ×, viewed as a character of B(Zp) by composing with πd. (So the
+coeﬃcient ring will be the Iwasawa algebra A = Λ.) Deﬁne the space of integral p-adic
+automorphic forms for D to be
+SD
+int :=
+{
+ϕ :D×\(D⊗ Af)×/Kp→ IndIwq
+B(Zp)([−])
+⏐⏐ϕ(xup) =ϕ(x)||[−]
+up, for up∈ Iwq
+}
+.
+Since the coeﬃcient ring Λ is not a Banach algebra, SD
+int is not a Banach space in the lit-
+eral sense. But as shown later in (2.11.1) and Proposition 2.17, at least when the tame
+level is neat, SD
+int is the completion of an (countably) inﬁnite direct sum of Λ’s. Moreover,
+the topological space SD
+int carries a continuous action of Up, deﬁned using the same for-
+mula (2.5.1). (Here and later, we do not discuss the tame Hecke operators as we will not use
+them. Clearly, this space carries a natural action of the tame Hecke algebra; see for example
+[WXZ14+,§3.4].)
+Note that Λ (or Λ[ 1
+p]) is not an aﬃnoid algebra, one needs to pass over an aﬃnoid sub-
+domain of W to compare SD
+int with the usual space of overconvergent automorphic forms.
+More precisely, for m0∈ N≥4, we writeWm0 :=W≤p−1/pm0−4
+and use [−]m0 : Z×
+p →O×
+Wm0
+to
+denote the induced universal character (the radius here is not optimal), which is m0-locally
+analytic. Then SD
+intˆ⊗ΛOWm0 containsSD,†
+[−]m0
+=∪m≥m0SD,†,m
+[−]m0
+and hence SD,†,m0
+[−]m0
+as subspaces.
+Remark 2.8. In his thesis [Go88], F. Gouvˆ ea proved that Up is not a compact operator
+on the space of p-adic modular forms. Since SD
+int is an integral model of the space of p-adic
+automorphic forms for D, it is very likely that the Up-action on SD
+int is not compact in the
+sense of Deﬁnition 5.1. However, a key observation of this work is that one can still deﬁne the
+characteristic power series for the Up-action with respect to a carefully chosen orthonormal
+basis of SD
+int. See Theorem 3.16 and the discussion in Section 5.
+Remark 2.9. The Λ-dual space ofSD
+int may be identiﬁed withP (Zp) =
+( Z×
+p Zp
+0 1
+)
+-coinvariants
+of Emerton’s completed homology of the Shimura variety associated to D×:
+˜SD :=
+(
+lim←−m→∞
+Zp
+[
+D×\(D⊗ Af)×)/KpKp,m
+])
+P (Zp)
+,
+whereKp,m :=
+(
+1+pmM2(Zp)
+)×
+. (Rigorously speaking, the Up-action on both sides might be
+normalized slightly diﬀerently; this is because we chose to follow the convention of Buzzard
+[Bu04].) More naturally, we should have taken the invariants under N(Zp), which would
+lead to a theory of eigensurface overW×W “homogeneous” along one factor ofW. But it is
+custom to simplify the picture by taking a “slice” of the eigensurface to study the eigencurve.
+For general algebraic groupsG over Q which is quasi-split atp and compact modulo center
+at the archimedean place, one can construct the corresponding integral model by taking the
+coinvariants of the completed homology of the Shimura variety under the unipotent subgroup
+of the chosen Borel subgroup at p, or equivalently consider a similar induced representation.
+These two viewpoints are essentially the same, as explained in [Lo11, Section 3.10]. More
+generally, it might be possible to extend this construction to general G by looking at the
+completed homology groups of the associated locally symmetric space.
+12
+===== PDF PAGE 13 =====
+We also point out that our construction is closely tied to the ´ etale (or Betti) realization
+of the eigencurve or the corresponding automorphic forms. One can also realize the space
+of automorphic forms using their de Rham realization, as in the original construction of
+Coleman–Mazur [CM98] and Andreatta–Iovita–Pilloni–Stevens [AIS14, Pi13]. In the recent
+work of Andreatta, Iovita, and Pilloni [AIP15 +], they constructed some integral model of
+the space of overconvergent Hilbert modular forms, developing an idea of Coleman [Cole-A]
+(see also Remark 5.6).
+Hypothesis 2.10. For simplicity, from now on we assume that Kp is neat. But we shall
+insert discussions throughout on reducing the argument from the general case to the neat
+case.
+2.11. Explicit presentation of (overconvergent) automorphic forms. One can give
+an explicit description of the space of (overconvergent) automorphic forms. For this, we
+decompose (D⊗ Af)× into (a disjoint union of) double cosets ∐t−1
+i=0D×γiKpIwq, for some
+elements γ0,γ 1,...,γ t−1∈ (D⊗ Af)×. The condition (Neat) implies that the natural map
+D××KpIwq→D×γiKpIwq for each i sending (δ,u ) to δγiu is bijective. Since D× is dense
+in (D⊗ Qp)×, we may and will take each γi so that its p-component γi,p is just 1. 3
+Evaluating each functionϕ at these chosen γi’s, we have an explicit description of various
+spaces of automorphic forms:
+(2.11.1) SD
+int
+∼= →→⨁t−1
+i=0C(Zp; Λ)
+SD,†,m
+χ
+∼= →→⨁t−1
+i=0OBqp−mˆ⊗QpA
+ϕ  →→(
+ϕ(γi)
+)
+i=0,...,t−1,
+where χ : Z×
+p →A× is an m-analytic character of Z×
+p with values in an aﬃnoid Qp-algebra
+A.
+2.12. Characteristic power series. From the explicit presentation (2.11.1), we see that
+SD,†,m
+χ is an orthonormalizable Banach A-module, i.e. there exists an orthonormal ba-
+sis (ei)i∈Z≥0 such that SD,†,m
+χ ∼= ˆ⊕i≥0Aei. With respect to this basis, the action of Up is
+given by an inﬁnite matrix, say P . Moreover, the action of Up is compact (see e.g. [Bu07,
+Lemma 12.2]), namely, it is a uniform limit of A-linear operators whose images are ﬁnite
+A-modules. We deﬁne the characteristic power series of the Up-action on SD,†,m
+χ to be
+Char(Up;SD,†,m
+χ ) := det(I∞−XP )∈AJXK.
+This power series converges and does not depend on the choice of the orthonormal basis
+(ei)i∈Z≥0.
+Deﬁnition 2.13. Forr∈ (0, 1)∩pQ, let [−]≤r : Z×
+p →O×
+W ≤r denote the universal character.
+Choosem∈ N such thatr <p−q/pm(p−1) so that the universal character ism-locally analytic.
+The spectral curve Spc≤r
+D overW≤r is deﬁned to be the (scheme theoretic) zero locus of
+the characteristic power series Char( Up;SD,†,m
+[−]≤r
+) inside W≤r× Grig
+m . By [Bu04, Lemma 4],
+Char(Up;SD,†,m
+[−]≤r
+) and hence Spc≤r
+D does not depend on the choice of m, and it is compatible
+3It was pointed out to us by Emerton and Ren (independently) that the assumption γi,p = 1 is not
+essentially needed to prove Proposition 3.1(3) later.
+13
+===== PDF PAGE 14 =====
+as r varies. We put Spc D :=∪r∈(0,1) Spc≤r
+D to be the spectral curve with tame level Kp.
+The natural projection wt to weight space W is called the weight map. The composition of
+x↦→x−1 on Grig
+m and the natural projection SpcD→ Grig
+m is called the slope map and denoted
+byap : SpcD→ Grig
+m .
+Remark 2.14. One may reduce the non-neat case to the neat case as follows. Choose a split
+primel≥ 3 ofD diﬀerent fromp, and intersectKp with the full levell structure. The spectral
+curve for this new tame level structure (which is neat) is endowed with a GL 2(Z/lZ)-action
+which commutes with the weight map. Since | GL2(Z/lZ)| is invertible on weight space, the
+spectral curve for Kp is a union of connected components of the spectral curve for this new
+tame level.
+We record the following classicality result for later use. It establishes a basic link between
+the classical theory of automorphic forms and the theory of the overconvergent ones.
+Proposition 2.15 ([Bu04, Proposition 4]) . Let χ = (k,ψ ) : Z×
+p → E× be a classical char-
+acter of conductor pm. Let 0̸=ϕ∈SD,†
+χ be an eigenvector for Up with non-zero eigenvalue
+λ.
+• If v(λ)<k + 1, then ϕ is classical, i.e. ϕ∈SD
+k+2(KpIwpm;ψ).
+• If v(λ)>k + 1, then ϕ /∈SD
+k+2(KpIwpm;ψ).
+2.16. One-variablep-adic analysis. Before proceeding, we need some one-variable p-adic
+analysis, as developed by P. Colmez [Colm10].
+Recall thatC(Zp; Zp) carries a supremum norm:
+for f∈C (Zp; Zp),|f|Zp := max
+z∈Zp
+|f(z)|.
+The functions 1,z,...,
+(z
+n
+)
+,... form an orthonormal basis of C(Zp; Zp), called the Mahler
+basis. In other words, any f∈C (Zp; Zp) admits a Mahler expansion:
+(2.16.1) f(z) =
+∑
+n≥0
+an
+(z
+n
+)
+, where all an∈ Zp; and lim
+n→∞
+|an| = 0.
+Form≥v(q), recall thatOBqp−m is the subspace ofC(Zp; Qp) consisting of those continuous
+functions that admits a local Taylor expansion over a +q−1pmZp for each a∈ Zp. It carries
+a natural norm
+for f∈O Bqp−m,|f|qp−m,an := max
+z∈Bqp−m(Cp)
+|f(z)|.
+By [Colm10, Th´ eor` em 1.29], the functions
+⌊ n
+q−1pm
+⌋
+!·
+(z
+n
+)
+; n∈ Z≥0
+form an orthonormal basis of OBqp−m for the norm |·| qp−m,an. Note that this orthonormal
+basis is not the one we commonly use in the context of studying SD,†,m
+[−]m (e.g. in [Bu04] and
+in [WXZ14+]).
+In the rest of the paper, we always equip Λ JXK with the mΛ-adic topology.
+14
+===== PDF PAGE 15 =====
+Proposition 2.17. Using the isomorphism (2.11.1), the space SD
+int admits an orthonormal
+basis (over Λ) given by
+10,..., 1t−1,z 0,...,z t−1,
+(z0
+2
+)
+,...,
+(zi
+2
+)
+,...,
+where the subscript i indicates that the term comes from the ith direct summand. Let P =
+(Pm,n)m,n∈Z≥0 denote the corresponding inﬁnite matrix for the Up-action, with coeﬃcients in
+Λ. Suppose that the (uniform) limit of power series
+Char(P ) := det(I∞−XP ) = lim
+n→∞
+det
+(
+In−X(Pi,j
+)
+i,j=0,...,n−1
+)
+∈ ΛJXK
+exists (which we shall prove in Theorem 3.16). Then it agrees with the characteristic power
+series of the Up-action on each SD,†,m
+[−]m .
+Proof. By [Colm10, Th´ eor` em 1.29] we cited above, the functions
+⌊ n
+q−1pm
+⌋
+!·
+(zi
+n
+)
+for i = 0,...,t − 1 and n∈ Z≥0
+form an orthonormal basis of SD,†,m
+[−]m . If P′ denotes the inﬁnite matrix of Up-action on this
+basis, then P and P′ are conjugated by an inﬁnite diagonal matrix with diagonal entries
+1,..., 1  
+t
+, 1,..., 1  
+t
+,..., ⌊ n
+q−1pm⌋!,..., ⌊ n
+q−1pm⌋!
+  
+t
+,...
+So taking the limit of the characteristic polynomial of the ﬁrst r×r-minors, as r goes to
+inﬁnity gives
+Char(Up;SD,†,m
+[−]m ) = det(I∞−XP′) = det(I∞−XP ),
+provided that the latter is well deﬁned. □
+Remark 2.18. Once again, we point out that the deﬁnition of Char( P ) depends on the
+choice of the orthonormal basis; in particular, it a priori depends on the choice of the coset
+representatives (see Remark 5.3), if we had not shown that it agrees with the characteristic
+power series Char(Up;SD,†,m
+[−]m ). See Section 5 for more discussion.
+3. Estimation of the Newton polygon
+The advantage of working with a deﬁnite quaternion algebra is that the action of the Up-
+operators may be written in a relatively explicit form. This was ﬁrst observed by Buzzard
+and carried out by his student Jacobs [Ja04] (in one example), and later carefully optimized
+by the second and third authors and Zhang in [WXZ14 +].
+In this section, we will ﬁrst revisit this explicit presentation of the Up-operator. Then we
+give an estimate of the explicit formula for the Up-operator and provide a lower bound of
+the Newton polygon for the Up-action that is valid over weight space W>1/p. Luckily, this
+lower bound agrees with the actual Newton polygon at inﬁnitely many points. Theorem 1.3
+follows from a careful analysis of the Newton polygon at these points, as proved at the end
+of this section.
+15
+===== PDF PAGE 16 =====
+Proposition 3.1. In terms of the isomorphism (2.11.1), the Up-operator on SD
+int can be
+described by the following commutative diagram.
+SD
+int
+ϕ↦→(ϕ(γi)) →→
+ϕ↦→Upϕ
+↓↓
+⊕t−1
+i=0C(Zp; Λ)
+Up
+↓↓
+SD
+int
+ϕ↦→(ϕ(γi)) →→⊕t−1
+i=0C(Zp; Λ).
+Here the right vertical arrow Up is given by a t×t matrix with the following description.
+(1) Each entry of Up is a sum of operators of the form ||[−]
+δp , where δp is the p-component
+of a global element δ∈D×.
+(2) There are exactly p such operators appearing in each row and each column of Up.
+(3) Each δp appearing above belongs to
+(pZp Zp
+qZp Z×
+p
+)
+.
+Proof. We reproduce the proof from [WXZ14 +, Proposition 4.4] to make this paper more
+self-contained. For each γi, we have
+(Upϕ)(γi) =
+p−1∑
+j=0
+ϕ(γiv−1
+j )||[−]
+vj .
+Write eachγiv−1
+j uniquely asδ−1
+i,jγλi,jui,j withδi,j∈D×,λi,j∈{ 0,...,t −1}, andui,j∈KpIwq.
+Then we have
+(Upϕ)(γi) =
+p−1∑
+j=0
+ϕ(δ−1
+i,jγλi,jui,j)||[−]
+vj =
+p−1∑
+j=0
+ϕ(γλi,j)||[−]
+ui,j,pvj,
+whereui,j,p is thep-component ofui,j. Substitute back in ui,jvj =γ−1
+λi,jδi,jγi and note the fact
+that both γi and γλi,j have trivial p-component by our choice in Subsection 2.11. We have
+(Upϕ)(γi) =
+p−1∑
+j=0
+ϕ(γλi,j)||[−]
+δi,j,p,
+whereδi,j,p is thep-component of the global element δi,j∈D×. We now check the description
+of each δi,j,p:
+δi,j,p =ui,j,pvj∈ Iwq
+(p 0
+0 1
+)
+Iwq⊆
+(pZp Zp
+qZp Z×
+p
+)
+.
+This concludes the proof of the proposition. □
+Remark 3.2. By choosing the representatives γi’s more carefully, one can ensure that each
+global element δ appearing above has norm exactly p. This was used in a somewhat crucial
+way in [WXZ14+].
+Now, to understand the action of the Up-operator, it suﬃces to understand the action
+of||[−]
+δp onC(Zp; Λ) for each δp =
+(a b
+c d
+)
+∈
+(pZp Zp
+qZp Z×
+p
+)
+. For later use, we will generalize our
+discussion to all δp in the monoid M1 (as deﬁned in (2.3.3)).
+16
+===== PDF PAGE 17 =====
+3.3. More Mahler expansions. Recall that every functionf∈C (Zp; Zp) admits a Mahler
+expansion f(z) = ∑
+n≥0an(f)
+(z
+n
+)
+with an(f)∈ Zp and limn→∞an(f) = 0. These Mahler
+coeﬃcientsan(f) can be determined by the following process: for f(z)∈C (Zp; Zp), we write
+˜∆(f)(z) = ˜∆(1)(f)(z) =f(z + 1)−f(z) and ˜∆(m+1)(f)(z) = ˜∆
+( ˜∆(m)(f)
+)
+(z) for m∈ N.
+Set ˜∆(0)(f) =f. Then for m∈ Z≥0, we have
+(3.3.1) am(f) = ˜∆(m)(f)(0) =
+m∑
+i=0
+(−1)m−i
+(m
+i
+)
+f(i).
+Proposition 3.4. Consider the action of δp =
+(a b
+c d
+)
+∈ M1 onC(Zp; Λ). Let P (δp) =
+(Pm,n(δp))m,n∈Z≥0 denote the inﬁnite matrix for this action with respect to the orthonormal
+Mahler basis 1,z,
+(z
+2
+)
+,... . Then
+(3.4.1) Pm,n(δp) = ˜∆(m)
+(((az +b)/(cz +d)
+n
+)
+·
+[
+(cz +d)
+])⏐⏐⏐⏐
+z=0
+.
+Proof. For a function f∈C (Zp; Λ), we write its Mahler coeﬃcients an(f)∈ Λ as an inﬁnite
+column vector. So the entry Pm,n(δp) corresponds to the mth Mahler coeﬃcient of the
+function (z
+n
+)⏐⏐⏐
+⏐⏐⏐
+[−]
+(
+a b
+c d
+) =
+((az +b)/(cz +d)
+n
+)
+·
+[
+(cz +d)
+]
+.
+Note that the universal character [−] cannot be applied to the formal expression cz +d; but
+[cz +d] still makes sense as a continuous function on Zp with values in Λ. Comparing with
+(3.3.1), we have
+Pm,n(δp) =am
+(((az +b)/(cz +d)
+n
+)
+·
+[
+(cz+d)
+])
+= ˜∆(m)
+(((az +b)/(cz +d)
+n
+)
+·
+[
+(cz+d)
+])⏐⏐⏐⏐
+z=0
+.
+□
+3.5. More p-adic analysis. We start by listing the following three useful equalities, which
+can be checked easily.
+˜∆(m)(fg )(z) =
+m∑
+i=0
+(m
+i
+)
+˜∆(m−i)(f)(z +i) ˜∆(i)(g)(z).(3.5.1)
+˜∆(m)
+(z
+n
+)
+=
+{( z
+n−m
+)
+if n≥m
+0 otherwise .(3.5.2)
+(x1 +··· +xr
+n
+)
+=
+∑
+i1+···+ir=n
+(x1
+i1
+)
+···
+(xr
+ir
+)
+.(3.5.3)
+As a corollary of (3.5.2), if f =∑
+n≥0an(f)
+(z
+n
+)
+is the Mahler expansion of a function f∈
+C(Zp; Zp), then
+(3.5.4) ˜∆(m)(f)(z) =
+∑
+n≥m
+an(f)
+( z
+n−m
+)
+.
+17
+===== PDF PAGE 18 =====
+Deﬁnition 3.6. We say a continuous function f ∈C (Zp; Zp) is a polynomial function of
+degree≤n (for n∈ Z≥0) if the Mahler coeﬃcients ai(f) = 0 for i>n .
+Lemma 3.7. (1) A continuous function f∈C (Zp; Zp) is a polynomial function of degree
+≤n if and only if ˜∆(n+1)(f) = 0.
+(2) If f and g are polynomial functions on Zp of degree≤n and≤m, respectively, then
+fg is a polynomial function of degree ≤m +n.
+(3) If f∈C (Zp; Zp) is a polynomial function of degree ≤ r, then
+(f(z)
+n
+)
+is a polynomial
+function of degree≤rn.
+Proof. (1) If f(z) =∑
+i≥0ai(f)
+(z
+i
+)
+is the Mahler expansion of f, then
+˜∆(n+1)(f) =
+∑
+i≥n+1
+ai(f)
+( z
+i−n− 1
+)
+.
+Then ˜∆n+1(f) = 0 if and only if ai = 0 for all i≥n + 1. (1) is proved.
+The rest of the lemma follows immediately from the fact that the polynomial functions of
+degree≤n are precisely the polynomials in Qp[z] of degree at most n which map Zp to Zp.
+□
+In addition to the degree, the following convenient deﬁnition is tailored for our computa-
+tion.
+Deﬁnition-Proposition 3.8. We say a continuous function f∈C (Zp; Zp) has tilted degree
+≤n (for n∈ Z≥0) if the following equivalent conditions are satisﬁed:
+(1) for any m∈ N, ˜∆(m)(f) is a (continuous) function on Zp that takes value in pm−nZp;
+(2) writing down the Mahler expansion of f(z) =∑
+j≥0aj(f)
+(z
+j
+)
+, then v(aj(f))≥j−n.
+Note that the assumption f∈C (Zp; Zp) implies that condition (1) for m≤n and condition
+(2) for j≤n hold automatically.
+Proof. Let f(z) = ∑
+j≥0aj(f)
+(z
+j
+)
+be the Mahler expansion of f. By (3.5.4), ˜∆(m)(f) =∑
+n≥man(f)
+( z
+n−m
+)
+. Since the Mahler basis forms an orthonormal basis of C(Zp; Zp), ˜∆(m)(f)
+takes value in pm−nZp if and only if aj(f)∈pm−nZp for all j≥m≥n, which is equivalent
+to v(aj(f))≥j−n for all j≥n. □
+Remark 3.9. If f ∈C (Zp; Zp) is a polynomial function of degree ≤ n, then it has tilted
+degree≤n.
+Lemma 3.10. (1) If f∈C (Zp; Zp) and n∈ N, then f has tilted degree≤n if and only
+if ˜∆(f) has tilted degree≤n− 1.
+(2) If f and g are Zp-valued continuous functions on Zp of tilted degree≤ m and≤ n,
+respectively. Then fg has tilted degree≤m +n.
+Proof. (1) is clear from Deﬁnition-Proposition 3.8(2) because aj(f) =aj−1( ˜∆(f)).
+(2) We check it using Deﬁnition-Proposition 3.8(1). By (3.5.1), we have
+˜∆(r)(fg )(z) =
+r∑
+i=0
+(r
+i
+)
+˜∆(r−i)(f)(z +i) ˜∆(i)(g)(z).
+Each term on the right hand side has valuation at least ( r−i−m) + (i−n) =r−m−n.
+So fg has tilted degree≤m +n. □
+18
+===== PDF PAGE 19 =====
+To understand the expression (3.4.1), we need the following estimates.
+Lemma 3.11. Let g(z) = b0 +b1z +··· +brzr∈ Zp[z]. If there exists some s∈ R≥0 such
+that v(bi)≥is for all i, then we can rewrite g(z) as
+r∑
+i=0
+ci·i!
+(z
+i
+)
+with v(ci)≥is for all i.
+Proof. : If we compare the coeﬃcients of each degree, we see that
+br =cr,
+br−1 =cr−1 +crαr,r−1,
+br−2 =cr−2 +cr−1αr−1,r−2 +crαr,r−2,
+......,
+where αi,j are the coeﬃcients of zj in the product z(z− 1)··· (z−i + 1), which is of course
+an integer. By reverse induction, we see that v(br)≥ rs implies that of v(cr)≥ rs, and
+v(br−1)≥ (r− 1)s implies that of cr−1, .... This concludes the lemma. □
+Lemma 3.12. For a functionf(z) =a0 +pa1z +p2a2z2 +···∈ ZpJpzK and an integer n≥ 0,
+the expression
+(f(z)
+n
+)
+has tilted degree≤⌊ n
+p⌋.
+Proof. By approximation, we may assume that f(z) is a polynomial. Put
+g(z) =f(z)(f(z)− 1)··· (f(z)−n + 1)∈ Zp[pz]
+so that
+(f(z)
+n
+)
+= 1
+n!g(z). By Lemma 3.11, we may rewrite g(z) as
+r∑
+k=0
+ck·k!pk
+(z
+k
+)
+with v(ck)∈ Zp for all k.
+Since
+(f(z)
+n
+)
+is a continuous Zp-valued function, it suﬃces to prove that when k >⌊n
+p⌋,
+v(k!pk/n!)≥k−⌊ n
+p⌋. To this end, note that in this case ⌊ k
+pℓ⌋≥⌊ n
+pℓ+1⌋ for any ℓ∈ N. Thus
+v(k!pk) =k +⌊k
+p⌋ +⌊ k
+p2⌋ +···≥ k +⌊ n
+p2⌋ +⌊ n
+p3⌋ +··· =k−⌊ n
+p⌋ +v(n!).
+We are done. □
+Lemma 3.13. For a function f(z) =a0 +a1z +pa2z2/2 +p2a3z3/3 +··· +pk−1akzk/k +···
+with an∈ Zp and an integer m≥ 0, the expression
+(f(z)
+m
+)
+has tilted degree≤m.
+Proof. By approximation, we may suppose that f(z) is a polynomial function. Moreover,
+by the binomial identity (3.5.3) together with the additive property of the tilted degree
+(Lemma 3.10), we may assume that f(z) =pn−1anzn/n is a monomial with n∈ N (the case
+f(z) = a0 is trivial). When n = 1, this follows from the easy bound:
+(a1z
+m
+)
+is a polynomial
+function of degree m, so we are done by Remark 3.9. So we assume n> 1 for the rest of the
+proof.
+19
+===== PDF PAGE 20 =====
+Fixn and put g(z) =f(z)(f(z)− 1)··· (f(z) +m− 1)∈ Zp
+[pn−1
+n zn]
+; its degree is nm. By
+Lemma 3.11, we can rewrite
+(f(z)
+m
+)
+=g(z)/m! as
+nm∑
+k=0
+ckk!p
+n−1−v(n)
+n k/m!·
+(z
+k
+)
+,
+where ck belongs to Zp[p1/n]. Now we hope to show that for any k≤mn,
+(3.13.1) v
+(
+ckk!p
+n−1−v(n)
+n k/m!
+)
+≥ max{k−m, 0}.
+Whenk≤m, this follows from the fact that
+(f(z)
+m
+)
+is a continuous Zp-valued function on Zp.
+So we may assume that k >m (and k≤mn as the degree of g(z) is just mn). Simplifying
+the terms of (3.13.1), we see that it suﬃces to show (by ignoring the contribution of v(ck))
+(3.13.2) v(k!) +m≥v(m!) + 1 +v(n)
+n k.
+We separate several cases:
+(a) If p ∤ n, then we need to show that v(k!) +m≥ v(m!) +k/n. But this is just a
+combination of v(k!)≥v(m!) (as k≥m) and m≥k/n (as k≤nm).
+(b) If n≥ 2p and (p,n )̸= (2, 4), then 1+v(n)
+n ≤ 1/p. But v(k!/m!)≥⌊ k−m
+p ⌋≥ k−m
+p − p−1
+p .
+So (3.13.2) follows from
+v(k!/m!) +m≥ k
+p + p−1
+p m− p−1
+p ≥ k
+p≥ 1+v(n)
+n k.
+(c) If n =p, the inequality (3.13.2) might fail. So we have to go back to the beginning
+to show directly that
+(app−2zp
+m
+)
+has tilted degree ≤ m, when a∈ Zp. We prove this
+by induction on m; the case of m = 0 is void. Now suppose this is proved for all
+numbers strictly less than m and we prove it for m. We need to show that
+˜∆
+((app−2zp
+m
+))
+has tilted degree ≤m− 1.
+We argue as in Lemma 3.7(3). Note that
+˜∆
+((app−2zp
+m
+))
+=
+(app−2(z + 1)p
+m
+)
+−
+(app−2zp
+m
+)
+(3.5.3)
+=
+m∑
+j=1
+(app−2((z + 1)p−zp)
+j
+)(app−2zp
+m−j
+)
+.
+Note that app−2((z + 1)p−zp)∈ Zp[pz]; so Lemma 3.12 shows the ﬁrst factor has
+tilted degree≤⌊ j
+p⌋≤ j−1. The second factor has tilted degree≤m−j by induction.
+By Lemma 3.10, the sum has tilted degree ≤m− 1. We are done.
+(d) If (p,n ) = (2 , 4), we may proceed as in ( c) to show directly that
+(2az4
+m
+)
+has tilted
+degree≤ m. The only non-trivial part is the inductive step: we need to show
+that
+(2a(z+1)4−2az4
+j
+)
+has tilted degree ≤ j− 1 for j ∈ N. To this end, note that
+2a(z + 1)4− 2az4 =a(8z3 + 12z2 + 8z + 2)∈ Z2[2z], and then apply Lemma 3.12.
+□
+20
+===== PDF PAGE 21 =====
+Proposition 3.14. (1) When δp =
+(a b
+c d
+)
+∈
+(pZp Zp
+qZp Z×
+p
+)
+, the coeﬃcient Pm,n(δp) belongs to
+mmax{m−⌊n/p⌋,0}
+Λ .
+(2) When δp =
+(a b
+c d
+)
+∈ M1, the coeﬃcient Pm,n(δp) belongs to
+mmax{m−n,0}
+Λ .
+Proof. The coeﬃcient Pm,n(δp) for sure belongs to Λ because the operator ||[−]
+δp preserves
+C(Zp; Λ). This explains the max on the exponents.
+Put f(z) = (az +b)/(cz +d)∈ ZpJzK. Write d = d0·⟨d⟩ with d0∈ ∆ = ( Z/qZ)× and
+⟨d⟩∈ (1 +qZp)×, so that [cz +d] can be written as
+[d0]·
+[
+(cz +d)/d0
+]
+= [d0]· (1 +T )log((cz+d)/d0)/q.
+Put g(z) = log((cz +d)/d0)/q; it is of the form considered in Lemma 3.13. Now we have
+˜∆(m)
+(((az +b)/(cz +d)
+n
+)[
+cz +d
+])⏐⏐⏐⏐
+z=0
+= [d0]·
+∑
+r≥0
+Tr· ˜∆(m)
+((f(z)
+n
+)(g(z)
+r
+))⏐⏐⏐⏐
+z=0
+.
+• By Lemma 3.13,
+(g(z)
+r
+)
+has tilted degree≤r.
+• In case (1), we havef(z)∈ ZpJpzK. So by Lemma 3.12,
+(f(z)
+n
+)
+has tilted degree≤⌊ n
+p⌋.
+• In case (2), note that f(z) is of the form considered in Lemma 3.13. Thus
+(f(z)
+n
+)
+has
+tilted degree≤n.
+Using Lemma 3.10 again, we see that the tilted degree of
+(f(z)
+n
+)(g(z)
+r
+)
+is≤r +⌊n
+p⌋ in case
+(1), and is≤r +n in case (2). So the Tr-coeﬃcients of (3.4.1) has valuation at least
+m−
+⌊n
+p
+⌋
+−r in case (1), and m−n−r in case (2).
+This is exactly what we need to prove. □
+Lemma 3.15. The rigid space associated to the ring
+Λ>1/p := ΛJpT−1K = ZpJT,pT −1K⊗Zp Zp[∆]
+isW>1/p. The ideal mΛΛ>1/p is the same as the principal ideal (T ).
+Proof. This is clear, noting that p =pT−1·T . □
+In the following, we will work over Λ >1/p instead.
+Theorem 3.16. Recall thatt = #D×\(D⊗ Af)×/KpIwq. Let P = (Pm,n)m,n∈Z≥0 denote the
+inﬁnite matrix of the Up-action with respect to the basis
+10,..., 1t−1,z 0,...,z t−1,
+(z0
+2
+)
+,...,
+(zi
+2
+)
+,...,
+as in Proposition 2.17. The characteristic power series
+Char(P ) := lim
+n→∞
+det
+(
+1−X(Pi,j)i,j=0,...,n−1
+)
+=
+∑
+n≥0
+cnXn∈ ΛJXK
+21
+===== PDF PAGE 22 =====
+is well deﬁned. Moreover, we have
+(3.16.1) cn∈Tλ(n)· Λ>1/p for n∈ Z≥0, 4
+whereλ(0) = 0,λ (1),... is a sequence of integers determined by
+λ(i + 1)−λ(i) =
+⌊i
+t
+⌋
+−
+⌊ i
+pt
+⌋
+.
+Proof. Combining the estimate in Proposition 3.14 and the explicit description of the Up-
+operator in Proposition 3.1, we see that the ( m,n )-entry of the inﬁnite matrix P satisﬁes
+(3.16.2) Pm,n∈ mmax{⌊m/t⌋−⌊n/pt⌋,0}
+Λ .
+In particular, modulo mr
+Λ for each r ∈ N, the inﬁnite matrix is strict upper triangular
+except the ﬁrst ⌊ptr/(p− 1)⌋×⌊ ptr/(p− 1)⌋-minor. Then modulo mr
+Λ, the characteristic
+polynomial of the ﬁrst s×s-minor is the same as the characteristic polynomial of the ﬁrst
+⌊ptr/(p−1)⌋×⌊ptr/(p−1)⌋-minor fors≥⌊ptr/(p−1)⌋. This implies that Char(P )∈ ΛJXK
+is well deﬁned.
+To compute Char(P ), we work with a bigger coeﬃcient ring Λ >1/p. So we have
+(3.16.3) ma
+Λ·TbΛ>1/p =Ta+bΛ>1/p for any integers a,b such that a,a +b∈ Z≥0.
+We now conjugate the matrix P by the inﬁnite diagonal matrix whose diagonal entries are
+1,..., 1  
+t
+,T,...,T  
+t
+,T 2,...,T 2
+  
+t
+,... ;
+let P′ = (P′
+m,n)m,n∈Z≥0 denote the matrix we get this way. Then we have
+P′
+m,n∈ mmax{⌊m/t⌋−⌊n/pt⌋,0}
+Λ ·T⌊n/t⌋−⌊m/t⌋Λ>1/p (3.16.3)
+⊆ T max{⌊n/t⌋−⌊n/pt⌋,⌊n/t⌋−⌊m/t⌋}Λ>1/p.
+In particular, the entries of P′ in the n-th column all lie in T⌊n/t⌋−⌊n/pt⌋Λ>1/p. So Char(P ) =
+Char(P′) has the property given in (3.16.1). □
+Remark 3.17. Comparing with [WXZ14 +], the major advantage of our estimate is that
+the basis we choose in this paper allows us to extend the estimate to the entire annuli, as
+opposed to just small disks near the boundary of weight space in [WXZ14 +]. Moreover, we
+shall see later that the estimate in Theorem 3.16 is already sharp for inﬁnitely manyn. This
+magical fact allows us to deduce the strong Theorem 1.3.
+By Proposition 2.17 (where the missing condition is checked by Theorem 3.16), the char-
+acteristic power series of Up on the space of overconvergent automorphic forms SD,†,m
+[−]m (for
+anym) is∑
+n≥0cnXn∈ ΛJXK with cn bounded as in (3.16.1).
+Now, we ﬁx a character ω of ∆. By abuse of notation, we still use cn to denote its image
+under the quotient map Λ → ZpJT K by evaluating ∆ using ω. Write cn(T ) =∑
+m≥0bn,mTm
+for bn,m∈ Zp.
+4In the very recent preprint [JN16 +] of Johansson and Newton, they gave a more conceptual proof of the
+estimate in this Theorem.
+22
+===== PDF PAGE 23 =====
+Corollary 3.18. For T∈ Cp with 0 < v(T ) < 1, we have v(cn(T ))≥ λ(n)v(T ) for every
+n≥ 0, with equality holding if and only if bn,λ(n)∈ Z×
+p . Moreover, if bn,λ(n) /∈ Z×
+p , then
+v(cn(T ))≥λ(n)v(T ) + min{v(T ), 1−v(T )}.
+As a consequence, the Newton polygon of ∑
+n≥0cn(T )Xn always lies above the polygon with
+vertices (n,λ (n)v(T )) for all n≥ 0.
+Proof. First note that if ∑
+m∈ZdmTm∈ Λ>1/p, then v(dm)≥ max{0,−m}. Combining this
+fact with (3.16.1), we get
+v(bn,m)≥ max{λ(n)−m, 0}.
+ForT∈ Cp with 0 <v (T )< 1, we deduce
+(3.18.1) v(bn,mTm)≥ max{λ(n)−m, 0} +mv(T )≥λ(n)v(T ),
+with the second equality holding if and only if m = λ(n). It follows that we always have
+v(bn,mTm)≥λ(n)v(T ), with equality holding if and only if m =λ(n) and bn,λ(n) is a p-adic
+unit in Zp. The rest of the corollary is clear. □
+We call the polygon given in Corollary 3.18 the lower bound polygon of∑
+n≥0cn(T )Xn.
+In the next we consider the ordinary locus of the (entire) spectral curve. In fact, it is
+very well known among the experts that the ordinary locus of the eigencurve is nothing but
+the Hida family of ordinary modular forms. Consequently, it should be ﬁnite and ﬂat over
+weight space. Because of the lack of proper reference, we give a proof about this fact in our
+case as follows.
+Theorem 3.19. LetXord denote the locus of the spectral curve SpcD whereap(x) has valu-
+ation zero. Then the following holds:
+(1) Xord is ﬁnite and ﬂat over W;
+(2) Xord is a union of connected components of SpcD.
+Proof. Applying Remark 2.14, it reduces to the case that tame level is neat. Then it suﬃces
+to prove this over each connected component ofW; so we ﬁx a character ω of ∆ throughout
+and denote by [−]ω the universal character. Let Xord
+ω denote the corresponding components.
+Recall that the characteristic power series of Up on SD,†
+[−]ω is equal to ∑∞
+n=0cn(T )Xn. Let d
+be the maximal index such that cd(T ) is a unit in ZpJT K, or equivalently, the constant term
+ofcd(T ) is a p-adic unit in Zp; such a d must exist by Corollary 3.18. We claim that Xord
+ω is
+ﬁnite and ﬂat of degree d overWω. Indeed, for each weight character χ : Z×
+p → C×
+p whose
+restriction to ∆ is ω, the Newton polygon of ∑∞
+n=0cn(Tχ)Xn has slope zero in the ﬁrst d
+segment and the vertices with x-coordinate strictly bigger than d must havey-coordinate at
+least min{1,v (Tχ)}, and the corresponding slopes eventually tend to inﬁnity. This implies
+thatXord
+ω is ﬁnite and ﬂat overWω of degreed, and is an aﬃnoid subdomain when restricted
+to the ﬁber of each aﬃnoid subdomain of Wω. Moreover, the ﬁrst non-zero slope of the
+Newton polygon at χ can be bounded away from 0 uniformly over any aﬃnoid subdomain;
+so Xord is disconnected from its complement. □
+Remark 3.20. For a classical weight ( k,ψ ), its ﬁber in Xord exactly corresponds to the
+ordinary part of the space of automorphic forms SD,†
+(k,ψ). By the Zariski density of classical
+weights in weight space, one can show thatXord is the same as the spectral Hida family (e.g.
+by the standard control theorem for Hida families ([Hi02, Theorem 7.1(5)])).
+23
+===== PDF PAGE 24 =====
+Recall that rord(ω) denotes the dimension of the ordinary subspace of automorphic forms
+of weight 2 and character ω.
+Corollary 3.21 (Hida). The degree of Xord
+ω overWω is rord(ω). As a consequence, for any
+integer k∈ Z and any ﬁnite character ψ of conductor pm, the slope zero subspace of SD,†
+(k,ψ)
+has dimension rord(ψ|∆·ωk
+0).
+Proof. In the course of the proof of Theorem 3.19, we already saw that the degree of Xord
+ω
+overWω is equal to the dimension of the ordinary subspace of SD,†
+χ (Kp) for every weight
+characterχ∈W ω. In particular, we can choose χ =ω. The rest part follows from the fact
+that (k,ψ ) belongs to the weight disk corresponding to ψ|∆·ωk
+0. □
+Let m∈ N≥2, and let ψ be a ﬁnite character of conductor pm. For k∈ Z≥0, using an
+isomorphism analogous to (2.11.1), we see that SD
+k+2(KpIwpm;ψ) is isomorphic to the direct
+sum of t copies of LPm−v(q),deg≤k(Zp;E). So in total,
+(3.21.1) dim SD
+k+2(KpIwpm;ψ) = (k + 1)q−1pmt.
+To prove Theorem 1.3, we also need the following result on Atkin–Lehner theory.
+Proposition 3.22 (Atkin–Lehner). We useα0(ψ),...,α (k+1)q−1pmt−1(ψ) to denote the slopes
+of Up acting on SD
+k+2(KpIwpm,ψ ) in non-decreasing order. Then we have
+αi(ψ) =k + 1−α(k+1)q−1pmt−1−i(ψ−1) for i = 0,..., (k + 1)q−1pmt− 1.
+In particular, the total sum of the Up-slopes of SD
+k+2(KpIwpm;ψ)⊕SD
+k+2(KpIwpm;ψ−1) is
+(k + 1)2q−1pmt.
+Proof. This is well known to the experts. We here give a proof as follows. Firstly note that
+the base change ofSD
+k+2(KpIwpm;ψ) to C is isomorphic to the corresponding classical space of
+automorphic forms forD. Since ψ has conductorpm while the level structure atp is Iwpm, by
+applying Jacquet–Langlands and [LW12, Proposition 2.8], we see that for every automorphic
+representation π appearing in SD
+k+2(KpIwpm;ψ), its p-component πp is a principal series of
+GL2(Qp) whose corresponding two characters of Q×
+p are unr(α) and unr(α−1)⊗ωp, where
+unr(?) is an unramiﬁed character of Q×
+p sending p to ? and ωp is the p-component of the
+Hecke character associated to ψ. Moreover, the Up-eigenvalue on the Iwpm ﬁxed vector of πp
+isαp(k+1)/2. But we can twist the representationπ by a central Hecke character associated to
+ψ−1; then the resulting automorphic representation would appear in SD
+k+2(KpIwpm;ψ−1) (or
+rather its base change to C) instead. Moreover, the Up-eigenvalue on the Iwpm ﬁxed vector
+of thep-component of this automorphic representation is α−1p(k+1)/2. In conclusion, one can
+pair the Up-eigenvalues ofSD
+k+2(KpIwpm;ψ) and the Up-eigenvalues ofSD
+k+2(KpIwpm;ψ−1) so
+that they multiply to pk+1. Our assertion on slopes follows from this. □
+3.23. Proof of Theorem 1.3. By virtue of Remark 2.14, we only need to treat the case
+that the tame level is neat. To this end, it suﬃces to get the desired decomposition for each
+Spc>1/p
+D,ω . We consider the classical weights χk = (k,ψ ) of conductor q2 with k∈ Z≥0, such
+thatχk|∆ =ω. The corresponding T -coordinates Tχk have valuation q
+ϕ(q2) = p
+q(p−1) < 1. The
+space of overconvergent automorphic forms SD,†
+χk contains the subspace SD
+k+2(KpIwq2;ψ) of
+classical automorphic forms. Put nk =kqt for k∈ Z≥0. By (3.21.1), we have
+dimSD
+k+2(KpIwq2;ψ) = (k + 1)qt =nk+1.
+24
+===== PDF PAGE 25 =====
+Step I: The ﬁrst important observation is that the Newton polygon of ∑
+n≥0cn(Tχk)Xn
+touches the lower bound polygon at the points
+Pk :=
+(
+nk+1,λ (nk+1)v(Tχk)
+)
+.
+On the one hand, Proposition 3.22 says that the sum of all Up-slopes on SD
+k+2(KpIwq2;ψ)⊕
+SD
+k+2(KpIwq2;ψ−1) is (k+1)2qt. By Proposition 2.15, one deduces that the set of allUp-slopes
+onSD
+k+2(KpIwq2;ψ)⊕SD
+k+2(KpIwq2;ψ−1) is exactly the set of the ﬁrst nk+1 Up-slopes in each
+ofSD,†
+(k,ψ) andSD,†
+(k,ψ−1). It follows that the sum of the ﬁrst nk+1 Up-slopes in each of SD,†
+(k,ψ) and
+SD,†
+(k,ψ−1) is also (k + 1)2qt.
+On the other hand, for each of T(k,χ) and T(k,χ−1), when the x-coordinate is (k + 1)qt, the
+y-coordinate of the lower bound polygon is
+p
+q(p− 1)λ
+(
+(k + 1)qt
+)
+= p
+q(p− 1)
+(k+1)qt−1∑
+n=0
+(⌊n
+t
+⌋
+−
+⌊n
+pt
+⌋)
+= p
+q(p− 1)
+(
+t
+(k+1)q−1∑
+n=0
+n−pt
+(k+1)q
+p −1
+∑
+n=0
+n
+)
+= (k + 1)2qt
+2 .
+(3.23.1)
+This exactly agrees (!) with half of the sum of the ﬁrst nk+1 Up-slopes on each of SD,†
+(k,ψ) and
+SD,†
+(k,ψ−1). In particular, we see that the sum of ﬁrst nk+1 Up-slopes on SD,†
+(k,ψ) (resp. SD,†
+(k,ψ−1))
+is (k + 1)2qt/2. That is, the Newton polygon of ∑
+n≥0cn(Tχk)Xn passes through the point
+(
+(k + 1)qt, (k + 1)2qt/2
+)
+=
+(
+nk+1,λ (nk+1)v(Tχk)
+)
+.
+We admit that the matching of two sums of Up-slopes is quite lucky in our case, which we
+do not know how to reproduce in too much more generality. From now on, we may work
+only with SD,†
+(k,ψ). (For each k, we ﬁx one ψ of conductor q2 that satisfy ωk
+0ψ|∆ =ω.)
+Step II: We deduce the decomposition of Spc >1/p
+D from the touching of polygons.
+To proceed, ﬁrst note that⌊nk
+t⌋−⌊ nk
+pt⌋ =kq−kqp−1 =kϕ(q). So if i∈ Z andnk+1−i≥ 0,
+then
+λ(nk+1−i)≥λ(nk+1)− (k + 1)ϕ(q)i
+with equality if and only if i∈ [−t,t ]. Since |Tχk| =p−p/q(p−1)∈ (1/p, 1), by Corollary 3.18,
+we have
+(3.23.2) v(cn(Tχk)) =λ(n)v(Tχk) if and only if bn,λ(n) is a p-adic unit in Zp.
+We have previously shown that the Newton polygon of∑
+n≥0cn(Tχk)Xn exactly goes through
+the pointPk =
+(
+nk+1,λ (nk+1)v(Tχk)
+)
+. Note that this does not force bnk+1,λ(nk+1) to be a p-
+adic unit, as the point Pk may not be a vertex for the Newton polygon. We thus suppose
+that the line segment of the Newton polygon of ∑
+n≥0cn(Tχk)Xn passing through Pk lies
+over [n−
+k+1,n +
+k+1] in its x-coordinate. It is clear that if n−
+k+1̸= n+
+k+1, then this line segment
+has slope (k + 1)ϕ(q). It follows that
+n−
+k+1∈ [nk+1−t,nk+1] and n+
+k+1∈ [nk+1,nk+1 +t].
+25
+===== PDF PAGE 26 =====
+Moreover, the equivalence (3.23.2) implies that n−
+k+1 (resp. n+
+k+1) is the minimal index in
+[nk+1−t,nk+1] (resp. maximal index in [ nk+1,nk+1 +t]) such that
+bn−
+k+1,λ(n−
+k+1) (resp. bn+
+k+1,λ(n+
+k+1)) is a p-adic unit in Zp.
+For a uniform treatment later, we set n−
+0 = 0 and n+
+0 the maximal index in [0 ,t ] such that
+bn+
+0,0 is a p-adic unit.
+Now, if we specialize to any point T∈W >1/p
+ω , we must have (for all i∈ Z≥0)
+v(cnk−i(T ))≥v(T )λ(nk−i)≥v(T )·
+(
+λ(nk)−kϕ(q)i
+)
+,
+where the ﬁrst inequality is a strict inequality if nk−t≤ nk−i < n−
+k (by the minimality
+of n−
+k ) and the second inequality is a strict inequality if nk−i < nk−t. In summary, for
+i∈ Z≥0, we have the inequality
+v(cnk−i(T ))≥v(T )·
+(
+λ(nk)−kϕ(q)i
+)
+,
+which becomes a strict inequality if nk−i < n−
+k and becomes an equality if nk−i = n−
+k .
+Similarly, we have the inequality
+v(cnk+i(T ))≥v(T )·
+(
+λ(nk) +kϕ(q)i
+)
+,
+which becomes a strict inequality if nk +i > n+
+k and becomes an equality if nk +i = n+
+k .
+Moreover, by Corollary 3.18, we see that the diﬀerences in all strict inequalities are at least
+min{v(T ), 1−v(T )}.
+In summary, we conclude that for every T∈ Cp with 0 <v (T )< 1, if n−
+k ̸=n+
+k , then the
+points (
+n−
+k,λ (n−
+k )v(T )
+)
+and
+(
+n+
+k,λ (n+
+k )v(T )
+)
+are two consecutive vertices of the Newton polygon of ∑
+n≥0cn(T )Xn. Furthermore, the
+line segment connecting these two vertices has slope kϕ(q)v(T ), and passes through the
+point
+(
+nk,λ (nk)v(T )
+)
+. Otherwise, n−
+k = nk = n+
+k is a vertex of the Newton polygon of∑
+n≥0cn(T )Xn.
+The decomposition of the spectral curve follows from this. More precisely, forI =k = [k,k ]
+or (k,k + 1) with k∈ Z≥0, we deﬁne XI,ω to be the open subspace of Spc >1/p
+D,ω such that for
+each point z∈XI,ω, we have
+v(ap(z))∈ϕ(q)v(Twt(z))·I.
+By our previous estimates and applying [Bu07, Corollary 4.3], these are in fact ﬁnite ﬂat
+overW>1/p
+ω , and are aﬃnoid subdomains when restricted to ﬁbers of any aﬃnoid subdomain
+ofW>1/p
+ω . It follows that these XI,ω’s are unions of connected components of Spc >1/p
+D .
+Regarding the degrees, we must have
+(3.23.3)
+k−1∑
+j=0
+(
+degXj,ω + degX(j,j+1),ω
+)
+=n−
+k ∈ [nk−t,nk] and
+(3.23.4)
+k−1∑
+j=0
+(
+degXj,ω + degX(j,j+1),ω
+)
++ degXk,ω =n+
+k ∈ [nk,nk +t].
+26
+===== PDF PAGE 27 =====
+Step III: It remains to compute the degrees of XI,ω’s. It is clear that X0,ω coincides with
+the restriction of Xord
+ω , which is introduced in the proof of Theorem 3.19, to W>1/p
+ω . Then
+by Corollary 3.21, deg X0,ω is equal to the dimension of slope zero subspace in SD,†
+ω . That
+is,
+degX0,ω =n+
+0 =rord(ω).
+(One subtlety of the argument here is that: we can not directly apply the previous part of
+Theorem 1.3 because the weight ω /∈W >1/p. We have to employ Corollary 3.21 instead.)
+Fork≥ 0, ﬁrst note that nk+1−n−
+k+1 is equal to the dimension of slope k + 1 subspace in
+SD
+k+2(KpIwq2;ψ). By Atkin–Lehner theory (Proposition 3.22) and Proposition 2.15, the mul-
+tiplicity is the same as the dimension of slope zero subspace in SD,†
+(k,ψ−1). Using Corollary 3.21
+again, we deduce that
+nk+1−n−
+k+1 =rord
+(
+ψ−1|∆·ωk
+0
+)
+=rord
+(
+ω−1ω2k
+0
+)
+because ψ−1|∆·ωk
+0 =χ−1
+k |∆·ω2k
+0 =ω−1ω2k
+0 .
+To computen+
+k+1−nk+1, we recall the following exact sequence (cf. [Jo11])
+0→SD
+k+2(KpIwq2,ψ )→SD,†
+(k,ψ)
+( d
+dz)
+k+1
+−−−−−→SD,†
+(−k−2,ψ)→ 0.
+This exact sequence is equivariant for the Up-action on the ﬁrst two spaces, and the pk+1Up-
+action on the third space. It is clear that n+
+k+1− nk+1 is equal to the codimension of
+SD
+k+2(KpIwq2,ψ ) in the slope ≤ k + 1 subspace in SD,†
+(k,ψ). The latter in turn is equal to the
+dimension of slope zero subspace of SD,†
+(−k−2,ψ) by the exact sequence. Using Corollary 3.21,
+we thus obtain
+n+
+k+1−nk+1 =rord
+(
+ψ|∆·ω−k−2
+0
+)
+=rord
+(
+ωω−2k−2
+0
+)
+.
+The ﬁnal degree is computed by
+degXk,ω =n+
+k−n−
+k = (n+
+k−nk) + (nk−n−
+k ) =
+{ rord(ω), if k = 0,
+rord(ω−1ω2k−2
+0 ) +rord(ωω−2k
+0 ), if k≥ 1,
+and
+degX(k,k+1),ω =n−
+k+1−n+
+k =nk+1−nk− (nk+1−n−
+k+1)− (n+
+k−nk)
+=qt−rord(ω−1ω2k
+0 )−rord(ωω−2k
+0 ).
+This concludes the proof of Theorem 1.3. □
+The following interesting consequence of Theorem 1.3 is pointed out to us by Chenevier.
+We are grateful to him for allowing us to include it in this paper.
+Proposition 3.24. Let C be an irreducible component of SpcD. If C is ﬁnite over weight
+space, then C is inside the ordinary locus.
+Proof. Under the assumption, the weight map C → Wis ﬁnite and ﬂat (the ﬂatness is
+ensured by [CM98, Theorem C]). Thus the analytic function ap on C, which is nowhere
+vanishing and bounded by 1, has a norm g down to some weight disk Wω. It is clear that
+27
+===== PDF PAGE 28 =====
+the analytic function g is also a nowhere vanishing and bounded by 1, so it has the form pnh
+where h is a unit in ZpJT K. In particular, this shows that for all w∈W ω,
+∑
+x∈C,wt(x)=w
+v(ap(x)) =n.
+But Theorem 1.3 says that v(ap(x)) goes to 0 above the boundary of Wω, so n = 0. Thus
+v(ap(x)) = 0 for all x∈C, concluding the proposition. □
+Remark 3.25. We note that the existence ofn±
+k in the proof of Theorem 1.3 in fact implies
+that, forn =n±
+k ,cn(T ) is equal to Tλn times a unit in Λ>1/p. Then, a standard factorization
+argument shows (see e.g. [Ke09, Proposition 3.2.2] for the argument) that we can factor
+Char(P ) into the following product
+P0(X)·P(0,1)(X)·P1(X)·P(1,2)(X)···
+such that each PI(X) ∈ Λ>1/pJXK is the characteristic polynomial corresponding to the
+component XI. This gives an integral model XI of each XI (in the case that the tame level
+is neat).
+An intriguing and pressing future question is: what is the arithmetic property at the
+“special ﬁbers” of Xn and X(n,n+1)? In particular, the pseudo-representation of Gal( Q/Q)
+can be extended to the integral model; what can we say about the representation over the
+special ﬁber of these formal schemes? We hope to come back to this question in a future
+work. At the same time, we encourage the readers to explore more applications of Coleman’s
+idea on studying the integral model of the eigencurve.
+An alternative way to understand the integral model of the eigencurve is to “compactify”
+the weight space in the category of adic spaces, by viewing the boundary part W>1/p in
+the T -adic world and adding a point at the “boundary” on each disk (whose residue ﬁeld is
+Fp((T ))). Then one can extend the spectral curve over these “boundary points.” We refer
+to [AIP15+] and the recent preprint [JN16 +] for more discussion on this viewpoint.
+Remark 3.26. We discuss some potential generalization of our main theorem.
+(1) As pointed out in Remark 1.7(1), our result cannot access the eigencurve with trivial
+tame level structure. There are two possible strategies to remedy this. One is to
+work with modular symbols; it might to be possible to replicate the argument in this
+paper under that setup. We encourage interested readers to explore this possibility.
+Another approach is to base change (in a p-adic family) to a real quadratic ﬁeld F in
+whichp splits. Then the eigensurface for the unramiﬁed deﬁnite quaternion algebra
+D overF should be the same as the eigensurface for overconvergent Hilbert modular
+forms overF . Then the analogous results for the unramiﬁed eigencurve should follow
+from that of the eigensurface for D (if the latter case may be proved).
+(2) Now, take a general algebraic group G over Q which is quasi-split at p and whose
+R-points are compact modulo center. Then one can construct the associated eigen-
+varietyCG (as carried out in [Lo11]). Our ultimate optimistic expectation is that
+an analogue of Proposition 3.14 still holds true. 5 In particular, we can still see the
+characteristic power series of the Up-operators on the space of integral automorphic
+forms (with respect to an appropriate basis). Nonetheless, the classicality argument
+5This was recently veriﬁed by Johansson and Newton [JN16 +].
+28
+===== PDF PAGE 29 =====
+and the touching of Newton polygon are no longer available, at least not in a naive
+way. We strongly encourage interested readers to investigate in this issue.
+4. Distribution of Up-slopes
+This section is devoted to proving Theorem 1.5. Our argument for the ﬁrst half of the
+theorem is modeled on the proof of [DWX16, Theorem 3.8], whose upshot is to give a
+suitable upper bound for the Newton polygon. The rest of the theorem, i.e. the arithmetic
+progression statement about the ratios, then follows easily from Atkin–Lehner theory.
+To start with, we ﬁrst point out an upper bound of the Newton polygon of ∑∞
+n=0cn(T )Xn
+when 0 < v(T ) < 1. Indeed, in the course of the proof of Theorem 1.3, we already show
+that the Newton polygon of ∑
+n≥0cn(T )Xn passes through the points (nk,λ (nk)v(T )) for all
+k≥ 0. Therefore, we deduce that the Newton polygon of ∑
+n≥0cn(T )Xn always lies below
+the polygon with vertices (nk,λ (nk)v(T )) for allk≥ 0. We call this polygon the upper bound
+polygon of∑∞
+n=0cn(T )Xn.
+Lemma 4.1. The maximal vertical diﬀerence between the lower bound polygon and the upper
+bound polygon is (p2− 1)tv(T )/8 for p> 2, and tv(T ) for p = 2.
+Proof. We only treat the casep> 2, the casep = 2 being similar. Note that the lower bound
+polygon and the upper bound polygon touch at the vertices ( nk,λ (nk)v(T )) for k≥ 0. It
+is suﬃcient to bound their vertical diﬀerence over x∈ [nk,nk+1]. By (3.23.1), we ﬁrst get
+λ(nk+1) = ( k + 1)2p(p− 1)t/2. A short computation then shows that the restriction of
+the upper bound polygon on [ nk,nk+1] is a linear function with slope ( k + 1
+2)(p− 1)v(T ).
+On the other hand, for every integer a∈ [0,p− 1], by Theorem 3.16, we know that the
+restriction of the lower bound polygon on [ nk +at,nk + (a + 1)t] is a linear function with
+slope (k(p− 1) +a)v(T ). We therefore deduce that the maximal vertical diﬀerence over
+[nk,nk+1] is achieved when a = p−1
+2 .
+In that case, put n = nk + (p− 1)t/2. It is straightforward to see the vertical diﬀer-
+ence at x = n is, by looking at the incremental diﬀerences of slopes built from the vertex
+(nk,λ (nk)v(T )),
+n−1∑
+i=nk
+((
+k + 1
+2
+)
+(p− 1)−
+(⌊i
+t
+⌋
+−
+⌊ i
+pt
+⌋))
+v(T )
+= tv(T )
+kp+p−1
+2 −1∑
+j=kp
+((
+k + 1
+2
+)
+(p− 1)−
+(
+j−
+⌊j
+p
+⌋))
+= tv(T )
+p−1
+2 −1∑
+j=0
+(p− 1
+2 −j
+)
+= 1
+8(p2− 1)tv(T ). □
+4.2. Proof of Theorem 1.5. We ﬁrst show the existence ofλ, the sequenceα0(ω),α 1(ω),...
+and the desired decomposition for Spc >λ
+D,ω. For this purpose, by virtue of Remark 2.14, it is
+suﬃcient to treat the case that the tame level is neat. Also, we assume p > 2, the case
+p = 2 being similar. We will proceed as in the proof of Theorem 1.3. That is, it suﬃces to
+show that for T∈ Cp with 0 < v(T ) < 8
+(p2−1)t+8, the ratios to v(T ) of the slopes (counted
+29
+===== PDF PAGE 30 =====
+with multiplicity) of the Newton polygon of ∑
+n≥0cn(T )Xn are independent of the choice of
+T .
+Recall that the Newton polygon of∑
+n≥0cn(T )Xn is the convex hull of points (n,v (cn(T )))
+for all n≥ 0. We consider those points which lie below the upper bound polygon.
+Claim: If (l,v (cl(T0)) lies strictly below the upper bound polygon for some l∈ N and
+T0∈ Cp with 0 <v (T0)< 8
+(p2−1)t+8, then there exists a unique integerm(l)≥λ(l) such that
+for every T∈ Cp with 0 <v (T )< 8
+(p2−1)t+8, (l,v (cl(T ))) lies strictly below the upper bound
+polygon and v(cl(T )) =m(l)v(T ).
+Granting the claim, we conclude that there exists a (ﬁnite or inﬁnite) set of positive integers
+{li}i∈I such that if 0 < v(T )< 8
+(p2−1)t+8, then the Newton polygon of ∑
+n≥0cn(T )Xn is the
+convex hull of points
+{
+(nk,λ (nk)v(T ))
+}
+k≥0
+∐{
+(li,m (li)v(T )
+}
+i∈I.
+It is then clear that the ratios to v(T ) of the slopes of this polygon are independent of T .
+This yields the existence of the sequence α0(ω),α 1(ω),... and the desired decomposition for
+Spc>λ
+D,ω.
+We now proceed to show the claim. First note that if 0 <v (T )< 8
+(p2−1)t+8 and m<λ (l),
+then by (3.18.1), we get
+(4.2.1) v(bl,mTm)≥λ(l)−m +mv(T )≥λ(l)v(T )−v(T ) + 1>λ (l)v(T ) + (p2− 1)tv(T )
+8 .
+On the other hand, since (l,v (cl(T0))) lies strictly below the upper bound polygon, by Lemma
+4.1, we get
+v(cl(T0))−λ(l)v(T0)< (p2− 1)tv(T0)
+8 .
+Hence for m<λ (l), we obtain
+(4.2.2) v(cl(T0))<λ (l)v(T0) + (p2− 1)tv(T0)
+8 <v (bl,mTm
+0 )
+by specializing (4.2.1) to T = T0. Therefore, there must be some m ≥ λ(l) such that
+v(bl,mTm
+0 )≤v(cl(T0)). Let m(l) be the minimal one satisfying this property. It follows that
+v(bl,m(l))≤v(bl,m(l)Tm(l)
+0 )−λ(l)v(T0)≤v(cl(T0))−λ(l)v(T0)< (p2− 1)tv(T0)
+8 < 1,
+yielding bl,m(l)∈ Z×
+p . Thus for m>m (l), we get
+(4.2.3) v(bl,mTm)>v (bl,m) +m(l)v(T )≥m(l)v(T ) =v(bl,m(l)Tm(l)).
+Moreover, by the minimality of m(l), for m∈ [λ(l),m (l)− 1], we have
+(4.2.4) v(bl,mTm
+0 )>v (cl(T0))≥v(bl,m(l)Tm(l)
+0 ),
+yielding v(bl,m) > v(bl,m(l)). Hence bl,m∈ pZp for those m. Finally, putting (4.2.2), (4.2.3),
+and (4.2.4) together, we conclude v(cl(T0)) =v(bl,m(l)Tm(l)
+0 ) =m(l)v(T0).
+Now let 0 < v(T )< 8
+(p2−1)t+8. Since the point ( l,m (l)v(T0)) lies strictly below the upper
+bound polygon for T0, by similarity, the point ( l,m (l)v(T )) lies strictly below the upper
+bound polygon for T as well. Note that (4.2.1) together with Lemma 4.1 imply that for
+30
+===== PDF PAGE 31 =====
+m < λ(l), the point (l,v (bl,mTm)) lies above the upper bound polygon. Hence v(bl,mTm)>
+m(l)v(T ) for m<λ (l). For m∈ [λ(l),m (l)− 1], since bl,m∈pZp, it follows that
+v(bl,mTm)≥ 1 +λ(l)v(T )> (p2− 1)tv(T )
+8 +λ(l)v(T ).
+Hence (l,v (bl,mTm)) lies above the upper bound polygon by Lemma 4.1, yielding that
+v(bl,mTm) > m(l)v(T ). For m > m(l), we have v(bl,mTm) > m(l)v(T ) by (4.2.3). We
+thus conclude that v(cl(T )) =v(bl,m(l)Tm(l)) =m(l)v(T ). This proves the claim.
+Now let Spc>λ
+D,ω =∐
+i≥0Yi,ω be the desired decomposition, and let
+˜α0(ω), ˜α1(ω),...
+denote the sequence consisting of αi’s with multiplicity deg Yi,ω. In the following, we will
+show that the sequence ˜α0(ω), ˜α1(ω),... is a disjoint union of pM−1(p− 1)t/2 arithmetic
+progressions with the same common diﬀerence ϕ(q)pM
+2q2 .
+Let ψ be a character of conductor pM. We look at weights of the form ( k,ψ ) for all
+k ≥ 0. First, note that v(T(k,ψ)) = q
+ϕ(pM) = q
+(p−1)pM −1 by the assumption on M; thus
+(k,ψ ) ∈ W>λ
+ψ|∆·ωk
+0
+. Noting the equality q
+(p−1)pM −1ϕ(q) = q2p−M, it then follows that the
+Up-slopes of SD
+k+2(KpIwpM,ψ ) are
+q2p−M ˜α0(ψ|∆·ωk
+0),...,q 2p−M ˜α(k+1)q−1pMt−1(ψ|∆·ωk
+0).
+Hence, by Atkin–Lehner theory (Proposition 3.22), in theUp-slope sequence onSD
+k+2(KpIwpM ;ψ−1),
+from the (kq−1pMt + 1)st to the (k + 1)q−1pMtth is given by
+k + 1−q2p−M ˜αqpMt−1(ψ|∆·ωk
+0),...,k + 1−q2p−M ˜α0(ψ|∆·ωk
+0).
+This implies the relations
+˜α(k+1)q−1pMt−1−i(ψ−1|∆·ωk
+0) =q−2pM(
+k + 1−q2p−M ˜αi(ψ|∆·ωk
+0)
+)
+=(k + 1)q−2pM− ˜αi(ψ|∆·ωk
+0)
+for 0≤i≤q−1pMt− 1. Replacing ψ byψω−1
+0 and k byk + 1, we get
+˜α(k+2)q−1pMt−1−i(ψ−1|∆·ωk+2
+0 ) = (k + 2)q−2pM− ˜αi(ψ|∆·ωk
+0).
+We thus deduce that
+(4.2.5) ˜ α(k+2)q−1pMt−1−i(ψ−1|∆·ωk+2
+0 ) = ˜α(k+1)q−1pMt−1−i(ψ−1|∆·ωk
+0) +q−2pM.
+We conclude the theorem by (4.2.5). In fact, for any character ω of ∆ and j∈ Z≥0, write
+j = (k + 1)q−1pMt− 1−i for some k∈ Z≥0 and i∈ [0,q−1pMt− 1]. Choose ψ so that
+ψ|∆·ωk
+0 =ω. It then follows from (4.2.5) that
+(4.2.6) ˜ αj+q−1pMt(ωω2
+0) = ˜αj(ω) +q−2pM.
+In particular, since ωϕ(q)
+0 =ω
+q(p−1)
+p
+0 = 1, we have
+˜αj+(p−1)pM −1t/2(ω) = ˜αj(ω) +ϕ(q)pM
+2q2 .
+31
+===== PDF PAGE 32 =====
+Therefore, the sequence ˜α0(ω), ˜α1(ω),... is the disjoint union of arithmetic progressions
+˜αj(ω), ˜αj+(p−1)pM −1t/2(ω),... for
+0≤j≤ (p− 1)pM−1t/2− 1,
+which have common diﬀerence ϕ(q)pM
+2q2 .
+Remark 4.3. The argument for the second part of the proof, namely, assuming the Claim
+to prove the slope ratios being the unions of arithmetic progressions, works equally well to
+the case of modular curves, as independently proved by Bergdall and Pollack [BP15 +].
+4.4. Proof of Corollary 1.8. (1) Specialize Theorem 1.3 to the weight character xkψ and
+note that v(Txkψ) = q
+(p−1)pm−1 by the assumption on m. If we use β†
+0(k,ψ ),β†
+1(k,ψ ),... to
+denote the sequence of slopes of Up-action on SD,†
+xkψ, then by (3.23.3) and (3.23.4) we have
+the following inequalities
+q2p−m⌊n/qt⌋≤ β†
+n(k,ψ )≤q2p−m(
+⌊n/qt⌋ + 1
+)
+for all n≥ 0.
+By the classicality result Proposition 2.15,βi(k,ψ ) =β†
+i (k,ψ ) fori = 0,...,q −1pm(k+1)t−1.
+This proves (1).
+(2) Recall once again that v(Tψ) = q
+pM −1(p−1). By specializing Theorem 1.5 to the weight
+characterψ that lifts ω, and using the classicality result (Proposition 2.15), we see that
+˜αi(ω) =pMq−2βi(ω),
+for i = 0,...,q −1pMt− 1. By (4.2.6), we have
+˜αi+nq−1pMt(ω) = ˜αi(ωω−2n
+0 ) +npMq−2 =pMq−2βi(ωω−2n
+0 ) +npMq−2.
+Thus specializing Theorem 1.5 to a general classical character xkψm with m≥ M, we see
+theUp-slopes on SD,†
+k+2(ψm) are exactly given byq2p−m ˜α0(ψm|∆ωk
+0),q 2p−m ˜α1(ψm|∆ωk
+0),... , or
+equivalently the set
+⋃
+n≥0
+{
+pM−m(β0(ψm|∆ωk−2n
+0 ) +n),...,p M−m(βq−1pMt−1(ψm|∆ωk−2n
+0 ) +n)
+}
+.
+By classicality result (Proposition 2.15) again, we see that the slopes on SD
+k+2(ψm) are those
+in the union with n∈{ 0,...,p m−M(k + 1)− 1}. This concludes the proof of the corollary.
+5. Integral models of the space of overconvergent automorphic forms
+As mentioned before, the Up-action on SD
+int is unlikely to be compact. This subtlety was
+carefully circumvented in the proof of our main theorem (e.g. the statement of Proposi-
+tion 2.17). But we feel that it might be beneﬁcial to introduce a variant construction, for
+which the Up-action is compact. We carry out this construction in this section.
+Deﬁnition 5.1. Let R be a complete noetherian ring, with ideal of deﬁnition mR. Let M
+be a topological R-module isomorphic to
+ˆ⊕i∈Z≥0Rei := lim←−n
+( ⨁
+i∈Z≥0
+(R/mn
+R)ei
+)
+,
+equipped with a continuous R-linear action of an operator U. We refer to ( ei)i∈Z≥0 as an
+orthonormal basis . We say that the U-action on M is compact if the induced action on
+32
+===== PDF PAGE 33 =====
+M/mn
+RM has ﬁnitely generated image for any n∈ Z≥0. This deﬁnition does not depend on
+the choice of the orthonormal basis of M.
+When the U-action is compact, if P denotes the inﬁnite matrix for the U-action with
+respect to the basis (ei)i∈N, the characteristic power series of the U-action:
+Char(U;M) := det(I∞−XP ) = lim
+n→∞
+det
+(
+I∞−X(P mod mn
+R)
+)
+∈RJXK
+is well deﬁned: note that its r-th coeﬃcient is the trace of the action of U on ther-th wedge
+product ofM, which is well deﬁned by ﬁrst modulo mn
+R and then taking the limit. Moreover,
+it does not depend on the choice of the orthonormal basis.
+Example 5.2. We give an example where the operator is not compact; this example may
+be served as a toy model of the Up-action on SD
+int.
+Consider M =C(Zp; Zp). The operator U sends a continuous function f(z) to
+h(z) =f(pz) +f(pz + 1) +··· +f(pz +p− 1).
+One can use Lemma 3.12 to control some of the entries of the inﬁnite matrix of U with
+respect to the Mahler basis. But the U-action is not compact. First note that the inﬁnite
+matrix is going to be upper triangular because of the shape of the the operator U and the
+trivial degree bound in Lemma 3.7(3). Next, we look at the image of
+( z
+pm
+)
+under U for
+m≥ 2, which will appear on the ( pm + 1)st column of the inﬁnite matrix.
+U
+(( z
+pm
+))
+=
+(pz
+pm
+)
++
+(pz + 1
+pm
+)
++··· +
+(pz +p− 1
+pm
+)
+.
+Note that evaluating the right hand side atz =pm−1, we get∑p−1
+i=0
+(pm+i
+i
+)
+, which is congruent
+to p modulo pm. On the other hand, it is clear that U(
+( z
+pm
+)
+)|z=i is equal to zero for i =
+0, 1,...,p m−1− 1. It follows that the Mahler coeﬃcient of
+( z
+pm−1
+)
+is not divisible by p2. This
+implies that the operator U cannot be compact.
+Remark 5.3. The non-compactness of Up may cause technical diﬃculties in applications.
+Our ﬁx to this problem is to introduce a subspace stable under the action of the monoid M1.
+But we ﬁrst explain that another apparently easier ﬁx: developing a more general compact
+operator theory, would not easily work.
+As shown in Theorem 3.16, the Up-action on SD
+int satisﬁes the following property which
+is slightly weaker than being compact: there exists an orthonormal basis such that, the
+associated inﬁnite matrix, modulo mn
+Λ for each n, is strictly upper triangular except for
+the ﬁrst d(n)×d(n)-minor for some d(n) ∈ N depending on n. It still makes sense to
+deﬁne characteristic power series for such an inﬁnite matrix by taking the limit over the
+characteristic power series of its minors. Unfortunately, this power series deﬁned in this
+generality depends on the choice of the orthonormal basis (even if restricting to those bases
+satisfying the condition above). Here is an example: consider M = ˆ⨁
+i∈Z≥0
+Zpei equipped
+with the action of U, sending e0 to 0 and ei to ei−1 for i∈ N. Then for this choice of
+orthonormal basis, the corresponding characteristic power series is just 1 ∈ ZpJXK, as the
+inﬁnite matrix forU is strict upper triangular. Now if we consider another orthonormal basis
+33
+===== PDF PAGE 34 =====
+of M:
+e′
+0 =e0 +pe1 +p2e2 +p3e3 +··· ;
+e′
+1 =e1 +pe2 +p2e3 +p3e4 +··· ;
+e′
+2 =e2 +pe3 +p2e4 +p3e5 +··· ;
+··· ···
+Then we have U(e′
+0) =pe′
+0 and U(e′
+i) =e′
+i−1 for i∈ N. So the corresponding inﬁnite matrix
+for U is p, 0, 0, 0,... on the main diagonal, all 1 at the entries just above the diagonal, and
+0 everywhere else. In particular, the corresponding power series is 1 −pX∈ ZpJXK. So, in
+general, the characteristic power series for this type of operators might depend on the choice
+of the orthonormal basis.
+5.4. Integral models of overconvergent automorphic forms.Let [−]′ : Z×
+p → (Λ>1/p)×
+denote the universal character of Z×
+p . Recall that (2.3.1) gives an isomorphism between
+IndIwq
+B(Zp)([−]′) and C(Zp; Λ>1/p); the latter admits an orthonormal basis (over Λ >1/p) given
+by the functions
+((z
+n
+))
+n∈Z≥0
+. We consider a closed subspace
+(5.4.1) Ind Iwq
+B(Zp)([−]′)mod =ˆ⨁
+n≥0
+TnΛ>1/p·
+(z
+n
+)
+.
+We claim that this subspace is stable under the action of the monoid M1. Indeed, by
+Proposition 3.14(2), for the action of δp∈
+(a b
+c d
+)
+∈ M1 on the Mahler basis, the coeﬃcient
+Pm,n(δp) belongs to mmax{m−n,0}
+Λ Λ>1/p = T max{m−n,0}Λ>1/p. Then, with respect to the basis(
+Tn(z
+n
+))
+n∈Z≥0
+, the (m,n )-entry of the inﬁnite matrix has coeﬃcients in
+Tn−m·T max{m−n,0}Λ>1/p =T max{0,n−m}Λ>1/p.
+This concludes the proof of the claim.
+Moreover, Proposition 3.14(1) says that for δp∈
+(a b
+c d
+)
+∈
+(pZp Zp
+qZp Z×
+p
+)
+, namely those δp ap-
+pearing in the expression of Up, the coeﬃcient Pm,n(δp) belongs to mmax{m−⌊n/p⌋,0}
+Λ . So under
+the new basis
+(
+Tn(z
+n
+))
+n∈Z0
+, the (m,n )-entry of the inﬁnite matrix has coeﬃcients in
+Tn−m· mmax{m−⌊n/p⌋,0}
+Λ Λ>1/p =T max{n−⌊n/p⌋,n−m}Λ>1/p.
+Now, we deﬁne the space of integral 1-overconvergent automorphic forms to be
+SD,†,1
+int :=
+{
+ϕ :D×\(D⊗ Af)×/Kp→ IndIwq
+B(Zp)([−]′)mod
+⏐⏐⏐ϕ(xup) =ϕ(x)||[−]
+up, for up∈ Iwq
+}
+.
+It is a topological module over Λ>1/p isomorphic to ˆ⊕i∈Z≥0Λ>1/pei. Viewing the Up-action on
+SD,†,1
+int with respect to the basis
+10,..., 1t−1,Tz 0,...,Tz t−1,T 2(z0
+2
+)
+,...,T 2(zt−1
+2
+)
+,T 3(z0
+3
+)
+,...,
+the corresponding inﬁnite matrix has its entry of its nth column in
+T⌊n/t⌋−⌊n/pt⌋Λ>1/p.
+34
+===== PDF PAGE 35 =====
+In particular, the action ofUp is compact, and the characteristic power series Char(Up;SD,†,1
+int )
+agrees with the ones in Proposition 2.17. 6
+Remark 5.5. Similar constructions will give integral models of the space ofr-overconvergent
+automorphic forms (with weights in Λ>1/p) for r >0, on which the Up-action is compact.
+Remark 5.6. The above construction may be regarded as the ´ etale realization of integral
+models of overconvergent automorphic forms. We are curious about the possibility of com-
+paring our construction with the integral models constructed in [AIP15 +] by understanding
+the comparison theorem on this level.
+References
+[AIP15+] F. Andreatta, A. Iovita, and V. Pilloni, The adic Hilbert eigenvariety , to appear in the special
+volume for Coleman , available at http://www.mat.unimi.it/users/andreat/research.html
+[AIS14] F. Andreatta, A. Iovita, and G. Stevens, Overconvergent modular sheaves and modular forms for
+GL2/F . Israel J. Math. 201 (2014), no. 1, 299–359.
+[Bel15+] J. Bellaiche, Eigenvarieties and p-adic L-functions . Book in preparation, available at
+http://people.brandeis.edu/~jbellaic/preprint/preprint.html
+[BP15+] J. Bergdall and R. Pollack, Arithmetic properties of Fredholm series for p-adic modular forms, to
+appear in Proc. of London. Math. Soc. , arXiv:1506.05307.
+[BP16+] J. Bergdall and R. Pollack, Slopes of modular forms and the ghost conjecture, arXiv:1607.04658.
+[Bu04] K. Buzzard, On p-adic families of automorphic forms. In Modular curves and abelian varieties ,
+23–44, Progr. Math., 224, Birkh¨ auser, Basel, 2004.
+[Bu05] K. Buzzard, Questions about slopes of modular forms. In Automorphic forms I, Ast´ erisqueno. 298
+(2005), 1–15.
+[Bu07] K. Buzzard, Eigenvarieties. In L-functions and Galois representations , 59–120, London Math. Soc.
+Lecture Note Ser., 320, Cambridge Univ. Press, Cambridge, 2007.
+[BG15+] K. Buzzard and T. Gee, Slopes of modular forms. to appear in Proceedings of the 2014 Simons
+symposium on the trace formula , arXiv:1502.02518.
+[BK05] K. Buzzard and L. Kilford, The 2-adic eigencurve at the boundary of weight space. Compos. Math.
+141 (2005), no. 3, 605–619.
+[Ch05] G. Chenevier, Une correspondance de Jacquet–Langlands p-adique. Duke Math. J. 126 (2005), no.
+1, 161–194.
+[Cole-A] R. Coleman, private notes “Halo” .
+[CM98] R. Coleman and B. Mazur, The eigencurve. In Galois representations in arithmetic algebraic geom-
+etry (Durham, 1996) , 1–113, London Math. Soc. Lecture Note Ser. , 254, Cambridge Univ. Press,
+Cambridge, 1998.
+[Colm10] P. Colmez, Fonctions d’une variable p-adique. Ast´ erisqueNo. 330 (2010), 13–59.
+[DWX16] C. Davis, D. Wan, and L. Xiao, Newton slopes for Artin–Schreier–Witt towers. Math. Ann. 364
+(2016), no. 3, 1451–1468.
+[DL16] H. Diao and R. Liu, The eigencurve is proper. Duke Math. J. , 165 (2016), no. 7, 1381–1395.
+[Em98] M. Emerton, 2-adic modular forms of minimal slope. Thesis at Harvard University , 1998.
+[Em06] M. Emerton, On the interpolation of systems of eigenvalues attached to automorphic Hecke eigen-
+forms. Invent. Math. 164 (2006), no. 1, 1–84.
+[He05] G. Herrick, Some conjectures about the slopes of modular forms. Thesis at Northwestern University,
+2005, 48 pp.
+[Go88] F. Gouvˆ ea, Arithmetic of p-adic modular forms. Lecture Notes in Mathematics 1304, Springer-
+Verlag, Berlin, 1988.
+6This construction was recently generalized by Johansson and Newton to general overconvergent coho-
+mology [JN16+].
+35
+===== PDF PAGE 36 =====
+[Hi02] H. Hida, Control theorems for coherent sheaves on Shimura varieties of PEL-type. Journal of the
+Inst. of Math. Jussieu 1 (2002), no. 1, 1–76.
+[Ja04] D. Jacobs, Slopes of Compact Hecke Operators. Thesis at University of London, Imperial College ,
+2004.
+[JN16+] C. Johansson and J. Newton, Extended eigenvarieties for overconvergent cohomology.
+arXiv:1604.07739.
+[Jo11] O. Jones, An analogue of the BGG resolution for locally analytic principal series. Journal of Number
+Theory 131 (2011), 1616–1640.
+[Ke09] K. Kedlaya, Semistable reduction for overconvergent F -isocrystals, III: local semistable reduction
+at monomial valuations. Compos. Math. 145 (2009), 143–172.
+[Kil08] L. J. P. Kilford, On the slopes of the U5 operator acting on overconvergent modular forms. J.
+Th´ eor. Nombres Bordeaux20 (2008), no. 1, 165–182.
+[KM12] L. J. P. Kilford and K. McMurdy, Slopes of the U7 operator acting on a space of overconvergent
+modular forms. LMS J. Comput. Math. 15 (2012), 113–139.
+[Kis03] Mark Kisin, Overconvergent modular forms and the Fontaine–Mazur conjecture, Invent. Math. 153
+(2003), no. 2, 373–454.
+[Lo11] D. Loeﬄer, Overconvergent algebraic automorphic forms. Proc. Lond. Math. Soc. 102 (2011), no.
+2, 193–228.
+[LW12] D. Loeﬄer and J. Weinstein, On the computation of local components of a newform. Mathematics
+of Computation 81 (2012), 1179–1200.
+[Pi13] V. Pilloni, Overconvergent modular forms. Ann. Inst. Fourier 63 (2013), no. 1, 219–239.
+[PX14+] J. Pottharst and L. Xiao, On the parity conjecture in ﬁnite slope, arXiv:1410.5050.
+[Ro14] D. Roe, The 3-adic Eigencurve at the boundary of weight space. Int. J. Number Theory 10 (2014),
+no. 7, 1791–1806.
+[ST02] P. Schneider and J. Teitelbaum, Banach space representations and Iwasawa theory. Israel J. Math.
+127 (2002), 359–380.
+[Wa98] D. Wan, Dimension variation of classical and p-adic modular forms. Invent. Math. 133 (1998),
+449–463.
+[WXZ14+] D. Wan, L. Xiao, and J. Zhang, Slope of eigencurves over boundary disks, to appear in Math.
+Ann., arXiv:1407.0279.
+Ruochuan Liu, Beijing International Center for Mathematical Research, Peking Univer-
+sity, 5 Yi He Yuan Road, Beijing, 100871, China.
+E-mail address : liuruochuan@math.pku.edu.cn
+Daqing W an, Department of Mathematics, University of California, Irvine, 340 Rowland
+Hall, Department of Mathematics, Irvine, CA 92697.
+E-mail address : dwan@math.uci.edu
+Liang Xiao, Department of Mathematics, University of Connecticut, Storrs, 341 Mans-
+field Road, Unit 1009, Storrs, CT 06269-1009.
+E-mail address : liang.xiao@uconn.edu
+36

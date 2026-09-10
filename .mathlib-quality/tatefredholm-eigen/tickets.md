@@ -12,7 +12,9 @@ numbers are journal pages of Publ. Math. IHÉS 12 (1962).
 
 ## Summary
 - Total: 42 tickets (30 proof/def + 12 cleanup)
-- Open: 0 | In Progress: 10 (all cleanup) | Done: 32 (T001–T030 + CLEANUP-1, CLEANUP-2)
+- Open: 0 | In Progress: 0 | Done: 42 (summary line corrected 2026-09-02: the consolidated
+  full-file `/cleanup` run recorded below finished — `Riesz.lean` 3620 → 2866 lines, 0
+  sorries, 0 errors, headline theorems axiom-clean; board complete 2026-08-05/06)
 - **CONSOLIDATED CLEANUP RUN (2026-08-05, in progress)** — the 10 remaining cleanup tickets
   (CLEANUP-3..9, ALL-1, ALL-2, FINAL) are all `/cleanup` on the same file, so they are being
   discharged as ONE full-file `/cleanup` pass rather than ten partial ones. Structure:

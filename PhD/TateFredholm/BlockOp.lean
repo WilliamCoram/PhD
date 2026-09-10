@@ -113,14 +113,6 @@ noncomputable def cSpace.comap (φ : B → A) (hφ : Function.Injective φ) :
   · rw [cSpace.single_apply_of_ne h,
       cSpace.single_apply_of_ne (fun hh => h (by rw [← hh, Equiv.symm_apply_apply]))]
 
-/-- Matrix coefficients of a finite sum of operators. -/
-theorem matrixCoeff_sum [DecidableEq A] {ι : Type*} (s : Finset ι)
-    (F : ι → (c(A, R) →L[R] c(B, R))) (j : B) (i : A) :
-    matrixCoeff (∑ x ∈ s, F x) j i = ∑ x ∈ s, matrixCoeff (F x) j i := by
-  show cSpace.evalCLM j ((∑ x ∈ s, F x) (cSpace.single i 1)) = _
-  rw [sum_apply, map_sum]
-  rfl
-
 /-- Cofinite decay on `σ × A` with `σ` finite is checked one slice at a time. -/
 theorem tendsto_cofinite_prod_of_finite {σ : Type*} [Finite σ] {M : Type*} {l : Filter M}
     {f : σ × A → M} (h : ∀ a : σ, Tendsto (fun i => f (a, i)) cofinite l) :

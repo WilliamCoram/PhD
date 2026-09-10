@@ -1,0 +1,3921 @@
+
+===== PDF PAGE 1 =====
+NOTE TO USERS
+Page(s) not included in the original manuscript and are
+unavailable from the author or university. The manuscript
+was scanned as received.
+134
+This reproduction is the best copy available.
+®
+DMI
+===== PDF PAGE 2 =====
+
+===== PDF PAGE 3 =====
+Explicit computations
+of Hilbert modular forms on Q(V5)
+by
+Lassina Dembélé
+Department of Mathematics and Statistics
+McGill University, Montreal
+September 2002
+A thesis submitted to the Faculty of Graduate Studies and Research
+in partial fulfilment of the requirements for PhD. degree
+@Lassina Dembélé, 2002
+===== PDF PAGE 4 =====
+1+1
+National Library
+of Canada
+Acquisitions and
+Bibliographie Services
+395 Wellington Street
+Ottawa ON K1A DN4
+Canada
+Bibliothèque nationale
+du Canada
+Acquisisitons et
+services bibliographiques
+395, rue Wellington
+Ottawa ON K1A DN4
+Canada
+Your file Votre référence
+ISBN: 0-612-85699-2
+Our file Notre référence
+ISBN: 0-612-85699-2
+The author has granted a non­
+exclusive licence allowing the
+National Library of Canada to
+reproduce, loan, distribute or sell
+copies of this thesis in microform,
+paper or electronic formats.
+The author retains ownership of the
+copyright in this thesis. Neither the
+thesis nor substantial extracts from it
+may be printed or otherwise
+reproduced without the author's
+permission.
+Canada
+L'auteur a accordé une licence non
+exclusive permettant à la
+Bibliothèque nationale du Canada de
+reproduire, prêter, distribuer ou
+vendre des copies de cette thèse sous
+la forme de microfiche/film, de
+reproduction sur papier ou sur format
+électronique.
+L'auteur conserve la propriété du
+droit d'auteur qui protège cette thèse.
+Ni la thèse ni des extraits substantiels
+de celle-ci ne doivent être imprimés
+ou aturement reproduits sans son
+autorisation.
+===== PDF PAGE 5 =====
+Contents
+Acknowledgements.
+Introduction. 1
+Chapter 1. Computing Hilbert modular forms. 5
+1. Quaternion algebras: a brief review. 5
+2. Classical Hilbert modular forms. 13
+3. Hilbert modular forms in the adelic language. 18
+4. Hecke operators. 24
+5. Automorphic representations. 26
+6. The Jacquet-Langlands correspondence. 29
+7. Applications. 30
+8. Motives. 80
+9. Listing of Programs. 83
+Chapter 2. Sorne numerical results on the üda conjecture. 95
+1. A brief review of Hodge structures. 97
+2. Cohomology of Hilbert modular surfaces. 101
+3. The Hodge structure attached a Hilbert newform. 103
+4. Hilbert-Blumenthal abelian varieties. 108
+5. The abelian variety associated to a Hilbert newform. 111
+6. Computations. 116
+7. Program Listing 126
+8. Conclusion. 132
+1
+===== PDF PAGE 6 =====
+2
+Bibliography
+CONTENTS
+135
+===== PDF PAGE 7 =====
+ACKNÜWLEDGEMENTS.
+Acknowledgements.
+l am grateful to my supervisor Prof. H. Darmon who has intro­
+duced me to the very beautiful subject of Number Theory. His great
+patience and wonderful personality have always been a source of en­
+couragement for me. Not only is he a great mathematician but he is
+also an exceptional as a person.
+l thank aIl my friends G. Alpargu and her husband A. Bourget, T.
+Jackson, M.~H. Nicole, 1. Longhi and C. E. M'lan with whom l shared
+a lot while studying mathematics at McGill. On a more personallevel,
+l would like to thank my parents from whom l have been away for aIl
+these years. It has not always been easy but their moral support has
+always helped inspire me. l will also like to thank my friends, T. A.
+Baldé, J. Grah, J.-M. K. D. N'dri, R. Ali Kazmi and P. Reddappagari,
+for their inavaluable support during my stay at McGill and in Montreal.
+A special thanks to R. Friedman for aIl the efforts she put in making
+sense of my distorted english.
+l thank the department of mathematics and statistics of McGill
+university for their collaboration and for their financial support. A
+special thanks goes to Prof. N. Elkies who kindly helped me with the
+Pari search of aIl elliptic curves in this thesis.
+===== PDF PAGE 8 =====
+ii CONTENTS
+Abstract. We compute the eigenvalues of the first few Hecke operators
+Tp (N(p) ::; 100) for all Hilbert modular forms on Q(VS) of parallel
+weight 2 and level of norm less than 500. This is done by exploiting
+the Jacquet-Langlands correspondence which allows us to transfer such
+computations to forms on the (totally definite) Hamilton quaternion
+algebra over Q(V5). We use these computations to test numerically a
+conjecture of Oda on periods of Hilbert modular forms.
+Résumé. Nous calculons les valeurs propres des opérateurs de Hecke
+Tp (N(p) ::; 100) pour toutes les formes modulaires de Hilbert primitives
+de poids (2, 2) et de niveau de norme plus petite que 500 sur Q(V5).
+Pour ce faire, nous exploitons la correspondence de Jacquet-Langlands
+qui permet de se ramener au calcul de formes automorphes sur l'algèbre
+de quaternions de Hamilton sur Q(VS). À l'aide de deux examples,
+nous illustrons la consistance de nos calculs avec la conjecture de Oda
+sur les périodes de formes modulaire de Hilbert.
+===== PDF PAGE 9 =====
+INTRODUCTION.
+Introd uction.
+1
+Thanks to the works ofWiles [57], Wiles and Taylor [53] and Breuil,
+Conrad, Diamond and Taylor [7], it is now known that the Taniyama­
+Shimura-Weil conjecture over Q is true; i.e., that every elliptic curve
+E /Q is modular. As a by-product, this put an end to the mathematieal
+saga of Fermat's Last Theorem that Ribet [43] had already proved to
+be a consequence of the TSW-conjecture. Before the modularity of
+all rational elliptie curves was establised, the main numerical results
+supportive of this conjecture were given by the Antwerp tables [5], later
+extended by Cremona [14].
+Even with the substantial progress accomplished by Wiles in [57]
+and Skinner-Wiles [50], the hope for a proof of the full TSW-conjecture
+for elliptie curves over general number fields still seems far away. Mean­
+while, motivated by Wiles [57] and related works, Darmon [15] has
+proposed a strategy to tackle the generalized Fermat Last Theorem.
+This strategy requires a very good understanding of Hilbert modular
+forms over the real subfields of certain cyclotomie fields and consists of
+a series of conjectures. So numerical investigations in order to gather
+more data supportive of Shimura-Tanyama-Weil conjecture over gen­
+eral number fields still has a role to play as it did in the rational case.
+The main ingredient in Cremona [14] is the notion of modular sym­
+bols that gives a very concrete description of the first Homology group
+H1(Xo(N), Z) of the modular curve of level N amen able to compu­
+tation. There have been sorne attempts to generalized this notion to
+===== PDF PAGE 10 =====
+2 CONTENTS
+higher dimension but the theory is stilliess elaborate, and is often lim­
+ited to establishing non-vanishing of L-functions by exhibiting specifie
+modular symbols (see [1, 2, 3, 35, 40]). So to get numerical results
+about the TSW-conjecture over arbitrary number fields, it is preferable
+to resort to different computational methods. However, let us mention
+the work of Oda [40] who has closely investigated this conjecture in
+the spirit of Deligne [19] in the case of Hilbert modular surfaces. This
+leads to the so-called Oda's conjecture. To state it, let F be a totally
+real field of degree 9 = [F : Q] and c an integral ideal in F. We consider
+the Hilbert modular variety Xo(c) and let H~p(Xo(c), Q) be its middle
+cuspidal cohomology. This carries a homogeneous Hodge structure on
+which the Hecke algebra acts. Let f be a newform and Kr the number
+field generated by its Fourier coefficients.
+Conjecture (Oda [24, Chap. VI. sec. 1.]): There is a piece H9(Mrl Q)
+of H~p(Xo(c), Q), an abelian variety Ar of dimension [Kr: Q] de­
+fined over F with good reduction outside of c, a homomorphism Kr ~
+End(A r) ® Q, and an isomorphism
+® H1(Af", C) ~ H9(Mr, C)
+lTEGal(F /CQI)
+of Kr-rational Hodge structures (Ar is the abelian variety obtained from
+Ar by the action of (JJ.
+The piece H9(Mr, Qi) is felt to be the Hodge realization of the conjec­
+tural motive associated to f.
+When 9 = 2, Oda [40] showed that H2 (Mrl Q) is indeed the tensor
+product of two Kr-rational Hodge structures of weight 1 coming from
+===== PDF PAGE 11 =====
+INTRODUCTION. 3
+the isogeny classes of abelian varities A} and A~. Unfortunately not
+much is known about the field of definition of those varieties.
+The goal of this thesis was two fold:first discuss an alternative
+way of computing Hilbert modular newforms of weight 2 on certain
+quadratic fields and second, see if the forms obtained could provide
+one with sorne numerical evidence on the Oda conjecture. Our main
+focus has been the quadratic field F = Q(V5) though there seems to
+be no major obstacle to extending those computational methods to
+any real quadratic field of class number one. While we have more or
+less succeeded with the first goal, the second one should rather be seen
+more as a work in progress, and the few results we could obtain merely
+illustrate the mystery of the Oda conjecture.
+To explain briefly our method, let F = Q(V5) and c be an integral
+ideal. Let f be a newform of weight 2 and level c (see Chapter l, sec.
+3 for the precise definition). Then, the Hamilton quaternion algebra
+B over F has class number one. We consider its maximal order R
+consisting of the icosians; we fix an Eichler order Re of level c in R.
+By the Jacquet-Langlands correspondence, f can be identified with a
+newform on R~A \B~/Bx. However, R~A \B~/Bx is just the complex
+analytic space of a zero-dimensional variety. Thus it consists of a finite
+discrete space. The action of Hecke operators on the complex valued
+functions on this space is the basic ingredient in the computations. We
+could compute an the eigenvalues al' of the Hecke operators TI' for an
+prime p of norm N(p) :::; 10000 for any level of norm N(c) :::; 500, but
+only the first few (with N(p) :::; 100) have been listed. It is then easy
+to compute the periods of such a newform when the plurigenus Pg of
+===== PDF PAGE 12 =====
+4 CONTENTS
+the modular surface Xo(c) is equal to 1. We have done so for the two
+smallest levels; namely, when c is one of the prime living above 31 or
+41 in F. By direct investigations, we obtain the minimal model of the
+corresponding elliptic curves.
+In the first chapter, we recall the main facts about the Jacquet­
+Langlands correspondence, then explain in the last section how this is
+used to perform our computations. In the second chapter, we use the
+fact that Oda [40] had already establised that integrating a newform
+along sorne specifie cycles, the corresponding periods are just twists
+of special values of L-functions, to compute the period moduli of the
+abelian varieties associated to the newforms of level one of the primes
+above 31 or 41.
+===== PDF PAGE 13 =====
+CHAPTER 1
+Computing Hilbert modular forms.
+In this chapter, we explain how to compute aIl Hilbert modular
+forms on F = Q(VS) of level an integral ideal c and parallei weight 2.
+Let f be a newform of level c and weight 2 on GL2 • By the Jacquet­
+Langlands correspondence, it is associated to an eigenform on the unit
+group in the Hamilton quaternion algebra over Q(VS). The space of
+modular forms one then gets by making this transfer is simple, hence
+more suitable for computational purposes. Before delving into those
+computations, let us recall some facts about Hilbert modular forms,
+Hecke operators and the Jacquet-Langlands correspondence. We start
+with a brief review of quaternion algebras.
+1. Quaternion algebras: a brief review.
+The main references for this section are Vignéras [54] and Reiner
+[42].
+DEFINITION 1.1. A quaternion algebra over F is a central simple F­
+algebra of rank 4 over F.
+Let B be a quaternion algebra over F. By the non-commutativity of
+B, every element a E B generates a quadratic F-subalgebra L = F[a]
+of B. The characteristic polynomial of a is of the form x2 - tr( a)x +
+5
+===== PDF PAGE 14 =====
+6 1. COMPUTING HILBERT MODULAR FORMS.
+n(a), where tr(a) and n(a) denote respectively the reduced trace and
+norm of Œ.
+Let T be the non-trivial automorphism of L. The algebra B viewed
+as a module over L, under left multiplication is free of rank 2; hence if
+(3 E B - L, one has B = L œ L(3. We can always find a couple (L, a)
+such that (32 = a (see Reiner [42, Chap. VII, sec. 29.]). Then, the
+multiplication in B is completely determined by the rule (3a = a T (3.
+EXAMPLE 1.2. 1) F = Q and B = M2 (F) the 2 x 2 matrices. Here,
+we may take L = F x F and a = 1
+2) F = Q and B = Q œ Qi œ Qj œ Qk, where i2 = -1, j2 = -1 and
+k = ij = - Ji, the Hamilton quaternion algebra. Here, we may take
+L = Q + Qi, (3 = j and a = -1.
+3) In general, by the structure theorem of Wedderburn for simple alge­
+bras, a quaternion algebra B is either a division algebra or isomorphic
+to the matrix algebra M2 (F). If char(F) =1=- 2, we can write B in the
+form B = F EB Fi EB Fj œ Fk, where i2 = a, j2 b, a, b E F X
+and k = ij = -Ji. We denote this algebra by B = (1f). In
+B = (1f), the conjugate of an element q = x + yi + zj + wk is given
+by il = x - yi - zj - wk, and the reduced trace and norm respectively
+by tr(q) = 2x and n(q) = x2 + ay2 + bz2 - abw2.
+DEFINITION 1.3. An order R in B is a finite OF-subalgebra of B such
+that B = F· R.
+EXAMPLE 1.4. Let l be a lattice in B (Le. a finitely generated OF­
+module which contains an F-basis of B) and put
+0 1(1) = {x E BI xl c I},
+Or(1) = {x E BI Ix c I}.
+===== PDF PAGE 15 =====
+1. QUATERNION ALGEBRAS: A BRIEF REVIEW. 7
+One easily sees that these are Op-algebras eontained in B. In faet, they
+are orders in B. Indeed, let el, 00', e4 be an F-basis of B eontained
+in 10 For any x, y E B, xy = alel + ... + a4e4, for sorne ai E F. So
+killing denominators of the ai's, there exists a E OF sueh that axy E 1.
+Fixing x and letting y run over the set {el, O' 0 , e4}, we see that there
+exists a E OF sueh that ax E 0 1(1). Henee B = F· 0 1(1). So we
+only need see that 0 1(1) is a finite OF-algebra. Choose an element
+a E OF n l - {D}. One sees that
+Since a-II is a finitely generated OF-module, so is 0 1(1). A similar
+argument shows that Or (1) is an order in B.
+DEFINITION 1.5. An ideal in B is a lattice le B. We caU 0 1(1) (resp.
+Or(1)) the left (resp. right) arder of 10 We say that l is
+(i) two-sided if 0 1(1) = Or(1);
+(ii) normal if 0 1(1) and Or (1) are maximal orders in B;
+(iii) integral if l is contained in bath 0 1(1) and Or(1);
+(iv) principal if l is of the form l = OI(1)a = aOr(1).
+We define the inverse of l ta be
+1-1 = {x E BllxI Cl}.
+The norm n(1) of l is the fractional ideal generated by the norms of aU
+elements in 1.
+When R is an arder in B, we say that l is a left (resp. right) R-ideal,
+if R is contained in 0 1(1) (resp. Or (1)).
+===== PDF PAGE 16 =====
+8 1. COMPUTING HILBERT MODULAR FORMS.
+By Zorn's lemma, maximalorders always exist. We say R is an
+Eichler order if it is the intersection of two maximal orders. We will
+need the fol1owingresult of Hijikata later.
+PROPOSITION 1.6. [54, Chap. II, Lemma 2.4] Let F be a local field, 7r
+a uniformizer of F and R an order in M2(F). Then the following are
+equivalent.
+(i) R is an Eichler order.
+(ii) There exists a unique pair of maximal orders RI and R 2 such that
+R=R I nR2·
+(iii) There is a unique integer n E N such that R is conjugate to the
+order
+~= C~;F ~J
+(iv) R contains a subring conjugate to (OF 0).o OF
+DEFINITION 1.7. Let F be a local field and R an Eichler order in
+M2(F). The integer n in Proposition 1.6 (iii) is called the level of R.
+DEFINITION 1.8. Let R be an order. The different 'D(R) of R is the
+inverse of the dual of R with respect to the trace form. The (reduced)
+discriminant of R is the ideal disc(R) = n('D(R)) in F.
+PROPOSITION 1.9. Let 1 (resp. R) be an ideal (resp. an order) in B.
+Then, we have the jollowing.
+a) The dual IV of 1 is a two-sided ideal in B.
+b) 'D(R) is an integral two-sided ideal in B.
+c) If R is a free OF-module, then disc(R)2 (det(A)), where A =
+(tr(eiej)) for some OF-basis of R.
+===== PDF PAGE 17 =====
+1. QUATERNION ALGEBRAS: A BRIEF REVIEW. 9
+d) If R' is an arder contained in R, then disc(R ' ) = disc(R) implies
+that R' = R.
+PROOF. Vignéras [54, Chap. IV, Lemme 4.7. and Corollaire 4.8.]
+o
+DEFINITION 1.10. Let R be an arder in B and l, J two left (resp.
+right) R~ideals. We say that land J are right (resp. left) equivalent
+if J = Ix (resp. J = xl) for some non-zero x E B.
+PROPOSITION 1.11. Let R be an arder in B. The number of left equiv­
+alence classes is finite and equal ta the number of right equivalence
+classes. All maximal orders have the same class number.
+DEFINITION 1.12. Let R be an arder in B. The class number of R is
+the number of left equivalence classes. The class number of B is the
+class number of any maximal arder in B.
+DEFINITION 1.13. Let R and R' be two orders in B. We say that Rand
+R' have the same type if they are conjugate by an inner automorphism
+of B. The number of equivalence classes of maximal orders in B under
+this equivalence relation is called the type number of B.
+Now, let F be a global field and fix a quaternion algebra B over F.
+Let l be a lattice in B. Then, for any prime p of F, the complet ion
+Ip = l @ Op of l at p is a (free) lattice in Bp; therefore it is an ideal in
+B p• The completions (Ip)p determine an 6F -module in E, where 6F
+(resp. E) is the finite part of A (resp. of BA.).
+===== PDF PAGE 18 =====
+10 1. COMPUTING HILBERT MODULAR FORMS.
+PROPOSITION1.14. [54, Chap. V, Proposition 5.1.] Let B be a quater­
+nion algebm over F and fix a lattice L in B. Then, the map
+is a bijection between the set of all ideals in B and the set of lattices
+{(Ip)pIIp = L p for almost aIlpinF}.
+This Proposition and the very simple structure theorem [54, The­
+orems 1.1. & 1.3.] of quaternion algebras over local field is the thrust
+of the global-adelic language. For example, sending (xp)p to the ideal
+determined by the local ideals I p = Rpx p, one gets that the quotient
+R~ \B~ parametrizes the set of left R-ideals which are locally princi­
+pal. Thus, R~ \B~ / B X parametrizes aIlleft equivalence classes of aIl
+R-ideals which are locally principal.
+DEFINITION 1.15. We say that B ramifies at p if Bp is a division ring.
+We. den ote by Ram(B) the set of places at which B ramifies.
+The following theorem gives a classification of quaternion algebras
+over a global field. A proof can be found in Vignéras [54, Chap. III.].
+THEûREM 1.16. [54, Chap. III, Theorem 3.1.] Let B be quaternion
+algebra over a global field F. Then Ram(B) is a finite set of even car­
+dinality. Conversely, for every finite set S of places of even cardinality,
+there is a unique quaternion algebm B (up to isomorphism) such that
+Ram(B) = S.
+===== PDF PAGE 19 =====
+1. QUATERNION ALGEBRAS: A BRIEF REVIEW. 11
+The reduced discriminant of Bis defined to be the integral ideal disc(B) c
+Op determined by all the primes P E Ram(B). This is a well-defined
+ideal as Ram(B) is finite by the above theorem.
+Let R be an Eichler order. Then, for any prime P E Ram(B), R p
+is the unique maximal order in B p; while if P ~ Ram(B), by Hijikata
+[54, Lemma 2. 4], disc(R p) = (7r;P), where np is the level of Rp and 7rp
+a uniformizer of Op.
+DEFINITION 1.17. Let R be an Eichler arder. The level m(R) of R is
+the unique integral ideal determined by the local discriminant disc(R p),
+for p ~ Ram(B).
+By the local nature of the discriminant, we see that
+disc(R) = disc(B)m(R).
+The class number formula for orders in quaternion algebras can be
+found in several places. We refer to Vignéras [54, Chap. III, IV &
+V] and references therein. The following result will be enough for our
+purpose.
+PROPOSITION 1.18. [55] Let F be a number field of degree 9 and B
+a totally definite quaternion algebra over F (i.e., Ram(B) contains all
+the archimedian places of F). Let R be a maximal arder in Band h
+its class number. We fix a set of representatives of allleft ideal classes
+of R, say {h, ... , h}. For each i, let Ri be the right arder of h We
+let Rt (resp. RU be the group of units (resp. elements of norm 1) in
+===== PDF PAGE 20 =====
+12 1. COMPUTING HILBERT MODULAR FORMS.
+Ri. We denote by Wi the cardinality of RI. Then,
+(p( -1) II (1 - N(p)) = 29 t [R; :~;RtJ.
+pldisc(B) i=l t
+PROOF. See Vignéras [55]. o
+EXAMPLE 1.19. Let F = Q(v5") and B the Hamilton quaternion al­
+gebra (i.e. the unique quaternion algebra, which ramifies only at both
+infinite places). Put
+with
+1
+el = 2(1 - wi +wj),
+1
+e2 = "2(-wi + j +wk),
+1
+e3 = "2 (wi - wj + k),
+e4 = ~ (i + wj - wk),
+and w = (1 + V5)/2. Then disc(R) = 1, thus R is a maximal order:
+this is the icosian ring (see Conway and Sloane [13, Chap. VIII, sec.
+2.1.]). RI is the icosian group and RX is the semi~direct product of
+RI with 0; = Z[wr. Keeping the same notations as in the above
+proposition, we see that by the structure theorem of finite multiplica­
+tive subgroups of the Hamilton quaternion algebra H over the real [54,
+Chap. 1, Théorème 3.7.], the only possibilities for Wi are 24, 48 and
+120. Again from [54, Chap. l, Théorème 3.7. and Exercice 3.1.], the
+only possibilities for [R; : O;RI] are 1, 2, 4. Since (Q(v'5)(-1) = 1/30,
+we see that we must necessarily have h = 1, [R~ : O;Ri] = 1 and
+WI = 120. That is, B has class number 1.
+===== PDF PAGE 21 =====
+2. CLASSICAL HILBERT MODULAR FORMS.
+2. Classical Hilbert modular forms.
+The main reference for this section is van der Geer [24].
+13
+Through out the rest of this chapter, F is a totally real number field
+of degree g. We let a -t aTi , i = 1, ... , g, be aIl the real embeddings
+of F. AIso, we let OF be the ring of integers of F, 8 its different and
+A its adèle ring. We say that an element a E F is totally positive if
+aTi > 0, for aIl i = 1, ... , g. We denote by F+ (resp. ot), the set of
+aIl totally positive elements in F (resp. OF)' Through out, b (resp. c)
+will be a fractional (resp. integral) ideal of F.
+We consider the reductive group G = ReSFjlQiGL2 obtained by
+restriction of scalars à la Weil, so that for any Q-algebra A, GA =
+GL2 (A 01Qi F). We let
+{ ( ac db) : a, dE OF, b E b- 1 , cE b,
+ad-bcE o;+}.
+This is the subgroup of aIl automorphisms of the projective rank 2 OF­
+module OF EB b having totally positive determinant. We put f(b, c) to
+be the following subgrou p of GL+(OF EB b).
+r(b,c)= {(: :) EGL+(OFEIlb):a,dEOF,bEb-"CECb}.
+GL+(OF EB b) can be embedded into GLt(IR)g by making use of the
+9 embeddings Ti : F '---+ JR. We recall that GLt (I~)g acts on the g­
+fold product Hg of the upper half-plane by extension of the well-known
+===== PDF PAGE 22 =====
+14 1. COMPUTING HILBERT MODULAR FORMS.
+action of GLt(I~.) on 1-l by Mobius transformations:
+GLt(IR) x 1-l --+ 1-l
+az + b
+t---t
+cz+d'
+where l' = (: :). This action of GL+(IR)9 factors through PGL+(IR)9
+and the resulting action (up to a semi-direct factor given by 6 g , the
+group of g-permutations), gives all the biholomorphic transformations
+of 1-lg • For any two ideals 01 and 02, GL+(OF EB (1) and GL+(OF EB (2)
+are conjugate (by an inner automorphism) in M2 (F) if and only if 01
+and 02 belong to the same genus (Le., there exists sorne totally positive
+À E F and an ideal 0 such that 01 = À02( 2).
+The domain 1-lg is contained in Pl(qg, and the 9 embeddings Ti :
+F '---+ lR induce an embedding
+GLt (lR)g acts on pl (lR)g by fractional linear transformations, and so
+does GL+(OF EB 0) on Pl(F) C pl (lR)g.
+Let us fix r a subgroup of GL+(OF EB 0) of finite index. The r­
+equivalent classes of pl (F) are called the cusps of r. The class of
+(1 : 0) is called the cusp 00. The isotropy group of the cusp 00 in
+GL+( OF EB 0) is
+===== PDF PAGE 23 =====
+2. CLASSICAL HILBERT MODULAR FORMS.
+It determines the transformation group
+15
+Henee the transformation group corresponding to the isotropy group
+r 00 = r n GL+(OF EB b)00 of 00 in r is of the form
+where V is a subgroup of 0;+, while M is a Z-submodule of b- l . In
+fact, since r has finite index in GL+(OF EB b), Mis a sublattiee of b- l ,
+and the Dirichlet unit theorem implies that V is a subgroup of 0;+ of
+rank 9 - 1. We caU (M, V) the type of the cusp 00.
+Let k = (kl , ... , kg) E zg be a vector with integer coefficients, and
+f : Hg ---t C a meromorphic function. Take 'Y = ('YI' ... ' 'Yg) E
+GLt(IR)g, with 'Yi = (ai bi) and put
+Ci di
+for Z = (Zl, ... , Zg) E Hg. This defines an action of GLt (IR)g on the
+set of meromorphic functions on Hg.
+DEFINITION 1.20. A Hilbert modular form of weight k and level r is
+a holomorphic function f : Hg ---t C such that
+fllk'Y = f, for aIl 'Y E r.
+===== PDF PAGE 24 =====
+16 1. COMPUTING HILBERT MODULAR FORMS.
+Let j : 1U ---t C be a Hilbert modular form. Since it is f-invariant,
+we have in particular
+j(z + j.t) = j(z), for all z E Hg, j.t E M.
+Therefore, it admits a Fourier expansion of the form
+j(z) = L ave27riTr(vz) ,
+vEMV
+where Tr(1/z) = 2:;=11/
+T
+i Zi, and MV is the dual lattice of M with
+respect to the trace form. When g > 1, every Hilbert modular form is
+automatically holomorphie at cusps as the next lemma shows.
+LEMMA 1.21 (Koecher's principle). Assume that g > 1. Then, j is
+holomorphie at the cusp 00 (hence at all cusps) in the following sense:
+av =1= 0 =? 1/ = 0 or 1/ » o.
+PROOF. Let (M, V) be the type of the cusp 00, and take E E V.
+Thcn, 1'(;;) = (~ ~) E r. Henee, fllk1'(c) = f. Equating the q­
+expansion of both members of this equality, it follows that
+where we use the notation N(E) = E~! ... E~9. Now, let us assume that
+there is a non~zero 1/0 E M V not totally positive such that avo # O.
+Without lost of generality, we can assume that 1/~1 < O. By the Diriehlet
+units theorem, we can find E E V such that
+ET! > 1 and ETi < 1, i = 2, ... , g.
+===== PDF PAGE 25 =====
+2. CLASSICAL HILBERT MODULAR FORMS. 17
+We now consider the subseries of f(z) = L:vEMvave27l"iTr(VZ) index by
+the set {vocm , mEN}, in which we put z = (i, ... , i). Then
+growth ensures that N(é)mk/2avoe-27l"Tr(VOêm) -+ 00. Therefore the se­
+ries does not converge, which is a contradiction. 80 we must have
+aVo = o. D
+DEFINITION 1.22. We say that f is a cusp form if the constant term
+ao in the Fourier expansion is equal to 0 for any fllk)', )' E GLt(F)
+(i.e., if f vanishes at ail cusps).
+We will denote by Mk(f) (resp. Sk(f)) the space of Hilbert modular
+forms (resp. cusp forms) of weight k and level f.
+COROLLARY 1.23. Sk(f) = Mk(f) unless k1 = ... = kg.
+PROOF. Let assume that there is f E Mk(f) not a cusp form. Then
+at sorne cusp a, the q-expansion must give ao =1= o. From
+ao = N(c)k/2ao , for aIl é E V,
+it foIlows that we must have N(é)k/2 = 1 for aIl é EV. But this is
+possible only if we have k1 = ... = kg. D
+PROPOSITION 1.24. (i) Mk(f) = 0 unless ki 2: 0 for ail i = 1, ... , g.
+(ii) Mo(r) = C and So(r) = o.
+PROOF. van der Geer [24, Chap. 1. sec. 6.] D
+===== PDF PAGE 26 =====
+18 1. COMPUTING HILBERT MODULAR FORMS.
+EXAMPLE 1.25. Eiseinstein series. Let B be an ideal class and b E B.
+Let k ~ 2 be even. Put
+Ck,B(Z) = N(b)k L N(c~ + d)-k,
+(c,d)Epl(abxb)
+where pl(ab x b) = {(c, d) E ab x bl(c, d) =1 (0, On/O;. This series
+does not depend on b E B, and it can be shown to be modular form
+of weight k = (k, ... , k) with respect to SL(OF EB a). As in the one­
+dimension al case, one can find the expansion at 00 by making use of
+Poisson summation (see van der Geer [24, Chap. 1, sec. 6]). We
+caH Ck,B the Eiseinstein series of weight k and class B with repect to
+SL(OF EB a).
+The Petersson inner product on Sk(r) is given by
+3. Hilbert modular forms in the adelic language.
+In this section, we fix a quaternion algebra B over F and let C =
+ResF/tQ(BX ) be the reductive algebraic group obtained by restriction of
+scalars. For any F-algebra A, C(A) is the group of aH A-valued points
+of G. In particular, G (A) is the adelization of G, and G00 and Gf
+respectively, its infinite and finite parts. The subgroup of aH totaHy
+positive elements of Goo will be denoted G~. We fix a maximal compact
+subgroup K oo of C~ and let K f be a compact open subgroup of Cf.
+Put K = K oo x K f . Let 9 be the Lie algebra of Coo ' Then we denote by
+===== PDF PAGE 27 =====
+3. HILBERT MODULAR FORMS IN THE ADELIC LANGUAGE. 19
+ge the complexification of g, by U(gc) the universal enveloping algebra
+of ge, and by Z(gc) the center of U(gc).
+Let <I> : G(A) -+ te be a continuous function. We say that <I>
+is smooth if it is Coo as a function on Goo and locally constant on
+Gf' We say that it is K -finite to the right if the complex space
+Wq, = Span( {<I>k' k E K}), where <I>k : G(A) -+ te is the function
+sending 9 to <I>k(g) = <I> (gk), is finite dimensional. This means that
+the representation of K we obtain by right translation of <I> is finite
+dimension al. The elements in U (gc) can be thought of as differential
+operators or as distributions (see [23]). As such, they act on <I> in a nat­
+ural way. So we can define Z(gc)-finiteness similarly to K -finiteness.
+Finally, we say that <I> is slowy increasing if there is a continuous rep­
+resentation p: G(A) -+ GLn(C) such that, for any 9 E G(A),
+where IIAI12 = Tr(AAt) 1/2 is the Schur norm.
+DEFINITION 1.26. An automorphic form on G(A) of level Kf is a
+smooth function <I> : G(A) -+ te satisfying the following conditions:
+(i) <I>hgz) = <I>(g), for all, E G(Q), 9 E G(A) and z E ZA;
+(ii) <I> is right K -finite and Z (gc) -finite;
+(iii) <I> is slowly increasing.
+If <I> satisfies the further condition that
+r <I>(ng)dn= 0, for all 9 E G(A),
+JN(A)/N(F)
+where N is the unipotent radical of G, we say that <I> is cuspidal (or a
+cusp form).
+===== PDF PAGE 28 =====
+20 1. COMPUTING HILBERT MODULAR FORMS.
+When G = ReSF/iQl(GL2 ), we let Koo = SO(2)9. Then, since K oo is
+abelian, the finite dimensionality of the representation WeI> implies that
+it is induced by sorne character X of (IR/Z)9. If X(B) = exp(27fiTr(kB)
+for B E IR9 and k E Z9, then
+<I>(gr(O)) = X(O)<I>(g), for aIl 9 E G(A),
+In this setting, the center of the universal enveloping algebra is gener­
+ated by the Casimir operators Lli corresponding to each archimedian
+place. Therefore the Z(gc)-finiteness of <I> is equivalent to <I> being
+an eigenvector of each Lli' Recall that for the Lie group GLt(IR), the
+Casimir operator Ll is given by
+-4Ll = H 2 + 2RL + 2LR,
+where
+(01) (0 0) (1 0) (1 0)R= L= H= Z=o 0' 10' 0 -1' 01.
+DEFINITION 1.27. A Hilbert modular form of level K f and weight
+k E Z9 is an automorphic form <1> : G(A) -+ C such that
+(i) <I>(gk) = <I>(g), for aU k E Kf (koo = 1);
+(ii) <I>(gr(O)) = x(B)<I>(g), for aU 9 E G(A), r(B) E K oo , where the
+character X is defined as above;
+(iii) Lli<I> = - ~i (~i -1) <1>, for aU i = 1, ... , g.
+===== PDF PAGE 29 =====
+3. HILBERT MODULAR FORMS IN THE ADELIC LANGUAGE. 21
+We still assume that G = ResF/Q(GL 2 ), and let Y(c) and Ko(c) be the
+following semigroups.
+Y(c) = G(A) n (G;t, x IJY"),
+where the product is taken over aIl finite primes of F, and
+Y, = { (: :) E GL2(F,) : b, dE 0" a ~ 1, C E cl
+Kp = {x E Yp : det(x) E O;}.
+We simply calI a Hilbert modular form of level Ko(c) and weight k a
+Hilbert modular form of level c and weight k. We will denote by Mk(c)
+(resp. Sk(C)) the space of Hilbert modular forms (resp. cusp forms) of
+weight k and level c. The connection of the spaces Mk(c) (resp. Sk(C))
+with the classical Hilbert modular forms is obtained as follows: let
+CÀ, À = 1, ... , h+, be representatives of the narrow ideal classes of F.
+For each À = 1, ... , h+, take XÀ E GA, so that tÀ = det(xÀ) generates
+the ideal CÀ' Then, by the strong approximation theorem,
+h+
+G(A) = Il G(Q)xÀ(G~ x Ko(c)),
+À=l
+and we see that
+To each h+-tuple (h, ... , fh+) E EB~:lSk(rÀ)' we associate the C­
+valued function f on G(A) defined by
+where i = (i, ... , i). The function f uniquely determines the h+-tu pIe
+(h, ... , fh+)'
+===== PDF PAGE 30 =====
+22 1. COMPUTING HILBERT MODULAR FORMS.
+PROPOSITION 1.28. [25, Chap. 3] The map
+h+
+EB Sk(f>.) -+ Sk(C)
+>.=1
+(fI, ... , fh+) H f
+is an isomorphism of complex vector spaces.
+In our general setting, we will denote by Ak(G, K f ) (resp. A~(G, K f ))
+the space of aIl automorphic (resp. cusp) forms. They satisfy the fol­
+lowing results, which we refer to [30, Chap. 4] and [6] for proofs.
+THEOREM 1.29. The space Ak(G, K f ) is finite dimensional and every
+element in A~ (G, K f) is square-integrable.
+Again, let G = ResF/IQ(GL2 ) and <P E Ao(G, K f ) be a cusp form.
+We recaIl that the standard additive character Ta of AIQ is given by
+Ta = TIp Tp, where
+Tp(X) = e- 27riy, where x = y + Z, y E Z[llp]' Z E Zp,
+at each prime p. The standard additive character is obtained by com­
+posing Ta with the trace map A = AF -+ Â1Q. Then, any character of
+AI F is of the form Tt; : x H T(Ç"X), Ç" E F. For almost aIl 9 E G(A),
+is a square-integrable function on AI F. Hence, it admits the Fourier
+expansion:
+= L Wt;(g)T(Ç"X),
+t;EF
+===== PDF PAGE 31 =====
+3. HILBERT MODULAR FORMS IN THE ADELIC LANGUAGE. 23
+where
+DEFINITION 1.30. We caU thefunction W~ : 9 H W~(g) the çth-Fourier
+coefficient of <I>.
+Take f E Sk(C) and let (h, ... , fh+) be the corresponding h+-tuple of
+classical Hilbert rnodular forrns. Each cornponent 1>. has a q-expansion
+(ç = 0 or 0 «ç E i(t À )),
+where i(t) is the ideal corresponding to the idèle t. Since 1>.(éZ)ék/2 =
+1>.(z) for é E 0;+, we see that aÀ(ç)ç-k/2, for ç =J 0, depends only
+on the ideal i(ç). Now, by definition of the tÀ, every non-zero integral
+ideal of F is of the forrn i(çt,X"l) for sorne unique À and sorne totally
+positive ç E i(tÀ)' We define c(a, f) by
+( {
+aÀ(ç)t~k/2 if a = i(çt,X"l)is integral
+c a, f) =
+o if not.
+By rnirnicking the proof of Lernrna 3. 6 in [25, Gelbart], we get that
+the q-expansion of the cusp forrn f is given by
+W~ ((Y
+o
+0
+1
+)) = { oc(a, f)e-21rTr(~Yoo) if a = i(ç)i(tÀ)-l is integral
+otherwise,
+ç » 0, Yoo » o.
+The Dirichlet L-series associated to f is
+L(f ) = ~ c(a, f)
+,S L.J N(a)s .
+a
+It converges for Re(s) large enough.
+===== PDF PAGE 32 =====
+24 1. COMPUTING HILBERT MODULAR FORMS.
+The Petersson inner product on Sk(C) is then given by
+h+
+(f, g) = LU", g,,).
+"=1
+4. Hecke operators.
+We refer the reader to Shimura [48, Chap. 3] and [47, sec. 2], also
+to Miyake [38, Chap. 2, sec. 2], which contain a very nice description
+of the local Hecke algebras and their relation to the global one. Though
+the discussion in Miyake [38] is over Qp, it still applies to any p-adic
+field. In our discussion, we assume that aIl modular forms have parallel
+weight, i.e. k = (k, ... , k). (See [48] for more details on the non­
+parallel case). The Hecke algebra, defined by the group K o = K o(c) and
+the semi-group Y = Y(c) consists offormal finite sums LYEY cyKoyK o,
+with y E Y and c y E C. The multiplication law is defined as in [48,
+Chap. 3, sec. 1]. It acts on Mk(c) as follows: for y E Y with KoyK o =
+Uj KOYj, where (Yj)oo = 1,
+(fIKoyKo)(x) = L f(xYj),
+j
+xE G(A).
+This is independent of the choice of yjs. For each integral ideal a of F,
+we define the (normalized) Hecke operator Tc(a) on f E Mk(c) by
+Tc(a)f = N(a)k/Z-1 L (fIKoyK o),
+det( i(y) )=a
+where the sum is taken over aIl distinct double cosets KoyK o for which
+det(i(y)) = a. Also, for eah integral ideal a of K prime to c, we define
+the operator Sc(a)
+===== PDF PAGE 33 =====
+4. HECKE OPERATORS. 25
+where a is any element ofA x such that a = i(a). For convenience, we
+set Sc(a) to be zero when a is not prime to c. As for modular forms
+over Q, R(Ko, Y) is generated by the operators Tc(p) and Sc(p) for aH
+prime ideal p.
+By definition of the multiplication in R(Ko, Y) and as in the one
+dimensional case (see Theorem 3.24 [48, Chap.3, sec. 3]), we have
+Tc(m)Tc(n)= L N(a)k- 1Sc(a)Tc(a- 2mn);
+m+nCa
+we also have the formaI Euler product (see [47] and [48, Chap. 3,
+sec.3])
+LTc(a)N(a)-S = Il (1 - Tc(p)N(p-S) + Sc(p)N(p)k-1-2S)-1.
+a p
+The Hecke operators act on the Fourier coefficients of f by
+c(m, Tc(a)f) = L N(a)k-1 c(a-2mn, Sc(a)f).
+m+nCa
+Since, the Hecke operators commute and are self-adjoint with respect to
+the Peterson inner product, they have a common basis of eigenvectors.
+If fis an eigenform, the corresponding eigenvalues are the c(a, f). We
+say that f is normalized if c(OF, f) = 1. When f is a normalized
+eigenform, its Dirichlet L-series has a formaI Euler product
+L(f, s) = I1(1-c(p, f)N(p)-S + N(p)k-1-2s)-1.
+Il
+PROPOSITION 1.31. The eigenvalues of Tc( a) are algebraic integers.
+PROOF. See [47, Prop. 2.2]. o
+===== PDF PAGE 34 =====
+26 1. COMPUTING HILBERT MODULAR FORMS.
+5. Automorphic representations.
+We refer the reader to Jacquet~Langlands [32, Chap. 1& II], Gode­
+ment [26] or Gelbart [25, Chap. II & III], for the definition of admis­
+sible representations and the local and global Hecke theory; there is
+also a very nice survey of representations of p-adic groups by Cartier
+in [9]. We let Hp be the local Hecke algebra at the prime p and HA
+the global one (which is obtained as the restricted tensor product of
+the local ones; see Flath [23]).
+DEFINITION 1.32. Let <I> be in Ak(G, K f ). We say that Wq, is an auto­
+morphic representation if it is irreducible. If further, <I> E A~ (G, K f ),
+we say that Wq, is cuspidal.
+REMARK 1.33. We only consider automorphic repesentations associ­
+ated with the trivial character. By Theorem 4.5 [6], such a repre­
+sentation is admissible. AIso, since we are only interested in unitary
+admissible representations, we will not distinguished between such rep­
+resentations and their corresponding HA-modules; indeed, the functor
+that sends the isomorphism class of a unitary admissible G(A)-module
+to the one of the corresponding HA-module is full and faithful.
+A natural question is the understanding of the map <I> H Wq,. This
+is very well-understood in the case of GL2 • We will restrict ourselves
+to this case in the rest of this section and refer to [25, Chap. 5, sec.
+A] and [32, Chap. 2, sec. 10], for more on that subject and for the
+following theorem which make use of the uniqueness of the Whittaker
+model.
+===== PDF PAGE 35 =====
+5. AUTOMORPHICREPRESENTATIONS. 27
+THEOREM 1.34 (Multiplicityone). The representation R o decomposes
+into a countable direct (Hilbert) sum of cuspidal representations:
+In this decomposition, each WQ has multiplicity one (i.e., up to iso­
+morphism, WQ appears only once). Moreover, for each Œ, /3, if there is
+a finite set of places 5 such that for each p rt 5, WQ,p rv W,B,p, then
+WQ = W,B'
+Take <I> E A~ (C, K f) and assume that the corresponding represen­
+tation 7r<I> is cuspidal. Then, by Theorem 4 in Flath [23], it factorizes
+as 7r<I> = Q97rp • The characterization of cuspidal representations is then
+purely local and we need the fol1owing few defintions to start.
+DEFINITION 1.35. Let 7r be an infinite dimensional irreducible admis­
+sible representation of Cp = GL2 (Fp) at a finite prime p on the vector
+space V. We let 7rp be a uniformizer at p, and W'Ir the central charac­
+ter of 7r. The conductor C'lr of 7r is the largest ideal c of Op such that
+V K 1(C) =1= 0, where
+K1(c) = { (: :) E GL,(O,ll c, d - 1 E c}.
+We say that 7r is unramified (or class 1 or special) if C'lr = Op.
+Here is the list of possible conductors for a p-adic field (see Gelbart
+[25, Rcmark 4.25]):
+• If 7r = 7r(Xl' X2) is in the principal series, then C'lr = hb where
+fi, i = 1, 2 is the conductor of Xi.
+===== PDF PAGE 36 =====
+28 1. COMPUTING HILBERT MODULAR FORMS.
+• If 7r = 7r(xl'I I / 2 , xl'I- I / 2 ) is special, then C1l" = f2 n7rOp, where
+f is the conductor of X.
+• If 7r is supercuspidal, then C1l" = 7rn Op, for sorne n 2 2.
+Note that C1I" is divisible by the conductor of W1l" and we have the
+following theorern.
+THEOREM 1.36. ([10, Theorern 1]) For c
+one-dimensional and
+( ac db)v E V K 1(C) {:} 7r(g)v = w1I"(d)v, for aU 9 =
+where
+Ko(c) = { (: :) E GL2(Op)lc E c}
+E Ko(c),
+DEFINITION 1.37. The vector v E V, unique up to constant, invariant
+under KI (c), with c = C1l"' is called the new vector of 7r.
+Piecing these together, we get the notion of a new forrn.
+DEFINITION 1.38. Let W be a cuspidal representation of weight k.
+Then, it is an irreducible admissible representation of Cf. Therefore, it
+factors as 7r = Q97rp. For each finite prime p, let vp be a new vector of 7rp.
+We assume that, for almost aU p, Vp is equal to the vector we have used
+to define the restricted tensor product. We say that v = Q9Vp, defined
+up to a constant, is the new vector of W. Let 1> be in A~( C, Kf), and
+Wq, = Span(1)· Cf). We say that 1> is a new forrn ifWq, is irreducible
+and 1> is a new vector for Wq,. The conductor of 1> is then the ideal
+c = TIp 7rt
+p
+, fp being the conductor of Wq"p.
+===== PDF PAGE 37 =====
+6. THE JACQUET-LANGLANDS CORRESPONDENCE. 29
+REMARK 1.39. By Theorem 2 in Flath [23] and the discussion following
+it, almost every Wp is unramified; therefore the new vector is well­
+defined up to a constant. Further we see that, by the multiplicity one
+theorem, w.iù(c) must be one-dimensional; which means that <I> is an
+eigenform.
+We denote by A~,new(G, Kf ) the subspace ofnew forms in A~(G, Kf ).
+THEOREM 1.40. [16, Deligne, Scholie 2.4.2] The map <I> H W<I>, which
+associates to each cusp form the irreducible Gf-module it generates, is
+an injection of A~' new(G, K f) into the set of isomorphism classes of
+cuspidal representations.
+When Kf = Ka = Ka (c), the holomorphie newforms are just Skew (c) =
+Sk(C) nA~,new(G, Ka). For a more classical definition of newforms, see
+Shimura [47, sec. 2, Prop. 3].
+6. The Jacquet-Langlands correspondence.
+The last step in building the bridge between the new forms on the
+algebraic group G' = ResF/iQJBx and the ones on G = ResF/iQJGL2 is
+making explicit the correspondence between automorphic representa­
+tions on G~ and on GA, Let Ram(B) be the set of places at which
+B is ramified. We take a cusp form 7f' on B~, and let 7f' = 07f~ be
+its factorization. If p ct Ram(B), we fix an isomorphism Bp = M2 (Fp)
+such that the maximal compact open subgroup K~ we have fixed in
+defining the Hecke algebra of B goes to K p = GL2 (Op). We can carry
+the representation 7f~ to a representation 7fp of Gp via this isomorphism,
+===== PDF PAGE 38 =====
+30 1. COMPUTING HILBERT MODULAR FORMS.
+and by construction, those two representations will be isomorphic as
+Hecke modules. Although our choice of isomorphism has been arbi­
+trary, it will not affect the construction we will be making (see [32]).
+It remains now to take care of the local representations at places in
+Ram(B). This is done by making use of the Weil representations (see
+Jacquet-Langlands [32] and Gelbart [25], for more details). By tak­
+ing the restricted tensor product of the local representations we just
+obtained, we get an admissible irreducible representation 7r = J L(7r').
+That 7r = J L(7r') is automorphic is a consequence of the celebrated
+Jacquet- Langlands correspondence.
+THEOREM 1.41. The map 7r' H 7r = J L(7r') is an injection of the irre­
+ducible constituents of Ak(G', K') into A~,new(G, K). Its image con­
+sists of the representations 7r with 7rp square-integrablefor p E Ram(B).
+PROOF. The proof of this result relies essentiaHy on the trace for­
+mula and we refer to [25, Chap. 9 and 10] for a detailed treatment. 0
+7. Applications.
+We would like to compute the coefficients ap (N(p) :::; 100) of aH
+the (normalized) eigenvectors of the Tp acting on 82 (c) with N(c) :::;
+500 on F = Q(VS). To this end, let us consider the (unique, up to
+isomorphism) totally definite quaternion algebra B over F, which is
+unramified at aH finite places. The algebra B can be identified with
+the standard Hamilton quaternion algebra, since 2 is inert in F:
+B = {x + yi + zj + wk, x, y, z, w E F}.
+===== PDF PAGE 39 =====
+7. APPLICATIONS. 31
+As we have seen in Example 1.19, the class number of B, henee the
+type number is one. Every maximal order in B is then conjugate to
+the icosian ring
+whose group of units R x is isomorphic to the semi-direct product of Il
+with the binary icosahedral group of order 120. (Cf. [13, Chap. 8, sec.
+2.1.]) For any prime p, we fix an isomorphism BI' = M2 (Fp) so that
+RI' = M 2 ( OF,l'). Now, let Re be an Eichler order of level c in R, and
+write
+and
+We recall that RX\BX/B x parametrizes the set of left ideal classes of
+R. Thus, since B has class number one,
+Henee
+R:\R
+X
+/R
+x
+= (IIR~q \R:) /R
+x
+qle
+(IIP l(Oq/qeq )) /Rx,
+qle
+where c = flq1e qeq and
+pl(A) = {(a, b) E A2 : aa + {3b = 1 for sorne (a, (3) E A2 } /A x ,
+for any ring A. This is then a finite set, and L2(R~\BX jB X ) is the
+vector space of Cvalued maps defined on it. By the Jacquet-Langlands
+correspondenee, S2(C) is isomorphic as a Hecke module to the complex
+spaee
+===== PDF PAGE 40 =====
+32 1. COMPUTING HILBERT MODULAR FORMS.
+on which the Hecke operators act in the standard way. To carry out our
+computations, we will explain a bit more how this action goes. This will
+lead us to the theory of Brandt matrices in the case of algebraic modular
+forms (as in Gross [28] and Khuri-Makdisi [33]). Indeed, in the spirit of
+Gross [28], L2(R~\Êx /B X) can be identified with the space ofalgebraic
+modular forms on G = Resp/Q(BX/ F X ) of level the compact open
+subgroup with K = R~ with values in the trivial representation V = ce.
+To make this more precise as a statement, let us recaH sorne definitions
+and facts. We assume for a while that G is a connected reductive
+group defined over Q such that G(lR) is compact. We let V be a (finite)
+dimensional complex representation of G(lR) and fix a compact open
+subgroup K of Gf = G(Af ).
+DEFINITION 1.42. [33] The space of algebraic modular forms of level
+K and weight V on G is M(V, K) := HomG(~)(V, L2 (K\G A /G(Q))).
+By Proposition 8.3 in [28] (see also [33, Lemma 2.2]), M(V, K) can
+be identified with the complex space of aH functions f : K\G A/G(Q) ---+
+V* such that f(goog) = g;;}f(g) for aH goo E G(lR). This is in fact an
+isomorphism of Hecke modules.
+PROPOSITION 1.43. Let (gih~i~k be a complete set of representatives
+of K\Gf/G(Q). Define fi = G(Q)ng;l Kgi. Then fi is afinite group,
+as it embeds discretely into the compact group G(lR). Let Vri be the
+subspace of aU fi-invariant vectors in V. Then the map
+k
+M(V, K) ---+ ES Vri
+i=l
+is an isomorphism of complex spaces.
+===== PDF PAGE 41 =====
+7. APPLICATIONS. 33
+PROOF. The proof essential1y uses the fact that each element in
+M(V, K) viewed as a functions on the double coset space K\GA/G(Q)
+is completely determined by its values on the gi; see [28, Proposition
+4.5] or [33, Lemma 2.3]. D
+By letting G = ResF/Q(BX / F X ) and K the image of R~ by the pro­
+jection ÊX ---+ Gl, and V = C the trivial representation, we see that
+L2(R~\Êx /B X ) is nothing else but the space of aIl algebraic modular
+forms on G of level K and trivial weight as we claimed before. The
+definition of Brandt matrices for the action of Hecke operators on such
+forms has been given by Khuri-Makdisi in the case when V is non­
+trivial. In what fol1ows, we will content ourselves with recalling that
+definition only for algebraic modular forms of weight the trivial repre­
+sentation and refer to Khuri-Makdisi [33, sec. 3] for the general case.
+So, let (gih"'Ç,i"'Ç,k be a complete set of representatives for the classes in
+R~\ÎV /B x , and recal1that we have an isomorphism of complex spaces:
+L2(R~\ÊX /BX ) ---+ Ck
+f H (f(gi)h"'Ç,i"'Ç,k.
+Aiso recal1 that in this setting, the definition of Hecke operators is as
+follows: take t E Gland write the double coset as a disjoint union
+K tK = Uf=l K ti . Then,
+s
+fIIKtK(g) = L f(tig),
+i=l
+forg E GA.
+Viewing every element in L2(R~\Êx /B X ) as a column vector via the
+isomorphism above, we see that the action of t on L2(R~\Êx /B X ) is
+then given by a matrix Sb called the Brandt matrix of t. We see that
+it is independent on both sets of coset representatives (gdl"'Ç,i"'Ç,k and
+===== PDF PAGE 42 =====
+34 1. COMPUTING HILBERT MODULAR FORMS.
+(ijh5,j5,s' For a prime p E OF, we will simply denote by Hp = (bij ) the
+Brandt matrix of Tp• When B is unramified at p there is a well-known
+alternative description of the Hp = (bij ). Indeed, fix an isomorphism
+Bp = M2 (Fp) such that Rp = M2 (Op), and let tp E Rp correspond
+ta (~ ~), wherc ", is a uniformizer of 0,. Wc can view t, as an
+element of EX by letting all its other entries be equal to the identity
+matrix in the corresponding Bq's. Then, the following proposition is
+standard.
+THEOREM 1.44. [37, Pizer] Let p be a prime at which B splits such
+that (p, c) = 1, and let Il, ... , h be a complete set of representatives
+of the ideal classes in R~ \E
+X
+/Bx so that Ii corresponds to gi. Then bij
+is the number of subideals Lv C Ii satisfying the following conditions:
+(i) IdLv ~ (Op/1rpOp)2,
+(ii) Lv is in the same ideal class as Ij; so that Lv = 'Yvlj for some
+'Yv E B
+X
+•
+The computation of the Brandt matrices exploits this theorem and
+the duality between the action of Hecke operators on L 2 (R:\EX /B X )
+and on the free group on X = R~\EX /B x . Indeed, let us use the
+improper notation that Div(X) equals the free abelian group on X.
+We define the map
+52(c) X X -+ te
+(f, x) H (f, x) = f(x), x E X,
+===== PDF PAGE 43 =====
+7. APPLICATIONS. 35
+that we extend linearly in the second factor to Div(X)@zC. One easily
+sees that this is a perfect pairing and by definition of Hecke operators,
+(fIIT, D) = (f, DIIT),
+for an f E S2(C), D E Div(X) and T E R(Ko(c), Y). Further, the
+action of Hecke on Div(X) @z C preserves the lattice Div(X) by def­
+inition. Therefore, it is enough to compute the action of Hecke on
+Div(X). The resulting matrices are then the tranposes of the Brandt
+matrices. The action of Hecke on Div(X) is described in several places.
+We refer to Gross [28, sec. 4] and Bertolini and Darmon [4, sec. 1.5]
+where this is done in the setting of quaternion algebras over Q. If B
+splits at the prime p such that (p, c) = 1, then
+is the Bruhat- Tits tree of PGL 2 (Fp) whose vertices correspond to simi­
+larity classes of Op-Iattices in F;. This is a homogeneous tree of degree
+N(p) + 1. Let 9 E PGL 2 (Op)\PGL 2 (Fp) corresponds to the lattice L.
+The neighbours of 9 which determine an sublattices of L of index p,
+are given by
+(
+1 i)gi = g,
+o 7fp (
+7fP 0)goo = 0 1 g.
+To get the action of Tp on Div(X), we then take N(p) + 1 global
+elements 1'i, i E IFp and 1'00 in R such that gi = 1'ig, i E IFp and
+goo = 1'oog· Then, by Theorem 1.44,
+Tp.x = L 1'i·X + goox,
+iElFp
+for xE X.
+===== PDF PAGE 44 =====
+36 1. COMPUTING HILBERT MODULAR FORMS.
+When pic, the operator Sp is described in a similar way. PracticaIly,
+we let the elements li, i E lFp and 100 act on the projective space
+TIqlc Pl( Oq/qeq). We then take the summation over the elements which
+are not equivalent to (0, 0) under the action of R x. To do the com­
+putations, we find a fundamental domain S of the action of R x on
+TIqICPl(Oq/qeq).We then let R act on S by embedding it diagonally
+into R.
+Aigorithms.
+1) Generating the icosian group: We could have used a set of
+generators for the icosian group and their relations (cf. [13, Chap. 8,
+sec. 2.1] to generate this group. Instead, we have chosen to find aIl
+4-tuples in Z[w] such that the quaternion q = xlel +X2e2 +X3e3 +X4e4
+has reduced norm 1 (see example 1.19).
+2) Finding a fundamental domain: We first find a set of repre­
+sentatives of the space Pl(O/C). We have chosen to work with the
+product
+pl(O/C) = ITpl(O/p ep ).
+pic
+Then the coset representatives for each local factor pl (0/pep ) are taken
+to be aIl couples
+(1, a) and (a, 1)
+We let the icosian group R x acts on this set of coset representatives.
+This is done via the local isomorphism Rp = M2 (Op) which reduces to
+===== PDF PAGE 45 =====
+7. APPLICATIONS. 37
+Note that by Hensel's Lemma, we only need find that redueed isomor­
+phism. This amounts to finding a set of generators of M2(Op/pe p )
+which satisfies the appropriate relations corresponding to the basis we
+have chosen for Rp. This determines a fundamental domain for this
+action.
+3) Generating the Hecke operators: Let p be a prime in F =
+Q(v"5). To compute Tp, it is enough to find coset representatives of
+redueed norm (a uniformizer of) p in the form
+q = x + yi + zj + wk with x, y, z, w E Z[w].
+To this end, we again consider the local isomorphism Rp = M2(Op)
+and reduce it to R0lF p = M2(lFp). We then consider the Eichler order
+in M2 (Op) whose reduction consists of aH upper triangular matrices.
+We use the fact that GL2(Op) acts transitively on pl (lFp) and that the
+stabilizer of 00 under this action is the group of invertible elements
+in our fixed Eichler order. Our algorithm consists in finding global
+elements q E R of reduced norm p such that q'q-l E R; reduees to
+a non upper triangular element. This couId have been much easier
+and faster if we were able to prove that R is Euclidean. Which we
+couldn't do, so we have chosen instead to represents the quadratic
+form n(q) = x2 + y2 + Z2 + W2; so our algorithm is O(N(p)2) time. If
+p Ellis a prime that splits, we only stored the cosets representatives
+corresponding to Tp sinee we can get Tp by Galois conjugation.
+Conventions:
+===== PDF PAGE 46 =====
+38 1. COMPUTING HILBERT MODULAR FORMS.
+• Let p be a prime in Z which splits in OF = Z[w]. We have a
+canonical isomorphism OF = Z[xJl(x2 - X - 1), and
+OF ® IFp = IFp [xJl(x2 - X - 1) = IF[x]/(x - a) x IF[x]/(x - (3),
+where a is the reduction of w modulo p and f3 the one of w.
+We denote by pA the prime which reduces to (x - a), and pB
+the one which reduces to (x - (3).
+• For quadratic fields, we use the notations
+{
+v75 if D =11
+WD =
+l+VD if D - 12 -
+mod 4
+mod 4.
+• The prime p has norm 2 :::; N(p) :::; 100.
+• The ideal of smaHest norm above which we could find a modu­
+lar form has norm 31. The level chas norm 31 :::; N(c) :::; 500.
+• The first row of the table gives the levels which have been
+listed in the increasing order of the norm. For each level c,
+the corresponding columns give the list of aH modular forms
+of level c. The listing is done up to Galois conjugation of the
+levels.
+• We have listed separately aH levels c which have normalized
+eigenforms with Fourier coefficients generating a field of di­
+mension greater or equal to 3. In such case, the notation
+c : Pl, ... , Ps means that, up to Galois conjugation, we have
+s newforms fI, ... , fs and that the field generated by the Hecke
+eigenvalues of fi is Q(ai), where ai is a root of the irreducible
+polynomial Pi which is also an Hecke eigenvalue. We then
+===== PDF PAGE 47 =====
+7. APPLICATIONS. 39
+give the coefficients of each eigenform in a chosen integral ba­
+sis. We only specify this integral basis when it does not corre­
+spond to the canonical power basis {l, Œi, ... , Œfi- 1}, where
+di = deg Pi,
+===== PDF PAGE 48 =====
+40 1. COMPUTING HILBERT MODULAR FORMS.
+31A 2.3 41A 3.VS 7 VS,lIA 61A 23 7lA
+P ap(f) ap(f) ap(f) ap(f) ap(f) ap(f) ap(f) ap(f) ap(f)
+2 -3 - -2 -3 0 -1 . - 2W5 - -1
+3 2 - -4 - 5 -2 -3+W5 2 -2
+VS -2 -4 -1 - -4 - -2 + 3W5 -2 0
+7 2 10 -6 -14 - 14 -2 + 4W5 10 -4
+lIA 4 2 -2 -4 -3 - -1 +W5 -4 0
+lIB -4 2 5 -4 -3 0 2 - 4W5 -4 0
+19A -4 0 -1 4 0 8 2 -W5 4 -4
+19B 4 0 6 4 0 -4 -3 - 3W5 4 2
+29A -2 0 9 -2 5 -6 -4+ 5W5 -2 -6
+29B -2 0 2 -2 5 6 4+ 2W5 -2 6
+31A - -8 -10 0 2 -4 4 - 5W5 0 2
+31B 8 -8 4 0 2 8 6+ 2W5 0 8
+41A -6 2 - 10 2 -6 6 - 2W5 2 12
+41B -6 2 0 10 2 6 -10 + 4W5 2 6
+59A 12 -10 -3 -4 -10 0 4 -10w5 12 -12
+59B -4 -10 4 -4 -10 -12 7W5 12 6
+61A 6 2 6 -2 -8 2 - -10 -4
+61B -2 2 -8 -2 -8 -10 0 -10 -10
+7lA 0 12 9 -8 -8 0 2+3w5 8 -
+7lB -8 12 -12 -8 -8 0 -4W5 8 6
+79A 0 0 -11 0 5 8 -8 + 2W5 -16 14
+79B 16 0 -4 -8 5 -4 8 - 4W5 -16 -4
+89A -6 10 -8 -6 0 -18 2 + 2W5 -6 18
+89B 10 10 -1 -6 0 6 -11 + 3W5 -6 6
+===== PDF PAGE 49 =====
+7. APPLICATIONS. 41
+2 ·19A 79A 22 .V5 32 89A V5.19A 3.IlA
+Il ap(h) ap(h) ap(h) ap(f) ap(f) ap(f) ap(f) ap(f) ap(f)
+2 - - - 1 - -1 -1 -1 1
+3 -5 1 1 -2 -2 - 4 -2 -
+V5 1 -3 -3 -2 - 0 0 - -2
+7 0 -4 -4 -2 -10 14 -4 2 2
+IlA 2 -6 3 0 0 0 0 0 -
+IlB -3 3 -6 -4 0 0 -6 0 -4
+19A - - - 8 -4 -4 -4 - 4
+19B 5 -7 -7 4 -4 -4 2 -4 -4
+29A 5 3 -6 -2 6 0 6 6 6
+29B -10 -6 3 6 6 0 6 -6 -2
+31A -3 5 5 -8 -4 8 -4 -4 8
+31B 7 5 5 0 -4 8 -4 8 -8
+41A 2 6 6 -2 6 0 0 -6 -6
+41B 2 6 6 2 6 0 6 -6 2
+59A 10 6 -12 -4 12 0 0 12 12
+59B 0 -12 6 4 12 0 12 12 12
+61A 12 8 8 14 2 2 -4 -10 -2
+61B -8 8 8 10 2 2 14 14 -2
+71A -8 0 -9 12 -12 0 0 0 8
+71B 7 -9 0 -16 -12 2 12 12 -8
+79A 15 -1 -1 - 8 -16 2 -16 8
+79B 5 -1 -1 8 8 -16 -16 8 16
+89A 0 0 9 18 -6 0 - -6 2
+89B -15 9 0 -14 -6 0 6 6 -14
+===== PDF PAGE 50 =====
+42 1. COMPUTING HILBERT MODULAR FORMS.
+2. J54 101A 109A 2.29A llA2 11
+P apUd ap(f2) ap(f) ap(f) ap(fd ap(f2) ap(f) ap(fl) ap(f2)
+2 - - -1-w2 2W5 - - -W3 0 1- W33
+3 -5 5 -2 - 2W2 1- 3W5 0 -4 -1 -5 2 +W33
+J5 - - 1 + 2W2 - 2W5 1 -1 W3 1 -2 + W33
+7 -10 10 4 - 2W2 2 - 5W5 5 1 W3 -10 2
+lIA -3 -3 - 2W2 -2- W5 2 -2 - - -1
+lIB -3 -3 1 +W2 -4 + 2W5 -3 5 2W3 - -1
+19A 5 -5 -1 + 5W2 4+ 2w5 -5 -1 -2 0 -4
+19B 5 -5 -3- W 2 -3W5 0 -8 -4W3 0 -4
+29A 0 0 1- 2W2 -4 + 7W5 - - 5W3 0 -2 - 2W33
+29B 0 0 -4 5 -W5 -5 9 -3 0 -2 - 2W33
+31A 2 2 -2 1- 3W5 7 -3 - 2W3 7 W33
+31B 2 2 -3 - 3W2 -3 + 3W5 -8 4 -2W3 7 W33
+41A -3 -3 1- 4W2 6 -W5 -3 -7 9 -8 2 + 2W33
+41B -3 -3 8 -6 + 6W5 12 0 - 4W3 -8 2 + 2W33
+59A 0 0 2 - 4W2 1- 5W5 0 4 -6 5 4 +W33
+59B 0 0 4+ 2W2 -4 + 8W5 0 4 -6 5 4 +W33
+61A 2 2 11 -6W5 12 -8 3W3 12 6 - 2W33
+61B 2 2 6 +2W2 -6W5 2 6 7 12 6 - 2W33
+71A 12 12 -6 +4W2 4 - 8W5 7 9 6 -3 -3W33
+71B 12 12 2 - 6W2 -4 + 4W5 -8 16 6 -3 - 3W33
+79A -10 10 - 2W2 5 - 3W5 -10 10 6W3 -10 -8 + 2W33
+79B -10 10 2 +4W2 8 - 2W5 -6 -11 14 -10 -8 + 2W33
+89A 15 -15 7 +6W2 3 -7W5 15 -1 4W3 15 2 - W33
+89B 15 -15 -10 + 6W2 16+w5 0 -8 -7W3 15 2 - W33
+===== PDF PAGE 51 =====
+7. APPLICATIONS. 43
+131A 2.31A v'5;j 139A 22 .3 v'5.29A 149A
+P ap(fI) ap(f) ap(f) ap(f) ap(f) ap(fI) ap(f2) ap(f3) ap(f)
+2 -W3 - 0 1- w2 - -2 1 2 0
+3 -2 + 2W3 -2 0 -1- w2 - 3 -6 1 2 - 4ws
+v'5 W3 0 - 2W2 2 - - - 2ws
+7 -2 - 6W3 14 0 6 - 4W2 -2 8 2 -4 2+ws
+llA 2 - 2W3 -6 2 - 5ws -3 - 2W2 -4 -2 4 -6 -Ws
+llB 1 0 -3 + 5ws -2 -4 5 -4 -3 -2 - 2ws
+19A -2 2 0 1 + 4W2 0 -8 4 -4 3 - Ws
+19B -2 2 0 3+W2 0 -1 -4 5 -5 + 5ws
+29A -4 + 2W3 0 0 -3 + 4W2 6 - - - 5ws
+29B -1- 4W3 6 0 -1- 6W2 6 -5 -2 9 7+ws
+31A -3 +4W3 - -8 + 5ws 7 -W2 4 -10 8 2 -6 + 6ws
+31B 4+W3 -4 -3 - 5ws -2 + 2W2 4 -3 0 5 -6ws
+41A 4 - W3 6 7 - 5ws -1 + 5W2 -10 7 10 -9 -2 - 2ws
+41B - 4W3 -6 2 + 5ws -8 - 2W2 -10 0 -6 0 -3 + 5ws
+59A -W3 -12 0 6+ 4w2 -4 -3 -12 -9 4 - 8ws
+59B 6 - 2W3 0 0 10 - 2W2 -4 4 4 12 2+ws
+61A 6+2w3 8 2 - 5ws -3 + 3W2 2 13 -2 5 3 + 3ws
+61B -4 -10 -3 + 5ws 2 - 8W2 2 -8 -2 -4 -2 - 7ws
+71A 4+ 4w3 -12 7 +5ws -2 + 6W2 0 -12 0 12 -8 + lOws
+71B 4+ 4w3 0 12 - 5ws -2 - 8W2 0 2 -16 -6 6 - 3ws
+79A 1- 8W3 8 0 -2 + 4W2 12 10 16 2 2 - 9ws
+79B 4 - 2W3 8 0 2 - 2W2 12 -4 8 -4 2+ws
+89A -7 - 4W3 6 0 6 10 6 -6 -6 12 - 9ws
+89B 13 -6 0 4 - 4W2 10 13 10 15 6 - 2ws
+===== PDF PAGE 52 =====
+44 1. COMPUTING HILBERT MODULAR FORMS.
+VS.31A 2.41A 3.19A 22.11A 179A 2.3.VS
+P ap(f) ap(f) ap(h) ap(fz) ap(fd ap(f2) ap(fd ap(fz) ap(f)
+2 1 - -1 -1 + 2W5 - - -1 1 -
+3 -2 2 - - -2 2 - 4W5 4 0 -
+VS - 2 0 2 - 2W5 0 2W5 0 0 -
+7 -6 -6 -10 2 - 4W5 8 -8 + 6W5 5 -5 2
+lIA 0 -2 0 4- 4W5 - - 3 -5 0
+lIB 4 -4 6 -4 + 2W5 6 -2 - 2W5 -3 3 0
+19A 0 8 - - -4 0 8 -4 -4
+19B -4 -6 -4 0 2 -6 + 2W5 -1 1 -4
+29A -2 -6 -6 -2 + 4W5 -6 2 - 4W5 -3 5 -6
+29B -2 8 0 -6 + 2W5 -6 -2 + 4W5 -9 7 -6
+31A - -4 -4 4 - 4W5 2 -6+ 6W5 -10 2 8
+31B -4 -8 -4 4W5 -4 4- 4w5 -7 1 8
+41A 2 - -6 -2 + 8W5 -6 -2 + 8W5 3 -3 -6
+41B 2 6 12 -2 - 2W5 0 8- 2W5 -6 6 -6
+59A -12 0 6 -8 + 6W5 12 -4+ 8W5 0 8 0
+59B -12 4 -6 -4 - 2W5 0 -8 - 4W5 12 -4 0
+61A 10 0 14 2 8 -6W5 2 -10 -10
+61B -2 -8 2 -10 + 4W5 -10 2 -13 -11 -10
+7lA -4 0 -6 4+ 6w5 0 12 6 10 0
+7lB 16 0 6 8 - 2W5 12 4- 4w5 0 12 0
+79A -8 16 8 4- 8W5 -10 -2 - 6W5 8 12 8
+79B 16 -4 -4 8+4w5 8 0 8 0 8
+89A 10 10 6 2 - 4W5 6 -2 + 4W5 -12 4 18
+89B 18 14 12 -2 - 6W5 6 6 -12w5 0 4 18
+===== PDF PAGE 53 =====
+7. APPLICATIONS.
+191A 2.7 199A
+P ap (ft) ap(h) ap(fd ap(f2) ap(fd ap(h) ap(h)
+2 -3 1 - - 0 -4 3
+3 2 2 -4W5 -2 0 0 -2 0
+V5 2 -2 + 2W5 0 2-V6 1 -3 -2
+7 -2 -6 + 2W5 - - 5 5 2
+lIA 0 4 - 2W5 0 2V6 2 0 -4
+lIB 4 0 0 2V6 -3 -3 0
+19A -4 -4 + 4W5 2 -4-V6 0 2 0
+19B 4 -4 2 -4-V6 5 -7 -4
+29A -2 -6 +4W5 -6 -2 +2V6 0 6 -6
+29B -10 6 - 4W5 -6 -2+2V6 0 -6 6
+31A 0 0 -4 4-2V6 -8 -4 10
+31B -8 4W5 -4 4- 2V6 2 -4 -4
+41A 2 -6 + 4W5 6 -6-2V6 -3 -3 6
+41B -10 2 + 2W5 6 -6-2V6 -8 12 4
+59A 0 4 -10w5 -6 4+V6 -5 3 4
+59B 12 -4 + 8W5 -6 4+V6 10 0 -2
+61A 10 6 - 6W5 8 6+V6 2 -10 14
+61B 14 -2 + 8W5 8 6+V6 7 -1 -14
+7lA 12 8 - lOw5 0 -6-2V6 2 -12 8
+7lB 0 4 - 8W5 0 -6 - 2V6 -3 -3 -12
+79A -16 0 8 -2+2V6 10 -10 10
+79B -4 2W5 8 -2+2V6 -10 -10 8
+89A -14 10 + 4W5 -6 10 -10 0 14
+89B -6 -6 -6 10 0 12 6
+45
+===== PDF PAGE 54 =====
+46 1. COMPUTING HILBERT MODULAR FORMS.
+V5.41A llA.19A llB.19A
+P ap (fI) ap(h) ap(h) ap(h) ap(h) ap(h) ap(h) ap(h) ap(h)
+2 -1 1 3 -3 -1 1 -2 1 2
+3 4 2 -4 -4 4 -2 2 2 -2
+V5 - - - -4 a 2 4 -2 a
+7 -4 10 4 -12 8 6 -12 -6 8
+lIA 6 -4 -2 - - - -5 4 -3
+lIB a -4 a a a -4 - - -
+19A -4 -4 4 - - - - - -
+19B -4 4 -4 2 2 a 1 4 -7
+29A -6 -2 -6 2 -6 6 1 -2 9
+29B a 6 -8 -10 6 -2 7 -2 9
+31A 12 a 10 4 -4 a -5 -8 5
+31B 2 a -6 -8 -4 a -2 -8 -10
+41A - - - a a 6 -3 -6 3
+41B -6 -6 10 a -12 6 -11 10 -3
+59A -12 4 12 4 -12 4 -3 12 -3
+59B 12 -12 4 -10 6 8 la 4 -6
+61A -la -2 6 6 2 -2 8 -10 -4
+61B 2 14 2 -4 -4 -6 -2 -2 2
+71A -12 8 4 -8 a a -13 8 3
+71B 6 -8 -2 -14 -6 -12 12 a a
+79A 8 -8 -16 -8 -16 8 4 -8 8
+79B -4 a -4 16 8 -16 -la 8 2
+89A a 18 -8 14 6 18 la 10 6
+89B -6 -6 -6 -6 6 la -14 10 6
+===== PDF PAGE 55 =====
+7. APPLICATIONS.
+2.VS.IlA 3.VS:l
+P apUd ap(f2) ap(f3) apUd ap(f2) ap(f3)
+2 - - - 0 0 3
+3 0 -2 4 - - -
+VS - - - - - -
+7 -10 2 2 -5 5 14
+IlA - - - 2 2 -4
+IlB 2 0 -6 2 2 -4
+19A 0 -4 -4 -5 5 -4
+19B 0 -4 8 -5 5 -4
+29A -10 6 -6 10 -10 2
+29B 0 -6 0 10 -10 2
+31A -8 8 -4 -3 -3 0
+31B 2 -4 -10 -3 -3 0
+41A 2 -6 -6 -8 -8 10
+41B -8 6 0 -8 -8 10
+59A 0 -12 12 -10 10 4
+59B 10 0 -6 -10 10 4
+61A 2 -10 14 7 7 -2
+61B 2 14 2 7 7 -2
+71A 12 0 -12 -8 -8 -8
+71B -8 0 0 -8 -8 -8
+79A 0 8 8 0 0 0
+79B 10 -4 -10 0 0 0
+89A 10 -6 6 0 0 6
+89B -10 -6 -6 0 0 6
+47
+===== PDF PAGE 56 =====
+48 1. COMPUTING HILBERT MODULAR FORMS.
+2·59B 239A
+P ap(fI) ap (12) ap(fd ap (12) ap(f3)
+2 1 -1 -3 1 1
+3 - 2W5 2W21 -5 -1 2
+VS 1- W5 1- W21 -3 1 -2
+7 -8 - 4W21 6 -6 6
+lIA -2 + 3W5 2 - W21 1 -5 4
+lIB -2 + 3W5 2 +W21 -3 3 0
+19A - 4W5 0 7 5 -4
+19B -3 + 7W5 -5 + W21 -2 -2 4
+29A 5 - 5W5 -5 + W21 -8 0 6
+29B -4- W 5 -3W21 -8 0 6
+31A 2 - 6W5 2 - 2W21 4 -4 -4
+31B -6 + 4W5 2 3 1 -8
+41A 7 -7W5 -3 + 3W21 3 1 -8
+41B 8 -W5 -8 + W21 -11 9 -6
+59A -3- W 5 5 + 3W21 -7 11 -4
+59B 1 -1 10 14 -4
+61A -6 - 2W5 2 + 2W21 -6 -14 -2
+61B 5W5 -8 + W21 -7 5 -10
+71A -1- 3W5 -3 + 3W21 14 -6 0
+71B 14 2 - 4W21 -12 -8 16
+79A -2+W5 -10 +W21 -12 -8 16
+79B 2 - 4W5 10 - 4W21 -1 -3 0
+89A -1 + 5W5 -5 + 5W21 0 -4 2
+89B 4+ 6w5 -6W21 -7 9 -6
+===== PDF PAGE 57 =====
+7. APPLICATIONS. 49
+2.61A VS,7 24 269A
+P ap(fI) ap(h) ap(h) ap(h) ap(f) ap(fI) ap(h) ap(h)
+2 - - -4 W17 - -3 -1 2
+3 1 5 -5 -1- W17 -2 -1 1 - 2W13
+VS 0 0 - 1 2 -3 3 0
+7 -4 8 - 1 -10 -5 5 -2 + 4W13
+lIA 0 -4 -3 1- W17 -4 0 0 -2 + 2W13
+lIB -3 3 -3 1- W17 4 -5 -3 0
+19A 2 -6 2 -2 - 2W17 4 -3 5 -5 + W13
+19B 2 6 2 -2 - 2w17 -4 1 -1 -2 + 4W13
+29A 0 -8 3 -1 + 3W17 -2 -5 3 6 - 3W13
+29B -9 9 3 -1 + 3W17 -2 -2 -6 4 + 2W13
+31A 5 -3 -4 0 0 6 -10 4 - 5W13
+31B -4 0 -4 0 0 -10 2 2 - 2W13
+41A -6 -10 -12 2W17 -2 12 0 5 - 5W13
+41B 0 0 -12 2W17 -2 6 6 -8 - W13
+59A 3 1 0 -4 12 3 3 6 + 3W13
+59B 6 -10 0 -4 -12 -7 -9 10 - 4W13
+61A - - 8 6W17 10 6 2 -4
+61B -1 -11 8 6W17 10 2 -10 2W13
+71A -3 -7 0 8 8 10 -6 6W13
+71B 6 -10 0 8 -8 -6 -6 -7 +W13
+79A 8 8 -1 -5 +W17 16 12 -16 1 +W13
+79B -1 -13 -1 -5 +W17 -16 -8 8 -6 - W13
+89A 12 -4 -12 4 - 2W17 -6 -18 6 7 - W13
+89B -3 13 -12 4 - 2W17 -6 -13 3 3 + 3W13
+===== PDF PAGE 58 =====
+50 1. COMPUTING HILBERT MODULAR FORMS.
+5 . lIA 3·31A 2·7lA
+P ap(Jd ap(f2) ap(fI) ap(f2) ap(f3) ap(fI) ap(f2)
+2 1 1- 2W5 -1 1 3 - -
+3 . 2 -2 + 4W5 - - - 2 2 - 2V2
+VS - - 2 2 -2 a 2V2
+7 -14 2 - 4W5 -2 10 -10 -2 5V2
+lIA - - -2 a -2 -2 -3V2
+lIB a 2 2 -4 2 4 -2
+19A -8 -2 + 4W5 a 8 -4 6 -4+V2
+19B 4 a 4 -4 4 2 -2 - 2V2
+29A 6 -2 +4W5 a -10 4 4 6+V2
+29B -6 4 - 8W5 6 -2 -2 a -2-V2
+31A -4 2 - - - -8 -6+V2
+31B 8 -8 -8 4 -4 8 -2 + 2V2
+41A -6 2 -12 10 -12 -6 -7V2
+41B 6 -8 a -6 a -10 2+4V2
+59A a -2 + 4W5 -4 4 12 a 12 + 2V2
+59B 12 4 - 8W5 10 4 2 2 6+4V2
+61A 2 -8 a -6 a 8 -4+8V2
+61B -10 2 -6 14 10 -10 2V2
+7lA a -8 la -4 -6 - -
+7lB a 12 8 a -8 8 -6+ 5V2
+79A -8 4 - 8W5 -8 8 a 4 -6+3V2
+79B 4 2 - 4W5 -8 a -8 12 -4
+89A 18 2 - 4W5 -6 la 18 -10 -4+8V2
+89B -6 -2 +4W5 12 -6 -8 -6 4-4V2
+===== PDF PAGE 59 =====
+7. APPLICATIONS.
+22 .19A VS.61A 23 .VS
+lJ ap(ft) ap(h) ap(fd ap(h) ap(ft) ap(h) ap(h)
+2 - - 1 1- 2W5 - - -
+3 4 2 - 2W5 2 2 2 2 -6
+VS -2 2 - - - - -
+7 -6 6 2 2 - 4W5 -6 -6 2
+UA 0 -4+ 4W5 -4 4 -4 4 4
+UB 2 - 2W5 0 -2 + 4W5 4 -4 4
+19A - - 0 -6+ 4W5 -4 -4 4
+19B 8 -4 +4W5 0 -2 + 4W5 -4 -4 4
+29A 2 2 +4W5 6 2 -10 6 -2
+29B -10 -2 -2 -2 - 4W5 6 -10 -2
+31A -2 -4 - 2W5 -8 4 - 8W5 8 0 -8
+31B -10 -2 -4 -6 +4W5 0 8 -8
+41A -4 2 - 2W5 2 2 - 8W5 -6 10 -6
+41B -10 -2 - 4W5 2 10 10 -6 -6
+59A -12 8 4 -8 -12 4 -4
+59B 10 -8 - 2W5 0 -6 + 4W5 4 -12 -4
+61A 4 -2 + 10w5 - - -2 -2 -2
+61B 0 -10 + 6W5 -2 -6 + 8W5 -2 -2 -2
+71A -8 -8 + 8W5 0 4 - 8W5 -8 0 0
+71B -2 -4 - 2W5 -4 2 - 4W5 0 -8 0
+79A 14 4 -10w5 8 -4 + 8W5 -16 0 0
+79B 0 8 - 8W5 -4 -2 + 12w5 0 -16 0
+89A 6 6 - 4W5 10 -10 + 4W5 10 10 -6
+89B 6 -6 + 12w5 -6 10 - 8W5 10 10 -6
+51
+===== PDF PAGE 60 =====
+52 1. COMPUTING HILBERT MODULAR FORMS.
+2· 79B 319A
+Il ap(h) ap(h) ap(h) ap(f4) ap(f5) ap(fd ap(h) ap(h)
+2 1 -1 1 1 1 -3 1- V2 2- V3
+3 3 - W17 I-V6 2 -3 1 -2 2 - 2V2 -2+ 2V3
+J5 -1- W17 1 -2 2 0 -2 2V2 0
+7 -2 -8 - 2V6 -2 10 2 -10 -2 - 6V2 8
+lIA 2W17 2 2 0 0 -1 1 -1
+lIB 2W17 2V6 2 0 0 -4 -2 2V3
+19A 1 +W17 I-V6 2 -5 -1 -4 2V2 2 - 2V3
+19B -6 2- 2V6 -6 0 -4 0 2V2 2
+29A -3 - W17 -3+3V6 -4 -3 -3 -2 -4+2V2 4V3
+29B 2 - 4W17 -2+2V6 -2 -4 0 1 1 -1
+31A 4 - 4W17 2V6 0 -2 2 -4 -4-2V2 2
+31B 1 + 3W17 1-4V6 4 4 2 8 2-4V2 -4+ 2V3
+41A -10 2 -10 2 -6 -2 6 - 2V2 -6 - 2V3
+41B -3 + W17 1+V6 -2 -3 -3 6 -6+ 2V2 -4V3
+59A 3 + 3W17 -11 + V6 6 3 3 4 6V2 -6+2V3
+59B 1- W17 -7+2V6 0 -2 0 0 4 6-4V3
+61A 8 - 4W17 -8 4 8 8 -10 2V2 -4- 4V3
+61B 3 - W17 -1- 2V6 2 0 2 6 -6+4V2 2+4V3
+7lA -1 - 3W17 5+2V6 -4 2 0 8 -8- 6V2 -6+ 2V3
+7lB -4 + 4W17 6-4V6 0 -10 -6 12 4+4V2 -6 -4V3
+79A -10 + 2W17 2 - 2V6 -8 -10 -10 -8 10 -4 - 2V3
+79B 1 -1 1 1 1 -8 8V2 -4+4V3
+89A -14 10 -14 10 -6 10 -4-6V2 -8V3
+89B 2W17 -12 + 2V6 2 0 0 -14 -6+4V2 6+4V3
+===== PDF PAGE 61 =====
+7. APPLICATIONS. 53
+2.32 2.J5.19A 2.3.11A
+P ap(!t) ap(!2) ap(Jd ap(!2) ap(!3) ap(Jd ap(!2) ap(!3) ap (14) ap(J5)
+2 - - - - - - - - - -
+3 - - 2 -2 2 - - - - -
+J5 4 0 - - - -2 3 1 1 3
+7 10 -4 0 -4 -2 -14 -11 -5 5 11
+llA -2 -3V2 4 0 -4 - - - - -
+llB -2 3V2 2 6 0 4 2 2 2 -6
+19A 0 2 - - - 4 7 -5 -5 -1
+19B 0 2 -2 2 0 4 -7 -5 5 -1
+29A 0 6V2 4 0 2 -10 0 0 0 0
+29B 0 -6V2 -2 -6 6 6 -7 5 -5 -9
+31A -8 -4 0 -4 -8 0 6 2 2 -10
+31B -8 -4 4 -4 -8 0 -1 -3 7 5
+41A -2 -3V2 -12 12 -10 -6 -5 7 -3 9
+41B -2 3V2 2 -6 10 -6 2 2 2 -6
+59A 10 -3V2 0 0 -4 -12 4 0 0 -12
+59B 10 3V2 -4 -12 -4 4 11 -5 -15 9
+61A 2 -10 6 -10 6 -2 -12 12 -8 8
+61B 2 -10 -2 -10 -10 14 -5 -13 7 -1
+71A -12 6V2 0 0 8 8 5 -3 -13 3
+71B -12 -6V2 -8 12 0 -8 12 -8 -8 12
+79A 0 8 -16 8 8 0 -14 10 -10 -10
+79B 0 8 -6 -10 4 -16 -14 -10 10 14
+89A -10 3V2 6 -18 2 -6 10 -10 -10 -6
+8gB -10 -3V2 -14 6 10 6 -11 15 -5 9
+===== PDF PAGE 62 =====
+54 1. COMPUTING HILBERT MODULAR FORMS.
+lIA·31B
+P ap(Jd ap(h) ap(h) ap(J4) al' (Js)
+2 1 1 -1 1- 2ws 1
+3 -2 -6 -4 0 - 2W17
+V5 2 2 -4 2ws 2
+7 -6 -14 -6 2 - 4ws -2 - 4w17
+lIA -1 -1 1 1 -1
+lIB 0 4 -6 2 -2 + 2W17
+19A 4 8 0 -4 - 2ws 2 + 2W17
+19B 0 4 6 -2 + 4ws -2 + 2w17
+29A -2 -2 2 2 - 4ws -2
+29B -2 -10 6 -2 +4ws 2 - 4W17
+31A -4 -8 -6 2 -2 - 2w17
+31B -1 -1 -1 1 -1
+41A 2 10 -2 2 -2 + 4w17
+41B 2 2 -6 2 2
+59A -4 -4 -12 4 - 8ws -4
+59B 4 4 8 -8 - 4ws 4
+61A -2 -10 2 2 2 - 4W17
+61B 10 14 -12 -8 8 + 2W17
+7lA 8 4 -4 -8 + lOws 10 - 2w17
+7lB 4 -4 10 2 -lOws 8 - 4W17
+79A 0 0 -4 -12 + 4ws 0
+79B 0 4 -4 -8 + 6ws -2 + 2w17
+89A -6 -10 -10 2 +6ws -4 - 2w17
+89B -6 2 -6 2 - 4ws -10 + 4w17
+===== PDF PAGE 63 =====
+7. APPLICATIONS.
+o 349A
+[Uf---ap-U-1 ) 1 ap(f2) 1
+2 -2- W5 I-V2 W2l
+3 -4- W 5 3 -W21
+v'5 -3 + 2W5 2V2 1
+7 -2 - 3W5 -4+ 4V2 3W21
+lIA 2 - 5W5 -2 2 - W21
+lIB -3 + 2W5 1- V2 -3
+19A -3 + 6W5 -2-2V2 5 - 2W21
+19B -3 - 2W5 -2-2V2 5- 2W21
+29A -6 + 3W5 -4+ 2V2 W21
+29B 1 +W5 4+4V2 -5 + W21
+31A 2 - 3W5 -2+ 2V2 2 +W21
+31B 1 + 3W5 2- 4V2 -3 - W21
+41A 7 - 5W5 -6+ 2V2 -3 + 3w2l
+41B 2 +W5 8+2V2 -8 - W21
+59A 7 - 4W5 4 -5 + 4W21
+59B -4W5 1+V2 -4W21
+61A -13 + 4W5 3- 6V2 7
+61B -8 + 3W5 -8 2 +W21
+71A -6 -5+ 7V2 2
+71B 1 +W5 -8-6V2 -3 + 5W21
+79A -3 4+ 2V2 5
+79B -1 + 4W5 -3-5V2 -5 + 6W21
+89A 6 - 6W5 -3 + 1OV2 10 - 2W21
+89B 11- W5 -12V2 5 - W21
+55
+===== PDF PAGE 64 =====
+56 1. COMPUTING HILBERT MODULAR FORMS.
+2·89B 3 ·41B
+P ap(Jd ap(h) ap(h) ap(J4) ap(J5) ap(Jd ap(f2) ap(h) ap (/4) ap(J5)
+2 -1 -1 -1 -1 1 -2 1 1 -2 1 +W17
+3 -2 0 0 0 -2 - 2V3 -1 -1 1 -1 1
+v'5 -4 3 2 2 - 2W5 1 + V3 -3 2 -2 -1 2 - W17
+7 -10 0 0 0 -6-2V3 -10 6 2 -6 2 - 4W17
+l1A -2 2 2 2 -2V3 -5 -4 0 5 -W17
+l1B -6 -2 0 4W5 2 + 2V3 0 4 4 -2 -4
+19A -2 -4 -2 -2 +4W5 -2 -8 0 8 6 -4
+19B 4 0 0 0 -2 3 -4 4 -1 -W17
+29A 8 -3 -4 -4 - 2W5 3 + V3 -2 2 -2 2 -2
+29B -6 4 2 2 - 4W5 -4 - 2V3 -1 6 -10 9 2 +W17
+31A 0 -1 -2 -2 - 2W5 5 + V3 6 -8 -4 4 2W17
+31B 0 -2 0 4W5 -2-2V3 6 -4 4 -10 -2W17
+41A -6 2 2 2 4V3 -6 6 -6 0 -6 + 4W17
+41B -6 -2 0 4W5 -4 - 4V3 1 -1 1 -1 1
+59A 8 -14 -12 -12 + 4W5 4 - 2V3 -8 4 -8 4 4 + 4W17
+59B 10 -8 -4 -4 + 8W5 -4 + 4V3 7 0 0 -3 -5W17
+61A -10 10 6 6 - 8W5 -2 + 4V3 6 10 -10 -8 -2 + 4W17
+61B 12 -1 -2 -2 - 2W5 3 + 3V3 8 -6 -10 6 6 - 2W17
+nA 0 14 8 8 - 12w5 -6 - 2V3 -6 0 -8 -12 -2W17
+71B -16 -8 -8 -8 4 - 4V3 -9 -12 12 9 -4 + 7W17
+79A 0 15 10 10 -10w5 -1+3V3 -12 8 -12 -4 8 - 4W17
+79B -4 -11 -8 -8 + 6W5 1 + 7V3 1 -8 16 -11 4 +W17
+89A -6 -10 -10 -10 2 -7 2 10 -1 6 - W17
+89B 1 -1 -1 -1 1 6 -2 -6 -8 -6 + 8W17
+===== PDF PAGE 65 =====
+7. APPLICATIONS. 57
+2 W5 -2-W5 2- V3
+3 1- 2W5 -3 + 4W5 2+V3
+VS 1 +W5 -3+W5 -2
+7 -3 + 3W5 -1- w5 6+3V3
+lIA 3 - 2W5 -1- 2W5 -2
+lIB -2- W 5 3W5 2+2V3
+19A 1 -7 2+2V3
+19B 1 1- 4W5 1
+29A 2 - 2W5 -2 + 6W5 -3
+29B 3 - 6W5 -1 - 4W5 -2 - 2V3
+31A -3 + 7W5 -1 + 3W5 4V3
+31B - 5W5 -4 + 3W5 2 -4V3
+41A -6 + 2W5 -2 + 6W5 2+6V3
+41B 5 - 4W5 5 - 4W5 -6 - 2V3
+59A -3 + 5W5 1- 3W5 -6+2V3
+59B 3 7 - 6W5 -8
+61A -5 + 2W5 3 - 6W5 0
+61B -2 + 9W5 1O+w5 -8-2V3
+71A -6 + 8W5 -2 + 4W5 6- 5V3
+71B -5 + 4W5 7 - 4W5 1-8V3
+79A 8+ 3w5 -14 + W5 -1O+4V3
+79B 9 -W5 3+ 7W5 -6- 3V3
+89A -7 + 8W5 5+ 2W5 2
+89B 4+ 2W5 -12 + 6W5 7-4V3
+DI 379A
+ŒJj ap(fI) I--ap-(h-) 1
+===== PDF PAGE 66 =====
+58 1. COMPUTING HILBERT MODULAR FORMS.
+22.VS~ 2.101A 32.VS
+P ap(fI) ap(f2) ap(fI) ap(f2) ap(f3) ap(f4) ap(fI) ap(f2) ap(f3)
+2 - - - - - - -3 2 2
+3 2 0 -4 0 0 4 - - -
+VS - - -3 -2 1 2 - - -
+7 10 0 -6 -4 -10 -4 -14 -4 -4
+lIA 0 4 - 4W5 -6 -1 2 -1 4 - 3W5 3 - 3W5
+lIB 0 4W5 -1 6 -3 -2 4 -3+ 3W5 3W5
+19A 4 0 -1 2 5 -2 4 -4 + 6W5 2 - 6W5
+19B 4 0 1 4 -5 0 4 2 - 6W5 -4 + 6W5
+29A -6 0 1 -4 5 0 2 6 - 6W5 -6W5
+29B -6 0 0 9 0 3 2 6W5 -6 + 6W5
+31A -4 4 -4W5 0 -5 -8 5 0 -1- 3W5 -4 + 3W5
+31B -4 4W5 9 -11 7 -1 0 -4+ 3W5 -1- 3W5
+41A 6 -10 + 4W5 5 3 -3 -1 -10 -6 - 3W5 9 - 3W5
+41B 6 -6 - 4W5 0 -2 -8 -6 -10 -9 + 3W5 6+ 3w5
+59A -12 0 -8 6 0 14 4 6 -6
+59B -12 0 -14 -5 10 -9 4 6 -6
+61A 2 -6 - 4W5 -7 -6 -3 -10 -2 2 - 3W5 -1 + 3W5
+61B 2 -10+ 4W5 -12 1 -8 7 -2 -1 + 3W5 2 - 3W5
+71A -12 4W5 16 -12 12 -4 8 3 +3W5 -6 + 3W5
+71B -12 4 - 4W5 -10 -16 2 -8 8 6 - 3W5 -3 - 3W5
+79A -8 0 10 -8 10 -8 0 8 - 6W5 2 +6W5
+79B -8 0 -12 6 0 -10 0 2 + 6W5 8 - 6W5
+89A 6 0 -7 9 -15 17 6 6+ 6w5 -12 + 6W5
+89B 6 0 -4 12 0 0 6 12 - 6W5 -6 - 6W5
+===== PDF PAGE 67 =====
+7. APPLICATIONS. 59
+11A.41A 22.29A
+P ap(h) ap(h) ap(f3) ap(f4) ap(f5) ap(ft} ap(h) ap(f3) ap (14)
+2 -1 3 -2 1 -W41 - - - -
+3 1 1 2 W41 W41 4 -4 0 2W5
+VS 3 -1 -3 -W41 1 0 -4 4 -2W5
+7 -4 4 8 -2 - 2W41 0 2 -2 2 -6 + 4W5
+11A - - - 1 1 0 -2 -4 2 + 2W5
+11B 0 0 -5 4 -3 + W41 0 -4 0 0
+19A 2 -6 -5 2W41 5 - W41 -4 -4 4 4
+19B 5 1 -2 -6 + W41 -W41 2 4 -6 4 -4W5
+29A -6 -6 7 -2 5 - W41 - - - -
+29B -6 2 -4 -2 2W41 6 -6 -2 2 + 4W5
+31A 8 0 -2 0 2 + 2W41 -10 0 -2 4W5
+31B -4 4 -10 0 2 + 2W41 8 4 -8 -4 - 4W5
+41A - - - 1 1 6 2 6 -2
+41B 0 0 8 6 - 2W41 -8 0 0 -12 -4 - 2W5
+59A -6 2 -3 - 2W41 -5 + W41 -12 -2 0 2 - 6W5
+59B -9 -1 -4 6 - W41 -10 - W41 6 -8 6 8W5
+61A 14 6 -4 -2 + 4W41 -8 - 2W41 -10 10 6 -10 + 4W5
+61B 5 -3 -8 4 +W41 2 - W41 8 -12 -4 -8 - 2W5
+71A -6 -6 1 -4 - 2W41 7 +W41 -12 -6 16 -2 + 2W5
+71B 12 -12 6 - 4W41 2 - 2W41 -6 4 10 -4
+79A -10 14 7 -4 - 2W41 5 ~ W41 -4 -8 -4 4 - 8W5
+79B -13 11 0 6 +W41 -10 + W41 8 10 4 -2 + 2W5
+89A 9 -3 0 -4 - W41 -10 + W41 -6 -10 -6 2 +4W5
+89B 0 -16 13 6 + 2W41 -5 - W21 -18 -2 6 14 - 4W5
+===== PDF PAGE 68 =====
+60 1. COMPUTING HILBERT MODULAR FORMS.
+J5:l.19A 2.11A.llB
+j:l ap(fI) ap(f2) ap(f3) ap(f4) ap(f5) ap(fd ap(f2) ap(fg) ap(f4) ap(!5)
+2 -3 1 3 -1- V6 1- V6 - - - - -
+3 -2 2 2 1+V6 -1+V6 2 1 1 5 -3
+J5 - - - - - 2 0 0 -4 4
+7 4 -2 -4 8- 2V6 -8-2V6 14 -1 -1 5 13
+llA -2 0 -2 -2V6 2V6 - - - - -
+llB -6 0 -6 3+V1 3-V6 - - - - -
+19A - - - - - -4 -1 5 5 7
+19B -4 4 4 2+2V6 -2+ 2V6 -4 5 -1 5 7
+29A -4 -6 4 -3+2V6 3+2V6 10 3 -3 -5 -3
+29B 10 6 -10 0 0 10 -3 3 -5 -3
+31A 2 -4 2 2 2 -8 -7 5 7 -5
+31B -4 8 -4 -1+2V6 -1- 2V6 -8 5 -7 7 -5
+41A -2 -6 -2 -2V6 2V6 -2 0 0 -8 -8
+41B -2 -6 -2 -2V6 2V6 -2 0 0 -8 -8
+59A 4 -12 -4 3-2V6 -3 - 2V6 12 0 -12 0 -12
+59B -12 -12 12 -9+V6 9+V6 12 -12 0 0 -12
+61A -2 -10 -2 5+3V6 5-3V6 -10 -1 -7 -13 5
+61B -6 14 -6 -7+V6 -7-V6 -10 -7 -1 -13 5
+7lA 12 0 12 -3 -3 0 9 -3 -3 -7
+7lB -10 12 -10 -9-V6 -9+V6 0 -3 9 -3 -7
+79A -8 16 8 -1-V6 1-V6 -12 8 -4 0 4
+79B 0 -8 0 5 -5 -12 -4 8 0 4
+89A 8 6 -8 6-4V6 -6 - 4V6 -18 9 -15 15 7
+89B 2 -6 -2 -6 +4V6 6+4V6 -18 -15 9 15 7
+===== PDF PAGE 69 =====
+7. APPLICATIONS.
+o 499A 1
+Ci]1-----a-p(-11-)1 ap (12) I--ap---'(-h-).-,--ap---'U-4-:-)
+2 -1 + 2W5 -2 3 0
+3 3 -W5 2 - 4W5 -3 + 3W5 0
+VS 2 - 2W5 -3+W5 2 - 2W5 -W29
+7 6+3 w5 2 - 8W5 4 -l1w5 2 + 2W29
+lIA -2 - 2W5 -2 -W5 -2 + 2W5 3 +W29
+lIB 4W5 -2 + 2W5 -4 2
+19A 2 +W5 -6 + 2W5 4 - 5W5 2 + 2W29
+19B 4 - 3W5 -4+ 3W5 -4+ 5W5 1 +W29
+29A -7- W 5 -3 + 3W5 1- W5 6 +W29
+29B -4+ 3W5 -3- W 5 -4+ 3W5 2 - 3W29
+31A 7 - 5W5 -4+ 7W5 3 -W5 -7 + W29
+31B -2 - 2W5 2 - 3W5 6 - 2W5 1- W29
+41A -2 + 3W5 0 -4+W5 -6 + 2W29
+41B 4W5 5 -7W5 -8+ 4W5 -4 - W29
+59A -2- W 5 -4+ 8W5 -4+W5 6 - 4W29
+59B 3 -W5 8 - 4W5 3 - 9W5 0
+61A 3+ 3w5 0 1 + 3W5 -8
+61B -4+ 2W5 -2 + 3W5 -4+ 6W5 -1- 3W29
+71A -14 + 2W5 7 +W5 2 - 2W5 6 - W29
+71B -4+ 2W5 2+ 2W5 4- 6W5 -8
+79A -4+ 3W5 -8+ 5W5 4+ 7W5 -1- W29
+79B 11- 7W5 -6+ 4W5 5 + 5W5 4 + 4W29
+89A -7- W 5 -5+W5 5 - 5W5 -6 - W29
+89B -2 - 6W5 4 - 8W5 -6 + 2W5 8 - 2W29
+61
+===== PDF PAGE 70 =====
+62 1. COMPUTING HILBERT MODULAR FORMS.
+3.VS.llA 2.VS"
+P ap(fd ap(f2) ap(f3) ap(f4) ap(fd ap(f2)
+2 3 -3 1 -1+2w - -
+3 - - - - 0 0
+VS - - - - - -
+7 -2 2 2 2 - 4W5 10 -10
+llA - - - - 2 2
+llB 0 -4 4 4 - 4W5 2 2
+19A 0 -8 -4 0 -5W5 5 - 5W5
+19B 4 -4 -4 0 -5 + 5W5 5W5
+29A 2 6 -2 2 - 4W5 - 5W5 5 - 5W5
+29B -2 -6 -2 2 - 4W5 -5 + 5W5 5W5
+31A 4 -8 0 4 - 4W5 - 5W5 -3 + 5W5
+31B -8 4 0 4W5 -3 + 5W5 2 - 5W5
+41A 2 6 10 -10 + 4W5 2 - 5W5 -3+ 5W5
+41B -10 -10 -6 2 -3 + 5W5 2 - 5W5
+59A 0 4 12 -12 + 4W5 5+5 w5 -10 + 5W5
+59B 4 12 -4 4 - 8W5 10 - 5W5 -5 - 5W5
+61A -6 -6 -2 2 2 -10w5 -8 + 10w5
+61B -10 -2 -2 -2 + 8W5 -8 + 10w5 2 -10w5
+nA 0 8 16 -8 -8 + 5W5 -3 - 5W5
+71B -8 -4 0 -4 + 12w5 -3 - 5W5 -8 + 5W5
+79A -16 0 -8 -4 + 8W5 - lOw5 10 - lOw5
+79B 4 -12 -8 4 - 8W5 -10 + lOw5 lOw5
+89B -10 2 -6 -2 + 4W5 -10 10
+89A 14 -6 -6 -2 + 4W5 -10 10
+===== PDF PAGE 71 =====
+7. APPLICATIONS.
+13: x3 + 6x2 151A : x3 - x2 181A : x4 - 12x2
++8x-2 -5x+ 1 +8x -1
+p ap(fd ap(fd ap(fd
+2 (3, -2, -1) (0,1,0) (0,1,0,0)
+3 (2,10,3) (6,1, -3) (-3,0,1,0)
+v'5 (-4, -2,0) (-2,-1,1) (-2 12 -1 -2), , ,
+7 (6, -2,0) (4,-1,1) (6, -38,2,6)
+lIA (0,1,0) (-4, -2,2) (8, -20,0,3)
+lIB (0,1,0) (5, -1, -2) (8, -33,2,5)
+19A (-2,-1,0) (-6,0,2) (6, -31,2,5)
+19B (-2,-1,0) (3,1, -2) (-6,26, -2, -4)
+29A (-6, -12, -3) (-12,-2,4) (-12 50 -4 -8), , ,
+29B (-6, -12, -3) (-6,2,2) (-6,2,2,0)
+31A (-4,-7,-2) (-4,2,2) (2,6, -2, -1)
+31B (-4,-7,-2) (8,5, -3) (-10 50 -4 -8), , ,
+41A (4, -4, -2) (-8, -3,5) (-7 28 -1 -4), , ,
+41B (4, -4, -2) (8,2, -4) (-10,26,0, -4)
+59A (10, -3, -2) (-16, -3, 7) (-6, -5, 2, 1)
+59B (10, -3, -2) (4, -4,0) (22, -60,2,9)
+61A (2, -10, -3) (8,6, -4) (18, -12, -2, 2)
+61B (2, -10, -3) (8,1, -5) (-8 40 -1 -6), , ,
+7lA (-10,17,6) (18,1, -5) (12, -14,0,2)
+7lB (-10,17,6) (2,4, -2) (2, -12,0,2)
+79A (12,10,2) (-2, -4,2) (22, -56,2,9)
+79B (12,10,2) (14,1, -7) (16, -34,0,5)
+89A (2,16,4) (6,2, -6) (-12,10,0,-2)
+89B (2,16,4) (-17,-7,8) (-4, -2, 1,0)
+For Q(a) ~ Q[x]/(x 3 - x2 - 5x + 1), the chosen integral basis is
+{l, a, 1/2(a 2 + 1)}.
+For Q(a) ~ Q[x]/(x 4 - 12x2 + 8x - 1) the chosen integral basis is
+{l,a, 1/2(a 2 + 1), 1/2(a 3 + a)}.
+63
+===== PDF PAGE 72 =====
+64 1. COMPUTING HILBERT MODULAR FORMS.
+211A : x4 - 2x3 229A : x3 - 3x2
+-8x 2 + 6x + 7 -x+ 1
+p ap(fd ap(fd ap(!2)
+2 (0,1,0,0) -3 (0,1,0)
+3 (-3,5,4, -3) -1 (2,2,-1)
+v'5 (3, -2, -2, 1) -4 (1, -4, 1)
+7 (-1, -8, -2,3) -:"10 (0,-10,4)
+lIA (1, -3, -1, 1) -2 (1,8, -3)
+lIB (-4, -2,2,0)
+°
+(-3, -2, 1)
+19A (4,3,-1,-1) -5 (-3,5,-1)
+19B (4, -2, -4,2) -7 (2, -1,0)
+29A (-2 -4 -2 2) 6 (-1,2,-1), , ,
+29B (-12,3,7, -3) 3 (2, -4, 1)
+31A (-7,5,6, -3) -3 (3,7, -3)
+31B (6,5,-1,-1) 8 (-3, -8,3)
+41A (-3,1,2, -1) 2 (1, -6, 1)
+41B (14, -10, -12,6) -9 (-1,4,0)
+59A (-9,3,5, -3) 9 (-8, -1,2)
+59B (-2,12,4, -4) -10 (-1, -12,3)
+61A (0,12,4, -4)
+°
+(4,14, -6)
+61B (4, -4, -6,4) -14 (-8, -6,4)
+71A (12, -14, -8,6) -3 (-6,-19,6)
+71B (5,0,0, -1) 16 (-9,2,1)
+79A (-10, -8, -2,4) 6 (7,22, -7)
+79B (-9,7,5, -3) -12 (9, -10,3)
+89A (0,2, -2,0) -5 (5,14, -4)
+89B (-5,3,7, -3) -6 (7,4, -3)
+For Ql(a) ~ Ql[x]/(x4 - 2x3 - 8x2 + 6x + 7), the chosen integral basis is
+===== PDF PAGE 73 =====
+7. APPLICATIONS.
+241A : X 5 - 3x4 - 7x3 251A: X 3 + X 2
++20x 2 - 4x - 8 -5x+ 1
+p ap(ft) ap(JI) ap(h)
+2 (0,1,0,0,0) -3 (0,1,0)
+3 (-8, -4,7,3, -3)
+°
+(3, -2, -1)
+VS (0, -7,3,3, -2) -3 (-3,1,1)
+7 (-6,8,2, -2,0)
+°
+(9, -2, -3)
+11A (14,28, -18, -14, 10) -6 (5,-2,-1)
+11B (4, -4, -3,0,1) -4 (5,-2,-1)
+19A (12,30, -18, -14, 10)
+°
+(-5,0,1)
+19B (-19, -19, 17, 10, -8) 8 (3,0,-1)
+29A (10,16, -12, -8,6) -5 (-9,2,2)
+29B (-4, -26, 12, 12,-8) 8 (-5,2,1)
+31A (-8, -16,13,9, -7) 1 (-7,2,2)
+31B (12,16, -12, -8,6) -8 (8, -2, -2)
+41A (-21, -47,29,22, -16) -10 (8,0, -2)
+41B (-12, -10, 11, 6, -5)
+°
+(-11,4,3)
+59A (-14, -28, 14, 12, -8) -11 (-1,3,1)
+59B (-26, -54,32,26, -18) -9 (-6,4,1)
+61A (-4,10,2, -2,0) -7 (-4, -1,2)
+61B (24,48, -30, -22, 16) 8 (0,4,0)
+71A (32,46, -35, -25, 19) 4 (-11,10,3)
+71B (-4,12,2, -2,0) 3 (-4,6,1)
+79A (-24, -29,25,15, -12) -2 (-12,0,2)
+79B (-16, -18, 17, 12, -9) 1 (-14,3,4)
+89A (11,13, -7, -6,4) 8 (13, -10, -5)
+89B (34,24, -30, -16, 14) 4 (17, -4, -3)
+65
+For ij(a) ':::' ij[x]/(x 5 - 3x4 -7x 3 +20x2 - 4x - 8), the chosen integral basis is
+===== PDF PAGE 74 =====
+66 1. COMPUTING HILBERT MODULAR FORMS.
+3 . 29B : x3 + x2 - 5x + 2 271A : x4 - 14x2 + 8x + 25
+P apUd ap(h) apUd ap(h)
+2
+°
+(3, -3, -1) 1 (0,1,0,0)
+3 -1 (1,0,0) -2 (-5, -5, 1,2)
+yI5 2 - /21 (0,1,0) 2 (1,2,0,-1)
+7 -9 - /21 (2,2,1) 2 (-6,8,2, -2)
+lIA 2/21 (0,2,0) 4 (-2, -6,0,2)
+lIB 1 + /21 (-8,4,3) -4 (11,4, -2, -2)
+19A -2 + 2/21 (4, -4, -2) -8 (6,3,-1,-1)
+19B -4 - /21 (2,3,0) -4 (-8, -5,2,2)
+29A 1 - /21 (-6,0,1) -2 (5,0, -2,0)
+29B -1 (1,0,0) -4 (6,0,0,0)
+31A 5 - 3/21 (-4,0,1) 8 (-4, -5,0,2
+31B -2 + 4/21 (4, -2, -2) 8 (2,10,0, -4)
+41A 5 - 3/21 (-6,2,1) 6 (10,7, -3, -3)
+41B 2 (10, -8, -4) -10 (-2, -7, 1,3)
+59A -3 + 3/21 (-4, -2, -1) 8 (-9,1,1,0)
+59B 8-3/21 (-14,7,4) -4 (-1,4,0,-2)
+61A -6 - 2/21 (18, -6, -4) -14 (9,5, -1, -2)
+61B 2 - 5/21 (12, -5, -4) 10 (23,6, -6, -3)
+71A 6 + /21 (18, -11, -6) -8 (10,6, -2, -2)
+71B -4 - 4/21 (-8,8,4)
+°
+(-14,-2,4,2)
+79A 8+2/21 (-12,10,4) 16 (-8, -12, 2, 4)
+79B -6 + /21 (-10,3,2) 12 (-5,6,2, -1)
+89A 4 + /21 (-12,5,2) 2 (-20, -6,4,4)
+89B -6 - 4/21 (26, -16, -8) -14 (2,6,0, -2)
+For Q(a) ~ Q[xJl(x 4 - 14x2 + 8x + 25), the chosen integral basis is
+{l, a, 1/2(a 2 + 1), 1/4(a 3 + a 2 + a + 1)}.
+===== PDF PAGE 75 =====
+7. APPLICATIONS.
+281A : X 5 - X 4 - 11x3 + 17 : x4 - 4x3 - 2x2 + 8x + 1
+8x2 + 28x - 8
+P ap(h) al' (ft) ap(!2)
+2 (0,1,0,0,0) -3 (0,1,0,0)
+3 (2,2, -2, -2,2) -6 (-1,-3,2,0)
+V5 (2,2,1,0,-1) -2 (6,0, -5, 1)
+7 (7,7, -1, -2,0) 2 (-23,7,24, -6)
+11A (2, -12, -4,2,2)
+°
+(-4,0,4, -1)
+11B (-4, -2, 2, 1, -1)
+°
+(-4,0,4,-1)
+19A (2, -8, -2,2,0) -4 (-6,4,6, -2)
+19B (-10,11,8, -1, -4) -4 (-6,4,6, -2)
+29A (3, -1, -5, -2,4) 6 (8, -6, -6,2)
+29B (-4,4,4,1, -3) 6 (8, -6, -6,2)
+31A (5, -1, -5, -2,4) 4 (-4,4, -1,0)
+31B (6, -5, -2, 1,0) 4 (-4,4,-1,0)
+41A (6,10,0, -2,0) -6 (10, -4, -11,3)
+41B (-6,15,6, -3, -2) -6 (10, -4, -11,3)
+59A (-8,6,4,0, -2) -12 (2,0,0,0)
+59B (-8,8,8,2, -6) -12 (2,0,0,0)
+61A (-4,20,6, -4, -2) -10 (8, -6, -3, 1)
+61B (-12,2,6,1,-3) -10 (8, -6, -3, 1)
+71A (10,6,0,0, -2) -4 (-6,6,2, -1)
+71B (2,8,3, -2, -1) -4 (-6,6,2,-1)
+79A (6, -22, -10,4,4) 12 (22, -2, -17,4)
+79B (-8, -18, -4,4,2) 12 (22, -2, -17,4)
+89A (4, -2,2,2, -2) 10 (1,5, -4,0)
+89B (-2, -16, -3,4,1) 10 (1,5, -4,0)
+67
+For Q(a) ~ Q[xl/(x 5 - x4 -l1x 3 +8x2 +28x - 8), the chosen integral basis is
+For Q(a) ~ Q[xl/(x 4 - 4x3 - 2x2 + 8x + 1), the chosen integral basis is
+{l, a, 1/2(a 2 + 1), 1/2(a 3 + a)}.
+===== PDF PAGE 76 =====
+68 1. COMPUTING HILBERT MODULAR FORMS.
+VS, 59B : x3 + x2 - 7x + 1 311A: x4 + x3 - 7x2 - x + 2
+Il ap(fI) ap (fz) ap(ft} ap(fz)
+2 2 - V3 (0,1,0) -2 (0,1,0,0)
+3 1 + 2V3 (-3,0,1) 1 (-1, -8, 1,2)
+VS -1 (1,0,0) -4 (3,3,-1,-1)
+7 -1-6V3 (-9,4,3) 5 (-1 20 -3 -6), , ,
+11A -3 + 2V3 (-1,0,1) -5 (1, -8, 1,2)
+11B -V3 (8, -3, -3) -2 (-2,8,0, -2)
+19A 2 + 3V3 (6, -1, -3) -2 (-3, -3, 1, 1)
+19B 2 (-6,0,2) 1 (-1, -1,0,0)
+29A -3V3 (0,-3,-1) 4 (-2,-14,2,4)
+29B V3 (0, -3, -1) -5 (-5,7,0, -2)
+31A -4 + 2V3 (-4,2,2) -4 (4, -10,0,2)
+31B -7-2V3 (-1,4,1) -3 (5,0, -1,0)
+41A -6 - 3V3 (2,-1,-1) 8 (3,5,-1,-1)
+41B 4V3 (-4,4,2) -10 (-4, -6,2,2)
+59A -4V3 (-12,4,4) 1 (-1 12 -1 -2), , ,
+59B -1 (1,0,0) 14 (10,4, -4, -2)
+61A 2 - 3V3 (2,3,-1) 4 (3,19, -3, -5)
+61B -4 + 6V3 (8, -2, -4) 7 (-5, -2, 1,0)
+nA -2V3 (-16,2,6) -10 (11,9, -3, -3)
+nB 12 - V3 (-4,1,1) -13 (1,19, -2, -4)
+79A 5 - 4V3 (13, -2, -3) -14 (6,14, -4, -4)
+79B 14 (-18,4,6) -8 (-9,5,1,-1)
+89A -2V3 (16,2, -4)
+°
+(4,22, -2, -6)
+89B -12 (0,0, -2)
+°
+(-16, -4,4,2)
+For Q(o:) ~ Q[xJl(x 3 + x2 - 7x + 1), the chosen integral basis is
+{l, 0:,1/2(0:2 + 1)}.
+For Q(o:) ~ Q[x]/(x 4 + x3 - 7x2 - x + 2), the chosen integral basis is
+===== PDF PAGE 77 =====
+7. APPLICATIONS.
+331A : X 6 - 2x5 - 17x4 + 32x3 l1A· 31A : X 3 - X 2 - 12x + 16
++39x 2 - 86x + 25
+P ap(ft} ap(ft) ap(f2) ap(f3)
+2 (0,1,0,0,0,0) a a (0, 1, 0)
+3 (15, -19, -8, 12,4, -11) a a (8, -2, -4)
+v'5 (-1,3,1, -3, -1, 3) 2 1 (-1,0,1)
+7 (-30,43,13, -23, -7,20) 2 a (0, 0, -2)
+l1A (-4,13,1, -8, -2, 7) 1 1 (-1,0,0)
+l1B (-16,13,11, -7, -3,6) a 2 (-2,0,2)
+19A (21, -21, -12, 14,5, -13) -2 a (4, -2, -2)
+19B (14, -26, -6, 14,4, -12) -1 a (0,-1,-1)
+29A (-32,34,17, -20, -7, 18) -1 a (0,1, -1)
+29B (6, -6, -6,4,2, -4) -4 -5 (7, -2, -1)
+31A (10,2, -6, -2, 0, 2) 1 1 (-1, 0, 0)
+31B (-30,34,17, -20, -7, 18) 1 2 (-18,5,7)
+41A (2,22, -6, -12, -2, 10) -2 -3 (9,0,-1)
+41B (7, -13, -4,6,2, -5) 4 2 (14, -2, -6)
+59A (20, -30, -12, 18,6, -16) -11 -10 (-6,3,5)
+59B (-4, 0, -2, -2, 0, 2) 5 a (-20,3,7)
+61A (22, -30, -12, 18,6, -16) 5 2 (-10, -1,3)
+61B (6, -11, -1,5,1, -4) 5 2 (14, -3, -7)
+71A (63, -79, -32,46, 15, -41) -2 2 (-22,6,8)
+71B (-44,36,26, -20, -8, 18]) -2 2 (-2,2, 0)
+79A (-51,57,27, -33, -11,29) 6 5 (-21,6,9)
+79B (10,4, -10, -4,0,4) -4 -5 (-1,0,-1)
+89A (9, -41, 0, 22, 5, -19) -4 a (12, -2, -8)
+89B (-34,17,19, -8, -4,7) -6 -10 (-6,4,4)
+69
+For Q(a) ~ Q[x]/(x 6 -2x 5 -17x 4 +32x 3 +39x 2 -86x+25), the chosen integral
+basis is
+{l,a, 1/2(a 2 + 1), 1/2(a 3 + a), 1/4(a 4 - 1), 1/28(a 5 + 2a4 - 2a3 - 4a2 + 9a + 6)}.
+For Q(a) ~ Q[x]/(x 3 - x2 - 12x + 16), the chosen integral basis is
+{l,a, 1/4(a 2 - an.
+===== PDF PAGE 78 =====
+70 1. COMPUTING HILBERT MODULAR FORMS.
+J5.7lB : x3 + x2 - 11x + 1 359A : x3 - x2 - 5x + 1
+Il ap (fI) ap(f2) apUd ap(f2) ap(fg)
+2 1-V2 (0,1, 0) 2 -2 (0,1, 0)
+3 1 +3V2 (-3,0,1) 1 -3 (0, -2, 0)
+J5 1 (1,0,0) -3 -3 (2,0,0)
+7 -2 - 6V2 (0, -2, 0) -4 8 (7,2, -3)
+11A -3 - 2V2 (6,-1,-1) a 2 (0,0,0)
+11B -1 + 2V2 (6, -1, -1) 6 -4 (1,0,-1)
+19A 1-3V2 (-5,0,1) -4 -4 (9,1, -4)
+19B 6 (8, -2, -2) 2 -2 (-9, -2,5)
+29A -1+V2 (-7,0,1) 3 -1 (7,3, -2)
+29B -4+ 2V2 (8, 0, -2) 6 4 (0, -2, 0)
+31A 6V2 (-2,2,0) -4 a (11, 0, -5)
+31B -2+ 2V2 (-6, 0, 2) -7 1 (-11,-3,4)
+41A -8-2V2 (-8, 0, 2) -6 a (-11, 0, 3)
+41B -3 - 6V2 (0,-1,-1) -6 -4 (-11, 0, 5)
+59A 3+5V2 (-1,-2,-1) 6 -6 (-10,-2,4)
+59B 7-V2 (-1,0,1) 9 -15 (0,2,2)
+61A -2-2V2 (4,2,0) 11 -5 (-4, 0, -2)
+61B -1 (-2,3,1) -10 12 (13,6, -7)
+7lA -6-2V2 (-10,4,2) a 6 (18,6, -8)
+7lB 1 (-1,0,0) -3 9 (-8, 0, 4)
+79A -4 (-16,4,4) -la -12 (13,6, -3)
+79B 10 (-16,2,2) -4 2 (-14, 0, 6)
+89A 2-8V2 (-6, 0, 0) -3 -15 (5,1, -2)
+89B -6+4V2 (18, -4, -4) -12 -14 (8, 0, -2)
+For Q(a) ~ Q[xJl(x 3 + x2 - 11x + 1), the chosen integral basis is
+{l, a, 1/2(a 2 + 1)}.
+For Q(a) ~ Q[x]/(x 3 - x2 - 5x + 1), the chosen integral basis is
+{l,a, 1/2(a 2 + 1)}.
+===== PDF PAGE 79 =====
+7. APPLICATIONS. 71
+19A2 : X 4 - 10x2 + 5 19: x3 - 2x2 - 5x + 4
+P ap(h) ap(h) ap(h) ap(ft} ap(h) ap(h) ap(f4)
+2 -2 2 (0,1,0,0) 3 -4 0 (0,1,0)
+3 -1 1 (0, -8,0,3) 6 -2 0 (2, -2,0)
+J5 -3 -3 (3,0, -1,0) -2 3 1 (3,2,-1)
+7 2 2 (-4,0,1,0) 10 -13 -5 (11,2, -1)
+lIA -3 3 (0,4,0, -2) -4 3 2 - W15 (-3, -2, 1)
+lIB -3 3 (0,4,0, -2) -4 3 2 + W15 (-3, -2, 1)
+19A -1 -1 (-6,0,4,0) -1 1 -1 (1,0,0)
+19B 0 0 (0,0,0,0) -1 1 -1 (1,0,0)
+29A 6 -6 (0,3,0,-1) 6 6 2W15 (-6,0,0)
+29B 3 3 (2,0, -3,0) 6 6 - 2W15 (-6,0,0)
+31A -7 -7 (0,0,2,0) -4 -4 2 + 2W15 (-8, -2, 2)
+31B -5 5 (0, -12,0,4) -4 -4 2 - 2W15 (-8, -2,2)
+41A -3 -3 (8,0, -5,0) -10 -6 2 (10,2, -2)
+41B 3 -3 (0,7,0, -3) -10 -6 2 (10,2, -2)
+59A 12 -12 (0,6,0, -2) 0 -6 - 2W15 (-2, -2,0)
+59B -3 -3 (-18,0,12,0) 0 -6 2W15 (-2, -2,0)
+61A -14 14 (0, -16,0,7) 2 -1 2 + W15 (9,4, -3)
+61B -5 5 (0,11,0, -3) 2 -1 2 - W15 (9,4, -3)
+71A 9 -9 (0,10,0, -4) 4 6 -8 - 2W15 (10, -2,0)
+71B 0 0 (0,10,0, -4) 4 6 -8 + 2W15 (10, -2,0)
+79A 5 5 (10,0, -8,0) -4 8 -10 - 2W15 (12,2, -2)
+79B 4 -4 (-2,0, -2,0) -4 8 -10 + 2W15 (12,2, -2)
+89A 9 -9 (0,10,0, -2) 2 12 -10 + 2W15 (-16,4,2)
+89B -18 -18 (0, -18, 0, 7) 2 12 -1O-2w15 (-16,4,2)
+For Q(a) ~ Q[x]/(x 4 - lOx2 + 5), the chosen integral basis is
+{l, a, 1/4(a 2 + 1), 1/4(a 3 + an.
+===== PDF PAGE 80 =====
+72 1. COMPUTING HILBERT MODULAR FORMS.
+389A : x4 - 3x3 - 3x2 + 10x - 4 y'5 . 79A : x3 + x2 - 9x - 1
+P ap(fd ap(h) ap(fd ap(h) ap(h)
+2 -2- W 5 (0,1,0,0) 1 -3 (-1,2,0)
+3 - 3W5 (2, -1,0,0) 4 -2 (2, -2, -2)
+y'5 -3+ 2W5 (-4,5,3, -2) -1 -1 (1,0,0)
+7 1 + 2W5 (-22,20,12, -7) 4 -6 (2, -6, -2)
+lIA -3 (6, -7, -3,2) -2 -4 (4, -2, -2)
+lIB -3+W5 (4, -4, -3, 2) 2 -2 (0,0,2)
+19A -3 + 3W5 (10, -4, -5,2)
+°
+2 (0, -2,0)
+19B -3W5 (2, -7, -2,2)
+°
+-8 (-4,0,4)
+29A -4+ 7ws (16, -19, -8,6) 6 -2 (-6,4,4)
+29B -5 - 2ws (-5,1,3,-1) -4
+°
+(2, -4, -2)
+31A -2 + 3W5 (0,0,1, -1)
+°
+4 (4,0, -4)
+31B 3 - 6W5 (0,1,-1,0) -4
+°
+(4,0, -4)
+41A 9 -W5 (-6,2,1,0) -6 12 (-2,6,0)
+41B -8 +4W5 (-14,20,8, -6) 2 -10 (2, -4,0)
+59A -3 + 3W5 (6,1, -4, 1) 12
+°
+(-4, -4,4)
+59B 3 - 2W5 (-17,23,9, -7) 4 -8 (-4,4,0)
+61A 10 - 3ws (1,3,0,-1) -14 -10 (-2,4,0)
+61B 2 - 9W5 (-16,9,8, -4) -10 12 (2, -6,0)
+7lA 12 - 4W5 (-11,16,6, -5) -6
+°
+(-8,6,6)
+7lB -1 + 2ws (4, -5, -3,2) 4
+°
+(-4,8,0)
+79A 2 - 3ws (12, -3, -6,2) -1 1 (1,0,0)
+79B -9+ 8W5 (-2,1,1,0) -16 -8 (0,0, -4)
+89A -5 - 8W5 (4,6,4, -3)
+°
+12 (-10,4,6)
+89B -15 + 3W5 (18, -10, -7,4)
+°
+12 (-10,4,6)
+For Q(o:) ~ Q[xJl(x 4 - 3x3 - 3x2 + 10x - 4), the chosen integral basis is
+For Q(o:) ~ Q[]/(x 3 + x2 - 9x - 1), the chosen integral basis is
+{l, 1/2(0: + 1)1/4(0:2 - 1)}.
+===== PDF PAGE 81 =====
+7. APPLICATIONS. 73
+401A: X 6 - 15x4 + 409A : X 4 - X 3 - 8x2 + 4x + 8
+12x3 + 39x2 - 24x - 29
+P a,,(ft) a,,(h) a,,(ft) a,,(h) a,,(h)
+2 -1 (0,1,0,0,0,0) -3 3 -W5 (0,1,0,0)
+3 -4 (-5, -16, -7, 12,0, -2) -4 3 (0, -3, -1, 1)
+VS -3 (-5, -12, -3, 7, 0, -1) -1 -2 + 2W5 (0,3,2, -2)
+7 5 (24,37,5, -27,2,5) 2 -2 + 8W5 (6,8,0, -4)
+lIA -4 (23,35,7, -24, 1,4) -1 -4 + 2W5 (-2, -5,0,2)
+lIB -3 (1,11,9, -8, -1, 1) -1 1- 2W5 (6,2, -3,0)
+19A 3 (-27, -24,3,16, -2, -3)
+°
+-3 + 2W5 (2, -8, -4, 5)
+19B 4 (37,38, -1, -24) -4 2 - 6W5 (0, -2,2,0)
+29A
+°
+(-5,2,1,0,0,0) -4 -6 (8,4,0, -2)
+29B
+°
+(-61 -72 -1 46 -4 -8) -3 -2 + 4W5 (-1,-2,0,0), , , , ,
+31A 10 (-15, -24, -5, 14,0, -2) -1 -3 + 2W5 (-2 -3 -2 3), , ,
+31B -1 (10,22,10, -18,0,3) -1 2 (-2, -5, -4,4)
+41A -4 (39,56,7, -36,2,6) 8 7- 4W5 (-10,1,3,-2)
+41B -10 (34,24, -8, -12, 2, 2) -6 -1 + 4W5 (-10,0,6, -3)
+59A -5 (19,11, -5, -6, 1, 1)
+°
+-7 + 2W5 ([8,5,-1,-1)
+59B -2 (-22, -22, -4, 14,0, -2) 12 - 8W5 (6,10,0, -4)
+61A -1 (-19, -41, -16,31,0, -5) 6 2 (3,5,2, -4)
+61B -6 (-71, -78, 1,48, -4, -8) 5 -4 + 6W5 (-6,9,4, -4)
+71A
+°
+(24,8, -14,0,2,0) -14 -12 + 4W5 (5,3, -2,0)
+71B -15 (-47, -62, -9,42, -2, -7) 15 3 - 2W5 (4,6,-3,-1)
+79A
+°
+(-3,19,13, -14, -1,2) -11 -8 + 12w5 (7,2, -4,0)
+79B -16 (27,42,1, -24,2,4) 1 2 +4W5 (-6,3,2,0)
+89A 3 (19,36,7, -27,2,5) 6 13 - 8W5 (-14,3,11, -6)
+89B 15 (2, -17, -15, 11,2, -1) 1 7 +4W5 (6, -7, -8, 7)
+The integral basis for the field Q(a), where a is a root of x6 - 15x4 +
+12x3 + 39x 2 - 24x - 29 is
+The integral basis for the field Q(a), where a is a root of x4 - x3 - 8x2 +
+4x + 8, is
+===== PDF PAGE 82 =====
+74 1. COMPUTING HILBERT MODULAR FORMS.
+419A : x4 - 6x2 + 2x + 5 421A : x8 - 2x7 - 23x6 + 46x5+
+148x4 - 312x3 - 176x2 + 576x - 256
+P ap (fI) ap (12) ap(f3) ap(fd
+2 -1 -3 (0,1,0,0) (0,1,0,0,0,0,0,0)
+3 -4 -4 (-1,0,1,0) (6, -16, -1, 14,0, -7, -1,2)
+VS -4
+°
+(3,0,-1,0) (13, -19, -7, 16,3, -9, -2,3)
+7 6 6 (10,8, -4, -2) (46, -73, -29,65,14, -35, -8, 11)
+lIA -1 -3 (4,7, -2, -2) (-39,66,28, -61, -14,34,8, -11)
+lIB 3 -5 (-3, -8,2,2) (12, -5, -13,5,8, -3, -2, 1)
+19A -6 2 (2, -2,0,0) (-36,42,24, -30, -12, 14,4, -4)
+19B -6 2 (-4, -5,2,1) (8, -18, -10, 16, 7, -9, -3,3)
+29A -4
+°
+(-4, -3,2,1) (62, -78, -48,70,24, -38, -10, 12)
+29B 6 -10 (12,1, -4, -1) (40, -73, -24,62, 10, -34, -7, 11)
+31A 10 2 (2,10, -2, -2) (-72,106,50, -92, -24,50,12, -16)
+31B -10 10 (1,0, -1,0) (-80,134,56, -122, -28,68,16, -22)
+41A 4
+°
+(-17,-14,7,4) (-56,96,42, -90, -22,50,12, -16)
+41B 2 -2 (-12,2,4,0) (117, -179, -79, 162,38, -90, -21,29)
+59A -12 -12 (13,14, -5, -4) (-62,76,48, -64, -24,36,10, -12)
+59B -5 -13 (-6,4,1,0) (-91,136,64, -121, -32, 66,16, -21)
+61A 10 -10 (4,6, -4, -2) (52, -74, ~38, 72, 18, -42, -10, 14)
+61B -1 13 (2,1, -2,0) (138, -204, -94, 178,45, -97, -23,31)
+71A -14 6 (-1, -4, 1, 2) (58, -70, -46,56,25, -29, -9,9)
+71B -14 6 (-10,2,4,0) (-22,28,14, -30, -6, 18,4, -6)
+79A 6 10 (8, -1, -2, -1) (63, -109, -55, 102,30, -58, -15, 19)
+79B -5 -15 (6,-14,0,3) (-156,230,109, -198, -56, 107, 27, -34)
+89A -10 -14 (-4,3,2, -1) (-32,60,18, -50, -10,26,6, -8)
+89B 15 7 (1,20, -2, -4) (64, -83, -47, 75, 22, -41, -10, 13)
+For Q(o:) ~ Q[x]/(x 8 - 2x7 - 23x6 +46x5 + 148x4 - 312x3 - 176x2 +576x - 256),
+the chosen integral basis is
+===== PDF PAGE 83 =====
+7. APPLICATIONS. 75
+431A ; X 3 + 3x2 - 9x - 23 2· 109A : x 3 - x2 - 20x - 25,
+x 3 - x2 - 8x - 5
+P ap(fI) ap (12) ap(f3) ap(f4) ap(fs) ap(ft} : 0:1 ap (12) ; 0:2
+2 1 2 -1 -2 (0,1,0) (-1,0,0) (1,0,0)
+3 2 -5 -2 -1 (2,0,0) (0,1,0) (0,1,0)
+y'5 2
+°
+3 -2 (-6,0,1) (-2,-1,1) (6,2,-1)
+7 -10 -4 5 -4 (-5,1,1) (4,1, -1) (0,2,-1)
+lIA
+°
+6
+°
+-6 (1,-1,0) (3,0,-1) (-3,-1,1)
+lIB -4
+°
+6 -2 (12,0, -2) (10,2, -4) (2, -2,0)
+19A 4 -1 -4 -5 (8, -2, -2) (-14,-2,6) (-10, -4,2)
+19B -4 5 -1 5 (-12,-1,2) (-6,-1,2) (-10, -5,2)
+29A -2 9 -3 5 (7,0, -2) (10,2, -6) (-10, -4,2)
+29B -2 -9 -3 -1 (5,0,0) (-6,0,2) (10,6, -2)
+31A
+°
+-4 5
+°
+(-9,0,2) (-11,-2,5) (-3, -3, 1)
+31B 4 2 -1 4 (15, -1, -3) (20,3, -7) (-8, -2, 1)
+41A -6 9 -6 -3 (-12,2,4) (4,2,-2) (12,4, -2)
+41B 2 -9 12 -5 (-14,0,2) (13,2, -7) (17,9, -3)
+59A 8 -12 -3 4 (-3,3,1) (-4,1,0) (0,-1,0)
+59B 4 -12 6 2 (-14,2,2) (8, -2, -2) (0,4, -2)
+61A -6 8 -1 -12 (17,1, -3) (17,0, -5) (-13,3,1)
+61B 2 -4 2 2 (7, -3, -2) (-16, -3,6) (-8,-7,2)
+71A 8 3 -12 -5 (12, -2, -2) (-14, -4,4) (-18, -8,4)
+71B 8 -6 -12 -2 (8,0,0) (-32, -4, 14) (12,2, -2)
+79A 8 -4 2 14 (-8,2,0) (-24, -4,8) (20,4, -4)
+79B 0 -1 -10 3 (14,2, -2) (-3,2,-1) (5,3,-1)
+89A 10 15 -15 -1 (10, -3, -4) (6,3, -6) (10,1, -2)
+89B 2 -6 -12 -8 (-16,0,4) (22,5, -11) (-10, -4, 1)
+The integral basis for the field Q(o:), where 0: is a root of the polynomial
+x3 + 3x2 - 9x - 23 is
+{l, 0:,1/2(0:2 + 1)}.
+The integral basis for the field Q(o:d, where 0:1 is a root of the polyno-
+mial x3 - x2 - 20x - 25, is
+===== PDF PAGE 84 =====
+76 1. COMPUTING HILBERT MODULAR FORMS.
+439A : x 3 - x 2 - 9x + 5 3 . 7 : x 3 - x 2 - 13x + 5
+P ap(fd ap(f2) a p(fa) ap(fd ap(f2) ap (fa) ap (/4) a p(f5)
+2 2 -W5 -2- W5 (0,1,0) 3 -3 1 1 (-1,2,0)
+3 2 +W5 -4+W5 (-4,-1,1) -1 1 1 1 (-1,0,0)
+VS -2+W5 -2+W5 (2,0,0) 2 -2 2 2 (2, -2,0)
+7 2 - 5W5 2+ 7W5 (0, -2,0) -1 1 1 1 (-1,0,0)
+lIA 1 1- 4W5 (-1,-1,0) -6 4 -4 4 (-3,0,0)
+lIB 1 -3+ 4W5 (6,0, -2) -6 4 4 -4 (-3,0,0)
+19A -1 + 4W5 -3 - 2W5 (4,0,0) 6 4 -8
+°
+(2,0, -2)
+19B 2 - 6W5 -2 - 2W5 (6, -1, -1) 6 4
+°
+-8 (2,0, -2)
+29A 1 + 5W5 1- W5 (4,0,-2) 2 -2 6 -10 (2, -4,0)
+29B -3 -1- 2W5 (4,-2,0) 2 -2 -10 6 (2, -4,0)
+31A -1 -1- 4W5 (-6,0,2) -10
+°
+-4 4 (2,4, -2)
+31B 2 +W5 5W5 (-10,0,2) -10
+°
+4 -4 (2,4, -2)
+41A -3 - 4W5 -1- 2W5 (2,1, -1) 2 2 6 6 (-6, -2,4)
+41B -3 + 7W5 9 - 5W5 (-4,2,0) 2 2 6 6 (-6, -2,4)
+59A 7 - 3W5 -1 + 7W5 (-10,0,2) 8 12 12 -4 (-16,4,4)
+5gB -7 + 7W5 -7 + 7W5 (-6,0,2) 8 12 -4 12 (-16,4,4)
+61A 1- 2W5 7 -4W5 (-2,1,1) -2 -2 -10 6 (6,0, -4)
+61B 3+6w5 -11 +4W5 (-12,1,1) -2 -2 6 -10 (6,0, -4)
+7lA -11- 2W5 7 -4W5 (-14,2,4) 10
+° °
+-8 (-8,0,0)
+7lB -5 -11 + 6W5 (0,1,1) 10
+°
+-8
+°
+(-8,0,0)
+79A -9 + 7W5 -5+W5 (16,3, -3) -4 -16 8 -8 (4,0, -4)
+79B 2 -4W5 -6 + 12w5 (3,3,0) -4 -16 -8 8 (4,0, -4)
+89A -2 - 5W5 -6 - 5W5 (17,1, -6) -6 -14 6 6 (-6,2,0)
+89B -5 - 6W5 5 -4W5 (10,6, -2) -6 -14 6 6 (-6,2,0)
+The integral basis for the field ij(a), where a is a root of the polynomial
+{l,a, 1/2(a 2 + 1)}.
+The integral basis for the field ij(a), where a is a root ofthe polynomial
+x 3 - x 2 - 13x + 5, is
+{l, 1/2(a + 1), 1/4(a 2 - 1)}.
+===== PDF PAGE 85 =====
+7. APPLICATIONS. 77
+v'5 .89B : X 3 - X 2 - 12x + 4 lIA . 41B : X 3 - X 2 - 9x + 5,
+x3 + x2 - 9x + 3
+P ap(!I) ap(!3) ap(!3) ap (14) ap(fd ap(h) : al ap(!3) : a2
+2 1 -3 2 (0,1,0) 3 (0,1,0) (0,1,0)
+3 2 -2 2 - W13 (-4, -1, 1) 4 (3,0,-1) (3, -2, -1)
+v'5 1 -1 -1 (1,0,0) -2 (1, -1,0) (1,1,0)
+7 -6 6 7 - 5W13 (-3, -2, 1) -10 (0,2,0) (-12,2,4)
+lIA
+° °
+2 - 2W13 (6,0, -2) -1 (1,0,0) (1,0,0)
+lIB
+°
+-4 -2 + 2W13 (6,0, -2) -6 (-1,0,1) (5, -2, -1)
+19A -8
+°
+-1+3 w13 (1,0,1) 6 (-3,0,1) (-5,0,1)
+19B 4 -4 2W13 (-8, -2,2) 4 (6,0, -2) (-6,0,2)
+29A -10 -10 3 - 3W13 (5,0,-1)
+°
+(3, -2, -1) (-5,2,1)
+29B -2 -2
+°
+(8,2, -4) 2 (-5,1,0) (13, -3, -4)
+31A 4
+°
+-2 + 4W13 (-2, -2,0) -10 (5,2,-1) (-3,2,1)
+31B
+°
+-8 -1- 3w13 (-9, -2, 5) 4 (-4, -2, 2) (8, -2, -2)
+41A 10 2 -8 - W13 (-10,-1,3) -8 (5,0,-1) (3,-4,-1)
+41B 2 6 -6 (10,4, -4) 1 (-1,0,0) (-1,0,0)
+59A 4 -4 -8 + 2W13 (0,2, -2)
+°
+(-6, -4,2) (-10,4,2)
+59B
+°
+12 6 - 3W13 (8,3, -5) 4 (1, -1, -2) (19, -5, -6)
+61A -2 -2 3 - 7W13 (-1,0,1) -14 (14,0, -4) (-10,4,4)
+61B 14 -6 2 (-14,0,4) -4 (-17,2,3) (13, -2, -1)
+71A -16
+°
+-6 + 3W13 (8, -1, -1) 2 (5,4,-1) (-7,2,3)
+71B 8 16 -12 + 3W13 (-2,1,-1) -8 (-2,0, -2) (14,0, -2)
+79A -4 8 3 + 5W13 (1,2,-1) 14 (3,0,-1) (-17,4,5)
+79B -12 4 8 - 3W13 (-6, -3,3) -8 (-10,2,0) (10,2,0)
+89A -6 -6 8 +W13 (-18, -5, 7) 10 (-12,-2,4) (-16,6,4)
+89B 1 1 -1 (-1,0,0) 12 (-15,0,5) (-1,-2,-1)
+The chosen integral basis for the field Q(a), where a is a root of x3 ­
+x2 - 12x + 4, is {l, a, 1/4(a 2 + a + 2)}.
+The integral basis for the field Q(ad, where al is a root of x3_x2-9x+5,
+is {l,al' 1/2(a! + 1)}.
+The integral basis for the field Q(a2), where a2 is a root of x3+x2-9x+3,
+is {l, a2, 1/2(a§ + 1)}.
+===== PDF PAGE 86 =====
+78 1. COMPUTING HILBERT MODULAR FORMS.
+461A : x4 - 4x3 - 12x2 + 48x - 16 479A : x4 + x3 - 8x2 - 11x + 1
+P ap(fl) ap(h) ap(f3) ap(fd ap(h) ap(f3)
+2 -2 -W5 -1- w5 (-1,3,1,-1) 1 -1-w5 (0,1,0,0)
+3 -1 -3 (0,2,0,0) 2 -3 (2, -9, -3,4)
+y'5 3 - 2W5 -3+ 2W5 (3,0, -1,0) 2 -3+W5 (-1,8,3,-4)
+7 5 +3W5 8 - 9W5 (-12,22,4, -6) 10 -7 + 2W5 (4,9,1,-4)
+11A 3W5 -1- 3W5 (6, -8, -2,2) -2 -3 + 4W5 (0, -5, -1,2)
+11B 5 -W5 -4-W5 (-5, -1, 2,0)
+°
+-1- 2W5 (4,1,-1,0)
+19A -3 + 3W5 4 - 3W5 (4, -6, -2,2) 2 -3 - 3W5 (1, -6, -1,2)
+19B -3 + 3W5 -4+ 5W5 (4, -6, -2,2) -4 1- W5 (3,16,5, -8)
+29A -1 + 5W5 4 - 3W5 (-6,8,2, -2) -6 -2 + 6W5 (8, -6, -4,4)
+29B 5 - 2W5 -1 +6W5 (-10,8,3, -2) -6 1- 7W5 (-3, -10, -1,4)
+31A -3 + 6W5 -3 + 2W5 (4, -6, -1, 1) 8 4 - 3W5 (-3, -25, -8, 12)
+31B 1- 6W5 -1 + 6W5 (-4, -8,2,2) -8 -2-W5 (7, -7, -4,4)
+41A -7 + 4W5 -1 + 4W5 (8, -8, -2,2) 6 -3 + 9W5 (-5,8,3, -4)
+41B 2 -W5 -9- W5 (10, -4, -4,2) 4 5 - 3W5 (-1,4,1,-2)
+59A -6 -2 + 8W5 (4,2, -1, -1) 2 -11 + 2W5 (6, -11, -5,6)
+59B 2 - 2W5 8 - 6W5 (-11,13,4, -4) 12 1 +6W5 (-10, -9, -1,4)
+61A 6+3 w5 -3 - 3W5 (-14,16,5, -4) -8 4 - 2W5 (-2, -10, -4,6)
+61B 6 - 8W5 -2 - 4W5 (16, -18, -7,4) -12 5 - 2W5 (4,23,5, -10)
+71A -4+ 8W5 -12 (-12,22,6, -6) -10 2 - 8W5 (-10,28,12, -14)
+71B 2 -10w5 4 - 6W5 (-6,6,3, -1) 12 1 + 3W5 (-15,6,5, -4)
+79A -9 + 3W5 6 -l1w5 (14, -12, -6,4) 16 7 - 2W5 (-4,25,7, -12)
+79B 1 + 6W5 5 + 2W5 (-13,9,4, -4) 0 -1- 5W5 (-9, -2,3,0)
+89A -16 - W5 -3 - 5W5 (10, -2, -2,0) -10 -5 + 2W5 (10,39,9, -16)
+89B -9 -7 + 8W5 (-2,16,2, -4) -10 -9 + 14w5 (6, -33, -11, 16)
+The chosen integral basis for the field Q(a), where a is a roots of x4 ­
+4x3 - 12x2 + 48x - 16, is
+The chosen integral basis for the field Q(a), where a is a roots of x4 +
+x3 - 8x2 - 11x + 1, is
+===== PDF PAGE 87 =====
+7. APPLICATIONS.
+491A : X 6 - X 5 - 13x4 4 . 31A : x4 + 12x3
++16x 3 + 39x 2 - 63x + 17 -24x 2 - 80x + 80
+P ap(Jd ap(f2) ap(fI) ap (12)
+2 -1- w5 (0,1,0,0,0,0)
+°
+(0,0,0,0)
+3 -1- 2W5 (-7,7,1,-1,0,0) -1+w3 (0,1,0,0)
+v'5 -3 + 2W5 (2,3, -4, -1, 1,0) 1- W3 (20, -11, -2,6)
+7 5 +3W5 (-3,23, -5, -12, 1,2) -4 - 2W3 (-6,6,0, -4)
+llA -2 -W5 (4,-7,0,1,0,0) 1 +W3 (2, -1,0,0)
+lIB -5 (5, -4,3,1, -1,0) 2 (-20,14,2, -8)
+19A 1 + 2W5 (-17,33,1, -13,0,2) 5+W3 (-18,5,2, -2)
+19B -2 + 3W5 (18, -41,6,15, -2, -2) -2 - 2W3 (-32, 14,4, -8)
+29A -6+ 7W5 (3, -16,4, 7, -1, -1) -2 +4W3 (6, -8,0,4)
+29B 3 - 2W5 (11, -21, -1, 11,0, -2) -2 + 2W3 (10,0, -2,0)
+31A -1- 5W5 (-1,6,-7,-2,2,0) -1 (1,0,0,0)
+31B 4- 8W5 (-7,16, -3, -7, 1, 1) 5 - 3W3 (10, -3, -2,2)
+41A -1 + 7W5 (-13,28,1, -12,0,2) 6W3 (2, -2,0,0)
+41B -3+ 3W5 (-17,14,3,-2,0,0) -6W3 (-30,14,4, -8)
+59A 2 - 6W5 (-20,28,2, -12,0,2) -6 + 2W3 (32, -14, -4,8)
+59B 1 +W5 (-11,14,1, -10,0,2) -4 (0,0,0,0)
+61A -14 + W5 (2,19, -2, -11,0,2) -3 + 3W3 (40, -21, -4, 12)
+61B 3+ 4w5 (17, -33, -1, 13,0, -2) -2 + 4W3 (-30,16,4, -8)
+nA 7 -7W5 (33, -54, -3,24,0, -4) 9 - 3W3 (30, -21, -4, 12)
+nB -6 - 4W5 (8, -17, 10,4, -3,0) -2 + 6W3 (28, -6, -4,4)
+79A -6 - 6W5 (-18,6,10,0, -2,0) -6 - 2W3 (44, -30, -4, 16)
+79B 7W5 (11, -14,2,7, -1, -1) 4 - 4W3 (-48,24,4, -12)
+89A 1- 4W5 (-30,69,4, -30, -1,5) -6 - 4W3 (70, -36, -8,20)
+89B 10 -W5 (10, -31,0,13,0, -2) -8 - 6W3 (6, -10,0,4)
+79
+For Q(a) ~ Q[x]/(x 6 - x5 -13x 4 + 16x3+ 39x2 - 63x + 17), the chosen integral
+basis is
+For Q(a) ~ Q[x]/(x 4 + 12x3 - 24x2 - 80x + 80) the chosen integral basis:
+===== PDF PAGE 88 =====
+80 1. COMPUTING HILBERT MODULAR FORMS.
+8. Motives.
+By a gp search, we found the list of aH curves of prime conductor
+of norm less than 100. We would like to thank Prof. N. Elkies for
+his valuable help in implementing this search. We have only listed one
+curve for each prime as one gets the other one by Galois conjugation.
+For each curve E /Q(V5) of conductor c, we have checked that aH the
+ap(E) match up with the Fourier coefficients of a modular form of level
+c given in the table. We would like to complete the list of those curves
+in a near future along with studing their modularity by making use of
+sorne of the results in Skinner and Wiles [50, 51]. In fact, we already
+have the modularity of the curves listed below thanks to a result in
+[51]. We begin by recaHing this theorem.
+DEFINITION 1.45. Let p: Gal(P / F) -7 GL2 (IFp ) be a Galois represen­
+tation, and let plp be a prime of F. We say that p is distinguished at P
+if the semisimplification of the restriction of p to Dp, the decomposition
+group at p, is isomorphic to BI EB B2 , where BI and B2 are two distincts
+characters from Gal(F / F) to if;.
+Proposition 1.2. in EHenberg [22], says that the mod p Galois rep­
+resentations associated to the curves listed below are p-distinguished
+for aH p not dividing the conductor. This is also a consequence of the
+corollary to Proposition 11 in Serre [44].
+Here is the theorem we need from Skinner and Wiles [51] (see [22,
+Theorem 3.1]).
+===== PDF PAGE 89 =====
+8. MOTIVES. 81
+THEOREM 1.46. Let F be a totally real number field, let p > 2 be a
+rational prime, let L be a finite extension of Qp, and let
+p: Gal(P / F) -+ GL2 (L)
+be a continuous irreducible Galois representation ramified at only finitely
+many primes. Suppose
+• det p = 'l/JX;-l, where XP is the cyclotomie character and 'l/J is
+a finite order character;
+• p is ordinary in the sense that, for each prime p dividing p,
+• p is distinguished at p for each prime p dividing p;
+• there exists an ordinary modular Galois representation p' and
+an isomorphism between the mod p representations P and p'.
+Then p is modular.
+PROOF. See [51]. D
+For the rest of this section, we let F = Q(V5). Let E be an ellipitc
+curve defined over F. For any prime R~ 3, let
+be the mod R representation attached to E. The proof of Serre [45,
+Proposition 1] carries on to give the following lemma.
+LEMMA 1.47. The image of PE,3 is either GL2 (lF3 ) or contained in a
+Borel subgroup; the latter case happens if and only if E or a 3-isogenous
+curve E' / F to it has a 3-torsion point defined over F.
+===== PDF PAGE 90 =====
+82 1. COMPUTING HILBERT MODULAR FORMS.
+PROOF. Going through the proof of Proposition 1 in Serre [45],
+one sees that the only thing we need to check is that there can't be
+a Galois extension K of F = Q(V5) such that Gal(K/F) = D4 or a
+subgroup of index 2 in D4 and K ramifies only at 3. We recall that
+D4 /Z 2 rv (Z/2Z)2. But, there can't be an abelian extension of F of
+degree 4 that is only ramified at 3. 0
+Let E /Q(V5) be any of the curve listed below, let PE,3 be the
+associated 3-adic Galois representation and PE,3 its reduction mod 3.
+By inspecting the listed of the ap, we see that, except for the curves of
+conductor of norm 49, 71 or 89, the curve E does not have a 3-torsion
+point; neither can it be 3-isogenous to a curve E' / F that has a 3-torsion
+point defined over F. Therefore by Lemma 1.47, PE,3 is irreducible,
+and so is PE,3' As we already mentionned, E is distinguished at 3. It
+is also ordinary at 3, since it has good reduction at p = 3 and a3(E)
+is not divisible by 3; this follows from results in Chap. V, VIII and
+IX in Silverman [49] (on elliptic curves over finite field and reduction
+of elliptic curves over local or global fields.). The ordinariness in this
+sense is equivalent to the one in Theorem 1.46 by the theory of finite fiat
+commutative group schemes. The determinant of PE,3 being cyclotomie
+is also a well-known facto So, we only need check that PE,3 is modular.
+But since GL2 (JF3 ) is solvable, this follows from Langlands- Tunnell (see
+[36, Chap. I] and [52], see also Serre [46]). Therefore, E is modular.
+REMARK 1.48. The curve E / F with conductor of norm 41 in our list
+has a 7 -torsion point defined over F. So we could have used instead
+the Main theorem of Skinner-Wiles [50] to deduce its modularity. This
+has the advantage of avoiding to verify the modularity of the residual
+representation PE,7' We can also use the same result to conclude the
+===== PDF PAGE 91 =====
+9. LISTING OF PROGRAMS. 83
+modularity for the rest of the curves in our list which might have a
+reducible mod 3 representation.
+31 1 -1- w5 W5 0 0
+41 0 -W5 W5 0 0
+7 0 W5 1 1 0
+71 1 +W5 -1 +W5 1 0 0
+79 1 +W5 -1 +W5 W5 0 0
+89 W5 -W5 1 -1 0
+9. Listing of Programs.
+The first program computes the Hecke eigenvalues for a given level,
+and second one the quaternions needed to calculate the Hecke action.
+\\THIS COMUPTE ALL HECKE EIGENVALUES FOR A GIVEN LEVEL.
+\\Initial values.
+w=quadgen(5);
+field=nfinit(z-2-z-1);
+fieldembed(x)=Mod(real(x)+imag(x)*z, z-2-z-1);
+level=fieldembed(6+w);
+levelf=idealfactor(field, level);
+leveIO=[]; res=idealfactor(field, level);\
+for(j=l, matsize(res) [1] , resO=[res[j,] [1] [1] ,res[j,] [2]];\
+leveIO=concat(leveIO, [resO])); print(leveIO);
+levell=length(leveIO);
+read(icosiangroupl);
+===== PDF PAGE 92 =====
+84 1. COMPUTING HILBERT MODULAR FORM8.
+\\Working with quaternions; we represent quaternions by vectors [x,y,w,z].
+hnorm(q)=q[1]~2+q[2]~2+q[3]~2+q[4]~2;
+hconj(q)=[q[l] ,-q[2] ,-q[3] ,-q[4]];
+hmult(a,b)=[a[1]*b[1]-a[2]*b[2]-a[3]*b[3]-a[4]*b[4],\
+a [1] *b [2] +a [2] *b [1] +a[3] *b [4] -a[4] *b [3] , \
+a[1]*b[3]+a[3]*b[1]-a[2]*b[4]+a[4]*b[2] ,\
+a [1] *b [4] +a [4] *b [1] +a [2] *b [3] -a [3] *b [2] ];
+hinv(q)=hconj(q)/hnorm(q);
+\\This function returns the reduction of a matrix modulo level with
+\\coefficients in O_K.
+matredmod(u,j,resO)=resO=matrix(matsize(u) [1], matsize(u) [2]);\
+for(pl=l, matsize(u) [1] , for(ql=l, matsize(u) [2] ,\
+resO[pl,ql]=u[pl,ql]%(levelO[j] [l]~levelO[j] [2]))); resO;
+\\Be carefull in using the function vectredmod: one might have sorne
+\\problems when the denominator is divisible by 2.
+vectredmod(v, l, resl)=resl=vector(length(v));\
+for(pl=l, length(v), res2=v[pl]%(levelO[1] [l]~levelO[l] [2]);\
+res2=nfeltreduce(field, fieldembed(res2),\
+idealpow(field, levelf[l,] [1], levelf[l,] [2]));\
+resl[pl]=res2[1]+res2[2]*w); resl;
+\\Here is the quotient ring O/level.
+Quotring=vector(length(levelO));\
+for(j=1, length(levelO), res=[]; card=levelO[j][1]~levelO[j][2];\
+if (kronecker(levelO[j] [1] ,5)==-1,\
+for(i=O, card-l, for(k=O, card-l, res=concat(res, i+k*w))),\
+for(i=O, card-l, res=concat(res, i))); Quotring[j]=res);\
+print(Quotring);
+===== PDF PAGE 93 =====
+9. LISTING OF PROGRAMS. 85
+ProjO=vector(level1);\
+for(j=l, levell, res=[]; for(k=l, length(Quotring[j]),\
+res=concat(res, [[1, Quotring[j] [k]]]));\
+if (kronecker(leveIO[j] [1],5)==-1, for(k=l, length(Quotring[j]),\
+resO=Quotring[j] [k]; if(gcd(norm(resO), leveIO[j] [1])==1,,\
+res=concat(res, [[resO, 1]]))),\
+for(k=l, length(Quotring[j]), resO=Quotring[j] [k];\
+if(gcd(resO, leveIO[j] [1])==1" res=concat(res, [[resO, 1]]))));\
+ProjO[j]=res); print(ProjO);
+Proj=[];\
+if(levell==l, Proj =Proj 0 [1] , resO=vector(length(ProjO[l]));\
+for(j=l, length(ProjO[l]), resO[j]=[ProjO[l] [j]]); resO; j=2;\
+while(j<=levell, Proj=[]; for(i=l, length(resO), for(k=l, length(ProjO[j]),\
+res=concat(resO[i], [ProjO[j] [k]]); Proj=concat(Proj, [res])));\
+resO=Proj; j=j+1)); print(Proj);
+\\This routine embeds the quaternion q into the ring M_2(O/level).
+\\Return 1 if xA2+1 has a root mod level and the first solution.
+alpha=vector(levell);\
+for(j=l, levell, res=[O];\
+k=l; while(k<=length(Quotring[j])&&\
+!((Quotring[j] [k]A2+1)%(leveI0[j] [1] AleveIO[j] [2])==0), k=k+1);\
+if(k>length(Quotring[j])" res=concat(l, Quotring[j] [k]));\
+alpha[j]=res); alpha;
+\\When xA2+1 has no root mod level, this routine returns a matrix
+\\J=[a, b; b, -a] such that J-2=-[1, Oj 0, 1] mod level;
+J=vector(level1);\
+for(j=l,levell, res=resO=[O, Oj 0, 0];\
+if(leveIO[j] [1]==2, J[j]=matredmod([l, 2 + 9*w; 2 + 10*w, -1], j)j\
+JO=matredmod([27 + 23*w, 31 + 4*wj 4*w, 6 + 9*w], j),\
+===== PDF PAGE 94 =====
+86 1. COMPUTING HILBERT MODULAR FORMS.
+if (alpha[j] [1]==1, , i=2; k=l;\
+res=[Quotring[j][i], Quotring[j] [k]; Quotring[j][k], -Quotring[j] [i]];\
+until(!(matredmod(res-[O, -1; 1, 0], j)==[O, 0; 0, 0]) &&\
+matredmod(res~2+[1, 0; 0, 1], j)==[O, 0; 0, 0], k=k+l;\
+if(k>length(Quotring[j]), i=i+l; k=l);\
+res=[Quotring[j] Ci], Quotring[j] [k]; Quotring[j] [k], -Quotring[j] [i]]);\
+J[j]=res))); J; JO; print(J":"JO);
+\\This routine embeds the quaternion q into the ring M_2(O/level).
+P=[l, 0, 1/2, 0; 0, 0, 1/2, 1/2; 0, 1, 1/2, w/2; 0, 0, 1/2, conj(w)/2];
+embed(q, j, res)=res=O;\
+if(levelO[j] [1]==2, xO=matsolve(P, q-);\
+res=matredmod(xO[l]*[l, 0; 0, 1]+xO[2]*J[j]+\
+xO[3]*JO+xO[4]*[0, -1; 1, 0], j),\
+qO=vectredmod(q, j); if (alpha[j] [1]==1,\
+res=matredmod([qO[l]+ alpha[j] [2]*qO[2] , -qO[3]-alpha[j] [2]*qO[4];\
+qO[3]-alpha[j] [2] *qO [4] , qO[l]-alpha[j] [2]*qO[2]] , j),\
+res=matredmod(qO[l]*[l, 0; 0, 1]+qO[2]*[0, -1; 1, 0]+qO[3]*J[j]+\
+qO[4]*([0, -1; 1, O]*J[j]), j))); res;
+\\Defining the action of a quaternion on an element of P_l(O/level).
+actO(q, cO, j, res3)=res3=«embed(q, j)*cO-)-)%(levelO[j][l]~levelO[j] [2]);\
+if(res3==[0,0]" if(gcd(norm(res3[1]), levelO[j] [1])==1,\
+res3=(res3/res3[1])%(levelO[j] [l]~levelO[j] [2]),\
+res3=(res3/res3[2])%(levelO[j] [l]~levelO[j] [2]))); res3;
+act(q, c, res5)=res5=0;\
+if(level1==1, res5=actO(q, c, 1), res5=vector(level1);\
+for(j=l, levell, res5[j]=actO(q, c[j], j))); res5;
+\\This action is used to find the degenerated hecke operator at the
+\\prime $p$ dividing the level.
+===== PDF PAGE 95 =====
+9. LISTING OF PROGRAMS.
+act2(q, c, j, res4)=res4=«embed(q, j)*c-)-)%levelO[j] [1]; res4;
+\\This routine returns the operator $U(p)$ at a prime $p$ dividing
+\\the level.
+print (act (icosiangroup[l] , Proj[l]));
+\\This returns the orbit of a point in $P-l(O_K/level)$.
+orbit(x,t)=t=[];\
+for(k=l, 60, t=concat(t, [act(icosiangroup[k], x)]));\
+t=eval(Set(t)); t;
+print(orbit(Proj[l]));
+\\Determining the global array orbits.
+87
+orbits=[orbit(Proj[l])];\
+tt=eval(setminus(Set(Proj), Set(orbits[l])))j\
+until (length(tt)==O , orbits=concat(orbits, [orbit(tt[l])])j\
+tt=eval(setminus(Set(tt), Set(orbit(tt[l])))))j print(orbits)j
+\\Here is a fundamental domain of the action of the icosians on
+\\$P-l(O_K/level)$.
+FD= [] ; \
+for(j=l, length(orbits), FD=concat(FD, [orbits[j] [1]])); print(FD)j
+\\Computing the action of tp.
+\\We first determine the number of operators whose norm does not divide the
+\\level.
+===== PDF PAGE 96 =====
+88 1. COMPUTING HILBERT MODULAR FORMS.
+Hecke=[J ;\
+for(p=l, length(tp), heckeop=tp[pJ;\
+res=nfeltreduce(field, fieldembed(hnorm(tp[pJ [lJ)),\
+idealhnf(field,level));\
+if(gcd(res, idealnorm(field, level))==l"lO=l;\
+while(gcd(res, levelO[lOJ [1])==1, 10=10+1)); 10; print(p":"lO);\
+Tp=matrix(length(FD),length(FD));\
+for(kl=l, length(FD), for(k2=1, length(FD), counter=O;\
+if(levell==l, for(k3=1, length(heckeop),\
+if(act2(heckeop[k3J,FD[klJ,10)==[0,OJ,,\
+if(!(setsearch(Set(orbits[k2J), act(heckeop[k3J,FD[klJ))==0),\
+counter=counter+l))),\
+for(k3=1, length(heckeop),\
+if (act2(heckeop[k3J ,FD[klJ [lOJ ,10)==[0,OJ ,,\
+if(!(setsearch(Set(orbits[k2J), act(heckeop[k3J,FD[klJ))==0),\
+counter=counter+l)))); Tp[kl,k2J=counter)); print(Tp);\
+Hecke=concat(Hecke, [TpJ)); Hecke;
+vectoalgO(u)=res; if (length(u)==l, res=u[lJ, res=u[lJ+u[2J*wO); res;
+\\This function, applied to a polynomial, returns either an irreducible factor
+\\of degree 3 or the discriminant vector of aIl the quadratic factors.
+irredfact(pol, res)=res=O;\
+polfact=factor(pol); h=l; discvectorO=[J;\
+while(h<=matsize(polfact)[lJ && poldegree(polfact[h, lJ)<=2,\
+if(poldegree(polfact[h, lJ)==2, D=quaddisc(poldisc(polfact[h, lJ));\
+discvectorO=concat(discvectorO, D), ); h=h+l); h; discvectorO;\
+if(h>matsize(polfact)[lJ, res=[O, discvectorOJ, res=[l, polfact[h, lJJ);\
+res;
+s=l; discvector=[J; factofdeg3=[J;\
+while(s<=length(Hecke) && irredfact (charpoly(Hecke [sJ , x))[lJ==O,\
+discvector=concat(discvector, irredfact(charpoly(Hecke[sJ, x))[2J);\
+===== PDF PAGE 97 =====
+9. LISTING OF PROGRAMS. 89
+s=s+l); s; discvector;\
+if(s>length(Hecke), discvector=eval(Set(discvector)),\
+for(k=l, length(Hecke),\
+factofdeg3=concat(factofdeg3, [factor(charpoly(Hecke[k], x))])); factofdeg3);\
+discvector; factofdeg3;
+heigen=[];\
+if(!(factofdeg3==[]), heigen=factofdeg3,\
+if(length(discvector»=2, heigen=discvector,\
+if (length(discvector)==O, splt=l; spltfield=nfinit(v-1), splt=O;\
+wO=quadgen(discvector[l]); spltfield=nfinit(v~2-trace(wO)*v+norm(wO)));\
+rts=nfroots(spltfield, charpoly(Hecke[l] , x)); print(rts);\
+resO=[vectoalgO(nfalgtobasis(spltfield, rts[l]))];\
+for(i=2, length(rts),\
+resO=concat(resO, vectoalgO (nfalgtobasis (spltfield, rts[i])))); resO;\
+print(resO);\
+P=matker(Hecke[l]-resO[l]*matid(matsize(Hecke[l]) [1])) ;\
+for(i=2, length(resO),\
+P=concat(P, matker(Hecke[l]-resO[i]*matid(matsize(Hecke[l]) [1])))) ; P;\
+j=2; while(j<=length(Hecke) , B=P~-l*Hecke[j]*P;\
+if (matisdiagonal(B), Q=matid(matsize(Hecke[j])[l]), print(B);\
+rts=nfroots(spltfield, charpoly(Hecke[j], x)); print(rts);\
+res1=[vectoalgO(nfalgtobasis(spltfield, rts[l]))];\
+for(i=2,length(rts),\
+res1=concat(res1, vectoalgO (nfalgtobasis (spltfield, rts[i])))); res1;\
+print(res1);\
+Q=matker(B-res1[1]*matid(matsize(Hecke[j]) [1]));\
+for(i=2, length(res1),\
+Q=concat(Q, matker(B-res1[i]*matid(matsize(Hecke[j]) [1])))); Q);\
+P=P*Q; j=j+l)j Pj print(P);\
+heckediag=vector(length(Hecke));\
+for(j=l, length(Hecke) , heckediag[j]=P~-l*Hecke[j]*P); heckediag;\
+test=[]; for(j=l, length(heckediag),\
+===== PDF PAGE 98 =====
+90 1. COMPUTING HILBERT MODULAR FORMS.
+test=concat(test, matisdiagonal(heckediag[j]))); test; print(test)j\
+lambda=vector(matsize(Hecke[l]) [1] , il, [])j\
+for(j=l, matsize(Hecke[l])[l], for(i=l, length(Hecke),\
+lambda[j]=concat(lambda[j], heckediag[i] [j, j])))j lambda;\
+heigen=concat(heigen, lambda))); print(heigen)j
+\\WE USE THIS ROUTINE To COMPUTE ALL THE QUATERNIONS NEEDED To
+\\CoMPUTE A GIVEN HECKE oPERAToR.
+\\Initial values
+w=quadgen(5);
+field=nfinit(z-2-z-1)j
+fieldembed(x)=Mod(real(x)+imag(x)*z, z-2-z-1)j
+\\Working with quaternionsj we represent quaternions by
+\\vectors [x,y,w,z].
+hnorm(q)=q[1]-2+q[2]-2+q[3]-2+q[4]-2j
+hconj(q)=[q[l] ,-q[2],-q[3] ,-q[4]];
+hmult(a,b)=[a[l] *b[1]-a[2] *b[2]-a[3]*b[3]-a[4]*b[4] ,\
+a[1]*b[2]+a[2]*b[1]+a[3]*b[4]-a[4]*b[3] ,\
+a [1] *b [3] +a [3] *b [1] -a [2] *b [4] +a [4] *b [2] , \
+a[1]*b[4]+a[4]*b[1]+a[2]*b[3]-a[3]*b[2] ] j
+hinv(q)=hconj(q)/hnorm(q)
+\\This function returns the primes in $o_K$ lying above any prime
+\\$p$ in $\Z$.
+gen(pr, res)=res=Oj\
+if(kronecker(pr,5)==-1,res=pr,NO=floor(sqrt(pr-l));\
+a=NO;resl=r-2-a*r+pr-a-2j\
+while(polisirreducible(resl),a=a-l;resl=r-2-a*r+pr-a-2)j\
+res=floor(real(polroots(resl)))-;\
+if(res[1]==res[2], res=a+res[l]*w, res=[a,a]+w*res)); res;
+===== PDF PAGE 99 =====
+9. LISTING OF PROGRAMS.
+\\This function reduces any matrix modulo pr, where pr is is
+\\modprinit format.
+matredmodpr(m,pr, res)=res=matrix (matsize (m) [1] , matsize(m)[2])j\
+for(i=l, matsize(m) [1] , for(j=l, matsize(m) [2] ,\
+resO=nfeltreducemodpr(field, fieldembed(m[i,j]), pr)j\
+resO=lift(resO)j res[i,j]=resO[1]+resO[2]*w)); reSj
+vectredmodpr(v,pr,res1)=res1=vector(length(v));\
+for(l=l, length(v) , resO=nfeltreducemodpr(field,\
+fieldembed(v[l]), pr);\
+resO=lift(resO); res1[1]=resO[1]+resO[2]*w); res1;
+91
+\\Every integral quaternion in this order is then given in the form:
+quat(a,b)=a+w*b;
+\\We get its norm in the form $Q+R*w$, where $Q$ and $R$ are the following
+\\quadratic forms.
+Q(a,b)= real(hnorm(a+b*w))j
+R(a,b)= imag(hnorm(a+b*w))j
+\\This function returns the norm of the ideals lying above a prime in $O_K$.
+normO(p)=if«kronecker(p,5)==11 1kronecker(p ,5) ==0) , p, p-2)j
+Primes=[] ;\
+prs=primes(1440); for(i=l, length(prs), p=prs[i] j\
+if (normO(p) <=12000) , Primes=concat (Primes , p)))j Primesj
+===== PDF PAGE 100 =====
+92 1. COMPUTING HILBERT MODULAR FORMS.
+heckeops=[];\
+for(n=l, length(Primes) , p=Primes[n]; read(compl);\
+heckeops=concat(heckeops, [hecke])); heckeops;
+write(hecke, heckeops);
+\\This is the subroutine COMP1.GP we calI in our main program which
+\\compute the hecke operators.
+Pr=if«kronecker(p,5)==-11 Ikronecker(p,5)==0) , gen(p), gen(p)[l]);\
+print(Pr); PrO=nfmodprinit(field,idealfactor(field, fieldembed(Pr)) [1,1]);
+Prl=if(norm(Pr)==Pr~2, Pr, norm(Pr)); print(Prl);
+\\This return a root of x~2+1 has a root mod level and the first solution.
+alpha=res=O;\
+if«norm(Pr)-1)%4==0, G=idealstar(field, PrO, flag=O);\
+res=nfeltpowmodpr(field, G[3] [1] ,G[2] [1]/4, PrO);\
+res=lift(res); alpha=res[1]+res[2]*w, alpha=O); alpha;
+\\When x~2+1 has no root mod level, this routine returns a matrix
+\\J=[a, b; b, -a] such that J~2=-[1, 0; 0, 1] mod level;
+J=res=resO=[O, 0; 0, 0];\
+if (Pr==2 , J=[matredmodpr([l, 2 + 9*w; 2 + 10*w, -1], PrO),\
+matredmodpr([27 + 23*w, 31 + 4*w; 4*w, 6 + 9*w] , PrO)] ,\
+if (alpha==O , i=2; k=l; res=[i, k; k, -i];\
+until(!(matredmodpr(res-[O, -1; 1, 0], PrO)==[O, 0; 0, 0]) &&\
+matredmodpr(res~2+[1, 0; 0, 1], PrO)==[O, 0; 0, 0], k=k+l;\
+if(k>=norm(Pr), i=i+l; k=l); res=[i, k; k, -i]); J=res)); J; print(J);
+\\This routine embeds a quaternion into $M_2(O_K/pr)$.
+===== PDF PAGE 101 =====
+9. LISTING OF PROGRAMS. 93
+embed(q, res2)=res2=0;\
+if(Pr==2, xO=matsolve(P, q-);\
+res2=matredmodpr(xO[lJ*[1, 0; 0, lJ+xO[2J*J[lJ+\
+xO[3J*J[2J+xO[4J*[0, -1; 1, OJ, PrO),\
+qO=vectredmodpr(q, PrO); if(alpha==O,\
+res2=matredmodpr(qO[lJ*[1, 0; 0, lJ+qO[2J*[0, -1; 1, OJ+qO[3J*J+\
+qO[4J*([0, -1; 1, OJ*J), PrO),\
+res2=matredmodpr([qO[lJ+ alpha*qO[2J, -qO[3J-alpha*qO[4J;\
+qO[3J-alpha*qO[4J, qO[lJ-alpha*qO[2JJ, PrO))); res2;
+\\This function returns of the equivalence class of $x$ in $P~l(O_K/Pr)$
+\\in the form $[O,lJ$ or $[l,aJ$, with $a\in F_q$.
+eqcls(u.res3)=res3=0;\
+if(u[lJ==O, res3=[0,lJ. res3=[1, u[2J/u[lJJ%Prl); res3;
+N=real(Pr); Nl=floor(sqrt(N));
+hecke=[J;\
+S= [] ; \
+for(xl=O.Nl. N2=floor(sqrt(N-xl~2));\
+for(x2=0, N2, N3=floor(sqrt(N-xl~2-x2~2));\
+for(x3=-N3, N3. N4=floor(sqrt(N-xl~2-x2~2-x3~2));\
+for(x4=-N4. N4, N5=floor(sqrt(N-xl~2-x2~2-x3~2-x4~2));\
+for(yl=-N5, N5, N6=floor(sqrt(N-xl~2-x2~2-x3~2-x4~2-yl~2));\
+for(y2=-N6, N6. N7=floor(sqrt(N-xl~2-x2~2-x3~2-x4~2-yl~2-y2~2));\
+for(y3=-N7. N7, x=[xl,x2,x3,x4J; y=[yl.y2.y3.rJ;\
+resO=Q(x,y)-real(Pr); if(polisirreducible(resO)==O.\
+res=floor(real(polroots(resO)));\
+for(i=1.2. yO=[yl.y2.y3.res[iJJ; res4=embed(quat(x,yO)) [l,J;\
+if((R(x.yO)==imag(Pr))&&(!(res4==[O,O])). res4=eqcls(res4);\
+if (setsearch(S, res4)==O. S=setunion(S. Set([res4J));\
+hecke=concat(hecke, [quat(x,yO)J);\
+print(length(hecke)": "norm(Pr)-length(S)+1); \
+if(length(hecke)==norm(Pr)+l. return(hecke)))))))))))));
+===== PDF PAGE 102 =====
+94
+print(hecke);
+1. COMPUTING HILBERT MODULAR FORMS.
+===== PDF PAGE 103 =====
+CHAPTER 2
+Sorne nurnerical results on the Orla conjecture.
+Let f be a newform of weight 2 and level C on GL2 (ÂQ) with coef­
+ficients in Q. The construction of Eichler-Shimura associates to f an
+elliptic curve Er/Q whose complex points are given by
+Er(C) = ClAr,
+where Ar, the period lattice of f, is canonically isomorphic to Hl (Er, Z)
+(see Knapp [34, Chap. XI]). The elliptic curve Er is a quotient of the
+Jacobian variety ofthe modular curve Xo(c). The Taniyama-Shimura­
+Weil conjecture over Q, which is now a theorem thanks to the work of
+Wiles [57] and several people, can be stated as follows.
+TSW-conjecture: For any elliptic curve E over Q, there is a new­
+form f of weight 2 and level CE on GL2 (ÂQ) and an isogeny
+<p: Er -t E.
+(We refer to Diamond and lm [20, Theorem 13.0.5.] for several equiv­
+aIent statements.)
+Let F be a totally real number field of degree g > 1. In an at­
+tempt to generalize the Eichler-Shimura construction to Hilbert mod­
+ular forms over F, Oda has proposed a conjecture that circumvents the
+lack of a good substitute for the Jacobian variety in higher dimension.
+This proceeds as follows. Let c be an integral ideal in F and X 0 ( c) the
+modular variety of level c. By Deligne [16, 17], the middle dimensional
+95
+===== PDF PAGE 104 =====
+96 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+cohomology H9(Xo(c), Q) carries a mixed Hodge structure (see the text
+for the precise definitions). Let (Wk)kEZ be its weight filtration, and
+consider W9H9(Xo(c), Q). This has a homogeneous Hodge structure
+of weight 9 on which the Hecke operators act in a natural way. Let f
+be a newform of weight 2 and level c. We let Kr be the number field
+generated by the Fourier coefficients of f. Then we have the natural
+homomorphism
+where 'f is the (Hecke) Q-algebra generated by an the operators Tl' and
+SI" Put
+This is a rational homogeneous Hodge structure of weight 9 with a
+homomorphism
+Or : Kr y End(H9(M r, Q)).
+Orla conjecture: For each newform f of weight 2 and level c, there
+exists an abelian variety Ar of dimension [Kr: Q] defined over F, with
+good reduction outside c, and a homomorphism
+Or : Kr y End(A r) 0 Q
+such that there is an isomorphism of KrHodge structures
+® Hl (Af(C) , Q) -+ H9(Mr , Q).
+CTEGal(Fj(()l)
+When Fis a quadratic field, üda [40, Chap. II. sec.7] has proved that
+the Hodge structure H2(Mr, Q) is the tensor product of two rational
+Hodge structures of weight 1. However the field of definition of the
+corresponding abelian variety is unknown. In this section, we try to
+provide some numerical evidence for this conjecture by making use of
+===== PDF PAGE 105 =====
+1. A BRIEF REVIEW OF HODGE STRUCTURES. 97
+the computations that we have done in the first chapter. Namely, for
+F = Q(V5), we give two examples which show that the period moduli
+of üda agree to a certain precision with the period moduli of sorne
+specifie elliptic curves that are known to be defined over F = Q(V5).
+In order to do so, we need to recall the main results of üda on his own
+conjecture. This requires a brief review on Hodge structures.
+1. A brief review of Hodge structures.
+References: Deligne [16, 17].
+Let .s. = Rese/IRGm be the algebraic group obtained by restriction of
+scalars. We denote by w : Gm/IR -+ .s. the morphism which corresponds
+to the natural inclusion ~x <......+ ex, and by t : .s. -+ Gm/IR the inverse
+of the norm morphism. We have ta w(x) = x-2 •
+Let HIR be a finite dimension al real vector space, and H = He =
+HIR ® <C its complexification. We let E be a subset of Z x Z.
+DEFINITION 2.1. A real Hodge structure on HIR is a bigraduation
+H = E9HP,q,
+p,q
+such that Hq,p = HP,q.
+We say that the Hodge structure {HIR , HP,q}
+a) is of type E if HP,q = 0 for (p, q) tf. E;
+b) has weight n if HP,q = 0, for p + q =/: n.
+We caU hP,q = dimHP,q the Hodge numbers of {HIR , HP,q}.
+By making use of the theory of multiplicative groups, Definition 2.1 is
+equivalent to the following one.
+===== PDF PAGE 106 =====
+98 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+DEFINITION 2.2. Let Hn;e. be a finite dimensional real vector space. A
+real Hodge structure is a representation of real algebraic groups
+h : .s. -+ GL(Hn;e.).
+We say that h has weight n if h 0 w(x) = xn . We caU C = h(i) the
+Weil operator.
+Now, let Hz be a free Z-module of finite rank, and H = He =
+Hz ® te its complexification. For every pair of integers (p, q), pick a
+complexlinear subspaee HP,q c H.
+DEFINITION 2.3. We say that the data {Hz, HP,q} is a Hodge structure
+if {Hn;e. = Hz @ IR, HP,q} is a real Hodge structure. Similarly, a Q­
+rational Hodge structure consists of the data of a Q-vector space HQ
+together with a bigraduation HP,q, (p, q) E Z x Z of HQ ® C such that
+{HQ ® IR, HP,q} is a real Hodge structure.
+EXAMPLE 2.4. 1) The simplest example of Hodge structure, coming
+from algebraic geometry, is provided by the Tate Hodge structure Z(n)
+of type (-n, -n) given by
+Z(n)c = C, and Z(n)z = (27ritZ C c.
+2) Let X be a Kahler manifold. We let
+Hz = Hn(X, Z)/(torsion),
+and HP,q be the cohomology of type (p, q) in the Hodge decomposition
+of Hn(x, C). Then {Hz, HP,q} is a Hodge structure of weight n. (See
+[27, Chap.D, sec.7]).
+3) Let A be a complex abelian variety, and A(C) its complex points.
+Sinee A is projective, A(C) is a Kahler manifold; so the cohomology
+group Hz = HI(A, Z) carries a Hodge structure of weight 1. This is
+a polarized Hodge structure, and the assignment A H Hl (A, Z) is an
+equivalenee of categories (see Section 4 for more details).
+===== PDF PAGE 107 =====
+1. A BRIEF REVIEW OF HODGE STRUCTURES. 99
+From Definition 2.2, one gets a natural way to define the notion of
+morphisms and tensor products of Hodge structures. Indeed, a mor­
+phism of Hodge structures will correspond to the morphism of the un­
+derlying representations; likewise for tensor product. The category of
+Q-Hodge structures is abelian.
+DEFINITION 2.5. A polarization of a Hodge structure of weight n is
+a morphism of Hodge structures 'IjJ : Hz 0 Hz --t Z( -n) such that,
+on H'ft? = Hz 0 JR, the real bilinear form (x, y) H (21ri)n'IjJ(x,Gy) is
+symmetric positive definite. Note that 'IjJ is then symmetric or anti­
+symmetric according to the parity of the weight n.
+In terms of Definition 2.2, a polarization of a real Hodge structure H'ft? of
+weight n is a bilinear form 'IjJ on H'ft?, invariant by the compact subgroup
+ker(t) of s., such that the form (x, y) H 'IjJ(x,Gy) is symmetric positive
+definite. So, a polarization of a Hodge structure Hz of weight n is
+a polarization 'IjJ of the real Hodge structure H'ft? = Hz 0 JR which is
+integral valued on Hz.
+EXAMPLE 2.6. Let A be a complex abelian variety. The intersec­
+tion form gives a polarization of the homogeneous Hodge structure
+HI(A, Z). Let 'IjJ be polarization of HI(A, Z). It is a perfect pairing;
+therefore it induces a Z-linear injection of Hl (A, Z) into its Z-dual.
+As a result, we get a polarization of A.
+REMARK 2.7. In general, for any Noetherian subring A of JR, one de­
+fines an A-Hodge structure of weight n to be a finitely generated A­
+module HA such that H'ft? = HA 0A JR has a real Hodge structure of
+weight n. A polarization of an A-Hodge structure HA is a polarization
+of the underlying real Hodge structure which is A-valued on HA'
+===== PDF PAGE 108 =====
+100 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+Now, let G be a reductive group over Q, and t and w two Q­
+morphisms
+Gm ~ G ~ Gm
+with t 0 w(x) = x-2 and w central. Furthermore, assume we have a
+commutative diagram
+Il
+Gm/m; ~ Gm; ~ Gm/m;.
+Let p : G -+ GL(VtQJ) be a representation defined over Q. We say that
+pis homogeneous of weight nif pow(x) = xn ·1 v . Every representation
+is a SUffi of homogeneous representations.
+We can let G act on Q(n)tQJ by the rule 9 * x = t(g)n . x. This
+definition is made compatible with the commutative square above as ~
+acts on Q(n)m; in a similar way.
+DEFINITION 2.8. A polarization of p: G -+ GL(VtQJ) is aG-invariant
+form
+(27fit'l/J: VtQJ @ VtQJ -+ Q(n)
+such that (x, po h(y)) is symmetic positive definite on Vm;.
+Proposition 2.11 in Deligne [17] gives necessary and sufficient condi­
+tions for a representation to be polarizable. We see that, if VtQJ has
+a rational Hodge structure, any polarization of a representation VtQJ
+induces a polarization of this rational Hodge structure on VQ .
+DEFINITION 2.9. A mixed Hodge structure is a triple (Hz, W, F) which
+consists of:
+(i) A finitely generated Z-module Hz.
+(ii) A finite increasing filtration W n of HtQJ = Hz@zQ called the weight
+===== PDF PAGE 109 =====
+2. COHOMOLOGY OF HILBERT MODULAR SURFACES. 101
+filtration.
+(iii) A finite decreasing filtration FP of He = Hz 0 z C called the Hodge
+filtration. We require that the filtration induced on Gr: He by F pro­
+vides Gr: HrQ with a homogeneous Hodge structure of weight n.
+In [17], Deligne proved that the category of mixed Hodge structures
+is abelian and that the cohomology of any finite scheme over Chas a
+mixed Hodge structure and that this construction is functorial. The
+main example of a mixed Hodge structure we will be dealing with is
+the subject of the next section.
+2. Cohomology of Hilbert modular surfaces.
+Reference üda [40, Chap. 1.] and [41].
+We assume in this section that the modular surface Xo(c) is con­
+nected but this restriction couId be removed. Recall that we have
+intersection pairing
+which is non-degenerate. By making use of Deligne [18, sec. 8], üda
+computed the weight filtration of the Hodge structure of H2 (XO(c), Q):
+WkH2(X~(C), Q) = 0, for k ::; 1,
+W2H2(X~(C), Q) = W3H2(X~(C), Q) = j* H2(XO(c), Q),
+where j is the natural inclusion. We put
+===== PDF PAGE 110 =====
+102 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+One gets the Hodge filtration on W(Xo(c), ij) by using its description
+in terms of Hilbert modular forms. To this end, let Cl (resp. C2) be the
+involution on Xo(c) induced by the maps ((Zl' Z2) H (tZl' CZ2)) and
+((Zl' Z2) H (CZl' tZ2)), where C is a unit in OF such that C > 0 and
+t < O. Let f be in 52 (c). We can define a holomorphie 2-form on Xo(c),
+by putting
+This gives a linear map 52 (c) -+ W(Xo(c), C). We define
+Oda obtained the Hodge filtration ofW(Xo(c), ij).
+THEOREM 2.10. [40, Chap.I, sec.I] W(Xo(c), C) is the direct sum of
+(i) its (2, O)-component {Wf : f E 52 (c)}
+(ii) its (0, 2)-component {Wf: fE 52 (c)}
+(iii) its (1, I)-component {1]f + 1]~ : f, g E 52 (c)} EB W,
+where W is the 2-dimensional space span by the forms
+Wl = -~ dXlÂ dYl and W2 = _~ dX2Â dY2
+271" Yî 271" y~
+We are only interested III the orthogonal complement of W which
+arises from cusp forms. We call it the cuspidal cohomology and de­
+note it by H;p(Xo(c), Q). We denote by H;p(Xo(c), Q)new the part of
+JHI;p (Xo(c), ij) that is described by newforms and call it the new part of
+JHI;p(Xo(c),ij). JHI;p(Xo(c),ij) and JHI;p(Xo(c),ij)new are both equipped
+with sorne homogeneous Hodge structures polarized by the restriction
+of the bilinear form coming from Poincaré duality.
+===== PDF PAGE 111 =====
+3. THE HODGE STRUCTURE ATTACHED A HILBERT NEWFORM. 103
+REMARK 2.11. Our definition of the new part of the cuspidal coho­
+mology is equivalent to the one in Oda [41], by Proposition 3.3 in [41].
+3. The Hodge structure attached a Hilbert newform.
+In the previous section, we obtained a homogeneous Hodge struc­
+ture together with a bilinear pairing
+coming from Poincaré duality. We will now define an action of the
+Hecke algebra on H;p (Xr , Q)new. This action is compatible with the
+polarization 'lJ. As a consequence, we will get that H;p (Xr, Q)new
+decomposes as a direct sum of polarized Hodge structures.
+The action of the Hecke algebra is given as usual via algebraic
+correspondences. Let p be a prime ideal in F such that (p, c) = 1.
+Then, as in the one dimensional case, the diagram
+Xb(pc)
+/~
+Xb(c) Xb(c)
+with arrows corresponding to natural projections, gives rise to a corre­
+spondence on Xb(c) x Xb(c) which extends to a correspondence C on
+Xo(c) x Xo(c). Let Pl, P2 : C -+ Xo(c) he the canonical projections.
+They are finite fiat morphisms, étale outside a finite set of points.
+Therefore, we have an action of Tp on H2 (Xb(c), Q) given by
+===== PDF PAGE 112 =====
+104 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+and an action on HbR(Xb(c), Ql) given by
+where pi and (P2)* are the usual pull back and trace maps respectively.
+To avoid problems with quotient singularities, we take a torsion free
+normal subgroup r' of r and put
+This definition does not depend on r' as one can check. To ensure
+self-adjointness, we restrict to primes p not dividing the level c. Let
+T be the image of the Hecke Q-algebra in End(W(Xo(c), Ql)). By
+symmetry of Hecke correspondences, we have
+THEOREM 2.12. [40, Theorem 1.12] Tacts on the homogenous polar­
+ized Hodge structure W(Xo(c), Ql) of weight 2 as endomorphisms of
+Hodge structures. This action preserves JHI;p(Xo(c),Ql) and
+H;p(Xo(c), Ql)new.
+As a consequence of the Multiplicity one Theorem (see Miyake [39])
+and the fact that 52(c)new has a basis of eigenforms we have the fol­
+lowing lemma.
+LEMMA 2.13. [41, Proposition 3.3.] T is a semi-simple Ql-algebra.
+8ince T is a semi-simple Q-algebra, we can write it as a direct sum
+of number fields
+n
+===== PDF PAGE 113 =====
+3. THE HODGE STRUCTURE ATTACHED A HILBERT NEWFORM. 105
+Note that since each TET is self-adjoint with respect ta the Peterson
+inner product, it has real eigenvalues, therefore each Ki is totally real.
+Let
+IHI;p(Xo(c),qnew = H2,o EB HI,1 EB HO,2
+be the Hodge decomposition of H;p(Xo(c), Q)new. By Theorems 2.10
+and 2.12, each summand has the same isotypic components as S2(C)new
+as a 1I'-module. And, since S2(C)new admits a basis of eigenforms,
+putting [Ki: Q] = di, we get L::di = dimS2(C)new. We chaose a set of
+primitive idempotents {el, ... , en} such that Ki = eiT = Tei = eiTei'
+Then,
+n
+IHI;p(Xo(c),Qtew = Eg eiIHI;p(Xo(c), Qtew .
+i=l
+Since the action of Ton H;p(Xo(c), Q)new preserves Hodge type, each
+eiH;p(Xo(c), Q)new is a sub-Hodge structure. Moreover, by symmetry
+of Hecke correspondences, we see that the above decomposition is in
+fact a direct sum of polarized Hodge structures, the polarization of
+eiH;p(Xo(c), Q)new being obtained by restriction of the form W. We
+denote by
+(Ji : Ki ~ End(eiH;p(Xo(c), Qtew )
+the action of Ki on eiH;p(Xo(c), Q)new. Take an idempotent ei E
+{el, ... , en} and let f E eiS2(C)newbe a normalized eigenform. Then f
+defines an embedding a : Ki ~ te by t(f) = a(t)f. Since Ki ®IQ te =
+EBa <C with the summands corresponding to the embeddings a : Ki ~
+<C, we have
+a
+where the fa are the normalized eigenforms with t(fa) = a(t)f a. We
+call the fa the companions of f. Now, we choose a set E = {fI, ... , fn}
+of normalized eigenforms such that fi E eiS2(c)new. Each fi then
+===== PDF PAGE 114 =====
+106 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+corresponds to a unique field Ki. 80, for a normalized eigenform
+f E ei52 (c)new, we can put ei = er, Ki = Kr, \lii = \lir, Oi = Or
+and define
+This symbol Mr though very suggestive as it seems to refer to a certain
+conjectural motive associated to f, of which we only study the Hodge
+realization, will be used only in combination with H2(Mr , Q).
+THEOREM 2.14. [41, Lemma 3.5.] Corresponding to T = ffirEE Kr,
+there is a direct sum decomposition
+H;p(Xo(c), Qtew = EB H 2 (Mr, Q)
+r
+of polarized Hodge structures. Moreover, if Kr aets on H2 (Mr, Q) vw
+Or, then
+\lir(Or(t)x, y) = \lir(x, Or(t)y)
+with \lir the polarization of H2 (Mr, Q).
+The involutions Cl and C2 defined on Xo(c) and Yo(c) induce an
+action of 7l/271 x 7l/271 on ITn;p(Xo(c),Q) which commutes with the
+action of 1L. Therefore, we can split H2 (Mr, Q) as
+H 2 (Mr , Q) = EB H2 (Mr , Q)ss"
+s,s'E{+,-}
+where ci (resp. c2) acts on H 2 (Mf , Q) as s . id (resp. s'· id).
+PROPOSITION 2.15. [24, Proposition 6.3] For every newform f E 52 (c)
+we have rank KrH2(Mr, Q)ss' = 1. Furthermore, \lir = TrKr/Q'l/Jr with
+===== PDF PAGE 115 =====
+3. THE HODGE STRUCTURE ATTACHED A HILBERT NEWFORM. 107
+which, with respect to a suitable basis es s' E H 2 (Mr, Q)ss" is of the
+form
+000 1
+o 0 1 0
+o 100
+1 000
+We cal1 such a basis (ess') a canonical basis.
+Define
+{ 'Y E Im(H2(X~(c), Q) -+ H2(Zo(c), Q)) :
+1w = 0, Vw E W } .
+By duality, we'have a direct sum
+~P(Xo(c), Qtew = E9 H2(Mr, Q),
+r
+and each H2 (Mr, Q) splits into four eigenspaces H2 (Mr, Q)ss"
+DEFINITION 2.16. Let (ess') be a canonical basis of H 2 (Mr, Q), ("(ss')
+a dual basis in H2 (Mr, Q) and g a companion of f. The periods of g
+are given by
+nss' (g) = 1Wg.
+Iss'
+The fol1owing period relation which is due to üda will be needed
+later.
+THEOREM 2.17 (Hodge-Riemann bilinear relation). [40, Theorem 4.
+4.]:
+n++(g)n __ (g) = -n+_(g)n_+(g) = ~ r wg 1\ Wg.
+4 JXh(c)
+===== PDF PAGE 116 =====
+108 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+4. Hilbert-Blumenthal abelian varieties.
+We start with a totally real number field K of degree d, and let OK
+be its ring of integers. With this notation, we have in mind the field
+Kr generated by the eigenvalues a newform f.
+DEFINITION 2.18. A complex Hilbert-Blumenthal abelian variety of
+dimension d is a pair (A, 0), where:
+(i) A is a complex abelian variety,
+(ii) 0 : OK y End(A) defines an action of OK on A.
+The Lie algebra of any complex Hilbert-Blumenthal abelian variety
+satisfies the following lemma.
+LEMMA 2.19, Let A be a complex Hilbert-Blumenthal abelian variety
+of dimension d. Then,
+Lie(A/C) is locally free OK ®z C-module of rank 1.
+Let A be a complex abelian variety. From the general theory of
+complex abelian varieties, we know that Lie(A/C) is the universal cov­
+ering space of A(C) so that
+Lie(A/C)/A ~ A(C),
+where A is a lattice in Lie(A/C) canonically isomorphic to HI(A, lE).
+Moreover Hl (A, lE) admits a Riemann form which, by Poincaré duality,
+gives a polarization of the Hodge structure of type {(l, 0), (0, l)} on
+HI(A, lE). We have the following weIl known theorem.
+THEOREM 2.20 (Riemann). The map A H HI(A, lE) is an equivalence
+between the category of abelian varieties and the one of polarized Hodge
+structures of type {(a, 1), (1, on.
+===== PDF PAGE 117 =====
+4. HILBERT-BLUMENTHAL ABELIAN VARIETIES. 109
+Now, let (A, 0) be a Hilbert-Blumenthal abelian variety. We let
+'l/J be the polarization of A given by the Riemann form which defines
+the algebraic structure on A. Then, the Rosati involution defined by
+'l/J acts triviaHy on OK' So letting
+be the bilinear pairing induced from 'l/J, we get that
+To avoid certain technical problems, we assume that the pairing 'l/J* is
+obtained as the composition of the trace map with sorne OK-valued
+pairing.
+THEOREM 2.21. The map (A, 0) H (Hl (A, Z), 0*) is an equivalence
+between the category of Hilbert-Blumenthal abelian varities with RM by
+OK and the one of polarized Hodge structures of type {(O, 1), (1, On
+with OK -action.
+We would like to determine the periods of the complex Hilbert­
+Blumenthal abelian variety (A, 0). To this end, let w be a nowhere
+vanishing invariant differential form on A. Then, under the action of
+OK, we have the decomposition
+where a runs over aH the complex embeddings of K. As Cvector
+spaces, we know that Lie(AjC) and wAle have dimension d, and they
+are duals of each other. Therefore, the differential form w defines an
+OK ®z C isomorphism:
+w : Lie(AjC) ~ K ® c.
+===== PDF PAGE 118 =====
+110 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+The period lattice L of A is then given by the image of Hl (A, Z)
+under that isomorphism. More explicitly, let WI, W2 be an OK-basis
+of HI(A, Z) such that '/jJ*(WI, W2) = 1, and "(1, "(2 its dual basis in
+Hl (A, Z). For each embedding a : K '---+ C, and i = 1, 2, put
+Then, by Riemann period relations, the point T = (Tu)u E (C - IR)d,
+given by
+belongs to 1id . It determines the lattice L. The point T E 1id we just
+constructed does not depend on the choice of w, however, it depends
+on the one of WI and W2. Indeed, let wL w~ be another OK-basis of
+Hl (A, Z) such that '/jJ* (w~, w~) = 1. Then there exists "( E SL2 ( OK)
+such that
+The resulting point which corresponds to (w~, w~) is then "(. T. There­
+fore, SL2 ( OK )\1i d parametrizes the period moduli of an Hilbert-Blumen­
+thal abelian varieties with OK-action. In fact, the compactification
+of SL2 (OK)\1i d is the analytic space of the moduli stack MK which
+parametrizes an semiabelian Hilbert-Blumenthal varieties with real mul­
+tiplication by OK' If we start instead with the cohomology Hl (A, Q),
+the abelian variety we get is then defined only up to Q-isogeny. 50 the
+above discussion then needs sorne modifications (see Oda [40, Chap.
+II.]) .
+REMARK 2.22. Note that the variety M K is pretty much distinct from
+the Hilbert modular variety Xo(c). Indeed, each point on MK parame­
+trizes an isomorphism class of Hilbert-Blumenthal abelian varieties
+===== PDF PAGE 119 =====
+5. THE ABELIAN VARIETY ASSOCIATED TO A HILBERT NEWFORM. 111
+with multiplication by OK' So when K = Kr, the field generated
+by the Fourier coefficients of a newform f, the piece H9(Mr, Q) will
+correspond to sorne point on MKf , but each point on MKf will not
+necessarily come from such a piece on H9(XO(C), Q).
+5. The abelian variety associated to a Hilbert newform.
+References Deligne [17] and Oda [40, Chap. II. sec. 1.].
+Let A be a ring, E a free A-module and Q a quadratic form on E.
+We consider the subfunctor
+F : A - Alg --t Set
+of B Ho HOmA-mod(E, B), where F(B) consists of aIl the A-linear
+maps u : E --t B such that u(x? = Q(x), for aIl x E E. We recall
+that the functor F is represented by the Clifford algebra we denote by
+C(E, Q) or C(E). We will denote by C+(E, Q) or C+(E) the even
+part of C(E, Q). For any bilinear symmetric form B on V, we will
+denote by C(E, B) or C(E) the Clifford algebra of the corresponding
+quadratic form.
+Now, assume that A = k is a field of characteristic 0 and that Q
+is non-degenerate. Then E injects into C(E). Let CSpin(E) be the
+Clifford group. It is the algebraic group of aIl invertible elements 9 in
+C+(E) such that gEg- 1 = E. This gives a morphism <p of CSpin(E)
+onto SO(E) by letting <p(g) acts on E by <p(g).x = gxg- l . The kernel
+of <p is Gm , so one has an exact squence
+o ----+ Gm ~ CSpin(E) ~ SO(E) ----+ o.
+===== PDF PAGE 120 =====
+112 2. 80ME NUMERICAL RE8ULT8 ON THE ODA CONJECTURE.
+Let C+(E) x be the algebraic group of aU invertible elements in C+ (E).
+By definition, we have an inclusion
+a: CSpin(E) y C+(E)x.
+This induces a representation of the algebraic group CSpin(E) on
+C+(E) by:
+9 *x = a(g) . x.
+We denote this representation by C+(E)s. We let (C+(E))ad be the
+representation of CSpin(E) on C+(E) given by
+Ad(g) *x = a(g) . x· a(g)-l.
+The action of CSpin(E) on C+(E)s is compatible with the right C+(E)­
+module structure of C+(E); and since Endc+(E)(C+(E)) consists of
+multiplication to the left by elements of C+(E), one easily sees that the
+representation obtained on Endc+(E)(C+(E)) from C+(E)s is nothing
+else but C+(E)ad; that is, we have an isomorphism of representations:
+Also, from the structure theorem of Clifford algebras, we have an iso­
+morphism of representations
+Now, let Hz be a free Z-module of rank n + 2 endowed with a
+bilinear form of non-zero discriminant
+B : Hz ® Hz -+ Z.
+===== PDF PAGE 121 =====
+5. THE ABELIAN VARIETY ASSOCIATED TO A HILBERT NEWFORM. 113
+We assume that B has signature (n, 2). Let HrQ be a rational Hodge
+structure of weight 0 polarized by Band having Hodge numbers:
+h-1,1 = h1,-1 = 1 and hO,o = n.,
+Then, HrQ is given by a morphism of IR-groups h : .s. -+ SO(HlR ),
+which lifts uniquely to a morphism h : .s. -+ CSpin(H lR) fitting into the
+commutative diagram
+tr< W----,­
+IlJTm/lR ---r
+Il Il
+Gm / lR ~ CSpin(H lR) ~ Gm / lR •
+By Proposition 2.11 in Deligne [17], every representation of CSpin(HrQ)
+is polarizable with respect to h. As a consequence, one gets the follow­
+ing.
+PROPOSITION 2.23. ([17, Deligne]) The Hodge structure of C+(HrQ)ad
+defined by h has type
+{(-l, 1), (0, 0), (1, -ln.
+PROPOSITION 2.24. [17, Proposition 4. 5] The Hodge structure of
+C+(HrQ)s defined by h has type {(O, 1), (1, On. The Hodge structure
+C+(HrQ)s together with the lattice C+(Hz)s is a polarized Hodge struc­
+ture; therefore it defines an abelian variety.
+REMARK 2.25. If we start with a rational Hodge structure HrQ, the re­
+sulting abelian variety is given up to Q-isogeny as this involves choosing
+a lattice Hz in HrQ on which the restriction of B is integral valued.
+Now, let us assume instead that we are given a Hodge structure HK
+of weight 0 and rank n + 2 over the totally real number field K with a
+non-degenerate bilinear form
+===== PDF PAGE 122 =====
+114 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+Moreover, we assume that K acts on HK as endomorphisms of Hodge
+structures. Then, we have
+g
+HK ®iQ lR = EB HK ®K,Ti lR,
+i=l
+and
+g
+HK ®iQ C = EB HK ®K,Ti C.
+i=l
+We assume that, for each i = 1, ... , g, the extension of scalars 'ljJ ®Ti lR
+of'ljJ has signature (n, 2) and defines a polarization of HK ®K,Ti lR, and
+that the Hodge number of H K ®K, Ti lR are
+hl, -1 = h-1,1 = 1 and hO,o = n.
+By Definition 2.2, this datum defines a morphism of real algebraic
+groups
+of weight O. By making use of the functoriality of ResK/iQ, one easily
+sees that h lifts to a unique morphism
+which fits in the commutative diagram
+Gm /JR
+w
+S
+t
+Gm /JR~ ~
+Il lii Il
+Gm /JR
+w t
+Gm / JR ,~ GJR ~
+where G is the Q-algebraic group ResK/iQl(CSpin(HK )) and t 0 w(x) =
+x-2 • The representations C+(HK)s and C+(HK)ad of CSpin(H K) re­
+strict functorially to Q-rational representations of the Q-group G on
+the Q-spaces ResK/iQ(C+(HK)s)and ResK/iQ(C+(HK)ad)respectively.
+Now, Proposition 4. 5 in [17] can be restated as follows.
+===== PDF PAGE 123 =====
+5. THE ABELIAN VARIETY ASSOCIATEDTO A HILBERT NEWFORM. 115
+PROPOSITION 2.26. [17, Proposition 4. 5] The Hodge structure of
+ResK/<Q(C+ (HK)s) defined by iL is a polarized Hodge structure of type
+{(O, 1), (1, On.
+By choosing an OK-lattice HOK of HK to which the restiction of'ljJ is
+OK-valued, we get a lattice ResOK/Z(C+(HoK)S)in ResK/<Q(C+(HK)s)'
+This then defines a polarized abelian variety. Any other choice of lattice
+gives an F-isogenous variety.
+Applying this construction to the Hodge structure H2 (Mr, Q)(1),
+we get a Hilbert-Blumenthal abelian variety Ar. We caU it the Hilbert­
+Blumenthal abelian variety attached to f. By making use of the fact
+that wr is a kernel form, one can be a bit more specific about Ar.
+THEOREM 2.27. [40, sec. 5.5] The Kr-rational Hodge structure
+H2(Mr, Q) is the tensor product of two Kr-rational Hodge structures
+of weight 1:
+H2(Mr, Q) = W(1) ®Kr W(2).
+Therefore the variety Ar is of the form Ar = A} x A} x Ai x Ai.
+The period moduli of those varieties are given by the foUowing result
+of üda.
+THEOREM 2.28. [40, Theorem 6.6] Let f E S2(C) be a normalized eigen­
+form, and fiT the companions of f, where (J runs over aU the real em­
+beddings of Kr. Choose a canonical basis of H2(Mr, Q) and form the
+periods
+Ossl(f
+iT
+).
+Then, the period moduli of the two Hilbert-Blumenthal abelian varieties
+Ai and Ai are given by the points Tl, T2 E (C - lR)d given by
+===== PDF PAGE 124 =====
+116 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+6. Computations.
+In this section, we explain, in a specifie example, how one can com­
+pute the period modulus of the Hilbert-Blumenthal abelian variety as­
+sociated to a newform f E S2(C). One way of doing this is to exploit the
+relation given by Oda [40] between such periods and special values of
+twists of L-functions. Those methods can then be applied easily when
+Pg(Xo(c))= 1.
+In the rest of this section, we let F = Q(V5) and w = (1 + J6)/2 .
+. Let n = (II) be an integral ideal and V c O~+ a subgroup of fini~e
+index such that V c 1 +n. For any a E OF, we define
+Da / v = {z E 1{2 : Re(z) = a/II}.
+We have a map i : V\D a/v -7 r\1{2, where V acts on Da/v by Z H
+éZ+ (l-é)a/lI. The quotient V\D a/v is topologically a cylinder SI x lR.
+and its image in Xr can be compactified by adding the orbits of a/II
+and 00 in Pl(F). This gives a 2-cyc1e "'la/v,V in Xr. (Replacing V by
+a smaller subgroup V' multiplies this cycle by [V : V']). The following
+lemma is from Oda [40].
+LEMMA 2.29. [40, Lemma 15.2] If x: (OFln) x -7 ex is a non-trivial
+chameter, then
+"'Ix,v = L X(a)"'(a/v,v E Im(H2(X~, Q) -7 H 2(Xr , Q)).
+aEOF/n
+By projection, "'Ix,v defines a class in H?(X r , Q)).
+===== PDF PAGE 125 =====
+6. COMPUTATIONS. 117
+LEMMA 2.30. [40, Lemma 15.4] Let X: (OF/nr -4 ex he a primitive
+character. Then, we have
+{
+H?(Xr, Q.))++ œ H;P(Xr , Q))-- ifx( -1) = 1,
+"Ix, v E H;P(Xr , Q))+_ œ H;P(Xr , Q))_+ ifx( -1) = -1.
+Moreover, "Ix,v E H?(X r , Q))ss' if x(w) = sand X(w) = s'.
+üda had shown that integrating along the cycle "Ix,v, one gets spe­
+cial values of twisted L-functions.
+THEOREM 2.31. [40, Theorem 16.3] Let f E 8 2 (c) he a normalized
+eigenform. Then
+1 1 1 1L f 1 - ---- w(, ,X) - [O~+ : V] (27f)2G(;K) 'l'x, v f,
+where V is of sufficiently large index and the orientation of "Ix, v zs
+appropriately chosen, and G (X) the Gauss sum
+G(x) = L x(a) exp(27fTr(wa/vVD)).
+aEOF/(V)
+This theorem gives us a way to compute the period moduli of the
+abelian varieties Ai and Ai. Let us fix a normalized eigenform f E 82 ( c)
+and a primitive character X of conductor n = (v). We let WA be the
+Atkin-Lehner involution given by
+where A is a totally positive generator of c. Let
+===== PDF PAGE 126 =====
+118 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+be the q-expansion off. Then fx = f®X E 52 (cn2 ) and its q-expansion
+is given by
+LEMMA 2.32. Let f E 52 (,) be an eigenform.
+If WAf = -f, then L(f) = 0; otherwise
+L(f, 1) =
+PROOF. By definition,
+with 70 arbitrarly chosen on the imaginary axis. But choosing 70
+i/wVA., and making the change of variable Z H WA(Z), we get
+L(f, 1)
+l
+W2TO
+toofIIWA(Zl, z2)dz1dz2
+TO Jo
+éAL(f, 1).
+This gives the first part of the lemma. To get the second one, keeping
+the same choice of 70 as before, we choose C on the imaginary axis and
+split the integral as
+===== PDF PAGE 127 =====
+6. COMPUTATIONS. 119
+Again choosing C = i /VA and making the change of variable z H
+WA (z) in the first integral of the sum, we get that
+We then conc1ude the proof of the lemma by an integration term by
+term. 0
+REMARK 2.33. Let f E S2(C) be an eigenform with WAf = cAf, and
+X a quadratic character of conductor n = (li) with (c, n) = 1. When
+X is a quadratic character, fx E S2(cn2) and WAII2fx = cAX(-A)fx'
+Therefore, by the above Lemma, when cAX(-A) = 1,
+L(f, 1, X) =
+By using the fact that every totally positive element is of the form
+W2k, k E Z, this series can be rearranged as
+L(f, 1, X) =
+D
+[
+21T (PW2k+l J.LW2k )]exp -- _ - -- .
+Vi5 DVA lIVA
+When X is not a quadratic character, we need to resort to a different
+approach to express L(f, 1, X) as a series. This involves the calculation
+of the partial L-functions that appear in Oda's Theorem. As we will
+see shortly, this has the inconvenient of bringing sorne extra factor in
+the denominator of the exponential sum with the bad effect of slowing
+===== PDF PAGE 128 =====
+120 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+down the convergence of the series. To start, we recal1 that
+fx = G(X)-l L x(a)fll'Ya,1I
+aEOF/n
+so that
+L(f, 1, X) = G(xt
+1
+L x(a)L(fll'Ya, Il' 1).
+aEOF/n
+The partial L-functions are then computed using the fol1owing proce­
+dure.
+LEMMA 2.34. Let f be a normalized eigenform, with fllWA= cAf.
+We let P = {L(fba,lI' 1), a E (Op/n)X} be the set of all partial L­
+functions that contribute to L(f, 1, X), and WA : (Op/n)X --+ (Op/n)X
+the isomorphism a H -1/Aa.
+Then the map L(fba,lI' 1) H L(fbwA(a),II' 1) is a permutation of P.
+Moreover, L(fll'Ya,lI'1) = cA L(fbwA(a),II' 1) for aU a, and
+[exp (-2niTr (:~)) + cA exp (-2niTr (~:~a)))] x
+exp [-~-D (-:~--A ----'co~-~-A)] ,
+where co E 0; is chosen such that co > 0 and c~ - 1 E (v).
+PROOF. Let f3 E Op be such that Aaf3 = -1 mod (v). Then,
+. (va)there eX1sts 'Y1 = E ro(c) such that 'Y1(-a/v) = O. Take
+Af3 d
+===== PDF PAGE 129 =====
+6. COMPUTATIONS. 121
+'10 ~ 'I;;,~ (,,; ~) '1o,v in r 0(,) and put '1 = 'Ino. Then, hy definition,
+where we choose TO E 1i with Re(To) = -a/v. By making the substi­
+tution Z H 1'11WA(Z),we get that
+j
+-l/k Y1 (TO) jiOO
+L(fbo,v, 1) = _ fIIWA(Zl, z2)dz1dz2.
+-l/A,(To) -f3/v
+Taking TO = -a/v + i/cov-/A.,this gives
+where T1 = - f3/v + ilEoV.,fA and io = 'Ii, ~ ("; ~) 'Ifi, v. This jus!
+says that
+L(fbo,v, 1) cAL(fbf3,v, 1)
+cAL(fbwA(O),V' 1),
+and the first part of the lemma then follows. To the second one, we
+take C E 1i with Re(C) = -fi/D, and split the integral as
+===== PDF PAGE 130 =====
+122 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+where the second equality is obtained by making the change of variable
+Z H 1'l l(z) in the first integral and using the ro(c)-invariancy off. The
+substitution Z H WA(z) then gives:
+Again, choosing TO = -0'.11/+ i/col/VAand C = -alv + ilvVA, we
+obtain that
+with Im(To) = Im(Tl) = licol/VA,Im(')'o(To))= Im(,),b(Tl)) = coll/VA
+and Im(C) = Im(-l/A;Yl(C)) = l/vVA. Wethencompletethelemma
+by integrating term by term. 0
+By making use of the identity
+X(J1)G(X) = L x(a) exp (21TiTr (ffi))
+ŒEOF/n
+and the fact that X(- Aaj3) = 1, we see that
+L x(a) [exp (-21TiTr (:0J))
+ŒEOF/(V)
++ SA exp ( -2niTr (J1:~a)) ) ]
+= X(J1)G(X) + cAX(-A)X(J1)G(X)·
+Thus reversing the order of the summation in L(f, 1, X), we get the
+following proposition.
+===== PDF PAGE 131 =====
+6. COMPUTATIONS. 123
+PROPOSITION 2.35. Let f E 82 (c) be an eigenform with WAf = éAf,
+and X a character of conductor n = (v) with (c, n) = 1. Then,
+G(X) _L(f, 1, X) = S(f, 1, X) + éAX(-A) GCX)S(f, 1, X),
+where
+D ~ c((/l))
+S(f, 1, X) = - (27r)2 L.J N(/l) X(/l) x
+/LEVi
+[1-exp (- éO~~(é~ -1))]exp [~ (D~ -éO~~)] .
+REMARK 2.36. Again making use of the fact that every totally positive
+element is of the form W2k, k E Z, we get
+REMARK 2.37. The rate of convergence of those two series is con­
+trolled by the exponential sumo So to improve the convergence of our
+algorithm we must choose the character X with conductor as small as
+possible. This turns out to be very delicate as a satisfactory error term
+requires to compute aIl Hecke operators for primes p such that the ratio
+N(p)/ DN (cn2 ) is large enough.
+EXAMPLE 2.38. For c = 31A = (5+2w), we take nI = (3) and n2 = (4).
+Then (OF/nl)X = lF~ = (w) and (OF/n2)X = (-1, w). We let Xl be
+the unique quadratic character of conductor nI and X2 the quadratic
+character given by
+X2(W) = -1 = X2(-1).
+Then 'YXI,VI E H2(XO(C), «Jl)-- with VI = (W8) and
+'YX2,V2 E H2 (XO(c), Q)-+ with V2 = (w6 ). We complete 'YXI,v1 and
+===== PDF PAGE 132 =====
+124 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+'YX2, V2 ta get a canonical basis. Then, 0++ and 0+_ are completely
+determined by the Riemann-Hodge relation. We get
+0 __ = -67.464569223618835646128485047426897
+and
+0_+ = -128.75794400309976871557728718976371i.
+This gives
+T' = -0__ /0_+ = 0.52396432504385645846658571918312i
+The curve E /Q(V5) : y2 + xy + wy = x3 - (1 + w)x 2 has conductor
+31A = (5 + 2w). The PARI procedure on elliptic curves yields the
+following periods for this curve:
+Wl = 3.0521731533572582695976003439575002
+and
+W2 = 2.39884476932372222732017398860862i.
+We get
+T = W2 = 0.78594648756578468769989532640147425i.
+Wl
+The ratio
+~ = 1.50000000000000000000003196
+T
+is close to 3/2 with 21 decimals accuracy. (Note that this is consistent
+with the fact that E has sorne 2-torsion).
+EXAMPLE 2.39. For c = 41A = (6 + w), we take n = (4). Then,
+(Op/n)X = (-1, w). We let Xl the quadratic character given by
+and X2 the quadratic character given by
+X2(w)=-1 and X2(-I)=1.
+===== PDF PAGE 133 =====
+6. COMPUTATIONS. 125
+Then 'YXI,v E H2 (XO(c), Q)-+ and 'YX2'v E H2 (XO(c), «JD-- with V =
+(w6). We complete 'YXl,v and 'YX2,v to get a canonical basis. We get
+0 __ = -54.40018580695956431139383963207
+and
+0_+ = -160.12204086937231354613169017024i.
+This gives
+T' = -0__ /0_+ = 0.3397420212207966955319258264730i.
+The curve E /Q( V5) : y2 + wy = x 3 - wx2 has conductor
+41A = (6 +w). Again, the PARI procedure yields the real and imagi­
+nary periods
+Wl = 7.227157478384688293199095999068
+and
+W2 = 2.455369089387410305504378228262i.
+This gives
+T = W2 = 0.33974202122079669553215993921i.
+Wl
+The ratio
+~ = 1.000000000000000000000689
+T
+is close to 1 with 22 decimals accuracy.
+===== PDF PAGE 134 =====
+126 2. SOME NUMERICAL RESULTS ON THE ODA CONJECTURE.
+7. Program Listing
+We use this program to compute the Oda periods.
+\\THIS ROUTINE COMPUTE THE ODA PERIODS.
+\\Initializing parameters.
+w=quadgen(5);
+field=nfinit(z~2-z-1);
+fieldembed(x)=Mod(real(x)+imag(x)*z, z~2-z-1);
+level=6+wj
+read(uniformizersl)j
+read(41Acoeffs2_10979);
+\\This function returns the primes in $O_K$ lying above\\
+\\any prime $p$ in $\Z$.
+gen(pr, res)=res=O;\
+if(kronecker(pr,5)==-1,res=pr,NO=floor(sqrt(pr-l))j\
+a=NOjresl=r~2-a*r+pr-a-2j\
+while(polisirreducible(resl),a=a-ljresl=r-2-a*r+pr-a~2)j\
+res=floor(real(polroots(resl)))-;\
+if(res[1]==res[2], res=a+res[l]*w, res=[a,a]+w*res))j res;
+\\Creating the group of unit in $O_K/I$ for some ideal $1$. We are only
+\\interested in the reduction of the torsion free part. We call $nu$ a
+\\generator of $1$.
+nu=3j
+nul=[]; res=idealfactor(field, fieldembed(nu))j\
+for(j=l, matsize(res) [1] , resO=nfmodprinit(field, res[j,] [1]);\
+===== PDF PAGE 135 =====
+7. PROGRAM LISTING
+nul=concat(nul, [resO]»; nul;
+127
+nuO=vector(length(nul), il, O)j for(j=l, 1ength(nul),\
+res=idea1norm(fie1d, nul[j]);\
+if(issquare(res)==l, nuO[j]=sqrtint(res), nuO[j]=res»; nuO;
+nu2=3j
+nu3=4;
+G=vector(3)j\
+G[l]=lj for(j=l, 1ength(nuO), if(kronecker(nuO[j],5)==-1,\
+G[1]=G[1]*(nuO[j]~2-1), G[l]=G[l]*(nuO[j]-l»)j G[l];\
+G[2] =[] ;\
+for(j=l, 1ength(nuO), if (kronecker(nuO[j] ,5)==-1, res=nuO[j]~2-1,\
+res=nuO[j]-l)j G[2]=concat(G[2], res»j G[2];\
+G[3] =[] j \
+for(j=l, 1ength(G[2]), s=divisors(G[2] [j])j\
+if (kronecker(nuO[j] ,5)==-1, i=O; k=l; n=l;\
+res=Mod(i, nuO[j])+Mod(k, nuO[j])*w;\
+unti1(n==length(s), n=lj k=k+lj if (k>=nuO[j] , k=l; i=i+l)j\
+res=Mod(i,nuO[j])+Mod(k, nuO[j])*w;\
+whi1e«!(res~s[n]==Mod(1, nuO[j]»)&&n<length(s), n=n+l»;\
+res=lift(res)j G[3]=concat(G[3], res),\
+1=1; unti1(n==length(s), n=l; 1=1+1; res=Mod(l, nuO[j]);\
+whi1e«! (res~s[n]==Mod(l, nuO[j]»)&&n<length(s), n=n+l»;\
+res=lift(res)j G[3] =concat (G[3] , res»)j print(G);
+GO=vector(3);\
+GO[l]=G[l]j GO[2]=G[2]; GO[3]=[]; for(j=l, 1ength(G[2]),\
+if (! (imag(G [3] [j])==O), res=Mod(rea1 (G [3] [j]), nuO [j] )+Mod(imag(G[3] [j]) , \
+nuO[j])*w, res=Mod(G[3] [j], nuO[j]» j\
+GO [3] =concat (GO [3] , res»j print(GO)j
+\\In the cyc1ic group of order $G[2] [j]$, this function returns the
+\\order of any e1ement $g$.
+ord(g, j, s)=s=lj divs=divisors(G[2] [j])j k=l;\
+===== PDF PAGE 136 =====
+128 2. 80ME NUMERICAL RE8ULT8 ON THE ODA CONJECTURE.
+gO=nfeltreducemodpr(field, fieldembed(g), nu1[j]);\
+gO=gO[1]+gO[2]*w;\
+while«!(gOAdivs[k]==Mod(l, nuO[j])))&&k<length(divs), k=k+1);\
+s=divs[k]; s;
+\\Writing any element of the local factor at the jAth primes as \\
+\\a power of the cyclic generator $G[3] [j]$.
+decomp(g, j, resO)=resO=l; res1=G[2] [j]/ord(g,j); i=O;\
+gO=nfeltreducemodpr(field, fieldembed(g), nu1[j]); gO=gO[1]+gO[2]*w;\
+while(!(GO[3] [j]Ai==gO), i=i+1); resO=i; resO;
+\\ This function returns the quadratic residue character modulo $\nu$.
+\\We first define the local residue character at each prime. The global
+\\character is just the product of those one.
+quadO(g, j, res)=res=l; res1=(G[2] [j]/ord(g,j))%2; res=(-1)A res 1; res;
+quad(g, resO)=resO=O;\
+if(!(idealadd(field, fieldembed(g), fieldembed(nu))==[l, 0; 0, 1]),\
+resO=O, resO=l; for(j=l, length(G[2]), resO=resO*quadO(g, j))); resO;
+print([quad(-l), quad(w), quad(l-w), quad(-level)]);
+\\Here we create the quadratic character over $O_K/(4)$. We use the fact that
+\\$O_K/(4)A*$ is generated by $w$ and $-1$.
+quad2(g, res3)=res3=0;\
+if(!(idealadd(field, fieldembed(g), [4, 0; 0,4])==[1,0; 0, 1]),\
+res3=0, res3=1; if(g==-ll Ig==w, res3=-1, resO=g%4;\
+j=l; until«w Aj%4==resOI l-wAj%4==resO), j=j+1);\
+if (w Aj%4==resO , res3=(-1)Aj, res3=(-1)A(j+1»»; res3;
+print([quad2(-1), quad2(w), quad2(1-w), quad2(-level)]);
+quad3(g, res3)=res3=0;\
+===== PDF PAGE 137 =====
+7. PROGRAM LISTING 129
+if(!(idealadd(field, fieldembed(g), [4,0; 0,4])==[1,0; 0, 1]),\
+res3=0, res3=1; if(g==-lllg==w, if (g==w, res3=-1, res3=1), resO=g%4;\
+j=l; until«w~j%4==resOI l-w~j%4==resO), j=j+l); res3=(-1)~j)); res3;
+print([quad3(-1), quad3(w), quad3(1-w), quad3(-level)]);
+\\This function gives the factorization of aIl ideals of norm less than
+\\$N$ in terms of uniformizer given by the gen function above.
+N=10979;
+ideals=[];\
+ids=ideallist(field, N);\
+idsO=[]; for(j=2, length(ids), idsO=concat(idsO, ids[j]));\
+for(j=l, length(idsO), resO=idealfactor(field, idsO[j]);\
+res3=matrix(matsize(resO)[1],2);\
+for(k=l, matsize(resO) [1], res2=resO[k,1] [1];\
+if(kronecker(res2,5)==-1, res3[k,]=[res2, resO[k,2]],\
+if(kronecker(res2,5)==O, res3[k,]=[gen(5), resO[k,2]],\
+if(kronecker(res2,5)==1 &&\
+idealfactor(field, fieldembed(gen(res2)[1]))[1,1]==resO[k,1],\
+res3[k,]=[gen(res2) [1], resO[k,2]], res3[k,]=\
+[conj(gen(res2) [1]), resO[k,2]]))));\
+ideals=concat(ideals, [res3])); ideals;
+\\For an ideal given in the above form, this function returns a generator.
+idgen(id, res4)=res4=1;\
+for(kl=l, matsize(id)[1], res4=res4*id[kl,][1]~id[k1,] [2]); res4;
+\\This function returns the Hecke eigenvalue associated to any prime\\
+power given in the above list.
+hcoeffO(idO,resO)=resO=l;\
+j 1=1; while(! (idO[1]==unifs[jl]), j l=j 1+1); j 1; \
+===== PDF PAGE 138 =====
+130 2. 80ME NUMERICAL RE8ULT8 ON THE ODA CONJECTURE.
+if (denominator(level/unifs [j 1])==1, resO=ap[j1]-idO[2] ,\
+if(idO[2]==1, resO=ap[j1] , resO=res2=ap[j1]; res1=1;\
+for(k2=2, idO[2] , resO=ap[j1]*res2-norm(unifs[j1])*res1;\
+res1=res2; res2=resO))); resO;
+\\This function compute the Hecke eigenvalue associated to any ideal\\
+\\given in the the list above.
+hcoeff(id, res5)=res5=1;\
+for(l=l, matsize(id) [1] , res5=res5*hcoeffO(id[I,])); res5;
+\\This compute the exponential sum corresponding to the residue
+\\$\alpha$ modulo $\nu$.
+subsum(id1, nus, sumO)=sumO=O;\
+M=[O,O]; MO=-l;\
+while (abs (2*Pi*conj (idgen(id1))*(1-w)-(2*MO+1)/(conj (nus)*(2*w-1)*\
+sqrt(conj(level))))<=10-5, MO=MO-1); M[l]=MO;\
+MO=l; while(2*Pi*idgen(id1)*w-(2*MO+1)/(nus*(2*w-1)*\
+sqrt(level))<=10-5, MO=MO+1); M[2]=MO;\
+sumO=sum(k3=M[1], M[2] , (1-exp(-2*Pi*idgen(id1)*\
+w-(2*k3+1)/(nus*(2*w-1)*sqrt(level))))*\
+exp((2*Pi/(2*w-1))*(conj(idgen(id1)*w-(2*k3+1))/(conj( nus)*\
+sqrt(conj(level)))- idgen(id1)*w-(2*k3)/(nus*sqrt(level))))); sumO;
+\\This returns an approximation of the L-function ... ???
+LO=res6=subsum(Mat([1,1]), nu3);\
+res6=res6+sum(m=1, length(ideals), hcoeff(ideals[m])*\
+quad3(idgen(ideals[m]))/norm(idgen(ideals[m]))*\
+subsum(ideals[m], nu3)); LO=-res6;
+print(LO);
+===== PDF PAGE 139 =====
+7. PROGRAM LISTING
+Wmm=sqrt(abs(norm(nu)))*LO; print(Wmm);
+131
+L=res7=subsum(Mat([1,1]), nu3)j\
+res7=res7+sum(m=1, length(ideals),\
+(hcoeff(ideals[m])/norm(idgen(ideals[m])))*\
+quad2(idgen(ideals[m]))*subsum(ideals[m], nu3)); L=-res7;
+print(L);
+Wmp=sqrt(abs(norm(nu2)))*L; print(Wmp);
+===== PDF PAGE 140 =====
+132 2. 80ME NUMERICAL RE8ULT8 ON THE ODA CONJECTURE.
+8. Conclusion.
+The theory of algebraic modular forms in Gross [29] gives a very
+nice way to compute Hilbert modular eigenforms of weight 2 over F =
+Q(J5) by transferring such computations to the Hamilton quaternion
+algebra by means of the Jacquet-Langlands correspondence. The same
+approach can be used over any totally real field F (of narrow class
+number one) and for more general (including non-parrallel) weights (see
+the recent paper ofConsani and Scholten [12]). The major requirement
+of the algorithms we have used is finding an efficient way to compute
+the Hecke operators. This becomes an imperative issue as the norm
+of the level increases, in order to get a satisfactory precision on the
+period moduli of the computed newforms. So it would be interesting
+to see wether or not the icosian ring admits a Euclidean algorithm. If
+affirmative, such a result will have the dramatic effect of increasing the
+efficiency of our algorithm. This is an issue that we intend to explore.
+In contrast to the one dimension al case, the computation of periods
+in higher dimension seems to be a delicate matter. Indeed, from the
+examples we discussed, the computation of the Oda periods requires a
+large number of Hecke eigenvalues. Indeed, for the two smallest primes
+in our list, namely 31 and 41, we needed the Hecke eigenvalues for all
+primes of norm less than or equal to 10000. But this could only give
+us an accuracy of no more than 20 decimalsj and this does not seem
+to he enough to determine either an integral or a rational model in the
+corresponding isogeny classes. The main difficulty lies in the fact that
+the computation of the Oda periods implicitly involves the choice of a
+lattice in the rational cohomology group H 2 (Mr , Q) associated to the
+===== PDF PAGE 141 =====
+8. CONCLUSION. 133
+newform f, and this is a big difference with the one dimensional case.
+Indeed, when F = Q, not only is it known that the elliptic curve Er
+is rational, but also a result of Edixhoven [21] on the Manin constant,
+says that the modular symbols computations, as done in Cremona [14],
+directly leads to an integral model. This greatly cuts down the amount
+of computations needed in this case. The modular parametrization of
+elliptic curves play a rôle in the definition of the Manin constant. In
+our setting, one is then tempted to consider its natural analogue which
+is the parametrization of elliptic curves by Shimura curves. Due to
+the lack of q-expansion in this situation, one then asks for the right
+substitute to the Manin constant and how this will ensure us with a
+good model for the isogeny class of the elliptic curve corresponding to
+our newform. There is no doubt that this question is related to the one
+of accessing the fundamental periods of the newform f. As this is a
+very active field in the theory of Hilbert modular forms, the few results
+in our second chapter should be seen more as a work in progress. We
+would like to explore the issue of overcoming the torsion in H 2 (Mr, Q)
+in order to obtain an integral model for the computed isogeny class.
+We would also like to extend the PARI search that we started with the
+help of Prof. N. Elkies and see if we can make use of results in the
+spirit of Faltings-Serre or the more recent results of Skinner-Wiles to
+prove the modularity of the curves we have obtained (and will obtain).
+===== PDF PAGE 142 =====
+NOTE TO USERS
+Page(s) not included in the original manuscript and are
+unavailable from the author or university. The manuscript
+was scanned as received.
+134
+This reproduction is the best copy available.
+®
+DMI
+===== PDF PAGE 143 =====
+Bibliography
+[1] A. Ash and L. Rudolph, The modular symbol and continued fractions in higher
+dimensions. Invent. Math. 55 (1979), no. 3, 241-250.
+[2] A. Ash and A. Borel, Generalized modular symbols. Cohomology of arithmetic
+groups and automorphic forms (Luminy-Marseille, 1989),57-75, Lecture Notes
+in Math., 1447, Springer, Berlin, 1990.
+[3] A. Ash, D. Ginzburg and S. Rallis, Vanishing periods of cusp forms over mod­
+ular symbols. Math. Ann. 296 (1993), no. 4, 709-723.
+[4] M. Bertolini and H. Darmon, Heegner points on Mumford- Tate curves. Inven­
+tiones Math. 126 (1996), pp. 413-456.
+[5] Modular functions of one variable. IV. Proceedings of the International Sum­
+mer School on Modular Functions of One Variable and Arithmetical Appli­
+cations, RUCA, University of Antwerp, Antwerp, July 17-August 3, 1972.
+Edited by B. J. Birch and W. Kuyk. Lecture Notes in Mathematics, Vol. 476.
+Springer- Verlag, Berlin-New York, 1975.
+[6] A. Borel and H. Jacquet, Automorphic forms and automorphic representations.
+Proc. Sympos. Pure Math., vol 33, part 1. pp. 189-202.
+[7] C. Breuil; B. Conrad; F. Diamond and R. Taylor, On the modularity of elliptic
+curves over Q: wild 3-adic exercises. J. Amer. Math. Soc. 14 (2001), no. 4,
+843-939.
+[8] D. Bump, Automorphic Forms and Representations. Cambridge Studies in
+Advanced Mathematics 55. Cambridge University Press, 1997.
+[9] P. Cartier, Representations of p--adie groups: a survey. Proc. Sympos. Pure
+Math., vol 33, part 1. pp. 111-155.
+[10] W. Casselman, One sorne results of Atkin and Lehner, Math. Ann. 201 (1973),
+pp. 301-313.
+135
+===== PDF PAGE 144 =====
+136 BIBLIOGRAPHY
+[11] Coates, J.; Wiles, A. On the conjecture of Birch and Swinnerton-Dyer. Invent.
+Math. 39 (1977), no. 3, 223-251.
+[12] C. Consani and J. Scholten, Arithmetic on a Quintic treefold, preprint.
+[13] J. H. Conway and Sloane, Sphere packings, lattice and groups. Second edition.
+Springer Verlag, New York, 1993.
+[14] Cremona, J. E. Algorithms for modular elliptic curves. Second edition. Cam­
+bridge University Press, Cambridge, 1997.
+[15] H. Darmon, Rigid local systems, Hilbert modular forms, and Fermat's last
+theorem. Duke Math. J. 102 (2000), no. 3, 413-449.
+[16] P. Deligne, Formes modulaire et représentations de GL2 • Modular functions
+on variable II, Lecture Notes in Math., vol. 349, pp. 55-105, Springer- Verlag,
+1973.
+[17] P. Deligne, La oonjecture de Weil pour les surfaces K3. Inventiones math. vol
+15 (1972), pp.206-226.
+[18] P. Deligne, Théorie de Hodge II et III. Publ. Math. IRES, 40 (1971), pp. 5-58;
+44 (1974), pp. 5-77.
+[19] P. Deligne, Variétés de Shimura: interprétation modulaire, et techniques de
+construction de modèles canoniques. Automorphic forms, representations and
+L-functions (Proc. Sympos. Pure Math., Oregon State Univ., Corval1is, Ore.,
+1977), Part 2, pp. 247-289, Proc. Sympos. Pure Math., XXXIII, Amer. Math.
+Soc., Providence, RL, 1979.
+[20] F. Diamond and J. lm, Modular forms and modular curves. Seminar on Fer­
+mat's Last Theorem (Toronto, ON, 1993-1994),39-133, CMS Conf. Proc., 17,
+Amer. Math. Soc., Providence, RI, 1995.
+[21] B. Edixhoven, On the Manin constants of modular elliptic curves. Arithmetic
+algebraic geometry (Texel, 1989), 25-39, Progr. Math., 89, Birkhuser Boston,
+Boston, MA, 1991.
+[22] J. El1enberg, Serre's conjectures over lFg ; preprint.
+[23] D. Flath, Decomposition of representations into tensor products. Proc. Sym­
+pos. Pure Math., vol 33, part 1. pp. 179-183.
+[24] G. van der Geer. Hilbert modular surfaces. Springer- Verlag 1988.
+===== PDF PAGE 145 =====
+BIBLIOGRAPHY 137
+[25] S. S. Gelbart, Automorphic forms on adele groups. Annals of Maths. Studies
+83, Princeton Univ. Press, 1975.
+[26] R. Godement, Notes on Jacquet-Langlands' theory. lAS, 1970.
+[27] P. Griffiths and J. Harris, Principles of Aigebraic Geometry. Wiley Classics
+Library, John Wiley and Sons, New York, 1994.
+[28] B. H. Gross, Heights and the Special values of L-series. CMS conference Pro­
+ceedings, vol.7 (1987), pp. 115-187.
+[29] Gross, Benedict H. Aigebraic modular forms. Israel J. Math. 113 (1999),61­
+93.
+[30] Harish-Chandra, Automorphic forms on semisimple Lie groups. Lecture Notes
+in Math., vol. 62, Springer- Verlag, New York, 1968.
+[31] F. Hirzebruch, Hilbert modular surfaces. L'Ens. Math. 19 (1973), pp. 183-28l.
+[32] H. Jacquet and R. P. Langlands, Automorphic forms on GL(2). Lectures Notes
+in Math., vol. 114, Springer- Verlag, Berlin and New York, 1970.
+[33] Kamal Khuri-Makdisi, On the curves associated to certain rings of automor­
+phic forms. Canad. J. Math. 53 (2001), No. 1, pp. 98-12l.
+[34] Knapp, Anthony W. Elliptic curves. Mathematical Notes, 40. Princeton Uni­
+versity Press, Princeton, NJ, 1992.
+[35] Kobayashi, Toshiyukij Oda, Takayuki A vanishing theorem for modular sym­
+bols on locally symmetric spaces. Comment. Math. Helv. 73 (1998), no. 1,
+45-70.
+[36] Langlands, Robert P. Base change for GL(2). Annals of Mathematics Studies,
+96. Princeton University Press, Princeton, N.J.; University of Tokyo Press,
+Tokyo, 1980.
+[37] A. Pizer, An algorithm for computing modular forms on ro(N). Journal of
+Aigebra 64 (1980), pp. 340-390.
+[38] T. Miyake, Modular forms. Springer-Verlag, Berlin Heidelberg, 1989.
+[39] T. Miyake, On automorphic forms on GL2 and Hecke operators. Ann. Math.
+94, pp. 174-189 (1971).
+[40] T. Oda, Periods of Hilbert Modular Forms. Progress in Mathematics 19,
+Birkhauser, 1982.
+===== PDF PAGE 146 =====
+138 BIBLIOGRAPHY
+[41] T. Oda, The Riemann-Hodge period relation for Hilbert modular forms of
+weight 2. Cohomology of arithmetic groups and automorphic forms (Luminy­
+Marseille, 1989), 261-286, Lecture Notes in Math., 1447, Springer, Berlin,
+1990.
+[42] 1. Reiner, Maximal Orders. Academie Press 1975.
+[43] Ribet, K. A. On modular representations of Gal(Q/Q) arising from modular
+forms. /nvent. Math. 100 (1990), no. 2, 431-476.
+[44] Serre, Jean-Pierre; Propriétés galoisiennes des points d'ordre fini des courbes
+elliptiques. /nvent. Math. 15 (1972), no. 4, 259-331.
+[45] Serre, Jean-Pierre; Travaux de Wiles (et Taylor, ... ). 1. Séminaire Bourbaki,
+Vol. 1994/95. Astérisque No. 237 (1996), Exp. No. 803, 5, 319-332.
+[46] Serre, Jean-Pierre; Sur les représentations modulaires de degré 2 de Gal(Q/Q).
+Duke Math. J. 54 No. 1, pp. 179-230 (1987).
+[47] G. Shimura, The special values of the zeta functions associated to Hilbert
+modular forms. Duke Math. J. 45, No. 3 (1978), pp. 637-679.
+[48] G. Shimura, Introduction to the arithmetic theory of automorphic functions,
+Princeton Univ. Press 1971.
+[49] Silverman, Joseph H. The arithmetic of elliptic curves. Graduate Texts in
+Mathematics, 106. Springer- Verlag, New York, 1986.
+[50] Skinner, C. M.; Wiles, A. J. Residually reducible representations and modular
+forms. /nst. Hautes tudes Sei. Publ. Math. No. 89 (1999),5-126 (2000).
+[51] Skinner, C. M.; Wiles, A. J. Nearly ordinary deformations of irreducible resid­
+ual representations. To appear, Ann. Fac. Sei. Toulouse Math. (6).
+[52] J. Tunnell, Artin's conjecture for representations of octahedral type. Bull.
+Amer. Math. Soc. (N.S.) 5 (1981), no. 2, 173-175.
+[53] R. Taylor and A. Wiles, Ring theoretic properties of certain Hecke algebras.
+Annals of Maths. 141 (1995), pp. 553-572.
+[54] M.-F. Vignéras, Arithmétique des algèbres de quaternions. Lecture Notes in
+Math., vol. 800, Springer-Verlag, New York, 1981.
+[55] Guého, Marie France Le théorème d'Eichler sur le nombre de classes d'idéaux
+d'un corps de quaternions totalement défini et la mesure de Tamagawa.
+===== PDF PAGE 147 =====
+BIBLIOGRAPHY 139
+Journées Arithmétiques (Grenoble, 1973), pp. 107-114. Bull. Soc. Math.
+France Mem., No. 37, Soc. Math. France, Paris, 1974.
+[56] N. R. Wallach, Real reductive group 1. Pure and applied mathematics, vol. 132,
+Academie press, 1988.
+[57] A. Wiles, Modular elliptic curves and Fermat Last Theorem. Annals of Maths.
+141 (1995), pp. 443-551.

@@ -167,7 +167,7 @@ private lemma coe_toReal_eq_self {x : WithBotTop ℝ} (h1 : x ≠ ⊥) (h2 : x �
 sequence is not `⊥`: `⊥` is the slope of the `unboundedBelow` step only, and that step is taken
 exactly when the slope set out of the anchor is unbounded below — which `IsAdmissible` forbids.
 (Stated here, against the construction, rather than in the Newton-polygon files.) -/
-private lemma slopes_zero_ne_bot {Γ : Type*} [CommSemiring Γ] [Algebra Γ ℝ] (v : ℕ → WithTop Γ)
+lemma slopes_zero_ne_bot {Γ : Type*} [CommSemiring Γ] [Algebra Γ ℝ] (v : ℕ → WithTop Γ)
     (h1 : ∃ i, v i ≠ ⊤) (h2 : IsAdmissible v) : (newtonPolygon₀OfSeq v).slopes 0 ≠ ⊥ := by
   intro hbot
   have h0 : slopes' (newtonPolygon v 0) = (⊥ : WithBotTop ℝ) := hbot

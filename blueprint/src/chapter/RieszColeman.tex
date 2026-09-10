@@ -1,0 +1,463 @@
+\chapter{Entire Series, Coleman's Resultant, and the Riesz--Coleman Decomposition}
+\label{chap:riesz-coleman}
+
+Chapter~\ref{chap:compact} attached to a compactoid operator $u$ its Fredholm determinant
+$\det(1-Tu)$ and proved Serre's theorems: $1-au$ is invertible exactly when $\det(1-Tu)$ is a
+unit at $a$ (Theorem~\ref{thm:serre11}), a zero of the determinant is a reciprocal eigenvalue
+(Theorem~\ref{thm:serre12}), and each zero carries a finite-dimensional Riesz summand
+(Theorem~\ref{thm:riesz}).  Serre's decomposition is attached to a \emph{single} zero, and it
+lives over a field.
+
+The applications need more.  A slope decomposition splits off \emph{all} the eigenvalues of a
+given valuation at once, which means splitting the determinant as $\det(1-Tu) = Q\cdot S$ with
+$Q$ a polynomial and asking for the corresponding splitting of the space; and the coefficient
+ring in the halo application of Chapter~\ref{chap:lwx-halo} is the Banach--Tate ring
+$\Lhalo[1/T]$, not a field, and is not Noetherian.  This chapter formalises the general
+statement over a Banach--Tate ring, following Johansson--Newton \cite{JN} Theorem~2.2.2, which
+is Buzzard \cite{Buzzard} Theorem~3.3, which is Bella\"iche \cite{Bellaiche} Theorem~II.2.18,
+and ultimately Coleman \cite{Coleman} Theorem~A4.3.  No Noetherian hypothesis appears anywhere:
+none of the sources' proofs uses one.
+
+The route is Bella\"iche's.  Given the factorisation $\det(1-Tu) = QS$, one replaces $u$ by the
+auxiliary operator $\varphi' = 1 - Q^{*}(u)/Q^{*}(0)$ and computes \emph{its} Fredholm
+determinant by a spectral mapping formula; that determinant turns out to have a zero of order
+$\deg Q$ at $1$, and Serre's projector at that zero is the projector one wants.  So we need
+three things first: the ring $R\{\{T\}\}$ of entire series and division inside it (\S1),
+Coleman's resultant $D(B,P)$ and the spectral mapping formula (\S2), and then the decomposition
+itself (\S3).  Section~4 adds the vertex factorisation that produces the polynomial $Q$ in the
+first place.
+
+\section{Entire series and division}
+
+\begin{definition}
+  \label{def:isentire}
+  \uses{def:isrestricted}
+  \lean{PowerSeries.IsEntire, PowerSeries.entireSubring}
+  \leanok
+  A power series $F = \sum a_n T^n$ over a normed ring $R$ is \emph{entire} if
+  $\lVert a_n\rVert C^n \to 0$ for every $C > 0$; equivalently, if it is restricted at every
+  radius in the sense of Definition~\ref{def:isrestricted}.  The entire series form a subring
+  $R\{\{T\}\}$ of $R\llbracket T\rrbracket$.  A \emph{Fredholm series} is an entire series with
+  constant term $1$.
+\end{definition}
+
+This is \cite[Definition II.1.16]{Bellaiche} and the ring written $R\{\{T\}\}$ in
+\cite[\S2.1]{JN}; Theorem~\ref{thm:charpowerseries-entire} says the Fredholm determinant of a
+compactoid operator lies in it.
+
+\begin{theorem}[Euclidean division in $R\{\{T\}\}$, {\cite[Proposition II.2.8]{Bellaiche}}]
+  \label{thm:entire-division}
+  \uses{def:isentire, thm:wdivision, thm:wdivision-unique}
+  \lean{PowerSeries.IsEntire.exists_eq_mul_add, PowerSeries.eq_mul_add_q_unique,
+        PowerSeries.eq_mul_add_r_unique}
+  \leanok
+  Let $g \in R[T]$ have invertible leading coefficient and degree $n$.  Every entire $F$ can be
+  written uniquely as $F = g\,q + r$ with $q$ entire and $r$ a polynomial of degree $< n$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:wdivision, thm:wdivision-unique}
+  Existence and uniqueness are Martin's Weierstrass division (Theorem~\ref{thm:wdivision} and
+  Theorem~\ref{thm:wdivision-unique}) applied at a radius large enough that $g$ dominates: the
+  divisor of a distinguished division is precisely a polynomial whose leading coefficient
+  achieves the Gauss norm, and for a polynomial with invertible leading coefficient this happens
+  at all sufficiently large radii.  Entireness of the quotient is then the statement that the
+  division is performed at every radius simultaneously, which uniqueness supplies.
+\end{proof}
+
+\begin{definition}
+  \label{def:isentirecoprime}
+  \uses{def:isentire}
+  \lean{PowerSeries.IsEntireCoprime}
+  \leanok
+  Two entire series are \emph{relatively prime in $R\{\{T\}\}$} if the ideal they generate is
+  the unit ideal (\cite[Definition 2.2.1]{JN}).
+\end{definition}
+
+\begin{lemma}[{\cite[Corollary II.2.9]{Bellaiche}}]
+  \label{lem:coprime-remainder}
+  \uses{def:isentirecoprime, thm:entire-division}
+  \lean{PowerSeries.isEntireCoprime_iff_isCoprime_of_eq_mul_add}
+  \leanok
+  If $F = g\,q + r$ is the division of Theorem~\ref{thm:entire-division}, then $F$ and $g$ are
+  relatively prime in $R\{\{T\}\}$ if and only if $r$ and $g$ are relatively prime in $R[T]$.
+\end{lemma}
+
+Division reduces coprimality questions to polynomial ones; that is the only use we make of it.
+
+\begin{definition}
+  \label{def:isgoodzero}
+  \uses{def:isentire}
+  \lean{PowerSeries.IsGoodZero, PowerSeries.hasseDeriv_mul}
+  \leanok
+  An entire $F$ has a \emph{good zero of order $s$} at $a$ if the divided derivatives
+  $\Delta^{i}F$ vanish at $a$ for $i < s$ and $\Delta^{s}F(a)$ is a unit
+  (\cite[Definition II.2.11]{Bellaiche}).  The divided derivatives obey the Leibniz rule
+  $\Delta^{s}(FG) = \sum_{i+j=s}\Delta^{i}F\cdot\Delta^{j}G$, so good zeros multiply.
+\end{definition}
+
+\section{Coleman's $D(B,P)$ and the spectral mapping formula}
+
+Coleman's construction \cite[\S A3--A4]{Coleman} takes a polynomial $B$ and a Fredholm series
+$P$ and produces the series whose reciprocal roots are the $B$-images of those of $P$:
+informally $D(B,P)(T) = \prod_i (1 - T\,B(t_i))$ over the roots $t_i$ of the reciprocal
+polynomial $P^{*}$.  Written that way the definition needs roots; written as a resultant it
+needs nothing.
+
+\begin{definition}
+  \label{def:dpoly}
+  \lean{TateFredholm.Coleman.dPoly, TateFredholm.Coleman.bQ}
+  \leanok
+  For polynomials $B, P$ over a commutative ring and $N \geq \deg P$, set
+  \[
+    D_N(B,P) \;=\; \Res_X\bigl(P^{*}, \; 1 - T\,B(X)\bigr) \in R[T],
+  \]
+  the resultant of the reversed polynomial $P^{*} = \mathrm{reflect}_N P$ against
+  $1 - T B(X)$.  We also write $b_Q = 1 - u^{-1}Q^{*}$ for a polynomial $Q$ with leading
+  coefficient the unit $u$; this is Bella\"iche's auxiliary polynomial.
+\end{definition}
+
+\begin{lemma}[{\cite[Lemma II.2.13]{Bellaiche}}]
+  \label{lem:dpoly-mul}
+  \uses{def:dpoly}
+  \lean{TateFredholm.Coleman.dPoly_mul}
+  \leanok
+  $D_N(B, PQ) = D_N(B,P)\,D_N(B,Q)$: the construction is multiplicative in its second argument.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Multiplicativity of the resultant in its first argument, together with
+  $\mathrm{reflect}(PQ) = \mathrm{reflect}(P)\,\mathrm{reflect}(Q)$ at compatible degrees.
+\end{proof}
+
+\begin{proposition}[The finite-dimensional case]
+  \label{prop:resultant-charpoly}
+  \uses{def:dpoly}
+  \lean{Matrix.resultant_charpoly, Matrix.det_aeval_eq_prod_roots}
+  \leanok
+  For a square matrix $A$ over any commutative ring and any polynomial $g$,
+  \[
+    \Res(\mathrm{charpoly}\,A,\; g) \;=\; \det\bigl(g(A)\bigr).
+  \]
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  Over an algebraically closed field both sides equal $\prod_\lambda g(\lambda)$ over the
+  eigenvalues with multiplicity.  The general case follows from the universal characteristic
+  polynomial: both sides are polynomial identities in the matrix entries and the coefficients of
+  $g$, so it suffices to verify them over $\Z[x_{ij}, y_k]$, which embeds in an algebraic closure
+  of its fraction field.
+\end{proof}
+
+\begin{definition}
+  \label{def:dseries}
+  \uses{def:dpoly, def:isentire}
+  \lean{TateFredholm.Coleman.dSeries, TateFredholm.Coleman.norm_coeff_dSeries_sub_le,
+        PowerSeries.IsEntire.dSeries}
+  \leanok
+  For a Fredholm series $F$ over a Banach--Tate ring, $D(B,F)$ is the coefficientwise limit of
+  $D_N(B, \mathrm{trunc}_N F)$.  The limit exists because each coefficient of $D_N$ is a fixed
+  polynomial in the coefficients of the truncation, and that polynomial is Lipschitz in them;
+  $D(B, \cdot)$ is multiplicative and carries entire series to entire series.
+\end{definition}
+
+Entireness uses Buzzard's rescaling trick \cite[p.~21]{Buzzard}: the identity
+$\Res(Q,P) = \Res(u^{-n}Q(uT), P(uT))$ lets one renormalise the radius at which the estimate is
+performed.
+
+\begin{lemma}[{\cite[Lemma II.2.14 and Proposition II.2.15]{Bellaiche}}]
+  \label{lem:dseries-goodzero}
+  \uses{def:dseries, def:isentirecoprime, def:isgoodzero}
+  \lean{TateFredholm.Coleman.isUnit_evalT_one_dSeries_bQ_iff,
+        TateFredholm.Coleman.isGoodZero_dSeries_bQ}
+  \leanok
+  Let $Q$ be a polynomial with unit leading coefficient and constant term $1$, and $S$ a
+  Fredholm series.  Then $D(b_Q, S)(1)$ is a unit if and only if $Q$ and $S$ are relatively
+  prime in $R\{\{T\}\}$; and $D(b_Q, QS)$ has a good zero of order $\deg Q$ at $1$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{lem:dpoly-mul, lem:coprime-remainder, def:isgoodzero}
+  By Lemma~\ref{lem:dpoly-mul}, $D(b_Q, QS) = D(b_Q, Q)\,D(b_Q, S)$.  The first factor is
+  computed directly: $b_Q$ was built so that $D(b_Q, Q)$ is $(1-T)^{\deg Q}$ up to a unit, which
+  is a good zero of order $\deg Q$ at $1$.  The second factor is a unit at $1$ by the
+  coprimality criterion, which is Lemma~\ref{lem:coprime-remainder} transported through the
+  resultant.  Good zeros multiply by the Leibniz rule of Definition~\ref{def:isgoodzero}.
+\end{proof}
+
+\begin{theorem}[Spectral mapping, {\cite[Proposition II.2.16]{Bellaiche}}]
+  \label{thm:spectral-mapping}
+  \uses{def:dseries, prop:resultant-charpoly, def:iscompactoid}
+  \lean{TateFredholm.Coleman.charPowerSeries_aeval}
+  \leanok
+  For a compactoid $\varphi$ on $c(I,R)$ and any polynomial $B$ with $B(0)=0$,
+  \[
+    \det\bigl(1 - T\,B(\varphi)\bigr) \;=\; D\bigl(B, \det(1-T\varphi)\bigr).
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{prop:resultant-charpoly, def:dseries}
+  For a finite matrix this is Proposition~\ref{prop:resultant-charpoly} rewritten in reversed
+  form.  A compactoid operator is a limit of its truncations to finite blocks, both sides are
+  continuous in the operator coefficientwise, and $D(B,\cdot)$ was defined as exactly that
+  limit.
+\end{proof}
+
+\section{The Riesz--Coleman decomposition}
+
+\begin{theorem}[{\cite[Theorem 2.2.2]{JN}; \cite[Theorem 3.3]{Buzzard};
+                 \cite[Theorem A4.3]{Coleman}}]
+  \label{thm:riesz-coleman}
+  \uses{thm:spectral-mapping, lem:dseries-goodzero, thm:riesz, def:iscompactoid}
+  \lean{TateFredholm.exists_rieszColemanProjection, TateFredholm.IsRieszColemanProjection}
+  \leanok
+  Let $R$ be a Banach--Tate ring, $u$ compactoid on $M = c(I,R)$, and suppose
+  $\det(1-Tu) = Q\,S$ with $Q$ a polynomial with unit leading coefficient and constant term $1$,
+  relatively prime to the Fredholm series $S$ in $R\{\{T\}\}$.  Then there is a continuous
+  projector $p$, lying in the closure of $R[u]$, with $Q^{*}(u)\,w = p$ for some $w$ in that
+  closure and $Q^{*}(u)^{\deg Q}(1-p) = 0$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:spectral-mapping, lem:dseries-goodzero, thm:riesz}
+  Put $\varphi' = 1 - Q^{*}(u)/Q^{*}(0)$, a compactoid operator.  Theorem~\ref{thm:spectral-mapping}
+  computes $\det(1 - T\varphi') = D(b_Q, \det(1-Tu))$, and Lemma~\ref{lem:dseries-goodzero}
+  says that this has a good zero of order $\deg Q$ at $1$.  Serre's projector at that zero
+  (the construction behind Theorem~\ref{thm:riesz}) is $p$.  Because the projector is produced
+  as an operator-norm limit of polynomials in $\varphi'$, and $\varphi'$ is itself a polynomial
+  in $u$, both $p$ and the inverse witness $w$ lie in the closure of $R[u]$ --- so they commute
+  with $u$, not merely with $\varphi'$.
+\end{proof}
+
+The refinements of \cite[Proposition 3.2 and Theorem 3.3]{Buzzard} and the last sentence of
+\cite[Theorem 2.2.2]{JN} follow.  We record them as the API of the predicate
+$\mathrm{IsRieszColemanProjection}$.
+
+\begin{theorem}[The full decomposition]
+  \label{thm:riesz-coleman-full}
+  \uses{thm:riesz-coleman}
+  \lean{TateFredholm.IsRieszColemanProjection.finite,
+        TateFredholm.IsRieszColemanProjection.projective,
+        TateFredholm.IsRieszColemanProjection.rankAtStalk,
+        TateFredholm.IsRieszColemanProjection.charPowerSeries_mul_one_sub,
+        TateFredholm.IsRieszColemanProjection.charPowerSeries_mul,
+        TateFredholm.IsRieszColemanProjection.ker_aeval_reverse,
+        TateFredholm.IsRieszColemanProjection.isUnit_mul_one_sub_add,
+        TateFredholm.IsRieszColemanProjection.eq_range_of_isTopCompl}
+  \leanok
+  With the notation of Theorem~\ref{thm:riesz-coleman}, write $N = \ker Q^{*}(u)$.  Then
+  $M = N \oplus \mathrm{im}\,p$ topologically; $N$ is finitely generated projective of rank
+  $\deg Q$ at every prime; $u$ is invertible on $N$; $\det(1-Tu \mid N) = Q$ and
+  $\det(1-Tu\mid \mathrm{im}\,p) = S$; and $\mathrm{im}\,p$ is the unique $u$-stable closed
+  complement on which $Q^{*}(u)$ is invertible.
+\end{theorem}
+
+\begin{lemma}[{\cite[Lemma 3.1]{Buzzard}}]
+  \label{lem:coprime-iff-unit}
+  \uses{def:isentirecoprime}
+  \lean{TateFredholm.isEntireCoprime_iff_isUnit_aeval_reverse}
+  \leanok
+  $Q$ and $S$ are relatively prime in $R\{\{T\}\}$ if and only if $Q^{*}(u)$ is invertible on
+  the summand where the determinant is $S$.
+\end{lemma}
+
+\begin{proposition}[Determinants of summands]
+  \label{prop:det-summand}
+  \uses{thm:riesz-coleman-full}
+  \lean{TateFredholm.charPowerSeries_eq_mul_of_comm,
+        TateFredholm.exists_polynomial_charPowerSeries_of_range_le,
+        TateFredholm.exists_matrix_realisation}
+  \leanok
+  If $u$ commutes with a continuous projector then its determinant is the product of the
+  determinants of the two pieces; on a finitely generated summand the determinant is a
+  polynomial, computed as the reversed characteristic polynomial of any matrix realisation.
+\end{proposition}
+
+The matrix-level facts behind Proposition~\ref{prop:det-summand} are elementary but were not in
+mathlib.
+
+\begin{lemma}
+  \label{lem:charpolyrev}
+  \lean{Matrix.charpolyRev_map, Matrix.charpolyRev_mul_comm, Matrix.charpolyRev_eq_of_mul_eq,
+        Matrix.exists_mul_eq_of_idempotent, Matrix.charpolyRev_eq_one_sub_pow_rank}
+  \leanok
+  Write $\mathrm{charpolyRev}\,M = \det(1 - XM)$.  It commutes with ring homomorphisms and
+  satisfies Sylvester's identity $\det(1-XAB) = \det(1-XBA)$; an idempotent matrix with free
+  range factors as $E = PQ$, $QP = 1$, and along such a factorisation
+  $\mathrm{charpolyRev}\,M = \mathrm{charpolyRev}(QMP)$ whenever $ME = EM = M$.  Over a field,
+  if moreover $M = E - N$ with $N$ nilpotent then
+  $\mathrm{charpolyRev}\,M = (1-X)^{\mathrm{rank}\,E}$.
+\end{lemma}
+
+\section{The vertex factorisation}
+
+Theorem~\ref{thm:riesz-coleman} takes the factorisation $\det(1-Tu) = QS$ as input.  Producing
+it is a Newton-polygon statement: a vertex of the polygon at which the coefficient is a unit
+splits off a polynomial factor of the corresponding degree.
+
+\begin{definition}
+  \label{def:dominant-index}
+  \uses{def:isentire}
+  \lean{PowerSeries.IsDominantIndex, PowerSeries.IsDominantPoly}
+  \leanok
+  The index $N$ is \emph{dominant} for $F = \sum a_k T^k$ at radius $\rho$ if
+  $\lVert a_k\rVert\rho^k \leq \lVert a_N\rVert\rho^N$ for all $k$, with strict inequality for
+  $k > N$; that is, $N$ is Bella\"iche's largest integer minimising $v(a_n) - n\nu$
+  (\cite[Definition II.2.3]{Bellaiche}).  A polynomial of degree $N$ dominant at $\rho$ with
+  invertible leading coefficient is a \emph{$\rho$-dominant polynomial}
+  (\cite[Definition II.2.4]{Bellaiche}).
+\end{definition}
+
+\begin{lemma}
+  \label{lem:dominant-distinguished}
+  \uses{def:dominant-index, def:ismuldistinguished}
+  \lean{PowerSeries.IsDominantPoly.isMulDistinguished, PowerSeries.IsDominantPoly.mul,
+        PowerSeries.exists_isDominantPoly_of_isUnit_leadingCoeff}
+  \leanok
+  A $\rho$-dominant polynomial is exactly a Martin-distinguished element at radius $\rho$
+  (Definition~\ref{def:ismuldistinguished}); dominant polynomials are closed under
+  multiplication.
+\end{lemma}
+
+That identification is what lets Chapter~\ref{chap:wp} be reused here.
+
+\begin{theorem}[The slope factorisation, {\cite[Theorem II.3.6]{Bellaiche}};
+                {\cite[Definition 2.2.5]{JN}}]
+  \label{thm:slope-factorisation}
+  \uses{def:dominant-index, lem:dominant-distinguished, thm:wdivision, def:isentirecoprime}
+  \lean{PowerSeries.exists_isDominantFactorization, PowerSeries.IsDominantFactorization,
+        PowerSeries.IsDominantFactorization.isEntireCoprime}
+  \leanok
+  Let $F$ be entire over a Banach--Tate ring, with dominant index $N$ at radius $\rho$ and with
+  $\lVert\cdot\rVert$ multiplicative on the dominant coefficient $a_N$.  Then $F = PG$ with $P$
+  a $\rho$-dominant polynomial of degree $N$ and $G$ entire of dominant index $0$ at $\rho$;
+  moreover $P$ and $G$ are relatively prime in $R\{\{T\}\}$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:dominant-distinguished, thm:wdivision, thm:wprep}
+  Bella\"iche and Kedlaya \cite[Proposition 3.2.2]{Kedlaya} both run a Newton iteration
+  $P_{l+1} = P_l + X_l$, $Q_{l+1} = Q_l + Y_l$ driven by the division estimates
+  $\lVert f\rVert = \max(\lVert g\rVert\lVert q\rVert, \lVert r\rVert)$.  We instead observe that
+  those division estimates \emph{are} Martin's, so the hypotheses say exactly that $F$ is
+  distinguished of order $N$ at radius $\rho$ (Lemma~\ref{lem:dominant-distinguished}); dividing
+  $T^N$ by $F$ (Theorem~\ref{thm:wdivision}) and subtracting the remainder from $T^N$ produces
+  the monic factor.  This is Weierstrass preparation (Theorem~\ref{thm:wprep}) in the form
+  needed.  For coprimality (the norm-level form of \cite[Lemma 2.2.7]{JN}, and where \cite{JN}
+  argue with resultants over the Gelfand spectrum): $\lVert G-1\rVert_\rho < 1$, so $G$ is a unit
+  of the Tate algebra of radius $\rho$; dividing $G^{-1}$ by $P$ there gives
+  $1 = Pq' + rG$ with $\deg r < N$, and the cofactor is entire because the entire division of
+  $1 - rG$ by $P$ has the same quotient, by uniqueness.  That is a B\'ezout identity for $P$ and
+  $G$ in $R\{\{T\}\}$.
+\end{proof}
+
+Together with Theorem~\ref{thm:riesz-coleman-full}, Theorem~\ref{thm:slope-factorisation} says:
+\emph{a vertex of the Newton polygon of $\det(1-Tu)$ whose coefficient is a multiplicative unit
+splits off a $u$-stable summand of rank equal to the abscissa of the vertex, carrying exactly
+the eigenvalues of smaller slope.}  This is the form in which the halo $U_p$ of
+\S\ref{sec:tate-riesz} is decomposed.
+
+\section{Auxiliary constructions}
+
+Three further pieces of the model-space toolkit are used in
+Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} and recorded here.
+
+\begin{lemma}[Two-sided weight bounds]
+  \label{lem:two-sided}
+  \uses{lem:hadamard, def:minor}
+  \lean{TateFredholm.norm_charCoeff_le_pow_two_sided}
+  \leanok
+  Suppose the matrix of $u$ satisfies $\lVert u_{ab}\rVert \leq \sigma^{\max(w(a) - w'(b),\,0)}$
+  for weights $w, w'$.  Then $\lVert c_n(u)\rVert \leq \sigma^{f(n)}$ whenever
+  $f(n) \leq \sum_{a\in S} w(a) - \sum_{a \in S} w'(a)$ for all $\lvert S\rvert = n$.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{lem:hadamard}
+  A permutation $\pi$ of $S$ satisfies $\sum_{a\in S} w'(\pi a) = \sum_{a \in S} w'(a)$, so every
+  Leibniz monomial of $\mathrm{minor}(u,S)$ carries the same column contribution and the row
+  contribution is $\sum_{a\in S}w(a)$.  This is the Hadamard bound of Lemma~\ref{lem:hadamard}
+  with the column weight subtracted; note that nothing is inverted, so the estimate runs over an
+  arbitrary complete ultrametric ring rather than a field.
+\end{proof}
+
+This is the estimate behind \cite[Theorem 3.16]{LWX}, where $\sigma = \lVert T\rVert$ and the
+conjugation by $\mathrm{diag}(T^{w})$ that \cite{LWX} performs explicitly is replaced by the
+observation that principal minors are invariant under diagonal conjugation.
+
+\begin{lemma}[Diagonal intertwining]
+  \label{lem:diag-intertwine}
+  \uses{def:minor}
+  \lean{TateFredholm.minor_eq_of_diag_intertwine, TateFredholm.charCoeff_eq_of_diag_intertwine,
+        TateFredholm.charPowerSeries_eq_of_diag_intertwine}
+  \leanok
+  If $D\,M_v = M_u\,D$ entrywise for a diagonal $D$ with unit entries then
+  $\mathrm{minor}(v,S) = \mathrm{minor}(u,S)$ for every finite $S$, and hence
+  $\det(1-Tv) = \det(1-Tu)$.  No compactness hypothesis and no inversion of $D$ is needed.
+\end{lemma}
+
+The point of avoiding $D^{-1}$ is that the diagonal occurring in \cite[Proposition 2.17]{LWX} is
+$\mathrm{diag}(n!)$, whose inverse is unbounded.
+
+\begin{definition}[Block-diagonal and rectangular block maps]
+  \label{def:blockmaps}
+  \uses{prop:blockop}
+  \lean{TateFredholm.blockDiag, TateFredholm.diagBlockEquiv, TateFredholm.blockOpMap,
+        TateFredholm.blockMap, TateFredholm.blockMapEquiv}
+  \leanok
+  An operator $f$ on $c(I,R)$ induces the block-diagonal operator $\mathrm{blockDiag}\,f$ on
+  $c(\sigma\times I, R)$, an equivalence if $f$ is; more generally a map
+  $f : c(I,R) \to c(I',R)$ changing the fibre induces $\mathrm{blockMap}\,f$, and a family
+  $T_{ij} : c(I,R)\to c(I',R)$ induces the rectangular block operator
+  $\mathrm{blockOpMap}\,T$, with the expected composition rules against
+  Proposition~\ref{prop:blockop}.
+\end{definition}
+
+\begin{theorem}[Perturbed unitriangular matrices are isometries]
+  \label{thm:unitriangular}
+  \uses{def:cspace}
+  \lean{TateFredholm.IsUnitriangularPerturbation, TateFredholm.ofPerturbation,
+        TateFredholm.norm_ofPerturbation, TateFredholm.surjective_ofPerturbation,
+        TateFredholm.equivOfPerturbation}
+  \leanok
+  Let $M$ be an infinite matrix over a complete ultrametric field with entries of norm
+  $\leq 1$, unit diagonal, entries strictly below the diagonal of norm $\leq q < 1$, and
+  finitely supported columns.  Then $M$ defines an isometry of $c(\N,K)$ with dense range, hence
+  a continuous linear equivalence.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  Norm-preservation is a largest-index argument: in $Mx$ the coordinate at the largest index
+  where $x$ attains its norm receives the unit diagonal contribution and nothing else of that
+  size, the sub-diagonal entries being smaller by the factor $q$.  Surjectivity is $q$-adic
+  successive approximation.
+\end{proof}
+
+This is the criterion behind Colmez's proof of Amice's theorem, which Colmez states through the
+residue field of a discretely valued base; the argument above needs only completeness and the
+ultrametric inequality, which is what \S\ref{sec:amice} requires.
+
+\begin{lemma}[Pairing of characteristic roots]
+  \label{lem:charpoly-pairing}
+  \lean{Matrix.det_mul_det_of_mul_eq_smul, Matrix.C_det_mul_charpolyRev_eq,
+        Matrix.roots_charpolyRev, Matrix.roots_charpoly_of_mul_eq_smul}
+  \leanok
+  If $AB = c\cdot 1$ then $A$ is invertible with $B = c\,A^{-1}$, $\det A\det B = c^{\,n}$, and
+  over an algebraically closed field
+  $(\mathrm{charpoly}\,B).\mathrm{roots} = (\mathrm{charpoly}\,A).\mathrm{roots}$ mapped by
+  $x \mapsto c/x$.
+\end{lemma}
+
+The root statement is phrased as an identity of multisets rather than as a sorted indexing
+$\alpha_i = k+1-\alpha_{n-1-i}$: summing recovers the slope total, and counting recovers the
+per-slope multiplicities, which are the two consumers in \S\ref{sec:stepone}.

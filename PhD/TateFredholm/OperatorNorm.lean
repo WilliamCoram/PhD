@@ -533,6 +533,12 @@ theorem opNorm_mul_le (f g : M →L[R] M) : ‖f * g‖ ≤ ‖f‖ * ‖g‖ :=
   _ ≤ ‖f‖ * (‖g‖ * ‖x‖) := mul_le_mul_of_nonneg_left (le_opNorm g x) (opNorm_nonneg f)
   _ = ‖f‖ * ‖g‖ * ‖x‖ := (mul_assoc _ _ _).symm
 
+/-- `‖a • u‖ ≤ ‖a‖ ‖u‖`, on a general `M →L[R] N`. -/
+theorem opNorm_smul_le (a : R) (u : M →L[R] N) : ‖a • u‖ ≤ ‖a‖ * ‖u‖ :=
+  opNorm_le_of_forall _ (mul_nonneg (norm_nonneg a) (opNorm_nonneg u)) fun x ↦
+    (norm_smul_le a (u x)).trans <| (mul_le_mul_of_nonneg_left (le_opNorm u x)
+      (norm_nonneg a)).trans_eq (mul_assoc _ _ _).symm
+
 omit [NormOneClass R] [IsBoundedSMul R M] [IsTate R] in
 /-- The identity operator has operator norm at most `1` (`‖id x‖ = ‖x‖ = 1·‖x‖`). -/
 theorem opNorm_one_le : ‖(1 : M →L[R] M)‖ ≤ 1 :=

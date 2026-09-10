@@ -46,9 +46,10 @@ and compatible.  This development records their common refinement:
 > is a multiplicative pseudo-uniformizer `ϖ ∈ R^×`, `‖ϖ‖ < 1`) — no ground field, and
 > **no Noetherian hypothesis** anywhere except `Noetherian.lean` (the closedness of
 > finitely generated submodules, the bridge `IsCompletelyContinuous.isCompactoid`, and
-> the recovered criterion `isCompletelyContinuous_iff_rowNorm`) and the single isolated
-> statement `finite_projective_of_one_sub_compact_nilpotent`.  The determinant theory
-> itself runs on `IsCompactoid` (cofinite row decay) and is Noetherian-free.
+> the recovered criterion `isCompletelyContinuous_iff_rowNorm`).  The determinant theory
+> itself runs on `IsCompactoid` (cofinite row decay) and is Noetherian-free, and so is
+> [Bel] Proposition II.1.21 (`finite_projective_of_one_sub_compact_nilpotent`), whose proof
+> only ever used the Neumann inverse.
 >
 > **Proof architecture**: Bellaïche's — coordinate truncations `π_S`, the quantitative
 > Open Mapping Theorem, the Lipschitz bound for the determinant's coefficients, and the
@@ -67,7 +68,15 @@ and compatible.  This development records their common refinement:
 * `ModelSpace.lean` — the model space `c(I, R)`, ON-able / potentially ON-able / (Pr)
 * `Matrix.lean` — matrix coefficients, truncations, the compactness criterion
 * `Fredholm.lean` — the Fredholm determinant `det(1 − Tu)` and its invariances
-* `Pr.lean` — the lifting property, projectivity, the one Noetherian statement
+* `Pr.lean` — the lifting property, projectivity, [Bel] Proposition II.1.21 (Noetherian-free)
+* `Entire.lean` — entire power series, Euclidean division by a polynomial with unit leading
+  coefficient, `IsEntireCoprime`, good zeros
+* `Resultant.lean` — `Res(charpoly A, g) = det g(A)`
+* `Coleman.lean` — Coleman's `D(B, P)` and the spectral mapping `det(1 − T·B(u))`
+* `Charpoly.lean` — `charpolyRev` under base change; Sylvester; unipotent matrices over a field
+* `RieszColeman.lean` — [JN] Theorem 2.2.2: the Riesz–Coleman decomposition for a coprime
+  factorisation `det(1 − Tu) = QS`
+* `SlopeFactor.lean` — the vertex (slope) factorisation of an entire series ([Bel] II.3.6)
 * `Residue.lean` — residue machinery for Serre's theorem
 * `BaseChange.lean` — norm comparison, equivalent-norm invariance, bounded base change,
   and the classical (field) specialisations
@@ -97,8 +106,8 @@ Three statements resist the merge and are recorded accordingly:
   ON-able) is intrinsically a field statement — kept in the "classical specialisations"
   section of `BaseChange.lean`, phrased over a field via the bridge, with its residue
   machinery in `Residue.lean`;
-* Bellaïche's Proposition II.1.21 (compact `u`, `1 − u` nilpotent ⟹ finite projective)
-  genuinely needs `[IsNoetherianRing R]` and keeps it, isolated;
+* Bellaïche's Proposition II.1.21 (compact `u`, `1 − u` nilpotent ⟹ finite projective) was
+  proved Noetherian-free in 2026-09-06 (`Pr.lean`, `finite_of_one_sub_compact_nilpotent`);
 * [JN]'s norm-comparison Lemmas 2.1.6–2.1.7 are Tate-specific and hold here as stated —
   they never made sense in the field-only files.
 
@@ -140,7 +149,7 @@ merged ones.
 | `charPowerSeries_comm` (trace property)  | Prop II.1.17 | —           | —         |
 | `charPowerSeries_conj`, `_extendZero`    | Cor II.1.18  | 2.5/2.6, pp.72–73 | —  |
 | `HasPr.exists_lift`, `HasPr.projective`  | Ex II.1.19, Prop II.1.20 | — | —      |
-| `finite_projective_of_one_sub_compact_nilpotent` (**Noetherian**) | Prop II.1.21 | — | — |
+| `finite_projective_of_one_sub_compact_nilpotent` (Noetherian-free) | Prop II.1.21 | — | — |
 | `norm_le_pow_of_equiv`, `norm_comparison_of_common_uniformizer` | — | Lem 2.1.6–7 | — |
 | `isCompletelyContinuous_map_equiv`, `charPowerSeries_map_equiv` | — | Prop 2.1.8 | — |
 | `charCoeff_baseChange` etc. (bounded `ψ`)| Lem II.1.23 (matrix-wise) | Buz 2.9/2.10 | — |
@@ -169,12 +178,29 @@ instance {I : Type*} [h : DecidableEq I] : DecidableEq (Ix I) := h
 
 section Tate
 
-variable {A : Type*} [NormedRing A]
-
-omit [NormedRing A] in
 /-- An element `a` is *multiplicative* if `‖ax‖ = ‖a‖‖x‖` for all `x` — the single-element
 form of `NormMulClass` ([JN] Definition 2.1.1). -/
-def IsMultiplicative [Norm A] [Mul A] (a : A) : Prop := ∀ x : A, ‖a * x‖ = ‖a‖ * ‖x‖
+def IsMultiplicative {A : Type*} [Norm A] [Mul A] (a : A) : Prop := ∀ x : A, ‖a * x‖ = ‖a‖ * ‖x‖
+
+/-- Products of multiplicative elements are multiplicative. -/
+theorem IsMultiplicative.mul {A : Type*} [Norm A] [Semigroup A] {a b : A}
+    (ha : IsMultiplicative a) (hb : IsMultiplicative b) : IsMultiplicative (a * b) := fun x ↦ by
+  rw [mul_assoc, ha, hb, ha, mul_assoc]
+
+/-- Powers of a multiplicative element scale norms by the corresponding power. -/
+theorem IsMultiplicative.norm_pow_mul {A : Type*} [Norm A] [Monoid A] {a : A}
+    (ha : IsMultiplicative a) (n : ℕ) (x : A) : ‖a ^ n * x‖ = ‖a‖ ^ n * ‖x‖ := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [pow_succ', mul_assoc, ha, ih, pow_succ', mul_assoc]
+
+/-- Powers of a multiplicative element are multiplicative. -/
+theorem IsMultiplicative.pow {A : Type*} [SeminormedRing A] [NormOneClass A] {a : A}
+    (ha : IsMultiplicative a) (n : ℕ) : IsMultiplicative (a ^ n) := fun x ↦ by
+  have h1 : ‖a ^ n‖ = ‖a‖ ^ n := by simpa using ha.norm_pow_mul n 1
+  rw [ha.norm_pow_mul n x, h1]
+
+variable {A : Type*} [NormedRing A]
 
 /-- A *multiplicative pseudo-uniformizer*: a multiplicative unit `ϖ` with `‖ϖ‖ < 1`
 ([JN] Definition 2.1.2).  The scaling element that replaces the ground field of the

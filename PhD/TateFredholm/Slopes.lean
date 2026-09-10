@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.GenFun
 
 /-!
 # Slope bounds for the Fredholm determinant
@@ -16,11 +17,13 @@ row sum for `|S| = n` is `0 + 1 + ⋯ + (n−1) = n(n−1)/2`.  Hence
   `‖cₙ(u)‖ ≤ σ ^ (n choose 2)`,
 
 which says the Newton polygon of `det(1 − Tu)` lies on or above the polygon with unit slopes
-`0, v(σ), 2v(σ), …` ([Serre1962, §5]; [Jacobs, Thm 2.12] is the case where the rescaled minors
-are units, where the bound is an equality).
+`0, v(σ), 2v(σ), …` ([Serre1962, §5]).  When the rescaled minors are units the bound is an
+equality — [Jacobs, Thm 2.12] proper — and that exact case is proved here too, at an arbitrary
+`ϖ` with `‖ϖ‖ < 1`.
 
-This file is the σ-general, weight-free half of `PhD/JacobsSlash/«1_SlopeTheorem».lean`
-(whose statements are pinned at `σ = ‖3‖`).
+Everything here was generalised out of `PhD/JacobsSlash/«1_SlopeTheorem».lean`, whose statements
+were pinned at `ϖ = 3` (slopes-hecke board A1/A2, 2026-08-20, and the exact case on 2026-09-01);
+that file now keeps only the fork's normalisation `ϖ₃`.
 
 ## Main declarations
 
@@ -33,7 +36,14 @@ This file is the σ-general, weight-free half of `PhD/JacobsSlash/«1_SlopeTheor
   `norm_charCoeff_le_pow_choose_two` and `norm_charCoeff_le_pow_block`.
 * `TateFredholm.choose_two_lt_sum_of_ne_range` — the strict form of `choose_two_le_sum` for
   `S ≠ {0, …, n-1}`, which is what upgrades the bound to an *equality* when the principal block's
-  minor is a unit ([Jacobs, Thm 2.12]; see `PhD/JacobsSlash/«1_SlopeTheorem».lean`).
+  minor is a unit.
+* `TateFredholm.norm_charCoeff_of_unit_minors` — **the exact case** ([Jacobs, Thm 2.12] at an
+  arbitrary `ϖ`): unit top-left minors of the rescaled matrix `N j i = ϖ⁻ʲ uⱼᵢ` force
+  `‖cₘ(u)‖ = ‖ϖ‖ ^ (m.choose 2)`.
+* `TateFredholm.val_charCoeff_of_unit_minors` — the same through the additive valuation
+  `PseudoUniformizer.val`, normalised by `v_ϖ(ϖ) = 1`: `v_ϖ(cₘ) = m(m−1)/2`.
+* `TateFredholm.norm_tsum_eq_of_dominant` — the ultrametric isolated-dominant-term principle
+  the equality rests on.
 -/
 
 open Filter Topology
@@ -191,5 +201,152 @@ theorem norm_charCoeff_le_pow_block {ι : Type*} [Fintype ι] [DecidableEq ι] {
     (hdiv : ∀ j i, ‖matrixCoeff u j i‖ ≤ σ ^ j.2) (n : ℕ) :
     ‖charCoeff u n‖ ≤ σ ^ (∑ k ∈ Finset.range n, k / Fintype.card ι) :=
   norm_charCoeff_le_pow hσ0 hσ1 hu Prod.snd hdiv (fun _ _ h => sum_div_le_sum_block h) n
+
+/-! ### The exact case: unit minors
+
+[Jacobs, Theorem 2.12]: when the rescaled matrix `N j i = ϖ⁻ʲ · matrixCoeff u j i` has every
+top-left minor of norm `1`, the slope bound at the identity weight is an equality.  Three
+inputs: the ultrametric dominant-term principle for `tsum`s; the exact contribution of the
+principal block `{0, …, m−1}` (row rescaling of determinants); and its strict minimality among
+`m`-element index sets (`choose_two_lt_sum_of_ne_range` above). -/
+
+omit [CompleteSpace K] in
+/-- A summable family with one term of norm `b` and all others of norm `≤ c < b` has
+`‖tsum‖ = b` (ultrametric isolated-dominant-term principle). -/
+theorem norm_tsum_eq_of_dominant {ι : Type*} {f : ι → K} (hf : Summable f) (i₀ : ι)
+    {c : ℝ} (hc : c < ‖f i₀‖) (h : ∀ i ≠ i₀, ‖f i‖ ≤ c) : ‖∑' i, f i‖ = ‖f i₀‖ := by
+  classical
+  rw [hf.tsum_eq_add_tsum_ite i₀]
+  by_cases hall : ∀ i, i = i₀
+  · -- Degenerate case: no other index, so the tail vanishes identically.  (This case must be
+    -- separated because `c` may be negative, in which case `h` is vacuous.)
+    rw [tsum_congr fun i => if_pos (hall i), tsum_zero, add_zero]
+  · obtain ⟨i₁, hi₁⟩ := not_forall.1 hall
+    have hc0 : 0 ≤ c := (norm_nonneg (f i₁)).trans (h i₁ hi₁)
+    have htail : ‖∑' i, if i = i₀ then (0 : K) else f i‖ ≤ c := by
+      refine IsUltrametricDist.norm_tsum_le_of_forall_le_of_nonneg hc0 fun i => ?_
+      by_cases hi : i = i₀
+      · simpa [hi] using hc0
+      · simpa [hi] using h i hi
+    have hlt : ‖∑' i, if i = i₀ then (0 : K) else f i‖ < ‖f i₀‖ := htail.trans_lt hc
+    rw [IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hlt.ne', max_eq_left hlt.le]
+
+omit [IsUltrametricDist K] [CompleteSpace K] in
+/-- Row rescaling of determinants: if `A j i = a ^ j * B j i` then
+`det A = a ^ (∑ j, j) * det B` — the factorisation `det M_S = ϖ^{∑ rows} · det N_S` behind the
+principal-block computation. -/
+theorem det_row_smul_pow (a : K) {n : ℕ} (B : Matrix (Fin n) (Fin n) K) :
+    (Matrix.of fun j i : Fin n => a ^ (j : ℕ) * B j i).det =
+      a ^ (∑ j : Fin n, (j : ℕ)) * B.det := by
+  rw [Matrix.det_mul_column (fun j : Fin n => a ^ (j : ℕ)) B, Finset.prod_pow_eq_pow_sum]
+
+/-- The tautological identification `Fin m ≃ ↥(Finset.range m)` (both directions are `rfl`,
+and `↑(finEquivRange m j) = ↑j` definitionally).  `minor` is indexed by the subtype `↥S` while
+the unit-minor hypothesis is indexed by `Fin m`; this is the transport used for the principal
+block `S_m = {0, …, m-1}`. -/
+private def finEquivRange (m : ℕ) : Fin m ≃ ↥(Finset.range m) where
+  toFun j := ⟨(j : ℕ), Finset.mem_range.2 j.2⟩
+  invFun x := ⟨(x : ℕ), Finset.mem_range.1 x.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+omit [IsUltrametricDist K] [CompleteSpace K] in
+/-- Unit minors force the rescaling element to be nonzero.  No hypothesis on `ϖ` is needed:
+were `ϖ = 0` then `ϖ⁻¹ = 0`, so the second row of the rescaled `2 × 2` matrix would vanish and
+its determinant would have norm `0`, not `1`. -/
+theorem ne_zero_of_unit_minors {ϖ : K} {u : c(ℕ, K) →L[K] c(ℕ, K)}
+    (hmin : ∀ n : ℕ,
+      ‖(Matrix.of fun j i : Fin n => ϖ⁻¹ ^ (j : ℕ) * matrixCoeff u j i).det‖ = 1) :
+    ϖ ≠ 0 := by
+  intro h0
+  have hrow : ∀ i : Fin 2,
+      (Matrix.of fun j i : Fin 2 => ϖ⁻¹ ^ (j : ℕ) * matrixCoeff u j i) 1 i = 0 := by
+    intro i
+    show ϖ⁻¹ ^ (((1 : Fin 2) : ℕ)) * matrixCoeff u 1 i = 0
+    rw [show ((1 : Fin 2) : ℕ) = 1 from rfl, h0, inv_zero, pow_one, zero_mul]
+  have h := hmin 2
+  rw [Matrix.det_eq_zero_of_row_eq_zero 1 hrow, norm_zero] at h
+  exact zero_ne_one h
+
+omit [IsUltrametricDist K] [CompleteSpace K] in
+/-- The principal block contributes exactly `‖ϖ‖ ^ (m(m-1)/2)`: factoring `ϖ ^ j` out of the
+`j`-th row of `M_{S_m}` leaves the matrix `N_m` of the unit-minor hypothesis, whence
+`‖det M_{S_m}‖ = ‖ϖ‖ ^ (∑_{j < m} j) · 1`. -/
+theorem norm_minor_range {ϖ : K} (hne : ϖ ≠ 0) {u : c(ℕ, K) →L[K] c(ℕ, K)}
+    (hmin : ∀ n : ℕ,
+      ‖(Matrix.of fun j i : Fin n => ϖ⁻¹ ^ (j : ℕ) * matrixCoeff u j i).det‖ = 1)
+    (m : ℕ) : ‖minor u (Finset.range m)‖ = ‖ϖ‖ ^ m.choose 2 := by
+  have hsum : ∑ j : Fin m, (j : ℕ) = m.choose 2 := by
+    have hfin : ∑ j : Fin m, (j : ℕ) = ∑ i ∈ Finset.range m, i :=
+      Fin.sum_univ_eq_sum_range (fun i => i) m
+    rw [hfin, Finset.sum_range_id, Nat.choose_two_right]
+  have hdet : minor u (Finset.range m)
+      = (Matrix.of fun j i : Fin m => matrixCoeff u (j : ℕ) (i : ℕ)).det :=
+    (Matrix.det_submatrix_equiv_self (finEquivRange m) _).symm
+  have hfac : (Matrix.of fun j i : Fin m => matrixCoeff u (j : ℕ) (i : ℕ))
+      = Matrix.of fun j i : Fin m => ϖ ^ (j : ℕ) *
+          (Matrix.of fun j i : Fin m => ϖ⁻¹ ^ (j : ℕ) * matrixCoeff u j i) j i := by
+    ext j i
+    show matrixCoeff u (j : ℕ) (i : ℕ)
+      = ϖ ^ (j : ℕ) * (ϖ⁻¹ ^ (j : ℕ) * matrixCoeff u (j : ℕ) (i : ℕ))
+    rw [← mul_assoc, ← mul_pow, mul_inv_cancel₀ hne, one_pow, one_mul]
+  rw [hdet, hfac, det_row_smul_pow, norm_mul, norm_pow, hmin m, mul_one, hsum]
+
+/-- **[Jacobs, Theorem 2.12]** (norm form, at an arbitrary `ϖ` with `‖ϖ‖ < 1`).  Let `u` be an
+operator on `c(ℕ, K)` whose matrix satisfies the divisibility `‖matrixCoeff u j i‖ ≤ ‖ϖ‖ ^ j`
+and whose rescaled matrix `N j i = ϖ⁻ʲ · matrixCoeff u j i` has every top-left minor of norm
+`1`.  Then `‖c_m(u)‖ = ‖ϖ‖ ^ (m.choose 2)` for every `m` — the slope bound
+`norm_charCoeff_le_pow_choose_two` is an equality: the points `(m, m(m−1)/2)` of the Newton
+polygon of `det (1 - Tu)` lie on the parabola `½ x (x-1)`. -/
+theorem norm_charCoeff_of_unit_minors {ϖ : K} (hϖ : ‖ϖ‖ < 1) (u : c(ℕ, K) →L[K] c(ℕ, K))
+    (hdiv : ∀ j i, ‖matrixCoeff u j i‖ ≤ ‖ϖ‖ ^ j)
+    (hmin : ∀ n : ℕ,
+      ‖(Matrix.of fun j i : Fin n => ϖ⁻¹ ^ (j : ℕ) * matrixCoeff u j i).det‖ = 1)
+    (m : ℕ) : ‖charCoeff u m‖ = ‖ϖ‖ ^ m.choose 2 := by
+  obtain ⟨i₀, hi₀⟩ : ∃ i₀ : {S : Finset ℕ // S.card = m}, (i₀ : Finset ℕ) = Finset.range m :=
+    ⟨⟨Finset.range m, Finset.card_range m⟩, rfl⟩
+  have hne : ϖ ≠ 0 := ne_zero_of_unit_minors hmin
+  have h0 : (0 : ℝ) < ‖ϖ‖ := norm_pos_iff.2 hne
+  have hcpt : IsCompactoid u :=
+    isCompactoid_of_row_decay' (C := 1) (norm_nonneg ϖ) hϖ fun j i => by
+      rw [one_mul]; exact hdiv j i
+  -- The principal block `S_m = {0, …, m-1}` contributes exactly `‖ϖ‖ ^ m(m-1)/2`.
+  have hdom : ‖minor u (i₀ : Finset ℕ)‖ = ‖ϖ‖ ^ m.choose 2 := by
+    rw [hi₀]
+    exact norm_minor_range hne hmin m
+  -- Every other block is strictly smaller: its row sum exceeds `m(m-1)/2`.
+  have hoff : ∀ S ≠ i₀, ‖minor u (S : Finset ℕ)‖ ≤ ‖ϖ‖ ^ (m.choose 2 + 1) := by
+    intro S hS
+    refine (norm_minor_le_pow_sum (norm_nonneg _) (fun j => j) hdiv _).trans
+      (pow_le_pow_of_le_one (norm_nonneg _) hϖ.le ?_)
+    exact choose_two_lt_sum_of_ne_range S.2 fun h => hS (Subtype.ext (h.trans hi₀.symm))
+  have hc : ‖ϖ‖ ^ (m.choose 2 + 1) < ‖minor u (i₀ : Finset ℕ)‖ := by
+    rw [hdom]
+    exact pow_lt_pow_right_of_lt_one₀ h0 hϖ (Nat.lt_succ_self _)
+  have htsum : ‖∑' S : {S : Finset ℕ // S.card = m}, minor u (S : Finset ℕ)‖
+      = ‖minor u (i₀ : Finset ℕ)‖ :=
+    norm_tsum_eq_of_dominant (summable_minor u hcpt m) i₀ hc hoff
+  rw [charCoeff, norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul, htsum, hdom]
+
+/-- The slope reading of `norm_charCoeff_of_unit_minors` through the additive valuation
+`v_ϖ = PseudoUniformizer.val`, normalised by `v_ϖ(ϖ) = 1`:  `v_ϖ(c_m) = m(m-1)/2` — the exact
+valuation-sequence input the Newton-polygon machinery consumes (`PhD.NewtonPolygons`). -/
+theorem val_charCoeff_of_unit_minors (ϖ : PseudoUniformizer K) (u : c(ℕ, K) →L[K] c(ℕ, K))
+    (hdiv : ∀ j i, ‖matrixCoeff u j i‖ ≤ ‖(ϖ : K)‖ ^ j)
+    (hmin : ∀ n : ℕ,
+      ‖(Matrix.of fun j i : Fin n => (ϖ : K)⁻¹ ^ (j : ℕ) * matrixCoeff u j i).det‖ = 1)
+    (m : ℕ) : ϖ.val (charCoeff u m) = (m.choose 2 : ℝ) := by
+  have hlt : ‖(ϖ : K)‖ < 1 := by
+    rw [PseudoUniformizer.coe_eq]
+    exact ϖ.norm_lt_one
+  have hnorm := norm_charCoeff_of_unit_minors hlt u hdiv hmin m
+  have h0 : (0 : ℝ) < ‖(ϖ : K)‖ := ϖ.norm_pos
+  have hlog : Real.log ‖(ϖ : K)‖ ≠ 0 := ϖ.log_norm_neg.ne
+  have hne : charCoeff u m ≠ 0 := by
+    intro h
+    rw [h, norm_zero] at hnorm
+    exact (pow_pos h0 (m.choose 2)).ne' hnorm.symm
+  rw [PseudoUniformizer.val_of_ne_zero ϖ hne, hnorm, Real.log_pow, mul_div_assoc,
+    div_self hlog, mul_one]
 
 end TateFredholm

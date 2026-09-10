@@ -1,0 +1,1960 @@
+Extracted via pypdf from Pollack - Quaternionic modular forms.pdf
+
+===== PDF PAGE 1 =====
+AWS 2022: Modular forms on exceptional
+groups
+Aaron Pollack
+March 1, 2022
+Department of Mathematics, University of California San Diego, La Jolla,
+CA USA
+Email address: apollack@ucsd.edu
+===== PDF PAGE 2 =====
+
+===== PDF PAGE 3 =====
+Contents
+Chapter 1. Introduction 5
+1.1. Holomorphic modular forms 5
+1.2. Quaternionic modular forms 6
+1.3. Why study quaternionic modular forms 7
+Chapter 2. The group G2 10
+2.1. The group G2 10
+2.2. The Z/2-grading and the Heisenberg parabolic 11
+2.3. The Cartan involution 11
+Chapter 3. Modular forms on G2 13
+3.1. Warm-up: Holomorphic modular forms 13
+3.2. The deﬁnition 14
+3.3. Examples and theorems 15
+Chapter 4. Exceptional algebra 19
+4.1. Composition algebras 19
+4.2. Cubic norm structures 20
+4.3. The group MJ 21
+4.4. The Z/3 grading on g(J) 22
+Chapter 5. The Freudenthal construction 24
+5.1. The Freudenthal construction 24
+5.2. Rank one elements 25
+5.3. The exceptional upper half-space 25
+Chapter 6. The quaternionic groups 27
+6.1. The Z/2-grading 27
+6.2. The Heisenberg parabolic 28
+6.3. The Cartan involution 29
+Chapter 7. Quaternionic modular forms 31
+7.1. The diﬀerential equation 31
+7.2. Representation theory 32
+7.3. The Fourier expansion 32
+7.4. Examples of quaternionic modular forms 33
+Chapter 8. The Fourier expansion on orthogonal groups 36
+8.1. Setups 36
+8.2. Statement of theorem 37
+3
+===== PDF PAGE 4 =====
+8.3. The Iwasawa decomposition 38
+8.4. The diﬀerential equations 38
+8.5. Solving the diﬀerential equations 40
+Chapter 9. Proposed projects 43
+9.1. Project 1: The generalized Whittaker function on U(2,n ) 43
+9.2. Project 2: An Oda-Rallis-Schiﬀman lift for U(2,n ) 44
+Bibliography 45
+4
+===== PDF PAGE 5 =====
+CHAPTER 1
+Introduction
+This course is about quaternionic modular forms (QMFs). A QMF is a very special
+type of automorphic form, much like holomorphic modular forms (HMFs) are a special
+type of automorphic form. In fact, quaternionic modular forms appear to behave very
+similarly to holomorphic modular forms, and this is one reason to be interested in them. In
+this introduction, I will brieﬂy explain what are QMFs and try to motivate why they are
+interesting objects to study. I begin by brieﬂy reviewing holomorphic modular forms.
+1.1. Holomorphic modular forms
+Suppose G is a semisimple Q group, with symmetric space XG =G(R)0/K0, where K0
+is a maximal compact subgroup of G(R)0. For some groups G, the symmetric space XG has
+a structure of a complex manifold, for which the G(R)0 action is via biholomorphic maps.
+This is the case 1 if G(R)0 is, for example, isogenous to one of the following groups:
+(1) Sp 2n(R)
+(2) SO(2,n )
+(3) U(p,q )
+In these cases, one can make a classical deﬁnition of holomorphic modular forms. The
+holomorphic modular forms can be thought of sections of holomorhpic line bundles on Γ\XG,
+where Γ ⊆ G(Q) is an arithmetic subgroup. Another way to think of the holomorphic
+modular forms is as very special automorphic forms ϕ :G(Q)\G(A)→ C.
+Compared to general automorphic forms, holomorhpic modular forms are special for at
+least a few reasons. One reason is that, in many situations 2, they have a classical Fourier
+expansion and corresponding Fourier coeﬃcients. General automorphic forms do not have as
+nice of a notion of Fourier coeﬃcients. These Fourier coeﬃcients can contain very interesting
+arithmetic information. For example, if θ(q) = ∑
+n∈Zqn2
+is the classical θ-function, which
+is a modular form of weight 1 /2, then θ(q)k =∑
+n≥0rk(n)qn where rk(n) is the number of
+ways of writing n as the sum of k squares. So the Fourier coeﬃcients of θ(q)k, which is a
+special modular form of weight k/2, see the arithmetically interesting numbers rk(n).
+Another reason holomorphic modular forms are interesting is that they are frequently, al-
+though certainly not always, the objects for which we can say arithmetically interesting things
+about their L-values. To be more precise, automorphic representations π have associated
+L-functions,L(π,r,s ). For certain automorphic representations π, the L-functionsL(π,r,s )
+are conjectured to be motivic, i.e., equal to the L-functions of certain motives. One can then
+transfer the conjectures about motivic L-functions (e.g., the Deligne and Bloch-Kato con-
+jectures) to the automorphic L-functions. For example, one can ask if the special L-values
+1This is not an exhaustive list
+2If XG is of tube type and G has an appropriate rational parabolic subgroup
+5
+===== PDF PAGE 6 =====
+L(π,r,s =s0) are algebraic (after dividing by a certain period) and if they can be p-adically
+interpolated. Working with holomorphic modular forms enables one to prove statements of
+this sort. For example, there is the recent work of Eischen-Harris-Li-Skinner [EHLS20] who
+construct p-adic L-functions for holomorphic modular forms on unitary groups.
+Finally, because of their familiarity and extra structure, holomorphic modular forms are
+a great testing ground for potentially new phenomena. For theorems about automorphic
+forms–whether it be regarding L-values, periods, the trace formula, Galois representations–
+the ﬁrst special cases that are proved are in the context of holomorphic modular forms.
+Trying to ﬁnd and test new phenomena is yet another reason why holomorphic modular
+forms deserve special attention.
+1.2. Quaternionic modular forms
+For most semisimple groups G, the symmetric space XG is does not have a G(R)0-
+invariant complex structure. Consequently, there are no holomorhpic modular forms on XG,
+and no obvious notion of very special 3 automorphic forms on G(A). Phrased this way, it
+begs the question: Are there a class of groups G, and a class of very special automorphic on
+these groups G, that can in some ways take the place of holomorphic modular forms?
+Quaternionic modular forms are a potential answer to the above question. Their study
+was initiated by Gross-Wallach [GW94], Wallach [Wal03], and Gan-Gross-Savin [GGS02].
+I have been studying them for the last few years, trying to provide evidence that they behave
+like holomorphic modular forms. In this course, I will deﬁne quaternionic modular forms and
+give some of this evidence that quaternionic modular forms are arithmetic in a way similar
+to how holomorphic modular forms are arithmetic.
+So, what are the groups G above, and what are the quaternionic modular forms? This
+will be described in detail below, but for now let me give a brief indication. Suppose G
+is a semisimple group for which XG has a G(R)-invariant complex structure. If ϕ is an
+automorphic form on G(A) that corresponds to a holomorphic modular form fϕ of some
+integer scalar weight w, then ϕ has two properties:
+(1) ϕ(gk) = z(k)−wϕ(g) for all k ∈ K0, where z : K0 → U(1) is a certain ﬁxed
+surjection;
+(2) DCR,wϕ(g)≡ 0, where DCR,w is a certain linear diﬀerential operator corresponding
+to the fact fϕ satisﬁes the Cauchy-Riemann equation.
+And conversely, the automorphic forms ϕ with these properties correspond to holomorphic
+modular forms fϕ of weightw. One can also make a deﬁnition in terms of the representation
+theory of real group G(R): At least if w is suﬃciently large, ϕ corresponds to a holo-
+morphic modular form of weight w if the ( g,K 0)-module generated by ϕ is a holomorphic
+discrete series representation πw and ϕ spans a one-dimensional minimal K0-type in this
+representation. In other words, holomorphic modular forms correspond to special vectors in
+automorphic representations π = πf⊗π∞, where π∞ is a special type of representation of
+the real group G(R)0.
+3Some notions of special automorphic forms for G, which we do not consider “very special” for this
+purpose, are as follows: 1) functorial lifts from smaller groups (not wide enough a class of automorphic
+forms); 2) cohomological automorphic forms (too broad a class of automorphic forms)
+6
+===== PDF PAGE 7 =====
+Now, the groups G with holomorphic modular forms have K0 such that K0 possesses
+a surjection to the smallest nontrivial connected compact group, U(1). Gross and Wallach
+had the insight to ask the question, “What if G(R)0 is such that K0 possesses a surjection
+to the next smallest compact group, SU(2) /µ2 = SO(3)?” The list of these groups includes
+(strictly) the following groups:
+• split G2
+• split F4
+• En,4, n = 6, 7, 8 (groups of type E6,E 7,E 8 with real rank four)
+• SO(4,n )0 with n≥ 3.
+TheG for whichG(R)0 is as above are called quaternionic groups; they possess quaternionic
+modular forms. Set Vw =Sym2w(C2), a representation of SU(2)/µ2, or ofK0 via the surjec-
+tion K0→ SU(2)/µ2. A quaternionic modular form of integer weight w is an automorphic
+form ϕ :G(Q)\G(A)→ Vw satisfying
+(1) ϕ(gk) =k−1·ϕ(g) for all k∈K0;
+(2) Dwϕ(g)≡ 0, for a certain speciﬁc linear diﬀerential operator Dw.
+Like with holomorphic modular forms, one can also make a deﬁnition of quaternionic modular
+forms in terms of certain (discrete series) representations of G(R)0. In more detail, if w is
+suﬃciently large, there is a discrete series representation πw of G(R)0 whose minimal K0-
+type is V∨
+w≃ Vw. quaternionic modular forms are automorphic forms that correspond to
+the (entire) minimal K0-type of πw, embedded in the space of automorphic forms on G.
+1.3. Why study quaternionic modular forms
+From my point of view, the primary purpose of this course is to convince you that
+quaternionic modular forms are interesting gadgets which deserve further study 4. Let me
+brieﬂy indicate some ways in which quaternionic modular forms are interesting, leaving a
+more detailed description to the rest of the notes.
+1.3.1. Quaternionic modular forms possess Fourier coeﬃcients. One of the ﬁrst
+things to say about quaternionic modular forms is that they have a Fourier expansion and
+corresponding Fourier coeﬃcients, very similar to that of holomorphic modular forms. In
+other words, associated to a quaternionic modular form ϕ, one can deﬁne a list of complex
+numbers aϕ(λ), where λ varies in some lattice Λ. The proof of the existence of these Fourier
+coeﬃcients began with work of Wallach [ Wal03], was used by Gan-Gross-Savin [ GGS02],
+and then was made more complete and explicit in [ Pol20a].
+The existence and properties of these Fourier coeﬃcients are somewhat miraculous. Here
+is, in my mind, an important example: Suppose G1 ⊆ G2 are two quaternionic groups,
+embedded appropriately, and ϕ2 on G2 is a quaternionic modular form of weight w. Then
+the pullback ϕ1 of ϕ2 to G1 is again a quaternionic modular form of weight w. Moreover,
+one can show that the Fourier coeﬃcients of ϕ1 are ﬁnite sums of the Fourier coeﬃcients
+ofϕ2. Note that, for a general automorphic form ϕ2, one would not be able to say anything
+of content about a Fourier expansion of ϕ1 from that of ϕ2.
+4The secondary purpose of this course is to convince you that exceptional groups are beautiful, and that
+you can work with them concretely.
+7
+===== PDF PAGE 8 =====
+1.3.2. The Fourier coeﬃcients of quaternionic modular forms appear to be
+arithmetic. The Fourier coeﬃcients of a quaternionic modular form are deﬁned in a very
+transcendental way. Nevertheless, they appear to be highly arithmetic. Here are examples:
+(1) There are degenerate Eisenstein series E2k on G2 of even weight 2k. Using work of
+Jiang-Rallis [JR97], Gan-Gross-Savin [GGS02] showed that if the non-degenerate
+Fourier coeﬃcients of the E2k are nonzero5, then they are essentially values of Zeta
+functions ζE(1− 2k) of totally real cubic ﬁelds E.
+(2) In the works [ Pol20b], [Pol20c], it is shown that for two very special quaternionic
+modular forms on E8,4, their Fourier coeﬃcients are (nonzero) rational numbers.
+(3) In the paper [ Pol20b], I gave an example of a quaternionic modular forms on E6,4
+that is distinguished. I will deﬁne this notion precisely below, but for now let me say
+that a distinguished modular formϕ is one whose non-degenerate Fourier coeﬃcients
+aϕ(λ) are 0 unless a certain arithmetic condition on λ is satisﬁed.
+(4) In the paper [ Pol19], I proved that in every even weight w≥ 16, there is a nonzero
+cuspidal modular form on G2 with all Fourier coeﬃcients algebraic numbers.
+(5) In forthcoming joint work with Spencer Leslie, we deﬁne the notion of modular
+forms of half-integral weight on exceptional groups and prove that they have a
+similar notion of Fourier coeﬃcients. Moreover, we construct a modular form of
+weight 1/2 on G2 whose Fourier coeﬃcients see the 2-torsion in the narrow class
+groups of totally real cubic ﬁelds.
+Based on the above-mentioned evidence, I want to take this opportunity to make the
+following conjecture:
+Conjecture 1.3.1. Suppose G is a quaternionic exceptional group, and w≥ 1 is an
+integer. Then there exists a basis {ϕi} of quaternionic modular forms on G of weight w,
+such that all the Fourier coeﬃcients aϕi(λ) of the ϕi are algebaic numbers.
+Conjecture 1.3.1 says that quaternionic modular forms possess a very surprising arith-
+meticity.
+Remark 1.3.2. For the group GL 2, the Fourier coeﬃcients are essentially the Satake
+parameters, and so algebraicity of Satake parameters implies that of the Fourier coeﬃcients.
+For larger groups, the relationship between Satake parameters and Fourier coeﬃcients is
+much more elaborate. In particular, algebraicity of Satake parameters does not in any clear
+way imply that of the Fourier coeﬃcients.
+1.3.3. The representation theory of quaternionic real representations is par-
+ticularly nice. I won’t have much to say about this in the course, but I did want to take this
+opportunity to reference work of Wallach [Wal15], work of Gross-Wallach [GW94], work of
+Loke [Lok99]. Moreover, I also want to mention the work [ Wei06] of Marty Weissman and
+the recent work [Dal21] of Rahul Dalal, although they are more global in nature and don’t
+exactly ﬁt into this category. The paper of Dalal gives a dimension formula for the space of
+level one even weight modular forms on G2.
+5I believe one still does not know if these Fourier coeﬃcients are nonzero, although of course it is believed
+that they are nonzero. This would be a good project for someone!
+8
+===== PDF PAGE 9 =====
+1.3.4. Quaternionic modular forms are potentially a testing ground for new
+phenomena. Because of their very rich structure, and because they appear to possess
+surprising arithmeticity, quaternionic modular forms behave very much like holomorphic
+modular forms. I suspect that they are ripe for study. In particular, like holomorphic
+modular forms, they may be a fertile testing ground for as-yet-undiscovered phenomena.
+The rest of the notes will try to describe quaternionic modular forms in more detail, and
+explain some of the above-mentioned results.
+9
+===== PDF PAGE 10 =====
+CHAPTER 2
+The group G2
+In this chapter, we describe the groupG2 in ways that generalize to the other exceptional
+groups. For deeper reading on the group G2 and modular forms on G2, we refer the reader
+to [Pol19].
+2.1. The group G2
+We begin by deﬁning the group G2. We will deﬁne G2 in a way that will generalize to
+all the (quaternionic) exceptional Lie groups. We work over a ﬁeld k of characteristic 0.
+Let sl3 be the Lie algebra of SL 3. We may identify sl3 with the trace zero 3× 3 matrices.
+LetV3 denote the standard representation of sl3 andV∨
+3 its dual. Then End(V3)≃V3⊗V∨
+3 .
+Note that if v∈V3 and δ∈V∨
+3 , then v⊗δ− δ(v)
+3 13 has trace 0, so is an element of sl3.
+Fix an identiﬁcation ∧3V3 ≃ k. This gives rise to an identiﬁcation ∧2V3 ≃ V∨
+3 and
+∧2V∨
+3 ≃V3. We can describe this identiﬁcation in bases. Let v1,v 2,v 3 be the standard basis
+ofV3 andδ1,δ 2,δ 3 be the dual basis ofV∨
+3 . Then we identify vi∧vi+1 withδi−1 (indices taken
+modulo 3) and δj∧δj+1 with vj−1.
+Now we set g2 = sl3⊕V3⊕V∨
+3 , a k vector space of dimension 14. This is a Z/3-grading,
+with sl3 in degree 0, V3 in degree 1 and V∨
+3 in degree 2. One deﬁnes a Lie bracket on g2
+as follows. First, if φ,φ′∈ sl3, then [φ,φ′] is the usual Lie bracket on sl3: φ◦φ′−φ′◦φ.
+Next, if φ∈ sl3, v ∈ V3 and δ ∈ V∨
+3 , then [ φ,v ] = φ(v)∈ V3 and [φ,δ ] = φ(δ)∈ V∨
+3 .
+Here recall that the action on the dual space V3 is deﬁned as φ(δ)(v) =−δ(φ(v)), so that
+⟨φ(v),δ⟩ +⟨v,φ (δ)⟩ = 0, where⟨,⟩ is the canonical pairing between V3 and V∨
+3 .
+If v,v′ ∈ V3, then [ v,v′] = 2 v∧v′ ∈ ∧2V3 ≃ V∨
+3 , and similarly, if δ,δ′ ∈ V∨
+3 , then
+[δ,δ′] = 2δ∧δ′in∧2V3≃V3. Finally, if δ∈V∨
+3 andv∈V3, then [δ,v ] = 3v⊗δ−δ(v)13. All
+other Lie brackets are determined by linearity and antisymmetry.
+Proposition 2.1.1. With these deﬁnitions, g2 is a Lie algebra, i.e., the Jacobi identity
+is satisﬁed.
+Proof. This is a fun exercise, which we leave to the reader. □
+Proposition 2.1.2. The Lie algebra g2 is simple.
+Proof. Any ideal I of g2 will be a representation of sl3, and thus will be a direct sum
+of irreducible sl3 pieces. The rest is an exercise. □
+The algebraic group G2 is deﬁned as the (identity component of) the automorphism
+group of g2: For a Lie algebra g, deﬁne
+Aut(g) ={g∈ GL(g) :g[X,Y ] = [gX,gY ]∀X,Y ∈ g}
+andG(g) =Aut(g)0, the connected component of the identity. When g is semisimple,G(g) is
+a connected algebraic group with Lie algebra g, and of adjoint type. We deﬁne G2 =G(g2).
+10
+===== PDF PAGE 11 =====
+As a Cartan subalgebra h, we may take the usual (diagonal) Cartan of sl3. Indeed, it is
+clear that this h acts diagonally on g2 with distinct nonzero weights.
+2.2. The Z/2-grading and the Heisenberg parabolic
+The Lie algebra g2 possesses a 5-step Z-grading, and a closely related Z/2-grading. It
+will be useful to review these gradings on g2, which we will do presently.
+Let Eij =vi⊗δj∈End(V3)≃V3⊗V∨
+3 be the matrix with a 1 in the ( ij) place and 0’s
+elsewhere. For the 5-step Z-grading:
+• In degree 2, put kE13
+• In degree 1, put kE12 +kv1 +kδ3 +kE23
+• In degree 0, put kδ2 + h +kv2
+• In degree−1, put kE32 +kv3 +kδ1 +kE21
+• In degree−2, put kE31.
+Exercise 2.2.1. Write Fig2 for the degree i piece. Find an element h ∈ h so that
+[h,Fkg2] =kFkg2. Deduce that [Fjg2,Fkg2]⊆Fj+kg2.
+The degree 0 piece is isomorphic to gl2. Write W for the degree 1 piece.
+Exercise 2.2.2. Prove that W is isomorphic to the representation Sym3⊗ det()−1 of
+gl2≃F0g2.
+The Z/2-grading is deﬁned as follows: Set g0 =F−2g2⊕F0g2⊕F2g2 and g1 =F−1g2⊕F1g2.
+It is clear that this is a Z/2-grading.
+Exercise 2.2.3. Prove that g0≃ sl2⊕ sl2 and g1≃V2⊗W as a representation of g0.
+Let P the subgroup of G2 that stabilizes the line kE13. One can show that P is a
+parabolic subgroup of G2, with Lie algebra ⨁
+k≥0Fkg2, the part of g2 with non-negative
+components in the Z-grading. We call P the Heisenberg parabolic of G2. The group P has
+a Levi decomposition P = MN with M ≃ GL2. The Lie algebra of M is F0g2 and the
+Lie algebra of N is F1g2⊕F2g2. Set Z = [N,N ]. Then one can identify Z with F2g2 via
+the exponential map, and one can identify Nab =N/[N,N ] = N/Z with W =F1g2 via the
+exponential map.
+2.3. The Cartan involution
+In this section the ground ﬁeld is the ﬁeld R of real numbers. We describe the Cartan
+involutionθ on g2, and the corresponding decomposition g2 = k0⊕ p0, where k0 = gθ=1
+2 and
+p0 = gθ=−1
+2 .
+To describe the involution, we use theZ/3-model of g2. Recall that v1,v 2,v 3 andδ1,δ 2,δ 3
+are our ﬁxed bases of V3 and V∨
+3 .
+• On sl3, which we identify with the trace 0 three-by-three matrices, we deﬁneθ(X) =
+−Xt
+• On V3, θ is given by θ(vj) =δj
+• On V∨
+3 , θ is given by θ(δj) =v3.
+Exercise 2.3.1. Check that θ is a Lie algebra involution on g2, i.e., θ[X,Y ] = [θX,θY ]
+for X,Y ∈ g2.
+11
+===== PDF PAGE 12 =====
+In fact, θ is a Cartan involution, i.e., the bilinear form Bθ(X,Y ) := −B(X,θ (Y )) is
+positive deﬁnite on g2, where B is the Killing form.
+The group G2(R) has a corresponding maximal compact subgroup: Set KG2 ={k∈
+G2(R) :kθ =θk on g2}. Equivalently,KG2 is the subgroup of G2(R) that also preservesBθ.
+In fact, KG2≃ (SU(2)× SU(2))/{±1}.
+Set k = k0⊗ C and p = p0⊗ C. Then k≃ sl2⊕ sl2 and p≃ V2⊗W . For details, see
+[Pol19, section 4.1]. In fact, there is an explicit c∈ G2(C) such that c(k) = g0⊗ C and
+c(p) = g1⊗ C. This is the exceptional Cayley transform, which can be found in [ Pol20a].
+12
+===== PDF PAGE 13 =====
+CHAPTER 3
+Modular forms on G2
+In this chapter, we describe modular forms on G2, and what is known about them.
+3.1. Warm-up: Holomorphic modular forms
+We warm up to the deﬁnition by ﬁrst revisiting the deﬁnition of holomorphic modular
+forms for SL 2.
+3.1.1. Classical deﬁnition. Let h denote the complex upper half-plane. For g =
+(a b
+c d)∈ SL2(R) and z∈ h set j(g,z ) = cz +d. A function f : h→ C is a holomorphic
+modular form of weight ℓ if
+(1) f is holomorphic
+(2) f(γz) =j(γ,z )ℓf(z) for all γ∈ Γ some congruence subgroup
+(3) The function on SL 2(R) deﬁned byg↦→j(g,i )−ℓf(g·i) is of moderate growth. (See
+[BJ79] for the notion of moderate growth.)
+Denote the above space of modular forms by Mℓ(Γ). Holomorphic modular forms have a
+classical Fourier expansion: Assume for simplicity that Γ contains the subgroup{( 1 n
+0 1 ) :n∈
+Z}. Then f(z) =∑
+n≥0af(n)e2πinz with the Fourier coeﬃcients af(n)∈ C.
+3.1.2. Semi-classical deﬁnition. We now give a semi-classical deﬁnition of holomor-
+phic modular forms. We say a smooth function ϕ : SL2(R)→ C is a holmorphic modular
+form of weight ℓ if:
+(1) ϕ is of moderate growth
+(2) ϕ(γg) =ϕ(g) for all γ∈ Γ, some congruence subgroup
+(3) ϕ(gkθ) =e−iℓθϕ(g) for all g∈ SL2(R) and kθ =
+(
+cos(θ)− sin(θ)
+sin(θ) cos( θ)
+)
+∈ SO(2).
+(4) DCRϕ≡ 0 where DCR is a linear diﬀerential operator described below.
+To describe the operatorDCR, we proceed as follows. LetX+ = ( 1 i
+i−1 ) andX− =
+( 1 −i
+−i−1
+)
+.
+Then sl2⊗ C = k⊕ p+⊕ p−, where k is the complexiﬁed Lie algebra of SO(2), and p± is
+spanned by X±. One deﬁnes DCRϕ =X−ϕ, the diﬀerential of the right regular action.
+Let Aℓ(Γ) denote the above space of modular forms.
+Exercise 3.1.1. Prove that the maps f(z)↦→ ϕf(g) := j(g,i )−ℓf(g·i) and ϕ(g)↦→
+fϕ(z) := j(gz,i )ℓϕ(gz) deﬁne inverse bijections between Mℓ(Γ) and Aℓ(Γ). Here gz is any
+g∈ SL2(R) with g·i =z.
+Assume for simplicity that Γ contains the subgroup ( 1 Z
+0 1 ). Then
+ϕ
+((
+1 x
+0 1
+)(
+y1/2
+y−1/2
+))
+=yℓ/2
+∑
+n≥0
+aϕ(n)e2πinxe−2πny.
+13
+===== PDF PAGE 14 =====
+We can re-express this Fourier expansion as follows. Deﬁne the function Wn : SL2(R)→
+C as
+Wn
+((
+1 x
+0 1
+)(
+y1/2
+y−1/2
+)
+kθ
+)
+=yℓ/2e−iℓθe2πinxe−2πny.
+Then ϕ(g) =∑
+n≥0aϕ(n)Wn(g) with Fourier coeﬃcients aϕ(n)∈ C.
+3.1.3. Adelic deﬁnition. We now give the adelic deﬁnition of holomorphic modular
+forms and their Fourier expansion.
+A smooth function ϕ : SL2(A)→ C is a holomorphic modular form of weight ℓ if:
+(1) ϕ is of moderate growth
+(2) ϕ is right invariant under and open compact subgroup of SL 2(Af)
+(3) ϕ is left-invariant under SL2(Q)
+(4) ϕ(gkθ) =e−iℓθϕ(g) for all g∈ SL2(A) and kθ =
+(
+cos(θ)− sin(θ)
+sin(θ) cos( θ)
+)
+∈ SO(2).
+(5) DCRϕ≡ 0 where DCR is the linear diﬀerential operator described above.
+The Fourier expansion of ϕ is
+ϕ(gfg∞) =
+∑
+n∈Q,n≥0
+aϕ,n(gf)Wn(g∞)
+for locally constant functions aϕ,n(gf), the Fourier coeﬃcients of ϕ. Here gf∈ SL2(Af) and
+g∞∈ SL2(R).
+3.2. The deﬁnition
+We now give the deﬁnition of modular forms on G2, mimicking the adelic deﬁnition of
+holomorphic modular forms on SL 2.
+Let Vℓ = Sym2ℓ(C2) ⊠ 1 as a representation of KG2≃ (SU(2)× SU(2))/±1. Here the
+SU(2) factors are ordered so that p≃ C2 ⊠W (as opposed to W ⊠ C2). To deﬁne modular
+forms onG2, we need a certain diﬀerential operatorDℓ that will take the place ofDCR above.
+Suppose ϕ : G2(R) → Vℓ is a smooth function, satisfying ϕ(gk) = k−1ϕ(g) for all
+g∈G2(R) and k∈KG2. We deﬁne Dℓϕ :G2(R)→Sym2ℓ−1(C2) ⊠W as follows.
+First, we deﬁne ˜Dℓϕ :G2(R)→ Vℓ⊗ p∨ as:
+˜Dℓϕ =
+∑
+j
+Xjϕ⊗X∨
+j
+where{Xj} is a basis of p and{X∨
+j} is the dual basis of p∨. Here Xjϕ is the right regular
+action of p⊆ g on ϕ. One checks easily that ˜Dℓϕ is still KG2-equivariant, i.e., if ϕ′ = ˜Dℓϕ,
+then ϕ′(gk) =k−1ϕ(g) for all k∈K and g∈G.
+Now, because p≃ p∨, we have
+Vℓ⊗ p∨≃Sym2ℓ−1(C2) ⊠W⊕Sym2ℓ+1(C2) ⊠W.
+Let pr : Vℓ⊗ p∨→Sym2ℓ−1(C2) ⊠W be a KG2 equivariant projection (unique up to scalar
+multiple). We deﬁne Dℓ =pr◦ ˜Dℓ.
+Definition 3.2.1. Suppose ℓ≥ 1 is a non-negative integer. A smooth function ϕ :
+G2(A)→ Vℓ is a quaternionic modular form of weight ℓ if
+(1) ϕ is of moderate growth
+14
+===== PDF PAGE 15 =====
+(2) ϕ is right-invariant under an open compact subgroup of G2(Af)
+(3) ϕ is left G(Q)-invariant, i.e.,ϕ(γg) =ϕ(g) for all γ∈G(Q)
+(4) ϕ is KG2-equivariant, i.e.,ϕ(gk) =k−1ϕ(g) for all k∈KG2 and
+(5) Dℓϕ≡ 0.
+Quaternionic modular forms have a Fourier expansion and corresponding Fourier coeﬃ-
+cients. We brieﬂy state the result now, and will discuss it in more detail below. Denote ϕZ
+and ϕN the constant terms of ϕ along Z and N.
+We identify elements of W with four-tuples (a,b,c,d ) so that (a,b,c,d ) = aE12 +bv1 +
+cδ3+dE23. Deﬁne a symplectic form onW as⟨(a,b,c,d ), (a′,b′,c′,d′)⟩ =ad′−3bc′+3cb′−da′.
+This form is none other than the commutator of two elements of W , i.e., if w,w′∈W then
+[w,w′] =⟨w,w′⟩E13. If w = (a,b,c,d )∈W (R), write w≥ 0 if az3 + 3bz2 + 3cz +d is never
+0 on the upper half plane in C; we say such elements of W (R) are positive semi-deﬁnite.
+Theorem 3.2.2 ([Pol19],[Pol20a]). Supposew∈W (R) is positive semi-deﬁnite. There
+is a completely explicit function Ww :G2(R)→ Vℓ satisfying the following properties:
+(1) Ww(ng) = ei⟨w,n⟩Ww(g) for all n ∈ N(R). Here n denotes the image of n in
+Nab≃W .
+(2) Ww(gk) =k−1·Ww(g) for all k∈KG2.
+(3) DℓWw(g)≡ 0.
+(4) Ww is of moderate growth.
+Moreover, if ϕ is a modular form on G2 of weight ℓ, then
+ϕZ(g) =ϕN(g) +
+∑
+w∈2πW (Q):w≥0
+aϕ,w(gf)Ww(g∞)
+for locally constant functions aϕ,w on G2(Af). Additionally, the constant term ϕN is essen-
+tially a holomorphic modular form of weight 3ℓ on M≃ GL2.
+The functions aϕ,w, or sometime their value at gf = 1, are the Fourier coeﬃcients of
+ϕ. We say aϕ,w(1) is the Fourier coeﬃcient of ϕ associated to w. When w is in the open
+orbit of GL2(R) acting onW (R), these Fourier coeﬃcients were deﬁned by Gan-Gross-Savin
+[GGS02], using a multiplicity one result of Wallach [Wal03], even though these authors did
+not have the explicit functions Ww(g).
+Note that in the theorem, the constant terms ϕN are essentially modular forms of weight
+3ℓ on GL2. So, the Ramanujan cusp form ∆ can (and does) show up, but the cusp form of
+weight 16 does not.
+3.3. Examples and theorems
+We give some examples and theorem about modular forms on G2.
+3.3.1. Eisenstein series. The easiest family of examples is the degenerate Heisenberg
+Eisenstein series. To deﬁne these, let x2ℓ,...,y 2ℓ be a particular ﬁxed basis of Vℓ, that we
+will specify in more detail later.
+LetP⊆G be the Heisenberg parabolic, withν :P→ GL1 the character given byp·E13 =
+ν(p)E13. If ℓ >2 is even, there is a weight ℓ modular form associated to inducing sections
+in IndG
+P (|ν|ℓ+1). In more detail, let fℓ(g)∈ IndG(R)
+P (R)(|ν|ℓ+1) be the unique K-equivariant,
+15
+===== PDF PAGE 16 =====
+Vℓ-valued section whose value at g = 1 is xℓyℓ. Let now ffte ∈ Ind
+G(Af )
+P (Af )(|ν|ℓ+1) be an
+arbitrary element. Set f(g) = ffte(gf)fℓ(g∞) and E(g,f ) = ∑
+γ∈P (Q)\G(Q)f(γg). The sum
+converges absolutely using that ℓ > 2. Then it can be shown that the value E(g,f ) is a
+quaternionic modular form of weight ℓ. More generally, both for even and odd ℓ, one can
+make quaternionic modular forms by starting with inducing sections inIndG(A)
+P (A)((χ◦ν)|ν|ℓ+1),
+where χ : GL1(Q)\ GL1(A)→ C× is an automorphic character satisfying χ∞(t) =
+(
+t
+|t|
+)ℓ
+=
+sgn(t)ℓ.
+Another way to create modular forms is to use Heisenberg Eisenstein series with nontrivial
+inducing data. One can take a classical holomorphic modular form Φ of weight 3 ℓ on M≃
+GL2, and from it produce a weight ℓ modular form E(g, Φ) on G2 if ℓ is suﬃciently large.
+This is spelled out in [ Pol20a].
+Here are some interesting open questions about Eisenstein series:
+(1) Do the degenerate Eisenstein series E(g,f ) have rational or algebraic Fourier coef-
+ﬁcients, when ffte is spherical?
+(2) Say that w∈W (R) is non-degenerate if w is in the open orbit of M(C) on W (C).
+Are the non-degenerate Fourier coeﬃcients of the Eisenstein seriesE(g,f ) nonzero?
+(3) If the modular form Φ on GL 2 has algebraic Fourier coeﬃcients, does the same
+occur for E(g, Φ)? In the setting of holomorphic modular forms on tube domains,
+an analogous result is due to Harris [ Har81, Har84 ]. Nothing is known in the
+quaternionic case.
+Recall (see [GGS02]) that there is a correspondence between GL 2(Z) orbits of integral
+binary cubic forms and cubic rings. If ϕ is a level one modular form on G2, and w =
+(a,b/ 3,c/ 3,d ) corresponds to the integral binary cubic form au3 +bu2v +cuv2 +dv3, then
+we can consider the Fourier coeﬃcient aϕ,w(1). If ϕ is of even weight, and γ∈ GL2(Z), it is
+easy to check thataϕ,w(1) =aϕ,γ·w(1). Let A(w) be the cubic ring corresponding to the orbit
+GL2(Z)·w. Thus, following [ GGS02], we can deﬁne aϕ(A(w)) = aϕ,w(1) to be the Fourier
+coeﬃcient of ϕ associated to the cubic ring A(w). We use this deﬁnition in the statement of
+the following theorem, and also in the subsection below on L-functions.
+Theorem 3.3.1 (Gan-Gross-Savin [ GGS02], Jiang-Rallis [ JR97]). Forℓ≥ 4 even, let
+Eℓ(g) be the spherical weight ℓ Eisenstein series on G2. Assume the non-degenerate Fourier
+coeﬃcients of Eℓ(g) are nonzero1. Let ω = (a,b/ 3,c/ 3,d )∈W correspond to the totally real
+cubic ring A(ω), via the correspondence between binary cubic forms and cubic rings. If A(ω)
+is maximal, then the Fourier coeﬃcient of Eℓ(g) corresponding toω is ζA(ω)(1−ℓ), up to a
+nonzero constant independent of ω.
+We will have more to say later about some examples of modular forms constructed in
+[GGS02].
+3.3.2. Cusp forms. We now explain what is known about cusp forms.
+The following is the main theorem of [ Pol21].
+1For each ℓ, one only needs to assume that a certain purely archimedean integral (that depends on ℓ) is
+nonzero
+16
+===== PDF PAGE 17 =====
+Theorem 3.3.2. [Pol21] Letw≥ 16 be even. Then there are nonzero cuspidal modular
+forms on G2 of weight w, all of whose Fourier coeﬃcients are algebraic integers.
+In fact, in weight 20, there is nonzero cuspidal level one modular form onG2, all of whose
+Fourier coeﬃcients are integers.
+Recently, Dalal has given a dimension formula for the level one cuspidal quaternionic
+modular forms on G2.
+Theorem 3.3.3 (Dalal [Dal21]). There is an explicit formula for the dimension of level
+one cuspidal modular forms on G2. In particular, the smallest nonzero level one cuspidal
+modular form on G2 is in weight 6.
+Here are some questions:
+(1) Can the cuspidal weight 6, level one quaternionic modular form of Dalal be con-
+structed explicitly?
+(2) Let w = (0, 1/3,−1/3, 0) so that A(w)≃ Z× Z× Z. Do level one quaternionic
+modular forms with nonzerow Fourier coeﬃcient exist? Do they exist in abundance?
+3.3.3. L-functions. Nothing is known aboutL-functions of quaternionic modular forms
+on groups bigger than G2. However, on G2, one can say a bit about the standard L-function
+of quaternionic modular forms.
+Thus let π = πf⊗πℓ,∞ be a cuspidal automorphic representation of G2(A) for which
+πℓ,∞ is the quaternionic discrete series having minimal KG2-type Vℓ. Let ϕ be the level one
+cuspidal modular form associated to π. Then one can write the standard L-function of π as
+a Dirichlet series in the Fourier coeﬃcients of ϕ.
+Theorem 3.3.4. [iDD+21] Letaϕ(T ) denote the Fourier coeﬃcient of ϕ corresponding
+to the cubic ring T . Then
+∑
+T⊆Z3,n≥1
+aϕ(Z +nT )
+[Z3 :T ]s−ℓ+1ns =aϕ(Z3) L(π,Std,s − 2ℓ + 1)
+ζ(s− 2ℓ + 2)2ζ(2s− 4ℓ + 2).
+Here the sum is over the subrings T of Z× Z× Z and integers n≥ 1.
+It is also known that the completed L-function has a functional equation, if aϕ(Z3)̸= 0.
+To state the result, deﬁne the archimedean L-factor as
+L∞(πℓ,∞,s ) = ΓC(s +ℓ− 1)ΓC(s +ℓ)ΓC(s + 2ℓ− 1)ΓR(s + 1).
+Here
+ΓR(s) =π−s/2Γ(s/2) and Γ C(s) = 2(2π)−sΓ(s),
+where Γ is the usual gamma function.
+The completed L-function is given by
+Λ(π,Std,s ) =L∞(πℓ,∞,s )L(π,Std,s ).
+Theorem 3.3.5. [iDD+21] Suppose that ϕ is a level one cuspidal modular form on G2
+of positive even weight ℓ that generates the cuspidal automorphic representation π. Further,
+assume that the Fourier coeﬃcient of ϕ corresponding to the split cubic ring Z× Z× Z is
+nonzero. Then
+Λ(π,Std,s ) = Λ(π,Std, 1−s)
+for all s∈ C.
+17
+===== PDF PAGE 18 =====
+The proof of the theorems above is based on a reﬁned analysis of the Rankin-Selberg
+integral in [GS15].
+18
+===== PDF PAGE 19 =====
+CHAPTER 4
+Exceptional algebra
+In this chapter we will work our way up to deﬁning the quaternionic exceptional group
+of type E8. We begin with some exceptional algebra: composition algebras and cubic norm
+structures. Our aim is just to give the necessary deﬁnitions. For many of the omitted proofs
+in this chapter, the reader is encouraged to see my course notes [ Pol, Chapters 1 and 2].
+4.1. Composition algebras
+Suppose k is a ﬁeld, not of characteristic 2. In this section we discuss composition
+algebras, which we are about to deﬁne. For more on composition algebras, one can see
+[SV00] in addition to [ Pol].
+Definition 4.1.1. SupposeC is a not-neccessarily-associativek algebra with unit 1, and
+that C comes equipped with non-degenerate quadratic form nC :C→k. Then C is said to
+be a composition algebra if nC is multiplicative, i.e., nC(xy) =nC(x)nC(y) for all x,y∈C.
+Composition algebras can be classiﬁed, and in fact are always dimension 1 , 2, 4 or 8 over
+the ground ﬁeld. Every dimension four composition algebra is a quaternion algebra.
+Example 4.1.2. C =k with nC(x) =x2 is a composition algebra.
+Example 4.1.3. C = E, an etale quadratic extension of k, with nC(x) = NE/k(x) the
+norm.
+Example 4.1.4. C =B, a quaternion k-algebra, with nC(x) the reduced norm.
+There is a way of deﬁning an involution ∗ on a composition algebra, as follows. Let
+(x,y ) = nC(x +y)−nC(x)−nC(y) be the non-degenerate bilinear form associated to nC.
+Note that 1 satisﬁes (1, 1) = 2̸= 0. Let C0 be the perpendicular space to 1 under the bilinear
+form. Deﬁne∗ on C as (x1 +y)∗ =x−y if x∈k and y∈C0. In other words,
+z∗ = (z, 1)1−z
+for z∈C.
+Note that z +z∗∈k· 1 for all z∈C. Also note that nC(z) =nC(z∗) for all z∈C.
+Theorem 4.1.5. The map∗ satisﬁes
+(1) z∗z =nC(z) for all z∈C.
+(2) Moreover,∗ is an algebra involution, i.e., (xy)∗ =y∗x∗ for all x,y∈C.
+Definition 4.1.6. An octonion algebra Θ is an eight-dimensional composition algebra.
+Octonion algebras exist. We give two diﬀerent constructions, called the Zorn model and
+the Cayley-Dickson construction.
+19
+===== PDF PAGE 20 =====
+Definition 4.1.7 (The Zorn model) . Denote by V3 the three-dimensional deﬁning rep-
+resentation of SL 3 and by V∨
+3 its dual representation. Recall that we identify ∧2V3≃ V∨
+3
+and∧2V∨
+3 ≃V3. Denote by Θ the set of two-by-two matrices ( a v
+φ d) with a,d∈k,v∈V3 and
+φ∈V∨
+3 with multiplication
+(
+a v
+φ d
+)(
+a′ v′
+φ′ d′
+)
+=
+(
+aa′ +φ′(v) av′ +d′v−φ∧φ′
+a′φ +dφ′ +v∧v′ φ(v′) +dd′
+)
+.
+The involution∗ is
+(
+a v
+φ d
+)∗
+=
+(
+d −v
+−φ a
+)
+and the norm is nΘ(
+(
+a v
+φ d
+)
+) = ad−
+φ(v).
+The Cayley-Dickson construction starts with a quaternion algebra B and an element
+γ∈k×, and deﬁnes Θ = B⊕B with multiplication as follows.
+Definition 4.1.8. Let∗ denote the involution on the quaternion algebra B. Then the
+multiplicaton on Θ = B⊕B is
+(x1,y 1)(x2,y 2) = (x1x2 +γy∗
+2y1,y 2x1 +y1x∗
+2).
+The involution∗ on Θ is (x,y )∗ = (x∗,−y) and the norm is nΘ((x,y )) =nB(x)−γnB(y).
+The Cayley-Dickson construction and the Zorn model produces composition algebras.
+Proposition 4.1.9. The Zorn model is a special case of the Cayley-Dickson construction,
+with B =M2(k) and γ = 1.
+Proposition 4.1.10. The Zorn model and the Cayley-Dickson construction deﬁne octo-
+nion algebras, i.e., the norms are multiplicative.
+4.2. Cubic norm structures
+In this section we deﬁne another algebraic gadget, which is called a cubic norm structure.
+For more on cubic norm structures, one can see [McC04] in addition to [Pol]. You can think
+of cubic norm structures as generalizations the pair (3 × 3 matrices, the determinant map).
+We will jump straight into the deﬁnition, and then give the examples.
+Thus suppose k is a ﬁeld of characteristic 0 and J is a ﬁnite dimensional k vector space.
+That J is a cubic norm structure means that it comes equipped with a cubic polynomial
+map N : J → k, a quadratic polynomial map # : J → J, an element 1 J ∈ J, and a
+non-degenerate symmetric bilinear pairing ( , ) : J⊗J→ k, called the trace pairing, that
+satisfy the following properties. For x,y ∈ J, set x×y = (x +y)#−x#−y# and denote
+(, , ) :J⊗J⊗J→k the unique symmetric trilinear form satisfying ( x,x,x ) = 6N(x) for
+all x∈J. Then
+(1) N(1J) = 1, 1#
+J = 1J, and 1J×x = (1J,x )−x for all x∈J.
+(2) (x#)# =N(x)x for all x∈J.
+(3) The pairing (x,y ) = 1
+4(1J, 1J,x )(1J, 1J,y )− (1J,x,y ).
+(4) One has N(x +y) =N(x) + (x#,y ) + (x,y #) +N(y) for all x,y∈J.
+There is a weaker notion of a cubic norm pair. In this case, the pairing ( , ) is between
+J and J∨, the linear dual of J, the adjoint map # takes J→ J∨ and J∨→ J, and each
+J,J∨ have a norm map NJ :J→F and NJ∨ :J∨→F . The adjoints and norms on J and
+J∨ satisfy the same compatibilities as above in items (2) and (4).
+20
+===== PDF PAGE 21 =====
+Example 4.2.1. Let J =k with N(x) =x3, x# =x2, 1J = 1, and (x,y ) = 3xy.
+Example 4.2.2. Let J = M3(k) with N(x) = det( x), x# the adjoint matrix, (i.e.,
+x# = det(x)x−1 for invertible x), (x,y ) = tr(xy), 1J = 13.
+Example 4.2.3. J =k×S withS a pointed quadratic space. In more detail, take 1S∈S
+with q(1S) = 1. Deﬁne an involution ι on S ﬁxing 1S and acting as minus the identity on
+(k· 1S)⊥. The norm on J isNJ(β,s ) =βqS(s), one has 1J = (1, 1S), and the adjoint map is
+(β,s )# = (qS(s),βι (s)). Finally, the pairing is ((β,t ), (β′,t′)) =ββ′ + (t,ι (t′)).
+Proposition 4.2.4. With data as deﬁned above J =k×S is a cubic norm structure.
+SetJ =H3(C) the Hermitian 3× 3 matrices with coeﬃcients in the composition algebra
+C. We make J =H3(C) into a cubic norm structure, with the following choice of data:
+(1) NJ(X) =NJ
+
+
+c1 x3 x∗
+2
+x∗
+3 c2 x1
+x2 x∗
+1 c3
+
+ =c1c2c3−c1nC(x1)−c2nC(x2)−c3nC(x3)+trC(x1x2x3).
+(2) X# =
+
+
+c2c3−nC(x1) x∗
+2x∗
+1−c3x3 x3x1−c2x∗
+2
+x1x2−c3x∗
+3 c1c3−nC(x2) x∗
+3x∗
+2−c1x1
+x∗
+1x∗
+3−c2x2 x2x3−c1x∗
+1 c1c2−nC(x3)
+
+
+(3) The pairing (X,X′), in obvious notation, is
+(X,X′) =c1c′
+1 +c2c′
+2 +c3c′
+3 + (x1,x′
+1) + (x2,x′
+2) + (x3,x′
+3).
+Theorem 4.2.5. With data described above, J =H3(C) is a cubic norm structure.
+4.3. The group MJ
+If J is a cubic norm structure, we deﬁne the algebraic k-group MJ to be the group of
+linear automorphisms of J that preserve the norm form N up to scaling. On k-points, one
+has
+MJ(k) ={(λ,g )∈ GL1(k)× GL(J) :N(gX) =λN(X) for all X∈J}.
+We set M 1
+J the subgroup of MJ consisting of those g with λ(g) = 1 and we set AJ the
+subgroup of M 1
+J that also stabilizes the element 1 J ∈ J. It follows that AJ preserves the
+bilinear pairing ( , ): if a∈ AJ, then (ax,ay ) = (x,y ) for all x,y ∈ J. The group AJ is
+the automorphism group of J. If a∈ AJ, then one also has ( ax)× (ay) = a(x×y) for all
+x,y∈J.
+Let
+m(J) ={(µ, Φ)∈k×End(J) : (Φ(z1),z 2,z 3)+(z1, Φ(z2),z 3)+(z1,z 2, Φ(z3)) =µ(z1,z 2,z 3)}.
+Then m(J) is the Lie algebra of MJ. We deﬁne an MJ-equivariant mapJ⊗J∨→ m(J). See
+[Spr62] and [Rum97].
+Forγ∈J∨ and x∈J, deﬁne the element Φγ,x∈End(J) as
+Φγ,x(z) =−γ× (x×z) + (γ,z )x + (γ,x )z.
+Proposition 4.3.1. [Rum97, Equation (9)] One has
+(Φγ,x(z1),z 2,z 3) + (z1, Φγ,x(z2),z 3) + (z1,z 2, Φγ,x(z3)) = 2(γ,x )(z1,z 2,z 3)
+for all z1,z 2,z 3 in J. In particular, Φγ,x∈ m(J).
+21
+===== PDF PAGE 22 =====
+Note that Φγ,x(z) = Φγ,z(x). One sets Φ′
+γ,x = Φγ,x− 2
+3(γ,x ). Then Φ′
+γ,x∈ m(J)0, the Lie
+algebra of M 1
+J.
+Proposition 4.3.2. The map Φ : J⊗J∨→ m(J) is equivariant, i.e., if g∈ MJ then
+Ad(g)Φγ,x = Φ˜g(γ),g(x).
+4.4. The Z/3 grading on g(J)
+In this subsection we recall elements from the paper [ Rum97] (in diﬀerent notation).
+Rumelhart constructed a Lie algebra g(J) out of a cubic norm structure J, as follows.
+Denote by V3 the deﬁning representation of sl3, and by V∨
+3 the dual representation. One
+deﬁnes
+g(J) = sl3⊕ m(J)0⊕V3⊗J⊕V∨
+3 ⊕J∨.
+We consider V3,V ∨
+3 as left modules for sl3, and J,J∨ as left modules for m(J)0. This is a
+Z/3-grading, with sl3⊕ m(J)0 in degree 0, V3⊗J in degree 1 and V∨
+3 ⊕J∨ in degree 2. Note
+that when J =k, m(J)0 = 0 and g(J) becomes g2.
+4.4.1. The bracket. Following [Rum97], a Lie bracket on g(J) is given as follows.
+First, becauseV3 is considered as a representation ofsl3, there is an identiﬁcation∧2V3≃V∨
+3 ,
+and similarly∧3V∨
+3 ≃V3. If v1,v 2,v 3 denotes the standard basis of V3, and δ1,δ 2,δ 3 the dual
+basis ofV∨
+3 , thenv1∧v2 =δ3,δ1∧δ2 =v3, and cyclic permutations of these two identiﬁcations.
+Takeφ3∈ sl3, φJ∈ m(J)0, v,v′∈ V3, δ,δ′∈ V∨
+3 , X,X′∈ J and γ,γ′∈ J∨. The Lie
+bracket on g(J) is deﬁned as
+[φ3,v⊗X +δ⊗γ] =φ3(v)⊗X +φ3(δ)⊗γ.
+[φJ,v⊗X +δ⊗γ] =v⊗φJ(X) +δ⊗φJ(γ)
+[v⊗X,v′⊗X′] = (v∧v′)⊗ (X×X′)
+[δ⊗γ,δ′⊗γ′] = (δ∧δ′)⊗ (γ×γ′)
+[δ⊗γ,v⊗X] = (X,γ )v⊗δ +δ(v)Φγ,X−δ(v)(X,γ )
+= (X,γ )
+(
+v⊗δ− 1
+3δ(v)
+)
++δ(v)
+(
+Φγ,X− 2
+3(X,γ )
+)
+.
+Note that v⊗δ− 1
+3δ(v)∈ sl3 and Φγ,X− 2
+3(X,γ ) = Φ′
+γ,X∈ m(J)0.
+Theorem 4.4.1. [Rum97] The vector space g(J) is a Lie algebra, i.e., the Jacobi identity
+is satisﬁed.
+Example 4.4.2. When J =k, g(J) = g2.
+Example 4.4.3. When J =H3(k), g(J) is of type f4.
+Example 4.4.4. When J = H3(E) with E a quadratic etale extension of k, g(J) is of
+type e6.
+Example 4.4.5. When J =H3(B) with B a quaternion algebra, g(J) is of type e7.
+Example 4.4.6. When J =H3(Θ) with Θ an octonion algebra, g(J) is of type e8.
+22
+===== PDF PAGE 23 =====
+LetGJ = Aut(g(J))0 be the identity component of the automorphisms of the Lie algebra
+g(J). Then GJ is a connected adjoint algebraic group of the above types. When k = R,
+the norm form on the composition algebra C is positive deﬁnite, and J =H3(C), GJ(R) is
+the adjoint quaternionic exceptional group of the above types. You can take this to be the
+deﬁnition of the quaternionic exceptional groups.
+23
+===== PDF PAGE 24 =====
+CHAPTER 5
+The Freudenthal construction
+In the previous section, we gave a construction of the exceptional Lie algebras g(J), via a
+Z/3Z-grading. In order to discuss quaternionic modular forms on GJ = Aut0(g(J)), we will
+require a 5-step Z-grading on g(J). The purpose of this chapter is to give some preliminaries
+needed for the description of this 5-step Z-grading.
+Throughout this chapter, the omitted proofs can be found in [ Pol, Chapter 3].
+5.1. The Freudenthal construction
+Suppose that J is a cubic norm structure, or that J,J∨ is a cubic norm pair, over a ﬁeld
+k of characteristic 0. Deﬁne a vector space WJ = k⊕J⊕J∨⊕k. The space WJ comes
+equipped with a symplectic pairing ⟨,⟩ and a quartic form q, which are deﬁned as follows.
+We write a typical element inWJ asv = (a,b,c,d ), so that a,d∈k,b∈J andc∈J∨. Then
+⟨(a,b,c,d ), (a′,b′,c′,d′)⟩ =ad′− (b,c′) + (c,b′)−da′
+and
+q((a,b,c,d )) = (ad− (b,c ))2 + 4aN(c) + 4dN(b)− 4(b#,c #).
+The deﬁnition of this algebraic data goes back to Freudenthal.
+We now deﬁne a group
+HJ(k) ={(g,ν )∈ GL(WJ)×GL1(k) :⟨gv,gv′⟩ =ν⟨v,v′⟩∀v,v′∈WJ and q(gv) =ν2q(v)∀v∈WJ}.
+The element ν is called the similitude. More generally, we let HJ be the algebraic group
+of linear automorphisms of WJ that preserve the symplectic form⟨,,⟩ and the quartic form
+q up to appropriate similitude. We set H1
+J = kerν :HJ→ GL1.
+In general, the identity component H0
+J of HJ will be a Levi subgroup of a maximal
+parabolic subgroup of GJ.
+Example 5.1.1. When J =k, HJ≃ GL2.
+Example 5.1.2. When J =H3(k), HJ≃ GSp6.
+Example 5.1.3. WhenJ =H3(E) withE a quadratic etale extension ofk,HJ is of type
+A5.
+Example 5.1.4. When J =H3(B) with B a quaternion algebra, HJ is of type D6.
+Example 5.1.5. When J =H3(Θ) with Θ an octonion algebra, HJ is of type E7.
+Denote by (, , ,)WJ the unique symmetric four-linear form normalized so that (v,v,v,v )WJ =
+2q(v). Deﬁne t :WJ×WJ×WJ→WJ as (w,x,y,z ) =⟨w,t (x,y,z )⟩ and set v♭ =t(v,v,v ).
+24
+===== PDF PAGE 25 =====
+5.2. Rank one elements
+If J is a cubic norm structure, there is a notion of rank of elements of J, which we now
+deﬁne.
+Definition 5.2.1. All elements ofJ are of rank at most 3. If N(x) = 0, then x has rank
+at most 2. If x# = 0, then x has rank at most one. If x = 0, then x has rank 0.
+IfJ =H3(k), the above deﬁnition reduces to the usual notion of rank of a 3×3 symmetric
+matrix. There is a related notion of rank of elements of WJ.
+Definition 5.2.2. All elements of WJ are of rank at most 4. If q(v) = 0, then v has
+rank at most 3. If v♭ = 0, thenv has rank at most two. If (v,v,w ′,w ) = 0 for all w′∈ (kv)⊥,
+then v has rank at most one. If v = 0, then v has rank 0.
+Example 5.2.3. If a,d̸= 0, then (a, 0, 0,d ) has rank 4. If x∈J has rank j = 0, 1, 2, 3,
+then (0,x, 0, 0) has rank j in in WJ.
+Example 5.2.4. The element (1, 0, 0, 0) of WJ has rank one. If v = (1, 0,c,d ) has rank
+one, then c =d = 0.
+We will need a deﬁnition of certain elements ofEnd(WJ), constructed from two elements
+of WJ.
+Definition 5.2.5. Forw,w′∈WJ deﬁne Φw,w′∈ End(WJ) as follows:
+Φw,w′(x) = 6t(w,w′,x ) +⟨w′,x⟩w +⟨w,x⟩w′.
+One can show thatv has rank at most one if and only if1
+2Φv,v(x) := 3t(v,v,x )+⟨v,x⟩v = 0
+for all x∈ WJ. (Note that this condition implies the rank one condition of the deﬁnition,
+but the converse is not at all obvious.)
+It is clear that the set of rank one elements is an HJ-set. In fact,
+Proposition 5.2.6. There is one H1
+J-orbit of rank one lines.
+Let h(J)0 denote the Lie algebra of H1
+J.
+Proposition 5.2.7. Forw,w′∈ WJ, the endomorphism Φw,w′ is in h(J)0, i.e., it pre-
+serves the symplectic and quartic form on WJ. Furthermore, if φ∈ h(J)0, then [φ, Φw,w′] =
+Φφ(w),w′ + Φw,φ(w′).
+5.3. The exceptional upper half-space
+When the ground ﬁeldk = R and the pairing (, ) onJ is positive deﬁnite, the groupHJ
+has an associated Hermitian symmetric space. This space is HJ ={Z =X +iY :Y > 0}.
+Here Y > 0 means that Y =y2 for some y∈J with N(y)̸= 0.
+5.3.1. The positive deﬁnite cone.
+Theorem 5.3.1. The following statement are equivalent:
+(1) Y∈J is positive-deﬁnite, i.e., Y =y2 for some y∈J with N(y)̸= 0.
+(2) There exists a∈AJ with aY diagonal with positive entries
+(3) tr(Y ), tr(Y #) and N(Y ) are all positive.
+Theorem 5.3.2. LetC denote the set of Y in J with Y > 0. Then C is connected and
+convex.
+25
+===== PDF PAGE 26 =====
+5.3.2. The upper half space. We now deﬁne how HJ(R)0 acts onHJ.
+To do this, suppose Z∈ JC. Deﬁne r0(Z) = (1,−Z,Z #,−N(Z)). Then one has the
+following proposition.
+Proposition 5.3.3. Suppose Z ∈ HJ, so that Im(Z) is positive deﬁnite. Suppose
+moreover that g∈ HJ(R)0. Then there is j(g,Z )∈ C× and gZ ∈H J so that gr0(Z) =
+j(g,Z )r0(gZ). This equality deﬁnes the factor of automorphy j(g,Z ) and the action of
+HJ(R)0 simultaneously.
+Suppose J is a cubic norm structure. Let ι : J↔ J∨ be the identiﬁcation given by the
+symmetric pairing on J. Deﬁne J2 : WJ→ WJ as J2(a,b,c,d ) = (d,−ι(c),ι (b),−a). One
+checks that J2∈H1
+J.
+We will now explain the stabilizer of i1J inside of H1
+J.
+Proposition 5.3.4. Suppose g∈ H1
+J(R) stabilizers i1J∈ HJ. Then g commutes with
+J2.
+5.3.3. Modular forms. As an aside, we now deﬁne holomorphic modular forms on
+E7,3. To do so, let J = H3(Θ) be as above, where Θ is an octonion algebra with positive
+deﬁnite norm form. Deﬁne G = H1
+J(R). It turns out that the group G is connected, so it
+acts (transitively) onHJ.
+Following Baily [Bai70], a discrete subgroup Γ⊆G is deﬁned as follows. Let Θ 0⊆ Θ be
+Coxeter’s ring of integral octonions; see, e.g., loc cit. Deﬁne J0⊆J to be the integral lattice
+consisting of matrices X =
+
+
+c1 x3 x∗
+2
+x∗
+3 c2 x1
+x2 x∗
+1 c3
+
+ with c1,c 2,c 3∈ Z and x1,x 2,x 3∈ Θ0. Deﬁne
+WJ0⊆WJ to be the lattice WJ0 = Z⊕J0⊕J∨
+0⊕ Z. Then Γ is deﬁned to be the subgroup
+of H1
+J(Q) that preserves WJ0.
+A modular form for Γ of weight ℓ> 0 is a holomorphic function f :HJ→ C satisfying
+(1) f(γZ) =j(γ,Z )ℓf(Z) for all γ∈ Γ and
+(2) the function φf : Γ\G→ C deﬁned by φf(g) = j(g,i )−ℓf(g·i) is of moderate
+growth.
+Some results about modular forms on G can be found in [ Bai70], [ Kim93], [ GL97],
+[KY16].
+26
+===== PDF PAGE 27 =====
+CHAPTER 6
+The quaternionic groups
+In this chapter we discuss more about the quaternionic exceptional groups. A reference
+for this material is [ Pol, Chapter 4] and [ Pol20a].
+6.1. The Z/2-grading
+Previously, we deﬁned the Lie algebrag(J) via a Z/3-grading. In this section, we redeﬁne
+g(J) via a Z/2-grading. I believe the construction of the Lie algebra g(J) in this section
+essentially goes back to Freudenthal.
+Denote byV2 the deﬁning two-dimensional representation ofsl2. We have an identiﬁcation
+Sym2(V2)≃ sl2 as (v·v′)(x) =⟨v′,x⟩v+⟨v,x⟩v′. Here⟨,⟩ is the standard symplectic pairing
+on V2:
+⟨(a,b )t, (c,d )t⟩ =
+( a b )(
+1
+−1
+)(
+c
+d
+)
+=ad−bc.
+We deﬁne
+g(J) = g(J)0⊕ g(J)1 :=
+(
+sl2⊕ h(J)0)
+⊕ (V2⊗WJ).
+Here g(J)0 = sl2⊕ h(J)0 is the zeroth graded piece of g(J), and g(J)1 =V2⊗WJ is the ﬁrst
+graded piece of g(J).
+6.1.0.1. The bracket. We deﬁne a map [ , ] : g(J)⊗ g(J)→ g(J) as follows: If φ,φ′∈
+g(J)0 = sl2⊕ h(J)0, v,v′∈V2, and w,w′∈WJ, then
+[(φ,v⊗w), (φ′,v′⊗w′)] =
+(
+[φ,φ′] + 1
+2⟨w,w′⟩(v·v′) + 1
+2⟨v,v′⟩Φw,w′,φ (v′⊗w′)−φ′(v⊗w)
+)
+.
+With this deﬁnition, we have the following fact.
+Proposition 6.1.1. The bracket [, ,] on g(J) satisﬁes the Jacobi identity.
+Proof. To check the Jacobi identity∑
+cyc [X, [Y,Z ]] = 0, by linearity it suﬃces to check
+it on the various Z/2-graded pieces. Then there are four types identities that must be
+checked. Namely, if 0 , 1, 2 or 3 of the elements X,Y,Z are in g(J)1 = V2⊗WJ. If all
+three of X,Y,Z are in g(J)0 = sl2⊕ h(J)0, then the Jacobi identity is of course satisﬁed. If
+two of X,Y,Z are in g(J)0, then the Jacobi identity is satisﬁed. This fact is equivalent to
+the fact that the bracket [ , ]α deﬁnes a Lie algebra action of g(J)0 on g(J)1: [φ,φ′](x) =
+φ(φ′(x))−φ′(φ(x)) for x∈ g(J)1 and φ,φ′∈ g(J)0. If one of X,Y,Z is in g(J)0, then the
+Jacobi identity is satisﬁed by the equivariance of the map g(J)1⊗ g(J)1→ g(J)0. Finally,
+when X,Y,Z are all in g(J)1, a simple direct computation shows that ∑
+cyc [X, [Y,Z ]] = 0.
+In more detail, supposeX1 =v1⊗w1,X2 =v2⊗w2 andX3 =v3⊗w3. We must evaluate:
+−2
+∑
+cyc
+[X1, [X2,X 3]] = 2
+∑
+cyc
+[v2⊗w2,v 3⊗w3](v1⊗w1)
+27
+===== PDF PAGE 28 =====
+=
+∑
+cyc
+(⟨v2,v 3⟩Φw2,w3 +⟨w2,w 3⟩v2·v3)(v1⊗w1)
+=
+∑
+cyc
+⟨v2,v 3⟩v1⊗ (6t(w1,w 2,w 3) +⟨w3,w 1⟩w2 +⟨w2,w 1⟩w3)
++
+∑
+cyc
+⟨w2,w 3⟩(⟨v3,v 1⟩v2 +⟨v2,v 1⟩v3)⊗w1.
+The term t(w,w′,w′′) drops out right away because it is symmetric by applying the
+identity∑
+cyc⟨v2,v 3⟩v1 = 0 for v1,v 2,v 3∈V2. The other cyclic sums cancel in pairs. □
+One can give an explicit identiﬁcation between the Lie algebrag(J) deﬁned in this section
+and the one deﬁned via the Z/3-grading, which is why we have given both Lie algebras the
+same name. See [ Pol20a, Proposition 4.2.1].
+6.2. The Heisenberg parabolic
+We assume in this subsection that the Lie algebra g(J) is deﬁned over a ground ﬁeldF of
+characteristic 0. Recall that the group GJ is deﬁned to be the connected component of the
+identity of the automorhpism group of g(J). This is a connected reductive adjoint group.
+For notation, we write e0,h 0,f 0 for the usual sl2-triple inside sl2⊆ g(J)0, so that e0 =
+( 0 1
+0 0 ), h0 = ( 1
+−1 ), and f0 = ( 0 0
+1 0 ). Set e = (1, 0)t and f = (0, 1)t the standard basis of V2.
+6.2.0.1. The 5-grading. We now deﬁne the 5-grading on g(J). Namely, the components
+of g(J) in each graded piece are
+• In degree−2: spanned by f0
+• In degree−1: f⊗WJ
+• In degree 0: Fh 0⊕ h(J)0
+• In degree 1: e⊗WJ
+• In degree 2: spanned by e0.
+Note that this is the grading associated to the eigenvalues of h0 on g(J). The degree 0 piece
+Fh 0⊕ h(J)0 is the Lie algebra h(J), via the map αh0 +φ0↦→αIdWJ +φ0, where φ0∈ h(J)0
+and IdWJ denotes the identity on WJ.
+6.2.0.2. The Heisenberg parabolic. We now deﬁne the Heisenberg parabolic ofGJ. Deﬁne
+P ⊆ GJ to be the g∈ GJ stabilizing the line Fe 0 generated by e0. Then P is parabolic.
+For instance, the variety G/P is the subset of the projective space P(g(J)) consisting of
+those X with [X, [X,y ]] + 2Bg(X,y )X = 0 for all y∈ g(J). Thus G/P is cut out by closed
+conditions, so is projective.
+Equivalently, deﬁnepHeis⊆ g(J) to consist of the elementsX so that [X,e 0]∈Fe 0. Then
+the Heisenberg parabolic is equivalently deﬁned to be the g∈GJ satisfying gpHeis = pHeis.
+Furthermore, pHeis consists exactly of the element of g(J) non-negative degree in the 5-
+grading.
+The Lie algebra of P is pHeis. Deﬁne a Levi subgroup M of P to be the subgroup of P
+that preserves the 5-grading. Equivalently, M is the subgroup of P that also ﬁxes the line
+spanned by f0. The Levi subgroup M is exactly the group H0
+J, as we now prove.
+28
+===== PDF PAGE 29 =====
+Lemma 6.2.1. The map M → GL1× GL(WJ) deﬁned by the conjugation action of M
+on the degree 2 and degree 1 pieces of the 5-grading deﬁnes an isomorphism M≃HJ. The
+GL1-projection is the similitude.
+Proof. See [Pol20a, Lemma 4.3.1]. □
+LetN denote the unipotent radical of the Heisenberg parabolic P . Then the center Z of
+N is the exponential of the one-dimensional space Fe 0. The group Z is also the commutator
+subgroup [N,N ] of N. Consequently, the abelianization of N is naturally identiﬁed with
+WJ, via the map w↦→ exp(w)↦→ exp(w), where exp(w)∈N and for n∈N, n denotes the
+image of n in N/Z.
+In case G = G2, the Heisenberg parabolic is the (standard) maximal parabolic with
+two-step unipotent radical.
+6.3. The Cartan involution
+In this section, we discuss the Cartan involutions on various relevant groups.
+6.3.1. The Cartan involution on Sp2n. Suppose W = F 2n, Jn =
+( 0 1 n
+−1n 0
+)
+, and
+Sp(W ) = {g∈ Aut(W ) : tgJng = Jn}. In other words, assume that the sympletic form
+on W is deﬁned by ⟨w1,w 2⟩ = tw1Jnw2 for w1,w 2 column vectors in W = F 2n. Then
+Jn∈ Sp(W ). This induces an involution Θ on Sym2(W ) via Θ(ww′) = ( Jnw)(Jnw′). If
+the ground ﬁeld F = R, this is a Cartan involution and ( w1,w 2) := ⟨Jnw1,w 2⟩ deﬁnes a
+symmetric positive deﬁnite form on W .
+6.3.2. The Cartan involution on SO(V ). The Killing form is
+Bso(w∧x,y∧z) = (x,y )(w,z )− (w,y )(x,z ).
+This is a symmetric so(V ) invariant form on so(V ); if the ground ﬁeldF = R, it is a positive
+multiple of the Killing form.
+SupposeF = R. Suppose ι :V→V is an involution, for which the quadratic form (v,v )
+is positive deﬁnite on the subspace of V for which ι is +1, and is negative deﬁnite where
+ι is−1. Further assume that ι deﬁnes an element of the orthogonal group O( V ). Then
+(v,ι (w)) is a positive deﬁnite symmetric bilinear form on V . Associated to ι, one can deﬁne
+a Cartan involution Θι on the Lie algebra so(V )≃∧ 2V . Namely, one sets Θι :∧2V→∧ 2V
+via Θι(v∧w) =ι(v)∧ι(w).
+6.3.3. The Cartan involution on MJ. In the next several subsections, we assume
+the trace pairing on J is positive deﬁnite. This occurs if J =H3(C), with C a composition
+algebra with positive-deﬁnite norm form nC.
+Recall that the pairing onJ gives rise to anι :J→J∨ and thus an involution Θm on m(J)
+via Θm(φ) =ι−1◦˜φ◦ι, where ˜φ denotes the action of φ on J∨. One computes immediately
+that Θm(Φγ,x) =−Φι(x),ι(γ). If the ground ﬁeld F = R, Θm is a Cartan involution on m(J).
+6.3.4. The Cartan involution on HJ. Suppose the ground ﬁeld F = R. Consider
+the map J2 on WJ, given by J2(a,b,c,d ) = (d,−ι(c),ι (b),−a). Deﬁne a symmetric pairing
+on WJ via (v1,v 2) :=⟨J2v1,v 2⟩. Since J2 is in H1
+J, there is an associated involution on hJ
+given by Θ h(φ) = J2φJ−1
+2 . One has Θ h(Φw,w′) = ΦJ2w,J2w′. Then Θ h is a Cartan involution
+on h(J)0. .
+29
+===== PDF PAGE 30 =====
+6.3.5. The Cartan involution on GJ I. We abuse notation and also write J2 =
+( 1
+−1 ) ∈ SL2. (There is a natural map SL 2 → H1
+J, and the image of J2 ∈ SL2 is the
+J2∈H1
+J.)
+Using J2, we deﬁne an involution Θ g on g(J) as
+Θg(φ2 +φJ,v⊗w) = (J2φ2J−1
+2 +J2φJJ−1
+2 ,J 2v⊗J2w).
+Here φ2∈ sl2, φJ∈ h(J)0, v∈V2 and w∈WJ. It is clear that Θ g is an involution on g(J).
+If the ground ﬁeld F = R then Θg deﬁnes a Cartan involution on g(J).
+6.3.6. The Cartan involution on GJ II. We now express the Cartan involution Θ g
+on g(J) via the deﬁnition of g(J) in terms of its Z/3-grading. To do this, we endow V3 with
+the positive deﬁnite symmetric form given by ( v,v′) = tvv′. In other words, we make the
+standard basis v1,v 2,v 3 of V3 orthonormal. This induces an identiﬁcation ι betweenV3 and
+V∨
+3 .
+Deﬁne an involution Θg on g(J) as follows: On sl3 it isX↦→−Xt. On m(J)0 it is Θm. On
+V3⊗J it isv⊗X↦→ι(v)⊗ι(X)∈V∨
+3 ⊗J∨ and onV∨
+3 ⊗J∨ it isδ⊗γ↦→ι(δ)⊗ι(γ)∈V3⊗J.
+The map Θ g is a Cartan involution.
+30
+===== PDF PAGE 31 =====
+CHAPTER 7
+Quaternionic modular forms
+In this chapter, we explain a bit about what is known regarding quaternionic modular
+forms beyond the case of G2.
+7.1. The diﬀerential equation
+We begin with the deﬁnition of quaternionic modular forms. Thus suppose J is a cubic
+norm structure with positive deﬁnite trace pairing, and GJ is the associated quaternionic
+group. Recall that we have identiﬁed a Cartan involution Θ g on g(J)⊗ R. Let K⊆GJ(R)
+be the associated maximal compact subgroup. We assume GJ is of an exceptional Dynkin
+type; this insures that GJ(R) is connected. Our assumptions let us uniformly describe the
+maximal compact subgroup K as K = (SU(2)×L)/µ2 for a certain group L (that depends
+onJ). We write g = k⊕ p for the Cartan decomposition. As a representation of K, one has
+p =V2 ⊠W , where V2 is the standard representation of SU(2) and W is a certain symplectic
+representation of L. See [ GW96] and [Pol20a].
+For an integer ℓ≥ 1, let Vℓ = Sym2ℓ(V2) ⊠ 1, as a representation of K. Now suppose
+ϕ : GJ(R)→ Vℓ is a smooth function, satisfying ϕ(gk) = k−1ϕ(g) for all g∈ GJ(R) and
+k∈K. We deﬁne a diﬀerential operator Dℓϕ :G(R)→Sym2ℓ−1(V2) ⊠W as follows.
+First, we deﬁne ˜Dℓϕ :G(R)→ Vℓ⊗ p∨ as:
+˜Dℓϕ =
+∑
+j
+Xjϕ⊗X∨
+j
+where{Xj} is a basis of p and{X∨
+j} is the dual basis of p∨. Here Xjϕ is the right regular
+action of p⊆ g on ϕ. One checks easily that ˜Dℓϕ is still K-equivariant, i.e., if ϕ′ = ˜Dℓϕ,
+then ϕ′(gk) =k−1ϕ(g) for all k∈K and g∈GJ(R).
+Now, because p≃ p∨, we have
+Vℓ⊗ p∨≃Sym2ℓ−1(V2) ⊠W⊕Sym2ℓ+1(V2) ⊠W.
+Let pr : Vℓ⊗ p∨→ Sym2ℓ−1(V2) ⊠W be a K equivariant projection (unique up to scalar
+multiple). We deﬁne Dℓ =pr◦ ˜Dℓ.
+Definition 7.1.1. Suppose ℓ≥ 1 is a non-negative integer. A smooth function ϕ :
+GJ(A)→ Vℓ is a quaternionic modular form of weight ℓ if
+(1) ϕ is of moderate growth
+(2) ϕ is right invariant under an open compact subgroup of GJ(Af)
+(3) ϕ is left G(Q)-invariant, i.e.,ϕ(γg) =ϕ(g) for all γ∈G(Q)
+(4) ϕ is K-equivariant, i.e.,ϕ(gk) =k−1ϕ(g) for all k∈K and
+(5) Dℓϕ≡ 0.
+31
+===== PDF PAGE 32 =====
+7.2. Representation theory
+One can also deﬁne quaternionic modular forms from the lens of representation theory.
+In this section, we brieﬂy explain this representation-theoretic approach and its relationship
+to the deﬁnition above.
+To begin, we start with the quaternionic representations of the groupGJ(R). These were
+deﬁned and studied by Gross-Wallach [ GW94, GW96]. We say 1 an irreducible represen-
+tation π of GJ(R) is quaternionic of weight ℓ if
+(1) π contains the K-type V∨
+ℓ ≃ Vℓ with multiplicity one
+(2) π does not contain the K-type Sym2ℓ−1(V2) ⊠W .
+Gross-Wallach [GW94, GW96 ] constructed quaternionic representations πℓ of GJ(R),
+which at least for ℓ suﬃciently large are moreover discrete series representations of GJ(R).
+Let S≃ SU(2)⊆ K be the normal subgroup that is the kernel of the map K → L/µ2.
+Gross-Wallach also showed that theπℓ are admissible when restricted to S. The above prop-
+erties make theπℓ analogous to the so-called holomorphic (discrete series) representations of
+the groups that have an associated Hermitian symmetric space.
+Suppose π is a quaternionic representation of GJ(R) of weight ℓ. Suppose Φ π : π→
+A(GJ) is homomorphism of ( g,K )-modules, from π to the space of automorphic forms on
+GJ. In the parlance of [ GGS02], such a map is a modular form of weight ℓ. To relate
+the maps Φ π to the ϕ’s of the previous section, one proceeds as follows. Restricting Φ π
+to the K-type V∨
+ℓ of π, one obtains a map Φ π : V∨
+ℓ →A (GJ), or equivalently, a function
+ϕ : GJ(Q)\GJ(A)→ Vℓ. Because Φ π is K-equivariant, so is the function ϕ. Moreover,
+because π does not contain the K-type Sym2ℓ−1(V2) ⊠W , one can check that Dℓϕ = 0.
+Consequently, out of a map Φπ :π→A (GJ), one obtains a modular form ϕ of weight ℓ.
+7.3. The Fourier expansion
+In this section, we describe the Fourier expansion of quaternionic modular forms. Suppose
+ϕ is a quaternionic modular form. One can take the constant term of ϕ along Z, and then
+Fourier expand the result along N/Z:
+(1) ϕZ(g) =ϕN(g) +
+∑
+ω∈WJ,ω̸=0
+ϕω(g)
+where ϕω(g) =
+∫
+N(Q)\N(A)ψ(⟨ω,n⟩)−1ϕ(ng)dn. The Fourier expansion we explain in this
+section is a reﬁnement of (1) for quaternionic modular forms.
+The existence of the Fourier expansion that we describe is based on the following the-
+orem, which is the main result of [ Pol20a]. To state the theorem, we need a couple def-
+initions. Say a nonzero element ω ∈ WJ(R) is positive semi-deﬁnite , written ω ≥ 0, if
+⟨ω, (1,−Z,Z #,−N(Z))⟩ is never 0 forZ in the upper half space hJ ={Z =X +iY :X,Y ∈
+J,Y > 0}. (It is mildly remarkable that such ω exist!)
+We now deﬁne generalized Whittaker functions. If χ is a character of N(R), we say a
+function F :GJ(R)→ Vℓ is a generalized Whittaker function of type χ if it satisﬁes
+• F (ng) =χ(n)F (g) for all n∈N(R)
+• F (gk) =k−1F (g) for all k∈K
+1This is an ad-hoc deﬁnition that is suitable for our purposes
+32
+===== PDF PAGE 33 =====
+• DℓF≡ 0
+Ifω∈WJ andχ(n) =χω(n) =ei⟨ω,n⟩, we alternatively say thatF is a generalized Whittaker
+function of type ω.
+Theorem 7.3.1. Suppose ω∈ WJ(R) is nonzero. Then the space of moderate growth
+generalized Whittaker functions of type ω is at most one-dimensional. Moreover:
+(1) Suppose ω is not positive semi-deﬁnite. Then every moderate growth generalized
+Whittaker function of type ω is 0.
+(2) Suppose ω is positive semi-deﬁnite. Then there is a completely explicitly function
+Wω :GJ→ Vℓ satisfying:
+(a) Wω is a moderate growth generalized Whittaker function of type ω
+(b) If F is a moderate growth generalized Whittaker function of type ω then F =
+λFWω for some λF∈ C.
+Whenω∈WJ(R) is rank four, the ﬁrst two statements of the Theorem (i.e., the theorem
+without the explicit function Wω) are due to Wallach [ Wal03].
+An immediate corollary is the Fourier expansion of quaternionic modular forms:
+Corollary 7.3.2. Let ω∈ WJ be nonzero, let ϕ be a quaternionic modular form of
+weight ℓ, and let ϕω be as in (1). Then
+(1) If ω is not positive semi-deﬁnite, ϕω(g)≡ 0.
+(2) Ifω is positive semi-deﬁnite, then there is locally constant functioncω :GJ(Af)→ C
+so that ϕω(gfg∞) =cω(gf)W2πω(g∞).
+The locally constant functions cω(gf), or sometimes their values at gf = 1, are called the
+Fourier coeﬃcients ofϕ. When ω is rank four, Gan-Gross-Savin [GGS02] had deﬁned these
+Fourier coeﬃcients without the use of the explicit functions Wω, but instead using Wallach’s
+results in [Wal03].
+We now describe the functions Wω. Because of the equivariance properties of Wω, to
+describe it completely it suﬃces to give a formula for Wω on the Levi HJ of the Heisenberg
+parabolic. Let eℓ,hℓ,fℓ be the basis of the long root sl2 of k from [Pol20a]. Let x,y be
+a basis of its standard representation C2, so that hℓx = x, hℓy =−y and fℓx = y. We
+write Vℓ for the 2ℓth symmetric power representation of this sl2, which we also consider as
+a representation of K. The space Vℓ has as basis the elements xℓ+vyℓ−v for−ℓ≤v≤ℓ.
+Let r0(i)∈WJ⊗ C be the element r0(i) = (1,−i,−1,i ). Then if m∈HJ,
+Wω(m) =ν(m)ℓ|ν(m)|
+∑
+v
+(|⟨ω,m·r0(i)⟩|
+⟨ω,m·r0(i)⟩
+)v
+Kv(|⟨ω,m·r0(i)⟩|) xℓ+vyℓ−v
+(ℓ +v)!(ℓ−v)!.
+7.4. Examples of quaternionic modular forms
+In this section, we give results and examples about quaternionic modular forms and their
+Fourier coeﬃcients that go beyond G2.
+7.4.1. Eisenstein series. The easiest family of examples of quaternionic modular forms
+is the degenerate Heisenberg Eisenstein series. Thus letP⊆GJ be the Heisenberg parabolic,
+with ν :P→ GL1 the character given by p·e0 =ν(p)e0. There is a weight ℓ modular form
+associated to inducing sections in IndG
+P (νℓ|ν|). In more detail, suppose ℓ > 0 is even,
+33
+===== PDF PAGE 34 =====
+and let fℓ(g,s )∈ IndG(R)
+P (R)(|ν|s) be the unique K-equivariant, Vℓ-valued ﬂat section whose
+value at g = 1 is xℓyℓ. Let now ffte ∈ Ind
+G(Af )
+P (Af )(|ν|s) be an arbitrary ﬂat section. Set
+f(g,s ) = ffte(gf,s )fℓ(g∞,s ) and E(g,f,s ) = ∑
+γ∈P (Q)\G(Q)f(γg,s ). The sum converges
+absolutely if Re(s) > 1 + dim(WJ)/2. Suppose s = ℓ + 1 is in the range of absolute
+convergence, so thatℓ>dim (WJ)/2. Then it can be shown that the value E(g,f,s =ℓ + 1)
+is a quaternionic modular form of weight ℓ.
+Another way to create modular forms is to use Heisenberg Eisenstein series with nontrivial
+inducing data. One can take a classical holomorphic modular form Φ of weight n on HJ
+(weight 3n on G2), and from it produce a weight n modular form E(g, Φ) on GJ, if n is
+suﬃciently large. This is spelled out in [ Pol20a].
+7.4.2. Small representations. Because absolutely convergent degenerate Eisenstein
+series always deﬁne modular forms, it makes sense to ask about the automorphic forms
+deﬁned by these Eisenstein series outside the range of absolute convergence. In other words,
+suppose ℓ≤ dim(WJ)/2. Then one can ask:
+• Is the Eisenstein series E(g,f,s ) regular at s =ℓ + 1?
+• If so, is the resulting automorphic function a modular form of weight ℓ?
+In some cases, these questions have been answered.
+Theorem 7.4.1. Let Eℓ(g,s ) be the Eisenstein series on G = E8 with ffte spherical at
+every ﬁnite place.
+(1) (Gan [Gan00a], Gan-Savin [GS05]) Suppose ℓ = 4 . Then E4(g,s ) is regular at
+s = 5, andθmin(g) :=E4(g,s = 5) deﬁnes a square integrable, non-cuspidal, modular
+form of weight 4.
+(2) (Pollack [Pol20c]) Supposeℓ = 8. Then E8(g,s ) is regular ats = 9, and θntm(g) :=
+E8(g,s = 9) deﬁnes a square-integrable, non-cuspidal, modular form of weight 8.
+The choice of ℓ = 4, 8 are inspired by the work [ GW94].
+About the modular forms θmin, θntm, one can prove that their Fourier coeﬃcients are
+rational:
+Theorem 7.4.2 ([ Pol20b],[Pol20c]). The modular forms θmin and θntm have rational
+Fourier coeﬃcients.
+7.4.3. Theta lifts. Usingθmin, one can construct new, interesting modular forms. The
+ﬁrst such examples were considered by Gan-Gross-Savin [GGS02]. Recall that, via the cor-
+respondence between binary cubic forms and cubic rings, the Fourier coeﬃcients of modular
+forms on G2 correspond to totally real cubic rings.
+Let I∈ J be the three-by-three identity matrix. For a cubic ring A, and an element
+X∈ J with NJ(X) = 1 (such as X = I), let N(A,X ) be the number of maps f : A→ J
+satisfying
+(1) f(1) =X
+(2) NJ(f(x)) =NA(x) for all x∈A. Here NA is the cubic norm on A.
+This is the number of embeddings of pointed cubic spaces of A intoJ. Besides X =I, there
+another second element E∈ J with NJ(E) = 1, with the property that the pointed cubic
+34
+===== PDF PAGE 35 =====
+spaces (J,I ) and (J,E ) are not globally equivalent; see [ GGS02] for a discussion. See also
+[GG99], [EG97].
+Theorem 7.4.3. [GGS02] There are level one modular forms θI andθE onG2 of weight
+4 whose Ath Fourier coeﬃcient is N(A,I ), respectively, N(A,E ), if A is a non-degenerate
+totally real cubic ring.
+Let H be a certain group of type F4, which is compact at the archimedean place and
+split at every ﬁnite place. Then there is a dual pair G2×H⊆ E8. It is a theorem that
+the automorphic double quotient H(Q)\H(A)/H(R)H(ˆZ) has size two: see [ EG97] and
+[GG99]. There is thus a two-dimensional space of special automorphic forms on H(A).
+The modular forms θI,θE are lifts from this two-dimensional space, using θmin as the kernel
+function.
+The linear combination 91 θI + 600θE is the theta lift of the trivial function on H. A
+Siegel-Weil theorem of Gan identiﬁes this lift with the Eisenstein series of weight 4 on G2.
+Theorem 7.4.4 (Gan [Gan00b]). The linear combination 91θI + 600θE is the spherical
+weight 4 Eisenstein series on G2.
+We mention that the archimedean theta correspondence between G2(R) and H(R) has
+been determined in Huang-Pandzic-Savin [ HPS96].
+7.4.4. Distinguished modular forms. Supposef(Z) =∑
+Taf(T )e2πi tr(TZ ) is a Siegel
+modular form. Then f is said to be distinguished if it satisﬁes the following condition:
+(1) There exists T0 with det(T0)̸= 0 so that af(T0)̸= 0
+(2) If T is such that det(T )̸= 0 and af(T )̸= 0, then det(T )≡ det(T0) mod (Q×)2.
+One can make an analogous deﬁnition for quaternionic modular forms:
+Definition 7.4.5. A quaternionic modular formϕ with Fourier coeﬃcientsaϕ(ω) is said
+to be distinguished if
+(1) There exists a rank four ω0 with aϕ(ω0)̸= 0
+(2) If ω is rank four and aϕ(ω)̸= 0, then q(ω)≡q(ω0) modulo (Q×)2.
+In [Pol20b], by restricting θmin to quaternionic groups of type E6, we constructed dis-
+tinguished modular forms:
+Theorem 7.4.6. [Pol20b] Let E = Q(
+√
+−d) be an imaginary quadratic ﬁeld, and GE
+the quaternionic group of type E6 deﬁned from E. Then there is a weight 4 distinguished
+modular form ϕE on GE. The form ϕE satisﬁes: if ω is rank four and aϕ(ω)̸= 0 , then
+q(ω)≡−d modulo (Q×)2.
+There is an embedding GE → E8, and ϕE is deﬁned as the pullback of θmin via this
+embedding.
+35
+===== PDF PAGE 36 =====
+CHAPTER 8
+The Fourier expansion on orthogonal groups
+In this chapter, we give an explicit Fourier expansion on SO(4 ,n + 2), to show how it
+may be done for a classical group. More precisely, we state and prove the formula for the
+generalized Whittaker function on SO(4,n +2)(R)0. To state the result, we use the notation
+of the following section. Throughout this chapter, we work over the ground ﬁeld R of real
+numbers.
+8.1. Setups
+We begin by setting up notation. Set V2,n = V2⊕Vn. Here V2 is a positive deﬁnite
+quadratic space with orthonormal basis v1,v 2 and Vn is a negative deﬁnite quadratic space
+with basis v−j for 1≤ j≤ n. Now set U = Span(b1,b 2) and U∨ = Span(b−1,b−2), i.e., U,
+respectivelyU∨, is a two-dimensional vector space with basisb1,b 2, respectivelyb−1,b−2. Let
+V =U⊕V2,n⊕U∨. We put a symmetric bilinear form (, ) onV in such a way thatU,U∨ are
+two-dimensional and isotropic with pairing (bi,b−j) =δij and U⊕U∨ is orthogonal to V2,n.
+We identify the Lie algebra ofG := SO(V ) with∧2V , so thatv1∧v2(v) = (v2,v )v1−(v1,v )v2.
+We deﬁne the Heisenberg parabolic P = MN to be the stabilizer of U inside SO(V ).
+The Levi subgroup M is deﬁned to be the subgroup of P that also stabilizes U∨. Then
+M≃ GL2× SO(V2,n), and we writer = diag(m,h, tm−1) for a typical element ofM. Observe
+that the Lie algebra n ofN isU∧ (U +V2,n) and the Lie algebra m ofM isU∧U∨ +∧2V2,n.
+Now, for j = 1, 2, one sets uj = (bj + b−j)/
+√
+2 and u−j = (bj− b−j)/
+√
+2. Thus
+u1,u 2,u−1,u−2 are orthonormal (up to sign). Deﬁne a Cartan involution on SO( V ) as con-
+jugation by ι, where ι(bj) = b−j, ι(b−j) = bj, ι is +1 on V2 and ι is−1 on Vn. With this
+Cartan involution, p = Span{u1,u 2,v 1,v 2}∧ Span{u−1,u−2,v−1,...,v −n} =: V4∧Vn+2 and
+k =∧2V4⊕∧2Vn+2. We writeK for the associated maximal compact subgroup ofG = SO(V )
+and K0 for its identity component. Then K0 = SO(V4)× SO(Vn+2).
+Recall that SO(4)≃ SU(2)× SU(2)/µ2. Consequently, the complexiﬁed Lie algebra k of
+K has two sl2 pieces. The ﬁrst sl2 is given as
+• e+ = 1
+2(u1−iu2)∧ (v1−iv2)
+• h+ =i(u1∧u2 +v1∧v2) = 1
+2(u1−iu2)∧ (u1 +iu2) + 1
+2(v1−iv2)∧ (v1 +iv2)
+• f + =− 1
+2(u1 +iu2)∧ (v1 +iv2).
+The other sl2 is obtained by replacing v2 with−v2 in the above formulas: That is, it has
+basis
+• e′+ = 1
+2(u1−iu2)∧ (v1 +iv2)
+• h′+ =i(u1∧u2−v1∧v2)
+• f′+ =− 1
+2(u1 +iu2)∧ (v1−iv2).
+36
+===== PDF PAGE 37 =====
+Let V2 denote the standard representation of one of these sl2’s. We write x,y for a weight
+basis of it. We may identify V4⊗ C with V2⊗V2 for these two sl2’s as follows:
+1√
+2
+(
+u1−iu2 v1 +iv2
+−(v1−iv2) u1 +iu2
+)
+=
+(
+x⊗x y⊗x
+x⊗y y ⊗y
+)
+.
+Identifying sl2 =Sym2(V2), this leads to the identiﬁcations
+• e+ = (x⊗x)∧ (−x⊗y)↦→−x2
+• h+ = (x⊗x)∧ (y⊗y)− (x⊗y)∧ (y⊗x)↦→ 2xy
+• f + =−(y⊗y)∧ (y⊗x)↦→y2
+Finally, we setVℓ =Sym2ℓ(V2)⊠1⊠1 as a representation ofK0. It has basis x2ℓ,··· ,y 2ℓ.
+8.2. Statement of theorem
+Our main result in this chapter is a formula for a generalized Whittaker function on
+SO(V )0 for the Heisenberg parabolic. In this section, we state that theorem.
+In more detail, suppose T1,T 2 are in V2,n. A generalized Whittaker function ϕ of type
+(T1,T 2) is a function on SO(V )(R)0 that satisﬁes:
+• ϕ is valued in Vℓ.
+• ϕ(gk) =k−1·ϕ(g) for all g∈ SO(V )(R)0 and k∈K0.
+• ϕ(exp(b1∧y1 +b2∧y2) exp(zb1∧b2)g) =ei(T1,y1)+i(T2,y2)ϕ(g).
+• Dℓϕ≡ 0, where Dℓ is the so-called Schmid operator, deﬁned exactly as it was in
+previous sections.
+For r = (m,h, tm−1), and T1,T 2∈ V2,n deﬁne β(r) =
+√
+2i(T1,T 2)m
+(
+h(v1 +iv2)
+ih(v1 +iv2)
+)
+.
+The notation (T1,T 2)
+(
+w1
+w2
+)
+means (T1,w 1)+(T2,w 2). Say that the pair (T1,T 2) is positive
+semi-deﬁnite, written (T1,T 2)≥ 0, if β(r)̸= 0 for all r∈ GL2(R)+× SO(V2,n)0.
+Supposeϵ′∈ SO(V2,n) takesv1↦→−v1 andv2↦→v2 and deﬁneϵ = diag((−1
+1 ),ϵ′, (−1
+1 )).
+Then ϵ∈ SO(4,n + 2)(R)0. Observe that β(rϵ) =−β∗(r).
+With notation as above, and (T1,T 2) positive semi-deﬁnite, deﬁne
+W(T1,T2)(r) = det(m)ℓ| det(m)|
+∑
+−ℓ≤v≤ℓ
+(|β(r)|
+β(r)∗
+)v
+Kv(|β(r)|) xℓ+vyℓ−v
+(ℓ +v)!(ℓ−v)!.
+We will need the following result.
+Exercise 8.2.1. The function W(T1,T2) satisﬁes W(T1,T2)(rk) =k−1W(T1,T2)(r) for all k∈
+K0∩M(R).
+Here is the theorem.
+Theorem 8.2.2. SupposeF is a moderate growth generalized Whittaker function for the
+pair (T1,T 2), and T1,T 2 are not both 0. Then, if (T1,T 2) is not positive semi deﬁnite, F = 0.
+If (T1,T 2) is positive semi-deﬁnite, then F is proportional to W(T1,T2).
+37
+===== PDF PAGE 38 =====
+8.3. The Iwasawa decomposition
+We need detailed forms of the Iwasawa decomposition of elements of p. Recall n =
+U∧ (U +V2,n)⊆∧ 2V ≃ g and m =U∧U∨ +∧2V2,n. Then we have g = n + m + k, and we
+will write elements of p in terms of this decomposition:
+• (u1 +iu2)∧ (u−1 +iu−2) = (b−1 +ib−2)∧ (b1 +ib2) is in m.
+• (u1−iu2)∧ (u−1−iu−2) = (b−1−ib−2)∧ (b1−ib2) is in m.
+• (u1 +iu2)∧ (u−1−iu−2) = (b−1 +ib2)∧ (b1 +ib−2) = (b−1∧b1 +b−2∧b2) + 2ib2∧
+b1 +i(b−1∧b−2 +b1∧b2). Moreover, b−1∧b−2 +b1∧b2 = u1∧u2 +u−1∧u−2 so
+that i(b−1∧b−2 +b1∧b2) has projection into ∧2V4 equal to 1
+2h+ + 1
+2h′+.
+• (u1−iu2)∧ (u−1 +iu−2) = (b−1−ib2)∧ (b1−ib−2) = (b−1∧b1 +b−2∧b2)− 2ib2∧
+b1−i(b−1∧b−2 +b1∧b2). Moreover, b−1∧b−2 +b1∧b2 = u1∧u2 +u−1∧u−2 so
+that−i(b−1∧b−2 +b1∧b2) has projection into ∧2V4 equal to− 1
+2h+− 1
+2h′+.
+Some more Iwasawa decompositions:
+• ui∧v−j =
+√
+2bi∧v−j−u−i∧v−j is in n+k. Consequently 1√
+2(u1+iu2)∧v−j = (b1+ib2)∧
+v−j− 1√
+2(u−1+iu−2)∧v−j and 1√
+2(u1−iu2)∧v−j = (b1−ib2)∧v−j− 1√
+2(u−1−iu−2)∧v−j.
+These decompositions are in n + k.
+• vi∧v−j is in m
+One hasvi∧u−j =
+√
+2vi∧bj−vi∧uj is in n+k. This leads to the following decompositions:
+• 1
+2(v1 +iv2)∧ (u−1 +iu−2) = 1√
+2(v1 +iv2)∧ (b1 +ib2) + 1
+2(u1 +iu2)∧ (v1 +iv2) =
+1√
+2(v1 +iv2)∧ (b1 +ib2)−f +.
+• 1
+2(v1 +iv2)∧ (u−1−iu−2) = 1√
+2(v1 +iv2)∧ (b1−ib2) + 1
+2(u1−iu2)∧ (v1 +iv2) =
+1√
+2(v1 +iv2)∧ (b1−ib2) +e′+
+• 1
+2(v1−iv2)∧ (u−1 +iu−2) = 1√
+2(v1−iv2)∧ (b1 +ib2) + 1
+2(u1 +iu2)∧ (v1−iv2) =
+1√
+2(v1−iv2)∧ (b1 +ib2)−f′+
+• 1
+2(v1−iv2)∧ (u−1−iu−2) = 1√
+2(v1−iv2)∧ (b1−ib2) + 1
+2(u1−iu2)∧ (v1−iv2) =
+1√
+2(v1−iv2)∧ (b1−ib2) +e+.
+8.4. The diﬀerential equations
+We assumeϕ is a generalized Whittaker function of type ( T1,T 2).
+Suppose r = (m,h, tm−1) is in the Heisenberg Levi, so that m = ( m11 m12
+m21 m22 )∈ GL2(R)
+and h∈ SO(V2,n). Then if z1,z 2∈V2,n,
+(b1∧z1 +b2∧z2)ϕ(M) =i((T1,m 11h(z1) +m12h(z2)) + (T2,m 21h(z1) +m22h(z2)))ϕ(M)
+=i(T1,T 2)m(h(z1),h (z2))tϕ(M).
+Recall the operator ˜D with Dℓ = pr◦ ˜D. We now have:
+˜Dϕ = 1
+2(u1 +iu2)∧ (u−1 +iu−2)ϕ⊗x ⊠x⊗ 1√
+2(u−1−iu−2)
++ 1
+2(u1 +iu2)∧ (u−1−iu−2)ϕ⊗x ⊠x⊗ 1√
+2(u−1 +iu−2)
+38
+===== PDF PAGE 39 =====
++ 1
+2(u1−iu2)∧ (u−1 +iu−2)ϕ⊗y ⊠y⊗ 1√
+2(u−1−iu−2)
++ 1
+2(u1−iu2)∧ (u−1−iu−2)ϕ⊗y ⊠y⊗ 1√
+2(u−1 +iu−2)
++
+∑
+1≤j≤n
+((b1 +ib2)∧v−jϕ)⊗x ⊠x⊗v−j
++
+∑
+1≤j≤n
+((b1−ib2)∧v−jϕ)⊗y ⊠y⊗v−j
++
+∑
+1≤j≤n
+1√
+2((v1 +iv2)∧v−jϕ)⊗−x ⊠y⊗v−j
++
+∑
+1≤j≤n
+1√
+2((v1−iv2)∧v−jϕ)⊗y ⊠x⊗v−j
++ ( 1√
+2(v1 +iv2)∧ (b1 +ib2)−f +)ϕ⊗−x ⊠y⊗ 1√
+2(u−1−iu−2)
++ ( 1√
+2(v1 +iv2)∧ (b1−ib2) +e′+)ϕ⊗−x ⊠y⊗ 1√
+2(u−1 +iu−2)
++ ( 1√
+2(v1−iv2)∧ (b1 +ib2)−f′+)ϕ⊗y ⊠x⊗ 1√
+2(u−1−iu−2)
++ ( 1√
+2(v1−iv2)∧ (b1−ib2) +e+)ϕ⊗y ⊠x⊗ 1√
+2(u−1 +iu−2)
+Simplifying and contracting, one ﬁnds that in Dℓϕ the coeﬃcient of the various terms
+are as follows:
+Deﬁne [xa] = xa
+a! and similarly [yb] = yb
+b! . We write ϕ =∑
+−ℓ≤v≤ℓϕv[xℓ+v][yℓ−v].
+Theorem 8.4.1. Let the notation be as above. Then
+(1) The coeﬃcient of [xℓ+v][yℓ−v−1]⊗x⊗ 1√
+2(u−1−iu−2):
+−1
+2(u1 +iu2)∧ (u−1 +iu−2)ϕv− i√
+2(T1,T 2)m(h(v1)−ih(v2),ih (v1) +h(v2))tϕv+1
+(2) The coeﬃcient of [xℓ+v−1][yℓ−v]⊗y⊗ 1√
+2(u−1 +iu−2):
+1
+2(u1−iu2)∧ (u−1−iu−2)ϕv− i√
+2(T1,T 2)m(h(v1) +ih(v2),−ih(v1) +h(v2))tϕv−1
+(3) The coeﬃcient of [xℓ+v][yℓ−v−1]⊗x⊗v−j:
+−i(T1,T 2)m(h(v−j),ih (v−j))tϕv + 1√
+2((v1−iv2)∧v−j)ϕv+1
+(4) The coeﬃcient of [xℓ+v−1][yℓ−v]⊗y⊗v−j:
+i(T1,T 2)m(h(v−j),−ih(v−j))tϕv + 1√
+2((v1 +iv2)∧v−j)ϕv−1
+39
+===== PDF PAGE 40 =====
+(5) The coeﬃcient of [xℓ+v][yℓ−v−1]⊗x⊗ 1√
+2(u−1 +iu−2):
+1
+2(b1∧b−1 +b2∧b−2− 2(ℓ + 1)−v)ϕv− i√
+2(T1,T 2)m(h(v1)−ih(v2),−ih(v1)−h(v2))tϕv+1
+(6) The coeﬃcient of [xℓ+v−1][yℓ−v]⊗y⊗ 1√
+2(u−1−iu−2):
+−1
+2(b1∧b−1 +b2∧b−2− 2(ℓ + 1) +v)ϕv− i√
+2(T1,T 2)m(h(v1) +ih(v2),ih (v1)−h(v2))tϕv−1
+8.5. Solving the diﬀerential equations
+Abusing notation, write ϕv(w,x,y,h ) = ϕv(r) where r = diag(m,h, tm−1) and m =
+(w
+w ) (1 x
+1 )
+(
+y1/2
+y−1/2
+)
+. Deﬁne fv(w,x,y,h ) as ϕv =w2ℓ+2fv. Here w,y ∈ R×
+>0, x∈ R and
+h∈ SO(V2,n)0. We will ﬁnd the formula ϕ by solving the diﬀerential equations above in
+terms of the explicit coordinates w,x,y,h .
+Recall
+β =
+√
+2i(T1,T 2)m
+(
+h(v1) +ih(v2)
+ih(v1)−h(v2)
+)
+.
+Note thatb1∧b−1+b2∧b−2 becomes the diﬀerential operatorw∂w. Also note thatw∂w(wAf) =
+wA(w∂w +A)f.
+With these deﬁnitions, the ﬁnal two diﬀerential equations of Theorem 8.4.1 become
+• (w∂w−v)fv +β∗fv+1 = 0 and
+• (w∂w +v)fv +βfv−1 = 0.
+Note that β depends linearly on w. Solving these two equations on a domain where β̸= 0
+gives that, as a function of w, φv is proportional to w2ℓ+2Kv(|β|). (This uses that φv is of
+moderate growth.)
+DeﬁneYv(x,y,h ) so that fv =YvKv(|β|); i.e., Yv is independent of w. Then the diﬀeren-
+tial equations imply
+βYv−1Kv−1(|β|) =βfv−1 =−(w∂w +v)fv
+=Yv (−(w∂w +v)Kv(|β|))
+=|β|YvKv−1(|β)|.
+One obtains thatYv = β
+|β|Yv−1 = |β|
+β∗Yv−1. It follows thatφv(w,x,y,h ) =Y0(x,y,h )w2ℓ+2
+(
+|β|
+β∗
+)v
+Kv(|β|).
+We will now use the other diﬀerential equations of Theorem 8.4.1 to prove thatY0 is constant.
+Suppose m = ( 1 x
+0 1 )
+(
+y1/2
+y−1/2
+)
+w. Set z =x +iy. Then one computes
+β =−
+√
+2y−1/2w(z∗T1 +T2,h (v1 +iv2)).
+We will now prove the following proposition, which will be used in deducing that Y0 is
+constant.
+Proposition 8.5.1. One has
+y(∂x−i∂y)(|β|) = β
+|β|
+(
+− i√
+2wy−1/2(z∗T1 +T2,h (v1−iv2))
+)
+.
+40
+===== PDF PAGE 41 =====
+Proof. Set β′ = (z∗T1 +T2,h (v1 +iv2)), so that β =−
+√
+2wy−1/2β′ and− β′
+|β′| = β
+|β|.
+We ﬁrst compute that
+y(∂x−i∂y)(|β|) = i
+√
+2
+2 wy−1/2|β′| +
+√
+2wy1/2(∂x−i∂y)(|β′|).
+Now
+(∂x−i∂y)(|β′|) = 1
+2|β′|(β′∗(∂x−i∂y)(β′) +β′(∂x−i∂y)(β′∗)).
+One computes (∂x−i∂y)(β′) = 0 and (∂x−i∂y)(β′∗) = 2(T1,h (v1−iv2)). Thus
+y(∂x−i∂y)(|β|) = (
+√
+2wy−1/2)
+(i
+2|β′| + y
+|β′|β′(T1,h (v1−iv2))
+)
+=
+√
+2wy−1/2β′
+|β|
+(i
+2(zT1 +T2,h (v1−iv2)) +y(T1,h (v1−iv2))
+)
+= i
+2
+√
+2wy−1/2β′
+|β′| (zT1 +T2− 2iyT1,h (v1−iv2))
+=
+(
+− i√
+2wy−1/2(z∗T1 +T2,h (v1−iv2))
+)(
+− β′
+|β′|
+)
+.
+The proposition follows. □
+Note that if X∈ g and v∈V then Xh(v) = d
+dt(hetX)(v)|t=0 =h(X(v)).
+Lemma 8.5.2. One has
+(1) (v1−iv2)∧v−j(|β|) = β∗
+|β|(
+√
+2y−1/2w(z∗T1 +T2,h (v−j)))
+(2) (v1 +iv2)∧v−j(|β|) = β
+|β|(
+√
+2y−1/2w(zT1 +T2,h (v−j))).
+Proof. We have
+(v1−iv2)∧v−j(|β|) = 1
+2|β|(β∗((v1−iv2)∧v−j)(β) +β((v1−iv2)∧v−j)(β∗))
+and similarly for (v1 +iv2)∧v−j. Now, one has
+• (v1−iv2)∧v−j(β) = 2
+√
+2y−1/2w(z∗T1 +T2,h (v−j))
+• (v1 +iv2)∧v−j(β) = 0
+• (v1−iv2)∧v−j(β∗) = 0
+• (v1 +iv2)∧v−j(β∗) = 2
+√
+2y−1/2w(zT1 +T2,h (v−j)).
+The lemma follows. □
+Proposition 8.5.3. The function Y0(x,y,h ) above is constant.
+Proof. We ﬁrst consider Y0 as a function of x,y the coordinates on the complex upper
+half-plane. Note that
+−1
+2(u1 +iu2)∧ (u−1 +iu−2) = 1
+2(b1 +ib2)∧ (b−1 +ib−2).
+By acting on b1 and b2, one sees that this is the element of gl2 (via our usual isomorphism)
+with matrix 1
+2 ( 1 i
+i−1 ). As a diﬀerential operator, this Lie algebra element gives iy(∂x−i∂y)
+on functions that are right invariant under SO(2). Using the proposition above and the
+41
+===== PDF PAGE 42 =====
+diﬀerential equations of the theorem, one obtains that y(∂x−i∂y)Y0 = 0. Similarly, one
+obtains y(∂x +i∂y)Y0 = 0. Thus Y0 is constant as a function of x,y .
+Using the lemma above, and again the diﬀerential equations of the theorem, one obtains
+XY0 = 0 for allX∈ p∩∧ 2V2,n =V2∧Vn. Because Y0 is right invariant underK0∩SO(V2,n)0,
+we see that Y0 is constant. □
+We now put everything together. From the work above, one obtains that on a domain
+where β ̸= 0, there is a unique line of generalized Whittaker functions of type ( T1,T 2),
+spanned by W(T1,T2). Indeed, we solved the diﬀerential equations on GL 2(R)+× SO(V2,n)0,
+and then one must observe that W(T1,T2) is appropriately equivariant by ϵ.
+One can now argue as in [ Pol20a] to prove that if (T1,T 2) is not positive semi-deﬁnite,
+then the only generalized Whittaker function is 0. The idea is that one ﬁrst solves the
+diﬀerential equations on a domain where β̸= 0, and then observes that this unique solution
+blows up as M approaches a point where β = 0. Finally, one can check that the W(T1,T2)
+satisfy the Schmid equations of the theorem above; we omit this aspect. This completes our
+work.
+42
+===== PDF PAGE 43 =====
+CHAPTER 9
+Proposed projects
+There are numerous interesting unanswered questions about quaternionic modular forms.
+In the previous chapters, I have tried to mention a few such questions. Basically, whatever
+is your favorite result about holomorphic modular forms probably has an interesting, open
+analogue for quaternionic modular forms. For the projects, I am proposing develop some of
+the ﬁrst results about quaternionic modular forms on the groups U(2,n ). However, perhaps
+you have a diﬀerent idea for a project; that would be great to work on too!
+9.1. Project 1: The generalized Whittaker function on U(2,n )
+The ﬁrst project is to ﬁnd the generalized Whittaker function for the Heisenberg parabolic
+of quaternionic modular forms on U(2,n ). The Heisenberg parabolic P =MN of U(2,n ) is
+the maximal parabolic subgroup stabilizing an isotropic line in the deﬁning representation
+of U(2,n ); its Levi subgroup is GL 1,E×U(1,n− 1) where E is the quadratic imaginary
+extension used to deﬁne the unitary group. In one sentence, the goal is to do for the group
+U(2,n ) what is done for the group SO(4 ,n ) in Chapter 8. Thus references for this project
+are Chapter 8 of these notes, and, to a lesser extent, [ Pol20a]. The case of U(2,n ) was
+excluded from [Pol20a] because it could not be handled by the same uniform argument that
+handled the quaternionic exceptional groups. However, a direct argument, similar to the
+work of Chapter 8, should yield the desired generalized Whittaker function.
+Here are some problems to organize the work on this project.
+Problem 9.1.1. Find an explicit realization of the Lie algebra of G =U(2,n ) in terms
+of the standard representation V of U(2,n ).
+Problem 9.1.2. Deﬁne a Cartan involution on g and identify the maximal compact
+subgroupK of G. Identify explicitly g = k⊕ p.
+Problem 9.1.3. Deﬁne quaternionic modular forms on G =U(2,n ).
+Problem 9.1.4. Find the Iwasawa decomposition (g = n + m + k) of a weight basis of p.
+Problem 9.1.5. Write down explicitly the Schmid diﬀerential equations for satisﬁed by
+quaternionic modular forms on G.
+Problem 9.1.6. Solve these diﬀerential equations, both when the character ofN is trivial,
+and when it is nontrivial.
+Problem 9.1.7. Use the case of trivial character to show that Heisenberg Eisenstein
+series with appropriate cuspidal inducing data become quaternionic modular forms.
+43
+===== PDF PAGE 44 =====
+9.2. Project 2: An Oda-Rallis-Schiﬀman lift for U(2,n )
+The second project is to give an analogue of the Oda-Rallis-Schiﬀmann [Oda78], [RS81]
+lift toU(2,n ). The Oda-Rallis-Schiﬀmann lift is a theta lift from holomorphic modular forms
+f on SL2 or its double cover to holomorphic modular forms θ(f) on the group O(2,n ). It is
+a very special instance of the general theta lift from symplectic to orthogonal groups, but in
+this special case one can write simple formulas for the Fourier coeﬃcients of θ(f) in terms
+of those of f. See the introduction to [ Pol21] for more historical references.
+The goal of the second project is produce an analogue of this lift from holomorphic
+modular formsg onU(1, 1) to quaternionic modular formsθ(g) onU(2,n ), and to give simple
+formulas for the Fourier coeﬃcients of θ(g) in terms of those of g. In [ Pol21] I considered a
+special theta lift from holomorphic Siegel modular formsf on Sp(4) to quaternionic modular
+forms θ(f) on SO(4,n ), for some n, and found the quaternionic Fourier coeﬃcients of the
+lift θ(f) in terms of the classical Fourier coeﬃcients of f. Thus this project is an analogue
+to unitary groups of the work done for orthogonal groups in [ Pol21]. So, [ Pol21] is a good
+reference for working on this project.
+This project assumes a successful completion of Project 1, but can mostly be worked on
+independently of that project. Also note that it would be a good idea to pay close attention
+to Wee Teck Gan’s lectures on the theta correspondence to work on this project.
+Here are some problems to organize our work on this project.
+Problem 9.2.1. Understand general formulas for the Schrodinger model of the Weil
+representation for the pair (U(1, 1),U (2,n )).
+Problem 9.2.2. Work out a general (soft) formula for Heisenberg Fourier coeﬃcients
+of θ(g) in terms of the standard Whittaker Fourier coeﬃcients of g. Here by a soft formula
+I mean one where the data for the Weil representation is arbitrary at the archimedean place.
+Problem 9.2.3. Find special data for the Weil representation for the pair(U(1, 1),U (2,n ))
+so that holomorphic representations onU(1, 1) lift to quaternionic representations onU(2,n ).
+Problem 9.2.4. Prove that the quaternionic Fourier coeﬃcients of θ(g) can be given in
+terms of the Fourier coeﬃcients of g via simple formulas.
+44
+===== PDF PAGE 45 =====
+Bibliography
+[Bai70] Walter L. Baily, Jr., An exceptional arithmetic group and its Eisenstein series , Ann. of Math. (2)
+91 (1970), 512–549. MR 269779
+[BJ79] A. Borel and H. Jacquet, Automorphic forms and automorphic representations , Automorphic
+forms, representations and L-functions (Proc. Sympos. Pure Math., Oregon State Univ., Corvallis,
+Ore., 1977), Part 1, Proc. Sympos. Pure Math., XXXIII, Amer. Math. Soc., Providence, R.I.,
+1979, With a supplement “On the notion of an automorphic representation” by R. P. Langlands,
+pp. 189–207. MR 546598
+[Dal21] Rahul Dalal, Counting Discrete, Level-1, Quaternionic Automorphic Representations on G2, arXiv
+e-prints (2021), arXiv:2106.09313.
+[EG97] Noam Elkies and Benedict H. Gross, Embeddings into the integral octonions , no. Special Issue,
+1997, Olga Taussky-Todd: in memoriam, pp. 147–158. MR 1610847
+[EHLS20] Ellen Eischen, Michael Harris, Jianshu Li, and Christopher Skinner, p-adic L-functions for unitary
+groups, Forum Math. Pi 8 (2020), e9, 160. MR 4096618
+[Gan00a] Wee Teck Gan, An automorphic theta module for quaternionic exceptional groups, Canad. J. Math.
+52 (2000), no. 4, 737–756. MR 1767400
+[Gan00b] , A Siegel-Weil formula for exceptional groups , J. Reine Angew. Math. 528 (2000), 149–
+181. MR 1801660
+[GG99] Benedict H. Gross and Wee Teck Gan, Commutative subrings of certain non-associative rings ,
+Math. Ann. 314 (1999), no. 2, 265–283. MR 1697445
+[GGS02] Wee Teck Gan, Benedict Gross, and Gordan Savin, Fourier coeﬃcients of modular forms on G2,
+Duke Math. J. 115 (2002), no. 1, 105–169. MR 1932327
+[GL97] Wee Teck Gan and Hung Yean Loke, Modular forms of level p on the exceptional tube domain , J.
+Ramanujan Math. Soc. 12 (1997), no. 2, 161–202. MR 1612014
+[GS05] Wee Teck Gan and Gordan Savin, On minimal representations deﬁnitions and properties , Repre-
+sent. Theory 9 (2005), 46–93. MR 2123125
+[GS15] Nadya Gurevich and Avner Segal, The Rankin-Selberg integral with a non-unique model for the
+standard L-function of G2, J. Inst. Math. Jussieu 14 (2015), no. 1, 149–184. MR 3284482
+[GW94] Benedict H. Gross and Nolan R. Wallach, A distinguished family of unitary representations for the
+exceptional groups of real rank = 4, Lie theory and geometry, Progr. Math., vol. 123, Birkh¨ auser
+Boston, Boston, MA, 1994, pp. 289–304. MR 1327538
+[GW96] , On quaternionic discrete series representations, and their continuations, J. Reine Angew.
+Math. 481 (1996), 73–123. MR 1421947
+[Har81] Michael Harris, The rationality of holomorphic Eisenstein series , Invent. Math. 63 (1981), no. 2,
+305–310. MR 610541
+[Har84] , Eisenstein series on Shimura varieties , Ann. of Math. (2) 119 (1984), no. 1, 59–94.
+MR 736560
+[HPS96] Jing-Song Huang, Pavle Pandˇ zi´ c, and Gordan Savin,New dual pair correspondences, Duke Math.
+J. 82 (1996), no. 2, 447–471. MR 1387237
+[iDD+21] Fatma C ¸ i¸ cek, Giuliana Davidoﬀ, Sarah Dijols, Trajan Hammonds, Aaron Pollack, and Manami
+Roy, The completed standard l-function of modular forms on g2, 2021.
+[JR97] Dihua Jiang and Stephen Rallis, Fourier coeﬃcients of Eisenstein series of the exceptional group
+of type G2, Paciﬁc J. Math. 181 (1997), no. 2, 281–314. MR 1486533
+45
+===== PDF PAGE 46 =====
+[Kim93] Henry H. Kim, Exceptional modular form of weight 4 on an exceptional domain contained in C27,
+Rev. Mat. Iberoamericana 9 (1993), no. 1, 139–200. MR 1216126
+[KY16] Henry H. Kim and Takuya Yamauchi, Cusp forms on the exceptional group of type E7, Compos.
+Math. 152 (2016), no. 2, 223–254. MR 3462552
+[Lok99] Hung Y. Loke, Dual pairs correspondences of E8,4 and E7,4, Israel J. Math. 113 (1999), 125–162.
+MR 1729445
+[McC04] Kevin McCrimmon, A taste of Jordan algebras , Universitext, Springer-Verlag, New York, 2004.
+MR 2014924
+[Oda78] Takayuki Oda, On modular forms associated with indeﬁnite quadratic forms of signature (2, n−2),
+Math. Ann. 231 (1977/78), no. 2, 97–144. MR 466026
+[Pol] A. Pollack, Exceptional algebraic structures and applications , Available at https://mathweb.
+ucsd.edu/~apollack/course_notes.pdf.
+[Pol19] Aaron Pollack, Modular forms on G2 and their standard L-function, Proceedings of the Simons
+Symposium ”Relative Trace Formulas” (accepted) (2019).
+[Pol20a] , The Fourier expansion of modular forms on quaternionic exceptional groups , Duke Math.
+J. 169 (2020), no. 7, 1209–1280. MR 4094735
+[Pol20b] , The minimal modular form on quaternionic E8, Jour. Inst. Math. Juss. (accepted) (2020).
+[Pol20c] , Modular forms on indeﬁnite orthogonal groups of rank three, with an appendix “next to
+minimal representation” by Gordan Savin , preprint (2020).
+[Pol21] , A quaternionic Saito–Kurokawa lift and cusp forms on G2 , Algebra Number Theory 15
+(2021), no. 5, 1213–1244. MR 4283102
+[RS81] S. Rallis and G. Schiﬀmann, On a relation between˜SL2 cusp forms and cusp forms on tube domains
+associated to orthogonal groups, Trans. Amer. Math. Soc. 263 (1981), no. 1, 1–58. MR 590410
+[Rum97] Karl E. Rumelhart, Minimal representations of exceptional p-adic groups, Represent. Theory 1
+(1997), 133–181. MR 1455128
+[Spr62] T. A. Springer, On the geometric algebra of the octave planes , Nederl. Akad. Wetensch. Proc. Ser.
+A 65 = Indag. Math. 24 (1962), 451–468. MR 0142045
+[SV00] Tonny A. Springer and Ferdinand D. Veldkamp, Octonions, Jordan algebras and exceptional
+groups, Springer Monographs in Mathematics, Springer-Verlag, Berlin, 2000. MR 1763974
+[Wal03] Nolan R. Wallach, Generalized Whittaker vectors for holomorphic and quaternionic representa-
+tions, Comment. Math. Helv. 78 (2003), no. 2, 266–307. MR 1988198
+[Wal15] , On the Gelfand-Kirillov dimension of a discrete series representation , Representations
+of reductive groups, Progr. Math., vol. 312, Birkh¨ auser/Springer, Cham, 2015, pp. 505–516.
+MR 3495808
+[Wei06] Martin H. Weissman, D4 modular forms, Amer. J. Math. 128 (2006), no. 4, 849–898. MR 2251588
+46

@@ -8,11 +8,12 @@ proven 2026-08-10 in the new subfolder `CN1/` after the FLT deferral was cancell
 closed both **by replacement** — see the last section.
 
 This folder is the **self-enclosed** formalisation of Jacobs' thesis Ch. 2 in the
-thesis's own **right-action ("slash") convention**, replacing `PhD/Jacobs`
-(left-action original, now legacy-bound: NEVER import it).  Allowed imports:
-`Mathlib`, `PhD.TateFredholm`, `PhD.QMF` (including the right-slash layer
-`PhD.QMF.Slash`), `PhD.NewtonPolygons`, and earlier `PhD.JacobsSlash` files.
-`import PhD.Jacobs` anywhere in this folder is a defect.
+thesis's own **right-action ("slash") convention**, replacing the left-action
+original (moved to `PhD/LegacyCode/Jacobs/` on 2026-08-21: NEVER import it).
+Allowed imports: `Mathlib`, `PhD.TateFredholm`, `PhD.QMF` (including the
+right-slash layer `PhD.QMF.Slash`), `PhD.NewtonPolygons`, and earlier
+`PhD.JacobsSlash` files.  `import PhD.LegacyCode.Jacobs` (or the defunct
+`PhD.Jacobs`) anywhere in this folder is a defect.
 
 ## Naming and conventions
 
@@ -81,7 +82,7 @@ Root (analytic layer, ports of the left originals):
 
 | file | role |
 |---|---|
-| `1_PadicAnalytic` | p-adic analytic prerequisites (VERBATIM port) |
+| `1_PadicAnalytic` | `p = 3` instance of the general `PhD/LWX/PadicExpLog.lean` (exp/log re-exported + 8 `‖3‖ < 1` shims) plus the `p = 3`-specific `unitPow`/binomial-series sections; deduplicated 2026-09-05 (board `.mathlib-quality/jacobs-explog/`) |
 | `1_GenFun` | generating-function calculus, `idx`, `ext_matrixCoeff` norm form |
 | ~~`1_BlockOp`~~ → `PhD/TateFredholm/BlockOp.lean` (moved 2026-08-18, namespace `TateFredholm`; forms-headline board R0) | `cSpace` blocks, `blockOp`, `matrixCoeff_*`, compactoid closure |
 | `1_SlopeTheorem` | the slope machinery endpoint |
@@ -221,13 +222,23 @@ an `ω`-eigenvector of the base change of the matrix of the genuine `W`*; the ol
   Five lemmas in `U3/2_Level.lean` were un-`private`d for it, and the file instantiates
   `QMF.RigidificationAt.IsCompletionLinear` from `theta_one_tmul`.
 
+## Post-board dedup (2026-09-01)
+
+`1_SlopeTheorem.lean` shrank to the normalisation: the abstract slope theorem
+(`norm_charCoeff_of_unit_minors`, its `val` reading, `norm_tsum_eq_of_dominant`,
+`det_row_smul_pow`, `norm_minor_range`, `ne_zero_of_unit_minors`) now lives ϖ-generally in
+`PhD/TateFredholm/Slopes.lean`; the fork keeps `ϖ₃`/`coe_ϖ₃` and applies the general theorems at
+`ϖ₃` (`3_Slopes` unchanged, `4_SlopeReading` call sites now pass `(ϖ₃ h3)`).  `charCoeff_smul`
+stays fork-side pending the name collision with `TateFredholm.charCoeff_smul` (Riesz.lean) — see
+the NOTE(cleanup) in the file.
+
 ## Relation to the rest of the repo
 
 * `PhD/QMF/Slash/` — the general right-slash abstract layer this fork consumes
   (`Sigma0'`, `RightSlashAction`, automorphic slash, `heckeOperatorSlash` +
   matrix recipe, right-slash quaternionic forms with the `spaceSlash_eq_space`
   agreement corollary to the left/FLT interface).
-* `PhD/Jacobs/` — the left-action original: kept as history, to be moved to
-  legacy by the user; nothing here may import it.  A future "the two `U₃`'s
-  agree" bridge, if ever wanted, must itself be self-enclosed (explicitly
-  deferred, user decision).
+* `PhD/LegacyCode/Jacobs/` — the left-action original: moved to legacy by the
+  user on 2026-08-21, kept as history; nothing here may import it.  A future
+  "the two `U₃`'s agree" bridge, if ever wanted, must itself be self-enclosed
+  (explicitly deferred, user decision).

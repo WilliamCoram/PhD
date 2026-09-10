@@ -98,6 +98,7 @@ theorem coeff_hasseDeriv (k n : ℕ) (f : PowerSeries R) :
 theorem hasseDeriv_zero (f : PowerSeries R) : hasseDeriv 0 f = f := PowerSeries.ext fun n ↦ by
   rw [coeff_hasseDeriv, Nat.add_zero, Nat.choose_zero_right, Nat.cast_one, one_mul]
 
+
 end HasseDeriv
 
 section EvalT
@@ -110,6 +111,14 @@ evaluation of an entire (restricted) series; mathlib's `PowerSeries.eval₂` is
 adic-topology-only and does not apply over a normed ring. -/
 def evalT (a : R) (f : PowerSeries R) : R :=
   ∑' n, coeff n f * a ^ n
+
+omit [IsUltrametricDist R] [CompleteSpace R] in
+/-- `evalT` of a polynomial is its evaluation. -/
+theorem evalT_coe (a : R) (P : Polynomial R) : evalT a (P : PowerSeries R) = P.eval a := by
+  rw [evalT, tsum_eq_sum (s := Finset.range (P.natDegree + 1)) fun n hn ↦ by
+    rw [Polynomial.coeff_coe, Polynomial.coeff_eq_zero_of_natDegree_lt
+      (by rw [Finset.mem_range, not_lt] at hn; omega), zero_mul], Polynomial.eval_eq_sum_range]
+  exact Finset.sum_congr rfl fun n _ ↦ by rw [Polynomial.coeff_coe]
 
 -- The cofinite form of the standing hypothesis.  Note that `‖a ^ n‖ ≤ ‖a‖ ^ n` may fail
 -- at `n = 0` (the section has no `NormOneClass`), so the bound is only eventual.
@@ -157,14 +166,18 @@ theorem evalT_add {a : R} {f g : PowerSeries R}
   (tsum_congr fun n ↦ by rw [map_add, add_mul]).trans
     ((summable_coeff_mul_pow hf).tsum_add (summable_coeff_mul_pow hg))
 
-private theorem evalT_sub' {a : R} {f g : PowerSeries R}
+/-- Evaluation is subtractive on series restricted at the radius `‖a‖`. -/
+theorem evalT_sub {a : R} {f g : PowerSeries R}
     (hf : Tendsto (fun n ↦ ‖coeff n f‖ * ‖a‖ ^ n) atTop (𝓝 0))
     (hg : Tendsto (fun n ↦ ‖coeff n g‖ * ‖a‖ ^ n) atTop (𝓝 0)) :
     evalT a (f - g) = evalT a f - evalT a g :=
   (tsum_congr fun n ↦ by rw [map_sub, sub_mul]).trans
     ((summable_coeff_mul_pow hf).tsum_sub (summable_coeff_mul_pow hg))
 
-private theorem evalT_X (a : R) : evalT a X = a := by
+omit [IsUltrametricDist R] [CompleteSpace R] in
+/-- Evaluation of the series `X`. -/
+@[simp]
+theorem evalT_X (a : R) : evalT a X = a := by
   rw [evalT, tsum_eq_single 1 fun n hn ↦ by simp [coeff_X, hn], coeff_one_X, one_mul, pow_one]
 
 /-- The product of two cofinitely-null families is cofinitely null on the product index —
@@ -226,15 +239,16 @@ private theorem evalT_one_sub_C_mul_X (a b : R) : evalT a (1 - C b * X) = 1 - b 
   have hT : ∀ {f : PowerSeries R}, IsRestricted ‖a‖ f →
       Tendsto (fun n ↦ ‖coeff n f‖ * ‖a‖ ^ n) atTop (𝓝 0) :=
     fun hf ↦ tendsto_norm_coeff_mul_pow_of_isRestricted hf le_rfl
-  rw [evalT_sub' (hT (isRestricted_one ‖a‖))
+  rw [evalT_sub (hT (isRestricted_one ‖a‖))
       (hT (isRestricted.mul ‖a‖ (isRestricted_C ‖a‖ b) (isRestricted_X ‖a‖))),
     evalT_one, evalT_mul (hT (isRestricted_C ‖a‖ b)) (hT (isRestricted_X ‖a‖)),
     evalT_C, evalT_X]
 
+omit [CompleteSpace R] in
 /-- Divided derivatives preserve restrictedness at a positive radius: the binomial factor
 is an `ℕ`-multiple, hence norm-nonincreasing ultrametrically, and the index shift only
 costs the constant `(c ^ k)⁻¹`. -/
-private theorem isRestricted_hasseDeriv {c : ℝ} (hc : 0 < c) {f : PowerSeries R}
+theorem isRestricted_hasseDeriv {c : ℝ} (hc : 0 < c) {f : PowerSeries R}
     (hf : IsRestricted c f) (k : ℕ) : IsRestricted c (hasseDeriv k f) := by
   rw [isRestricted_iff']
   have hbase : Tendsto (fun n ↦ ‖coeff (n + k) f‖ * c ^ (n + k) * (c ^ k)⁻¹) atTop (𝓝 0) := by
@@ -261,7 +275,7 @@ private theorem coeff_succ_one_sub_C_mul_X_mul (b : R) (f : PowerSeries R) (n : 
 /-- The affine product rule for divided derivatives:
 `Δᵏ⁺¹((1 - bX)·f) = (1 - bX)·Δᵏ⁺¹f - b·Δᵏf` [Buzzard2007, p. 22].  Proved coefficientwise;
 the two binomial coefficients on the right recombine by Pascal's rule. -/
-private theorem hasseDeriv_one_sub_C_mul_X_mul (b : R) (k : ℕ) (f : PowerSeries R) :
+theorem hasseDeriv_one_sub_C_mul_X_mul (b : R) (k : ℕ) (f : PowerSeries R) :
     hasseDeriv (k + 1) ((1 - C b * X) * f) =
       (1 - C b * X) * hasseDeriv (k + 1) f - C b * hasseDeriv k f := by
   refine PowerSeries.ext fun n ↦ ?_
@@ -316,7 +330,7 @@ private theorem evalT_hasseDeriv_pow_mul_aux {a b : R} (hba : b * a = 1) {g : Po
       have hDk := isRestricted_hasseDeriv hc hmul k
       have hDk1 := isRestricted_hasseDeriv hc hmul (k + 1)
       rw [hpeel, hasseDeriv_one_sub_C_mul_X_mul,
-        evalT_sub' (hT (isRestricted.mul c hLres hDk1))
+        evalT_sub (hT (isRestricted.mul c hLres hDk1))
           (hT (isRestricted.mul c hCres hDk)),
         evalT_mul (hT hLres) (hT hDk1), hL0, zero_mul,
         evalT_mul (hT hCres) (hT hDk), evalT_C, zero_sub, ih k (Nat.succ_le_succ_iff.mp hs)]
@@ -345,7 +359,7 @@ section Order
 
 variable {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
 
-private theorem isRestricted_of_le {R : Type*} [NormedRing R] {c d : ℝ} (hc : 0 ≤ c) (hcd : c ≤ d)
+theorem isRestricted_of_le {R : Type*} [NormedRing R] {c d : ℝ} (hc : 0 ≤ c) (hcd : c ≤ d)
     {f : PowerSeries R} (hf : IsRestricted d f) : IsRestricted c f :=
   (isRestricted_iff' c f).mpr <| squeeze_zero (fun _ ↦ by positivity) (fun _ ↦ by gcongr)
     ((isRestricted_iff' d f).mp hf)
@@ -361,9 +375,10 @@ private def linFactor (a : K) (c : ℝ) : Restricted K c :=
 
 private theorem val_linFactor (a : K) (c : ℝ) : (linFactor a c).1 = 1 - C a⁻¹ * X := rfl
 
--- A definition rather than an inline `⟨f, hf⟩`: the anonymous constructor unfolds the opaque
--- type `Restricted R c` and loses its normed-ring instances.
-private def restrictedOf {R : Type*} [NormedRing R] [IsUltrametricDist R] {c : ℝ}
+/-- A restricted power series as an element of `Restricted R c`.  A definition rather than an
+inline `⟨f, hf⟩`: the anonymous constructor unfolds the opaque type `Restricted R c` and loses
+its normed-ring instances. -/
+def restrictedOf {R : Type*} [NormedRing R] [IsUltrametricDist R] {c : ℝ}
     {f : PowerSeries R} (hf : IsRestricted c f) : Restricted R c := ⟨f, hf⟩
 
 private theorem val_restrictedOf {c : ℝ} {f : PowerSeries K} (hf : IsRestricted c f) :
@@ -562,6 +577,38 @@ theorem IsOpLimit.comp_right {T : ℕ → M →L[R] M} {L : M →L[R] M}
   rw [← sub_mul]
   exact opNorm_mul_le _ _
 
+omit [IsUltrametricDist R] [CompleteSpace R] in
+/-- Scalar multiples of operator-norm limits. -/
+theorem IsOpLimit.smul {T : ℕ → M →L[R] N} {L : M →L[R] N} (h : IsOpLimit T L) (c : R) :
+    IsOpLimit (fun n ↦ c • T n) (c • L) := by
+  refine squeeze_zero (fun n ↦ opNorm_nonneg _) (fun n ↦ ?_)
+    (by simpa using Filter.Tendsto.const_mul ‖c‖ h)
+  rw [← smul_sub]
+  exact opNorm_smul_le _ _
+
+omit [IsUltrametricDist R] [CompleteSpace R] in
+/-- Products of operator-norm limits. -/
+theorem IsOpLimit.mul {T T' : ℕ → M →L[R] M} {L L' : M →L[R] M} (h : IsOpLimit T L)
+    (h' : IsOpLimit T' L') : IsOpLimit (fun n ↦ T n * T' n) (L * L') := by
+  have hg : Tendsto (fun n ↦ ‖T n - L‖ * (‖T' n - L'‖ + ‖L'‖) + ‖L‖ * ‖T' n - L'‖) atTop
+      (𝓝 0) := by
+    simpa using Filter.Tendsto.add (Filter.Tendsto.mul h (Filter.Tendsto.add_const ‖L'‖ h'))
+      (Filter.Tendsto.const_mul ‖L‖ h')
+  refine squeeze_zero (fun n ↦ opNorm_nonneg _) (fun n ↦ ?_) hg
+  rw [show T n * T' n - L * L' = (T n - L) * T' n + L * (T' n - L') by noncomm_ring]
+  refine (norm_add_le _ _).trans (add_le_add ((opNorm_mul_le _ _).trans
+    (mul_le_mul_of_nonneg_left ?_ (opNorm_nonneg _))) (opNorm_mul_le _ _))
+  calc ‖T' n‖ = ‖(T' n - L') + L'‖ := by rw [sub_add_cancel]
+    _ ≤ ‖T' n - L'‖ + ‖L'‖ := norm_add_le _ _
+
+omit [IsUltrametricDist R] [CompleteSpace R] in
+/-- Powers of operator-norm limits. -/
+theorem IsOpLimit.pow {T : ℕ → M →L[R] M} {L : M →L[R] M} (h : IsOpLimit T L) (m : ℕ) :
+    IsOpLimit (fun n ↦ T n ^ m) (L ^ m) := by
+  induction m with
+  | zero => simpa only [pow_zero] using IsOpLimit.const (1 : M →L[R] M)
+  | succ m ih => simpa only [pow_succ] using ih.mul h
+
 end OpLimit
 
 variable {I : Type*} [DecidableEq I]
@@ -678,7 +725,8 @@ theorem resolventCoeff_sub_mul (u : c(I, R) →L[R] c(I, R)) (m : ℕ) :
     resolventCoeff u (m + 1) - u * resolventCoeff u m = charCoeff u (m + 1) • 1 :=
   sub_eq_of_eq_add (resolventCoeff_succ u m)
 
-private theorem matrixCoeff_one (j i : I) :
+/-- The identity operator has the identity matrix. -/
+theorem matrixCoeff_one (j i : I) :
     matrixCoeff (1 : c(I, R) →L[R] c(I, R)) j i = if j = i then 1 else 0 := by
   by_cases h : j = i <;> simp [matrixCoeff, h, cSpace.single_apply_of_ne]
 
@@ -931,15 +979,6 @@ private theorem rowNorm_truncation_comp_le [IsTate R] (u : c(I, R) →L[R] c(I, 
   split_ifs
   · exact norm_matrixCoeff_le_rowNorm' u j i
   · simpa using rowNorm_nonneg u j
-
--- `OperatorNorm.lean` has `opNorm_mul_le` but no `smul` version.  Stated on a general
--- `M →L[R] N`: nothing here needs the domain and codomain to agree, or to be model spaces.
-private theorem opNorm_smul_le [IsTate R] {M N : Type*} [NormedAddCommGroup M] [Module R M]
-    [IsBoundedSMul R M] [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N]
-    (a : R) (w : M →L[R] N) : ‖a • w‖ ≤ ‖a‖ * ‖w‖ :=
-  opNorm_le_of_forall _ (mul_nonneg (norm_nonneg a) (opNorm_nonneg w)) fun x ↦
-    (norm_smul_le a (w x)).trans <| (mul_le_mul_of_nonneg_left (le_opNorm w x)
-      (norm_nonneg a)).trans_eq (mul_assoc _ _ _).symm
 
 private theorem tendsto_norm_pow_sub_pow [IsTate R] {α : Type*} {F : Filter α}
     (u : c(I, R) →L[R] c(I, R)) (v : α → c(I, R) →L[R] c(I, R)) {D : ℝ} (hD : ∀ x, ‖v x‖ ≤ D)
@@ -1230,6 +1269,95 @@ theorem commute_of_isOpLimit_resolventPartialSum [IsTate R] {u : c(I, R) →L[R]
     (Commute.sum_right _ _ _ fun _ _ ↦ ((Commute.sum_right _ _ _ fun _ _ ↦
       (Commute.self_pow u _).smul_right _).smul_right _).smul_right _).symm.eq
 
+-- The polynomial `∑_{k ≤ m} cₖ Xᵐ⁻ᵏ` evaluating to `resolventCoeff u m`.
+private def resolventPoly (u : c(I, R) →L[R] c(I, R)) (m : ℕ) : Polynomial R :=
+  ∑ k ∈ Finset.range (m + 1), Polynomial.C (charCoeff u k) * Polynomial.X ^ (m - k)
+
+private theorem aeval_resolventPoly (u : c(I, R) →L[R] c(I, R)) (m : ℕ) :
+    Polynomial.aeval u (resolventPoly u m) = resolventCoeff u m := by
+  simp only [resolventPoly, resolventCoeff, map_sum, map_mul, Polynomial.aeval_C, map_pow,
+    Polynomial.aeval_X, Algebra.smul_def]
+
+private def resolventPartialPoly (u : c(I, R) →L[R] c(I, R)) (a : R) (s n : ℕ) : Polynomial R :=
+  ∑ m ∈ Finset.range n, Polynomial.C (((m + s).choose s : R) * a ^ m) * resolventPoly u (m + s)
+
+private theorem aeval_resolventPartialPoly (u : c(I, R) →L[R] c(I, R)) (a : R) (s n : ℕ) :
+    Polynomial.aeval u (resolventPartialPoly u a s n) = resolventPartialSum u a s n := by
+  simp only [resolventPartialPoly, resolventPartialSum, map_sum, map_mul, Polynomial.aeval_C,
+    aeval_resolventPoly, Algebra.smul_def, mul_assoc]
+
+/-- `L` lies in the closure of `R[u]`: it is an operator-norm limit of polynomials in `u`
+([JN] Theorem 2.2.2: "the idempotent projectors … lie in the closure of `R[u]`"). -/
+def IsOpLimitAeval (u L : c(I, R) →L[R] c(I, R)) : Prop :=
+  ∃ pol : ℕ → Polynomial R, IsOpLimit (fun k ↦ Polynomial.aeval u (pol k)) L
+
+omit [DecidableEq I] in
+/-- Polynomials in `u` lie in the closure of `R[u]`. -/
+theorem IsOpLimitAeval.aeval (u : c(I, R) →L[R] c(I, R)) (P : Polynomial R) :
+    IsOpLimitAeval u (Polynomial.aeval u P) :=
+  ⟨fun _ ↦ P, IsOpLimit.const _⟩
+
+omit [DecidableEq I] in
+/-- The closure of `R[u]` is closed under addition. -/
+theorem IsOpLimitAeval.add [IsTate R] {u L L' : c(I, R) →L[R] c(I, R)} (h : IsOpLimitAeval u L)
+    (h' : IsOpLimitAeval u L') : IsOpLimitAeval u (L + L') :=
+  let ⟨p, hp⟩ := h
+  let ⟨q, hq⟩ := h'
+  ⟨fun k ↦ p k + q k, by simpa only [map_add] using hp.add hq⟩
+
+omit [DecidableEq I] in
+/-- The closure of `R[u]` is closed under multiplication. -/
+theorem IsOpLimitAeval.mul [IsTate R] {u L L' : c(I, R) →L[R] c(I, R)} (h : IsOpLimitAeval u L)
+    (h' : IsOpLimitAeval u L') : IsOpLimitAeval u (L * L') :=
+  let ⟨p, hp⟩ := h
+  let ⟨q, hq⟩ := h'
+  ⟨fun k ↦ p k * q k, by simpa only [map_mul] using hp.mul hq⟩
+
+omit [DecidableEq I] in
+/-- The closure of `R[u]` is closed under scalar multiplication. -/
+theorem IsOpLimitAeval.smul [IsTate R] {u L : c(I, R) →L[R] c(I, R)} (h : IsOpLimitAeval u L)
+    (c : R) : IsOpLimitAeval u (c • L) :=
+  let ⟨p, hp⟩ := h
+  ⟨fun k ↦ Polynomial.C c * p k, by
+    simpa only [map_mul, Polynomial.aeval_C, Algebra.smul_def] using hp.smul c⟩
+
+omit [DecidableEq I] in
+/-- The closure of `R[u]` is closed under powers. -/
+theorem IsOpLimitAeval.pow [IsTate R] {u L : c(I, R) →L[R] c(I, R)} (h : IsOpLimitAeval u L)
+    (m : ℕ) : IsOpLimitAeval u (L ^ m) :=
+  let ⟨p, hp⟩ := h
+  ⟨fun k ↦ p k ^ m, by simpa only [map_pow] using hp.pow m⟩
+
+omit [DecidableEq I] in
+/-- A limit of polynomials in a polynomial in `u` is a limit of polynomials in `u`. -/
+theorem IsOpLimitAeval.comp {u L : c(I, R) →L[R] c(I, R)} {B : Polynomial R}
+    (h : IsOpLimitAeval (Polynomial.aeval u B) L) : IsOpLimitAeval u L :=
+  let ⟨p, hp⟩ := h
+  ⟨fun k ↦ (p k).comp B, by simpa only [Polynomial.aeval_comp] using hp⟩
+
+/-- The divided evaluations `Nₛ` of the resolvent lie in the closure of `R[u]`. -/
+theorem IsOpLimitAeval.of_resolventPartialSum {u N : c(I, R) →L[R] c(I, R)} {a : R} {s : ℕ}
+    (hN : IsOpLimit (resolventPartialSum u a s) N) : IsOpLimitAeval u N :=
+  ⟨resolventPartialPoly u a s,
+    isOpLimit_congr hN fun n ↦ (aeval_resolventPartialPoly u a s n).symm⟩
+
+/-- An operator-norm limit of polynomials in `u` commutes with every operator commuting with
+`u` ([Bel] II.2.17/II.2.18: "`N` and `F` are stable by every operator … that commutes with
+`φ`"). -/
+theorem commute_of_isOpLimit_aeval [IsTate R] {u p : c(I, R) →L[R] c(I, R)}
+    {pol : ℕ → Polynomial R} (hp : IsOpLimit (fun k ↦ Polynomial.aeval u (pol k)) p)
+    {w : c(I, R) →L[R] c(I, R)} (hw : u * w = w * u) : p * w = w * p :=
+  (hp.comp_right w).unique <| isOpLimit_congr (hp.comp_left w) fun k ↦ by
+    rw [Polynomial.aeval_eq_sum_range]
+    exact (Commute.sum_right _ _ _ fun i _ ↦
+      ((show Commute w u from hw.symm).pow_right i).smul_right _).eq
+
+/-- Elements of the closure of `R[u]` commute with every operator commuting with `u`. -/
+theorem IsOpLimitAeval.commute [IsTate R] {u p : c(I, R) →L[R] c(I, R)} (h : IsOpLimitAeval u p)
+    {w : c(I, R) →L[R] c(I, R)} (hw : u * w = w * u) : p * w = w * p :=
+  let ⟨_, hp⟩ := h
+  commute_of_isOpLimit_aeval hp hw
+
 private theorem resolventPartialSum_zero_succ (u : c(I, R) →L[R] c(I, R)) (a : R) (n : ℕ) :
     resolventPartialSum u a 0 (n + 1) = resolventPartialSum u a 0 n +
       a ^ n • resolventCoeff u n := by
@@ -1390,6 +1518,15 @@ theorem charCoeff_smul [IsTate R] (a : R) (u : c(I, R) →L[R] c(I, R)) (hu : Is
     rw [minor_smul, S.2]
   rw [charCoeff, charCoeff, tsum_congr hminor, (summable_minor u hu n).tsum_mul_left]
   ring
+
+/-- **Scaling the operator rescales the determinant**: `det(1 - X·(a•u)) = det(1 - aX·u)`,
+coefficientwise `charCoeff_smul`. -/
+theorem charPowerSeries_smul [IsTate R] (a : R) (u : c(I, R) →L[R] c(I, R))
+    (hu : IsCompactoid u) :
+    charPowerSeries (a • u) = PowerSeries.rescale a (charPowerSeries u) := by
+  refine PowerSeries.ext fun n => ?_
+  rw [charPowerSeries_coeff, PowerSeries.coeff_rescale, charPowerSeries_coeff,
+    charCoeff_smul a u hu n]
 
 /-- `det(1 - a•u) = H_u(a)`: the determinant value of the rescaled operator is the
 evaluation of the characteristic power series. -/
@@ -1597,12 +1734,13 @@ private theorem norm_charCoeff_sub_le_of_opNorm_sub_le [IsTate R] {v u : c(I, R)
     fun T hT ↦ norm_minor_sub_minor_le v u hg0 hgv hgu hη0.le hdiff hδ0 hδ1 hD1 hgD B hgδ m T hT
 
 /-- Serre's Proposition 8 [Serre1962, §5 p. 77], the uniform-convergence engine: if
-`wₙ → u` in operator norm (all compactoid), the characteristic coefficients converge
-uniformly at any radius `M`. -/
+`wₙ → u` in operator norm along any filter (all compactoid), the characteristic coefficients
+converge uniformly at any radius `M`. -/
 theorem eventually_norm_charCoeff_sub_le [IsTate R] {u : c(I, R) →L[R] c(I, R)}
-    (hu : IsCompactoid u) {w : ℕ → c(I, R) →L[R] c(I, R)} (hw : ∀ n, IsCompactoid (w n))
-    (hconv : Tendsto (fun n ↦ ‖w n - u‖) atTop (𝓝 0)) (M : ℝ) (hM : 0 < M) {ε : ℝ} (hε : 0 < ε) :
-    ∀ᶠ n in atTop, ∀ m, ‖charCoeff (w n) m - charCoeff u m‖ * M ^ m ≤ ε := by
+    (hu : IsCompactoid u) {ι : Type*} {l : Filter ι} {w : ι → c(I, R) →L[R] c(I, R)}
+    (hw : ∀ n, IsCompactoid (w n)) (hconv : Tendsto (fun n ↦ ‖w n - u‖) l (𝓝 0)) (M : ℝ)
+    (hM : 0 < M) {ε : ℝ} (hε : 0 < ε) :
+    ∀ᶠ n in l, ∀ m, ‖charCoeff (w n) m - charCoeff u m‖ * M ^ m ≤ ε := by
   classical
   set C : ℝ := max M 1
   have hC1 : (1 : ℝ) ≤ C := le_max_right _ _
@@ -1629,7 +1767,7 @@ theorem eventually_norm_charCoeff_sub_le [IsTate R] {u : c(I, R) →L[R] c(I, R)
   have hfinal : η * (D ^ b * K) ≤ ε := by
     rw [← le_div_iff₀ (mul_pos (pow_pos hD0 b) hK0), hηdef]
     exact min_le_right _ _
-  have hev : ∀ᶠ n in atTop, ‖w n - u‖ ≤ η := by
+  have hev : ∀ᶠ n in l, ‖w n - u‖ ≤ η := by
     filter_upwards [Metric.tendsto_nhds.1 hconv η hη0] with n hn
     rw [Real.dist_eq, sub_zero, abs_of_nonneg (opNorm_nonneg _)] at hn
     exact hn.le
@@ -1918,14 +2056,16 @@ private theorem one_sub_smul_pow_mul_resolventEval_eq_zero [IsTate R] {u : c(I, 
 /-- **Serre's Riesz projectors** [Serre1962, §7 p. 81]: at a zero of order `h ≥ 1`, from
 `e := c⁻¹(1-au)N_h` and `f := -c⁻¹uN_{h-1}` (with `e + f = 1`, `f·eʰ = 0`), the binomial
 expansion of `(e+f)ʰ = 1` splits as the idempotent `p := eʰ` and its complement.  The
-witness `w` realises the invertibility of `1 - a•u` on the range of `p`. -/
-theorem exists_rieszProjection [IsTate R] {u : c(I, R) →L[R] c(I, R)}
+witness `w` realises the invertibility of `1 - a•u` on the range of `p`.  Both `p` and `w`
+lie in the closure of `R[u]` ([JN] Theorem 2.2.2, [Bel] II.2.17). -/
+theorem exists_rieszProjection_isOpLimit [IsTate R] {u : c(I, R) →L[R] c(I, R)}
     (hu : IsCompactoid u) {a : R} {h : ℕ} (hh : 1 ≤ h)
     (h0 : ∀ s < h, PowerSeries.evalT a (PowerSeries.hasseDeriv s (charPowerSeries u)) = 0)
     (hunit : IsUnit (PowerSeries.evalT a (PowerSeries.hasseDeriv h (charPowerSeries u)))) :
     ∃ p w : c(I, R) →L[R] c(I, R),
       p * p = p ∧ u * p = p * u ∧ u * w = w * u ∧ p * w = w * p ∧
-      (1 - a • u) ^ h * (1 - p) = 0 ∧ (1 - a • u) * w = p := by
+      (1 - a • u) ^ h * (1 - p) = 0 ∧ (1 - a • u) * w = p ∧
+      IsOpLimitAeval u p ∧ IsOpLimitAeval u w := by
   choose N hN using fun s : ℕ ↦ exists_isOpLimit_resolventPartialSum u hu a s
   set b : c(I, R) →L[R] c(I, R) := 1 - a • u with hbdef
   have hcomm : ∀ s, Commute u (N s) := fun s ↦
@@ -1961,14 +2101,31 @@ theorem exists_rieszProjection [IsTate R] {u : c(I, R) →L[R] c(I, R)}
   obtain ⟨q, hq⟩ := one_sub_dvd_one_sub_pow e h
   have hbw : b * (di ^ h • (b ^ (h - 1) * N h ^ h)) = e ^ h := by
     rw [mul_smul_comm, ← mul_assoc, ← pow_succ', Nat.sub_add_cancel hh, heh]
+  have hNh : IsOpLimitAeval u (N h) := IsOpLimitAeval.of_resolventPartialSum (hN h)
+  have hbl : IsOpLimitAeval u b := by
+    have := IsOpLimitAeval.aeval u (1 - Polynomial.C a * Polynomial.X)
+    rwa [map_sub, map_one, map_mul, Polynomial.aeval_C, Polynomial.aeval_X, ← Algebra.smul_def,
+      ← hbdef] at this
   refine ⟨e ^ h, di ^ h • (b ^ (h - 1) * N h ^ h),
     isIdempotentElem_pow_of_one_sub_mul_pow_eq_zero hfe, ?_, ?_, ?_,
-    by rw [hq, ← mul_assoc, hbf, zero_mul], hbw⟩
+    by rw [hq, ← mul_assoc, hbf, zero_mul], hbw, ((hbl.mul hNh).smul di).pow h,
+    ((hbl.pow (h - 1)).mul (hNh.pow h)).smul (di ^ h)⟩
   · exact (((hbu.symm.mul_right (hcomm h)).smul_right di).pow_right h).eq
   · exact (((hbu.symm.pow_right (h - 1)).mul_right ((hcomm h).pow_right h)).smul_right (di ^ h)).eq
   · exact ((((hbe.symm.pow_right (h - 1)).mul_right
       ((((hbN h).mul_left (Commute.refl (N h))).smul_left di).pow_right h)).smul_right
       (di ^ h)).pow_left h).eq
+
+/-- Serre's Riesz projectors (`exists_rieszProjection_isOpLimit` without the closure data). -/
+theorem exists_rieszProjection [IsTate R] {u : c(I, R) →L[R] c(I, R)}
+    (hu : IsCompactoid u) {a : R} {h : ℕ} (hh : 1 ≤ h)
+    (h0 : ∀ s < h, PowerSeries.evalT a (PowerSeries.hasseDeriv s (charPowerSeries u)) = 0)
+    (hunit : IsUnit (PowerSeries.evalT a (PowerSeries.hasseDeriv h (charPowerSeries u)))) :
+    ∃ p w : c(I, R) →L[R] c(I, R),
+      p * p = p ∧ u * p = p * u ∧ u * w = w * u ∧ p * w = w * p ∧
+      (1 - a • u) ^ h * (1 - p) = 0 ∧ (1 - a • u) * w = p := by
+  obtain ⟨p, w, h1, h2, h3, h4, h5, h6, -, -⟩ := exists_rieszProjection_isOpLimit hu hh h0 hunit
+  exact ⟨p, w, h1, h2, h3, h4, h5, h6⟩
 
 variable [IsTate R] {u p w : c(I, R) →L[R] c(I, R)} {a : R} {h : ℕ}
 

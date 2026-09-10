@@ -1,0 +1,4 @@
+{"kind":"statement_fix+rename","ticket":"H4","old":"LWX.cfunSlash_mahlerEmbed","new":"LWX.cfunSlash_mahlerON","reason":"B2: T-rescaled transport not c₀; restated in the plain Mahler basis per [LWX, Prop 3.4] (see b2_log)."}
+{"kind":"statement_fix+rename","ticket":"H4","old":"LWX.mahlerEmbed_seqSlash","new":"LWX.mahlerON_seqSlash","reason":"B2 propagation: bridge restated along the plain embedding mahlerON."}
+{"kind":"statement_fix","ticket":"H5","old":"LWX.seqSlash_coeff (T-weighted)","new":"LWX.seqSlash_coeff (plain: (a∣g) m = ∑' n, a n * entry ω δ m n)","reason":"B2 propagation: matches UpDatum.op's raw entry matrix."}
+{"kind":"api_visibility","ticket":"H4","old":"private LocalMat.wCoeff / private norm_wCoeff_le (UpMatrix.lean)","new":"public","reason":"needed by IntegralModel's logQuot_denUnit bridge (qlog_mul margins)."}

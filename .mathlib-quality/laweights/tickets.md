@@ -21,7 +21,9 @@ never kill another build.
 
 ## Summary
 - Total: 35 tickets (21 proof/def + 14 cleanup)
-- Open: 35 | Done: 0
+- Open: 0 | Done: all (summary line corrected 2026-09-02; the per-ticket statuses below
+  were already marked done — main board complete 2026-08-11, R6 tranche same day,
+  R7 follow-up 2026-08-12; code sorry-free in `PhD/QMF/Weight/`)
 - Milestone: T-M1 (classical quaternionic forms embed Hecke-equivariantly in the
   overconvergent space — "algebraic weights as an application, no recertification")
 - Second milestone: T017 (the thesis's `U₃`-action = the general action at the Jacobs

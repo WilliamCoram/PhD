@@ -12,7 +12,9 @@ reference (it does not compile).
 
 ## Summary
 - Total: 29 tickets (21 proof + 5 per-file cleanups + 1 cleanup-all + 1 final + 1 doc)
-- Open: 29 | Done: 0
+- Open: 0 | Done: all (summary line corrected 2026-09-02; every per-ticket status below
+  was already `done` — project completed 2026-08-04, blueprint §5.4–§5.14 sorry-free in
+  `PhD/NewtonPolygons/`, `test.lean` superseded)
 - Milestones: T110 (§5.7), T114 (§5.11), T118 (§5.12), T121 (§5.14 — project end)
 - Parallel at start: T101 ∥ T102 ∥ T109 ∥ T113 ∥ T115 (5 workers)
 - Build: `lake build PhD.NewtonPolygons.PowerSeriesZeros` (whole chain). Axioms at each

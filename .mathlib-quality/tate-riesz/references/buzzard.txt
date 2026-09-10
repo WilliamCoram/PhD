@@ -1,0 +1,3416 @@
+K. Buzzard, Eigenvarieties, in L-functions and Galois representations, LMS Lecture Notes 320 (2007).
+Text extracted via pypdf from ~/Desktop/Papers/'Buzzard - Eiganvarieties.pdf' for line-locator citations ('===== PDF PAGE n =====' markers).
+
+
+===== PDF PAGE 1 =====
+Eigenvarieties
+Kevin Buzzard
+August 2, 2006
+Abstract
+We axiomatise and generalise the “Hecke algebra”
+construction of the Coleman-Mazur Eigencurve. In par-
+ticular we extend the construction to general primes and
+levels. Furthermore we show how to use these ideas
+to construct “eigenvarieties” parametrising automorphic
+forms on totally deﬁnite quaternion algebras over totally
+real ﬁelds.
+1 Introduction
+In a series of papers in the 1980s, Hida showed that classical or-
+dinary eigenforms form p-adic families as the weight of the form
+varies. In the non-ordinary ﬁnite slope case, the same turns out
+to be true, as was established by Coleman in 1995. Extending
+this work, Coleman and Mazur construct a geometric object, the
+eigencurve, parametrising such modular forms (at least for forms
+of level 1 and in the case p >2). On the other hand, Hida has
+gone on to extend his work in the ordinary case to automorphic
+forms on a wide class of reductive groups. One might optimisti-
+cally expect the existence of non-ordinary families, and even an
+“eigenvariety”, in some of these more general cases.
+Anticipating this, we present in Part I of this paper (sections
+2–5) an axiomatisation and generalisation of the Coleman-Mazur
+1
+===== PDF PAGE 2 =====
+construction. In his original work on families of modular forms,
+Coleman in [10] developed Riesz theory for orthonormalizable
+Banach modules over a large class of base rings, and, in the case
+where the base ring was 1-dimensional, constructed the local
+pieces of a parameter space for normalised eigenforms. There
+are two places where we have extended Coleman’s work. Firstly,
+we set up Coleman’s Fredholm theory and Riesz theory (in sec-
+tions 2 and 3 respectively) in a slightly more general situation,
+so that they can be applied to spaces such as direct summands
+of orthonormalizable Banach modules; the motivation for this
+is that at times in the theory we meet Banach modules which
+are invariants of orthonormalizable Banach modules under the
+action of a ﬁnite group; such modules are not necessarily or-
+thonormalizable, but we want to use Fredholm theory anyway.
+And secondly we show in sections 4–5 that given a projective
+Banach module and a collection of commuting operators, one of
+which is compact, one can glue the local pieces constructed by
+Coleman to form an eigenvariety, in the case where the base ring
+is an arbitrary reduced aﬃnoid. At one stage we are forced to
+use Raynaud’s theory of formal models; in particular this gener-
+alisation is not an elementary extension of Coleman’s ideas.
+The resulting machine can be viewed as a construction of a
+geometric object from a family of Banach spaces equipped with
+certain commuting linear maps. Once one has this machine, one
+can attempt to feed in Banach spaces of “overconvergent auto-
+morphic forms” into the machine, and get “eigenvarieties” out.
+We extend the results of [9] in Part II of this paper (sections 6
+and 7), constructing an eigencurve using families of overconver-
+gent modular forms, and hence removing some of the assump-
+tions on p and N in the main theorems of [9]. Note that here
+we do not need the results of section 4, as weight space is 1-
+dimensional and Coleman’s constructions are enough.
+There are still technical geometric problems to be resolved
+before one can give a deﬁnition of an overconvergent automorphic
+form on a general reductive group, but one could certainly hope
+2
+===== PDF PAGE 3 =====
+for an elementary deﬁnition if the group in question is compact
+mod centre at inﬁnity, as the geometry then becomes essentially
+non-existent. As a concrete example of this, we propose in Part
+III (sections 8–13) a deﬁnition of an overconvergent automorphic
+form in the case when the reductive group is a compact form
+of GL 2 over a totally real ﬁeld, and apply our theory to this
+situation to construct higher-dimensional eigenvarieties.
+Chenevier has constructed Banach spaces of overconvergent
+automorphic forms for compact forms of GL n over Q and one
+can feed his spaces into the machine also to get eigenvarieties for
+these unitary groups.
+This work began in 2001 during a visit to Paris-Nord, and the
+author would like to thank Jacques Tilouine for the invitation
+and Ahmed Abbes for several useful conversations. In fact the
+author believes that he was the ﬁrst to coin the phrase “eigenva-
+rieties”, in 2001. Part I of this paper was written at that time, as
+well as some of Part III. The paper then remained in this state
+for three years, and the author most sincerely thanks Gaetan Ch-
+enevier for encouraging him to ﬁnish it oﬀ. In fact Theorem 4.6
+of this paper is assumed both by Chenevier in [8], and Yam-
+agami in [17], who independently announced results very similar
+to those in Part III of this paper, the main diﬀerence being that
+Yamagami works with the U operator at only one prime above p
+and ﬁxes weights at the other places, hence his eigenvarieties
+can have smaller dimension than ours, but they see more forms
+(they are only assumed to have ﬁnite slope at one place above p).
+My apologies to both Chenevier and Yamagami for the delay in
+writing up this construction; I would also like to thank both of
+them for several helpful comments.
+A lot has happened in this subject since 2001. Matthew
+Emerton has recently developed a general theory of eigenvari-
+eties which in many cases produces cohomological eigenvarieties
+associated to a large class of reductive algebraic groups. As well
+as Coleman and Mazur, many other people (including Emer-
+ton, Ash and Stevens, Skinner and Urban, Mazur and Calegari,
+3
+===== PDF PAGE 4 =====
+Kassaei, Kisin and Lai, Chenevier, and Yamagami), have made
+contributions to the area, all developing constructions of eigen-
+varieties in other situations. We ﬁnish this introduction with
+an explanation of the relationship between Emerton’s work and
+ours. Emerton’s approach to eigenvarieties is more automorphic
+and more conceptual than ours. His machine currently needs a
+certain spectral sequence to degenerate, but this degeneration
+occurs in the case of the Coleman-Mazur eigencurve and hence
+Emerton has independently given a construction of this eigen-
+curve for arbitrary N andp as in Part II of this paper. However,
+Emerton’s construction is less “concrete” and in particular the
+results in [6] and [7] rely on the construction of the 2-adic eigen-
+curve presented in this paper. On the other hand Emerton’s
+ideas give essentially the same construction of the eigenvariety
+associated to a totally deﬁnite quaternion algebra over a totally
+real ﬁeld, in the sense that one can check that his more concep-
+tual approach, when translated down, actually becomes equiva-
+lent to ours.
+We would like to thank Peter Schneider for pointing out an er-
+ror in an earlier version of Lemma 5.6, Elmar Grosse-Kloenne for
+pointing out a simpliﬁcation in the deﬁnition of our admissible
+cover, and the referee for several helpful remarks, in particular
+for pointing out that ﬂatness was necessary in Lemma 5.5.
+PART I: The eigenvariety machine.
+2 Compact operators on K-Banach mod-
+ules
+In this section we collect together the results we need from
+the theory of commutative Banach algebras. A comprehensive
+source for the terminology we use is [1]. Throughout this sec-
+tion, K will be a ﬁeld complete with respect to a non-trivial
+non-archimedean valuation |.|K, and A will be a commutative
+4
+===== PDF PAGE 5 =====
+Noetherian K-Banach algebra. That is, A is a commutative
+Noetherian K-algebra equipped with a function |.| : A → R≥0,
+and satisfying
+• | 1| ≤ 1, and |a| = 0 iﬀ a = 0,
+• |a +b| ≤ max{|a|, |b|},
+• |ab| ≤ |a||b|,
+• |λa| = |λ|K|a| for λ ∈K,
+and such that A is complete with respect to the metric induced
+by |.|. For elementary properties of such algebras we refer the
+reader to [1], §3.7 and thereafter. Such algebras are Banach
+algebras in the sense of Coleman [10]. Later on we shall assume
+(mostly for simplicity) that A is a reduced K-aﬃnoid algebra
+with its supremum norm, but this stronger assumption does not
+make the arguments of this section or the next any easier.
+From the axioms one sees that either |1| = 0 and hence A = 0,
+or |1| = 1, in which case the map K → A is injective and the
+norm on A extends the norm on K. Fix once and for all ρ ∈K ×
+with |ρ|K < 1. Such ρ exists as we are assuming the valuation
+on K is non-trivial. We use ρ to “normalise” vectors in several
+proofs. If A0 denotes the subring {a ∈ A : |a| ≤ 1} then one
+easily checks that the ideals of A0 generated by ρn,n = 1, 2,... ,
+form a basis of open neighbourhoods of zero in A. Note that A0
+may not be Noetherian (for example if A =K = Cp).
+Let A be a commutative Noetherian K-Banach algebra. A
+Banach A-module is an A-module M equipped with |.| : M →
+R≥0 satisfying
+• |m| = 0 iﬀ m = 0,
+• |m +n| ≤ max{|m|, |n|},
+• |am| ≤ |a||m| for a ∈A and m ∈M ,
+5
+===== PDF PAGE 6 =====
+and such that M is complete with respect to the metric induced
+by |.|. Note that A itself is naturally a Banach A-module, as
+is any closed ideal of A. In fact all ideals of A are closed, by
+Proposition 3.7.2/2 of [1].
+If M and N are Banach A-modules, then we deﬁne a norm
+onM ⊕N by |m⊕n| = Max {|m|, |n|}. This way M ⊕N becomes
+a Banach A-module. In particular we can give Ar the structure
+of a Banach A-module in a natural way.
+By a ﬁnite Banach A-module we mean a Banach A-module
+which is ﬁnitely-generated as an abstract A-module. We use the
+following facts several times in what follows:
+Proposition 2.1. (a) (Open Mapping Theorem) A continuous
+surjectiveK-linear map between Banach K-modules is open.
+(b) The category of ﬁnite Banach A-modules, with continuous
+A-linear maps as morphisms, is equivalent to the category of
+ﬁnite A-modules. In particular, any A-module homomorphism
+between ﬁnite Banach A-modules is automatically continuous,
+and if M is any ﬁnite A-module then there is a unique (up to
+equivalence) complete norm on M making it into a Banach A-
+module.
+Proof. (a) is Th´ eor` eme 1 in Chapter I, §3.3 of [3] (but note that
+“homomorphisme” here has the meaning assigned to it in §2.7
+of Chapter III of [2], and in particular is translated as “strict
+morphism” rather than “homomorphism”).
+(b) is proved in Propositions 3.7.3/2 and 3.7.3/3 of [1].
+Note that by (b), a ﬁnite A-moduleM has a canonical topol-
+ogy, induced by any norm that makes M into a Banach A-
+module. We call this topology the Banach topology on M .
+As an application of these results, we prove the following
+useful lemma:
+Lemma 2.2. If M is a Banach A-module, and P is a ﬁnite
+Banach A-module, then any abstract A-module homomorphism
+φ :P →M is continuous.
+6
+===== PDF PAGE 7 =====
+Proof. Letπ :Ar →P be a surjection of A-modules, and give Ar
+its usual Banach A-module norm. Then π is open by the Open
+Mapping Theorem, and φπ is bounded and hence continuous. So
+φ is also continuous.
+If I is a set, and for every i ∈ I we have ai, an element of
+A, then by the statement lim i→∞ai = 0, we simply mean that
+for all ϵ > 0 there are only ﬁnitely many i ∈ I with |ai| > ϵ.
+This is no condition if I is ﬁnite, and is the usual condition if
+I = Z≥0. For general I, if lim i→∞ai = 0 then only countably
+many of the ai can be non-zero. We also mention here a useful
+convention: occasionally we will take a max or a supremum over
+a set (typically a set of norms) which can be empty in degenerate
+cases (e.g., if a certain module or ring is zero). In these cases we
+will deﬁne the max or the supremum to be zero. In other words,
+throughout the paper we are implicitly taking suprema in the
+set of non-negative reals rather than the set of all reals.
+Let A be a non-zero commutative Noetherian K-Banach al-
+gebra, let M be a Banach A-module, and consider a subset
+{ei : i ∈ I} of M such that |ei| = 1 for all i ∈ I. Then for
+any sequence ( ai)i∈I of elements of A with lim i→∞ai = 0, the
+sum ∑
+iaiei converges. We say that a Banach A-module M is
+orthonormalizable, or ONable for short, if there exists such a
+subset {ei :i ∈I} of M with the following two properties:
+• Every element m ofM can be written uniquely as ∑
+i∈Iaiei
+with lim i→∞ai = 0, and
+• If m = ∑
+iaiei then |m| = max i∈I |ai|.
+Such a set of elements {ei} is called an orthonormal basis , or an
+ON basis, for M . Note that the second condition implies that
+|ei| = 1 for all i ∈I.
+Again assume A ̸= 0. If I is a set, we deﬁne cA(I) to be
+A-module of functions f : I → A such that lim i→∞f (i) = 0.
+Addition and the A-action are deﬁned pointwise. We deﬁne |f | to
+be Max {|ai| :i ∈I}. With respect to this norm, cA(I) becomes
+7
+===== PDF PAGE 8 =====
+a Banach A-module. If i ∈I and we deﬁne ei to be the function
+sending j ∈I to 0 if i ̸=j, and to 1 if i =j, and if furthermore
+A ̸= 0, then it is easily checked that the ei are an ON basis
+for cA(I), and we call {ei : i ∈ I} the canonical ON basis for
+cA(I). If M is any ONable Banach A-module, then to give an ON
+basis {ei : i ∈ I} for M is to give an isometric (that is, metric-
+preserving) isomorphism M ∼= cA(I). Note also that cA(I) has
+the following universal property: if M is any Banach A-module
+then there is a natural bijection between Hom A(cA(I),M ) and
+the set of bounded maps I →M , given by sending φ :cA(I) →
+M to the map i ↦→φ(ei).
+If A = 0 then the only A-module is M = 0, and we regard
+this module as being ONable of arbitrary rank. We have chosen
+to ignore this case in the deﬁnitions above because if we had
+included it then we should have to deﬁne an ONable Banach
+module as being a collection of ei as above but with |ei| = |1|
+and so on; however this just clutters notation. There is no other
+problem with the zero ring in this situation. We will occasionally
+assumeA ̸= 0 in proofs, and leave the interested reader to ﬁll in
+the trivial details in the case A = 0.
+We recall some basic results on “matrices” associated to endo-
+morphisms of Banach A-modules. The proofs are elementary ex-
+ercises in analysis. Let M andN be Banach A-modules, and let
+φ : M → N be an A-module homomorphism. Then a standard
+argument (see Corollary 2.1.8/3 of [1]) using the fact that one can
+use ρ to renormalise elements of M , shows that φ is continuous
+iﬀ it is bounded, and in this case we deﬁne |φ| = sup 0̸=m∈M
+|φ(m)|
+|m|
+(this set of reals is bounded above if φ is continuous). Now as-
+sume that M is ONable, with ON basis {ei :i ∈I}. One easily
+checks that if φ is continuous and φ(ei) = ni, then the ni are a
+bounded collection of elements of N which uniquely determine
+φ. Furthermore, if ni are an arbitrary bounded collection of ele-
+ments of N there is a unique continuous map φ :M → N such
+that φ(ei) = ni for all i, and |φ| = sup i∈I |ni|.
+8
+===== PDF PAGE 9 =====
+Now assume that N is also ONable, with basis {fj :j ∈J}.
+Ifφ :M →N is a continuous A-module homomorphism, we can
+deﬁne its associated matrix coeﬃcients ( ai,j)i∈I,j ∈J by1
+φ(ei) =
+∑
+j∈J
+ai,jfj.
+One checks easily from the arguments above that the collection
+(ai,j) has the following two properties:
+• For all i, lim j→∞ai,j = 0.
+• There exists a constant C ∈ R such that |ai,j| ≤ C for all
+i,j .
+In fact C can be taken to be |φ|, and furthermore we have |φ| =
+supi,j |ai,j|.
+Conversely, given a collection ( ai,j)i∈I,j ∈J of elements of A,
+satisfying the two conditions above, there is a unique continuous
+φ : M → N with norm sup i,j |ai,j| whose associated matrix is
+(ai,j). As a useful consequence of this, we see that if φ and
+ψ : M → N are continuous, with associated matrices ( ai,j) and
+(bi,j), then |φ −ψ| ≤ ϵ iﬀ |ai,j −bi,j| ≤ ϵ for all i and j.
+Let A be a commutative Noetherian K-Banach algebra and
+let M , N be Banach A-modules. The A-module Hom( M,N )
+of continuous A-linear homomorphisms from M to N is then
+also a Banach A-module: completeness follows because if φn is
+a Cauchy sequence in Hom( M,N ) then for all m ∈M ,φn(m) is
+a Cauchy sequence in N , and one can deﬁne φ(m) as its limit;
+then φ is the limit of the φn.
+A continuous A-module homomorphism M →N is said to be
+of ﬁnite rank if its image is contained in a ﬁnitely-generated A-
+submodule of N . The closure in Hom( M,N ) of the ﬁnite rank
+homomorphisms is the set of compact homomorphisms (many
+1Here we follow Serre’s conventions in [15], rather than writing aj,i for
+ai,j.
+9
+===== PDF PAGE 10 =====
+authors use the term “completely continuous”). Let M and N
+be ONable Banach modules, and let φ :M →N be a continuous
+homomorphism, with associated matrix ( ai,j). We wish to give a
+simple condition which is expressible only in terms of the ai,j, and
+which is equivalent to compactness. Such a result is announced
+in Lemma A1.6 of [10] for a more general class of rings A, but
+the proof seems to be incomplete. This is not a problem with
+the theory however, as the proof can be completed in all cases of
+interest without too much trouble. We complete the proof here
+in the case of commutative Noetherian K-Banach algebras. We
+start with some preliminary results. As ever, A is a Noetherian
+K-Banach algebra. If M is an ONable Banach A-module, with
+ON basis {ei : i ∈ I}, and if S ⊆ I is a ﬁnite subset, then
+we deﬁne AS to be the submodule ⊕i∈SAei, and we deﬁne the
+projection πS : M → AS to be the map sending ∑
+i∈Iaiei to∑
+i∈Saiei. Note that this projection is norm-decreasing onto a
+closed subspace of M .
+Lemma 2.3. LetM be an ONable Banach A-module, with basis
+{ei :i ∈I}, and let P a ﬁnite submodule of M .
+(a) There is a ﬁnite set S ⊆ I such that πS : M → AS is
+injective on P .
+(b) P is a closed subset of M , and hence is complete.
+(c) For all ϵ> 0, there is a ﬁnite set T ⊆I such that for all
+p ∈P we have |πT (p) −p| ≤ ϵ|p|.
+Proof. Say P is generated by m1,...,m r and for 1 ≤α ≤r we
+havemα = ∑
+iaα,iei.
+(a) For i ∈ I let vi be the element ( aα,i)1≤α≤r of Ar. The
+A-submodule of Ar generated by the vi is ﬁnitely-generated, as
+A is Noetherian, and hence there is a ﬁnite set S ⊆I such that
+this module is generated by {vi : i ∈ S}. It is now an easy
+exercise to check that this S works, because if πS(∑
+αbαmα) is
+zero, then ∑
+αbαaα,i is zero for all i ∈S and hence for all i ∈I.
+(b) P is a ﬁnite A-module, and hence there is, up to equiv-
+alence, a unique complete A-module norm on P . Let Q denote
+10
+===== PDF PAGE 11 =====
+P equipped with this norm. The algebraic isomorphism Q →P
+induces a map Q →M which is continuous by Lemma 2.2, and
+hence the algebraic isomorphism Q → P is continuous. On
+the other hand, if S is chosen as in part (a), then the injection
+P →AS induces a continuous injection from P onto a submodule
+ofAS which is closed by Proposition 3.7.3/1 of [1], and this sub-
+module is algebraically isomorphic to Q, and hence isomorphic
+to Q as a Banach A-module. We hence have continuous maps
+Q →P →Q, which are algebraic isomorphisms, and hence the
+norms on P andQ are equivalent. So the maps are also homeo-
+morphisms, and P is complete with respect to the metric induced
+from M , and is hence a closed submodule of M .
+(c) By (b), P is complete and hence a K-Banach space. The
+map Ar → P sending ( aα) to ∑
+αaαmα is thus a continuous
+surjection between K-Banach spaces, and hence by the open
+mapping theorem there exists δ > 0 such that if p ∈ P with
+|p| ≤ δ then p = ∑r
+α=1aαmα with |aα| ≤ 1 for all α. Choose
+T such that for all mα we have |πT (mα) −mα| ≤ ϵδ|ρ|. This T
+works: if p ∈ P is arbitrary, then either p = 0 and hence the
+condition we are checking is automatic, or p ̸= 0. In this case,
+there exists some n ∈ Z such that |ρ|δ < |ρ|n|p| ≤ δ, and then
+ρnp = ∑
+αaαmα with |aα| ≤ 1 for all α. Then
+|πT (p) −p| =
+⏐⏐⏐⏐⏐
+∑
+α
+ρ−naα(πT (mα) −mα)
+⏐⏐⏐⏐⏐
+≤ |ρ|−nϵδ|ρ|
+≤ϵ|p|
+and we are done.
+Proposition 2.4. LetM,N be ONable Banach A-modules, with
+ON bases {ei : i ∈ I} and {fj : j ∈ J}. Let φ : M → N be a
+continuous A-module homomorphism, with basis (ai,j). Then φ
+is compact if and only if limj→∞ supi∈I |ai,j| = 0 .
+11
+===== PDF PAGE 12 =====
+Proof. If the matrix of φ satisﬁes lim j→∞ supi∈I |ai,j| = 0, then
+φ is easily seen to be compact: for any ϵ > 0 there is a ﬁnite
+subset S ⊆J such that |φ −πSφ| ≤ ϵ.
+The other implication is somewhat more delicate. It suﬃces
+to prove the result when φ has ﬁnite rank. If φ = 0 then the
+result is trivial, so assume 0 ̸=φ andφ(M ) ⊆P , where P ⊆N is
+ﬁnite. By part (c) of Lemma 2.3, for any ϵ> 0 we may choose T
+such that |πT (p) −p| ≤ ϵ|p|/|φ|, and hence |πTφ −φ| ≤ ϵ. Hence
+|ai,j| ≤ ϵ if j ̸∈T , and we are home because ϵ was arbitrary.
+Remark. If we allow A to be non-Noetherian then we do not
+know whether the preceding proposition remains true.
+From this result, it easily follows that a compact operator
+φ : M → M , where M is an ONable Banach A-module, has a
+characteristic power series det(1 −Xφ) = ∑
+n≥0cnX n ∈A[[X]],
+deﬁned in terms of the matrix coeﬃcients of φ using the usual
+formulae, which we recall from §5 of [15] for convenience: ﬁrstly
+choose an ON basis {ei : i ∈ I} for M , and say φ has ma-
+trix ( ai,j) with respect to this basis. If S is any ﬁnite subset
+of I, then deﬁne cS = ∑
+σ:S→S sgn(σ) ∏
+i∈Sai,σ(i), where the
+sum ranges over all permutations of S, and for n ≥ 0 deﬁne
+cn = ( −1)n ∑
+ScS, where the sum is over all ﬁnite subsets of I of
+sizen. One easily checks that this sum converges, using Proposi-
+tion 2.4. Furthermore, again using Proposition 2.4 and following
+Proposition 7 of [15], one sees that the resulting power series
+det(1 −Xφ) = ∑
+ncnX n converges for all X ∈ A. However,
+from our deﬁnition it is not clear to what extent the power series
+depends on the choice of ON basis for M . We now investigate to
+what extent this is the case. We begin with some observations
+in the ﬁnite-dimensional case.
+If P is any ﬁnite free ONable Banach A-module, with ON
+basis (ei), and φ :P →P is any A-module homomorphism, then
+det(1 −Xφ), deﬁned as above with respect to the ei, is the usual
+algebraically-deﬁned det(1 −Xφ), because the deﬁnition above
+12
+===== PDF PAGE 13 =====
+coincides with the usual classical deﬁnition, which is independent
+of choice of basis. Next we recall the well-known fact that if P
+andQ are both free A-modules of ﬁnite rank, and u :P →Q and
+v :Q →P areA-module homomorphisms, then det(1 −Xuv ) =
+det(1 −Xvu ). Now let M be an ONable Banach A-module, with
+ON basis {ei : i ∈ I}. We use this ﬁxed basis for computing
+characteristic power series in the lemma below.
+Lemma 2.5. (a) If φn : M → M , n = 1 , 2,... are a sequence
+of compact operators that tend to a compact operator φ, then
+limn det(1 −Xφ n) = det(1 −Xφ), uniformly in the coeﬃcients.
+(b) If φ :M →M is compact, and furthermore if the image
+of φ is contained in P := ⊕i∈SAei, for S a ﬁnite subset of I,
+then det(1 −Xφ) = det(1 −Xφ|P ), the right hand determinant
+being the usual algebraically-deﬁned one.
+(c) (strengthening of (b)) If φ : M → M is compact, and
+if the image of φ is contained within an arbitrary submodule Q
+of M which is free of ﬁnite rank, then det(1 −Xφ) = det(1 −
+Xφ|Q), where again the right hand side is the usual algebraically-
+deﬁned determinant.
+Proof. (a) This follows mutatis mutandis from [15], Proposi-
+tion 8.
+(b) If ( ai,j) is the matrix of φ thenai,j = 0 for j ̸∈S and the
+result follows immediately from the deﬁnition of the character-
+istic power series.
+(c) Choose ϵ > 0. By Lemma 2.3(c), there is a ﬁnite set
+T ⊆ I such that πT : Q → P := AT has the property that
+|πT −i| ≤ ϵ, where i : Q → M is the inclusion. Deﬁne φT =
+πTφ :M →P ⊆M . By (b) we see that det(1 −Xφ T ) equals the
+algebraically-deﬁned polynomial det(1 −Xφ T |P ). Furthermore,
+by consideration of the maps φ : P → Q and πT : Q → P ,
+we see that this polynomial also equals the algebraically-deﬁned
+det(1 −Xφ T ), where φT = φπT : Q → Q. One can compute
+this latter determinant with respect to an arbitrary algebraic A-
+basis of Q. By Lemma 2.3(b), Q with its subspace topology is
+13
+===== PDF PAGE 14 =====
+complete, and hence the topology on Q is the Banach topology.
+Now as ϵ tends to zero, φT : Q → Q tends to φ : Q → Q and
+φT : M → M tends to φ : M → M , and the result follows by
+part (a).
+Corollary 2.6. Let M be an A-module, and let |.|1 and |.|2 be
+norms on M both making M into an ONable Banach A-module,
+and both inducing the same topology on M . Then an A-linear
+map φ :M →M is compact with respect to |.|1 iﬀ it is compact
+with respect to |.|2, and furthermore if {ei :i ∈I} and {fj :j ∈
+J} are ON bases for (M, |.|1) and (M, |.|2) respectively, then the
+deﬁnitions of det(1 −Xφ) with respect to these bases coincide.
+Proof. All one has to do is to check that φ can be written as the
+limit as maps φn which have image contained in free modules of
+ﬁnite rank, and then the result follows from parts (a) and (c) of
+the Lemma. To do this, one can simply use Lemma 2.3 to con-
+struct φ as a limit of πTnφ, for Tn running through appropriate
+ﬁnite subsets of I. Note that φn will then tend to φ with respect
+to both norms (recall that two norms on M are equivalent iﬀ
+they induce the same topology, because the valuation on K is
+non-trivial) and the result follows.
+The corollary enables us to conclude that the notion of a
+characteristic power series only depends on the topology on M ,
+when A is a commutative Noetherian K-Banach algebra. In
+particular it does not depend on the choice of an orthonormal
+basis for M . Coleman proves in corollary A2.6.1 of [10] that the
+deﬁnition of the characteristic power series only depends on the
+topology on M whenA is semi-simple; on the other hand neither
+of these conditions on A implies the other.
+Next we show that the analogue of Corollaire 2 to Proposi-
+tion 7 of [15] is true in this setting. Coleman announces such an
+analogue in Proposition A2.3 of [10] but again we have not been
+able to complete the proof in the generality in which Coleman is
+14
+===== PDF PAGE 15 =====
+working. We write down a complete proof when A is a commuta-
+tive Noetherian K-Banach algebra and remark that it is actually
+slightly delicate. We remark also that in the case where A is a
+reduced aﬃnoid, which will be true in the applications, one can
+give an easier proof by using Corollary 2.10 to reduce to the case
+treated by Serre.
+Lemma 2.7. If M and N are ONable Banach A-modules, if
+u : M → N is compact and v : N → M is continuous, then uv
+and vu are compact, and det(1 −Xuv ) = det(1 −Xvu ).
+Proof. If there exist ﬁnite free sub-A-modules F of M and G
+of N such that u(M ) is contained in G and v(G) is contained
+in F , then u : F → G and v : G → F , and by Lemma 2.5(c)
+it suﬃces to check that the algebraically-deﬁned characteristic
+polynomials of uv :G →G andvu :F →F are the same, which
+is a standard result. We reduce the general case to this case
+by several applications of Lemma 2.3, the catch being that it is
+not clear (to the author at least) whether any ﬁnite submodule
+of an ONable Banach module is contained within a ﬁnite free
+submodule.
+We return to the general case. Write u as a limit of ﬁnite rank
+operatorsun. Then unv andvun are ﬁnite rank, so uv andvu are
+both the limit of ﬁnite rank operators and are hence compact.
+By Lemma 2.5(a), it suﬃces to prove that det(1 −Xu nv) =
+det(1 −Xvu n) for all n, and hence we may assume that u is
+ﬁnite rank. Let Q ⊆N denote a ﬁnite A-module containing the
+image of u.
+Choose ON bases {ei : i ∈ I} for M and {fj : j ∈ J}
+forN . Now for any positive integer n we may, by Lemma 2.3(c),
+choose a ﬁnite subset Tn ⊆ J such that |πTnq −q| ≤ 1
+n|q| for
+all q ∈ Q. It follows easily that |πTnu −u| ≤ | u|/n and hence
+limn→∞πTnu = u. Hence vπTnu → vu and πTnuv → uv and
+again by Lemma 2.5(a) we may replace u byπTnu and in partic-
+ular we may assume that the image of u is contained in a ﬁnite
+free A-submodule of N . Let G denote this submodule. Now
+15
+===== PDF PAGE 16 =====
+P =v(G) is a ﬁnite submodule of M , and for any positive inte-
+ger n we may, as above, choose a ﬁnite subset Sn ⊆I such that
+|πSnp −p| ≤ 1
+n|p| for all p ∈P .
+It is unfortunately not the case that πSnv →v asn → ∞, as v
+is not in general compact. However we do have πSnvu →vu and
+hence the characteristic power series of πSnvu tends (uniformly
+in the coeﬃcients) to the characteristic power series of vu. Also,
+the image of uv :N →N anduπSnv are both contained within G
+and hence the characteristic power series of uv (resp. uπSnv) is
+equal to the algebraically-deﬁned characteristic power series of
+uv : G → G (resp. uπSnv : G → G). Once one has restricted
+to G, one does have uπSnv → uv, and hence the characteristic
+power series of uπSnv tends to the characteristic power series
+of uv. We may hence replace v by πSnv and in particular may
+assume that the image of v is contained within a ﬁnite free A-
+submodule F of M . We have now reduced to the algebraic case
+dealt with at the beginning of the proof.
+Corollary 2.6 also enables us to slightly extend the domain of
+deﬁnition of a characteristic power series: if M is a Banach A-
+module, then we say that M is potentially ONable if there exists a
+norm on M equivalent to the given norm, for which M becomes
+an ONable Banach A-module. Equivalently, M is potentially
+ONable if there is a bounded collection {ei : i ∈ I} of elements
+of M with the following two properties: ﬁrstly, every element
+m of M can be uniquely written as ∑
+iaiei with lim i→∞ai = 0,
+and secondly there exist positive constants c1 and c2 such that
+for all m = ∑
+iaiei inM , we have c1 supi |ai| ≤ |m| ≤ c2 supi |ai|.
+We call the collection {ei :i ∈I} a potentially ON basis for M .
+Being potentially ONable is probably a more natural notion than
+being ONable, because it is useful to be able to work with norms
+only up to equivalence, whereas ONability of a module really
+depends on the precise norm on the module. Note that to say
+a module is ONable is equivalent to saying that it is isometric
+to some cA(I), and to say that it is potentially ONable is just
+16
+===== PDF PAGE 17 =====
+to say that it is isomorphic to some cA(I) (in the category of
+Banach modules, with continuous maps as morphisms).
+IfM is potentially ONable then one still has the notion of the
+characteristic power series of a compact operator on M , deﬁned
+by choosing an equivalent ONable norm and using this norm
+to deﬁne the characteristic power series. By Corollary 2.6, this
+is independent of all choices. We note that certainly there can
+exist Banach A-modules which are potentially ONable but not
+ONable, for example if A = K = Qp and M = Qp(√p) with
+its usual norm, then |M | ̸ = |A| and so M is not ONable, but is
+potentially ONable.
+A useful result is
+Lemma 2.8. Ifh :A →B is a continuous morphism of Noethe-
+rian K-Banach algebras, and M is a potentially ONable Ba-
+nach A-module, then M ˆ⊗AB is a potentially ONable Banach
+B-module, and furthermore if {ei : i ∈ I} is a potentially ON
+basis for M , then {ei ⊗ 1 : i ∈ I} is a potentially ON basis for
+M ˆ⊗AB.
+Proof. Set N = cB(I), and let {fi : i ∈ I} be its canonical ON
+basis. Then there is a natural A-bilinear bounded map M ×B →
+N sending ( ∑
+iaiei,b ) to ∑
+ibh(ai)fi, which induces a continuous
+map M ˆ⊗AB →N . On the other hand, if n ∈N , one can write
+n as a limit of elements of the form ∑
+i∈Sbifi, where S is a ﬁnite
+subset of I. The element ∑
+i∈Sei ⊗bi of M ⊗A B has norm
+bounded above by a constant multiple of max i∈S |bi| and hence
+as S increases, the resulting sequence ∑
+i∈Sei ⊗bi is Cauchy
+and so its image in M ˆ⊗AB tends to a limit. This construction
+gives a well-deﬁned continuous A-module homomorphism N →
+M ˆ⊗AB which is easily checked to be an inverse to the natural
+map M ˆ⊗AB →N , and now everything follows.
+Note that because we are only working in the “potential”
+world, we do not need to assume the map A →B is contractive,
+although in the applications we have in mind it usually will be.
+17
+===== PDF PAGE 18 =====
+Corollary 2.9. If h : A → B is a continuous morphism of
+commutative Noetherian K-Banach algebras, M and N are po-
+tentially ONable Banach A-modules with potentially ON bases
+(ei) and (fj), and φ : M → N is compact, with matrix (ai,j),
+then φ ⊗ 1 : M ˆ⊗AB → N ˆ⊗AB is also compact and if (bi,j) is
+the matrix of φ ⊗ 1 with respect to the bases (ei ⊗ 1) and (fj ⊗ 1)
+then bi,j =h(ai,j).
+Proof. Compactness of φ ⊗ 1 follows from Proposition 2.4 and
+the rest is easy.
+Corollary 2.10. With notation as above, if det(1 − Xφ) =∑
+ncnX n then det(1 −X(φ ⊗ 1)) = ∑
+nh(cn)X n.
+Proof. Immediate.
+In practice we need to extend the notion of the characteristic
+power series of a compact operator still further, to the natural
+analogue of projective modules in this setting. Let us say that a
+BanachA-module P satisﬁes property (Pr ) if there is a Banach
+A-module Q such that P ⊕Q, equipped with its usual norm,
+is potentially ONable. I am grateful to the referee for pointing
+out the following universal property for such modules: P has
+property ( Pr ) if and only if for every surjection f : M → N of
+Banach A-modules and for every continuous map α : P → N ,
+α lifts to a map β : P → M such that fβ = α. The proof
+is an elementary application of the Open Mapping Theorem;
+the key point is that if P = cA(I) for some set I, then to give
+α : P → N is to give a bounded map I → N , and such a map
+lifts to a bounded map I →M by the Open Mapping Theorem.
+Note however that it would be perhaps slightly disingenuous to
+call such modules “projective”, as there are epimorphisms in the
+category of Banach A-modules whose underlying module map is
+not surjective.
+One can easily check that if P is a ﬁnite Banach A-module
+which is projective as an A-module, then P has property ( Pr ).
+The converse is also true:
+18
+===== PDF PAGE 19 =====
+Lemma 2.11. If P is a ﬁnite Banach A-module with property
+(Pr ) then P is projective as an A-module.
+Proof. Choose a surjection An →P for some n and then use the
+universal property above.
+Note that potentially ONable Banach A-modules have prop-
+erty ( Pr ), but in general the converse is false—for example if
+there are ﬁnite A-modules which are projective but not free then
+such modules, equipped with any complete Banach A-module
+norm, will satisfy ( Pr ) but will not be potentially ONable.
+Say P satisﬁes property ( Pr ) and φ : P → P is a compact
+morphism. Deﬁne det(1 −Xφ) thus: ﬁrstly choose Q such that
+P ⊕Q is potentially ONable, and deﬁne det(1 −Xφ) = det(1 −
+X(φ ⊕ 0)); note that φ ⊕ 0 : P ⊕Q → P ⊕Q is easily seen to
+be compact. This deﬁnition may a priori depend on the choice
+of Q, but if R is another Banach A-module such that P ⊕R is
+also potentially ONable, then so is P ⊕Q ⊕P ⊕R, and the maps
+φ ⊕ 0 ⊕ 0 ⊕ 0 and 0 ⊕ 0 ⊕φ ⊕ 0 are conjugate via an isometric
+A-module isomorphism, and hence have the same characteristic
+power series. Now the fact that det(1 − Xφ) is well-deﬁned
+independent of choice of Q follows easily from the fact that if M
+andN are ONable A-modules, and φ :M →M is compact, then
+the characteristic power series of φ andφ ⊕ 0 : M ⊕N →M ⊕N
+coincide.
+Many results that we have already proved for potentially ON-
+able Banach A-modules are also true for modules with property
+(Pr ), and the proofs are typically easy, because one can reduce to
+the potentially ONable case without too much diﬃculty. Indeed
+the trick used in the example above is typically the only idea one
+needs. One sometimes has to also use the following standard in-
+gredients: Firstly, if R is any commutative ring, P is a ﬁnite
+projective R-module, and φ :P →P is an R-module homomor-
+phism, then there is an algebraically-deﬁned det(1 −Xφ), deﬁned
+either by localising and reducing to the free case, or by choosing
+a ﬁnite projective R-moduleQ such that P ⊕Q is free, and deﬁn-
+19
+===== PDF PAGE 20 =====
+ing det(1 −Xφ) to be det(1 −X(φ ⊕ 0)). And secondly, if M and
+N both have property ( Pr ) and φ :M →M andψ :N →N are
+compact, then det(1 −X(φ⊕ψ)) = det(1 −Xφ) det(1 −Xψ ). Fi-
+nally, we leave it as an exercise for the reader to check the follow-
+ing generalisations of Lemma 2.7 and Lemma 2.8–Corollary 2.10.
+Lemma 2.12. IfM andN are Banach A-modules with property
+(Pr ), if u : M → N is compact and v : N → M is continuous,
+then uv and vu are compact, and det(1 −Xuv ) = det(1 −Xvu ).
+Lemma 2.13. If M is a Banach A-module with property (Pr ),
+φ : M → M is compact, and h : A → B is a continuous
+morphism of commutative Noetherian K-Banach algebras, then
+M ˆ⊗AB has property (Pr ) as a B-module,φ ⊗ 1 is compact, and
+det(1 −X(φ ⊗ 1)) is the image of det(1 −Xφ) under h.
+3 Resultants and Riesz theory
+We wish now to mildly extend the results in sections A3 and A4
+of [10] to the case where A is a Noetherian K-Banach algebra and
+M is a Banach A-module satisfying property ( Pr ). Fortunately
+much of what Coleman proves already applies to our situation,
+or can easily be modiﬁed to do so. We make what are hopefully
+some helpful comments in case the reader wants to check the
+details. This section is not self-contained, and anyone wishing
+to check the details should read it in conjunction with §A3 and
+§A4 of [10].
+Section A3 of [10] applies to commutative Noetherian K-
+Banach algebras already (apart from the comments relating to
+semi-simple algebras, because in general a commutative Noethe-
+rian K-Banach algebra may contain nilpotents). We give some
+hints for following the proofs in this section of [10]. We deﬁne
+the ring A{{T }} to be the subring of A[[T ]] consisting of power
+series ∑
+n≥0cnT n with the property that for all R ∈ R>0, we
+have |cn|Rn → 0 as n → ∞. One could put a norm on A{{T }},
+20
+===== PDF PAGE 21 =====
+for example | ∑
+ncnT n| = Max n |cn|, but A{{T }} is not in gen-
+eral complete with respect to this norm. One very useful result
+about this ring is that if H(T ) ∈A{{T }} and D(T ) is a monic
+polynomial of degree d ≥ 0 then H(T ) = Q(T )D(T )+R(T ) with
+Q(T ) ∈ A{{T }} and R(T ) a polynomial of degree less than d.
+Furthermore,Q(T ) and R(T ) are uniquely determined. A word
+on the proof: uniqueness uses the kind of trick in Lemma A3.1
+of [10]. For existence one reduces to the case where all the co-
+eﬃcients of D have norm at most 1 and proves the result for
+polynomials ﬁrst, and then takes a limit.
+If Q ∈ A[T ] is a monic polynomial, and P ∈ A{{T }}, then
+Coleman deﬁnes the resultant Res(Q,P ) on the top of p434
+of [10]. Many of the formulae that Coleman needs are classical
+whenP is a polynomial, and can be extended to the power series
+case using the following trick: straight from the deﬁnition it fol-
+lows that if u ∈ A× then Res( Q,P ) = Res( u−nQ(uT ),P (uT )).
+This normalisation can be used to renormalise either Q orP into
+A0⟨T ⟩, where A0 := {a ∈ A : |a| ≤ 1}. If Sn denotes the sym-
+metric group acting naturally on A0⟨T1,...,T n⟩ then the subring
+left invariant by the action is A0⟨e1,...,e n⟩, where the ei are the
+elementary symmetric functions of the Ti. Hence if P,Q ∈A0⟨T ⟩
+then Res( Q,P ) ∈A0. If Q ∈A0[T ] is monic then one can check
+that the deﬁnition of a resultant makes sense for P ∈A⟨T ⟩, and
+furthermore that Res( Q, −) is locally uniformly continuous in
+the second variable (in the sense that for all M ∈ R, Res( Q, −)
+is a uniformly continuous function from {P ∈A⟨T ⟩ : |P | ≤ M }
+to A).
+Coleman deﬁnes a function D sending a pair B,P ∈ A[X]
+to an element D(B,P ) ∈ A[T ]. In fact if P has degree n and
+we deﬁne P ∗(X) = X nP (X −1), thenD(B,P ) = Res( P ∗(X), 1 −
+TB (X)) where the resultant is computed in A⟨T ⟩{{X}}. One
+can check that D(B(uX),P (u−1X)) = D(B,P ) if u ∈ A×, and
+that D is locally uniformly continuous in the B variable. It
+is also locally uniformly continuous in the P variable, because
+Res(X,C (X)) = 1 if C(0) = 1. This is enough to check that
+21
+===== PDF PAGE 22 =====
+Coleman’s deﬁnition of D(B,P ) makes sense when B andP are
+inA{{T }}. In fact we shall only need it when B is a polynomial.
+Another useful formula is that D(uB,P )(T ) = D(B,P )(uT ) for
+u ∈A×.
+In §A4 of [10] Coleman assumes his hypothesis (M), which
+tends not to be true for aﬃnoids over K ifK is not algebraically
+closed. Coleman also assumes that he is working with an ON-
+able Banach A-module. We work in our more general situation.
+Hence let A denote a commutative Noetherian K-Banach al-
+gebra, let M be a Banach A-module satisfying property ( Pr )
+and let φ : M → M be a compact morphism, with character-
+istic power series P (X) = det(1 −Xφ). We deﬁne the Fred-
+holm resolvant of φ to be P (X)/(1 − Xφ) ∈ A[φ][[X]]. Ex-
+actly as in Proposition 10 of [15], one can prove that if F (X) =∑
+n≥0vmX m then for all R ∈ R>0 the sequence |vm|Rm tends to
+zero, where vm is thought of as being an element of Hom( M,M ).
+Lemma A4.1 of [10] goes through unchanged, and we recall it
+here (Notation: if Q(X) is a polynomial of degree n thenQ∗(X)
+denotes X nQ(X −1)):
+Lemma 3.1. WithA, M , φ andP as above, if Q(X) ∈A[X] is
+monic then Q and P generate the unit ideal in A{{X}} if and
+only if Q∗(φ) is an invertible operator on M .
+Before we continue, let us make some remarks on zeroes of
+power series. If f = ∑
+n≥0anT n is in A[[T ]] and s ∈ Z≥0 then we
+deﬁne ∆ sf = ∑
+n≥0
+(n+s
+s
+)
+an+sT n ∈ A[[T ]]. If f,g ∈ A[[T ]] then
+it is possible to check that ∆ s(fg ) = ∑s
+i=0 ∆i(f )∆s−i(g). One
+also easily checks that if A is a Noetherian K-Banach algebra
+then ∆ s sends A{{T }} to itself. We say that a ∈A is a zero of
+orderh ofH ∈A{{T }} if (∆ sH)(a) = 0 for s<h and (∆ hH)(a)
+is a unit. If h ≥ 1 and H = 1 + a1T +... then this implies that
+−1 = a(a1 +a2a +... ) and hence that a is a unit. One now
+checks by induction on h that H(T ) = (1 −a−1T )hG(T ), where
+G ∈A{{T }}, and then that G(a) is a unit.
+22
+===== PDF PAGE 23 =====
+Again let M be a Banach A-module with property ( Pr ) and
+let φ : M → M be a compact morphism, with characteristic
+power series P (T ). Say a ∈A is a zero of P (T ) of order h.
+Proposition 3.2. There is a unique decomposition M =N ⊕F
+into closed φ-stable submodules such that 1−aφ is invertible on F
+and (1−aφ)h = 0 onN . The submodules N andF are deﬁned as
+the kernel and the image of a projector which is in the closure in
+Hom(M,M ) of A[φ]. Moreover, N is projective of rank h, and
+assuming h > 0 then a is a unit and the characteristic power
+series of φ on N is (1 −a−1T )h.
+Proof. We start by following Proposition 12 of [15], much of
+which goes through unchanged in our setting. We ﬁnd that there
+are maps p,q ∈ Hom(M,M ), both in the closure of A[φ], such
+that p2 = p, q2 = q and p +q = 1, and if we consider the
+decomposition M = N ⊕F corresponding to these projections,
+N = ker(p), then (1 −aφ)h = 0 on N , and (1 −aφ) is invertible
+on F . The decomposition is visibly unique, as if ψ = (1 −
+aφ)h then N = ker( ψ) and F = Im( ψ). We now diverge from
+Proposition 12 of [15].
+It is clear that N satisﬁes ( Pr ), but furthermore we have
+(1 −aφ)h = 0 on N which implies that the identity is compact
+on N . An elementary argument (change the metric on N to
+an equivalent one if necessary and reduce to a computation of
+matrices) shows that if β ∈ Hom(N,N ) has suﬃciently small
+norm, then |βn| → 0 and hence 1 −β is invertible. Because 1
+is compact, we can choose α : N → N of ﬁnite rank such that
+1 −α is suﬃciently small, and hence α is invertible and so N is
+ﬁnitely-generated. By Lemma 2.11, N is projective.
+If h = 0 then N = 0 and F = M , as can be seen from
+Lemma 3.1, and we are home. So assume for the rest of the proof
+that h >0. Then P (a) = 0 and this implies that a must be a
+unit. If PN andPF denote the characteristic power series of φ on
+N andF respectively, then P =PNPF and by Lemma 3.1 we see
+that (T −a)h andPF generate the unit ideal in A{{T }}. Hence
+23
+===== PDF PAGE 24 =====
+(1−a−1T )h dividesPN inA{{T }}. Moreover,PN is a polynomial
+becauseN is ﬁnitely-generated, and hence (1 −a−1T )h dividesPN
+inA[T ]. Moreover, (1 −a−1T )h has constant term 1 and is hence
+not a zero-divisor in A{{T }}, hence if PN (T ) = D(T )(1−a−1T )h
+andP (T ) = (1 −a−1T )hG(T ) then D(T ) divides G(T ) in A{{T }}
+and so D(a) is a unit.
+We know that D(T ) is a polynomial. Furthermore, because
+(1 −aφ)h = 0 on N we see that φ has an inverse on N and hence
+that the determinant of φ is in A×. Hence the leading term of D
+is a unit. Reducing the situation modulo a maximal ideal of A
+we see that the reduction of PN must be a power of the reduction
+of (1 −a−1T ) and this is enough to conclude that D = 1. Hence
+the characteristic power series of φ onN is (1 −a−1T )h. Finally,
+the fact that φ is invertible on N means that the rank of N
+at any maximal ideal must equal the degree of PN modulo this
+ideal, and hence the rank is h everywhere.
+Keep the notation: M has (Pr ) and φ :M →M is compact,
+with characteristic power series P (T ).
+Theorem 3.3. SupposeP (T ) = Q(T )S(T ), where S = 1 + ... ∈
+A{{T }} andQ = 1+... is a polynomial of degree n whose leading
+coeﬃcient is a unit, and which is relatively prime to S. Then
+there is a unique direct sum decomposition M = N ⊕F of M
+into closed φ-invariant submodules such that Q∗(φ) is zero on
+N and invertible on F . The projectors M → N and M → F
+are elements of Hom(M,M ) which are in the closure of A[φ].
+Furthermore, N is projective of rank n and the characteristic
+power series of φ on N is Q(T ).
+Proof. We follow Theorem A4.3 of [10]. The operator v =
+1 −Q∗(φ)/Q∗(0) has a characteristic power series which has a
+zero at T = 1 of order n. Applying the previous proposition to
+v, we see M =N ⊕F , where N andF are deﬁned as the kernel
+and the image of a projector in the closure of A[v] and hence in
+the closure of A[φ]. Hence both N and F are φ-stable. Unfor-
+tunately, by the end of the proof of Theorem A4.3 of [10] one
+24
+===== PDF PAGE 25 =====
+can only deduce that Q∗(φ)n is zero on N and invertible on F ,
+so we are not quite home yet. However, by Proposition 3.2, N
+is projective of rank n. Moreover, the characteristic power series
+of φ on F is coprime to Q, by Lemma 3.1. Hence if G(T ) is the
+characteristic power series of φ on N , we see that Q divides G.
+But G and Q have degree n and the same constant term, and
+furthermore the leading coeﬃcient of Q is a unit. This is enough
+to prove that G =Q.
+4 An admissible covering
+The key aim in this section is to generalise some of the results of
+section A5 of [10] (especially Proposition A5.8) to the case where
+the base is an arbitrary reduced aﬃnoid. In fact almost all of
+Coleman’s results go through unchanged, but there are some
+diﬀerences, which we summarise here. Firstly it is not true in
+general that the image of an aﬃnoid under a quasi-ﬁnite map is
+still aﬃnoid. However if one works with ﬁnite unions of aﬃnoids
+then one can deal with the problems that this causes. Secondly
+Coleman uses the notion of a strict neighbourhood of a subspace
+of the unit disc. We slightly modify this notion to one which suits
+our purpose. Lastly we need some kind of criterion for when a
+quasi-ﬁnite map of rigid spaces of constant degree is ﬁnite. We
+use a theorem of Conrad whose proof invokes Raynaud’s theory
+of admissible formal models of rigid spaces.
+We set up some notation. Let K be a ﬁeld with a complete
+non-trivial non-Archimedean valuation. Let R denote a reduced
+K-aﬃnoid algebra, and let B = Max( R) be the associated aﬃ-
+noid variety. We equip R with its supremum semi-norm, which
+is a norm in this case. Let R{{T }} denote the ring of power se-
+ries ∑
+n≥0anT n withan ∈R such that for all real r >0 we have
+|an|rn → 0 as n → ∞. Then R{{T }} is just the ring of functions
+on B ×K A1,an, where here A1,an denotes the analytiﬁcation of
+25
+===== PDF PAGE 26 =====
+aﬃne 1-space over K.
+LetP (T ) = ∑
+n≥0rnT n ∈R{{T }} be a function with r0 = 1.
+Our main object of study is the rigid space cut out by P (T ), that
+is, the space Z ⊆B ×K A1,an deﬁned by the zero locus of P (T ).
+In practice, P (T ) will be the characteristic power series of a
+compact endomorphism of a Banach R-module.
+Certainly Z is a rigid analytic variety, equipped with pro-
+jection maps f : Z → B and g : Z → A1,an. We frequently
+make use of the following cover of Z: If r ∈
+√
+|K ×| (that is,
+some power of r is the norm of a non-zero element of K) then
+letB[0,r ] denote the closed aﬃnoid disc over K of radius r, con-
+sidered as an admissible open subspace of A1,an. Let Zr denote
+the zero locus of P (T ) on the space B ×KB[0,r ]. Then Zr is an
+aﬃnoid, and the Zr admissibly cover Z. Let fr :Zr →B denote
+the canonical projection. Note that any aﬃnoid subdomain of Z
+will be admissibly covered by its intersections with the Zr, which
+are aﬃnoids, and hence will be contained within some Zr.
+Now let C denote the set of aﬃnoid subdomains Y ofZ with
+the following property: there is an aﬃnoid subdomain X of B
+(depending on Y ) with the property that Y ⊆ ZX := f −1(X),
+the induced map f : Y → X is ﬁnite and surjective, and Y
+is disconnected from its complement 2 in ZX, that is, there is a
+function e ∈ O (ZX) such that e2 = e and Y is the locus of ZX
+deﬁned by e = 1.
+Our goal is (c.f. Proposition A5.8 of [10])
+Theorem. C is an admissible cover of Z.
+The reason we want this result is that in later applications
+Z will be a “spectral variety”, and the Y ∈ C are exactly the
+aﬃnoid subdomains of Z over which one can construct a Hecke
+algebra, and hence an eigenvariety, without any technical diﬃ-
+culties.
+2Elmar Grosse-Kloenne has pointed out that this condition in fact follows
+from the others; one can use 9.6.3/3 and 9.5.3/5 of [1] to check that Y → ZX
+is both an open and a closed immersion.
+26
+===== PDF PAGE 27 =====
+We prove the theorem after establishing some preliminary
+results.
+Lemma 4.1. fr :Zr →B is quasi-ﬁnite and ﬂat.
+Proof. By increasing r if necessary, we may assume r ∈ |K ×|
+and hence, by rescaling, that r = 1. The situation we are now
+in is as follows: R is an aﬃnoid and P (T ) = ∑
+n≥0rnT n ∈
+R⟨T ⟩ with r0 = 1, and we must show that R → R⟨T ⟩/(P (T ))
+is quasi-ﬁnite and ﬂat. Quasi-ﬁniteness is immediate from the
+Weierstrass preparation theorem. For ﬂatness observe that R⟨T ⟩
+is ﬂat 3 overR and that if P is any maximal ideal of R⟨T ⟩ then
+P := P ∩R is a maximal ideal of R. Hence R⟨T ⟩/(PR⟨T ⟩) =
+(R/PR)⟨T ⟩ is an integral domain and the image of P (T ) in
+(R/PR)⟨T ⟩ is non-zero, as its constant term is non-zero. Hence
+the image of P (T ) is not a zero-divisor and ﬂatness now follows
+from Theorem 22.6 of [14].
+Corollary 4.2. If Y ⊆ Z is an aﬃnoid then f : Y → B is
+quasi-ﬁnite and ﬂat.
+Proof. Y is aﬃnoid and hence Y ⊆Zr for some r ∈
+√
+|K ×|, so
+the result follows from the previous lemma.
+Corollary 4.3. If Y ⊆ Z is an aﬃnoid, and X ⊆ B is an
+admissible open such that Y ⊆f −1(X), and if there is an integer
+d ≥ 0 such that all ﬁbres of the induced map f : Y → X have
+degreed, then f :Y →X is ﬁnite and ﬂat.
+Proof. f : Y → X is ﬂat by Corollary 4.2. It is also quasi-
+compact and separated, so ﬁniteness follows from Theorem A.1.2
+of [11].
+Note that this latter result uses the full force of Raynaud’s
+theory of formal models.
+3One can prove ﬂatness by using the Open Mapping Theorem and mim-
+icking the proof of the result stated in Exercise 7.4 of [14], noting that the
+solution to the exercise is on p289 of loc. cit.
+27
+===== PDF PAGE 28 =====
+Lemma 4.4. If r ∈
+√
+|K ×| and fr : Zr → B, then for i ≥ 0
+deﬁne Ui := {x ∈ B : deg( f −1
+r (x)) ≥ i}. Then each Ui is a
+ﬁnite union of aﬃnoid subdomains of B, and Ui is empty for i
+suﬃciently large.
+Proof. The sequence |rn|rn tends to zero as n → ∞ , and hence
+for any x ∈ B, the set {|rn(x)|rn : n ≥ 0} has a maximum,
+denotedMx, which is attained. Note that |r0(x)| = 1 and hence
+Mx ≥ 1, and in particular if N is an integer such that |rn|rn < 1
+for all n ≥ N then Mx = Max {|rn(x)|rn : 0 ≤ n < N} and
+Mx > |rn(x)|rn for all n ≥N . For i ≥ 0 let Si denote the aﬃnoid
+subdomain of B deﬁned by {x ∈B : |ri(x)|ri =Mx}. Then Si
+is empty for i ≥N . A calculation on the Newton polygon shows
+that
+Ui = ∪j≥iSj
+and the result follows.
+Deﬁnition. If S and T are admissible open subsets of the aﬃ-
+noid B, such that both S and T are ﬁnite unions of aﬃnoid
+subdomains of B, then we say that T is a strict neighbourhood
+of S (in B) if S ⊆ T and there is an admissible open subset U
+of B with the following properties:
+• U is a ﬁnite union of aﬃnoid subdomains of B,
+• U ∩S is empty,
+• U ∪T =B.
+The intersection of two aﬃnoid subdomains of B is an aﬃ-
+noid subdomain of B. Hence if U and V are admissible open
+subsets of B which are both the union of ﬁnitely many aﬃnoid
+subdomains, then so is U ∩V . As a consequence, we see that if
+Tα is a strict neighbourhood of Sα for 1 ≤α ≤n then ∪αTα is a
+strict neighbourhood of ∪αSα. We now prove the key technical
+lemma that we need.
+28
+===== PDF PAGE 29 =====
+Lemma 4.5. Suppose r ∈
+√
+|K ×| and V ⊆ B is an aﬃnoid
+subdomain with the property that fr : f −1
+r (V ) → V is ﬁnite of
+constant degree d >0. Then there is an aﬃnoid subdomain X
+of B which is a strict neighbourhood of V in B, and s ∈
+√
+|K ×|
+with s > rsuch that the aﬃnoid Y =f −1
+s (X) containsf −1
+r (V ),
+lies in C, and is ﬁnite ﬂat of degree d over X.
+Proof. (c.f. Lemma A5.9 of [10]). If x ∈ V then let Px(T ) =∑
+n≥0rn(x)T n denote the specialisation of P (T ) to K(x){{T }}.
+The statement that the degree of f −1
+r (x) is d translates by the
+theory of the Newton polygon to the statement that for all
+x ∈ V we have |rd(x)| ̸ = 0 (so rd is a unit in Oan(V )) and
+furthermore that for all integers n ≥ 0 we have − log(|rn(x)|) ≥
+(n −d) log(r) − log(|rd(x)|), with strict inequality when n > d.
+Here log is the usual logarithm, with the usual convention that
+− log(0) = + ∞. Because P (T ) is entire, there exists an in-
+teger N > d such that for n ≥ N we have − log |rn(x)| >
+n log(r + 1) for all x ∈ B and hence − log(|rn(x)|) ≥ (n −
+d) log(r + 1) − log(|rd(x)|) for all n ≥ N . For d < n < N
+we have − log(|rn(x)|)> (n −d) log(r) − log(|rd(x)|) and hence
+|rn(x)/rd(x)|<r d−n for all x ∈V . Because functions on aﬃnoids
+attain their bounds, there is some t ∈
+√
+|K ×| withr <t<r + 1
+and |rn(x)/rd(x)| < td−n for d < n < N, and hence for all
+x ∈ V we have − log(|rn(x)|) ≥ (n − d) log(t) − log(|rd(x)|)
+for all n ≥ 0, with equality iﬀ n = d. Now choose γ1, γ2, δ1,
+δ2 ∈ log
+(√
+|K ×|
+)
+such that δ2 > − log |rd(x)|>δ 1 for all x ∈V
+and log( r)<γ 1 <γ 2 < log(t). Let X be the aﬃnoid subdomain
+of B deﬁned by the N equations
+δ1 ≤ − log |rd(x)| ≤ δ2,
+− log |rn(x)| + log |rd(x)| ≥ (n −d)γ1 for 0 <n<d,
+and
+− log |rn(x)| + log |rd(x)| ≥ (n −d)t for d<n<N.
+29
+===== PDF PAGE 30 =====
+These equations deﬁne X as a Laurent subdomain of B, and
+if x ∈ V then not only are these equations satisﬁed, but strict
+inequality holds in every case. Hence V ⊂X and moreover if we
+consider the N aﬃnoids, each deﬁned by one of the N equations
+δ1 ≥ − log |rd(x)|,
+− log |rd(x)| ≥ δ2,
+− log |rn(x)| + log |rd(x)| ≤ (n −d)γ1, 0<n<d,
+− log |rn(x)| + log |rd(x)| ≤ (n −d)t, d<n<N,
+and let W be the union of these N aﬃnoids, then X ∩W is
+empty and X ∪V =B. Hence X is a strict neighbourhood of V
+in B, in the sense we deﬁned above. Let s = exp( γ2) and set
+Y = f −1
+s (X). Then Y is an aﬃnoid in Z and by the previous
+corollary and the way we have arranged the Newton polygons,
+f :Y →X is ﬁnite of degree d (note that by our choice of t we
+have
+− log |rn(x)| + log |rd(x)| ≥ (n −d)t for all n ≥N,
+with strict inequality for x ∈V ). Furthermore if x ∈X then no
+slope of the Newton polygon of Px(T ) can equal s, and hence the
+projection from f −1(X) to A1,an contains no elements of norm s.
+HenceY is disconnected from its complement in f −1(X), and in
+particular is an aﬃnoid subdomain of Z, so Y ∈ C .
+We are now ready to prove the theorem.
+Theorem 4.6. C is an admissible cover of Z.
+Proof. Again we follow Coleman. We know that Z is admissibly
+covered by the Zr,r ∈
+√
+|K ×|, and hence it suﬃces to prove that
+for every Zr, there is a ﬁnite collection of aﬃnoids in C whose
+union contains Zr. Recall that for i ≥ 0,Ui is the subset of points
+in B such that deg( f −1
+r (a)) ≥i, and that Ui is a ﬁnite union of
+aﬃnoids. Furthermore, clearly Ui+1 ⊆ Ui. If U1 is empty there
+30
+===== PDF PAGE 31 =====
+is nothing to prove, so let us assume that it is not. Let d denote
+the largest i such that Ui is non-empty. For 1 ≤ i ≤ d let H(i)
+denote the following statement:
+H(i): “There is a ﬁnite set Y1, Y2...Y n(i) of aﬃnoid subdo-
+mains of Z, and a ﬁnite set X1, X2...X n(i) of aﬃnoid subdo-
+mains of B, such that for 1 ≤α ≤n(i) we have f :Yα →Xα is
+ﬁnite ﬂat and surjective, Yα ∈ C ,f −1
+r (Ui) ⊆ ∪ n(i)
+α=1Yα, and ∪n(i)
+α=1Xα
+is a strict neighbourhood of Ui in B.”
+If we can establish H(1) then we are home because f −1
+r (U1) =
+Zr. We ﬁrstly establish H(d), and then show that H(i) im-
+plies H(i − 1) for i ≥ 2, and this will be enough. For H(d)
+we cover Ud by ﬁnitely many aﬃnoid subdomains V1,V2,. . . Vn(1)
+of B (in fact it is not diﬃcult to show that Ud is itself an aﬃ-
+noid, but we shall not need this). By Corollary 4.3 we know
+that f −1
+r (Vα) → Vα is ﬁnite and ﬂat. Now applying Lemma 4.5
+to Vα we get a strict aﬃnoid neighbourhood Xα of Vα, and
+if Yα = f −1
+s (Xα) ( s as in the Lemma) then H(d) follows im-
+mediately.
+Now let us assume H(i), i ≥ 2. Then choose a ﬁnite union
+of aﬃnoid subdomains W ⊂ B such that W ∩Ui is empty and
+W ∪ ⋃n(i)
+α=1Xα = B. Then W ∩Ui−1 is a ﬁnite union Vn(i)+1,
+Vn(i)+2...V n(i)+m of aﬃnoid subdomains. Set n(i−1) = n(i)+m.
+Note that fr : f −1
+r (Vα) → Vα is ﬁnite of degree i − 1 for n(i) <
+α ≤n(i−1), hence one is in a position to apply Lemma 4.5 to get
+Yα →Xα ﬁnite ﬂat of degree i−1,Yα ∈ C ,f −1
+r (Vα) ⊆Yα, and Xα
+a strict neighbourhood of Vα, for n(i) < α≤ n(i − 1). We now
+show that ⋃n(i−1)
+α=1 Xα is a strict neighbourhood of Ui−1. We know
+that ⋃n(i−1)
+α=n(i)+1Xα is a strict neighbourhood of ⋃n(i−1)
+α=n(i)+1Vα, so
+choose a ﬁnite union of aﬃnoid subdomains W ′ such that W ′ ∩
+(⋃n(i−1)
+α=n(i)+1Vα) is empty and W ′ ∪ (⋃n(i−1)
+α=n(i)+1Xα) = B. Now
+set W ′′ = W ∩ W ′. Then W ′′ is a ﬁnite union of aﬃnoids,
+W ′′ ∩Ui−1 =W ′ ∩W ∩Ui−1 =W ′ ∩ (⋃n(i−1)
+α=n(i)+1Vα) is empty, and
+W ′′ ∪ (⋃n(i−1)
+α=1 Xα) = B, and we are done.
+31
+===== PDF PAGE 32 =====
+5 Spectral varieties and eigenvarieties
+Let R be a reduced aﬃnoid K-algebra equipped with its supre-
+mum norm, let M be a Banach R-module satisfying ( Pr ), and
+let T be a commutative R-algebra equipped with an R-algebra
+homomorphism to End R(M ), the continuous R-module endo-
+morphisms of M . In practice T will be a polynomial R-algebra
+generated by (typically inﬁnitely many) Hecke operators. We
+frequently identify t ∈ T with the endomorphism of M associ-
+ated to it. Fix once and for all an element φ ∈ T, and assume
+that the induced endomorphism φ : M → M is compact. Let
+F (T ) = 1 + ∑
+n≥1cnT n be the characteristic power series of φ.
+We deﬁne the spectral variety Zφ associated to φ to be the closed
+subspace of the rigid space Max( R)×A1 cut out by F . The spec-
+tral variety is a geometric object parametrising, in some sense,
+the reciprocals of the non-zero eigenvalues of φ. Its formulation
+is compatible with base change, by Lemma 2.13. Our main goal
+in this section is to write down a ﬁnite cover of this spectral vari-
+ety, the eigenvariety associated to the data ( R,M, T,φ ). Points
+on the eigenvariety will correspond to systems of eigenvalues for
+all the operators in T, such that the eigenvalue for φ is non-zero.
+The construction is just an axiomatisation of Chapter 7 of [9]
+and is really not deep (in fact by far the deepest part of the
+entire construction is the fact that the cover C of Section 4 is
+admissible, as this appealed to the theory of formal models at
+one point). Unfortunately the construction does involve a lot of
+bookkeeping.
+We begin with a ﬁnite-dimensional example, where φ is in-
+vertible and hence where we may avoid the technicalities of §4.
+Let R be a reduced aﬃnoid K-algebra, and let M denote a
+ﬁnitely-generated projective R-module of rank d. Let T be an
+arbitraryR-algebra equipped with an R-algebra homomorphism
+to End R(M ), and let φ be an element of T. Assume further-
+more that φ : M → M has an inverse, that is, there is an
+R-linear φ−1 : M → M such that φ ◦ φ−1 = φ−1 ◦ φ is the
+32
+===== PDF PAGE 33 =====
+identity on M . Deﬁne P (T ) = det(1 −Tφ ) = 1 + ... ∈ R[T ];
+then the leading term of P , that is, the coeﬃcient of T d, is
+a unit. Let Zφ denote the zero locus of P (T ) regarded as a
+function on Max( R) × A1. Then R[T ]/(P (T )) is a ﬁnite R-
+algebra and hence an aﬃnoid algebra, and Zφ is the aﬃnoid
+rigid space associated to this aﬃnoid algebra. Let T(Zφ) denote
+the image of T in End R(M ); then T(Zφ) is a ﬁnite R-algebra
+and hence an aﬃnoid algebra. By the Cayley-Hamilton theorem
+we have φ−1 ∈ T(Zφ), and furthermore there is a natural map
+R[T ]/P (T ) → T(Zφ) sending T to φ−1. Set Dφ = Max( T(Zφ)).
+Then the maps R →R[T ]/P (T ) → T(Zφ) of aﬃnoids give maps
+Dφ → Zφ → Max(R). We call Zφ the spectral variety and Dφ
+the eigenvariety associated to this data. As a concrete example,
+consider the case where R = K⟨X,Y ⟩, M = R2, T = R[φ,t ],
+where φ acts on M as the matrix
+( 1 X
+0 1
+)
+, and t acts as
+( 0 Y
+0 0
+)
+.
+Then det(1 −Tφ ) = (1 −T )2 so Zφ is non-reduced, and T(Zφ)
+is the ring R ⊕Iϵ, with I = (X,Y ) and ϵ2 = 0. Note that in this
+case the maps Dφ →Zφ andDφ → Max(R) are not ﬂat, and Dφ
+is not reduced either.
+It would not be unreasonable to say that what follows in this
+section is just a natural generalisation of this set-up, the main
+complication being that M is not necessarily ﬁnitely-generated,
+the purpose of the admissible cover C being to remedy this. See
+also Chenevier’s thesis, where he develops essentially the same
+theory in essentially the same way (assuming Theorem 4.6 of this
+paper). The example above shows that in this generality one
+cannot expect Dφ and Zφ to have too many “good” geometric
+properties; however one can hope that the examples of spectral
+and eigenvarieties arising “in nature” are better behaved.
+Let us now go back to our more general situation, where
+M is a Banach R-module satisfying property ( Pr ) and T is a
+commutativeR-algebra equipped with an R-algebra map T →
+EndR(M ), such that the endomorphism of M induced by φ ∈ T
+is compact. Let Zφ be the closed subspace of Max( R) × A1
+deﬁned by the zero locus of the characteristic power series of φ.
+33
+===== PDF PAGE 34 =====
+Let C be the admissible cover of Zφ constructed in section 4.
+Let Y be an element of this admissible cover, with image X ⊆
+Max(R). By deﬁnition, X is an aﬃnoid subdomain of Max( R),
+so set A = O(X). Then A is reduced by Corollary 7.3.2/10
+of [1]. Deﬁne MA :=M ˆ⊗RA and, for t ∈ T, let tA denote the A-
+linear continuous endomorphism of MA induced by t :M →M .
+Note that φA :MA →MA is still compact, by Lemma 2.13. Let
+FA(T ) be the characteristic power series of φA onMA. Again by
+Lemma 2.13, FA is just the image of F in A{{T }}.
+Let us assume ﬁrst that X is connected. Then we wish to
+associate to Y a factor of FA(T ) so that we are in a position
+to apply Theorem 3.3. We do this as follows. We know that
+O(Y ) is a ﬁnite ﬂat A-module, and hence it is projective of some
+rank d. The element T of O(Y ) is a root of its characteristic
+polynomial Q′, which is monic of degree d, and hence gives us a
+map A[T ]/(Q′(T )) → O (Y ). In fact, Y is a closed subspace of
+X ×B[0,r ] for some r, and hence if S is some appropriate K-
+multiple of T then the natural map A⟨S⟩ → O (Y ) is surjective.
+By Proposition 3.7.4/1 of [1] and its proof, any residue norm
+on O(Y ) will be equivalent to any of the Banach norms that
+O(Y ) inherits from being a ﬁnite complete A-module. One can
+deduce from this that the map A[T ]/(Q′(T )) → O (Y ) is surjec-
+tive. Hence A[T ]/(Q′(T )) → O (Y ) is an isomorphism, because
+both sides are locally free A-modules of rank d. This means that
+the image of FA(T ) in A{{T }}/(Q′(T )) is zero, and hence that
+Q′ divides FA in A{{T }}. Comparing constant terms, we see
+that Q′ = a0 +a1T +... with a0 a unit, and hence we can de-
+ﬁne Q =a−1
+0 Q′ and we are in a position to invoke Theorem 3.3
+to give a decomposition MA = N ⊕F where N is projective of
+rankd overA. Note that in general N will not be free. Because
+the projector MA → N is in the closure of A[φ], it commutes
+with all the endomorphisms of MA induced by elements of T,
+and hence N is t-invariant for all t ∈ T. Deﬁne T(Y ) to be the
+A-sub-algebra of End A(N ) generated by all the elements of T.
+Now End A(N ) is a ﬁnite A-module, and hence T(Y ) is a ﬁnite
+34
+===== PDF PAGE 35 =====
+A-algebra and hence an aﬃnoid. Let D(Y ) denote the associ-
+ated aﬃnoid variety. We know that Q∗(φ) is zero on N , and
+hence T(Y ) is naturally a ﬁnite A[S]/(Q∗(S))-algebra, via the
+map sending S to φ. Because the constant term of Q∗ is a unit,
+there is a canonical isomorphism A[S]/(Q∗(S)) = O(Y ) sending
+S to T −1. Hence T(Y ) is a ﬁnite O(Y )-algebra, and thus there
+is a natural ﬁnite map D(Y ) →Y .
+For general Y ∈ C , the image of Y in Max( R) may not be
+connected, but Y can be written as a ﬁnite disjoint union Y =
+∪Yi corresponding to the connected components of the image
+of Y in Max( R). We deﬁne D(Y ) as the disjoint union of the
+D(Yi). This construction gives us, for each Y ∈ C , a ﬁnite cover
+D(Y ) of Y . We wish to glue together the D(Y ), as Y ranges
+through all elements of C, and the resulting curve D, which will
+be a ﬁnite cover of Zφ, will be the eigenvariety associated to the
+data ( R,M, T,φ ). We ﬁrstly establish a few lemmas.
+Lemma 5.1. If Y ∈ C with image X ⊆ Max(R), and X ′ is
+an aﬃnoid subdomain of X then Y ′, the pre-image of X ′ under
+the map Y → X, is in C, and is an aﬃnoid subdomain of Y .
+Furthermore,D(Y ′) is canonically isomorphic to the pre-image
+of Y ′ under the map D(Y ) →Y .
+Proof. Y ′ is the pre-image of X ′ under the map Y → X and is
+hence an aﬃnoid subdomain of Y by Proposition 7.2.2/4 of [1].
+The map Y ′ →X ′ is ﬁnite and surjective, and if e is the idem-
+potent in O(ZX) showing that Y is disconnected from its com-
+plement (that is, e|Y = 1 and e|ZX \Y = 0), then the restriction
+of e to O(ZX ′) will do the same for Y ′. Hence Y ′ ∈ C . It is now
+elementary to check that T(Y ′) = T(Y ) ˆ⊗O(X)O(X ′) and hence
+D(Y ′) is the pre-image of Y ′ under the map D(Y ) →Y .
+Lemma 5.2. If Y1,Y 2 ∈ C then Y :=Y1 ∩Y2 ∈ C . Furthermore
+for 1 ≤ i ≤ 2, Y is an aﬃnoid subdomain of Yi, and D(Y )
+is canonically isomorphic to the pre-image of Y under the map
+D(Yi) →Yi.
+35
+===== PDF PAGE 36 =====
+Proof. Let Xi denote the image of Yi in Max( R). Then the
+Xi are aﬃnoid subdomains of Max( R), and hence so is their
+intersection. Let X denote a component of X1 ∩X2. It suﬃces
+to prove the assertions of the lemma with Y replaced by Y ∩ZX,
+so let us re-deﬁne Y to be Y ∩ZX.
+Let Y ′
+i denote the pre-image of X under the map Yi → Xi.
+Then Y ′
+i is an aﬃnoid subdomain of Yi containing Y and by
+Lemma 5.1 we have Y ′
+i ∈ C with D(Y ′
+i ) the pre-image of Y ′
+i
+under the map D(Yi) →Yi. Now Y =Y ′
+1 ∩Y ′
+2 is ﬁnite and ﬂat
+over Y ′
+1 and hence ﬁnite and ﬂat over X. Let ei ∈ O (ZX) be
+the idempotent associated to Y ′
+i , and set e = e1e2. Then Y is
+the subset of ZX deﬁned by e = 1, and hence Y is locally free
+of ﬁnite rank over X. One easily checks that Y is a union of
+components of Y ′
+i for 1 ≤ i ≤ 2, in fact. If Y is empty then
+the rest of the lemma is clear. If not then the map Y → X is
+surjective, and Y ∈ C . Finally, for 1 ≤i ≤ 2, the idempotents e
+and ei(1 −e3−i) sum to 1 on Y ′
+i showing that D(Y ) is actually
+a union of connected components of D(Y ′
+i ), pulling back the
+inclusion Y ⊆Y ′
+i .
+Now by Proposition 9.3.2/1 of [1] we can glue the D(Y ) for
+Y ∈ C to get a rigid space Dφ (the cocycle conditions are sat-
+isﬁed because they are satisﬁed for the cover C of Zφ), and by
+Proposition 9.3.3/1 of [1] we can glue the maps D(Y ) →Y to get
+a map Dφ →Zφ. We say that the rigid space Dφ is the eigenva-
+riety associated to the data ( R,M, T,φ ). We have already seen
+in the ﬁnite-dimensional case that the map Dφ →Zφ might not
+be ﬂat, and that Zφ andDφ may be non-reduced. We summarise
+the obvious positive results about Zφ and Dφ that come out of
+their construction:
+Lemma 5.3. Dφ and Zφ are separated, and the map Dφ →Zφ
+is ﬁnite.
+Proof. Zφ is separated by, for example, Proposition 9.6/7 of [1]
+(applied to the admissible covering {Zr} of Zφ deﬁned in the
+36
+===== PDF PAGE 37 =====
+previous section). The construction of Dφ over Zφ shows that
+Dφ → Zφ is ﬁnite; hence Dφ → Zφ is separated, which implies
+that Dφ is separated.
+We need to establish further functorial properties of this con-
+struction. As before, let R be a reduced K-aﬃnoid algebra
+equipped with its supremum norm, let M be a Banach R-module
+satisfying (Pr ), and let T be a commutative R-algebra equipped
+with a distinguished element φ and an R-algebra homomorphism
+T → HomR(M,M ), such that the image of φ is a compact endo-
+morphism. We now consider what happens when we change R.
+More speciﬁcally, let R′ denote another reduced K-aﬃnoid alge-
+bra equipped with a map R →R′, and let M ′, T′,φ ′ denote the
+obvious base extensions. The constructions above give us maps
+Dφ → Zφ → Max(R) and Dφ′ → Zφ′ → Max(R′). The map
+R →R′ gives us a map Max( R′) → Max(R).
+Lemma 5.4. Zφ′ → Max(R′) is canonically isomorphic to the
+pullback of Zφ → Max(R) to Max(R′).
+Proof. This is an immediate consequence of Lemma 2.13.
+In particular there is a natural map Zφ′ →Zφ.
+Lemma 5.5. If R → R′ is ﬂat then Dφ′ → Zφ′ is canonically
+isomorphic to the pullback of Dφ →Zφ under the map Zφ′ →Zφ.
+Proof. Let C and C′ denote usual the admissible covers of Zφ
+and Zφ′. If Y ∈ C and Y ′ is the pullback of Y to Zφ′ then
+one checks without too much diﬃculty that Y ′ ∈ C ′. It is not
+immediately clear whether every element of C′ arises in this way
+(although this is the case if Max( R′) ⊆ Max(R) is an aﬃnoid
+subdomain, which will be the only case we are interested in in
+practice). However, this does not matter because the elements of
+C′ which arise in this way still form an admissible covering of Zφ′,
+as they cover the separated space Zφ′, and all the elements of C′
+are aﬃnoids so one can use Proposition 9.1.4/2 of [1]. Hence we
+37
+===== PDF PAGE 38 =====
+may construct Dφ′ by gluing the D(Y ′) for all Y ′ which arise in
+this way. One checks that D(Y ′) is the pullback of D(Y ) under
+the map Y ′ →Y (this is where we use ﬂatness, the point being
+that without ﬂatness one cannot deduce that the natural map
+fromD(Y ′) to the pullback of D(Y ) is an isomorphism) and that
+everything is compatible with gluing, and after this somewhat
+tedious procedure one deduces that the maps D(Y ′) → D(Y )
+identifyDφ′ with the pullback of Dφ as indicated.
+We will only be applying the above lemma in the case where
+Max(R′) is an aﬃnoid subdomain of Max( R) and in particular
+R → R′ is ﬂat in this case. I am grateful to the referee for
+pointing out that ﬂatness is necessary for this lemma to be true.
+Indeed, one checks that in the example at the beginning of this
+section (with R = K⟨X,Y ⟩), if R′ = K and the map R → R′
+sends X and Y to zero, then the pullback of the eigenvariety is
+not isomorphic to the eigenvariety associated to the pullback. On
+the other hand, one can use the q-expansion principle to check
+that the construction of the cuspidal Coleman-Mazur eigencurve
+(see part II of this paper) will commute with any base change
+of reduced aﬃnoids. Had we set up the theory for non-reduced
+bases one could no doubt even check that the construction com-
+mutes with arbitrary base change. The same arguments do not
+work for the eigenvarieties associated to totally deﬁnite quater-
+nion algebras over totally real ﬁelds (see part III of this paper)
+and for Chenevier’s unitary group eigenvarieties [8]. One does
+not have a q-expansion principle in these cases, and whether con-
+struction of these eigenvarieties commutes with all base changes
+(even those coming from the inclusion of a point into weight
+space) seems to be an open question, related to multiplicity one
+issues for overconvergent automorphic eigenforms in these set-
+tings. See Lemma 5.9 for a partial result. Another way of set-
+ting up the foundations of the theory of eigenvarieties might be
+to construct the eigenvariety as a limit of spectral varieties such
+as those in sublemma 6.2.3 of [9]; such a construction might well
+commute with all base changes, but would not see subtleties such
+38
+===== PDF PAGE 39 =====
+as non-semisimplicity of eigenspaces at a ﬁxed weight.
+We now analyse how eigenvarieties change under a speciﬁc
+type of change of module. As always, let R be a reduced aﬃnoid,
+letM andM ′ denote Banach modules satisfying property ( Pr ),
+let T be a commutative R-algebra equipped with maps T →
+EndR(M ) and T → EndR(M ′), such that our chosen element
+φ ∈ T acts compactly on both M and M ′.
+In practice we are interested only in modules M and M ′
+which are related in a speciﬁc way, which we now axiomatise. We
+say that a continuous R-module and T-module homomorphism
+α :M ′ →M is a “primitive link” if there is a compact R-linear
+and T-linear map c : M → M ′ such that φ : M → M is α ◦c
+and φ : M ′ → M ′ is c ◦α. Note that these assumptions force
+the characteristic power series of φ on M and M ′ to coincide,
+by Lemma 2.12. Note also that the identity map M → M is a
+primitive link (take c =φ). We say that a continuous R-module
+and T-module homomorphism α :M ′ →M is a “link” if one can
+ﬁnd a sequence M ′ = M0,M 1,M 2,...,M n = M of Banach R-
+modules satisfying property ( Pr ) with T-actions, and continuous
+R-module and T-module maps αi : Mi → Mi+1 such that each
+αi is a primitive link, and α is the compositum of the αi. We
+apologise for this terrible notation but the underlying notion
+is what occurs in applications; our motivation is the study of
+r-overconvergent modular forms as r changes. More precisely,
+with notation as in Part II of this manuscript, if 0 < r ≤ r′ <
+p/(p + 1) and α is the inclusion from r′-overconvergent forms to
+r-overconvergent forms, then α will be a primitive link if r′ ≤pr,
+but if r′ >pr thenα may only be a link. Perhaps all of this can
+be avoided if one sets up the theory with a slightly more general
+class of topological modules.
+Lemma 5.6. Let R, M , M ′, T, φ be as above, and assume
+that we are given a link α : M ′ → M in the sense above. Let
+Dφ denote the eigenvariety associated to (R,M, T,φ ) and let D′
+φ
+denote the eigenvariety associated to (R,M ′, T,φ ). Then Dφ and
+D′
+φ are isomorphic.
+39
+===== PDF PAGE 40 =====
+Proof. This is clear if α is an isomorphism, so we may assume
+that α is a primitive link, and thus that there is a compact
+c :M →M ′ such that αc andcα are equal to the endomorphisms
+of M and M ′ induced by φ. We use a dash to indicate the
+analogue of one of our standard constructions, applied to M ′
+(for example Z ′
+φ, C′ and so on). By Lemma 2.13, Zφ and Z ′
+φ are
+equal, as are C and C′ (as their construction does not depend on
+the underlying Banach module). Choose Y ∈ C with connected
+image X ⊆ Max(R). It will suﬃce to prove that α induces an
+isomorphismD′(Y ) = D(Y ) that commutes with all the glueing
+data on both sides, and this will follow if we can show that,
+after base extension to A = O(X), α induces an isomorphism
+between the ﬁnite ﬂat sub- R-modules N ′ and N of M ′ and M
+corresponding to Y , and hence that α (which recall is T-linear)
+induces an isomorphism T(Y ) = T′(Y ).
+Recall that there is a polynomial Q = 1 + ... associated to Y
+as in the deﬁnition of D(Y ), such that the leading term of Q is
+a unit, and such that N ′ and N are the kernels of Q∗(φ) on M ′
+andM respectively. From this one can conclude that α mapsN ′
+to N , that c maps N to N ′, and that there is an element ψ of
+R[φ] ⊆ T, such that ψ is an inverse to φ on both N andN ′. We
+now see that α : N ′ → N must be an R-module isomorphism,
+because it is elementary to check that ψ ◦c is a two-sided inverse
+(recall that ψ is a polynomial in φ and hence commutes with c).
+Now everything else follows without too much trouble.
+I thank Peter Schneider for pointing out a problem with the
+proof of the above lemma in the initial version of this manuscript.
+We now have enough for our eigenvariety machine. The
+data we are given is the following: we have a reduced rigid
+space W, a commutative R-algebra T, and an element φ ∈ T.
+For any admissible aﬃnoid open X ⊆ W , with O(X) = RX
+(equipped with its supremum norm), we have a Banach RX-
+module MX satisfying ( Pr ), and an R-module homomorphism
+T → HomRX (MX,M X), denoted t ↦→ tX, such that φX is com-
+pact. Finally, if Y ⊆ X ⊆ W are two admissible aﬃnoid
+40
+===== PDF PAGE 41 =====
+opens, then we have a continuous O(Y )-module homomorphism
+α : MY → MX ˆ⊗RXRY which is a “link” in the above sense,
+and such that if X1 ⊆ X2 ⊆ X3 ⊆ W are all aﬃnoid subdo-
+mains then α13 = α23α12 where αij denotes the map MXi →
+MXi
+ˆ⊗O(Xi)O(Xj).
+Construction 5.7 (eigenvariety machine). To the above data
+we may canonically associate the eigenvarietyDφ, a rigid space
+equipped with a map to W, with the property that for any aﬃnoid
+openX ⊆ W , the pullback of Dφ to X is canonically isomorphic
+to the eigenvariety associated to the data (RX,M X, T,φ X).
+There is very little left to check in this construction. If Y ⊆X
+are aﬃnoid subdomains of W then by Lemma 5.6 the eigenvari-
+eties associated to ( RY,M Y, T,φ Y ) and ( RY,M X ˆ⊗RXRY, T,φ X)
+are isomorphic. By Lemma 5.5 the eigenvariety associated to
+(RY,M X ˆ⊗RXRY, T,φ X) is isomorphic to the pullback to Y of
+the eigenvariety associated to ( RX,M X, T,φ X). The assumption
+on compatibility of the α ensures that the cocycle condition is
+satisﬁed, and hence the Dφi glue together to give an eigenvariety
+Dφ over W whose restriction to Xi is Dφi.
+As we have seen earlier, one cannot expect Dφ to be reduced
+or ﬂat over W in this generality. However, here are some positive
+results.
+Lemma 5.8. Assume W is equidimensional of dimension n.
+ThenDφ is also equidimensional of dimension n. The ﬁnite map
+Dφ →Zφ has the property that each irreducible component of Dφ
+maps surjectively to an irreducible component of Zφ. Moreover,
+the image in W of each irreducible component of Dφ is Zariski-
+dense in a component of W.
+Proof. This is Proposition 6.4.2 of [8].
+We now explain how the points of Dφ are in bijection with
+systems of eigenvalues of T. For L a complete extension of K,
+say that a map λ : T →L is an L-valued system of eigenvalues if
+41
+===== PDF PAGE 42 =====
+there is an aﬃnoid X = Max(RX) ⊆ W , a point in X(L) (giving
+a map RX →L) and 0 ̸=m ∈MX ˆ⊗RXL such that tm =λ(t)m
+for all t ∈ T. Say that an L-valued system of eigenvalues is
+φ-ﬁnite if λ(φ) ̸= 0.
+Lemma 5.9. There is a natural bijection between φ-ﬁnite sys-
+tems of eigenvalues and L-points of Dφ.
+Proof. BecauseDφ is separated, no pathologies occur when base
+extending to L and hence we may assume L = K. Recall that
+Dφ is covered by the D(Y ) for Y ∈ C ; choose Y ∈ C and let
+X ⊆ W be its image in W. Choose a K-point P of X. This K-
+point corresponds to a map RX →K and it suﬃces to construct
+a bijection between the K-points of D(Y ) lying above P and
+the φ-ﬁnite systems of eigenvalues coming from eigenvectors in
+N ⊗RX K, where N ⊆ MX is the subspace corresponding to
+Y . The result then follows from the following purely algebraic
+lemma.
+Lemma 5.10. LetR be a commutative Noetherian ring and let
+N be a projective module of ﬁnite rank over R. Let T be a com-
+mutative subring of EndR(N ). Let m denote a maximal ideal
+of R, and let S denote the image of the natural map T/ mT →
+EndR/m(N/mN ). Then the natural map T/ mT → S induces a
+bijection between the prime ideals of T/ mT and the prime ideals
+of S.
+Proof. It suﬃces to show that the kernel of the map T/ mT →S
+is nilpotent. After localising at m we may assume that N is free;
+choose a basis for N . Let t be an element of T whose image
+in End R/m(N/mN ) is zero. Then all the matrix coeﬃcients of t
+with respect to this basis are in m. Thinking of t as a matrix
+with coeﬃcients in R, we see that t is a root of its characteristic
+polynomial, which is monic and all of whose coeﬃcients other
+than its leading term are in mR. Hence t is nilpotent in T/ mT
+and we are home.
+42
+===== PDF PAGE 43 =====
+Part II: The Coleman-Mazur eigen-
+curve.
+6 Overconvergent modular forms.
+One can say much more about the eigenvariety Dφ in the spe-
+ciﬁc case for which all this machinery was originally invented,
+namely the Coleman-Mazur eigencurve. Again we shall not give
+a complete treatment of this topic, but will refer to [9] for many
+of the basic deﬁnitions and results we need. The paper [9] gives
+constructions of two objects, called C and D, both in the case
+of level 1 and p > 2. The results in sections 2–3 of this paper
+are enough for us to be able to extend the construction of D to
+the case of an arbitrary level and an arbitrary prime p, and we
+shall give details of the construction here. Note that we do not
+need the results in sections 4–5 of this paper here, because the
+eigenvarieties constructed are over a 1-dimensional base, and the
+rigid analytic results that Coleman develops in section A5 of [10]
+are suﬃcient.
+Fix a prime p, set K = Qp, and let W be weight space, that
+is the rigid space whose Cp-points are naturally the continuous
+group homomorphisms Z×
+p → C×
+p (see section 2 of [5] for more
+details on representability of such functors). Then W is the dis-
+joint union of ﬁnitely many open discs, and there is a natural
+aﬃnoid covering of W which on each component is a cover of the
+open disc by countably many closed discs. Coleman and Mazur
+restrict to the case p> 2, and for an aﬃnoid Y in weight space
+deﬁne deﬁne MY to be the space of r-overconvergent modular
+forms of level 1, for some appropriate real number r. As Y gets
+bigger one has to consider forms which overconverge less and
+less; this is why we must include cases where (in the notation of
+section 5) the “links” α are not the identity. Finally the map φ
+is chosen to be the Hecke operator Up, which is compact. See [9]
+for rigorous deﬁnitions of the above objects, and veriﬁcation that
+43
+===== PDF PAGE 44 =====
+they satisfy the necessary criteria for the machine to work. In [9]
+it is proved that (for N = 1 and p> 2) the resulting eigencurve
+Dφ is reduced, and ﬂat over Zφ (see [9], Proposition 7.4.5 and
+the remarks before Theorem 7.1.1 respectively). Our Lemma 5.9
+is just the statement that points on the eigencurve are overcon-
+vergent systems of ﬁnite slope eigenvalues, and the existence of
+q-expansions assures us that, at least in the cuspidal case, points
+on the eigencurve correspond bijectively with normalised over-
+convergent eigenforms.
+In fact much more is proved in [9], where two rigid spaces
+are constructed for each odd prime p: a curve C, constructed
+via deformation theory and the theory of pseudorepresentations,
+and a curve D constructed via glueing Hecke algebras as above.
+In Theorem 7.5.1 of [9] it is proven that D is isomorphic to the
+space C red. Since the paper [9] appeared, various authors have
+assumed that the constructions in it would generalise to the cases
+N >1 and p = 2. In fact, it seems to us that the following are the
+main reasons that N = 1 and p> 2 are assumed in [9]. Firstly,
+the theory of pseudorepresentations does not work quite so well
+in the case p = 2. Secondly, there are some issues to be resolved
+when writing down the local conditions at primes dividing N on
+the deformation theory side (we remark that Kisin tells us that
+both of these issues can be resolved without too much trouble).
+And thirdly one sometimes has to deal with eigenspaces for the
+action of ( Z/4Z)× on a 2-adic Banach module when p = 2 on the
+Hecke algebra side, causing problems when looking for orthonor-
+mal bases. The ﬁrst two issues will not concern us in this paper,
+as we do not talk about the construction of C, and the results in
+sections 2 and 3 of this paper are enough to deal with the third
+issue. In fact Chenevier has pointed out to us that one can also
+avoid the troubles caused by the third issue when constructing
+eigencurves for p = 2 by appealing to the corollary of lemma 1
+in [15]. We do not construct a generalisation of C here, but we
+do show how to construct an eigencurve D for a general prime p
+and level N prime to p.
+44
+===== PDF PAGE 45 =====
+We ﬁrst establish some generalities and notation. All our
+rigid spaces will be over K = Qp in this section. Recall that W
+is the rigid space over Qp representing maps Z×
+p → Gm. Deﬁne
+q = p if p > 2, and q = 4 if p = 2. Deﬁne D = ( Z/qZ)×,
+regarded as a quotient of Z×
+p in the natural way. Deﬁne ˆD to be
+the set of group homomorphisms D → C×
+p . Set γ = 1 + q ∈ Z×
+p .
+The natural surjection Z×
+p → D has kernel 1 + qZp, which is
+topologically isomorphic to Zp, and is topologically generated
+by γ. The map Z×
+p → D induces an isomorphism between D
+and the roots of unity in Z×
+p , and hence the surjection splits and
+we have an isomorphism Z×
+p ∼= D × Zp; we shall thus identify
+Z×
+p with D × Zp. If χ ∈ ˆD then the composite of χ with the
+natural projection Z×
+p → D is an element of W, and one easily
+checks that distinct elements of ˆD are in diﬀerent components
+of W. Hence this construction establishes a bijection between
+the components of W and the group ˆD. Let Wχ denote the
+component of W corresponding to the character χ ∈ ˆD. Let 1
+denote the trivial character of D (sending everything to 1) and
+let B denote the component W1 of W. Note that if χ ∈ ˆD then
+multiplication by χ gives an isomorphism W1 → W χ.
+Forn ≥ 1 let Xn denote the aﬃnoid subdomain of W cor-
+responding to group homomorphisms ψ : Z×
+p → C×
+p such that
+|ψ(1 + q)pn−1
+− 1| ≤ |q|. It is easily checked that for any χ ∈ ˆD,
+Xn ∩ W χ is an aﬃnoid disc, that X1 ⊆ X2 ⊆ ... , and that
+the Xi give an admissible cover of W. The inclusion Xi ⊂ W
+induces a bijection of the connected components of Xi with
+the connected components of W; if χ ∈ ˆD then write Xi,χ for
+the closed disc Xi ∩ W χ. We remark here that if k ∈ Z and
+χ : ( Z/qpn−1Z)× → C×
+p then χ(1 + q)pn−1
+= 1 and hence the
+map ψ ∈ W deﬁned by ψ(x) = xkχ(x) is in Xn(Cp).
+Deﬁne Ri = O(Xi). Then Ri is an aﬃnoid for each i, and
+Ri = ⊕χRi,χ, where χ runs through ˆD and Ri,χ = O(Xi,χ).
+In preparation for the application of our eigenvariety ma-
+chine, we have to choose a family of radii of overconvergence.
+45
+===== PDF PAGE 46 =====
+Fortunately Coleman and Mazur have done enough for us here,
+even if p = 2. We give a brief description of the modular curves
+and aﬃnoids that we shall use. Let Af denote the ﬁnite adeles.
+For a compact open subgroup Γ ⊂ GL2(Af ) that contains the
+principal congruence subgroup Γ N for some N prime to p, we de-
+ﬁne the compact modular curve X(Γ) over Qp in the usual way.
+Let us ﬁrstly assume that Γ is suﬃciently small to ensure that
+the associated moduli problem on generalised elliptic curves has
+no non-trivial automorphisms (we will remove this assumption
+below). Now recall from section 3 of [4], for example, that for
+an elliptic curve E over a ﬁnite extension of Qp, there is a mea-
+sure v(E) of its supersingularity, and that v(E)<p 2−m/(p + 1)
+implies that E possesses a canonical subgroup of order pm. So
+for r ∈ Q with 0 ≤r <p/(p + 1) we deﬁne X(Γ)≥p−r to be the
+aﬃnoid subdomain of the rigid space over Qp associated to X(Γ)
+whose non-cuspidal points parametrise elliptic curves E with a
+level Γ structure and such that v(E) ≤r. For example if r = 0
+then X(Γ)≥p−r is the ordinary locus of X(Γ).
+Form ≥ 1 there is a ﬁne moduli space X(Γ, Γ1(pm)) (resp.
+X(Γ, Γ0(pm))) over Qp whose non-cuspidal points parametrise
+elliptic curves equipped with a level Γ structure and a point
+(resp. cyclic subgroup) of order pm over Qp-schemes. There are
+natural forgetful functors
+X(Γ, Γ1(pm)) →X(Γ, Γ0(pm)) →X(Γ).
+If 0 ≤ r < p2−m/(p + 1) and E is an elliptic curve over a ﬁ-
+nite extension of Qp with v(E) ≤ r then, as mentioned above,
+E has a canonical subgroup of order pm. For r in this range
+we deﬁne X(Γ, Γ0(pm))≥p−r to be the components of the pre-
+image of X(Γ)≥p−r in X(Γ, Γ0(pm)) whose non-cuspidal points
+parametrise elliptic curves with the property that their given
+cyclic subgroup of order pm equals their canonical subgroup, and
+we deﬁne the rigid space X(Γ, Γ1(pm))≥p−r to be the pre-image
+of X(Γ, Γ0(pm))≥p−r in X(Γ, Γ1(pm)).
+All these spaces are aﬃnoids; this follows from the fact that
+46
+===== PDF PAGE 47 =====
+X(Γ)≥p−r is an aﬃnoid, being the complement of a non-zero
+ﬁnite number of open discs in a complete curve. There is a
+natural action of the ﬁnite group ( Z/pmZ)× on X(Γ, Γ1(pm))
+and on X(Γ, Γ1(pm))≥p−r via the (weight 0) Diamond operators.
+Finally if Γ is a compact open subgroup of GL 2(Af ) con-
+taining Γ N for some N prime to p, but which is not “suﬃ-
+ciently small”, then choose some prime l ∤ 2Np and deﬁne Γ ′ :=
+Γ ∩ Γl; then Γ ′ is a normal subgroup of Γ and Γ ′ is suﬃciently
+small. Hence one may apply all the constructions above to
+Γ′ and then deﬁne X(Γ)≥p−r, X(Γ, Γ1(pm))≥p−r and so on by
+taking Γ /Γ′-invariants. The resulting objects are only coarse
+moduli spaces but this will not trouble us. A standard argu-
+ment shows that this construction is independent of l. We de-
+ﬁne X1(pm)≥p−r := X(GL2(ˆZ), Γ1(pm))≥p−r and X0(pm)≥p−r :=
+X(GL2(ˆZ), Γ0(pm))≥p−r. Similarly if N ≥ 1 is prime to p then
+we deﬁne X0(Np m)≥p−r :=X(Γ0(N ), Γ0(pm))≥p−r, where Γ 0(N )
+is as usual the matrices in GL 2(ˆZ) which are upper triangular
+modN . Note that X1(q)≥1 is the curve that Coleman and Mazur
+refer to as Z1(q), and that the quotient of X1(pm)≥p−r by the ac-
+tion of ( Z/pmZ)× is X0(pm)≥p−r. Note also that X0(pm)≥p−r is
+“independent of m”, in the sense that the natural (forgetful)
+map X0(pm)≥p−r →X0(p)≥p−r is an isomorphism (as both rigid
+spaces represent the same functor).
+We now come to the deﬁnition of the radii of overconvergence
+ri. Note that these numbers depend only on p and not on any
+level structure. We let Ep denote the function on X1(q)≥1 × B
+deﬁned in Proposition 2.2.7 of [9] (brieﬂy, Ep is the function
+which, when restricted to a classical even weight k ≥ 4 in B,
+corresponds to the function Ek(q)/Ek(qp), where Ek(q) is the p-
+deprived ordinary old Eisenstein series of weight k and level p).
+In Proposition 2.2.7 of [9] it is proved that Ep is overconvergent
+over B. The specialisations to a classical weight of Ep are ﬁxed
+by the weight 0 Diamond operators, and hence Ep descends to
+an overconvergent function on X0(q)≥1 × B =X0(p)≥1 × B. Fur-
+thermore, the assertions about the q-expansion coeﬃcients of Ep
+47
+===== PDF PAGE 48 =====
+made in Proposition 2.2.7 of [9], and the q-expansion principle,
+are enough to ensure that Ep has no zeroes on X0(p)≥1 × W1.
+Hence the inverse of Ep is a function on X0(p)≥1 × B and it is
+elementary to check that it is also overconvergent over B. In par-
+ticular, for any i ≥ 1 there exists a rational 0 < ri < 1/(p + 1)
+such that the restrictions of both Ep and E−1
+p toX0(p)≥1 ×Xi,1
+extend to functions on X0(p)≥p−ri ×Xi,1. We choose a sequence
+of rationals r1 ≥ r2 ≥ r3 ≥ ... ≥ 0 such that each ri has the
+aforementioned property. We may furthermore assume (for tech-
+nical convenience) that ri <p 2−i/q(p + 1) (although this may be
+implied by the other assumptions).
+Remark. It is not important for us to establish concrete values for
+the ri, so we do not. However for other applications where one
+wants to have explicit knowledge about how far one can extend
+overconvergent modular forms, it may in future be important to
+understand exactly how the ri behave. For example, machine
+computations for p ∈ { 3, 5, 7, 13} and i = 1 show that it is
+not the case that r1 can be taken to be an arbitrary rational
+number less than 1 /(p+1), because there are classical Eisenstein
+eigenforms of level p which have zeroes in ∪r<1/(p+1)X1(p)≥p−r.
+Can one take r1 to be any positive rational less than ( p−1)/p(p+
+1)? There are other interesting questions here, which we shall
+not attempt to answer here. 4
+We are now ready to begin our deﬁnitions of the Banach
+modules of overconvergent forms. These modules depend on an
+auxiliary level structure, which we now choose. Fix a compact
+open subgroup Γ ⊆ GL2(Af ) that contains the principal congru-
+ence subgroup Γ N for some N prime to p. For each n ≥ 1 we wish
+now to deﬁne a Banach module Mn =MΓ,n overRn := O(Xn).
+Recall that Rn = ⊕χ∈ bDRn,χ. If χ ∈ ˆD then we deﬁne the Banach
+module Bn,χ to be
+Bn,χ :=Rn,χ ˆ⊗QpO(X(Γ, Γ1(q))≥p−rn )
+4See however [7] for explicit calculations in the case p = 2, and note that
+these calculations may well generalise to odd primes p.
+48
+===== PDF PAGE 49 =====
+where rn is the radius of convergence deﬁned previously. Note
+thatBn,χ is naturally a potentially ONable Banach Rn,χ-module,
+because the ring O(X(Γ, Γ1(q))) can be viewed as a Banach space
+over a discretely-valued ﬁeld and is hence potentially ONable by
+Proposition 1 of [15] and the remarks before it.
+We give the module Bn,χ an Rn,χ-linear action of the group
+(Z/qZ)× by letting it act trivially on Rn,χ and via the (weight 0)
+Diamond operators on O(X(Γ, Γ1(q))). We deﬁne Mn,χ to be the
+direct summand of Bn,χ where ( Z/qZ)× acts via χ. Note that
+by deﬁnition Mn,χ satisﬁes property ( Pr ) (one can check that it
+is even potentially ONable, but we shall not need this because
+of our extension of Coleman’s theory). We remark in passing
+that if Γ = GL 2(ˆZ) then Mn,χ = 0 if χ(−1) ̸= 1. Finally we
+deﬁne Mn =MΓ,n to be the module over Rn = ⊕χ∈ bDRn,χ whose
+Rn,χ-part is Mn,χ. We give Mn an Rn-linear action of ( Z/qZ)×
+by letting it act via χ onMn,χ. We will shortly see that the ﬁbre
+of Mn at a point κ ∈ Xn can be naturally identiﬁed with the
+rn-overconvergent forms of weight κ (although there are caveats
+regarding compatibility of this map with Diamond operators; see
+below).
+The modules Mn we have described have the following functo-
+rial property: if Γ 1 and Γ 2 both satisfy the conditions imposed on
+Γ above (that is, they are of level prime to p), if γ ∈ GL2(Af ) has
+determinant which is a unit at p, and if γΓ1γ−1 ⊆ Γ2, then there
+is a natural induced ﬁnite ﬂat map X(Γ1) →X(Γ2) and the as-
+sumption on the determinant of γ means that if 0 ≤r ≤r1 then
+X(Γ1, Γ1(q))≥p−r is the pre-image of X(Γ2, Γ1(q))≥p−r. Hence
+there is a natural inclusion MΓ2,n → MΓ1,n. If furthermore
+γΓ1γ−1 = Γ 2 then this inclusion has an inverse and is hence
+an isomorphism. One can check using these ideas that if Γ 1
+is a normal subgroup of Γ 2 then MΓ2,n is the Γ 2/Γ1-invariants
+of MΓ1,n. Note also that for n ≥ 1 there is a natural map
+Mn → Mn+1 ˆ⊗Rn+1Rn, induced by restriction, which we shall
+later see is a link, in the sense of Part I.
+We now make explicit the relation between these spaces and
+49
+===== PDF PAGE 50 =====
+Katz’ spaces of overconvergent modular forms. Firstly we recall
+the deﬁnitions (in the form due to Coleman). If Γ ⊂ GL2(Af ) is
+a suﬃciently small compact open subgroup then there is a sheaf
+commonly denoted ω on X(Γ) which, on non-cuspidal points,
+is the pushforward of the diﬀerentials on the universal elliptic
+curve. A weight k modular form of level Γ, deﬁned over Qp,
+is a global section of ω⊗k. If L is a ﬁeld extension of Qp then
+a weight k modular form of level Γ deﬁned over L is a global
+section of ω⊗k on the base change of X(Γ) to L. If Γ contains
+ΓN for some positive integer N prime to p and 0 ≤r <p/(p + 1)
+then a p−r-overconvergent modular form of level Γ and weight k
+deﬁned over Qp is a section of (the analytic sheaf associated to)
+ω⊗k on the rigid space X(Γ)≥p−r, and similarly for L a complete
+extension of Qp. If Γ is not suﬃciently small then one can still
+make sense of these deﬁnitions by replacing Γ by a suﬃciently
+small normal subgroup Γ ′ and then taking Γ /Γ′-invariants, as
+Γ/Γ′ will act on everything. Finally, if 0 ≤r <p2−n/(p + 1) then
+one can deﬁne p−r-overconvergent modular forms of weight k and
+level Γ ∩ Γ1(pn) as sections of ω⊗k on X(Γ, Γ1(pn))≥p−r (again
+using the standard tricks if Γ is not suﬃciently small). There is
+a natural action of ( Z/pnZ)× on these spaces via the (weight k)
+Diamond operators.
+Fix n ≥ 1 and let L be the ﬁeld Qp(ζpn−1) generated by a
+primitivepn−1th root of unity ζpn−1. Fix k ∈ Z, and a character
+ε : ( Z/qpn−1Z)× →L×. Deﬁne ψ : Z×
+p →L× byψ(x) = xkε(x).
+Then ψ is an L-valued point of weight space and in fact ψ ∈
+Xn(L). Choose χ ∈ ˆD such that ψ ∈ W χ. Deﬁne κ =ψ/χ ∈ W 1
+and let Eκ = 1 + · · · be the associated Eisenstein series (see p39
+of [9] and note that κ ∈ W 1 = B so there are no problems with
+zeros of p-adic L-functions).
+Proposition 6.1. The q-expansion Eκ is the q-expansion of a
+p−rn-overconvergent weight k modular form of level Γ1(qpn−1)
+deﬁned over L, which is non-vanishing on X1(qpn−1)≥p−rn . Fur-
+thermoreEκ is in the ε/χ-eigenspace for the Diamond operators.
+50
+===== PDF PAGE 51 =====
+Proof. The fact that the q-expansion Eκ is the q-expansion of
+a section of ω⊗k on X1(qpn−1)≥p−r for some r > 0 is Corol-
+lary 2.2.6 of [9]. Now the fact that Eκ is an eigenvector for
+Up, which increases overconvergence, implies that Eκ extends to
+a section of ω⊗k on of X1(qpn−1)≥p−r for any rational r with
+0 ≤ r < p3−n/q(p + 1). For r in this range, there is a map
+Frob : X1(qpn−1)≥p−r/p →X1(qpn−1)≥p−r which is ﬁnite and ﬂat
+of degree p and which induces, by pullback, the map F (q) ↦→
+F (qp) on modular forms (on non-cuspidal points the map sends
+(E,P ) to ( E/C,Q) where C is the canonical subgroup of or-
+der p of E and Q is the image in E/C of any generator Q of
+the canonical subgroup of order qpn of E such that pQ = P ).
+By the q-expansion principle, Eκ has no zeroes on the ordinary
+locus X1(qpn−1)≥1. Let S denote the set of zeroes of Eκ on the
+non-ordinary locus of X1(qpn−1)≥p−rn . It suﬃces to show that
+S is empty. We know that S is ﬁnite, because X1(qpn−1)≥p−rn
+is a connected aﬃnoid curve and Eκ ̸= 0 (as its q-expansion is
+non-zero). We also know that Eκ(q)/Eκ(qp) has no zeroes on
+X1(qpn−1)≥p−rn , by deﬁnition of rn, and that rn <p 2−n/q(p + 1).
+Hence any zero of Eκ is also a zero of Eκ(qp) = Frob ∗Eκ. But if
+S is non-empty then let P denote a point of S which is “near-
+est to the ordinary locus” (that is, such that v′(P ) is minimal,
+wherev′ is the composite of the natural projection X1(qpn−1) →
+X0(p) and the function denoted v′ in section 4 of [4]). Then
+P is also a zero of Eκ(qp) and hence if P = Frob(Q) for some
+point Q ∈ X1(qpn−1)≥p−rn/p then Q is also a zero of Eκ(q), and
+furthermore Q is closer to the ordinary locus than P (in fact
+v′(Q) = 1
+pv′(P )< v′(P ) by Theorem 3.3(ii) of [4]), a contradic-
+tion.
+The assertion about the Diamond operators is classical if k ≥
+2 (see for example Proposition 7.1.1 of [13]). For general k it can
+be deduced as follows: by Theorem B4.1 of [10] applied with i =
+0, the function on X1(q)≥1×B×B denotedEα(q)Eβ(q)/Eαβ(q) in
+Theorem 2.2.2 of [9], when restricted to X1(q)≥1 ×B ∗ ×B ∗ (in the
+notation of the proof of Theorem 2.2.2 of [9]) is invariant under
+51
+===== PDF PAGE 52 =====
+the natural action of ( Z/qZ)× (acting trivially on B× and via
+Diamond operators on X1(q)). But this action is continuous, so
+(Z/qZ)× acts trivially on Eα(q)Eβ(q)/Eαβ(q). In particular, the
+functionEα(q)Eβ(q)/Eαβ(q) descends to a function on X0(q)≥1×
+B×B =X0(qpn−1)≥1×B×B . The result for general k now follows
+from the result for k ≥ 2.
+Corollary 6.2. Let k,ε,ψ,χ,κ be as above, and let ψ : Rn →
+L also denote the homomorphism corresponding to the L-point
+of Xn induced by ψ. Then multiplication by Eκ induces an
+isomorphism between MΓ,n ⊗Rn L (the tensor product formed
+via the homomorphism ψ : Rn → L) and the space of p−rn-
+overconvergent modular forms of level Γ, weight k and character
+ε deﬁned over L.
+Proof. Say ψ ∈ W χ. Then unravelling the deﬁnitions gives
+that MΓ,n ⊗Rn L = Mn,χ ⊗Rn,χ L is equal to the χ-eigenspace
+of O(X(Γ, Γ1(q))≥p−rn ) ⊗Qp L, and hence the χ-eigenspace of
+O(X(Γ, Γ1(qpn−1))≥p−rn ) ⊗Qp L, where χ here is regarded as a
+character of ( Z/qpn−1Z)× (note that the forgetful functor
+X(Γ, Γ1(qpn−1))≥p−rn →X(Γ, Γ1(q))≥p−rn
+is the map induced by quotienting X(Γ, Γ1(qpn−1))≥p−rn out by
+the group (1 + qZp/1 + qpn−1Zp)). The result now follows from
+the fact that Eκ has weight k, character ε/χ and is non-vanishing
+on X(Γ, Γ1(qpn−1))≥p−rn .
+Motivated by this Corollary, we deﬁne the q-expansion of an
+element of Mn to be the following element of Rn[[q]], as follows:
+it suﬃces to attach a q-expansion in Rn,χ[[q]] to an element of
+Mn,χ, and hence it suﬃces to attach a q-expansion in Rn,χ[[q]]
+to an element of Bn,χ. Now an element of O(X(Γ, Γ1(q))≥p−rn )
+has a q-expansion in Qp[[q]] in the usual way, and hence an el-
+ement of Bn,χ has a q-expansion in Rn,χ[[q]]. This is not the
+q-expansion that we are interested in however—this q-expansion
+corresponds to a family of weight 0 overconvergent forms. we
+52
+===== PDF PAGE 53 =====
+twist this q-expansion by multiplying it by E, the q-expansion
+of the restricted Eisenstein family deﬁned in Section 2.2 of [9].
+Note that the restricted Eisenstein family is a family over B and
+so we have to explain how to regard it as a family over Xn,χ;
+we do this by pulling back via the composite of the natural in-
+clusion Xn,χ → W χ and the natural isomorphism Wχ → W 1.
+The resulting power series is deﬁned to be the q-expansion of m,
+and with this normalisation, the isomorphism of the previous
+corollary preserves q-expansions.
+As we shall see in the next section, we will be deﬁning Hecke
+operators on MΓ,n (at least for certain choices of Γ) so that they
+agree with the standard Hecke operators on overconvergent mod-
+ular forms, via the isomorphism of the previous Corollary. We
+ﬁnish this section by remarking that the isomorphism of the
+previous corollary is however not compatible with Diamond op-
+erators in general, for two reasons—ﬁrstly, overconvergent forms
+of classical weight-character ψ naturally have an action of the
+group ( Z/qpn−1Z)×, but the full space Mn only has an action of
+(Z/qZ)×, and secondly even the actions of ( Z/qZ)× do not in
+general coincide, as one is deﬁned in weight 0 and the other in
+weightk so the two actions diﬀer (at least for p> 2) by the kth
+power of the Teichm¨ uller character.
+7 Hecke operators and classical eigen-
+curves
+We now restrict to the case where Γ is either the congruence
+subgroup Γ 0(N ) (the subgroup of GL 2(ˆZ) consisting of matri-
+ces which are upper triangular mod N ) or Γ 1(N ) (the subgroup
+of Γ 0(N ) consisting of matrices of the form
+( ∗ ∗
+0 1
+)
+mod N ) of
+GL2(Af ), for some N prime to p. The associated moduli prob-
+lems are then just the usual problems of representing cyclic sub-
+groups or points of order N . We now deﬁne Hecke operators
+Tm for m prime to p, and a compact operator Up, on the spaces
+53
+===== PDF PAGE 54 =====
+MΓ,n for n ≥ 1. Almost all of the work has been done for us, in
+section B5 of [10] (where Hecke operators are deﬁned on over-
+convergent forms over B∗) and in section 3.4 of [9] (where this
+work is extended to B). Note that the arguments in these ref-
+erences do not assume p > 2 or N = 1. We do not reproduce
+the arguments here, we just mention that the key point is that
+because the argument is not a geometric one, the construction
+ofTm is done at the level of q-expansions and the resulting deﬁ-
+nitions initially go from forms of level N to forms of level Nm .
+However one can prove that the resulting maps do in fact send
+forms of level N to forms of level N by noting that the result is
+true for forms of classical weight, where the Hecke operator can
+be deﬁned via a correspondence, and deducing the general case
+by considering a trace map and noting that a family of forms
+that vanishes at inﬁnitely many places must be zero.
+The one lacuna in the arguments in the references above is
+that in both cases the operators are deﬁned as endomorphisms
+of overconvergent forms, rather than r-overconvergent forms for
+some ﬁxed r. What we need to do is to prove that the Hecke
+operators deﬁned by Coleman and Mazur send r-overconvergent
+forms to r-overconvergent forms, for some appropriate choice
+of r. Let E denote the restricted Eisenstein family (that is, the
+usual family of Eisenstein series over B), and for ℓ ̸= p a prime
+number, let Eℓ(q) denote the ratio E(q)/E(qℓ) as in Proposi-
+tion 2.2.7 of [9], thought of as an overconvergent function on
+X0(ℓp)≥1 × B (note that Coleman and Mazur only assert that
+this function lives on X1(q,ℓ )≥1 × B but it is easily checked to
+be invariant under the Diamond operators at p).
+Lemma 7.1. The restriction of Eℓ(q) toX0(ℓp)≥1×Xn,1 extends
+to a non-vanishing function on X0(ℓp)≥p−rn ×Xn,1.
+Proof. For simplicity in this proof, we say that a function on
+X0(p)≥1 ×Xn,1 is r-overconvergent if it extends to a function
+on X0(p)≥p−r ×Xn,1, and similarly we say that such a function
+is r-overconvergent and non-vanishing if it extends to a non-
+54
+===== PDF PAGE 55 =====
+vanishing function on X0(p)≥p−r ×Xn,1.
+We ﬁrst prove that Eℓ(q) is rn-overconvergent. Observe that
+Proposition 2.2.7 of [9] tells us that Eℓ(q) is r-overconvergent
+for some r >0. Let us assume r < rn and explain how to ana-
+lytically continue Eℓ(q) a little further. By deﬁnition of rn, we
+know that Ep(q) is rn-overconvergent and non-vanishing. Fur-
+thermore the non-trivial degeneracy map X0(ℓp) →X0(p) which
+onq-expansions sends F (q) to F (qℓ) induces a morphism of rigid
+spaces X0(ℓp)≥p−rn → X0(p)≥p−rn and hence Ep(qℓ) is also an
+rn-overconvergent non-vanishing function. We deduce that the
+ratio Ep(qℓ)/Ep(q) is also an rn-overconvergent non-vanishing
+function. But
+Ep(qℓ)/Ep(q) = Eℓ(qp)/Eℓ(q)
+and Eℓ(q) is r-overconvergent, and hence we see that Eℓ(qp) is
+also r-overconvergent. Let r′ = min {pr,r n}. We claim that
+Eℓ(q) is r′-overconvergent and this clearly is enough because re-
+peated applications of this idea will analytically continue Eℓ(q)
+until it is rn-overconvergent, which is what we want. But it is
+a standard fact that the U operator increases overconvergence
+by a factor of p, and hence if Eℓ(qp) is r-overconvergent, then
+Eℓ(q) = U (Eℓ(qp)) is r′-overconvergent.
+Finally we show that Eℓ(q) is non-vanishing on X0(ℓp)≥p−rn ×
+Xn,1 and this follows from an argument similar to the non-
+vanishing statement proved in Proposition 6.1—if Eℓ(q) had a
+zero then choose a zero ( x,κ ) and then specialise to weight κ;
+we may assume that x is a zero closest to the ordinary locus in
+weightκ, and then Eℓ(qp) has a zero closer to the ordinary locus
+in weight κ and hence Eℓ(q)/Eℓ(qp) would have a pole in weight
+κ, contradicting the fact that Eℓ(q)/Eℓ(qp) = Ep(q)/Ep(qℓ) is
+rn-overconvergent.
+We now have essentially everything we need to apply our
+eigenvariety machine. The preceding lemma and the arguments
+in section 3.4 of [9] can be used to deﬁne Hecke operators Tm
+55
+===== PDF PAGE 56 =====
+(m prime to p) and Up on rn-overconvergent forms over Xn. If
+X is any admissible aﬃnoid open subdomain of W then there
+exists some n ≥ 1 such that X ⊆ Xn; we choose the smallest
+suchn and deﬁne the Banach module MX to be the pullback to
+O(X) of the O(Xn)-module Mn. We let T denote the abstract
+polynomial algebra over R generated by the Hecke operators Tm
+form prime to p, the operator φ =Up, and the Diamond opera-
+tors at N if Γ = Γ 1(N ). These Hecke operators are well-known
+to commute, as can be seen by checking on classical points. We
+need to check that the natural restriction maps α between spaces
+of overconvergent forms of diﬀerent radii are all links, but this
+follows easily from the technique used in the standard proof that
+the characteristic power series of Up on r-overconvergent forms
+is independent of the choices of r > 0. The key point is that
+the endomorphism Up of r-overconvergent forms can be checked
+to factor as a continuous map from r-overconvergent forms to s-
+overconvergent forms, for some s>r , followed by the (compact)
+restriction map from s-overconvergent forms to r-overconvergent
+forms. In fact one can take s to be anything less than both pr and
+p/(p + 1). One deduces that for any 0 <r <r ′ <p/ (p + 1), the
+natural map from r′-overconvergent forms to r-overconvergent
+forms is a “link”. Our conclusion is that the construction of the
+“D” eigencurve in [9] can be generalised to all p and N ≥ 1
+prime to p.
+PART III: Eigenvarieties for Hilbert
+modular forms.
+8 Thickenings of K-points and weight
+spaces
+Let K be a non-archimedean local ﬁeld (that is, a ﬁeld either
+isomorphic to a ﬁnite extension of Qp or to the ﬁeld of fractions
+of k[[T ]] with k ﬁnite). Let O denote the integers of K, and let
+V denote the closed aﬃnoid unit disc over K. As an example
+56
+===== PDF PAGE 57 =====
+of a construction which will be used many times in the sequel,
+we ﬁrstly show that is not diﬃcult to construct a sequence U1 ⊃
+U2 ⊃ ... of aﬃnoid subdomains of V , deﬁned over K, with the
+property that ⋂
+t≥1
+(
+Ut(L)
+)
+=V (K) = O (∗)
+for all complete extensions L of K. Note that ( ∗) implies that
+Ut(K) = V (K) for all t (setL =K), but also that no non-empty
+K-aﬃnoid subdomain of V can be contained in all of the Ut. The
+Ut should be thought of as a system of aﬃnoid neighbourhoods
+of V (K) = O in V . The construction of the Ut is simple: Let
+π ∈K be a uniformiser and deﬁne Ut = ⋃
+α∈XtB(α, |π|t), where
+Xt is a set of representatives in O for O/(π)t, and B(α, |π|t) is
+the closed aﬃnoid disc with centre α and radius |π|t. Note that
+Xt is ﬁnite because K is a local ﬁeld, and hence Ut is an aﬃnoid
+subdomain of V : it is a ﬁnite union of aﬃnoid subdiscs of V of
+radius |π|t. It is easy to check moreover that the Ut satisfy ( ∗)
+(use the fact that O is compact to get the harder inclusion).
+We in fact need a “twisted” n-dimensional version of this
+construction, which is more technical to state but which requires
+essentially no new ideas. Before we explain this generalisation,
+we make an observation about the possible radii of discs deﬁned
+over non-archimedean ﬁelds. Let K be an arbitrary ﬁeld com-
+plete with respect to a non-trivial non-archimedean norm. If L is
+a ﬁnite extension of K then there is a unique way to extend the
+norm on K to a norm on L, and hence there is a unique way to
+extend the norm on K to a norm on an algebraic closure K ofK.
+Let
+⏐⏐⏐K
+×⏐⏐⏐ denote the set
+{
+|x| :x ∈K
+×}
+. It is easily checked that
+this set is just {|y|1/d :y ∈K ×,d ∈ Z≥1}. Note that for r ∈
+⏐⏐⏐K
+×⏐⏐⏐
+the closed disc B(0,r ) with centre zero and radius r is a rigid
+space deﬁned over K: if r ≤ 1 then r = |y|1/d for some y ∈K ×
+and d ∈ Z≥1, and one can construct B(0,r ) as the space associ-
+ated to the aﬃnoid algebra K⟨T,S ⟩/(T d −yS); the general case
+can be reduced to this by scaling. By using products of these
+57
+===== PDF PAGE 58 =====
+discs, one sees that one can construct polydiscs with “fractional”
+radii over K.
+Let M/M0 be a ﬁxed ﬁnite extension of non-archimedean
+local ﬁelds, and assume that the restriction of the norm on M is
+the norm on M0. Let K denote any complete extension of M0,
+again with the norm on K assumed to extend the norm on M0.
+Assume moreover that K has the property that the image of
+any M0-algebra homomorphism M → K (an algebraic closure
+of K) lands in K. The Ut above will correspond to the case
+M0 =M =K of the construction below. Later on M0 will be Qp
+but we do not need to assume that we are in mixed characteristic
+yet.
+LetI denote the set of M0-algebra homomorphisms M →K.
+We will use |.| to denote the norms on both M and K, and
+there is of course no ambiguity here because any M0-algebra
+map i : M → K will be norm-preserving. Let O now denote
+the integers of M (in particular O is no longer the integers
+of K), and let π be a uniformiser of M . Let V be the unit
+polydisc over K of dimension |I|, the number of elements of I,
+and think of the coordinates of V as being indexed by elements
+of I. Let NK denote the set {|x| :x ∈K
+×
+, |x| ≤ 1} and let N ×
+K
+denote NK\{1} = {|x| :x ∈K
+×
+, |x|< 1}.
+Ifα = (α1,α 2,..., ) ∈K I andr ∈ N K then we deﬁne B(α,r )
+to be the K-polydisc whose L-points, for L any complete exten-
+sion of K, are
+B(α,r )(L) = {(x1,x 2,... ) ∈LI : |xi −αi| ≤ r for all i}.
+For example we have V =B(0, 1). Note that B(α,r ) is deﬁned
+overK by the comments above.
+There is a natural map M → K I which on the ith com-
+ponent sends m to i(m), and we frequently write mi for i(m).
+Furthermore, we implicitly identify m ∈M with its natural im-
+age (mi)i∈I inK I. In particular, if α ∈ O thenα can be thought
+of as a K-point of V .
+58
+===== PDF PAGE 59 =====
+Deﬁnition. If r ∈ N K then deﬁne Br := ⋃
+α∈OB(α,r ), and if
+furthermorer ∈ N ×
+K then deﬁne B×
+r := ⋃
+α∈O×B(α,r ).
+We see that Br and B×
+r are ﬁnite unions of polydiscs, because
+B(α,r ) = B(β,r ) if |α −β| ≤ r, and O is compact. In particular
+Br and B×
+r areK-aﬃnoid subdomains of V . The space Br should
+be thought of as a thickening of O inV ; similarly B×
+r should be
+thought of as a thickening of O×. One can check that for all
+complete extensions L of K, we have
+⋂
+r∈NK
+Br(L) = O
+and ⋂
+r∈N ×
+K
+B×
+r (L) = O×.
+The proof follows without too much diﬃculty from the fact that
+O and O× are compact subsets of the metric space K I. One
+can also check that for any r ∈ N K, the space Br is an aﬃnoid
+subgroup of ( A1)I, the product of I copies of the additive group,
+and that if r ∈ N ×
+K then B×
+r is an aﬃnoid subgroup of GI
+m, the
+product of I copies of the multiplicative group. An example of
+the idea continually used in the argument is that if ( yi) ∈ B×
+r (L)
+for L some complete extension of K, then ( yi) is close to some
+elementα of O×, and hence ( y−1
+i ) is close to α−1. See the lemma
+below for other examples of this type of argument.
+We record some elementary properties of Br and B×
+r that
+we shall use later. Let γ =
+( a b
+c d
+)
+be an element of M 2(O) with
+|c|< 1, |d| = 1 and det( γ) ̸= 0. Deﬁne m ∈ N K by | det(γ)| =m.
+Choose r ∈ N K, and t ∈ Z>0 such that |c| ≤ |πt|.
+Lemma 8.1. (a) There is a map of rigid spaces Br → B×
+r|πt|
+which on points sends (zi) to (cizi +di) (where here as usual ci
+denotes the image of c ∈M in K via the map i and so on).
+(b) There is a map of rigid spaces Br → Brm which on points
+sends (zi) to
+(
+aizi+bi
+cizi+di
+)
+.
+59
+===== PDF PAGE 60 =====
+Proof. (a) Clearly there is a map V →V sending ( zi) to ( cizi +
+di); we must check that the image of Br is contained within
+B×
+r|πt|. Because all the rigid spaces in question are ﬁnite unions
+of aﬃnoid polydiscs, it suﬃces to check this on L-points, for L
+any complete extension of K. So let ( zi) be an L-point of Br.
+Then there exists α ∈ O such that |zi −αi| ≤ r ≤ 1 for all i ∈
+I. In particular |zi| ≤ 1 so |cizi +di| = 1, and so cizi +di is
+invertible. Note now that β := cα +d ∈ O × and for i ∈ I we
+have |(cizi +di) −βi| = |ci(zi −αi)| ≤ |c|r ≤ |πt|r, which is what
+we wanted.
+(b) A similar argument works, the key point being that if
+(zi) ∈ Br(L) and α ∈ O is chosen such that |zi −αi| ≤ r for
+all i, then deﬁning β = aα+b
+cα+d ∈ O , we see that
+⏐⏐⏐ aizi+bi
+cizi+di
+−βi
+⏐⏐⏐ =
+| det(γ)i(zi −αi)| ≤ | det(γ)|r =mr (as |cizi +di| = 1 = |cα +d|
+as in (a)) and this is enough.
+Now let M0, M , K be as before, and let p > 0 denote the
+residue characteristic of K. Let Γ be a proﬁnite abelian group
+containing an open subgroup topologically isomorphic to Zd
+p for
+some d. If U is a rigid space over K, let O(U ) denote the ring
+of rigid functions on U . Note that O is still the integer ring
+of M but this should not cause confusion. We say that a group
+homomorphism Γ → O (U ) (resp. Γ → O (U )×) is continuous if,
+for all aﬃnoid subdomains X ofU , the induced map Γ → O (X)
+(resp. Γ → O (X)×) is continuous. We recall some results on
+representability of certain group functors. By a K-group we
+mean a group object in the category of rigid spaces over K.
+Lemma 8.2. (a) The functor from K-rigid spaces to groups,
+sending a space X to the group O(X) under addition (resp.
+the group O(X)× under multiplication) is represented by the K-
+group A1 (resp. Gm), the analytiﬁcation of the aﬃne line (resp.
+the aﬃne line with zero removed).
+(b) If Γ is as above, then there is a separated K-group XΓ
+representing the functor which sends a K-rigid space U to the
+60
+===== PDF PAGE 61 =====
+group of continuous group homomorphisms Γ → O (U )×. More-
+over XΓ is isomorphic to the product of an open unit polydisc
+and a ﬁnite rigid space over K.
+(c) If L is a complete extension of K then the base change
+of XΓ toL represents the functor on L-rigid spaces sending U to
+the group of continuous group homomorphisms Γ → O (U )×.
+Proof. (a) If X is a rigid space and f ∈ O (X) then for all aﬃnoid
+subdomains U ⊆ X, f induces a unique map U → A1 because
+there exists 0 ̸= λ ∈ K such that λf is power-bounded on U ,
+and then there is a unique map K⟨T ⟩ → O (U ) sending T to
+λf by Proposition 1.4.3/1 of [1]; everything is compatible and
+glues, and the result for A1 follows easily. Moreover, if f is in
+O(X)× then for every aﬃnoid subdomain U of X, it is possible
+to ﬁnd an aﬃnoid annulus in Gm containingf (U ), as both f (U )
+and (1/f )(U ) lie in an aﬃnoid subdisc of A1. Hence f ∈ O (X)×
+gives a map X → Gm, and the result in the multiplicative case
+now follows without too much diﬃculty.
+(b) The existence of XΓ is Lemma 2(i) of [5]. We recall the
+idea of the proof: the structure theorem for topologically ﬁnitely-
+generated proﬁnite abelian groups shows that Γ is topologically
+isomorphic to a product of groups which are either ﬁnite and
+cyclic, or copies of Zp. Now by functorial properties of products
+in the rigid category, it suﬃces to show representability in the
+cases Γ = Zp and Γ a ﬁnite cyclic group. The case Γ = Zp is
+treated in Lemma 1 of [5] and the remarks after it, which show
+that the functor is represented by the open unit disc centre 1, and
+the case of Γ cyclic of order n is represented by the analytiﬁcation
+of µn overK. That χΓ has the stated structure is now clear.
+(c) By functoriality it is enough to verify these base change
+properties in the two cases Γ = Zp and Γ ﬁnite cyclic; but in
+both of these cases the result is clear.
+We now assume that M0 = Qp, and hence that M is a ﬁ-
+nite extension of Qp. We assume (merely for notational ease)
+that the norms on M0, M and K are all normalised such that
+61
+===== PDF PAGE 62 =====
+|p| = p−1. We remind the reader that if t is an element of an
+aﬃnoidK-algebra and |t|< 1 then the power series for log(1 + t)
+converges, and if |t|<p −1/(p−1) then the power series for exp( t)
+converges; furthermore log and exp give isomorphisms of rigid
+spaces from the open disc with centre 1 and radius p−1/(p−1) to
+the open disc with centre 0 and radius p−1/(p−1). We would like
+to use logs to analyse B×
+r and hence are particularly interested
+in the spaces B×
+r for r < p−1/(p−1); we call such r “suﬃciently
+small”. For these r, we see that the component of B×
+r contain-
+ing 1 is isomorphic, via the logarithm on each coordinate, to the
+component of Br containing 0.
+Recall that O is the integers of M , and hence Γ = O× satisﬁes
+the conditions just before Lemma 8.2. If n ∈ ZI then there is
+a group homomorphism O× → K × = Gm(K), which sends α
+to ∏
+iαni
+i . It is easily checked (via exp and log) that if r is
+suﬃciently small then this map is the K-points of a map of K-
+rigid spaces B×
+r → Gm. For more arithmetically complicated
+continuous maps from O× to invertible functions on aﬃnoids,
+we might have to make r smaller still before such an analytic
+extension exists, but the proposition below shows that we can
+always do this. An important special case of this proposition is
+the case of an arbitrary continuous homomorphism O× → K ×,
+but the proof is essentially no more diﬃcult if K × is replaced by
+the invertible functions on an arbitrary aﬃnoid, so we work in
+this generality.
+Proposition 8.3. If X is a K-aﬃnoid space and n : O× →
+O(X)× is a continuous group homomorphism, then there is at
+least one r ∈ N ×
+K and, for any such r, a unique map of K-rigid
+spacesβr : B×
+r ×X → Gm, such that for all α ∈ O ×, n(α) is
+the element of O(X)× corresponding (via Lemma 8.2(a)) to the
+mapX → Gm obtained by evaluating βr at the K-valued point α
+of B×
+r .
+Deﬁnition. We call βr a thickening of n.
+62
+===== PDF PAGE 63 =====
+Proof of Proposition. It suﬃces to prove that there exists at least
+one suﬃciently small r such that if B is the component of B×
+r
+containing the K-point 1, then there is a unique β :B×X → Gm
+with a property analogous to that of βr above for all α ∈ ∆ :=
+{α ∈ O × : |α − 1| ≤ r} (or even in some subgroup of ﬁnite in-
+dex). Via the logarithm map one sees that ∆ is isomorphic to O.
+It hence suﬃces to prove that for any continuous group homo-
+morphism χ : O → O (X)× there exists N ∈ Z≥0 such that the
+induced homomorphism pN O → O (X)× is induced by a unique
+map of K-rigid spaces B(0,p −N ) ×X → Gm. Here B(0,p −N )
+denotes the polydisc in V with radius p−N , and pN O is embed-
+ded as a subset of the K-points of B(0,p −N ) in the usual way.
+Now observe that if d = [ M : Qp] then as a topological group,
+O is isomorphic to Zd
+p. Hence, if one ﬁxes a K-Banach algebra
+norm on O(X) and a Zp-basis e1,e 2,...,e d of O, one sees using
+Lemma 1 of [5] that there exists a positive integer N such that
+|χ(pNej) − 1| < p−1/(p−1) for all j. Observe now that log( χ) is
+a continuous group homomorphism pN O → O (X), and O(X) is
+a K-vector space; furthermore, the image of pN O will land in
+a ﬁnite-dimensional K-subspace of O(X). It is a standard fact
+(linear independence of distinct ﬁeld embeddings) that the con-
+tinuous group homomorphisms O → K form a ﬁnite-dimensional
+K-vector space with basis the set I, now regarded as the ring
+homomorphisms O → K, and hence there exists f1,f 2,...,f d ∈
+O(X)× such that for all α ∈pN O we have χ(α) = exp ( ∑
+iαifi),
+where αi denotes i(α) ∈ K. By increasing N if necessary, we
+may assume that
+⏐⏐pNfi
+⏐⏐< p−1/(p−1) for all i, and we claim that
+this N will work. To construct β : B(0,p −N ) ×X → Gm it
+suﬃces, by Lemma 8.2(a), to construct a unit in the aﬃnoid
+O(X)⟨T1,T 2,...,T d⟩ = O
+(
+B(0,p −N ) ×X
+)
+which specialises to
+χ(α) via the map sending Ti to αi/pN , for all α ∈ pN O. The
+unit exp
+(∑
+ipNTifi
+)
+is easily seen to do the trick.
+For uniqueness it suﬃces (again via exp and log) to prove that
+a map of rigid spaces f : B1 → A1 which sends every element
+of O to 0 must be identically 0, that is, that O is Zariski-dense
+63
+===== PDF PAGE 64 =====
+in B1. It suﬃces to show that f vanishes on a small polydisc
+centre 0, and one can check this on points. Again choose a Zp-
+basis ( e1,e 2,...,e d) of O as a Zp-module. It suﬃces to prove
+that for all complete extensions L ofK,f is zero on all L-points
+of B1 of the form z1e1 + z2e2 + ... + zded with zi ∈ O L, as
+this contains all the L-points of a small polydisc in B1 by a
+determinant calculation. Note that if all the zβ are in Zp then
+certainlyf (z1e1 +z2e2 +... ) = 0. Now ﬁx zβ ∈ Zp forβ ≥ 2 and
+consider the function on the aﬃnoid unit disc over L sendingz1
+tof (z1e1 +z2e2 +... ). This is a function on a closed 1-ball that
+vanishes at inﬁnitely many points, and hence it is identically
+zero. Now ﬁx z1 ∈ O L and zβ ∈ Zp for β ≥ 3, and let z2 vary,
+and so on, to deduce that f is identically 0.
+For applications, we want to consider products of the Br and
+B×
+r constructed above. Let F denote a number ﬁeld, with in-
+tegers OF , and let p be a prime. Let Op denote OF ⊗ Zp, the
+product of the integer rings in the completions of F at all the
+primes above p, and let K0 be the closure in Qp of the com-
+positum of the images of all the ﬁeld homomorphisms F → Qp.
+Then K0 is a ﬁnite Galois extension of Qp. Then K0 contains
+the image of any ﬁeld homomorphism Fv → Qp, where v is any
+place of F above p, so we are in a position to apply the previ-
+ous constructions with M0 = Qp, M =Fv, and K any complete
+extension of K0.
+LetJ denote the set of places of F abovep, and let I denote
+the set of ﬁeld homomorphisms F → K. Note that each i ∈ I
+extends naturally to a map i : Fp → K where Fp = F ⊗ Qp =
+⊕j∈JFj. For j ∈ J, let Ij denote the subset of I consisting of
+i :Fp →K which factor through the completion F →Fj. Then
+I is the disjoint union of the Ij. For r ∈ (NK)J and j ∈J write
+rj for the component of r at j. Let Br (resp. B×
+r if rj < 1 for
+all j) denote the rigid space over K which is the product over
+j ∈J of the rigid spaces Brj (resp. B×
+rj ) deﬁned above. Then Br
+(resp. B×
+r ) is a thickening of Op (resp. O×
+p ) in the unit g-polydisc
+64
+===== PDF PAGE 65 =====
+overK, where now g = [F : Q]. Indeed, it is easily checked that
+for all complete extensions L of K we have
+Br(L) = {z ∈LI : there is α ∈ O p with |zi −αi| ≤ ri}
+and, when ri < 1 for all i,
+B×
+r (L) = {z ∈LI : there is α ∈ O ×
+p with |zi −αi| ≤ ri}
+just as before, where, for α ∈ O p, αi denotes i(α) ∈K.
+Now assume that F is totally real. Let G denote a subgroup
+of O×
+F of ﬁnite index, and let Γ G be the quotient of O×
+p × O×
+p by
+the closure of the image of G via the map γ ↦→ (γ,γ 2). Then Γ G
+is topologically isomorphic to
+(
+O×
+p/G
+)
+× O×
+p , so its dimension is
+related to the defect of Leopoldt’s conjecture for the pair ( F,p )
+(in particular, the dimension is at least g + 1 and conjecturally
+equal to g + 1). Let XΓG be the rigid space associated to Γ G in
+Lemma 8.2(b), and let W to be the direct limit lim XΓG as G
+varies over the set of subgroups of ﬁnite index of O×
+F , partially
+ordered by inclusion. The fact that W exists is an easy conse-
+quence of Lemma 2(iii) of [5], which shows that the transition
+morphisms are closed and open immersions: if G1 ⊆ G2 ⊆ O ×
+F
+are subgroups of O×
+F of ﬁnite index and Γ i = Γ Gi, then there is a
+surjection Γ 1 → Γ2 with ﬁnite kernel, and the corresponding map
+XΓ2 → X Γ1 is a closed immersion which geometrically identiﬁes
+XΓ2 with a union of components of XΓ1. In particular we see that
+the XΓG, as G varies through the subgroups of O×
+F of ﬁnite index,
+form an admissible cover of W. A K-point of W corresponds to
+a continuous group homomorphism O×
+p × O×
+p →K × whose ker-
+nel contains a subgroup of O×
+F of ﬁnite index (we always regard
+O×
+F as being embedded in O×
+p × O ×
+p via the map γ ↦→ (γ,γ 2)).
+More generally, we deﬁne a weight to be a continuous group ho-
+momorphism κ : O×
+p × O ×
+p → O (X)×, for X any aﬃnoid, such
+that the kernel of κ contains a subgroup of O×
+F of ﬁnite index.
+If U is an aﬃnoid K-space and U → W is a map of rigid
+spaces, then (because the XΓG cover W admissibly) there is a
+65
+===== PDF PAGE 66 =====
+subgroup G of ﬁnite index of O×
+F such that the image of U is
+contained within XΓG. In particular, by the universal property
+of XΓG there is an induced continuous group homomorphism
+ΓG → O (U )×, which induces a continuous group homomor-
+phism κ : O×
+p × O ×
+p → O (U )×. By composing this map with
+the map O×
+p → O ×
+p × O ×
+p sending γ to ( γ, 1), we get a con-
+tinuous group homomorphism n : O×
+p → O (U )×, which can be
+written as a product over j ∈J of continuous group homomor-
+phisms nj : O×
+Fj → O (U )×. Hence by Proposition 8.3 there
+exists r ∈
+(
+N ×
+K
+)J
+and a map B×
+r ×U → Gm giving rise to n.
+We call such a map a thickening of n. Because we have only
+set up our Fredholm theory on Banach modules, we will have
+to somehow single out one such thickening, which we do (rather
+arbitrarily) in the deﬁnition below. First we single out a discrete
+subset N ×
+d of
+(
+N ×
+K
+)J
+as follows: let πj denote a uniformiser of
+Fj and deﬁne N ×
+d ⊂
+(
+N ×
+K
+)J
+to be the product over j ∈ J of
+the sets {|πt
+j| :t ∈ Z>0}. We equip N ×
+d with the obvious partial
+ordering.
+Deﬁnition. LetX be an aﬃnoid and let κ = (n,v ) : O×
+p ×O×
+p →
+O(X)× be a weight. We deﬁne r(κ) to be the largest element of
+N ×
+d such that the construction above works. Explicitly, we choose
+r(κ)j = |π
+tj
+j | with tj ∈ Z>0, and the tj are chosen as small as
+possible such that the maps nj : O×
+Fj → O (X)× are induced by
+maps B×
+r(κ)j
+×X → Gm and hence the map n : O×
+p → O (X)× is
+induced by a map B×
+r(κ) ×X → Gm.
+This construction applies in particular when X is an aﬃnoid
+subdomain of W (the inclusion X → W induces a map κ as
+above). Note however that as the image of X in W gets larger,
+ther(κ)j will get smaller—there is in general no universal r and
+map B×
+r × W → Gm. Note also that the construction applies if
+X is a point, and in this case κ corresponds to a point of W.
+66
+===== PDF PAGE 67 =====
+9 Classical automorphic forms.
+Our exposition of the classical theory follows [12] for the most
+part. We recall the notation of the latter part of the previous
+section, and add a little more. Recall that F is a totally real
+ﬁeld of degree g over Q, and OF is the integers of F . We ﬁx an
+isomorphism C ∼= Qp; then we can think of I as the set of all
+inﬁnite places of F , or as all the ﬁeld embeddings F → Qp. Note
+that any such map i extends to a map i :Fp :=F ⊗ Qp → Qp.
+Recall that K is a complete extension of K0, the compositum
+of the images i(F ) of F as i runs through I, and we may also
+think of I as the set of all ﬁeld homomorphisms F → K. We
+let J denote the set of primes of OF dividing p. If j ∈ J then
+let Fj denote the completion of F at j and let Oj denote the
+integers in Fj. We set Op := OF ⊗ Zp; then Fp = ⊕j∈JFj and
+Op = ⊕j∈J Oj. Choose once and for all uniformisers πj of the
+local ﬁelds Fj for all j, and let π ∈Fp denote the element whose
+jth component is πj. We will also use π to denote the ideal of
+OF which is the product of the prime ideals above p. Note that
+some constructions (for example the Hecke operators Uπj deﬁned
+later) will depend to a certain extent on this choice, but others
+(for example the eigenvarieties we construct) will not.
+Anyi ∈I gives a map Fp →K and this map factors through
+the projection Fp → Fj for some j := j(i) ∈ J; hence we get
+a natural surjection I → J. If S is any set then this surjection
+induces a natural injection SJ →SI, where as usual SI denotes
+the set of maps I → S. We continue to use the following very
+useful notation: if ( aj) ∈ SJ and i ∈ I then by ai we mean aj
+for j =j(i).
+Now let D be a quaternion algebra over F ramiﬁed at all in-
+ﬁnite places. Let us assume that D is split at all places above p.5
+Let OD denote a ﬁxed maximal order of D, and ﬁx an iso-
+5One can almost certainly develop some of the theory as long as at least
+one place above p is split, although one might have to ﬁx the weights at the
+ramiﬁed places.
+67
+===== PDF PAGE 68 =====
+morphism OD ⊗OF OFv = M 2(OFv ) for all ﬁnite places v of F
+where D splits (here Fv is the completion of F at v and OFv is
+the integers in this completion). In particular we ﬁx an isomor-
+phism OD ⊗OF Op = M 2(Op), and this induces an isomorphism
+Dp :=D ⊗F Fp = M 2(Fp).
+We recall the classical deﬁnitions of automorphic forms for D.
+If n ∈ ZI
+≥0 then we deﬁne Ln to be the K-vector space with ba-
+sis the monomials ∏
+i∈IZ mi
+i , where m ∈ ZI
+≥0, 0 ≤mi ≤ni, and
+where the Zi are independent indeterminates. If t ∈ ZJ
+≥1 then
+deﬁne Mt to be the elements ( γj) of M 2(Op) = ∏
+j∈J M2(Oj)
+with the property that if γj =
+( aj bj
+cj dj
+)
+then det( γj) ̸= 0, π
+tj
+j
+divides cj, and πj does not divide dj. Then Mt is a monoid
+under multiplication. By M1 we mean the monoid Mt for t =
+(1, 1,..., 1). If v ∈ ZI and n ∈ ZI
+≥0 then deﬁne the right M1-
+module Ln,v to be the K-vector space Ln equipped with the ac-
+tion of M1 deﬁned by letting ( γj) =
+(( aj bj
+cj dj
+))
+j∈J
+send ∏
+iZ mi
+i to
+∏
+i(ciZi +di)ni(aidi −bici)vi
+(
+aiZi+bi
+ciZi+di
+)mi
+and extending K-linearly
+(note that here we are using the notation ai for the image of aj(i)
+in K via the map i, as explained above). Note that in fact the
+same deﬁnition gives an action of GL 2(Fp) on Ln,v, but we never
+use this action.
+The natural maps OF → O p → M2(Op) (via the diagonal
+embedding) induce an embedding from O×
+F into M1. An easy
+check shows that the totally positive units in O×
+F act trivially on
+Ln,v if n + 2v ∈ Z.
+Deﬁne AF,f to be the ﬁnite adeles of F andDf :=D ⊗F AF,f .
+Ifx ∈Df then let xp ∈Dp = M 2(Fp) denote the projection onto
+the factor of Df atp. If t ∈ ZJ
+≥1 then we say that a compact open
+subgroupU ⊂D×
+f has wild level ≥πt if the projection U →D×
+p
+is contained within Mt. If t = (1, 1,..., 1) then we drop it from
+the notation and talk about compact open subgroups of wild
+level ≥π.
+SayD×
+f = ∐µ
+λ=1D×τλU . Then the groups Γ λ :=τ −1
+λ D×τλ∩U
+68
+===== PDF PAGE 69 =====
+are ﬁnitely-generated and moreover τλΓλτ −1
+λ ⊂ D× is commen-
+surable with O×
+D and hence with O×
+F . Hence Γ λ is also com-
+mensurable with O×
+F . If n is an ideal of OF which is coprime
+to disc( D) then we deﬁne U0(n) (resp. U1(n)) in the usual way
+as being matrices in ( OD ⊗ ˆZ)× which are congruent to
+( ∗ ∗
+0 ∗
+)
+(resp.
+( ∗ ∗
+0 1
+)
+) mod n. Note that for many such choices of U we
+see that the Γ λ are all contained within O×
+F (see, for example,
+Lemma 7.1 of [12] and the observation that, in Hida’s notation,
+the groups Γ
+i
+(U ) are ﬁnite because D is totally deﬁnite). How-
+ever we do not need to assume this because of our generalisation
+of Coleman’s Fredholm theory.
+Sayt ∈ ZJ
+≥1, U is a compact open of wild level ≥πt, and A
+is any right Mt-module, with action written ( a,m ) ↦→ a.m. If
+f :D×
+f →A andu ∈U then deﬁne f |u :D×
+f →A by (f |u)(g) :=
+f (gu−1).up. Now set
+L(U,A ) :=
+{
+f :D×\D×
+f →A : f |u =f for all u ∈U
+}
+.
+Note that f ∈ L (U,A ) is determined by f (τλ) for 1 ≤ λ ≤ µ,
+and one checks easily that the map f ↦→ (f (τλ))1≤λ≤µ induces an
+isomorphism
+L(U,A ) →
+µ⨁
+λ=1
+AΓλ.
+In particular, the functor L(U, −) is left exact. We remark that
+in the circumstances that will interest us later on, A will be an
+ONable Banach module over an aﬃnoid in characteristic zero,
+the Γ λ will all act via ﬁnite groups, and the invariants will hence
+be a Banach module with property ( Pr ). Indeed, this phe-
+nomenon was the main reason for extending Coleman’s theory
+from ONable modules to modules with property ( Pr ).
+Ifη ∈D×
+f andηp ∈ Mt then one can deﬁne an endomorphism
+[UηU ] of L(U,A ) as follows: decompose UηU = ∐
+iUx i (a ﬁnite
+union) and deﬁne
+f |[UηU ] :=
+∑
+i
+f |xi.
+69
+===== PDF PAGE 70 =====
+This operator is called the Hecke operator associated to η.
+Now let n ∈ ZI
+≥0 and v ∈ ZI be such that n + 2v ∈ Z. Set
+k = n + 2 and w = v +n + 1. Then k − 2w ∈ Z and k ≥ 2
+(that is, ki ≥ 2 for all i), and conversely given k and w with
+these properties one can of course recover n andv. We ﬁnish by
+recalling the deﬁnition of classical automorphic forms for D in
+this context. Let U ⊂D×
+f be a compact open subgroup of wild
+level ≥π.
+Deﬁnition. The space of classical automorphic forms SD
+k,w(U )
+of weight (k,w ) and level U for D is the space L(U,L n,v).
+This space is a ﬁnite-dimensional K-vector space. It is not,
+in the strict sense, a classical space of forms, because we have
+twisted the weight action from inﬁnity to p. On the other hand
+if one chooses a ﬁeld homomorphism K → C thenSD
+k,w(U ) ⊗K C
+is isomorphic to a classical space of Hilbert modular forms, as
+described in, for example, section 2 of [12]. We remark also that
+because the full group GL 2(Fp) acts naturally on Ln,v, our as-
+sumption that U has wild level ≥π is unnecessary at this point.
+However, the forms that we shall p-adically interpolate will al-
+ways have wild level ≥π, because of the standard phenomenon
+that to p-adically analytically interpolate forms on GL 2 one has
+to drop an Euler factor.
+10 Overconvergent automorphic forms.
+Let X be an aﬃnoid over K, and let κ = ( n,v ) : O×
+p × O ×
+p →
+O(X)× be a weight. In this section we will deﬁne O(X)-modules
+ofr-overconvergent automorphic forms of weight κ. In this gen-
+erality, κ really is a family of weights; one important case to
+keep in mind is when X is a point, so n and v are continuous
+group homomorphisms O×
+p →K ×, the resulting spaces will then
+be Banach spaces over K and will be automorphic forms of a
+ﬁxed weight. One important special case of this latter situation
+70
+===== PDF PAGE 71 =====
+is when n and v are of the form α ↦→ ∏
+iαmi
+i where the mi are
+integers; the resulting spaces of automorphic forms will have a
+“classical weight” and there will be a natural ﬁnite-dimensional
+subspace corresponding to a space of classical automorphic forms
+as deﬁned in the previous section.
+The group homomorphism κ : O×
+p × O×
+p → O (X)× induces a
+mapf :X → W by Lemma 8.2(b) and (c). We extend the map
+v : O×
+p → O (X)× to a group homomorphism v : F ×
+p → O (X)×
+by deﬁning v(πj) = 1 for all j ∈ J. Note that this extension
+depends on our choice of πj (it is analogous to Hida’s choices of
+{xv} in [12]) but subsequent deﬁnitions will not depend seriously
+on this choice (in particular the eigenvariety we construct will
+not depend on this choice). Note also that the supremum semi-
+norm of every element in the image of n or v is 1.
+Now for r ∈ (NK)J deﬁne Aκ,r to be the K-Banach algebra
+O(Br ×X). Note that Aκ,r does not yet depend on κ but we
+will deﬁne a monoid action below which does. Let us assume
+for simplicity that X is reduced (this is not really necessary, but
+will be true in practice and also gives us a canonical choice of
+norm on O(X), namely the supremum norm). Endow Aκ,r with
+the supremum norm. As usual write κ = (n,v ) and n = ∏
+j∈Jnj
+with nj : O×
+Fj → O (X)×.
+Deﬁnition. We say that t = ( tj)j∈J ∈ ZJ
+>0 is good for the
+pair (κ,r ) if for each j ∈ J there is thickening of nj to a map
+B×
+rj
+˛˛˛π
+tj
+j
+˛˛˛
+×X → Gm.
+Equivalently,t ∈ ZJ
+>0 is good if r|πt|<=r(κ) in ( NK)J with
+the obvious partial order. Given any ( κ,r ) as above, there will
+exist good t ∈ ZJ
+>0 by Proposition 8.3 (indeed, there will exist
+a unique minimal good t). The point of the deﬁnition is that if
+t is good for ( κ,r ) then we can deﬁne a right action of Mt on
+Aκ,r (we denote the action by a dot) by letting γ =
+( a b
+c d
+)
+∈ Mt
+act as follows: if h ∈ A κ,r and ( z,x ) ∈ Br(L) ×X(L) for L any
+71
+===== PDF PAGE 72 =====
+complete extension of K then
+(h.γ)(z,x ) :=
+n(cz +d,x ) (v (det(γ)) (x))h ((az +b)/(cz +d),x ).
+This is really a deﬁnition “on points” but it is easily checked
+that h.γ ∈ A κ,r, using Lemma 8.1, and that the deﬁnition does
+give an action. It is elementary to check that for ﬁxed γ ∈ Mt,
+the map Aκ,r → A κ,r deﬁned by h ↦→h.γ is a continuous O(X)-
+module homomorphism (but it is not in general a ring homo-
+morphism if κ is non-trivial). The fact that n and v take val-
+ues in elements of O(X)× with supremum norm 1 easily implies
+that γ : Aκ,r → A κ,r is norm-decreasing. One also checks using
+Lemma 8.1(b) that if | det(γj)| =mj thenγ induces a continuous
+norm-decreasing O(X)-module homomorphism Aκ,rm to Aκ,r.
+We now have enough to deﬁne our Banach modules of over-
+convergent modular forms. This deﬁnition is ultimately inspired
+by [16], a preprint which sadly may well never see the light of day
+but which contained the crucial idea of beeﬁng up a polynomial
+ring to a restricted power series ring in order to move from the
+classical to the overconvergent setting.
+Deﬁnition. LetX be a reduced aﬃnoid over K and let X → W
+be a morphism of rigid spaces, inducing κ : O×
+p × O×
+p → O (X)×.
+If r ∈ (NK)J , if t is good for (κ,r ), and if U is a compact open
+subgroup of D×
+f of wild level ≥ πt, then deﬁne the space of r-
+overconvergent automorphic forms of weight κ and level U to be
+the O(X)-module
+SD
+κ (U ;r) := L(U, Aκ,r).
+We remark that, just as in the case of “classical” overconver-
+gent modular forms, the hypotheses of the deﬁnition imply that
+ifκ is a weight near the boundary of weight space (that is, such
+that r(κ) is small), then r|πt| must be small and hence for each
+j either rj is small or there must be some large power of πj in
+the level.
+72
+===== PDF PAGE 73 =====
+If f ∈ SD
+κ (U ;r) then f is determined by f (τλ) for λ =
+1,...,µ . Moreover, if u ∈ U then so is u−1, and hence both
+up and u−1
+p are in Mt. In particular, both up and its inverse
+are norm-decreasing, and hence up is norm-preserving. We de-
+duce that for d ∈ D×, τ ∈ D×
+f and u ∈ U we have |f (dτu )| =
+|f (τ ).up| = |f (τ )| and hence |f (g)| ≤ maxλf (τλ) for all g ∈
+D×
+f . In particular we can deﬁne a norm on SD
+κ (U ;r) by |f | =
+maxg∈D×
+f
+|f (g)|, and the isomorphism
+SD
+κ (U ;r) →
+µ⨁
+λ=1
+(Aκ,r)Γλ
+deﬁned by f ↦→ (f (tλ))λ is norm-preserving. Next observe that
+the group Γ λ contains, with ﬁnite index, a subgroup of O×
+F of
+ﬁnite index, and hence Γ λ acts on Aκ,r via a ﬁnite quotient.
+Hence SD
+κ (U ;r) is a direct summand of an ONable Banach O(X)-
+module and our Fredholm theory applies.
+11 Classical forms are overconvergent.
+Fix n ∈ ZI
+≥0 and v ∈ ZI such that n + 2v ∈ Z. Set k = n + 2
+and w = v + n + 1 as usual. Deﬁne κ : O×
+p × O ×
+p → K ×
+by κ(α,β ) = ∏
+iαni
+i βvi
+i . Note that κ is trivial on the totally
+positive units in O×
+F (embedded via γ ↦→ (γ,γ 2) as usual) and
+hence κ is a K-point of W. With notation as above, we are
+taking L = K and X a point. The map n : O×
+p → K × deﬁned
+by α ↦→ ∏
+iαni
+i extends to a map of rigid spaces B×
+r → Gm for
+anyr ∈
+(
+N ×
+K
+)J
+, so r(κ)j = |πj| for all j ∈J. If r ∈ (NK)J then
+there is a natural injection Ln,v → A κ,r = O(Br) induced from
+the natural inclusion Br ⊂ (A1)I and one checks easily that this
+is an M1-equivariant inclusion. If U ⊂ D×
+f is a compact open
+subgroup of level ≥π then we get an inclusion
+SD
+k,w(U ) = L(U,L n,v) ⊆ L(U, Aκ,r) = SD
+κ (U ;r)
+73
+===== PDF PAGE 74 =====
+between the ﬁnite-dimensional space of classical forms and the
+typically inﬁnite-dimensional space of overconvergent ones.
+This relationship between classical and overconvergent mod-
+ular forms is however not quite the one that we want in general.
+When we construct our eigenvarieties in this setting, we will
+want the level structure at p to be U0(π), and hence we need to
+explain how to interpret ﬁnite slope classical forms of conduc-
+tor π2 and above, or forms with non-trivial character at p, as
+forms of level π and some appropriate weight. Brieﬂy, the trick
+is that we ﬁrstly load the character at p into the weight of the
+overconvergent form, thus reducing us to level U0(πn), and then
+decreaser and decrease the level to U0(π). Note that a variant of
+this trick is used to construct the classical eigencurve—although
+there the level structure is reduced only to Γ 1(p) (or Γ 1(4) if
+p = 2) because the p-adic zeta function may have zeroes on
+points of weight space which are not contained in the identity
+component.
+Let us explain these steps in more detail. Let U0 be a compact
+open subgroup of D×
+f of the form U ′ × GL2(Op), choose t ∈ ZJ
+≥1,
+and let U1 denote the group U0 ∩U1(πt). Then U1 is a normal
+subgroup of U0 ∩U0(πt); let ∆ denote the quotient group. The
+map O×
+p → GL2(Op) ⊂ U0 sending d to
+( 1 0
+0 d
+)
+identiﬁes ∆ with
+the quotient ( Op/πt)×. If L is a complete extension of K, if n ∈
+ZI
+≥0 andv ∈ ZI are chosen such that n + 2v ∈ Z, and if k =n + 2
+andw =v +n + 1 as usual, then for f ∈SD
+k,w(U1) = L(U1,L n,v)
+and u ∈ U0 ∩U0(πt) we have f |u−1 ∈ SD
+k,w(uU1u−1) = SD
+k,w(U1)
+and hence there is a left action of U0 ∩ U0(πt) on the ﬁnite-
+dimensional L-vector space SD
+k,w(U1) deﬁned by letting u act by
+f ↦→ f |u−1. This action is easily seen to factor through ∆,
+and is just the Diamond operators at primes above p in this
+setting. If L contains enough roots of unity then SD
+k,w(U1) is a
+direct sum of eigenspaces for this action. Choose a character
+ε : ∆ →L× and let ε also denote the induced character of O×
+p .
+Now deﬁne κ : O×
+p × O ×
+p → L× by κ(α,β ) = ε(α) ∏
+iαni
+i βvi
+i .
+The fact that n + 2v ∈ Z means that κ vanishes on a subgroup
+74
+===== PDF PAGE 75 =====
+of O×
+F of ﬁnite index, and hence κ is a weight. One checks that
+|πt| ≤ r(κ) and hence that if r ∈ (NK)J then t is good for
+(r,κ ), so the spaces L(U0, Aκ,r) and L(U1, Aκ,r) are well-deﬁned.
+Moreover, the natural map Ln,v → A κ,r is equivariant for the
+action of the submonoid of Mt consisting of matrices
+( a b
+c d
+)
+with
+π
+tj
+j |(dj − 1). Hence if L(U1,L n,v)(ε) denotes the ε-eigenspace of
+L(U1,L n,v) under the action of ∆, then we get an induced map
+L(U1,L n,v)(ε) → L(U1, Aκ,r) and unravelling the deﬁnitions one
+checks easily that the image of L(U1,L n,v)(ε) is in fact contained
+in L(U0, Aκ,r) (the point being that the map Ln,v → A κ,r is
+not U0(πt)-equivariant, and the two actions diﬀer by ε). This
+construction embeds classical forms with non-trivial character
+at primes above p into overconvergent forms with U0(πt) level
+structure at p, and should be thought of as the replacement in
+this setting of the construction of moving from a classical form of
+levelpn and character ε to an overconvergent function of level pn
+and trivial character, by dividing by an appropriate Eisenstein
+series with character ϵ. Note the phenomenon, also present in the
+classical case, that forms in distinct eigenspaces of SD
+k,w(U1) for
+the Diamond operators above p actually become overconvergent
+eigenforms of distinct weights in this setting.
+We now explain the relationship between forms of level U0(π)
+and forms of level U0(πr) for any r ≥ 1. Let X → W be a map
+from a reduced aﬃnoid to weight space, and let κ = ( n,v ) :
+O×
+p × O×
+p → O (X) be the induced weight. Let U be a compact
+open subgroup of D×
+f of the form U ′ × GL2(Op). Say r ∈ (NK)J ,
+s ∈ ZJ
+≥0 and t ∈ ZJ
+≥1 are chosen such that there is a thickening
+ofn to B×
+r|πs+t| ×X → Gm. Then we have deﬁned spaces of r|πs|-
+overconvergent weight κ automorphic forms of level U ∩U0(πt)
+and also r-overconvergent weight κ automorphic forms of level
+U ∩U0(πt+s). We now show that these spaces are canonically
+isomorphic.
+Proposition 11.1. There is a canonical isomorphism
+L(U ∩U0(πt), Aκ,r|πs|) ∼= L(U ∩U0(πt+s), Aκ,r).
+75
+===== PDF PAGE 76 =====
+Remark. We will see later that this isomorphism preserves the
+action of various Hecke operators when U =U1(n) or U0(n).
+Proof. The proof is an analogue of [5], Lemma 4, part 4, in this
+setting. We explain the construction of maps in both directions;
+it is then easy to check that these maps are well-deﬁned and
+inverse to one another. As usual let πs denote the element of Op
+whose component at j ∈J is π
+sj
+j . Then
+( πs 0
+0 1
+)
+is an element of
+GL2(Op) and hence we can think of it as an element of D×
+f .
+If f ∈ L (U ∩U0(πt), Aκ,r|πs|) then deﬁne h : D×
+f → A κ,r
+by h(g) = f
+(
+g
+(
+π−s 0
+0 1
+))
+.
+( πs 0
+0 1
+)
+; note that if φ ∈ O (Br|πs| ×X)
+then φ.
+( πs 0
+0 1
+)
+can be thought of as an element of O(Br ×X)
+as if z ∈ Br(L) then πsz ∈ Br|πs|(L). One checks that h ∈
+L(U ∩U0(πt+s), Aκ,r).
+Slightly harder work is the map the other way. First note
+that Br|πs| is the disjoint union of πsBr +α as α ∈ O p runs
+through a set of coset representatives S for Op/πs; hence Aκ,r =⨁
+α∈S O((πsBr +α) ×X). Now if h ∈ L (U ∩U0(πt+s), Aκ,r)
+then deﬁne f : D×
+f → A κ,r|πs| as follows: for g ∈ D×
+f we deﬁne
+f (g) on ( πsBr +α) ×X byf (g)(πsz +α,x ) = h
+(
+g
+( πs α
+0 1
+))
+(z,x ).
+One checks easily that this is well-deﬁned (that is, independent
+of choice of coset representatives S). A little trickier is that
+f ∈ L (U ∩U0(πt), Aκ,r|πs|), the hard part being to check that
+f |u =f for u ∈U ∩U0(πt). We give a sketch of the idea, which
+is just algebra. Firstly one checks easily that f |u =f ifu =
+( 1 γ
+0 1
+)
+with γ ∈ O p. Now say u ∈U ∩U0(πt), and choose α ∈ O p. We
+must check that ( f (g))(πsz +α,x ) = (( f |u)(g))(πsz +α,x ) for all
+x ∈X andz ∈ Br (again we present the argument on points but
+of course this suﬃces). The trick is knowing how to unravel the
+right hand side. Because u′ :=
+( 1 −α
+0 1
+)
+u
+( 1 α
+0 1
+)
+∈U ∩U0(πt), there
+exists β ∈ O p such that
+( 1 β
+0 1
+)
+u′ = v with vp =
+( a b
+c d
+)
+satisfying
+πs|b. In particular
+(
+π−s 0
+0 1
+)
+v
+( πs 0
+0 1
+)
+=v′ ∈U ∩U0(πt+s). Hence
+((f |u)(g))(πsz +α,x ) =
+(
+f |v
+( 1 −α
+0 1
+))
+(g)(πsz +α,x )
+= (f |v)
+(
+g
+( 1 α
+0 1
+))
+(πsz,x )
+76
+===== PDF PAGE 77 =====
+and by expanding out the deﬁnition of f |v and then using the
+deﬁnition of f in terms of h, one checks readily that this equals
+(h|v′)
+(
+g
+( πs α
+0 1
+))
+(z,x ). We are now home, as h|v′ =h.
+Finally one checks easily that the above associations f ↦→ h
+and h ↦→f are inverse to one another.
+No doubt one can now mimic the constructions of section 7
+of [5] to deduce the existence of various canonical maps between
+spaces of overconvergent forms, and relate the kernels of these
+maps to spaces of classical forms; these maps, analogous to Cole-
+man’s θk−1 operator, will not be considered here for reasons of
+space, as they are not necessary for the construction of eigenva-
+rieties. The reader interested in these things might like, as an
+exercise, to verify that overconvergent forms of small slope are
+classical in this setting, following section 7 of [5].
+12 Hecke operators.
+LetX be a reduced aﬃnoid over K and let κ = (n,v ) : X → W
+be a morphism of rigid spaces. If r ∈ (NK)J , if ρ = |πt| ∈ N ×
+d
+is such that n has a thickening to Brρ, and if U is a compact
+open subgroup of D×
+f of wild level ≥ πt, then we have deﬁned
+ther-overconvergent automorphic forms of weight κ and level U .
+Ifv is a ﬁnite place of F whereD splits then we deﬁne ηv ∈D×
+f
+to be the element which is the identity at all places away from v,
+and the matrix
+( πv 0
+0 1
+)
+at v, where πv ∈ Fv is a uniformiser.
+If v is prime to p then will not matter which uniformiser we
+choose, but if v|p then for simplicity we use the uniformiser which
+we have already chosen earlier (this is really just for notational
+convenience though—a diﬀerent choice would only change the
+operators we deﬁne by units). Let us assume in this section that
+U is a compact open of the form U0(n) ∩U1(r) for some integral
+ideals n and r of OF , both prime to disc( D), with π|n and π
+coprime to r. In this case, the resulting Hecke operator Tv =
+[Uη vU ], acting on L(U, Aκ,r), is easily checked to be independent
+77
+===== PDF PAGE 78 =====
+of the choice of πv, as long as v is prime to p. If furthermore v is
+prime to nr then we may regard πv as an element of the centre of
+D×
+f and we deﬁne Sv to be the resulting Hecke operator [ Uπ vU ].
+A standard argument shows that the endomorphisms Tv and
+Sv all commute with one another. Furthermore, we have
+Lemma 12.1. The isomorphism of Proposition 11.1 is Hecke
+equivariant.
+Proof. For the Hecke operators away from p this is essentially
+immediate. At primes above p things are slightly more deli-
+cate, because for tj ≥ 1 the natural left coset decomposition of
+the double coset U0(π
+tj
+j )
+( πj 0
+0 1
+)
+U0(π
+tj
+j ) is ∐
+α∈Oj /πjU0(π
+tj
+j )
+( πj 0
+απ
+tj
+j 1
+)
+which depends on tj. However, one checks easily that if (in the
+notation of Proposition 11.1) f ∈ L(U ∩U0(πt), Ar|πs|) and h is
+the element of L(U ∩U0(πt+s), Ar) associated to f in the proof,
+then Tvh is indeed associated to Tvf , for all v|p, the calculation
+boiling down to the fact that
+( πj 0
+απ
+tj
+j 1
+) (πs 0
+0 1
+)
+=
+(πs 0
+0 1
+) ( πj 0
+απ
+tj +sj
+j 1
+)
+.
+If p factors in F as ∏
+j p
+ej
+j then let Uj denote the Hecke op-
+erator Tpj , let Uπ denote ∏
+j∈JUj, and let ηj denote the matrix
+ηpj .
+Lemma 12.2. The map Uπ : SD
+κ (U ;r) → SD
+κ (U ;r) is the com-
+posite of the natural inclusion SD
+κ (U ;r) → SD
+κ (U ;r|π|) and a
+continuous norm-decreasing map SD
+κ (U ;r|π|) → SD
+κ (U ;r). The
+inclusion SD
+κ (U ;r) → SD
+κ (U ;r|π|) is norm-decreasing and com-
+pact, and hence Uπ, considered as an endomorphism of SD
+κ (U ;r),
+is also norm-decreasing and compact.
+Proof. One checks easily that Uπ is the Hecke operator [ UηU ]
+associated to the matrix η := ∏
+jηj. If one decomposes UηU into
+78
+===== PDF PAGE 79 =====
+a ﬁnite disjoint union ∐
+δUx δ of cosets, then det(( xδ)p)/ det(ηp)
+is a unit at all places of F abovep, and hence by Lemma 8.1(b)
+the endomorphism of Aκ,r induced by ( xδ)p can be factored as
+the inclusion Aκ,r ⊂ A κ,r|π| followed by a norm-decreasing map
+Aκ,r|π| → A κ,r. The inclusion Aκ,r ⊂ A κ,r|π| is induced by the
+inner inclusion of aﬃnoids Br|π| → Br and is hence compact and
+norm-decreasing; the result now follows easily.
+13 The characteristic power series of Uπ.
+We now have enough data to deﬁne the ingredients for our eigen-
+variety machine in this case. Let n be an integral ideal of OF
+prime to p and to disc( D) (this latter hypothesis is not really nec-
+essary, but we enforce it for simplicity’s sake), and set U0 =U0(n)
+or U1(n). Deﬁne U = U0 ∩U0(π); then U has wild level ≥ π.
+If X ⊂ W is an aﬃnoid subdomain, then set RX = O(X), let
+κ : O×
+p × O ×
+p → O (X)× denote the corresponding weights, and
+let r =r(κ). Let T be the set of Hecke operators Tv (for v run-
+ning through all the ﬁnite places of F whereD splits) and Sv (for
+v running through all the ﬁnite places of F prime to np whereD
+splits) deﬁned above, and let φ denote the operator Uπ. Deﬁne
+MX = SD
+κ (U ;r) = L(U, Aκ,r). If Y ⊆ X is an aﬃnoid subdo-
+main and κ′ is the weight corresponding to Y then r(κ) ≤r(κ′)
+and hence there is an inclusion Br(κ) ⊆ Br(κ′). There is a canon-
+ical isomorphism MX ˆ⊗RXRY = L(U, Aκ′,r(κ)), and the inclusion
+Br(κ) → Br(κ′) induces an injection Aκ′,r(κ′) → A κ′,r(κ) and hence
+an injection α :MY →MX ˆ⊗RXRY . It is easy to check that this
+injection commutes with the action of all the Hecke operators Tv
+and Sv. We now check that α is a link; the argument is a slight
+variant on the usual one because we have allowed non-parallel
+radii of convergence in our deﬁnitions and hence have to make
+essential use of r-overconvergent forms with r ̸∈ N ×
+d .
+Lemma 13.1. IfU =U0∩U0(π) as above, if Y ⊆ W is a reduced
+aﬃnoid with corresponding weight κ : O×
+p × O×
+p → O (Y )×, and
+79
+===== PDF PAGE 80 =====
+if r,r ′ ∈ (NK)J with r,r ′ ≤ r(κ) and rj ≤ r′
+j for all j, then the
+natural map SD
+κ (U ;r′) → SD
+κ (U ;r) is a link.
+Proof. It suﬃces to prove that α is a primitive link when r′
+j|πj|<
+rj ≤r′
+j for all j. But this is not too hard: let c be the composi-
+tum of the (compact) restriction map SD
+κ (U ;r) → SD
+κ (U ;r′|π|)
+and the continuous norm-decreasing map β : SD
+κ (U ;r′|π|) →
+SD
+κ (U ;r′) in the statement of Lemma 12.2; then it is not hard
+to check that αc and cα are both Uπ as endomorphisms of their
+respective spaces.
+We may now apply our eigenvariety machine, and deduce
+the existence of an eigenvariety parametrising systems of Hecke
+eigenvalues on overconvergent automorphic forms, and in partic-
+ular p-adically interpolating classical automorphic forms for D.
+The eigenvariety itself is a rigid space, the geometry of which
+we know very little about—indeed if we do not know Leopoldt’s
+conjecture then we do not even know its dimension.
+If one were to check (and it is no doubt not diﬃcult, following
+the ideas of section 7 of [5]) that overconvergent forms of small
+slope were classical, then the existence of the eigenvariety implies
+results of Gouvˆ ea-Mazur type for classical Hilbert modular forms
+over F , if [ F : Q] is even (although there are probably more
+elementary ways of attacking analogues of the Gouvˆ ea-Mazur
+conjectures in this setting—see for example the recent thesis of
+Aftab Pande).
+References
+[1] S. Bosch, U. G¨ untzer, and R. Remmert. Non-Archimedean
+analysis, volume 261 of Grundlehren der Mathematischen
+Wissenschaften [Fundamental Principles of Mathematical
+Sciences]. Springer-Verlag, Berlin, 1984.
+[2] N. Bourbaki. ´El´ ements de math´ ematique. Part I. Les
+structures fondamentales de l’analyse. Livre III. Topologie
+80
+===== PDF PAGE 81 =====
+g´ en´ erale. Chapitres III et IV . Actual. Sci. Ind., no. 916.
+Hermann & Cie., Paris, 1942.
+[3] Nicolas Bourbaki. Espaces vectoriels topologiques. Chapitres
+1 ` a 5 . Masson, Paris, new edition, 1981. ´El´ ements de
+math´ ematique. [Elements of mathematics].
+[4] Kevin Buzzard. Analytic continuation of overconvergent
+eigenforms. J. Amer. Math. Soc. , 16(1):29–55 (electronic),
+2003.
+[5] Kevin Buzzard. On p-adic families of automorphic forms.
+Progress in Mathematics , 224:23–44, 2004.
+[6] Kevin Buzzard and Frank Calegari. The 2-adic eigencurve
+is proper. Accepted for publication in Documenta Math.
+[7] Kevin Buzzard and L. J. P. Kilford. The 2-adic eigencurve at
+the boundary of weight space. Compos. Math. , 141(3):605–
+619, 2005.
+[8] Ga¨ etan Chenevier. Familles p-adiques de formes automor-
+phes pour GL( n). Journal f¨ ur die reine und angewandte
+Mathematik, 570:143–217, 2004.
+[9] R. Coleman and B. Mazur. The eigencurve. In Galois
+representations in arithmetic algebraic geometry (Durham,
+1996), volume 254 of London Math. Soc. Lecture Note Ser. ,
+pages 1–113. Cambridge Univ. Press, Cambridge, 1998.
+[10] Robert F. Coleman. p-adic Banach spaces and families of
+modular forms. Invent. Math. , 127(3):417–479, 1997.
+[11] Brian Conrad. Modular curves and rigid-analytic spaces.
+Pure Appl. Math. Q. , 2(1):29–110, 2006.
+[12] Haruzo Hida. On p-adic Hecke algebras for GL 2 over totally
+real ﬁelds. Ann. of Math. (2) , 128(2):295–384, 1988.
+81
+===== PDF PAGE 82 =====
+[13] Haruzo Hida. Elementary theory of L-functions and Eisen-
+stein series , volume 26 of London Mathematical Society Stu-
+dent Texts . Cambridge University Press, Cambridge, 1993.
+[14] Hideyuki Matsumura. Commutative ring theory , volume 8
+of Cambridge Studies in Advanced Mathematics . Cambridge
+University Press, Cambridge, second edition, 1989. Trans-
+lated from the Japanese by M. Reid.
+[15] Jean-Pierre Serre. Endomorphismes compl` etement continus
+des espaces de Banach p-adiques. Inst. Hautes ´Etudes Sci.
+Publ. Math. , (12):69–85, 1962.
+[16] Glenn Stevens. Overconvergent modular symbols. Preprint.
+[17] Atsushi Yamagami. On p-adic families of Hilbert cusp forms
+of ﬁnite slope. Preprint.
+82

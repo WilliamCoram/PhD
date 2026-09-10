@@ -1,0 +1,1260 @@
+K. Buzzard, 'On p-adic families of automorphic forms', in Modular curves and abelian varieties, Progr. Math. 224 (2004), 23-44.
+Text extracted via pypdf from ~/Desktop/Papers for line-locator citations.
+
+
+===== PDF PAGE 1 =====
+On p-adic families of automorphic forms
+Kevin Buzzard
+October 12, 2004
+Abstract
+Coleman and Mazur have constructed “eigencurves”, geometric ob-
+jects parametrising certain overconvergent p-adic modular forms. We for-
+mulate deﬁnitions of overconvergent p-adic automorphic forms for two
+more classes of reductive groups—ﬁrstly for GL 1 over a number ﬁeld,
+and secondly for D×, D a deﬁnite quaternion algebra over the rationals.
+We give several reasons why we believe the objects we construct to be the
+correct analogue of an overconvergent p-adic modular form in this setting.
+1 Introduction
+The deﬁnition of an overconvergent modular form was formulated in [14] and
+used in a very powerful way in work of Coleman (see [5], [6], [7] etc) as a key
+tool for constructing families of modular forms. Using these arguments Coleman
+was able to resolve some questions of Gouvˆ ea and Mazur about the existence of
+analytic families of modular forms. In fact, Coleman’s ideas gave more: using
+them, Coleman and Mazur constructed “eigencurves”, geometric objects which
+parametrise ﬁnite slope normalised overconvergent modular eigenforms.
+There is now evidence that these parameter spaces are just the tip of an ice-
+berg, and that there should exist parameter spaces, or “eigenvarieties”, parametris-
+ing systems of eigenvalues occurring in p-adic Fr´ echet spaces of “overconvergent
+automorphic forms” for a wide class of reductive groups. One way of looking
+at the formalism is as follows: ﬁrstly there should be some appropriate set of
+classical inﬁnity types (for example, the regular algebraic ones), which naturally
+form a subset of a rigid analytic space of “ p-adic inﬁnity types”, or “weights”
+for short. We call such a space a weight space , we call points of this space
+weights, and we call the subset mentioned above the set of classical weights . If
+κ is a weight, then the space of overconvergent automorphic forms of some ﬁxed
+level U and weight κ should be a (typically inﬁnite-dimensional) p-adic vector
+space that, if κ is classical, will naturally contain the ﬁnite-dimensional space of
+classical automorphic forms of this weight (after one has chosen isomorphisms
+C ∼= Cp and so on). Furthermore, the spaces should naturally p-adically inter-
+polate the classical spaces of forms as the inﬁnity type varies in weight space.
+Note that in this context, as was observed in the 1970s by Serre and Katz, the
+1
+===== PDF PAGE 2 =====
+notion of a weight should include both an inﬁnity type and also a level structure
+at the prime p.
+Now ﬁx a level structure U prime to p. Then there should be a second rigid
+space, the eigenvariety associated to this data—this will be a rigid-analytic space
+equipped with a map to weight space, such that the ﬁbre above a weight will be
+equal to the spectrum of a Hecke algebra acting on the space of “ﬁnite slope”
+overconvergent forms of that weight, and “tame level” U . In this perspective, a
+Hecke operator becomes a map from the eigenvariety to the aﬃne line, sending
+a point to the eigenvalue of the corresponding eigenform.
+There should be a family of p-adic Galois representations living on the eigen-
+variety, and the eigenvariety should in general be strongly connected to the
+deformation theory of such Galois representations. Moreover, the eigenvari-
+ety should perhaps be the natural domain for the special values of p-adic L-
+functions, in analogy with the role of the collection of Riemann surfaces that
+Tate uses to great eﬀect in the study of classical L-functions in his thesis (see
+p314 of [3]). These sides of the story will not be treated in this paper, however.
+One interesting application of the existence of these eigenvarieties is that
+one can re-formulate cases of Langlands functoriality in this setting as simply
+predicting the existence of a morphism between two such parameter spaces that
+intertwines Hecke operators appropriately.
+It is not currently clear to the author in what generality one would expect
+these parameter spaces to exist, but this may be due to a large extent to the fact
+that the author is certainly no expert in the theory of automorphic forms. On
+the other hand, there do seem to be some cases where this philosophy does not
+apply. For example, we know of no evidence to suggest that Maass forms can be
+p-adically interpolated in such a way, although perhaps Mazur’s observation that
+it seems harder to deform even Galois representations than odd ones might be
+evidence to suggest that the associated rigid spaces may all be 0-dimensional.
+On the other hand, there is a growing body of evidence to suggest that in
+many other common cases, non-trivial parameter spaces do exist. The author
+is optimistic that, for example, if the reductive group in question is compact
+mod centre at inﬁnity then almost all the techniques now exist for constructing
+such parameter spaces. See the thesis of G. Chenevier [4], forthcoming work [2]
+of the author and also future joint work of the author and Chenevier, where
+the constructions will be given in many cases. Unfortunately, the works cited
+above are perhaps daunting to read, relying on many technical computations in
+representation theory, as well as a generalisation of much of Coleman’s theory
+of families of p-adic Banach spaces to families of dimension greater than one.
+The purpose of this paper however is to give an explicit construction of
+the parameter spaces in two of the simplest cases: ﬁrstly in the case of GL 1
+over a number ﬁeld, and secondly in the case of D×, D a deﬁnite quaternion
+algebra over the rationals. The motivation for explaining these cases explicitly
+is several-fold. Firstly, the theory for GL 1 drops out from class ﬁeld theory and
+known results about p-adic Galois representations, and is excellent motivation
+for believing that these parameter spaces exist in some generality. One avoids
+having to generalise Coleman’s theorems because the Banach spaces in question
+2
+===== PDF PAGE 3 =====
+are ﬁnite-dimensional and everything is easy. Note that already the dimension of
+the parameter spaces in this case depends on the truth of Leopoldt’s conjecture,
+but not knowing the dimension of the spaces constructed here does not seem to
+lead to any problems in the theory. Secondly, the representation theory involved
+in the GL 1 case is trivial, so one sees a concrete example of the theory without
+having to get too bogged down in technicalities.
+One motivation for the construction in the deﬁnite quaternion algebra case is
+that it is easy to make all the representation theory very explicit, thus avoiding
+the technical computations in [4] where analogous results are proved for com-
+pact forms of GL n. Another reason is that by the Jacquet-Langlands theorem,
+classical automorphic forms in this setting will correspond to classical modular
+forms, and overconvergent automorphic forms in this setting should correspond
+to overconvergent p-adic modular forms (in fact this has recently been proved
+by Chenevier: see [4]). The families one constructs are one-dimensional, so one
+does not need to generalise Coleman’s work either. We refer to Theorem 1 be-
+low for some of the results proved by Coleman and others about classical and
+overconvergent modular forms. On the other hand, we show in this paper that
+the analogues of these theorems in this setting are, for the most part, elemen-
+tary consequences of the deﬁnitions. This gives weight to our hope that our
+deﬁnitions are the right ones in this setting.
+Some of this work in this paper was done during the semestre automorphe at
+the IHP in Paris in 2000, and some was done during a visit to Paris 13 funded
+by the Arithmetic Algebraic Geometry RTN network. The author thanks all
+these institutions. The results for GL 1 in this paper were presented at the
+conference on modular curves at the CRM in Barcelona, and the author thanks
+the organisers of this conference for giving him the opportunity to speak there.
+The author also thanks the referee for several useful comments and observations.
+Note added in proof: recent preprints of Emerton seem to give the construc-
+tion of eigenvarieties in a very wide class of situations, using more representation-
+theoretic techniques.
+2 The case of GL1 over a number ﬁeld
+Throughout this paper, p > 0 will be a prime, and K will denote a ﬁeld which is
+complete with respect to a non-trivial non-Archimedean valuation, and whose
+residue ﬁeld has characteristic p. The rigid spaces we construct will be rigid
+spaces over K. We will consider K as being ﬁxed—the interested reader can
+verify that all rigid spaces in this paper are quasi-separated and their deﬁnitions
+commute with base change if K′ is a complete extension of K. Up to and
+including Lemma 2, K may have characteristic 0 or p, but after Lemma 2 and
+for the rest of the paper we assume that the characteristic of K is zero. From
+section 3 onwards, we assume furthermore that K is a complete subﬁeld of Cp,
+but this is only for notational convenience; one has to do little more than to
+replace p by |p|−1 on many occasions to deal with the general case.
+Let L/Q be a number ﬁeld of degree d, and let OL denote the integers of L.
+3
+===== PDF PAGE 4 =====
+Let L∞ denote L ⊗Q R and ( L×
+∞)◦ the identity component of the topological
+group L×
+∞. Similarly, let Lp denote L ⊗Q Qp, let OL,p denote OL ⊗Z Zp and let
+O×
+L,p denote the topological group of units in OL,p.
+We would like to formulate a deﬁnition of an overconvergent p-adic automor-
+phic form for the group Res L/Q GL1, deﬁned over K. Associated to an overcon-
+vergent eigenform we should expect a one-dimensional p-adic Galois representa-
+tion. On the other hand, any Hodge-Tate one-dimensional p-adic representation
+of Gal( L/L) comes from an algebraic Gr¨ ossencharacter, and hence one should
+suspect that for classical weights, the overconvergent eigenforms should be in
+bijection with the classical eigenforms. In fact the main problem for GL 1 is
+simply that of constructing weight space and we present the natural deﬁnition
+below.
+Lemma 1. Let R be an aﬃnoid algebra over K. For there to exist a continuous
+group homomorphism Zp → R× sending 1 to 1 + r ∈ R, it is necessary and
+suﬃcient that r should be topologically nilpotent, and when this is the case, the
+group homomorphism sending 1 to 1 + r is unique.
+Proof. Fix a complete K-algebra norm on R inducing the topology on R. If there
+is a continuous group homomorphism Zp → R× sending 1 to 1 + r then (1 +
+r)pn
+→ 1 as n → ∞ in R, and the same is true in R/m for m any maximal ideal
+of R. This means that modulo m, the residue norm of r must be less than 1 (look
+at the residue ﬁeld). Hence r is topologically nilpotent by Proposition 6.2.3.2
+of [1]. Conversely, if r is topologically nilpotent, then |rn| → 0 as n → ∞ and
+hence an easy argument using the binomial theorem shows that (1 + r)pN
+tends
+to 1 as N → ∞, which suﬃces to construct the group homomorphism Zp → R×,
+and uniqueness follows because of continuity.
+Now let X be an arbitrary rigid space, and let O(X) denote the global
+sections of the structure sheaf on X. If H is a topological group, then we say
+that a group homomorphism H → O (X)× is continuous if for all admissible
+aﬃnoid subdomains U of X, the resulting map H → O (U )× is continuous. The
+lemma above shows that there is a canonical functorial bijection between the
+continuous homomorphisms Zp → O (X)× and the maps of rigid spaces X → ∆,
+where ∆ denotes the open disc of radius 1 and centre 1, considered as a subspace
+of rigid aﬃne 1-space.
+Let Gm denote the rigid space over K associated to the aﬃne scheme
+A1\{0}. We now explain an elementary but key construction. Let H be an
+abelian proﬁnite group which contains an open subgroup isomorphic to ( Zp)n
+for some n ≥ 0. Let Hom( H, Gm) denote the functor on rigid spaces over
+K sending a rigid space X to the set of continuous group homomorphisms
+H → O (X)×.
+Lemma 2. (i) The functor Hom(H, Gm) is represented by a quasi-separated
+rigid space over K, also denoted Hom(H, Gm).
+(ii) The space Hom(H, Gm) is a union of ﬁnitely many open n-balls and
+naturally has the structure of a group object in the category of rigid spaces over
+K.
+4
+===== PDF PAGE 5 =====
+(iii) If H → J is a surjective morphism of proﬁnite groups with ﬁnite kernel,
+then the canonical map Hom(J, Gm) → Hom(H, Gm) is a closed immersion. If
+furthermore the size of the kernel of H → J is non-zero in K (for example, if the
+characteristic of K is 0), then the canonical map Hom(J, Gm) → Hom(H, Gm)
+is a closed and open immersion, identifying Hom(J, Gm) with a union of com-
+ponents of Hom(H, Gm).
+(iv) If H → J is an injective morphism of proﬁnite groups with ﬁnite coker-
+nel, then the canonical map Hom(J, Gm) → Hom(H, Gm) is ﬁnite and ﬂat, of
+degree equal to [J : H]. If furthermore [J : H] ̸= 0 in K then the map is etale.
+Proof. Note ﬁrstly that if H1 and H2 satisfy the hypotheses put on H above,
+and Hom( H1, Gm) and Hom( H2, Gm) are representable, then one can represent
+Hom(H1 × H2, Gm) by the product Hom( H1, Gm) × Hom(H2, Gm). Further-
+more, if H is as in the lemma, then by the structure theorem for topologically
+ﬁnitely-generated abelian proﬁnite groups, H is isomorphic to the product of a
+ﬁnite group and a group isomorphic to ( Zp)n.
+(i) By the remarks above, we are reduced to representing the functor in the
+following two cases: the case of ﬁnite cyclic H, and the case H ∼= Zp. If H is
+ﬁnite cyclic of order n then the rigid space associated to the aﬃnoid algebra
+K⟨T ⟩/(T n − 1) is easily shown to do the trick. If on the other hand H ∼= Zp,
+then by Lemma 1 and the remarks following it, the open disc with centre 1 and
+radius 1 over K represents the functor in question.
+(ii) By the construction of the representing space above, we see it is a product
+of rigid spaces each of which is either ﬁnite or an open unit ball, and the results
+follow easily.
+(iii) Here one only need observe that H is isomorphic to the product of a free
+Zp-module and a ﬁnite group, and the kernel of the map H → J is contained in
+this ﬁnite group. One now easily reduces to the case where H is ﬁnite, where
+the result is easy.
+(iv) One reduces easily to the case where J/H is ﬁnite cyclic of degree n
+for some n ≥ 1. In this case the cover Hom( J, Gm) of Hom( H, Gm) is deﬁned
+by taking the nth root of some function f on Hom( H, Gm), and the fact that
+|f − 1| < 1 for any residue norm means that f is a unit. Hence the covering is
+ﬁnite and ﬂat, and moreover it is etale if n is prime to the characteristic of K.
+We now use this lemma to construct a “weight space”. Assume for the
+rest of this paper that the characteristic of K is zero. If Γ is a subgroup of
+O×
+L of ﬁnite index, and Γ denotes the closure of Γ in O×
+L,p, then the quotient
+HΓ := O×
+L,p/Γ satisﬁes the hypotheses of the lemma. Hence one has a rigid
+space WΓ := Hom( HΓ, Gm) deﬁned over K. If ∆ ⊆ Γ is a subgroup of ﬁnite
+index, then the corresponding surjection H∆ → HΓ has kernel of ﬁnite order
+[Γ : ∆] and hence by part (iii) of Lemma 2 there is a closed and open immersion
+WΓ → W ∆, identifying the former with a union of components of the latter.
+Deﬁnition. We deﬁne weight-space W to be the direct limit lim→ WΓ, as Γ
+5
+===== PDF PAGE 6 =====
+varies over the set of subgroups of ﬁnite index in O×
+L , partially ordered by in-
+clusion.
+The space W is a rigid space deﬁned over K. It has a group structure,
+which we in fact shall never use. By deﬁnition, a K-point in W corresponds
+to a continuous group homomorphism O×
+L,p → K× which vanishes on some
+subgroup of ﬁnite index in O×
+L .
+Let σ1, . . . , σ d denote the d embeddings L → Cp. Each such embedding
+gives a continuous group homomorphism O×
+L,p → C×
+p , which we also denote
+by σi.
+Deﬁnition. We say that a weight in W(K) is classical if there are a collection
+(n1, n 2, . . . , n d) of integers, and a subgroup H of ﬁnite index of O×
+L,p, such that
+the corresponding group homomorphism κ, when restricted to H, equals
+(σ1)n1(σ2)n2 . . . (σd)nd.
+Choose a K-point of WK and let κ denote the corresponding map O×
+L,p →
+K×. If S is a ﬁnite set of places of Q, let AS
+L denote the adeles of L away from
+the places in L above the places in S.
+Set S = {p, ∞} once and for all, and let U be a compact open subgroup of
+(AS
+L)×. We refer to such a subgroup U as a tame level .
+Let G denote the group Res L/Q GL1.
+Deﬁnition. An overconvergent automorphic eigenform for G, of weight κ and
+tame level U , deﬁned over K, is a continuous group homomorphism L×\A×
+L →
+K× which contains U.(L×
+∞)◦ in its kernel, and whose restriction to O×
+L,p equals
+κ. An overconvergent automorphic form for G, of weight κ and tame level U , de-
+ﬁned over K, is a continuous function f : L×\A×
+L → K such that f (gu) = f (g)
+for all u ∈ U.(L×
+∞)◦, the K-vector space generated by all the A×
+L -translates of f
+is ﬁnite-dimensional, and such that, after a ﬁnite base extension of K if neces-
+sary, there is a basis of this ﬁnite-dimensional space consisting of overconvergent
+automorphic eigenforms for G of weight κ and tame level U .
+Note that any continuous group homomorphism L×\A×
+L → K will automat-
+ically contain ( L×
+∞)◦ and some compact open subgroup of ( AS
+L)× in its kernel,
+and hence its restriction to O×
+L,p will automatically be a weight, in the sense
+that it must vanish on a subgroup of O×
+L of ﬁnite index.
+Note that there are only ﬁnitely many overconvergent automorphic eigen-
+forms of a given weight and tame level, because L×\A×
+L /O×
+L,pU (L×
+∞)◦ is ﬁnite.
+By the main theorem of global class ﬁeld theory, to an overconvergent eigenform
+deﬁned over K there is associated a continuous one-dimensional representation
+Gal(L/L) → GL1(K). If K is a ﬁnite extension of Qp and κ ∈ W (K), then this
+associated Galois representation will be Hodge-Tate if and only if κ is classical.
+In fact, for classical κ, the space we have constructed perhaps deserves to be
+thought of as either the space of p-adic, overconvergent p-adic, or classical forms
+deﬁned over K.
+6
+===== PDF PAGE 7 =====
+Note that Weil associated a Hodge-Tate p-adic Galois representation to any
+algebraic Gr¨ ossencharacterL×\A×
+L → C× and this p-adic Galois representation
+gives rise to an overconvergent automorphic eigenform (although of course one
+does not need class ﬁeld theory here—Weil’s argument directly constructs an
+overconvergent automorphic eigenform from a classical one). The weight of such
+an eigenform is classical, and the corresponding integers ( n1, n 2, . . . , n d) are the
+Hodge-Tate weights of the associated Galois representation, if one normalises
+the isomorphism of global class ﬁeld theory appropriately.
+It is easy to see, given what we have done, that these deﬁnitions interpolate
+naturally. More precisely, if V is an aﬃnoid subdomain of W with O(V ) = R,
+then the inclusion V → W K gives us, from the functorial property of WK, a
+continuous group homomorphism O×
+L,p → R×. Now for a tame level U one can
+deﬁne an overconvergent automorphic eigenform of weight V as simply being
+a continuous group homomorphism f : L×\A×
+L → R× containing U.(L×
+∞)◦ in
+its kernel, such that the restriction of f to O×
+L,p is the group homomorphism
+O×
+L,p → R× corresponding to the map V → W K, and one can give a similar
+deﬁnition of an overconvergent automorphic form of weight V . These spaces
+should of course be thought of as interpolating the spaces of overconvergent
+forms of weight κ introduced above, as κ varies through V .
+Let U be a ﬁxed tame level, and let Γ denote the intersection
+L× ∩ U.O×
+L,p(L×
+∞)◦.
+Then Γ is a subgroup of O×
+L of ﬁnite index. We will now deﬁne an “eigenvariety”
+of tame level U , which will be a ﬁnite cover of the weight space WΓ introduced
+earlier. Its deﬁnition is simple, given what we have already. Let H denote the
+quotient of the group L×\A×
+L by the closure of the image of U.(L×
+∞)◦. Then
+the map O×
+L,p → H is continuous with ﬁnite cokernel, and hence H satisﬁes the
+hypotheses of Lemma 2.
+Deﬁnition. We deﬁne the eigenvariety of tame level U to be the rigid space
+Hom(H, Gm).
+Let Γ denote the closure of Γ in O×
+L,p. Then the natural map O×
+L,p/Γ → H
+is injective and the cokernel is ﬁnite. The corresponding map of rigid spaces
+Hom(H, Gm) → W Γ is ﬁnite ﬂat of degree equal to the order of this cokernel,
+by part (iv) of Lemma 2. Note that it also follows from this lemma that the
+eigenvariety is a ﬁnite union of open balls, and that the ﬁbre of a point κ
+in weight space is canonically the set of overconvergent automorphic forms of
+weight κ and tame level U . The eigenvariety itself can be thought of as a
+parameter space interpolating overconvergent eigenforms of varying weights.
+Finally, the Hecke operator corresponding to a uniformiser at a place q of L
+manifests itself as the evaluation homomorphism from the eigenvariety to Gm
+corresponding to evaluation at this uniformiser.
+In this setting, the eigenvariety is smooth and has ﬁnitely many components.
+It still appears to be an open question as to whether the Coleman-Mazur eigen-
+7
+===== PDF PAGE 8 =====
+curve has ﬁnitely or inﬁnitely many components (indeed, almost every natural
+question about the Coleman-Mazur eigencurve is still open).
+3 Classical and overconvergent modular forms:
+Results of Coleman and others.
+In this section we brieﬂy summarise (see Theorem 1 below) some of the main
+results from the theory of classical and overconvergent modular forms. Our
+goal in the rest of this paper is to propose analogous deﬁnitions in the setting of
+automorphic forms for D×, D a deﬁnite quaternion algebra over Q, and then to
+prove analogues of the results in Theorem 1, although we shall only sketch the
+construction of the eigencurve in this setting, and the construction will be made
+under a minor but unnecessary technical restriction, which we shall remove in
+forthcoming work.
+Let p be prime, and let N be a positive integer prime to p. Let K be a
+complete subﬁeld of Cp (this is just for notational convenience; all of this works
+for a general K of characteristic zero, complete with respect to a non-trivial
+non-archimedian valuation and with residue ﬁeld of characteristic p), and for
+Γ ⊆ SL2(Z) let Sk(Γ) denote the space of classical cusp forms of level Γ and
+weight k deﬁned over K. If Γ = Γ 1(N ) then we refer to this space as the space
+of classical cusp forms of level N and weight k deﬁned over K. For r = p−t
+with t ∈ Q and 0 ≤ t < p/ (p + 1), let Sk(Γ1(N ); r) denote the p-adic Banach
+space of r-overconvergent cusp forms of tame level N and weight k, that is, at
+least for N ≥ 5, the cuspidal sections of ωk on the rigid subspace of X1(N )
+obtained by removing open discs of radius r above every supersingular point
+in characteristic p (a more precise deﬁnition may be found in, for example, [7]
+and [5]. We omit the more precise deﬁnitions as we shall never be using them).
+Let Sk(Γ1(N )) denote the space of forms which overconverge as far as one can
+reasonably ask, that is, sections of ωk on the wide-open subspace of X1(N )
+obtained by removing closed discs of radius p−p/(p+1) in each supersingular
+disc. By deﬁnition, Sk(Γ1(N )) ⊂ Sk(Γ1(N )) ⊂ Sk(Γ1(N ); r) and if r < s then
+Sk(Γ1(N ); r) ⊂ Sk(Γ1(N ); s). We remind the reader of some theorems about
+these objects (again we shall be slightly sketchy, and refer the reader to the
+original papers for more precise statements)
+Theorem 1. 1. If f ∈ Sk(Γ1(N ) ∩ Γ0(pn)) then f ∈ Sk(Γ1(N ); r) for some
+appropriate r.
+2. If f ∈ Sk(Γ1(N ); r) and Upf = λf for some non-zero λ, then f ∈
+Sk(Γ1(N )).
+3. For k ≥ 1, there is a map θk−1 : S2−k(Γ1(N )) → Sk(Γ1(N )) which on
+q-expansions is
+(
+q d
+dq
+)k−1
+, and whose cokernel is ﬁnite-dimensional.
+4. Say 0 ̸= f ∈ Sk(Γ1(N ); r) and Upf = λf for some non-zero λ. If vp(λ) <
+8
+===== PDF PAGE 9 =====
+k − 1, then f ∈ Sk(Γ1(N )). On the other hand, if vp(λ) > k − 1 then
+f ̸∈ Sk(Γ1(N )).
+5. Any ﬁnite slope overconvergent eigenform is part of a family of constant
+slope, in some precise sense.
+6. Finite slope normalised overconvergent eigenforms of tame level N are
+parametrised by a rigid-analytic geometric object, the eigencurve of tame
+level N (at least if p > 2 and N = 1 ).
+Proof. Parts 1 and 2 are classical. Part 1 is proved in [14] for n = 1 and in [10]
+for general n. Part 2 is also proved in [14]. Parts 3 and 4 are related and
+deeper, and are both proved in [5]. Part 5 is proved in [6] and part 6 in [7].
+Note also that the constructions in [7] should also go through for general p
+and N , although nothing is published in this generality as yet (see [2] and also
+forthcoming work of Emerton, however).
+As already explained, we will prove analogues of all these results in the
+setting of automorphic forms on deﬁnite quaternion algebras over the rationals.
+The main question to be solved here is that of ﬁnding the correct deﬁnition of an
+overconvergent automorphic form in this setting. The problem with the classical
+deﬁnition is that it is inherently geometric, and relies (amongst other things)
+on the fact that modular curves are one-dimensional. This causes problems
+when trying to construct analogues of the Coleman-Mazur construction for other
+reductive groups, although some progress has been made by Goren and others
+in the case of Hilbert modular forms. See also forthcoming work of Nevens,
+and recent preprints of Abbes-Mokrane and Kisin-Lai, which should hopefully
+culminate in a geometric construction of p-adic parameter spaces for Hilbert
+modular forms.
+In the setting of groups which are compact mod centre at inﬁnity, the
+problem is rather diﬀerent: now one cannot remove canonical small regions
+from the moduli space because it is 0-dimensional, and it appears that a com-
+pletely diﬀerent approach is necessary. Our approach is very much inspired by
+a preprint [9] of Stevens and involves using an “Eichler-Shimura” philosophy
+which re-interprets the theory of modular forms in a much more combinatorial
+way, which seems to be more amenable to generalisation. One consequence of
+this is that the proofs of the analogues of the results above in this setting are
+much easier, requiring no hard algebraic geometry.
+One natural question that can be raised is what relation there is between
+the eigencurves constructed here and those of Coleman-Mazur. Is there a map
+between them “explaining” the Jacquet-Langlands correspondence? In fact Ch-
+enevier in [4] has recently constructed such a map, although his construction
+assumes the classical Jacquet-Langlands result and hence does not give another
+proof of it.
+9
+===== PDF PAGE 10 =====
+4 Deﬁnitions and classical forms
+Let p be a ﬁxed prime. For α ≥ 1 an integer, let Mα be the monoid consisting
+of 2 by 2 matrices
+( a b
+c d
+)
+with a, b, c, d ∈ Zp and such that pα | c, p ∤ d and
+ad − bc ̸= 0. Let D be a deﬁnite quaternion algebra over Q with discriminant δ
+prime to p. Fix once and for all a maximal order OD of D and an isomorphism
+OD ⊗ B ∼= M2(B), where B = lim ←(Z/MZ), the limit being taken over all
+integers M prime to δ. This isomorphism induces isomorphisms OD ⊗ Zl ∼=
+M2(Zl) and OD ⊗ Ql ∼= M2(Ql) for all primes l ∤ δ, and we will henceforth
+identify these rings with one another. Let Af denote the ﬁnite adeles over Q
+and deﬁne Df = D ⊗Q Af . Then Df can be thought of as the restricted product
+over all primes l of D ⊗ Ql and in particular if g ∈ Df then the component gp
+of g at p can be regarded as an element of M 2(Qp).
+Deﬁnition. If U is an open compact subgroup of D×
+f and α ≥ 1 then we say
+that U has wild level ≥ pα if the projection of U onto GL2(Qp) is contained
+in Mα.
+We oﬀer the following as examples. If M is any integer prime to δ, then
+deﬁne U0(M ) (resp. U1(M )) to be the compact open in D×
+f formed as a product∏
+l Ul where Ul = ( OD ⊗ Zl)× for l | δ, and Ul is the matrices which are of the
+form
+(∗∗
+0∗
+)
+(resp.
+(∗∗
+0 1
+)
+) mod lvl(M ) for all other l. If pα divides M then the
+projection of U1(M ) to the factor at p is contained in Mα and hence U has
+wild level ≥ pα. At the other extreme, we say that a compact open U is “prime
+to p” if U can be written as U′ × GL2(Zp) where U′ is a compact open of
+(D ⊗ Af,p)×, where Af,p denotes the adeles with trivial components at inﬁnity
+and p. As examples, if N is a positive integer prime to pδ then U0(N ) and
+U1(N ) have level prime to p. We refer to the subgroups U′ above as “tame
+levels”.
+Let α ≥ 1 be an integer, and let U be a compact open of wild level ≥ pα. If
+R is any commutative ring and A is an R-module with an R-linear right action
+of Mα, then deﬁne the R-module L(U, A ) by
+L(U, A ) =
+{
+f : D×
+f → A : f (dgu) = f (g)up
+}
+,
+where d ∈ D× (embedded diagonally in D×
+f ), g ∈ D×
+f and u ∈ U . This object
+looks rather terrifying if one is not familiar with this kind of thing, but in fact
+it is well-known that if one writes D×
+f as a disjoint union of double cosets D×
+f =∐
+i D×diU then this union is ﬁnite, of size n say, and hence any f ∈ L(U, A ) is
+determined uniquely by the ﬁnite amount of data f (d1), f (d2), . . . f (dn). More
+precisely it can be shown that if Γ i = d−1
+i D×di ∩ U then Γ i is a ﬁnite group,
+and then an easy formal argument shows that the map
+L(U, A ) →
+n⨁
+i=1
+AΓi (1)
+sending f to
+(
+f (di)
+)
+1≤i≤n is an isomorphism of R-modules. In particular, if U
+is chosen such that all the groups Γ i are trivial, then the map L(U, A ) → An
+10
+===== PDF PAGE 11 =====
+sending f to
+(
+f (d1), f (d2), . . .
+)
+is an isomorphism of R-modules. Triviality of all
+the Γ i is a common occurrence—if γ ∈ Γi is non-trivial then the characteristic
+polynomial of γ must be of the form X 2 − aX + 1 where a ∈ {−2, −1, 0, 1}, with
+a = −2 occurring iﬀ γ = −1. Hence if U ⊆ U1(M ) for some M ≥ 4, for example,
+then all the Γ i are trivial. The non-triviality of the groups Γ i can be dealt with
+if one extends some of Coleman’s theory on families of compact operators—see
+forthcoming work [2] of the author. For simplicity we shall here assume that all
+Γi are trivial whenever this eases the exposition. The more sophisticated reader
+might be happier thinking of L(U, A ) in the general case as being the global
+sections of the sheaf corresponding to A on the stack D×\Df /U .
+We recall the classical deﬁnition of the space of automorphic forms of level U
+and weight k. Strictly speaking these are not classical forms because we have
+shifted the “weight” action from ∞ to p, so one should perhaps think of the
+spaces below as being analogues of modular forms with coeﬃcients in K. It is an
+elementary exercise (see for example the argument around equation (2) on p443
+of [8]) to verify, however, that if there is an embedding of ﬁelds K → C then the
+K-spaces we are about to deﬁne, when tensored up to C, become isomorphic as
+Hecke modules to spaces of classical forms.
+Recall that K is a complete subﬁeld of Cp. Let Lk denote the space of
+polynomials in one variable z, of degree at most k−2, and with coeﬃcients in K.
+Deﬁne an action of M1 (and hence of Mα for all α ≥ 1) by, for γ =
+( a b
+c d
+)
+∈ M1
+and h ∈ Lk,
+(h|γ)(z) = ( cz + d)k−2h
+( az + b
+cz + d
+)
+.
+If U is a compact open subgroup of D×
+f of wild level ≥ p, we shall refer to the
+K-vector space SD
+k (U ) := L(U, L k) as the space of classical automorphic forms
+of weight k and level U for D, deﬁned over K. If U = U1(M ) for some integer M
+which is a multiple of p and prime to δ as usual, then we refer to SD
+k (U1(M )) as
+the space of classical automorphic forms for D of level M and weight k, deﬁned
+over K. If K contains all the φ(M )th roots of unity then this space decomposes
+as a direct sum
+SD
+k (U1(M )) =
+⨁
+ε
+SD
+k (U1(M ))(ε)
+where the sum is over all characters ε : ( Z/MZ)× → K×, and SD
+k (U1(M ))(ε)
+is deﬁned to be
+{
+f : D×
+f → Lk : f (dgu) = ε(u)f (g)up for all d ∈ D×, u ∈ U0(M )
+}
+.
+Here ε is considered as a character of U0(M ) via the map U0(M ) → (Z/MZ)×
+sending
+( a b
+c d
+)
+to d mod M .
+It is more convenient to split up a character into its p-power part and its
+p-primary part. If M = N p n with n ≥ 1 and N prime to p, and we continue
+to assume that K contains all φ(M )th roots of unity, then one can write ε :
+(Z/MZ)× → K× as a product εpεp, where εp has level N and εp has level pn.
+Let α ≥ 1 be minimal such that εp factors through ( Z/pαZ)×. One can then
+11
+===== PDF PAGE 12 =====
+deﬁne a “weight-character ( k, ε p)”-action of Mα on Lk by, for h ∈ Lk and
+γ =
+( a b
+c d
+)
+∈ Mα,
+(h|γ) ( z) = ( cz + d)k−2εp(d)h
+( az + b
+cz + d
+)
+.
+Let Lk,εp denote Lk equipped with this action. If U is any compact open of
+level prime to p, then it makes sense to deﬁne SD
+k (U ∩ U1(pn))(εp) := L(U ∩
+U0(pn), L k,εp) and we see that
+⨁
+εp:(Z/NZ)×→K×
+SD
+k (U1(M ))(εpεp) = SD
+k (U1(M ))(εp),
+⨁
+εp:(Z/pnZ)×→K×
+SD
+k (U1(M ))(εp) = SD
+k (U1(M )),
+and more generally
+⨁
+εp:(Z/pnZ)×→K×
+SD
+k (U ∩ U1(pn))(εp) = SD
+k (U ∩ U1(pn))
+if U has level prime to p. This philosophy, of treating characters at p diﬀerently
+to characters of level prime to p, by amalgamating the character at p with the
+weight, is already present in the “classical” theory of p-adic modular forms, and
+we also saw it in the GL 1 case.
+Now let us return to the setting of a compact open U of wild level ≥ pα,
+and a general right Mα-module A. The space L(U, A ) comes equipped with
+certain standard operators, which we now deﬁne. Firstly say η ∈ D×
+f such that
+ηp ∈ Mα. If f : D×
+f → A then deﬁne f |η : D×
+f → A by
+(f |η)(g) = f (gη−1)ηp.
+Note that using this deﬁnition we have
+L(U, A ) = {f : D×\D×
+f → A : f |η = f for all η ∈ U }.
+Now say η is as above. We deﬁne A[ηp] to be the abelian group A equipped with
+the action, denoted ·, of η−1
+p Mαηp ∩ Mα, deﬁned by a · (η−1
+p γηp) := aγ. The
+map f ↦→ f |η is easily shown to be an isomorphism L(U, A ) → L(η−1U η, A [ηp]),
+which we shall denote |η. If the map a ↦→ aηp induces an isomorphism of abelian
+groups A → A, then one can think of this map as an isomorphism A[ηp] → A
+and in this case the map |η sends L(U, A ) to L(η−1U η, A ) isomorphically.
+Next we deﬁne Hecke operators. Let η be as above, write U ηU = ∐
+i U η i
+(a ﬁnite union) and deﬁne the Hecke operator [ U ηU ] : L(U, A ) → L (U, A ) by
+[U ηU ]f = ∑
+i f |ηi. Of particular interest are the standard Hecke operators,
+deﬁned as follows. If l is a prime not dividing δ, then deﬁne ϖl ∈ Af to be the
+ﬁnite adele which is l at l and 1 at all other ﬁnite places. We sometimes think
+12
+===== PDF PAGE 13 =====
+of ϖl as an element of D×
+f via the diagonal embedding. By a mild abuse of
+notation, we deﬁne ηl =
+( ϖl 0
+0 1
+)
+to mean the element of D×
+f which is
+( l 0
+0 1
+)
+at l
+and is the identity at all other places. We deﬁne Tl = [ U η lU ] and Sl = [ U ϖ lU ].
+An easy computation veriﬁes for example that if f ∈ SD
+k (U1(M ))(ε), then for
+all l ∤ M we have Sl(f ) = ε(l)lk−2f . We conclude this section by reminding the
+reader of the explicit form that the Jacquet-Langlands theorem takes in this
+setting:
+Theorem 2 (Jacquet-Langlands, Shimizu, Arthur). If k ≥ 3 then the
+space SD
+k (U1(M )) is isomorphic to the space Sδ-new
+k (Γ1(M ) ∩ Γ0(δ)) of classical
+δ-new forms, and this isomorphism commutes with the action of the standard
+Hecke operators deﬁned above. If k = 2 then Sδ-new
+k (Γ1(M ) ∩ Γ0(δ)) is iso-
+morphic to the quotient of SD
+k (U1(M )) by the subspace of forms which factor
+through the norm map, and again the isomorphism commutes with the action of
+the standard Hecke operators deﬁned above.
+Proof. This is a “concrete” realisation of the Jacquet-Langlands theorem; a
+good reference for how to deduce it from Theorem 16.1 of [13] is the ﬁrst few
+pages of section 5 of [8] (with t = 1 in their notation).
+As a consequence we see that if f ∈ SD
+k (U1(M ))(ε) is an eigenform then there
+is a continuous Galois representation ρf : Gal( Q/Q) → GL2(K) associated to f
+satisfying the usual properties.
+5 Overconvergent automorphic forms of a ﬁxed
+weight.
+Let K be a complete subﬁeld of Cp as usual.
+Deﬁnition. A real number r is said to be a radius of convergence if r = p−n
+for some integer n ≥ 0.
+Deﬁnition. If r is a radius of convergence then we let Br be the rigid subspace
+of aﬃne 1-space over K whose Cp-points are
+Br(Cp) = {z ∈ Cp : there exists y in Zp such that |z − y| ≤ r}.
+If furthermore r < 1 then we deﬁne B×
+r as the rigid subspace of aﬃne 1-space
+whose Cp-points are
+B×
+r (Cp) = {z ∈ Cp : there exists y in Z×
+p such that |z − y| ≤ r}.
+In fact Br and B×
+r are just disjoint unions of ﬁnitely many closed aﬃnoid
+discs. One can think of Br and B×
+r as being a sequence of rigid neighbourhoods
+of Zp and Z×
+p respectively in the analytiﬁcation of aﬃne 1-space over K. If
+s < r are both radii of convergence then Bs ⊂ Br and B×
+s ⊂ B×
+r .
+We say that a map between K-Banach spaces is compact (some authors use
+the term “completely continuous”) if it is a limit of maps having ﬁnite rank.
+13
+===== PDF PAGE 14 =====
+If r is a radius of convergence then let Ar denote the ring of functions on Br,
+equipped with the supremum semi-norm (which is a norm in this case, as Ar is
+reduced). A basic result is
+Lemma 3. If s < r are radii of convergence, then the inclusion Bs ⊂ Br
+induces a compact map Ar → A s.
+Proof. This is an immediate consequence of the fact that the inclusion Bs ⊂ Br
+is inner. Alternatively, one can give a direct proof, as follows: the space Br is a
+ﬁnite disjoint union of closed discs, and hence Ar is a ﬁnite direct sum of rings
+topologically isomorphic to the aﬃnoid K⟨x⟩. The inclusion Bs → Br induces,
+on each aﬃnoid corresponding to a component of Br, a map K⟨x⟩ → K⟨y⟩
+which, if one chooses appropriate parameters on the discs, is equal to the ring
+homomorphism deﬁned by x ↦→ (r/s)y. But this map is compact because for
+any ε > 0, the image of the basis {1, x, x 2, . . . } of K⟨x⟩ only contains ﬁnitely
+many terms with norm greater than ε.
+Note that we think of Br and B×
+r not as being abstract rigid spaces but as
+being explicit rigid subspaces of rigid aﬃne 1-space. Hence these spaces come
+with with a ﬁxed parameter z, upon which several constructions below will
+depend.
+Let W denote “weight space” in this setting, that is, the rigid space
+Hom(Z×
+p , Gm)
+over K (see Lemma 2). Then the L-points ( L any ﬁnite extension of K) of W
+are the continuous group homomorphisms κ : Z×
+p → L×. We refer to points
+of W as weights, or as weight-characters. Points of W corresponding to weight-
+characters of the form κ(x) = xkεp(x), where k is an integer and εp is a ﬁnite
+order character, will be called classical weight-characters.
+We have seen that W is a union of ﬁnitely many open discs. Say κ ∈ W (K).
+Then it is an easy check (use log and exp) that κ extends to a morphism of
+rigid spaces B×
+r → Gan
+m for some radius of convergence r < 1, (and hence to a
+morphism B×
+s → Gm,K for any radius of convergence s < r ). For example, one
+can take r = p−1 if κ(x) = xk for some k ∈ Z, and r = p−n if κ is of ﬁnite order
+and factors through ( Z/pnZ)×.
+If
+( a b
+c d
+)
+∈ Mα then the map z ↦→ cz + d deﬁnes a morphism Br → B×
+rp−α ,
+and the map z ↦→ az+b
+cz+d deﬁnes a morphism Br → Br|∆|, where ∆ = ad − bc. We
+frequently use the weaker statement that z ↦→ az+b
+cz+d deﬁnes a map Br → Br.
+Now say κ ∈ W (K) and r is a radius of convergence.
+Deﬁnition. We say an integer α ≥ 1 is good for (κ, r ) if κ : Z×
+p → K× extends
+to a morphism of rigid spaces B×
+rp−α → Gan
+m .
+For any κ and r, a good integer α will exist, by the remarks above. Of
+course, given α which is good for ( κ, r ), the extension of κ to B×
+rp−α is unique.
+Finally, if α is good for ( κ, r ) and β > α then β is also good for ( κ, r ) and the
+extension of κ to B×
+rp−β is just the restriction of the extension of κ to Brp−α .
+14
+===== PDF PAGE 15 =====
+Now choose κ and r as above, and let α be any integer which is good for
+(κ, r ). Let κ also denote the extension of κ to B×
+rp−α .
+Deﬁnition. Let Aκ,r be the ring Ar of rigid-analytic functions on Br, equipped
+with the following right action of Mα: for h ∈ A κ,r and γ =
+( a b
+c d
+)
+∈ Mα,
+(h|γ)(z) = κ(cz + d)
+(cz + d)2 h
+( az + b
+cz + d
+)
+.
+Note that α has to be good for ( κ, r ) for this deﬁnition to make sense. Note
+also that the simplest example of these rings is just Aκ,1 which is the ring K⟨z⟩
+of power series ∑ anzn such that an → 0 as n → ∞.
+We say that a map f between Banach spaces is norm-decreasing if |f (x)| ≤
+|x| for all x. We have equipped Ar with the structure of a Banach space and we
+think of Aκ,r also as having this Banach space structure. The map Aκ,r → A κ,r
+deﬁned by h ↦→ h|γ is norm-decreasing: this is an immediate consequence of the
+fact that κ(cz + d) and cz + d both have norm 1. If | det(γ)| < 1 then one can
+say much more. In this case, the endomorphism f ↦→ f |γ of Aκ,r is compact, as
+it factors as Aκ,r
+res− → Aκ,r|∆|
+|γ
+− → Aκ,r, where ∆ = det( γ), and the restriction
+map Aκ,r → A κ,r|∆| is compact by Lemma 3.
+On the other hand if | det(γ)| = 1 then γ has an inverse in Mα, and so
+the induced endomorphism of Aκ,r is norm-decreasing with a norm-decreasing
+inverse and is hence an isometry.
+For κ a weight and r = p−n, choose α ≥ 1 which is good for ( κ, r ), and let
+U be a compact open subgroup of D×
+f of wild level ≥ pα. The key deﬁnition is
+the following:
+Deﬁnition. The space of r-overconvergent automorphic forms of weight-character κ
+and level U is the space SD
+κ (U ; r) := L(U, Aκ,r).
+We now make some elementary observations about this space. Firstly, note
+that this space is independent of the choice of α, in the sense that if β is also
+good for ( κ, r ) and U also has wild level ≥ pβ, then the two induced actions of U
+on Aκ,r are the same and hence the deﬁnition is independent of the choice of α.
+Next note that using the “explicit” description of equation (1) in section 4, one
+sees that SD
+κ (U ; r) is naturally a Banach space over K (note that the groups Γ i
+are ﬁnite and K has characteristic 0 and hence the subspace of Aκ,r where Γ i acts
+trivially is a closed direct summand). In fact one can write down an explicit
+norm on SD
+κ (U ; r), useful for computational purposes—if f ∈ SD
+κ (U ; r) then
+deﬁne |f | = max g∈D×
+f
+|f (g)|. This max exists, is ﬁnite, and is attained, because
+if u ∈ U and h ∈ A κ,r then det( up) ∈ Z×
+p , so h and h|u have the same norm, and
+hence |f (g)| is constant on double cosets D×gU . One can also view the norm
+on SD
+κ (U, r ) in the following manner: ﬁx once and for all {d1, . . . , d n} such that
+D×
+f = ∐ D×diU ; then there is an induced isomorphism SD
+κ (U ; r) ∼= ⊕iAΓi
+κ,r as
+above, and the right hand side is a closed subspace of the aﬃnoid ⊕iAκ,r (which
+can be thought of as being equipped with its usual supremum semi-norm).
+15
+===== PDF PAGE 16 =====
+If s < r is another weight, then the restriction map Aκ,r → A κ,s is com-
+pact and norm-decreasing, and hence induces a compact norm-decreasing map
+SD
+κ (U ; r) → SD
+κ (U ; s).
+For η ∈ D×
+f such that ηp ∈ Mα, the endomorphism [ U ηU ] of SD
+κ (U ; r)
+is continuous and norm-decreasing. Moreover if also ηp has determinant ∆ a
+non-unit, then [ U ηU ] factors as
+[U ηU ] : SD
+κ (U ; r) res− →SD
+κ (U ; r|∆|) → SD
+k (U ; r)
+and hence is norm-decreasing and compact, as the restriction morphism is com-
+pact. Recall that a compact map has a characteristic power series, or a Fredholm
+determinant, which is the natural generalisation of the characteristic polynomial
+of a ﬁnite rank map: see section 5 of [16] for a beautifully-written introduction to
+these notions. The fact that [ U ηU ] is compact and norm-decreasing means that
+its characteristic power series is in OK{{T }}, that is, in the space of power series
+that converge on the whole of aﬃne 1-space. The case we are most interested
+in is the Hecke operator Up := [ U η pU ] where we recall ηp =
+( ϖp 0
+0 1
+)
+.
+If κ is a classical weight-character, that is, κ(x) = xkεp(x) where k is an
+integer and εp is a ﬁnite order character, then choose α ≥ 1 minimal such that
+εp factors through ( Z/pαZ)×. We have a natural inclusion Lk,εp → A κ,1 of
+Mα-modules. This induces a map from classical automorphic forms (with p-
+adic coeﬃcients) to 1-overconvergent automorphic forms. More precisely, if we
+ﬁx a level U0 prime to p and any n ≥ α then we get a continuous embedding from
+SD
+k (U0 ∩ U1(pn))(εp) = L(U0 ∩ U0(pn), L k,εp) to Sκ(U0 ∩ U1(pn), 1). This is the
+analogue in this setting of the statement that classical forms are overconvergent.
+In the next section we will discuss the slightly more subtle question of letting
+the level drop at p, and prove an analogue of the result that classical forms of
+level N p n with trivial character at p are overconvergent of level N p .
+6 The operator Up
+We record a few useful facts about the Hecke operator Up. Let κ be a weight
+and let r = p−t be a radius of convergence. Choose any α ≥ 1 which is good
+for ( κ, r ) and choose any n ≥ α. We will be concerned with forms of level
+U = U0 ∩ U1(pα) ∩ U0(pn), where U0 is a compact open of level prime to p.
+Lemma 4. 1. There exist maps αs : SD
+κ (U ; s/p) → SD
+κ (U ; s), for all radii
+of convergence s, such that Up : SD
+κ (U ; r) → SD
+κ (U ; r) factors as
+SD
+κ (U ; r) res− →SD
+κ (U ; r/p)
+αr
+− →SD
+κ (U ; r)
+and if r < 1 it also factors as
+SD
+κ (U ; r)
+αpr
+− →SD
+κ (U ; pr) res− →SD
+κ (U ; r).
+2. Up is a compact operator on SD
+κ (U ; r).
+16
+===== PDF PAGE 17 =====
+3. If s < r is another radius of convergence then the characteristic power
+series of Up on SD
+κ (U ; s) and on SD
+κ (U ; r) coincide.
+4. There is a canonical isomorphism of Hecke modules
+ι : SD
+κ (U ; r/p) ∼= SD
+κ (U ∩ U0(pn+1); r)
+5. The characteristic power series of Up on SD
+κ (U ; r) equals the characteristic
+power series of Up on SD
+κ (U0 ∩ U1(pα); r). That is, “the characteristic
+power series does not see the higher U0(pn) structure”.
+Proof. 1. By deﬁnition, Up is the sum of various maps f ↦→ f |γ where γ ∈
+Mα has determinant p. Hence the results follow from the fact that |γ :
+Aκ,r → A κ,r factors as Aκ,r
+res− → Aκ,r/p
+|γ
+− → Aκ,r, and also as Aκ,r
+|γ
+− →
+Aκ,pr
+res− → Aκ,r if r < 1. Hence αr(f ) := ∑
+i f |ηi will do the job, if
+U
+( ϖp 0
+0 1
+)
+U = ∐
+i U η i.
+2. The restriction maps are compact and compactness of Up follows.
+3. Let αps : SD
+κ (U ; s) → SD
+κ (U ; ps) be as in part 1. The characteristic power
+series of αs◦res and res ◦αs are equal, by [16], Corollaire 2 to Proposition 7,
+and the result follows easily by induction on − logp(s).
+4. One constructs ι by composing the following sequence of canonical iso-
+morphisms. Firstly deﬁne U 0(p) to be the matrices γ ∈ U0(1) such that
+γp is lower triangular mod p. Then one observes that SD
+κ (U ; r/p) =
+L(U, Aκ,r/p) is the subspace of L(U ∩ U 0(p), Aκ,r/p) where the matri-
+ces
+( 1 i
+0 1
+)
+all act as the identity. This space is naturally isomorphic to
+the space L(U ∩ U 0(p), O(pBr)), where pBr is the rigid subspace of Aan
+1
+whose Cp-points are {z : z/p ∈ Br(Cp)}. Note that pBr ⊂ Br/p. Next
+we observe that the map h ↦→ h|
+( ϖp 0
+0 1
+)
+induces an isomorphism L(U ∩
+U 0(p), O(pBr)) → L (U ∩ U0(pn+1), O(pBr)[
+( p 0
+0 1
+)
+]). Finally, one checks
+that the map f ↦→ f |
+( p 0
+0 1
+)
+induces an isomorphism O(pBr)[
+( p 0
+0 1
+)
+] →
+Aκ,r and hence an isomorphism L(U ∩ U0(pn+1), O(pBr)[
+( p 0
+0 1
+)
+]) = L(U ∩
+U0(pn+1), Aκ,r) = SD
+κ (U ∩ U0(pn+1); r). If we deﬁne ι to be the composite
+of these isomorphisms then it is elementary to check that ι commutes with
+the Hecke operators away from p, and an explicit calculation shows that ι
+also commutes with the Hecke operator Up. We remark that the way we
+have normalised things, the operator Up at level pn is ∑p−1
+i=0 |
+( p 0
+ipn 1
+)
+, and
+in particular it depends on n. This annoyance could have been avoided at
+the expense of introducing other annoyances.
+5. It suﬃces to prove that the characteristic power series of Up on SD
+κ (U0 ∩
+U1(pα)∩U0(pn); r/p) and SD
+κ (U0∩U1(pα)∩U0(pn+1); r) are equal, if n ≥ α.
+Let T denote the composition
+SD
+κ (U0 ∩ U1(pα) ∩ U0(pn+1); r) res− →SD
+κ (U0 ∩ U1(pα) ∩ U0(pn+1); r/p) →
+17
+===== PDF PAGE 18 =====
+→ SD
+κ (U0 ∩ U1(pα) ∩ U0(pn); r/p),
+where this latter morphism is given by the trace map f ↦→ ∑p−1
+i=0 f |
+( 1 0
+pni 1
+)
+.
+Then it is an elementary exercise to check that T is compact, and that
+both ι ◦ T and T ◦ ι are equal to Up on their respective spaces. The result
+follows by [16], Corollaire 2 to Proposition 7.
+We can now easily prove analogues of the ﬁrst two parts of Theorem 1. As
+before, let U0 be some compact open of level prime to p, let κ be a weight-
+character and let r be a radius of convergence. Let α be any positive integer
+which is good for ( κ, r ), and let n ≥ α be any integer. Set U = U0 ∩ U1(pα) ∩
+U0(pn).
+Proposition 3.
+1. If f ∈ Sκ(U ; r) then f |
+( ϖα−n
+p 0
+0 1
+)
+(appropriately interpreted) is an element
+of Sκ(U0 ∩ U1(pα); r/pn−α).
+2. If f ∈ Sκ(U ; r) and Upf = λf for some non-zero λ then f ∈ Sκ(U ; s) for
+any radius of convergence s ≥ r such that α is good for (κ, s ).
+Proof. 1. One continually applies the inverse of the map ι deﬁned in part 4
+of Lemma 4.
+2. By part 1 of Lemma 4, Upf ∈ Sκ(U ; pr) and hence f ∈ Sκ(U ; pr). So we
+are ﬁnished by induction on − logp(r).
+Note that the map f ↦→ f |
+( ϖn−α
+p 0
+0 1
+)
+, the inverse of the map in part 1 of this
+proposition, is in fact the natural inclusion Sκ(U0 ∩U1(pα); r/pn−α) → Sκ(U ; r),
+in the sense that it is the one which commutes with the Hecke operator Up.
+The fact that it is this morphism which is natural, rather than the identity
+map, is a mildly annoying consequence of the way we have set things up—more
+speciﬁcally, it is because the matrices deﬁning Up depend on the level that we
+are working with.
+7 Classical and overconvergent forms.
+We have just seen how classical forms embed into overconvergent ones. Now
+we show how to pull them out. Let κ = ( k, ε p) be a classical weight-character,
+where k ≥ 1, and as usual choose α ≥ 1 minimal such that εp factors through
+(Z/pαZ)×. Then Mα acts on Lk,εp. Let U0 be a compact open in D×
+f of level
+prime to p, and let U = U0 ∩ U0(pn) for any n ≥ α. Let κ′ be the character
+(2 − k, ε p). We deﬁne a map
+θ1−k : SD
+κ (U, 1) → SD
+κ′ (U, 1)
+18
+===== PDF PAGE 19 =====
+by
+(
+θ1−k(f )
+)
+(g) = ( |ν(g)| det(gp))1−k dk−1f (g)
+dzk−1 .
+Here ν is the norm map D×
+f → A×
+f , and |.| is the usual absolute value map
+Af → Q. Note that the superscript 1 − k is notational and merely there to
+indicate that θ1−k looks like the (1 − k)th power of some kind of Tate twisting
+operator.
+One has to verify that the map θ1−k is well-deﬁned, which boils down to
+checking that for
+( a b
+c d
+)
+∈ Mα and F a power series in z, we have the identity
+( dk−1
+dzk−1
+) (
+(cz + d)k−2F
+( az + b
+cz + d
+))
+= ( ad−bc)k−1(cz+d)−k
+( dk−1F
+dzk−1
+) ( az + b
+cz + d
+)
+.
+This identity is trivial for k = 1 and the general case is easily established
+by induction on k. Next one can analyse the relationship between θ1−k and
+Hecke operators. Again it is elementary to check that if f ∈ SD
+κ (U, 1) and
+η ∈ D×
+f with ηp ∈ Mα, then ( θ1−kf )|η = |ν(η)|k−1θ1−k(f |η) and hence that
+[U ηU ]θ1−k = |ν(η)|k−1θ1−k[U ηU ]. Applying this with η = ηl one sees that
+Tlθ1−k = l1−kθ1−kTl and hence that if f ∈ SD
+κ (U, 1) is an eigenform for Tl with
+eigenvalue al then θ1−kf is an eigenform for Tl with eigenvalue all1−k. We now
+prove the analogue of the third and fourth results of Theorem 1 in this setting.
+Proposition 4. The kernel of θ1−k is precisely the classical forms
+SD
+k (U0 ∩ U1(pn))(εp).
+Let 0 ̸= f ∈ SD
+κ (U ; r) be an eigenvector for Up with non-zero eigenvalue λ. Then
+f ∈ SD
+κ (U ; 1) . Moreover, if vp(λ) < k −1 then f is classical, and if vp(λ) > k −1
+then f is not classical.
+Proof. The kernel of θ1−k is the functions f ∈ SD
+κ (U ; 1) whose image is con-
+tained within the space of polynomials of degree at most k − 2, which is pre-
+cisely the space of classical forms L(U, L k,εp) = SD
+k (U0 ∩ U1(pn))(εp). Next,
+let 0 ̸= f ∈ SD
+κ (U ; r) be an eigenvector for Up with non-zero eigenvalue λ. By
+the proposition in the previous section, f ∈ SD
+κ (U, 1).
+If f is classical then one can easily deduce from the classical theory (see
+for example Theorem 4.6.17 of [15], the fact that λ is an algebraic integer, and
+the Jacquet-Langlands theorem) that vp(λ) ≤ k − 1. On the other hand, if
+vp(λ) < k − 1 then θ1−kf is in SD
+κ′ (U ; 1) and if it is non-zero then it is an
+eigenvector for Up with eigenvalue λ/pk−1, which has negative valuation. On
+the other hand, Up is an operator with norm at most 1, and hence θ1−kf = 0.
+Hence f is classical.
+In the classical theory, one can ﬁnd both classical and non-classical forms
+with vp(λ) = k − 1, and it would be an interesting computational exercise to
+search for examples of this phenomenon in this situation.
+We ﬁnish by remarking that if we had deﬁned our spaces of overconvergent
+automorphic forms as L(U, (Aκ,r)∗), using the dual of Aκ,r, then one would see
+19
+===== PDF PAGE 20 =====
+the theta operator going in the other direction, which would be more analogous
+to the classical theory. On the other hand, using this convention gives a surjec-
+tion from overconvergent forms to classical ones, rather than an injection from
+classical forms to overconvergent ones. Using the duals would give a theory
+more analogous to the one set up by Stevens in the classical case.
+8 Families
+Let R be a reduced aﬃnoid over K. Then R is a Banach algebra in the sense
+of section A1 of [6]. Let A be a Banach module over R. Brieﬂy, the key points
+are that R is a ring complete with respect to a non-trivial ultrametric norm
+and A is a complete normed R-module satisfying various natural axioms such
+as |ra| ≤ | r||a| for r ∈ R and a ∈ A. In fact the only cases of interest to
+us in this paper are when R is an aﬃnoid disc over K. Assume furthermore
+that we have an R-linear action of Mα on A, and that all elements of Mα act
+continuously. Then for U ⊂ D×
+f open and compact and of wild level ≥ pα, we
+see that L(U, A ) also inherits the structure of a Banach module over R. Let us
+for simplicity assume in this section that all the ﬁnite groups Γ i are trivial.
+We now specialise to the case that we are interested in. Let R be the ring of
+functions on an aﬃnoid disk V deﬁned over K in W. Deﬁne AV,r to be the ring
+of functions on the rigid space V ×K Br. We say that an integer α ≥ 1 is good
+for the pair ( V, r ) if for all κ ∈ V (Cp), the map κ : Z×
+p → C×
+p extends to a map
+B×
+r → Gan
+m . Because V is aﬃnoid, one can check that good integers α do exist.
+Deﬁne a right action of Mα on AV,r by, for h ∈ AV,r and γ =
+( a b
+c d
+)
+∈ Mα,
+(h|γ)(κ, z ) = κ(cz + d)
+(cz + d)2 h
+(
+κ, az + b
+cz + d
+)
+.
+It is easily veriﬁed that Mα acts by continuous R-linear maps. If U is a com-
+pact open of wild level ≥ pα then we deﬁne SD
+V (U ; r) := L(U, AV,r ). This is
+a Banach module over R and it enjoys various base change properties. For
+example, if V1 ⊆ V2 are aﬃnoids in W, with associated algebras R1 and R2,
+then SD
+V2(U ; r) ˆ⊗R2R1 = SD
+V1(U ; r), and if κ ∈ V (K) inducing a map R → K
+then SD
+V (U ; r) ⊗R K = SD
+κ (U ; r). The same formalism as we have seen already
+in the case of ﬁxed weight shows that we have continuous Banach R-module
+endomorphisms Tl of SD
+V (U ; r) for l any prime not dividing δ, and furthermore
+that Up is a compact morphism. In particular Up on SD
+V (U, r ) has a characteris-
+tic power series in R{{T }} whose restriction to a weight κ is the characteristic
+power series of Up on forms of weight κ.
+The reader who has read the construction of the classical eigencurve in [7]
+will now see that we have all the ingredients to construct the analogous object in
+this case. The reason we have restricted to the case where the Γ i are all trivial is
+to ensure that all the Banach modules SD
+V (U, r ) are orthonormizable, although
+in future work we shall show that this assumption is unnecessary. We point out
+here that we only deﬁne the “ D” eigencurve in this setting, although no doubt
+one can also construct a “ C” eigencurve by mimicking the construction in [7].
+20
+===== PDF PAGE 21 =====
+By the argument at the beginning of Chapter 7 of [7], for every Hecke op-
+erator α we can construct a spectral curve Zα representing the spectrum of the
+compact operator αUp. All of Coleman’s Riesz theory applies in this setting,
+and the construction of the curve Dα in Section 7.2 of [7] goes through word for
+word in our setting. Similarly the arguments of Section 7.3 go over unchanged,
+to give us an eigencurve D. Once the existence of D is established, the usual
+corollaries, such as local constancy of dimension of spaces of overconvergent
+forms of a given slope follow, although of course one can prove these corollaries
+directly just by an analysis of the spaces SD
+V (U, r ). Finally, the fact that forms
+of small slope are classical enables one to deduce that the dimensions of spaces
+of classical forms of a given slope are also locally constant.
+We remark that Dan Jacobs in his thesis ([12]) has make some explicit com-
+putations which indicate that, just as in the classical case, these new eigencurves
+exhibit some surprising and unexplained regularity in their structure.
+We end with a remark about what is lacking in this theory. One can prove
+slightly less about these eigencurves than the classical eigencurves, because the
+arguments in [7] that rely on the existence of q-expansions seem to have no
+analogue in this setting. The fact that points on the eigencurve correspond to
+overconvergent eigenforms follows from some elementary commutative algebra,
+but on the other hand, the lack of a natural pairing between spaces of forms
+and Hecke algebras in this setting means that the author cannot currently prove
+that the rank of the Hecke algebra acting on a space of overconvergent forms
+of some ﬁxed slope is as big as the rank of the space of the forms. We hope to
+resolve this problem in the future.
+References
+[1] S. Bosch, U. G¨ untzer and R. Remmert, Non-Archimedean Analysis ,
+Springer-Verlag (1984).
+[2] K. Buzzard, Eigenvarieties, in preparation.
+[3] J. Cassels, A. Fr¨ ohlich, Algebraic Number Theory , Academic Press, Boston
+(1967).
+[4] G. Chenevier, Familles p-adiques de formes automorphes et applications
+aux conjectures de Bloch-Kato , PhD, Univ. Paris VII, 2003.
+[5] R. Coleman, Classical and overconvergent modular forms , Invent. Math.
+124 (1996) 215–241.
+[6] R. Coleman, p-adic Banach spaces and families of modular forms. Invent.
+Math. 127 (1997), 417–479.
+[7] R. Coleman and B. Mazur, The eigencurve . In Galois representations in
+arithmetic algebraic geometry (Durham 1996), CUP 1998, 1–113.
+21
+===== PDF PAGE 22 =====
+[8] F. Diamond and R. Taylor, Non-optimal levels for mod l modular represen-
+tations of Gal(Q/Q), Invent. Math. 115 (1994), 435–462.
+[9] G. Stevens, Overconvergent modular symbols , preprint.
+[10] F. Gouvˆ ea, Arithmetic of p-adic modular forms , Springer LNM 1304 (1988).
+[11] F. Gouvˆ ea, B. Mazur, Families of modular eigenforms . Math. Comp. 58
+(1992), 793–805.
+[12] D. Jacobs, Slopes of compact Hecke operators , PhD, University of London,
+2003.
+[13] H. Jacquet and R. Langlands, automorphic forms on GL(2), Springer LNM
+114 (1970).
+[14] N. Katz, p-adic properties of modular schemes and modular forms , Mod-
+ular functions of one variable, III (Proc. Internat. Summer. School, Univ.
+Antwerp, Antwerp, 1972) (Berlin), Springer, 1973, 69–190. LNM Vol. 350.
+[15] T. Miyake, Modular forms , Springer Verlag, Berlin, 1989.
+[16] J.-P. Serre, Endomorphismes compl` etement continus des espaces de Banach
+p-adiques, Publ. Math. IHES 12 (1962) 69–85.
+22

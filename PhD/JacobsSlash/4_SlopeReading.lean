@@ -117,7 +117,7 @@ theorem isNewtonPolygonOf_val_charCoeff
       (ofSlopes (fun n => (n : ℝ)) Nat.mono_cast 0) := by
   refine isNewtonPolygonOf_ofSlopes _ _ _ _ fun m => ?_
   show (ϖ₃ h3).val (charCoeff u m) = (((0 : ℝ) + ∑ i ∈ range m, (i : ℝ) : ℝ) : WithTop ℝ)
-  rw [val_charCoeff_of_unit_minors h3 u hdiv hmin m, sum_range_cast_id m]
+  rw [val_charCoeff_of_unit_minors (ϖ₃ h3) u hdiv hmin m, sum_range_cast_id m]
 
 /-- Case A transport: the polygon the step algorithm constructs from the characteristic
 power series of `u` (coefficients valued by `v₃`) has unit slopes `0, 1, 2, …` — the
@@ -133,7 +133,7 @@ theorem unitSlope_newtonPolygon₀OfPowerSeries_charPowerSeries
   have hv : ∀ m, coeffSeq (ϖ₃ h3).val (charPowerSeries u) m
       = (((0 : ℝ) + ∑ i ∈ range m, (i : ℝ) : ℝ) : WithTop ℝ) := fun m => by
     rw [coeffSeq_apply, charPowerSeries_coeff,
-      val_charCoeff_of_unit_minors h3 u hdiv hmin m, sum_range_cast_id m]
+      val_charCoeff_of_unit_minors (ϖ₃ h3) u hdiv hmin m, sum_range_cast_id m]
   exact unitSlope_newtonPolygon₀OfSeq_ofSlopes (fun n => (n : ℝ)) Nat.mono_cast 0 _ hv j
 
 end CaseA

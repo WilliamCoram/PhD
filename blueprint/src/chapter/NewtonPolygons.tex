@@ -248,3 +248,102 @@ Chapter~\ref{chap:slopes}.
   $f$ is restricted at every smaller radius.  In polygon terms it is $\exp$ of the supremum of
   the slopes.
 \end{proposition}
+
+\section{The polygon of a product}
+
+Newton's own observation is that the polygon of a product is the \emph{Minkowski sum} of the two
+polygons: sort the segments of both by slope and concatenate.  We prove it in the height form the
+rest of the development reads, and in the counting form that says slope multiplicities add.
+
+Two auxiliary notions carry the proof.  The first is the \emph{face} of a given slope: the
+(possibly degenerate) segment where the supporting line of that slope touches the polygon.  The
+second is a finiteness condition without which the product formula is simply false.
+
+\begin{definition}
+  \label{def:slopesunbounded}
+  \uses{def:newtonpolygon0}
+  \lean{NewtonPolygon₀.SlopesUnbounded}
+  \leanok
+  A polygon has \emph{unbounded slopes} if every real number is exceeded by one of its unit
+  slopes, the junk value $\infty$ past a finite polygon counting.  Polynomials qualify through
+  that junk tail, and entire series because their coefficients lie above a line of every slope.
+\end{definition}
+
+The hypothesis cannot be dropped: $(1 - X)\sum_i X^i = 1$, where the two factors have polygons
+whose Minkowski sum is a horizontal ray while the product's polygon is a single point.  It is the
+polygon-level form of the convergence hypothesis Koblitz imposes for the same reason.
+
+\begin{definition}
+  \label{def:face}
+  \uses{def:slopesunbounded}
+  \lean{NewtonPolygon₀.faceLeft, NewtonPolygon₀.faceRight}
+  \leanok
+  For a real $\sigma$, $\mathrm{faceLeft}(\sigma)$ is the number of unit slopes strictly below
+  $\sigma$ and $\mathrm{faceRight}(\sigma)$ the number at most $\sigma$.  These are the two
+  endpoints of the face of slope $\sigma$; the polygon is the line of slope $\sigma$ between them
+  and strictly above it outside.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:vertex-is-point}
+  \uses{def:isnewtonpolygonof, def:face}
+  \lean{IsNewtonPolygonOf.height_eq_pointHeight_of_unitSlope_lt}
+  \leanok
+  Where the unit slope strictly increases, the polygon meets the point sequence.  In particular
+  both endpoints of every face are points.  (Textbooks take this as the definition of a vertex;
+  against the specification it is a theorem, proved by raising a supporting line of an
+  intermediate slope and contradicting maximality.)
+\end{proposition}
+
+\begin{definition}
+  \label{def:minkowskiheight}
+  \uses{def:newtonpolygon0}
+  \lean{NewtonPolygon₀.minkowskiHeight}
+  \leanok
+  The height at $n$ of the Minkowski sum of two polygons is
+  $\min_{i + j = n}\bigl(P(i) + Q(j)\bigr)$, the infimal convolution of the two height functions.
+\end{definition}
+
+\begin{theorem}[The polygon of a product]
+  \label{thm:np-product}
+  \uses{def:minkowskiheight, def:face, prop:vertex-is-point, def:coeffval}
+  \lean{IsEntireNewtonPolygonOf.height_mul}
+  \leanok
+  For $f$ and $g$ with nonzero constant coefficient and unbounded slopes, the Newton polygon of
+  $fg$ is the Minkowski sum of the polygons of $f$ and $g$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{prop:vertex-is-point}
+  Both inequalities come from the face of a common slope.  The ultrametric bound puts every point
+  of $fg$ on or above the Minkowski sum, since $c_n = \sum_{i+j=n} a_i b_j$.  A minimising split
+  of $n$ admits a slope $\sigma$ supporting both factors there, so the sum of the two supporting
+  lines lies below every point of $fg$ and hence below its polygon; that is one inequality.  For
+  the other, at the two endpoints of the face of slope $\sigma$ the minimising split is
+  \emph{unique}, so the ultrametric bound is an equality there and the endpoints are genuine
+  points of $fg$.  The polygon of $fg$ is therefore below the chord joining them, and that chord
+  is exactly the Minkowski sum on the face.
+\end{proof}
+
+\begin{corollary}[Multiplicities add]
+  \label{cor:np-product-multiplicity}
+  \uses{thm:np-product}
+  \lean{IsEntireNewtonPolygonOf.faceRight_mul, IsEntireNewtonPolygonOf.faceLeft_mul}
+  \leanok
+  The number of slopes of $fg$ that are at most $\sigma$ is the sum of the corresponding counts
+  for $f$ and for $g$; likewise for the slopes strictly below $\sigma$.  Equivalently, the slope
+  multiset of $fg$ is the union of the slope multisets of $f$ and $g$.
+\end{corollary}
+
+\begin{corollary}[The initial segment]
+  \label{cor:np-product-initial}
+  \uses{thm:np-product}
+  \lean{IsEntireNewtonPolygonOf.height_mul_of_forall_le,
+    height_newtonPolygon₀OfPowerSeries_mul_coe}
+  \leanok
+  If the first $n$ slopes of $g$ are at most every slope of $f$, then the polygon of $fg$ agrees
+  with that of $g$ up to $n$.  Applied to a Fredholm determinant factored as a polynomial times
+  the determinant of the complement, this says the finite factor supplies the initial segment of
+  the polygon --- the form used in Chapter~\ref{chap:slopes}.
+\end{corollary}

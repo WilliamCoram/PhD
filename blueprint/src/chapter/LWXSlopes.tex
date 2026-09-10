@@ -1,0 +1,583 @@
+\chapter{Slopes over the Boundary of Weight Space}
+\label{chap:lwx-slopes}
+
+We can now state what \cite{LWX} prove.  Their target is the Coleman--Mazur--Buzzard--Kilford
+conjecture \cite[Conjecture 1.2]{LWX}, transposed from the eigencurve to the spectral curve
+$\mathrm{Spc}_D$ of overconvergent automorphic forms for a definite quaternion algebra.  That
+conjecture has three clauses: sufficiently close to the boundary,
+\begin{enumerate}
+  \item $\mathrm{Spc}^{>r}_D$ is a disjoint union of countably many connected components $Z_n$,
+    each finite and flat over the annulus $\mathcal{W}^{>r}$ via the weight map;
+  \item there are rationals $\alpha_1 \leq \alpha_2 \leq \cdots \to \infty$ with
+    $\lvert a_p(z)\rvert = \lvert T_{\mathrm{wt}(z)}\rvert^{\alpha_n}$ for $z \in Z_n$;
+  \item the sequence $\alpha_1, \alpha_2, \dots$ is a disjoint union of \emph{finitely many
+    arithmetic progressions}, counted with multiplicity (at least for large indices).
+\end{enumerate}
+\cite[Theorem 1.3]{LWX} proves a coarse form of (1)--(2) over the full annulus
+$\mathcal{W}^{>1/p}$: a decomposition indexed by the intervals $[n,n]$ and $(n,n+1)$, with
+$v(a_p(x)) \in \varphi(q)\,v(T_{\mathrm{wt}(x)})\cdot I$ on the piece $X_I$, and explicit degrees.
+\cite[Theorem 1.5]{LWX} proves (1)--(2) on the nose over a smaller annulus
+$\mathcal{W}^{>\lambda}$, $\lambda = p^{-8/((p^{2}-1)t+8)}$, in the form
+\[
+  v\bigl(a_p(y)\bigr) \;=\; \varphi(q)\,v\bigl(T_{\mathrm{wt}(y)}\bigr)\,\alpha_i(\omega),
+  \qquad y \in Y_{i,\omega},
+  \tag{1.5.1}
+\]
+and then, in a second half beginning ``Moreover'', proves (3).  This is the \emph{spectral halo}:
+approaching the boundary of weight space, the spectral curve resolves into pieces of a completely
+explicit shape.
+
+Theorem~\ref{thm:lwx318} gave a \emph{lower} bound polygon.  The content of this chapter is that,
+under an explicit and checkable hypothesis, the bound is attained on a band around each of the
+points $n_k = kpt$, and that this pins the whole polygon.  Three ingredients:
+a combinatorial upper bound (\S1), a vertex analysis converting touching into $T$-free
+arithmetic (\S2), and the analytic Claim of \cite[\S4.2]{LWX} which controls the indices in
+between (\S3).  Section~4 assembles the polygon-level form of Theorem 1.5, and
+\S\ref{sec:what-15-says} says precisely how much of \cite[Theorem 1.5]{LWX} that is.
+Section~5 transports everything to the genuine Hecke operator, and
+Section~\ref{sec:stepone} records what is still missing for
+\cite[Theorem 1.3]{LWX} itself.
+
+\section{The upper bound polygon}
+
+Everything here is $\N$-combinatorics of the exponent
+$\lambda(n) = \sum_{k<n}\bigl(\lfloor k/t\rfloor - \lfloor k/pt\rfloor\bigr)$ of
+Definition~\ref{def:lwxlambda}.
+
+\begin{definition}
+  \label{def:touchx}
+  \uses{def:lwxlambda}
+  \lean{LWX.touchX, LWX.two_mul_lwxLambda_touchX, LWX.lwxUpperTwice}
+  \leanok
+  Set $n_k = k\,p\,t$, the abscissa of the $k$-th \emph{touching vertex}.  Then
+  \cite[(3.23.1)]{LWX}
+  \[
+    \lambda(n_k) \;=\; \frac{k^{2}p(p-1)t}{2},
+  \]
+  and the \emph{upper bound polygon} is the polygon through the points $(n_k, \lambda(n_k))$,
+  linear of slope $(k+\tfrac12)(p-1)$ on $[n_k, n_{k+1}]$.  We work with twice its exponent, so
+  as to stay in $\N$.
+\end{definition}
+
+\begin{lemma}[{\cite[Lemma 4.1]{LWX}}]
+  \label{lem:lwx41}
+  \uses{def:touchx}
+  \lean{LWX.two_mul_lwxLambda_le_lwxUpperTwice,
+        LWX.lwxUpperTwice_sub_two_mul_lwxLambda_le}
+  \leanok
+  The upper and lower polygons agree at every $n_k$ and differ by at most
+  $(p^{2}-1)t/8$ in between:
+  \[
+    0 \;\leq\; \mathrm{upper}(n) - \lambda(n) \;\leq\; \frac{(p^{2}-1)t}{8}
+    \qquad\text{for all } n .
+  \]
+\end{lemma}
+
+So the two polygons are uniformly close; the whole strategy is to show the Newton polygon is
+squeezed between them and touches the lower one at the $n_k$.
+
+\begin{lemma}[The band identities, {\cite[p.~25]{LWX}}]
+  \label{lem:band}
+  \uses{def:touchx}
+  \lean{LWX.lwxLambda_touchX_add, LWX.lwxLambda_touchX_sub, LWX.lwxLambda_touchX_add_ge,
+        LWX.lwxLambda_touchX_sub_ge}
+  \leanok
+  $\lambda(n_k\pm i) = \lambda(n_k) \pm k(p-1)i$ for $0\leq i\leq t$, and beyond the band of
+  width $t$ the excess is at least $\lvert i\rvert - t$.
+\end{lemma}
+
+The band identity is the reason the lower bound polygon is \emph{linear} of slope $k(p-1)$ across
+$[n_k-t, n_k+t]$: the increments $\lfloor n/t\rfloor - \lfloor n/pt\rfloor$ are constant there.
+
+\section{Vertices and Theorem 1.3}
+
+Write $c_n = \sum_m b_{n,m}T^{m}$ as in \S\ref{chap:lwx-halo}, and recall from
+Theorem~\ref{thm:lwx-sharp} that the polygon touches the lower bound at $n$ exactly when
+$b_{n,\lambda(n)}$ is a unit.  This condition does not mention $T$.
+
+\begin{definition}
+  \label{def:unitband}
+  \uses{thm:lwx-sharp, def:touchx}
+  \lean{LWX.IsUnitCoeff, LWX.leftIndex, LWX.rightIndex, LWX.HasUnitBand}
+  \leanok
+  Say $n$ is a \emph{unit index} if $b_{n,\lambda(n)}\in\Zp^{\times}$.  Let
+  $n_k^{-}$ be the least unit index in $[n_k-t, n_k]$ and $n_k^{+}$ the greatest in
+  $[n_k, n_k+t]$.  The \emph{touching hypothesis} $\mathrm{HasUnitBand}(k)$ asserts that both
+  exist.
+\end{definition}
+
+\begin{lemma}
+  \label{lem:unitband-from-touching}
+  \uses{def:unitband, thm:lwx318, thm:lwx-sharp}
+  \lean{LWX.hasUnitBand_of_height_eq, LWX.height_specCharSeries_touchX}
+  \leanok
+  $\mathrm{HasUnitBand}(k)$ holds if and only if the Newton polygon of $\Char(P)(T_0)$ touches
+  the lower bound polygon at $(n_k, \lambda(n_k)v(T_0))$ for one --- equivalently every --- halo
+  point $T_0$.
+\end{lemma}
+
+This equivalence is the pivot of the whole chapter.  Touching is a statement at one weight; the
+unit band is a statement about the integral matrix and holds for all weights at once.  So a
+single weight at which one can verify touching --- which is what \cite[\S3.23 Step I]{LWX}
+supplies from Atkin--Lehner theory and classicality --- propagates to the entire annulus.
+
+\begin{theorem}[{\cite[Theorem 1.3]{LWX}}, the vertex reading]
+  \label{thm:lwx13-vertices}
+  \uses{def:unitband, thm:lwx318, thm:lwx-sharp, lem:band, def:isnewtonpolygonof}
+  \lean{LWX.bandLine, LWX.height_specCharSeries_eq_bandLine,
+        LWX.bandLine_lt_height_specCharSeries_of_lt_leftIndex,
+        LWX.bandLine_lt_height_specCharSeries_of_rightIndex_lt}
+  \leanok
+  Assume $\mathrm{HasUnitBand}(k)$.  Then at every halo point $T_0$ the points
+  $\bigl(n_k^{-}, \lambda(n_k^{-})v(T_0)\bigr)$ and $\bigl(n_k^{+}, \lambda(n_k^{+})v(T_0)\bigr)$
+  are consecutive vertices of the Newton polygon of $\Char(P)(T_0)$, joined by the segment of
+  slope $k(p-1)v(T_0)$ through $(n_k,\lambda(n_k)v(T_0))$; strictly outside $[n_k^-, n_k^+]$ the
+  polygon lies strictly above that line.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx-sharp, lem:band, thm:lwx318, def:isnewtonpolygonof}
+  On the band, Lemma~\ref{lem:band} says the lower bound polygon is the straight line of slope
+  $k(p-1)v(T_0)$ through $(n_k, \lambda(n_k)v(T_0))$, and Theorem~\ref{thm:lwx-sharp} says the
+  valuation of $c_n(T_0)$ equals its lower bound exactly at the unit indices --- in particular at
+  $n_k^{\pm}$.  So the polygon meets the line at those two abscissae, hence coincides with it in
+  between by convexity.  Outside the band, the excess of Lemma~\ref{lem:band} plus the definitive
+  margin of Theorem~\ref{thm:lwx-sharp} at non-unit indices puts every point strictly above the
+  line; the greatest-convex-minorant characterisation of
+  Definition~\ref{def:isnewtonpolygonof} then gives the strict inequality for the polygon.
+\end{proof}
+
+\begin{corollary}[{\cite[(3.23.3)--(3.23.4)]{LWX}}]
+  \label{cor:lwx13-slopes}
+  \uses{thm:lwx13-vertices}
+  \lean{LWX.unitSlope_specCharSeries_eq_iff, LWX.unitSlope_specCharSeries_mem_Ioo}
+  \leanok
+  The $j$-th slope of the polygon equals $k(p-1)v(T_0)$ exactly for
+  $n_k^{-}\leq j < n_k^{+}$, and lies strictly between $k(p-1)v(T_0)$ and $(k+1)(p-1)v(T_0)$ for
+  $n_k^{+}\leq j < n_{k+1}^{-}$.  In particular the multiplicities
+  $\deg X_k = n_k^{+}-n_k^{-}$ and $\deg X_{(k,k+1)} = n_{k+1}^{-}-n_k^{+}$ are independent of
+  $T_0$.
+\end{corollary}
+
+The independence is what \cite[Theorem 1.3]{LWX} needs for its component decomposition: the
+pieces of the eigencurve over the annulus have degrees that do not vary.
+
+\section{The Claim of \S4.2}
+
+Corollary~\ref{cor:lwx13-slopes} controls the slopes on the bands and says the remaining slopes
+lie strictly between consecutive values.  To pin those too, \cite[\S4.2]{LWX} restrict to a
+smaller annulus, $0 < v(T) < 8/\bigl((p^{2}-1)t+8\bigr)$, and prove:
+
+\begin{theorem}[{\cite[\S4.2, Claim]{LWX}}]
+  \label{thm:lwx-claim}
+  \uses{lem:lwx41, thm:lwx-sharp, def:touchx}
+  \lean{LWX.unitIndex, LWX.IsBelowUpper, LWX.exists_isUnit_and_coeffVal_eq,
+        LWX.isBelowUpper_of_coeffVal_lt, LWX.coeffVal_specCharSeries_eq_unitIndex_mul,
+        LWX.le_coeffVal_specCharSeries_of_not_isBelowUpper}
+  \leanok
+  Let $m(l)$ be the least $m$ with $b_{l,m}\in\Zp^{\times}$.  If $(l, v(c_l(T_0)))$ lies strictly
+  below the upper bound polygon for one $T_0$ in the small annulus, then $m(l)\geq\lambda(l)$,
+  the same holds for every $T$ in the annulus, and
+  \[
+    v\bigl(c_l(T)\bigr) \;=\; m(l)\cdot v(T) \qquad\text{for all such } T .
+  \]
+  If it does not, then $v(c_l(T))\geq \mathrm{upper}(l)\cdot v(T)$ for every $T$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:lwx41, thm:lwx-sharp}
+  This is the analytic core (4.2.1)--(4.2.4) of \cite{LWX}.  Being strictly below the upper bound
+  forces, by Lemma~\ref{lem:lwx41}, that the dominant term in
+  $c_l(T_0) = \sum_m \psi(b_{l,m})T_0^{m}$ occurs at an index $m$ with
+  $\lambda(l)\leq m$ and $2m < \mathrm{upper}$ doubled; the smallness of the annulus makes the
+  competition between the factors $p^{-v(b_{l,m})}$ and $\lVert T_0\rVert^{m}$ strict, so the
+  dominant index is unique and is characterised $T$-freely as the least $m$ with $b_{l,m}$ a
+  unit.  Uniqueness of the dominant term gives the valuation identity by the ultrametric
+  principle, at every $T$ in the annulus simultaneously, since the characterisation of $m(l)$ no
+  longer mentions $T$.
+\end{proof}
+
+Both the hypothesis and the conclusion have been made $T$-free: ``strictly below the upper bound
+polygon'' becomes the predicate $2\,m(l) < \mathrm{upper}_{2}(l)$, both polygons scaling with
+$v(T)$.  That is what allows the next section to define a single $T$-free polygon.
+
+\section{Theorem 1.5}
+
+\begin{definition}
+  \label{def:shapepolygon}
+  \uses{thm:lwx-claim, def:unitband, def:isnewtonpolygonof}
+  \lean{LWX.shapeVal, LWX.shapePolygon, LWX.slopeRatio, LWX.isNewtonPolygonOf_shapePolygon}
+  \leanok
+  The \emph{shape polygon} is the Newton polygon of the $T$-free valuation sequence
+  \[
+    n \longmapsto
+    \begin{cases}
+      \lambda(n_k) & n = n_k, \\
+      m(n) & n \text{ strictly below the upper polygon}, \\
+      \infty & \text{otherwise},
+    \end{cases}
+  \]
+  and $\mathrm{slopeRatio}(j)$ is its $j$-th unit slope.  It is well defined unconditionally.
+\end{definition}
+
+\begin{theorem}[{\cite[Theorem 1.5]{LWX}}, (1.5.1)]
+  \label{thm:lwx15}
+  \uses{def:shapepolygon, thm:lwx-claim, thm:lwx13-vertices, cor:ofslopes-transport}
+  \lean{LWX.height_specCharSeries_eq_smul_shape,
+        LWX.unitSlope_specCharSeries_eq_slopeRatio}
+  \leanok
+  Assume $\mathrm{HasUnitBand}(k)$ for every $k$.  Then for every $T$ in the small annulus
+  $0 < v(T) < 8/\bigl((p^{2}-1)t+8\bigr)$ and every $j$, the $j$-th slope of the Newton polygon
+  of $\sum_n c_n(T)X^{n}$, counted with multiplicity, is
+  \[
+    \mathrm{slope}_j(T) \;=\; v(T)\cdot\mathrm{slopeRatio}(j),
+  \]
+  with $\mathrm{slopeRatio}$ independent of $T$.  In \cite{LWX}'s normalisation
+  $\mathrm{slopeRatio}(j) = \varphi(q)\,\tilde\alpha_j(\omega)$, the factor $\varphi(q)$ of
+  (1.5.1) being absorbed into our ratio and $\tilde\alpha$ being the sequence $\alpha$ repeated
+  according to the degrees $\deg Y_{i,\omega}$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx-claim, thm:lwx13-vertices, def:shapepolygon}
+  The Newton polygon of $\Char(P)(T)$ is the convex hull of the points $(n, v(c_n(T)))$.  At
+  $n = n_k$ the height is $\lambda(n_k)v(T)$ by Theorem~\ref{thm:lwx13-vertices}; at $n$ strictly
+  below the upper polygon it is $m(n)v(T)$ by Theorem~\ref{thm:lwx-claim}; and every other point
+  lies above the upper polygon and so above the hull of those two families.  Thus the two hulls
+  agree after scaling by $v(T)$, and reading unit slopes off a scaled polygon multiplies them by
+  the same scalar.
+\end{proof}
+
+\begin{theorem}[The remaining clauses of {\cite[Theorem 1.5]{LWX}}]
+  \label{thm:slope-growth}
+  \uses{def:shapepolygon, thm:lwx318}
+  \lean{LWX.monotone_slopeRatio, LWX.tendsto_slopeRatio_atTop}
+  \leanok
+  The ratios $\mathrm{slopeRatio}(0)\leq\mathrm{slopeRatio}(1)\leq\cdots$ increase, and tend to
+  infinity.  Both statements are unconditional: they need neither the small annulus nor the
+  touching hypothesis.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx318, def:shapepolygon}
+  Monotonicity is convexity of the shape polygon.  For the growth: unit coefficients occur only
+  at heights $\geq\lambda(n)$ by Theorem~\ref{thm:lwx318}, so the shape sequence dominates
+  $\lambda$, whose increments $\lfloor k/t\rfloor-\lfloor k/pt\rfloor$ are unbounded.  Given $M$,
+  the line $y = Mx - M^{2}pt$ lies on or below every point of the shape sequence, hence on or
+  below the shape polygon by the supporting-line lemma; comparing with the height as the sum of
+  the first $n$ slopes and using monotonicity gives a slope $\geq M-1$.
+\end{proof}
+
+The supporting-line lemma used here is a spec-level consequence of the greatest-convex-minorant
+characterisation, recorded separately.
+
+\begin{lemma}[Supporting lines]
+  \label{lem:supporting-line}
+  \uses{def:isnewtonpolygonof, def:ofslopes}
+  \lean{IsNewtonPolygonOf.twoSlope_le_height, IsNewtonPolygonOf.line_le_height,
+        NewtonPolygon₀.unitSlope_eq_of_height_eq, NewtonPolygon₀.monotone_toReal_unitSlope}
+  \leanok
+  A two-slope broken line lying on or below every point of an admissible valuation sequence lies
+  on or below its Newton polygon; with equal slopes this is the supporting-line statement for a
+  single line.  Moreover a unit slope is the corresponding height increment, and the unit slopes
+  of a constructed polygon are monotone and never $\bot$.
+\end{lemma}
+
+\section{What Theorem 1.5 says, and what \S4 proves}
+\label{sec:what-15-says}
+
+Theorem~\ref{thm:lwx15} is a statement about Newton polygons; \cite[Theorem 1.5]{LWX} is a
+statement about a rigid analytic space.  It is worth being exact about the gap.  \cite{LWX}'s
+theorem reads:
+
+\begin{quote}
+  Let $\omega : \Delta \to \Zp^{\times}$ be a character.  Then there exists
+  $\lambda \in (0,1)$ such that there exists a sequence of rational numbers
+  $\alpha_0(\omega), \alpha_1(\omega), \dots$ in increasing order and tending to infinity such
+  that $\mathrm{Spc}^{>\lambda}_{D,\omega}$ is a disjoint union
+  $\coprod_{i\geq 0} Y_{i,\omega}$ of rigid analytic spaces finite and flat over
+  $\mathcal{W}^{>\lambda}_\omega$ via $\mathrm{wt}$, such that
+  \[
+    v\bigl(a_p(y)\bigr) = \varphi(q)\,v\bigl(T_{\mathrm{wt}(y)}\bigr)\,\alpha_i(\omega)
+    \tag{1.5.1}
+  \]
+  for every $y \in Y_{i,\omega}$.  More precisely, if the tame level is neat, then we can take
+  $\lambda = p^{-8/((p^{2}-1)t+8)}$ for $p > 2$ \dots
+  \emph{Moreover}, let $M$ be a positive integer so that $p^{-q/p^{M-1}(p-1)} > \lambda$
+  \dots  Then if we extend the sequence $\alpha_0(\omega), \alpha_1(\omega),\dots$ into
+  $\tilde\alpha_0(\omega), \tilde\alpha_1(\omega), \dots$ with each $\alpha_i(\omega)$ appearing
+  with multiplicity $\deg Y_{i,\omega}$, then
+  $\tilde\alpha_0(\omega), \tilde\alpha_1(\omega), \dots$ is a disjoint union of
+  $(p-1)p^{M-1}t/2$ arithmetic progressions with (the same) common difference
+  $\varphi(q)p^{M}/2q^{2}$.  More precisely,
+  \[
+    \tilde\alpha_{j + q^{-1}p^{M}t}(\omega\omega_0^{2})
+      = \tilde\alpha_j(\omega) + \frac{p^{M}}{q^{2}}
+    \qquad\text{for any } j \geq 0.
+    \tag{1.5.2}
+  \]
+\end{quote}
+
+So the theorem is really three assertions, and the arithmetic progressions are the third.
+
+\paragraph{(a) The polygon identity.}  This is what Theorem~\ref{thm:lwx15} proves, and it is
+\cite{LWX}'s own reduction: the proof in \cite[\S4.2]{LWX} opens by saying that, the tame level
+being neat, ``it suffices to show that for $T \in \Cp$ with
+$0 < v(T) < \tfrac{8}{(p^{2}-1)t+8}$, the ratios to $v(T)$ of the slopes (counted with
+multiplicity) of the Newton polygon of $\sum_{n\geq0} c_n(T)X^{n}$ are independent of the choice
+of $T$.''  Theorem~\ref{thm:lwx15} is that sentence, with the ratios named
+$\mathrm{slopeRatio}(j) = \varphi(q)\tilde\alpha_j(\omega)$ and produced as the unit slopes of an
+explicit $T$-free polygon (Definition~\ref{def:shapepolygon}), on exactly \cite{LWX}'s annulus.
+Theorem~\ref{thm:slope-growth} adds the two clauses ``in increasing order and tending to
+infinity''.  We prove it over any complete ultrametric field receiving $\Zp$ isometrically, not
+only $\Cp$, and --- through Theorem~\ref{thm:lwx-slopes-seam} --- for the genuine $U_p$ rather
+than for the integral matrix.  It is conditional on the touching hypothesis
+$\mathrm{HasUnitBand}$; see \S\ref{sec:stepone}.
+
+\paragraph{(b) The geometric decomposition.}  The passage from ``the slope ratios are
+$T$-independent'' to ``$\mathrm{Spc}^{>\lambda}_{D,\omega} = \coprod_i Y_{i,\omega}$ with each
+$Y_{i,\omega}$ finite flat over the annulus'' is not formalised, and is out of scope for this
+thesis: the spectral curve is a rigid analytic space, and no rigid geometry is developed here.
+What we do have is its fibrewise shadow.  Theorem~\ref{thm:lwx-spectral} identifies, at each
+weight in the annulus, the zeros of $\Char(P)(T_0)$ with the reciprocal $U_p$-eigenvalues on
+$S^{D,\dagger,m}_{\kappa_{T_0}}(U)$, so (1.5.1) holds pointwise for every point of the spectral
+curve lying over the annulus; and Theorem~\ref{thm:halo-riesz} builds, at each halo vertex, the
+finite locally free $U_p$-stable summand over the \emph{whole} annulus $\Lhalo[1/T]$ whose
+Fredholm determinant is the corresponding polynomial factor --- which is the algebra underlying
+the finite flat piece.  Assembling those into a rigid space, and identifying the summands with
+connected components, is the missing step.
+
+\paragraph{(c) The arithmetic progressions.}  This is the ``Moreover'' clause, (1.5.2), and it is
+\emph{not} formalised and \emph{not} a consequence of Theorem~\ref{thm:lwx15}.  This is the point
+at which our statement is genuinely weaker than \cite{LWX}'s, and the reason is structural rather
+than a matter of effort: (1.5.2) relates the sequence at the nebentypus $\omega$ to the sequence
+at $\omega\omega_0^{2}$ --- two \emph{different} characters, shifted by the square of the
+Teichm\"uller character --- whereas everything in
+Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is proved at a single fixed $\omega$, one
+weight disc at a time.  Nothing in our development compares two nebentypi, so no periodicity
+statement can even be phrased, let alone proved.
+
+\cite[Remark 1.6(4)]{LWX} says where it comes from: ``The second half of Theorem 1.5 follows from
+the first half by classicality results and Atkin--Lehner theory'' (an argument found
+independently by Bergdall and Pollack).  Those are exactly the two ingredients of
+\cite[\S3.23 Step I]{LWX}, and \S\ref{sec:stepone} below records their status here: the
+Atkin--Lehner slope pairing is proved modulo one operator identity carried as a hypothesis
+(Proposition~\ref{prop:atkin-lehner}), the classical subspace and the theta operator are stated
+but unproved (Proposition~\ref{prop:theta}), and the conjugate character $\omega^{-1}$ exists as
+a definition (Definition~\ref{def:conjchar}) precisely so that a two-character argument could be
+phrased later.  The same remark applies to \cite[Corollary 1.4]{LWX}, the periodicity of
+$\deg X_{I,\omega}$ modulo $\varphi(q)/2$, which is a statement about two weight discs and is
+likewise not formalised.
+
+\paragraph{Degrees.}  One further difference is worth flagging.  Our
+Corollary~\ref{cor:lwx13-slopes} gives the multiplicities as
+$\deg X_k = n_k^{+} - n_k^{-}$ and $\deg X_{(k,k+1)} = n_{k+1}^{-} - n_k^{+}$, which is what the
+vertex analysis produces and is enough for $T$-independence.  \cite[Theorem 1.3]{LWX} additionally
+evaluates them, at a neat tame level, as
+$\deg X_{n,\omega} = r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n-2}) + r_{\mathrm{ord}}(\omega\omega_0^{-2n})$
+and $\deg X_{(n,n+1),\omega} = qt - r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n}) -
+r_{\mathrm{ord}}(\omega\omega_0^{-2n})$ in terms of dimensions of ordinary subspaces.  Those
+identifications are again Step I, and again involve several nebentypi at once; they are not
+formalised.
+
+\section{Reading it on the genuine $U_p$}
+
+Chapter~\ref{chap:lwx-model} identified $\Char(P)(T_0)$ with $\det(1-X\,U_p)$ on
+$S^{D,\dagger,m}$ at every analyticity level (Theorem~\ref{thm:lwx-prop217-h}).  Composing gives
+each of the statements above for the genuine Hecke operator; nothing new is proved, and no
+neatness hypothesis is needed, because none of the polygon statements uses one.
+
+\begin{theorem}
+  \label{thm:lwx-slopes-seam}
+  \uses{thm:lwx-prop217-h, thm:lwx318, cor:lwx13-slopes, thm:lwx15,
+        lem:unitband-from-touching}
+  \lean{LWX.isBelow_newtonPolygon_discHeckeCharPowerSeries,
+        LWX.hasUnitBand_of_height_discHeckeCharPowerSeries_eq,
+        LWX.unitSlope_discHeckeCharPowerSeries_eq_iff,
+        LWX.unitSlope_discHeckeCharPowerSeries_mem_Ioo,
+        LWX.unitSlope_discHeckeCharPowerSeries_eq_slopeRatio,
+        LWX.exists_level_unitSlope_discHeckeCharPowerSeries_eq_slopeRatio}
+  \leanok
+  For $\det(1-X\,U_p)$ on $S^{D,\dagger,m}$, at every point of the boundary annulus
+  $p^{-1}<\lVert T_0\rVert<1$: the Newton polygon lies on or above the lower bound polygon of
+  Theorem~\ref{thm:lwx318}; if it touches it at $n_k$ at one halo point then
+  $\mathrm{HasUnitBand}(k)$ holds; the slope readings of Corollary~\ref{cor:lwx13-slopes} hold;
+  and, on the small annulus, so does (1.5.1) of Theorem~\ref{thm:lwx15}.
+\end{theorem}
+
+The last item deserves emphasis: \emph{the touching hypothesis has to be verified only once, at a
+single weight}, and Lemma~\ref{lem:unitband-from-touching} then supplies it everywhere.
+
+\section{Towards Theorem 1.3: what remains}
+\label{sec:stepone}
+
+\cite[Theorem 1.3]{LWX} --- the statement that the spectral curve over the boundary annulus is a
+disjoint union of pieces finite and flat over it, with the slope of $a_p$ on the piece $X_I$
+lying in $\varphi(q)v(T)\cdot I$ --- needs the touching hypothesis to be discharged.
+\cite[\S3.23]{LWX} do this in three steps.  \emph{Step I} compares the slopes on the whole space
+with those on the finite-dimensional classical subspace, and uses Atkin--Lehner theory to pin
+their total; this is what supplies the touching.  \emph{Step II} is the vertex analysis of \S2
+above, and is formalised.  \emph{Step III} computes the degrees $\deg X_{I,\omega}$ in terms of
+dimensions of ordinary subspaces, using Hida theory and the theta exact sequence; we prove the
+degrees only in the form $n_k^{+}-n_k^{-}$, which is what \S2 produces.  So Step II is done and
+Steps I and III are not.  This section records exactly what is and is not there, and
+\S\ref{sec:ledger} tabulates what each of the missing steps would buy.
+
+\begin{definition}[The conjugate nebentypus]
+  \label{def:conjchar}
+  The character $\omega^{-1} : u \mapsto \omega(u)^{-1}$ (stated in Lean, proof still a
+  skeleton).  Step I runs the argument at the pair
+  $(\omega, \omega^{-1})$ simultaneously; since every statement of
+  Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is proved for an arbitrary $\omega$, the
+  second instance costs nothing.  The same $U_p$-datum serves both, the nebentypus entering only
+  through the entry streams.
+\end{definition}
+
+\begin{proposition}[Atkin--Lehner, reduced]
+  \label{prop:atkin-lehner}
+  \uses{lem:charpoly-pairing}
+  \lean{LWX.atkinLehner, LWX.atkinLehnerConj, LWX.atkinLehner_mul_atkinLehnerConj,
+        LWX.atkinLehnerConj_mem_Iw, LWX.roots_charpoly_atkinLehner,
+        LWX.norm_roots_charpoly_atkinLehner}
+  \leanok
+  The element $w = \begin{pmatrix}0&1\\-p^{m}&0\end{pmatrix}$ has determinant $p^{m}$, normalises
+  the Iwahori subgroup, inverts the nebentypus, and conjugates $U_p$ to $U'_p$ --- all expressed
+  by the inverse-free identity $w\,\gamma^{w} = \gamma\,w$.  \emph{Granting} the operator
+  identity $U_p\circ U'_p = p^{k+1}$ on the classical space,
+  Lemma~\ref{lem:charpoly-pairing} gives \cite[Proposition 3.22]{LWX}: the $U_p$-slopes at
+  nebentypus $\psi$ and at $\psi^{-1}$ pair up to $k+1$.
+\end{proposition}
+
+The proof of \cite[Proposition 3.22]{LWX} on \cite[p.~24]{LWX} applies Jacquet--Langlands and
+classifies the local component as a principal series.  Neither is available in Lean, so what is
+formalised is a \emph{reduction}: everything except the single operator identity
+$U_p U'_p = p^{k+1}$, which is carried as an explicit hypothesis.  The expected route to it ---
+expanding the product over coset representatives, so that all non-central contributions are
+traces from level $p^{m-1}$ and vanish by character orthogonality when the conductor is $p^{m}$
+--- has no source we could find stated in the quaternionic setting, so it is not claimed.  A
+per-result audit of every use of Jacquet--Langlands, and of our avoidance of it, is maintained
+alongside the sources.
+
+\begin{proposition}[The theta operator and the classical subspace]
+  \label{prop:theta}
+  \uses{def:discforms, def:blockmaps}
+  In the disc model an element \emph{is} the family of Taylor coefficients on each disc, so
+  $\theta^{r}$ --- $r$-fold differentiation, \cite[\S7]{Bu04} --- is the shift
+  $(a,j)\mapsto (j+1)\cdots(j+r)\,c(a,j+r)$: a diagonal of integers composed with a shift,
+  bounded by $1$ and column-finite, hence continuous, and block-diagonal over the discs.  Its
+  kernel at $r = k+1$ is exactly the locally polynomial functions of degree $\leq k$, which is
+  the first sentence of \cite[Proposition 4]{Bu04}, of dimension $(k+1)p^{h}$ per disc --- the
+  local half of \cite[(3.21.1)]{LWX}.  The weight equivariance holds on each disc and hence on
+  the model.
+\end{proposition}
+
+This proposition is \emph{stated but not yet proved}: it lives in a skeleton file, which is why
+it carries no Lean reference above and is not reachable from the project's root module.  The $U_p$
+intertwining $\theta U_p = p^{k+1}U_p\theta$, which follows by summing the equivariance over the
+coset decomposition, is not yet assembled.  Nothing in it depends on Jacquet--Langlands:
+\cite[Proposition 4]{Bu04}'s first sentence and its small-slope half are Jacquet--Langlands-free,
+and the converse half --- which does use it --- is never imported; the converse is instead
+derived from an explicit hypothesis.
+
+\begin{proposition}[The finite factor]
+  \label{prop:finite-factor}
+  \uses{prop:det-summand, lem:charpolyrev}
+  If a compactoid $u$ commutes with an idempotent whose range is finite free, its Fredholm
+  determinant splits as the reversed characteristic polynomial of the finite piece times the
+  determinant of the complement.
+\end{proposition}
+
+Step I uses exactly this, the classical subspace being a finite-dimensional $U_p$-stable piece.
+Both ingredients (Proposition~\ref{prop:det-summand} and Lemma~\ref{lem:charpolyrev}) are
+proved; the assembly is stated but not yet finished --- again in a skeleton file, hence no Lean
+reference --- and the further comparison --- that the
+finite factor contributes an \emph{initial segment} of the Newton polygon --- is a separate gap.
+
+\section{The dependency ledger}
+\label{sec:ledger}
+
+It is worth recording, once, exactly which unformalised input buys which unformalised
+conclusion, since the three missing statements have genuinely different requirements and the
+obvious guess --- that Steps I and III together give everything --- is not right.
+
+\begin{center}
+\small
+\begin{tabular}{p{0.27\textwidth}p{0.40\textwidth}p{0.24\textwidth}}
+  \hline
+  \textbf{Target} & \textbf{Input required} & \textbf{Status here} \\
+  \hline
+  $\mathrm{HasUnitBand}(k)$ for all $k$; hence unconditional
+    Corollary~\ref{cor:lwx13-slopes}, Theorems~\ref{thm:lwx15}, \ref{thm:slope-growth},
+    \ref{thm:lwx-slopes-seam}
+  & Step I at conductor $q^{2}$: classicality \cite[Prop.~2.15]{LWX}, Atkin--Lehner
+    \cite[Prop.~3.22]{LWX}, the dimension count \cite[(3.21.1)]{LWX}, and the initial-segment
+    comparison
+  & the single hook; Lemma~\ref{lem:unitband-from-touching} is built to receive it \\
+  \hline
+  \cite[Thm.~1.3]{LWX}'s degree formulas
+    $\deg X_{n,\omega} = r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n-2}) +
+     r_{\mathrm{ord}}(\omega\omega_0^{-2n})$
+  & Step III: Hida's \cite[Cor.~3.21]{LWX}, and the theta exact sequence
+    $0 \to S^{D}_{k+2} \to S^{D,\dagger}_{(k,\psi)} \xrightarrow{(d/dz)^{k+1}}
+     S^{D,\dagger}_{(-k-2,\psi)} \to 0$, \emph{including} its surjectivity
+  & not formalised; surjectivity is the Jacquet--Langlands half of \cite[Prop.~4]{Bu04}, which we
+    do not import \\
+  \hline
+  \cite[Thm.~1.5]{LWX}'s second half: (1.5.2) and the arithmetic progressions
+  & Step I's two inputs again, but at conductor $p^{M}$ for every admissible $M$, together with
+    statements ranging over the $\omega_0^{2}$-orbit of nebentypi
+  & not formalised, and \emph{not} implied by Steps I and III as such \\
+  \hline
+  The decomposition $\mathrm{Spc}^{>\lambda}_{D,\omega} = \coprod_i Y_{i,\omega}$, finite flat
+  & rigid analytic geometry
+  & out of scope for this thesis; see \S\ref{sec:what-15-says}(b) \\
+  \hline
+\end{tabular}
+\end{center}
+
+Two remarks on the third row, since it is the one that is easy to misjudge.  First, (1.5.2) is a
+statement about $\tilde\alpha$, the slope-ratio sequence counted with multiplicity --- our
+$\mathrm{slopeRatio}$ --- so it is a \emph{polygon-level} statement and needs none of the rigid
+geometry of the fourth row.  Second, it nonetheless does not follow from Step I plus Step III: it
+uses no theta operator and no degree formula, but it does need the classical space at
+\emph{arbitrary} level $p^{M}$ rather than at $q^{2}$, and it compares the sequence at $\omega$
+with the sequence at $\omega\omega_0^{2}$, whereas everything in
+Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is proved at a single fixed $\omega$.
+
+Concretely, five objects would have to be built, none of which exists yet:
+
+\begin{enumerate}
+  \item the classical space $S^{D}_{k+2}(K^{p}\Iw_{p^{m}};\psi)$ itself, at every $m$ --- the
+    overconvergent side is already available at every analyticity level by
+    Theorem~\ref{thm:lwx-prop217-h}, but its classical subspace is not;
+  \item the operator identity $U_p \circ U'_p = p^{k+1}$ on that space, the standing hypothesis
+    of Proposition~\ref{prop:atkin-lehner};
+  \item the theta operator's remaining clauses (Proposition~\ref{prop:theta}) and the $U_p$
+    intertwining $\theta U_p = p^{k+1}U_p\theta$, obtained by summing the weight equivariance
+    over the coset decomposition;
+  \item the initial-segment comparison: that a finite-dimensional $U_p$-stable summand
+    contributes an initial segment of the Newton polygon, which turns
+    Proposition~\ref{prop:finite-factor} into a statement about slopes;
+  \item a nebentypus-varying layer: the halo weight at the classical weights $(k,\psi)$ with
+    $\psi$ of conductor $p^{M}$, the computation $v(T_{(k,\psi)}) = q/((p-1)p^{M-1})$ placing
+    them in the small annulus, and statements indexed by $\psi|_\Delta\cdot\omega_0^{k}$ rather
+    than by one $\omega$.  Definition~\ref{def:conjchar} supplies $\omega^{-1}$; the
+    $\omega_0^{2}$-twist has no counterpart yet.
+\end{enumerate}
+
+Items (1)--(4) are Step I and Step III; item (5) is what the second half of
+\cite[Theorem 1.5]{LWX} needs on top of them.
+
+To summarise the status of \cite{LWX}: \S2 and \S3's estimates
+(Theorems~\ref{thm:lwx316}, \ref{thm:lwx318}, \ref{thm:lwx-sharp}), the model identifications
+(Theorems~\ref{thm:prop31}, \ref{thm:lwx-prop217}, \ref{thm:lwx-prop217-h}) and the slope
+theorems conditional on touching (Corollary~\ref{cor:lwx13-slopes},
+Theorems~\ref{thm:lwx15}, \ref{thm:slope-growth}, \ref{thm:lwx-slopes-seam}) are formalised and
+free of \texttt{sorry}.  Step I, Step III, and the nebentypus-varying layer are not; with them
+would come, in that order, the unconditional form of \cite[Theorem 1.3]{LWX}'s slope reading, its
+degree formulas, and the second half of \cite[Theorem 1.5]{LWX} --- everything, that is, except
+the passage from Newton polygons to rigid analytic spaces.

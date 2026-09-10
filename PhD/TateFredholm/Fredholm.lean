@@ -621,8 +621,9 @@ private theorem eventually_norm_truncation_sub_le {f : c(I, R)} {ε : ℝ} (hε 
   rw [cSpace.norm_eq_iSup]
   exact Real.iSup_le hcoord hε.le
 
-/-- A row of `a` vanishes iff `a` evaluates to `0` in that coordinate. -/
-private theorem apply_coord_eq_zero_of_row [IsTate R] {a : c(I, R) →L[R] c(J, R)} {j : J}
+omit [DecidableEq J] in
+/-- A vanishing row of `a` means that `a` evaluates to `0` in that coordinate. -/
+theorem apply_coord_eq_zero_of_row {a : c(I, R) →L[R] c(J, R)} {j : J}
     (ha : ∀ i, matrixCoeff a j i = 0) (x : c(I, R)) : (a x) j = 0 := by
   have hcoord : HasSum (fun i => x i * matrixCoeff a j i) ((a x) j) := by
     simpa only [ContinuousLinearMap.comp_apply, cSpace.evalCLM_apply, map_smul,
@@ -655,6 +656,29 @@ private theorem eq_sum_single_of_support {g : c(I, R)} {S' : Finset I}
     refine (Finset.sum_eq_zero fun i hiS => ?_).symm
     show g i • (cSpace.single i (1 : R)) i₀ = 0
     rw [cSpace.single_apply_of_ne fun h => hi (by rw [h]; exact hiS), smul_zero]
+
+/-- Matrix coefficients of a finite sum of operators. -/
+theorem matrixCoeff_sum {α : Type*} (T : Finset α) (g : α → c(I, R) →L[R] c(J, R)) (j : J)
+    (i : I) : matrixCoeff (∑ x ∈ T, g x) j i = ∑ x ∈ T, matrixCoeff (g x) j i := by
+  show ((∑ x ∈ T, g x) (cSpace.single i 1)) j = _
+  rw [sum_apply, sum_apply_coord]
+  rfl
+
+/-- The matrix of a composition whose right factor is row-supported on the finite set `S` is
+the finite matrix product over `S` (the finite kernel of `matrixCoeff_comp`). -/
+theorem matrixCoeff_comp_eq_sum_of_rows {L : Type*} [DecidableEq L] (a : c(J, R) →L[R] c(L, R))
+    (b : c(I, R) →L[R] c(J, R)) {S : Finset J} (hb : ∀ j ∉ S, ∀ i, matrixCoeff b j i = 0)
+    (l : L) (i : I) :
+    matrixCoeff (a.comp b) l i = ∑ j ∈ S, matrixCoeff a l j * matrixCoeff b j i := by
+  have hsupp : ∀ j ∉ S, (b (cSpace.single i 1)) j = 0 := fun j hj ↦ hb j hj i
+  show (a (b (cSpace.single i 1))) l = _
+  rw [show b (cSpace.single i 1) = ∑ j ∈ S, (b (cSpace.single i 1)) j • cSpace.single j (1 : R)
+    from eq_sum_single_of_support hsupp, map_sum, sum_apply_coord]
+  refine Finset.sum_congr rfl fun j _ ↦ ?_
+  rw [map_smul]
+  show (b (cSpace.single i 1)) j • (a (cSpace.single j 1)) l = _
+  rw [smul_eq_mul, mul_comm]
+  rfl
 
 /-- The trace property for a pair of row-supported operators — the finite kernel:
 both determinants reduce to `det(1 − X·AB) = det(1 − X·BA)` for finite blocks. -/

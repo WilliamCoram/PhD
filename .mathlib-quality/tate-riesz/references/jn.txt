@@ -1,0 +1,3695 @@
+C. Johansson, J. Newton, Extended eigenvarieties for overconvergent cohomology, arXiv:1604.07739v4.
+Text extracted via pypdf from ~/Desktop/Papers/'Johansson, Newton - Eigenvarities.pdf' for line-locator citations (49 pdf pages; '===== PDF PAGE n =====' markers). Math garbling from extraction is cosmetic - cross-check against the PDF.
+
+
+===== PDF PAGE 1 =====
+arXiv:1604.07739v4  [math.NT]  30 Oct 2020
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY
+CHRISTIAN JOHANSSON AND JAMES NEWTON
+Abstract. Recently, Andreatta, Iovita and Pilloni have constructed spaces of overconvergent modular forms
+in characteristicp, together with a natural extension of the Coleman–Mazur eig encurve over a compactiﬁed
+(adic) weight space. Similar ideas have also been used by Liu , Wan and Xiao to study the boundary of the
+eigencurve. This all goes back to an idea of Coleman.
+In this article, we construct natural extensions of eigenva rieties for arbitrary reductive groups G over a
+number ﬁeld which are split at all places above p. If G is GL2/Q, then we obtain a new construction of
+the extended eigencurve of Andreatta–Iovita–Pilloni. If G is an inner form of GL2 associated to a deﬁnite
+quaternion algebra, our work gives a new perspective on some of the results of Liu–Wan–Xiao.
+We build our extended eigenvarieties following Hansen’s co nstruction using overconvergent cohomol-
+ogy. One key ingredient is a deﬁnition of locally analytic di stribution modules which permits coefﬁcients
+of characteristicp (and mixed characteristic). When G is GLn over a totally real or CM number ﬁeld, we
+also construct a family of Galois representations over the r educed extended eigenvariety.
+This is an updated version of the paper , including a correcti on to Lemma 2.1.6 which was incorrect in
+the published version.
+1. I NTRODUCTION
+1.1. The Halo conjecture. The eigencurve, introduced by Coleman and Mazur [ CM98], is a rigid ana-
+lytic curve E rig over Qp which parametrizes systems of Hecke eigenvalues of ﬁnite sl ope overconvergent
+modular forms. It comes equipped with a morphism E rig→W rig
+0 , called the weight map, whose target is
+known as weight space.W rig
+0 parametrizes continuous characters κ : Z×
+p →
+Q
+×
+p and is a disjoint union of
+a ﬁnite number of open unit discs. There is also a morphism E rig→ Grig
+m which sends a system of Hecke
+eigenvalues to the Up-eigenvalue; the p-adic valuation of the Up-eigenvalue is known as the slope. The
+geometry of E rig encodes a wealth of information about congruences between ﬁ nite slope overconvergent
+modular forms, and it is therefore not surprising that its st udy remains a difﬁcult topic. In particular, we
+know very little about the global geometry of E rig (for example, it is not known whether the number of
+irreducible components of E rig is ﬁnite or not).
+Letq = p ifp̸= 2 andq = 4 ifp = 2 . The components of W rig
+0 are parametrized by the characters
+(Z/qZ)× → (Z/qZ)×, and if we deﬁne X := Xκ = κ(exp(q))− 1, X deﬁnes a parameter on each
+component. V ery little is known about the global geometry of E rig over the centre|X|≤ q−1 and it seems
+likely to be rather complicated. Near the boundary, however , the situation turns out to be rather simple.
+Coleman and Mazur raised the question of whether the slope te nds to zero as one moves along a component
+of E rig towards the boundary ofW rig
+0 . Buzzard and Kilford [
+BK05] investigated this question for p = 2
+(and tame level 1) and proved a striking structure theorem: E rig|{|X|>1/8} is a disjoint union of connected
+components (Ei)∞
+i=0, and the weight map Ei→{| X| > 1/8} is an isomorphism for every i. Moreover,
+the slope of a point on Ei with parameter X isi.v2(X), where vp is the p-adic valuation (normalized so
+that vp(p) = 1 ). Out of this came a folklore conjecture; the following vers ion is essentially [
+LWX17,
+Conjecture 1.2]:
+Conjecture. F orr∈ (0, 1) sufﬁciently close to 1, E rig|{|X|>r} is a disjoint union of connected components
+(Ei)∞
+i=0 such that each Ei is ﬁnite over {|X| > r}. Moreover , there exists constants λi ∈ R≥0 for
+i = 0, 1,... , strictly increasing and tending to inﬁnity, such that if x is a point onEi with weight parameter
+X, then the slope of x isλivp(X). The sequence (λi)∞
+i=0 is a ﬁnite union of arithmetic progressions, after
+perhaps removing a ﬁnite number of terms.
+2010 Mathematics Subject Classiﬁcation. 11F33,11F80.
+Key words and phrases. p-adic automorphic forms, eigenvarieties.
+1
+===== PDF PAGE 2 =====
+2 CHRISTIAN JOHANSSON AND JAMES NEWTON
+We will loosely refer to this as the ‘Halo conjecture’ (the ‘h alo’ in question is the (disjoint union of)
+annuli{|X| > r}). Let us assume p̸= 2 for simplicity. If κ is a point of W rig
+0 thenUp acts compactly
+on the space of overconvergent modular forms M †
+κ. The Fredholm determininants det(1−T.U p|M †
+κ)∈
+Qp[[T ]] interpolate to an entire series F =∑ ∞
+n=0anT n with coefﬁcients in Zp[[Z×
+p ]] =O(W rig
+0 )◦. Fix a
+characterη : Z×
+p → F×
+p and consider the ideal Iη = (p, [n]−η(n)|n = 1,...,p − 1). The quotient ring
+Zp[[Z×
+p ]]/Iη is isomorphic to Fp[[X]] via the map sending [exp(p)] to 1+X. We may consider the reduction
+F η ofF moduloIη and the character κη : Z×
+p → (Zp[[Z×
+p ]]/Iη)×∼
+= Fp[[X]]×. In an unpublished note,
+Coleman conjectured that there should exist an Fp((X))-Banach space
+M
+†
+κη of ‘overconvergent modular
+forms of weight κη’ with a compact Up-action such that det(1−T.U p| M
+†
+κη ) = F η, and promoted the
+idea that one should study the Halo conjecture via integral m odels of the eigencurve near the boundary of
+weight space.
+In [AIP], Andreatta, Iovita and Pilloni proved Coleman’s conjectu re on the existence of M
+†
+κη and con-
+structed an integral model E ′ of E rig , which lives in the category of analytic adic spaces [ Hub94].W rig
+0
+has a natural formal scheme model Spf Zp[[Z×
+p ]], which may be viewed as an adic space W0 over the
+afﬁnoid ring (Zp, Zp). Apart from the points corresponding to the adic incarnatio n ofW rig
+0 , W0 con-
+tains an additional 2(p− 1) points in characteristic p, corresponding to the characters η and
+κη. The
+latter points are analytic in Huber’s sense (the former are n ot) and one may consider the analytic locus
+W0 =W rig
+0 ∪{κη|η} of W0 (viewingW rig
+0 as an adic space).W0 may be viewed as a compactiﬁcation
+ofW rig
+0 , and Coleman’s idea may be interpreted as saying that one sho uld study the behaviour of E rig near
+the boundary ofW0 by extending the eigencurve to an adic space living overW0, turning global behaviour
+into local behaviour ‘at inﬁnity’. At a point κη, one can no longer measure slopes using p. Instead, one
+has to use X. Noting that one can use X not only at κη but also ‘near’ it, the Halo conjecture says that the
+X-adic slope is constant as one approaches κη. This supports the idea that an extension of E rig exists, and
+that the Ei in the Halo conjecture are X-adic Coleman families (i.e. subspaces which are ﬁnite over their
+images in weight space, and of constant slope). In this frame work, the slopes of Up should be the λi, with
+multiplicity the degree of Xi over{|X| > r}. The Halo conjecture asserts, remarkably, that a Coleman
+family centered at a point over κη extends to some locus{|X|>r} in the component corresponding to η,
+wherer is independent of the family (and in particular its slope).
+In [ LWX17], Liu, Wan and Xiao prove the Halo conjecture for eigencurve s for deﬁnite quaternion
+algebras. Here the construction of (overconvergent) autom orphic forms is of a combinatorial nature. Those
+authors succeeded in proving the Halo conjecture by calculations on some relatively explicit ad hoc integral
+models of spaces of overconvergent automorphic forms. They construct one space over the whole of W0,
+with a possibly non-compact Up-action, and another model over {|X|> p−1} with a compact Up-action.
+By Chenevier’sp-adic Jacquet–Langlands correspondence [ Che05], this proves the Halo conjecture for the
+components of the Coleman–Mazur eigencurve of (genericall y) Steinberg or supercuspidal type at some
+primeq̸=p.
+1.2. Extended eigenvarieties for overconvergent cohomology. The main goal of this paper is to con-
+struct extensions of eigenvarieties for a very general clas s of connected reductive groups G over Q. In
+particular, we give a new construction of the extended eigen curve E ′ appearing in [AIP]. Our construction
+also gives a conceptual framework for many of the results in [ LWX17] (and establishes a generalisation
+of some of their results which was described as an ‘optimisti c expectation’ in [ LWX17, Remark 3.26(2)]).
+See Theorem 6.3.4 for an interpretation of some of their results using the exte nded eigencurve.
+Our construction of these eigenvarieties appears in Sectio n 4.1. For the purposes of the introduction, we
+have the following vague statement:
+Theorem A. LetF be a number ﬁeld and let H be a connected reductive group overF which is split at all
+places abovep. Set G = Res F
+Q H. Then the eigenvarieties for G constructed in [
+Han17] naturally extend
+to adic spaces XG over the extended weight spaceW = Spa(Zp[[T ′
+0]], Zp[[T ′
+0]])an, whereT ′
+0 is a certain
+quotient of the Zp-pointsT0 of a maximal torus in a suitable model of G over Zp.
+The assumption that H is split at all places above p is made for convenience only; it makes it easy to
+deﬁne a ‘canonical’ Iwahori subgroup. We believe that it sho uld be relatively straightforward to generalise
+===== PDF PAGE 3 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 3
+our constructions to general quasi-split G over Q (or to the setting of [Loe11]). The resulting theory would,
+however, be even more notationally cumbersome, so we have de cided to stick to the simpler (but still very
+general) situation in this paper.
+As a secondary goal, we show (Theorem 5.4.5) that when G = Res F
+Q GLn/F , where F is a CM or
+totally real number ﬁeld, the reduced eigenvariety that we c onstruct carries a Galois determinant (in the
+language of [
+Che14]) satisfying the expected compatibilities between Froben ii at unramiﬁed places and the
+eigenvalues of Hecke operators. This shows that, in these ca ses, the new systems of Hecke eigenvalues that
+we construct in characteristic p carry arithmetic information.
+Theorem B. There exists an n-dimensional continuous determinant D ofGF with values inO+(X red
+G )
+such that
+D(1−XFrob v) = Pv(X)
+for unramiﬁed places v, wherePv(X) is the usual Hecke polynomial ( 5.3.1).
+Our proof of Theorem B is an adaptation of an argument due to the ﬁrst author and Davi d Hansen in
+the rigid setting, which will appear in a slightly reﬁned for m in [ HJ]. It crucially uses Scholze’s results
+on Galois determinants attached to torsion classes [ Sch15], as well as ﬁltrations on distribution modules
+constructed by Hansen in [ Han].
+To end our brief discussion of the results established in thi s paper, we explain one interpretation of the
+phrase ‘naturally extend’ in Theorem A. Suppose for simplicity that F = Q, G(R) is compact modulo
+centre, and G(Qp) may be identiﬁed with GLn(Qp). We let T0⊆ GLn(Qp) denote the diagonal matrices
+with entries in Zp (in this case T0 =T ′
+0). Modules of overconvergent automorphic forms for G (and some
+ﬁxed tame level, which we suppress) were constructed in [ Che04] (see also [ Loe11]). If we denote by U
+the Hecke operator corresponding to 
+
+
+
+
+1
+p
+. . .
+pn−1
+
+
+
+
+
+then this acts compactly on the spaces of overconvergent aut omorphic forms, and so for each continuous
+character κ : T0 →
+Q
+×
+p there is a characteristic power series Fκ ∈
+Qp[[T ]] given by the determinant
+of 1−TU on the space of overconvergent automorphic forms of weight κ. The following Theorem is a
+consequence of our eigenvariety construction, together wi th Corollary 4.1.5.
+Theorem C. The characteristic power series Fκ glue together to FW∈O (W){{T}}, an entire function
+on afﬁne 1-space overW.
+Suppose κ : T0 → Fq((X))× is a continuous character , with q a power of p. Then we give an in-
+terpretation of the specialisation FW,κ ofFW atκ as the characteristic power series of U acting on an
+Fq((X))-Banach space of overconvergent automorphic forms of weigh tκ.
+The Fredholm hypersurface Z cut out by FW is locally quasi-ﬁnite, ﬂat and partially proper over W
+and the eigenvariety X comes equipped with a ﬁnite map to Z .
+1.3. Outline of the construction. The eigenvarieties that we extend are those constructed usi ng overcon-
+vergent cohomology (sometimes also referred to as overconv ergent modular symbols). Overconvergent
+cohomology was developed by Ash and Stevens [ Ste, AS], and the eigenvarieties were constructed by
+Hansen [Han17]. Let us recall their construction in the special case of the Coleman–Mazur eigencurve and
+p̸= 2 . Let R be an afﬁnoid Qp-algebra in the sense of rigid analytic geometry and let κ : Z×
+p → R×
+be a continuous homomorphism. It is well known that κ is locally analytic, and in particular analytic on
+the cosets of 1 +psZp for all sufﬁciently large s. For such s, we consider the Banach R-moduleAκ[s] of
+functionsf :pZp→R which are analytic on the cosets of psZp. The monoid
+∆ =
+{
+γ =
+(a b
+c d
+)
+∈M2(Zp)|p|c, a∈ Z×
+p,ad−bc̸= 0
+}
+acts onAκ[s] from the right by
+(f.γ )(x) = κ(a +bx)f
+(c +dx
+a +bx
+)
+.
+===== PDF PAGE 4 =====
+4 CHRISTIAN JOHANSSON AND JAMES NEWTON
+We consider the dual spaceDκ[s] = Hom R,cts(Aκ[s],R ), with the dual left action of ∆ . A key point is that
+the matrixt =
+(1 0
+0 p
+)
+acts compactly onDκ[s]; it factors through the compact injectionDκ[s]֒D κ[s+1].
+Fix an integer N ≥ 5 (for simplicity) which is coprime to p, and consider the congruence subgroup
+Γ = Γ 1(N )∩ Γ 0(p)⊆ ∆ . We may view Dκ[s] as a local system ˜Dκ[s] on the complex modular curve
+Y (Γ) = Γ\H and consider the singular cohomology group
+H 1(Y (Γ),˜Dκ[s]) = H 1(Γ,Dκ[s]),
+where the right hand side is group cohomology (in general we w ould consider cohomology in all degrees,
+but it turns out that H i(Γ,Dκ[s]) = 0 ifi̸= 1 ; cf. §
+6.1). It carries an action of the Hecke operator Up.
+Considering these spaces for varyings andR =O(U), whereU⊆W rig
+0 is an afﬁnoid open subset, Hansen
+shows how to construct an eigenvariety from the Ash–Stevens cohomology groups by a clever adaptation
+of the eigenvariety construction of Coleman [ Col97] (in the one-dimensional case) and Buzzard [ Buz07]
+(the general case) 1. This eigenvariety turns out to equal the Coleman-Mazur eig encurve. To extend this
+construction toW0, the key point is to deﬁne generalizations of the modules Dκ[s] for all open afﬁnoid
+subsetsU⊆W 0. Let R =O(U) and let κ : Z×
+p → R× be the induced character. The ﬁrst thing to note
+is thatκ is continuous but need not be locally analytic anymore, so on e cannot directly copy the deﬁnition
+ofDκ[s]. One could try to instead use the space Aκ of all continuous functions pZp→R. This carries an
+action of ∆ by the same formula, and we may consider its dual Dκ. However, the action of t is no longer
+compact, so one has to do something different.
+Letf : pZp→R be a continuous function and let f (x) = ∑
+n≥0cn
+(
+x/p
+n
+)
+be its Mahler expansion.
+Recall that, when U ⊆Wrig
+0 (i.e. when R is a Qp-algebra), a theorem of Amice (see [
+Col10, Th´ eor` eme
+I.4.7]) says thatf is analytic on the cosets of ps+1Zp if and only|cn|pn/ps(p−1)→ 0 asn→∞ . Here|−|
+is any Qp-Banach algebra norm such that |p| = p−1. Dually, we may identify Dκ with the ring of formal
+power series ∑
+n≥0
+dnT n
+whereT n is the distribution f↦→cn(f ) anddn is bounded as n→∞ . The analytic distribution module
+Dκ[s] is deﬁned by the weaker condition that |dn|p−n/ps(p−1) is bounded as n→∞ . We may deﬁne
+norms||−|| r, forr∈ [1/p, 1), onDκ by||∑
+n≥0dnT n||r = sup n|dn|rn. LetDr
+κ denote the completion
+ofDκ with respect to||−|| r; it may be explicit described as the ring of power series ∑
+n≥0dnT n where
+|dn|rn → 0. While the Dκ[s] are not among the Dr
+κ, one sees that lim
+←−r→1Dr
+κ = lim←−s→∞Dκ[s], so
+the norms allow one to recover the space of locally analytic d istributions. As an aside, we remark it is
+possible to recover theDκ[s] on the nose from the ||−|| r, but we will not need them for the construction
+of eigenvarieties.
+The upshot of considering the norms||−|| r is that they may be constructed onDκ for any open afﬁnoid
+U⊆W 0, by the formula given above. It is, however, not clear a prior i that the norms interact well with
+the action of ∆ . As a monoid ∆ is generated by the Iwahori subgroup I = ∆ ∩ GL2(Zp) and the element
+t. The element t acts via multiplication by p onpZp and it is not too hard to see that it induces a norm-
+decreasing map (Dκ,||−|| r)→ (Dκ,||−|| r1/p) and that the inclusionsDs
+κ⊆D r
+κ forr<s are compact.
+Thust induces a compact operator on Dr
+κ as desired. The action of I is more complicated to analyse, but
+it turns out that I acts by isometries for sufﬁciently large r (depending only on κ). To see this, it is useful
+to ﬁnd a different description of ||−|| r. This description, which we will outline below, is one of the key
+technical innovations of this paper. It is the analogue, in o ur setting of norms, of the observation in the
+rigid case that if κ iss-analytic then the I-action onAκ preservesAκ[s].
+In [
+ST03], Schneider and Teitelbaum generalised the norms deﬁned ab ove to the spaces D(G,L ) of
+continuous distributions on a uniform pro-p groupG [DdSMS99, Deﬁnition 4.1] valued in a ﬁnite extension
+L of Qp. To recall this construction brieﬂy, a choice of a minimal se t of topological generators ofG induces
+1Note that it is not clear how to topologise the R-modules H 1(Γ ,Dκ [s]), nor that they can be made into potentially ON-able
+Banach R-modules, so even in this special case we are combining Hanse n’s eigenvariety construction with the Fredholm theory of
+Coleman and Buzzard, rather than using the Coleman–Mazur–B uzzard eigenvariety construction.
+===== PDF PAGE 5 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 5
+an isomorphism G∼
+= Zdim G
+p of p-adic manifolds and using multi-variable Mahler expansion s one may
+identifyD(G,L ) (as anL-Banach space) withOL[[T1,...,T dim G]][1/p], and we put (m = dimG)
+||
+∑
+ni≥0
+dn1,...,nmT n1
+1 ...T nm
+m ||r = sup|dn1,...,nm|rn1+···+nm.
+Schneider and Teitelbaum show that these norms are submulti plicative and independent of the choice of
+minimal generating set. We generalize the construction of t hese norms to the moduleD(G,R ) of distribu-
+tions on a uniform group G valued in a certain class of normed Zp-algebrasR that we call Banach–T ate
+Zp-algebras. These include the rings R =O(U) forU ⊆ W0 open afﬁnoid (for a suitable choice of
+norm) and generalize the constructions in the previous para graph, which was the special case G = pZp.
+Moreover, the action ofg∈G onD(G,R ) via left or right translation is an isometry for||−|| r (for anyr).
+LetB0 ={γ∈I|c = 0} be the upper triangular Borel and let
+N 1 ={( 1 0
+x 1 )|x∈pZp}∼
+=pZp;I has
+an Iwahori decomposition I∼
+=
+N 1×B0. Extend κ to a character of B0 by settingκ(γ) = κ(a). We have
+anI-equivariant injectionf↦→F ofAκ into the spaceC(I,R ) of continuous functions F :G→R given
+byF (nb) = f (n)κ(b), with n∈ N 1 andb∈ B0. Here I acts onC(I,R ) via left translation. The image
+is the set of functions F such that F (gb) = κ(b)F (g) for all g∈ I andb∈ B0. Dually, we obtain an I-
+equivariant surjectionD(I,R )→D κ. If we pretend, momentarily, that I is uniform, then we may consider
+the quotient norm on Dκ induced from||−|| r onD(I,R ) and one can show that for sufﬁciently large r,
+this quotient norm agrees with the previously deﬁned ||−|| r onDκ. This shows that I acts by isometries
+on (Dκ,||−|| r) for sufﬁciently large r. In reality I is not uniform, but one can adapt the argument by
+working with a suitable open uniform normal subgroup of I.
+This summarizes our construction of the modules Dr
+κ which we use to construct the eigenvariety. From
+theDr
+κ, we construct variants D<r
+κ and function modules Ar
+κ⊆A κ as well. When R is a Banach Qp-
+algebra, then the Aκ[s] andDκ[s] appearing in [
+Han17] are equal to Ar
+κ andD<r
+κ , respectively, for r =
+p−1/ps(p−1). It is easiest, however, to use the modules Dr
+κ to construct the eigenvariety since they are
+potentially orthonormalizable. Using the Dr
+κ, the construction of the eigenvariety follows [
+Han17], and
+amounts largely to generalizing various well-known result s from rigid geometry and non-archimedean
+functional analysis. Our arguments also generalize from th e case of G = GL 2/Q to the general case
+considered in [ Han17] (as stated in Theorem A). In particular, our methods work for groups that do not
+have Shimura varieties (such as G = Res F
+Q GLn/F forn≥ 3), which are intractable by the methods of
+[
+AIP] (see also [ AIP16]).
+Remark 1.3.1. In independent work, Daniel Gulotta [ Gul19] has used a similar deﬁnition of distribution
+modules to extend Urban’s construction [ Urb11] of equidimensional eigenvarieties for reductive groups
+possessing discrete series.
+1.4. Questions and future work.
+1.4.1. Generalizations of the Halo conjecture. It is interesting to consider how the Halo conjecture might
+generalize beyond the case of GL2/Q. For general G we raise the following questions:
+Question 1.4.1. Does every irreducible component of the extended eigenvari ety XG contain a point in the
+locusp = 0?
+Question 1.4.2. Are there irreducible components of XG contained in the locus p = 0?
+In the case of G = GL 2/Q it is a consequence of the Halo conjecture that every irreduc ible component
+contains a characteristic p point. Similary, when G is an inner form of GL2/Q associated to a deﬁnite
+quaternion algebra over Q, it is a consequence of the results of [
+LWX17] that every irreducible component
+contains a characteristic p point (see Theorem 6.3.4). In general, we regard an afﬁrmative answer to the
+ﬁrst question as a very weak version of the Halo conjecture.
+If a component has a characteristic p point, it becomes possible to study characteristic 0 points in the
+component (if they exist) by passing to the characteristic p point, or to points approximating the character-
+isticp point. In the case of GL2/Q (or its inner forms), components which have a characteristi cp point
+have a Zariski dense set of points corresponding to (twists o f) classical modular forms of weight 2. One ar-
+gument in this spirit appears in [ PX], which has been used by the authors in combination with the m ethods
+===== PDF PAGE 6 =====
+6 CHRISTIAN JOHANSSON AND JAMES NEWTON
+of [LWX17] to establish new cases of the parity conjecture for the Bloc h–Kato Selmer groups associated
+to Hilbert modular forms. We essentially do this by showing t hat there is a classical parallel weight 2 point
+on every irreducible component of an eigenvariety for a deﬁn ite quaternion algebra over a totally real ﬁeld
+in whichp splits completely. See [ JN18] for more details.
+1.4.2. Dimensions of irreducible components and functoriality. We note here that the theory of global
+irreducible components for the adic spaces we work with requ ires some explanation (see [ Con99] for the
+rigid case). We have done this in a sequel to this paper [ JN17], where we also generalise some of the results
+of [ Han17]. In particular, we show that the lower bound for the dimensi on of irreducible components
+[Han17, Theorem 1.1.6] and (a variant of) the interpolation of Lang lands functoriality [ Han17, Theorem
+5.1.6] generalise to our extended eigenvarieties.
+One application of the interpolation of Langlands functori ality is that in the case of GL2/Q (or its inner
+forms), [ BP16] and [ LWX17] show that the extended eigenvarieties contain the usual ri gid eigenvarieties
+as a proper subspace. Applying functoriality (cyclic base c hange, for example) then shows that this is true
+for a larger class of groups. See [ JN17] for more details.
+1.4.3. Galois representations. In [AIP] the natural question is raised as to whether the Galois repr esenta-
+tions attached to characteristicp points of the extended eigencurve are trianguline (in an app ropriate sense).
+One can similarly ask this question for the characteristic p Galois representations constructed in this paper.
+Note that in our level of generality, it is still only conject ural that the characteristic 0 Galois representations
+carried by the eigenvariety are trianguline, but this is kno wn, for example, in the case where G is a deﬁ-
+nite unitary group deﬁned with respect to a CM ﬁeld. It would a lso be interesting to construct a ‘patched
+extended eigenvariety’ in this setting, extending the cons truction of [BHS17], and we hope to study this in
+the near future.
+1.5. An outline of the paper. Let us describe the contents of the paper. Section
+2 collects what we need
+about the eigenvariety machine and the notion of slope decom positions, and introduces some functional-
+analytic terminology that we will need throughout the paper . Since the key point of the paper is the con-
+struction of certain norms, we adopt terminology that puts e mphasis on the norm, as opposed to merely
+the underlying topology. We give a deﬁnition of a slope decom position (a concept introduced in [ AS]) that
+differs slightly from the deﬁnitions that appear in the lite rature. This is necessary since the deﬁnition given
+in [AS] neither localizes nor glues well, and so is not suitable for the construction of eigenvarieties. Our
+deﬁnition is a formalization of an informal deﬁnition that t he ﬁrst author learnt from conversations with
+David Hansen.
+In Section 3, we carry out the construction of the norms on theDκ, following the outline above. We ﬁrst
+discuss the generalization of the Schneider–Teitelbaum no rms to distributions on a uniform groupG valued
+in a certain class of normed Zp-algebras that we call Banach–Tate Zp-algebras. These include, for example,
+all Banach Qp-algebras in the usual sense, as well as Tate rings R =O(U) withU an afﬁnoid open subset
+of weight space (equipped with a suitable norm). We show that , in a precise sense, the completion of
+D(G,R ) with respect to the family of norms (||−|| r)r∈[1/p,1) only depends on the underlying topology
+ofR. Imposing some additional conditions on the norm (which is a lways possible in practice), we then
+construct the modulesDr
+κ,D<r
+κ andAr
+κ as outlined above.
+Section
+4 then uses the modules Dr
+κ to construct the eigenvariety, following the strategy in [ Han17].
+Since theDr
+κ are potentially orthonormalizable, the construction simp liﬁes somewhat. We end the section
+by generalizing the ‘Tor-spectral sequence’ [ Han17, Theorem 3.3.1] to our setting, which is a key tool for
+analyzing the geometry of eigenvarieties, and use it give a d escription of the ‘points’ of the eigenvariety
+valued in a local ﬁeld. We use this description in Section 5 when we construct Galois determinants.
+In Section 6 we discuss the relationship of our work with that of [ AIP] and [ LWX17]. We show that
+when G = GL 2/Q, our construction, over the normalization of the weight spa ceW0 discussed above,
+produces the same eigencurve as in [ AIP] (this normalization is only different fromW0 ifp = 2). When G
+is the algebraic group over Q associated with the units of a deﬁnite quaternion algebra ov er Q, we show that
+our framework gives a conceptual proof of [LWX17, Theorem 3.16], which is a key ingredient in their proof
+of the Halo conjecture. In essence, the numerical estimate o f [ LWX17, Theorem 3.16] falls out directly
+from our proof of compactness of the Up-operator. Thus, it is possible to view our proof of compactn ess
+===== PDF PAGE 7 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 7
+of suitable ‘Up-like’ operators (known as controlling operators) as a gene ralization of [ LWX17, Theorem
+3.16], as asked for in [ LWX17, Remark 3.26(2)]. Since this numerical estimate doesn’t ap pear strong
+enough to establish the Halo conjecture in more general situ ations, we have restricted ourselves to proving
+the statement in the setting of [ LWX17] as an illustration of our method.
+Finally, Appendix A proves various results that we need on the class of Tate rings whose associated
+afﬁnoid adic spaces appear as the local pieces of our eigenva rieties; some of these results might be of
+independent interest.
+Acknowledgments. This paper was inspired by [
+AIP], and C.J. wishes to thank Vincent Pilloni for some
+interesting discussions on [ AIP] and David Hansen for innumerable and invaluable discussio ns on over-
+convergent cohomology and eigenvarieties. He would also li ke to thank Konstantin Ardakov for patiently
+answering several questions, and both authors would like to thank him for providing us with a proof of
+Lemma 3.3.4, and allowing us to include it here. We wish to thank John Berg dall and Kevin Buzzard for
+various conversations about the boundary of the eigencurve , as well as helpful comments on an earlier
+version of this paper. We also thank Judith Ludwig, who point ed out an error in the published version
+of this paper which is corrected here. Finally, we wish to tha nk the anonymous referees for their careful
+reading and helpful comments. C.J. was supported by NSF gran t DMS-1128155 during the main work on
+this paper, and by the Herchel Smith Foundation during the re vision. J.N. was supported by ERC Starting
+Grant 306326. Work on this project was also supported by the E PSRC Platform Grant EP/I019111.
+2. P RELIMINARIES
+The goal of this section is to set up some functional analytic terminology and theory. Speciﬁcally, we
+require the results of [Buz07, §2-3] on Fredholm determinants, Riesz theory and the construction of spectral
+varieties in a level of generality that is intermediate betw een the settings of [ Buz07] and [ Col97] (cf. also
+[AIP, Annexe B]). For example, we need to work over coefﬁcient rin gs arising from afﬁnoid opens in the
+adic spaceW0 discussed in our Introduction. These rings are complete top ological rings which are T atein
+the language of Huber (cf. [ Hub93, §1]). The topology on these rings is induced by a norm, and to discuss
+the spectral theory of compact operators it is convenient to ﬁx such a norm. This gives rise to a class of
+normed rings which we call Banach–Tate rings (see Deﬁnition 2.1.2).
+The proofs in [ Buz07] go through with little to no change when working over Banach –Tate rings, so we
+will be rather brief. All norms etc. will be non-archimedean so we will ignore this adjective. All rings will
+be commutative unless otherwise speciﬁed.
+2.1. Fredholm determinants over Banach–T ate rings.
+Deﬁnition 2.1.1. LetR be a ring. A function |−| : R→ R≥0 is called a seminorm if (for all r,s∈R)
+(1)|0| = 0,|1| = 1;
+(2)|r +s|≤ max(|r|,|s|);
+(3)|rs|≤| r||s|.
+If in addition|r| = 0 only ifr = 0 , then we say that |−| is a norm. A ring R together with a (semi)norm
+will be called a (semi)normed ring. A normed ring R is called a Banach ring if the metric induced by the
+norm is complete.
+Iff :R→S is a morphism of normed rings, we say that f is bounded if there is a constant C >0 such
+that|f (r)|≤ C|r| for allr∈R.
+We say that two norms|−| ,|−| ′ on a ring R are equivalent if they induce the same topology. We say
+that they are bounded-equivalent if there are constants C1,C 2 > 0 such that C1|r|≤| r|′≤ C2|r| for all
+r∈R (note that this is stronger than equivalence, cf. Lemma
+2.1.6). Let R be a normed ring. We say that
+r∈R is multiplicative if|rs| =|r||s| for alls∈R.
+Deﬁnition 2.1.2. LetR be a normed ring. We say that R is T ateifR contains a multiplicative2 unit̟ such
+that|̟|< 1. We call such a ̟ a multiplicative pseudo-uniformizer . If R is also complete, we say that R
+is a Banach–T ate ring. If R is a Tate normed ring and ̟ is a multiplicative pseudo-uniformizer, then we
+deﬁne the corresponding valuation v̟ onR byv̟(r) =− loga|r|, wherea =|̟−1|.
+2i.e. a unit which is multiplicative in the sense we just deﬁne d, as well as being a unit for multiplication!
+===== PDF PAGE 8 =====
+8 CHRISTIAN JOHANSSON AND JAMES NEWTON
+We remark that it is easy to see that a unit ̟ in a normed ring R is multiplicative if and only if|̟−1| =
+|̟|−1. A multiplicative pseudo-uniformizer ̟ is a uniform unit in the sense of Kedlaya-Liu [ KL15,
+Remark 2.3.9(b)].
+Remark 2.1.3. LetR be a Tate normed ring, with ̟ a multiplicative pseudo-uniformizer.
+(1) The underlying topological ring is a Tate ring in the lang uage of Huber; the unit ballR0 is a ring of
+deﬁnition and ̟ is a topologically nilpotent unit. Conversely, assume R is a Tate ring and ̟∈R
+is a topologically nilpotent unit, contained in some ring of deﬁnition R0. If a∈ R>1, then we may
+deﬁne a norm on R by|r| = inf{a−n|r∈̟nR0, n∈ Z}. Equipped with this norm, R is a Tate
+normed ring with unit ball R0 and̟ is a multiplicative pseudo-uniformizer.
+(2) A Banach–Tate ring A is the same thing as a Banach algebraA satisfying|Am|̸= 1 in the language
+of Coleman [
+Col97, §1] (and what we call a Banach ring is what Coleman calls a Ban ach algebra).
+HereAm denotes the set of multiplicative units of A. Additionally, when R is a Banach–Tate ring
+andR+ is a ring of integral elements, a choice of a multiplicative p seudo-uniformizer̟ may be
+used to identify the Gelfand spectrumM(R) of bounded multiplicative seminorms on R ([Ber90,
+§1.2]) with the maximal compact Hausdorff quotient of the ad ic spectrum Spa(R,R +) ([Hub93]);
+see [ KL15, Deﬁnition 2.4.6]. Concretely, ̟ gives us a natural way of viewing a rank 1 point in
+Spa(R,R +) as a bounded multiplicative seminorm.
+Deﬁnition 2.1.4. Let R be a normed ring. A normed R-module is an R-module M equipped with a
+function||−|| : M→ R≥0 such that (for all m,n∈M andr∈R)
+(1)||m|| = 0 ⇐⇒ m = 0;
+(2)||m +n||≤ max(||m||,||n||);
+(3)||rm||≤| r|.||m||.
+We remark that ifr∈R is a multiplicative unit, then one sees easily that||rm|| =|r|.||m|| for allm∈M .
+IfR is a Banach ring and M is complete, we say that M is a BanachR-module.
+LetR be a Tate normed ring. If M andN are normedR-modules, then a homomorphism φ : M→N
+is a continuous R-linear map. In this case, continuity of an R-linear map φ is equivalent to boundedness;
+i.e. there exists C ∈ R>0 such that ||φ(m)|| ≤C||m|| for all m ∈ M . In this case we set |φ| =
+supm̸=0|φ(m)|.|m|−1 as usual; HomR,cts(M,N ) becomes a normedR-module with respect to this norm.
+The open mapping theorem holds in this context; see e.g. [ Hub94, Lemma 2.4(i)].
+LetR be a Noetherian Banach–Tate ring. The results of [ BGR84, §3.7.2] hold in the context of Banach–
+Tate rings with the same proofs (thanks to the open mapping th eorem), soR being Noetherian is equivalent
+to all ideals being closed. Moreover, the results of [ BGR84, §3.7.3] hold for Noetherian Banach–Tate
+rings with the same proofs. In particular, any ﬁnitely gener atedR-module carries a canonical complete
+topology, and any abstractR-linear map between two ﬁnitely generated R-modules is continuous and strict
+with respect to the canonical topology.
+Deﬁnition 2.1.5. LetR be a Banach–Tate ring and let I be a set. We deﬁne cR(I) to be the set of sequences
+(ri)i∈I inR tending to 0 (with respect to the ﬁlter of subsets of I with ﬁnite complement). It is a Banach
+R-module when equipped with the norm||(ri)|| = sup i∈I|ri|.
+We say that a Banach R-module M is (potentially) orthonormalisable (or (potentially) ON-able for
+short) if there exists a set I such that M isR-linearly isometric (resp. merely R-linearly homeomorphic)
+tocR(I). A set in M corresponding to the set{ei = (δij)j|i∈I}⊆ cR(I) under such a map is called an
+(potential) ON-basis.
+Finally, we say that a Banach R-moduleM has property (Pr ) if it is a direct summand of a potentially
+ON-able BanachR-module.
+IfM→ N is a continuous morphism of ON-able Banach R-modules, then we may deﬁne its matrix
+for a ﬁxed ON-basis on M and one on N as on [
+Buz07, p. 65], and the properties stated there hold in this
+situation as well. A morphism φ : M → N between general Banach R-modules is said to be of ﬁnite
+rank if the image of φ is contained in a ﬁnitely generated submodule of N . More generally, φ is said to
+be compact (or completely continuous ) if it is a limit of ﬁnite rank operators in HomR,cts(M,N ). If R is
+Noetherian, [Buz07, Lemma 2.3, Proposition 2.4] go through with the same proofs (using a multiplicative
+===== PDF PAGE 9 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 9
+pseudo-uniformizer̟ for what Buzzard calls ρ in the proof of Lemma 2.3) and we see that if φ :M→N
+is a continuous R-linear map between ON-able Banach R-modules with matrix (aij) with respect to some
+bases (ei)i∈I ofM and (fj)j∈J ofN , then φ is compact if and only if limj→∞ supi∈I|aij| = 0 . When
+M = N and (ei)i∈I = (fj)j∈J this allows us to deﬁne the characteristic power series , or Fredholm
+determinant, det(1−Tφ ) of a compactφ using the recipe on [Buz07, p. 67] and one sees that det(1−Tu )∈
+R{{T}}, whereR{{T}} ={∑
+nanT n∈R[[T ]]||am|M m→ 0∀M∈ R≥0} is the ring of entire power
+series inR.
+Moving on, we remark that [ Buz07, Lemma 2.5, Corollary 2.6] are true in our setting with the sa me
+proofs. In particular, the notion of the Fredholm determina nt extends to compact operators on potentially
+ON-ableM , and may be computed using a potential ON-basis. It will be us eful (at least psychologically)
+for us to know that these notions remain unchanged if we repla ce the norm on R by an equivalent one.
+First, we remark that changing the norm on R to an equivalent one doesn’t change the topology on cR(I)
+(forI arbitrary). This can be seen directly, but it is also a conseq uence of the following lemma, which we
+will need later.
+Lemma 2.1.6.
+3 LetR be a complete T ate ring, and let̟,π ∈R be topologically nilpotent units. Assume
+that we have two equivalent norms |−| ̟ and|−| π onR (inducing the intrinsic topology) such that ̟ is
+multiplicative for|−| ̟ andπ is multiplicative for|−| π. Then we may ﬁnd constants C1,C 2,s> 0 such
+that, if|a|π < 1,
+|a|̟≤C1,
+and if|a|π≥ 1, then
+|a|̟≤C2|a|s
+π.
+Proof. For the ﬁrst inequality, ﬁrst note that we can ﬁnd a constant D1 < 1 such that if|a|π≤ D1 then
+|a|̟≤ 1 (since the norms induce the same topology). Choose an integerm> 0 such that|̟m|π≤D1 and
+setC1 =|̟|−m
+̟ . So, if |a|π≤ 1, then|̟ma|π≤D1 and hence|̟ma|̟≤ 1. Since ̟ is multiplicative
+for|−| ̟, we deduce that|a|̟≤|̟|−m
+̟ =C1.
+We now prove the second inequality. Assume that|a|π≥ 1. Set
+n =
+⌈ log|a|π
+log|̟m|−1π
+⌉
+;
+thenn≥ 0 by the assumption on a and the deﬁnition of m. By deﬁnition, we have that |̟m|n
+π|a|π≤ 1,
+and hence|̟mna|π≤ 1. Therefore we have |̟mna|̟≤C1. By multiplicativity of ̟ for|−| ̟ we get
+|a|̟≤C1|̟|−mn
+̟ =Cn+1
+1 . Then we have
+|a|̟≤Cn+1
+1 ≤C
+log |a|π
+log |̟m|−1π
++2
+1 =C2|a|s
+π
+where we have put s = (log C1|̟m|−1
+π )−1 andC2 =C2
+1 ; note that s> 0. This ﬁnishes the proof. □
+IfR has two equivalent norms|−| and|−| ′ with a common multiplicative pseudo-uniformizer ̟ such
+that|̟| =|̟|′, then a similar argument shows that |−| and|−| ′ are bounded-equivalent, as can be seen
+from the following lemma:
+Lemma 2.1.7. LetR be a complete T ate ring, and let ̟∈ R be a topologically nilpotent unit. Assume
+that we have two equivalent norms |−| 1 and|−| 2 onR (inducing the intrinsic topology) such that ̟ is
+multiplicative for both|−| 1 and|−| 2. Then we may ﬁnd constants C1,C 2> 0 such that
+C1|a|s
+1≤|a|2≤C2|a|s
+1
+for alla∈R, wheres is determined by|̟|2 =|̟|s
+1.
+Proof. We again ﬁx a constant D1 < 1 such that if|a|1≤ D1 then|a|2≤ 1. Choose an integer m >0
+such that|̟|m
+1 ≤D1. For a non-zero a, we set
+n =
+⌈ log|a|1
+log|̟m|−1
+1
+⌉
+.
+3The published version of this paper contains an incorrect st atement here. See [ JN] for more details.
+===== PDF PAGE 10 =====
+10 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Equivalently,n is deﬁned so that |̟−m(n−1)|1 <|a|1≤| ̟−mn|1. So |a̟mn|1≤ 1 and hence|a|2≤
+|̟|−m(n+1)
+2 . Let s be such that|̟|2 =|̟|s
+1. Then|a|2≤|̟|−m(n+1)s
+1 ≤C2|a|s
+1, whereC2 =|̟|−2ms
+1 .
+Swapping|−| 1 and|−| 2 we get a similar inequality|a|1≤C′
+1|a|1/s
+2 . □
+Suppose then that (M,|−| ) is a Banach (R,|−| )-module, and (M,|−| ′) is a Banach (R,|−| ′)-
+module, where|−| and|−| ′ are equivalent on both R andM . A Banach (R,|−| )-module isomorphism
+(M,|−| )∼
+= (cR(I),|−| ) is then the same thing as a Banach (R,|−| ′)-module isomorphism (M,|−| ′)∼
+=
+(cR(I),|−| ′), since (cR(I),|−| )∼
+= (cR(I),|−| ′) as topologicalR-modules via the identity map (one
+can argue as in Proposition
+3.2.6, or, perhaps better, formulate the basic notions of functio nal analysis
+introduced here in purely topological terms as in [ Gul19, §2]). Thus (M,|−| ) is potentially ON-able if
+and only if (M,|−| ′) is potentially ON-able, and (ei)i∈I is a potential ON-basis for (M,|−| ) if and only
+if it is a potential ON-basis for (M,|−| ′). It follows, at least when R is Noetherian (which is all we need),
+that an operatorφ is compact on a potentially ON-able (M,|−| ) if and only if it is compact on a potentially
+ON-able (M,|−| ′), and the Fredholm determinant is the same.
+We remark that the results [Buz07, Lemma 2.7-Corollary 2.10] hold over Noetherian Banach–Ta te rings
+R, again with the same proofs. We can extend the notion of Fredh olm determinants of compact operators
+on BanachR-modules with property (Pr) as on [Buz07, p.72-73], and the results there hold over Noetherian
+Banach–Tate rings. One also sees that having property (Pr) i s stable when changing the norms on (R,M )
+to equivalent ones, as is compactness of operators and the Fr edholm determinants for compact operators
+are unchanged. We summarise the results of this section with the following Proposition:
+Proposition 2.1.8. LetR be a Noetherian Banach–T ate ring. If M is a Banach R-module with property
+(Pr ) andφ :M→M is compact then there is a well-deﬁned Fredholm determinant
+det(1−Tφ|M )∈R{{T}}.
+If we change the norms on (R,M ) to equivalent ones, then M still has property (Pr ),φ is still compact,
+and the Fredholm determinant is unchanged.
+2.2. Riesz theory, slope factorizations and slope decompositions. We continue to letR denote a Banach–
+Tate ring. If Q∈R[T ], we write Q∗(T ) := T deg QQ(1/T ). We recall the following deﬁnitions:
+Deﬁnition 2.2.1. A Fredholm series is a formal power series F = 1 + ∑
+n≥1anT n ∈ R{{T}}. A
+polynomialQ∈ R[T ] is called multiplicative if the leading coefﬁcient of Q is a unit (in other words, if
+Q∗(0)∈R×).
+Two entire seriesP,Q∈R{{T}} are said to be relatively prime if the ideal (P,Q ) = R{{T}}.
+The proof of [
+Buz07, Theorem 3.3] goes through without changes; we state it for c ompleteness (see
+also [AIP, Theoreme B.2]). Implicit in this is that [ Buz07, Lemma 3.1] holds with the same proof; we will
+make use of this later.
+Theorem 2.2.2. Assume that R is Noetherian. Let M be a Banach R-module with property (Pr) and let
+u :M→M be a compact operator with F =det(1−Tu ). Assume that we have a factorization F =QS
+whereS is a Fredholm series, Q∈R[T ] is a multiplicative polynomial, and Q andS are relatively prime
+inR{{T}}. Then KerQ∗(u)⊆ M is ﬁnitely generated and projective and has a unique u-stable closed
+complement N such that Q∗(u) is invertible on N . The idempotent projectors M → KerQ∗(u) and
+M→ N lie in the closure of R[u]⊆ EndR,cts(M ). The rank of KerQ∗(u) is degQ, and det(1−Tu|
+KerQ∗(u)) = Q. Moreover ,u is invertible on KerQ∗(u), and det(1−Tu|N ) = S.
+Proof. Apart from the last sentence, this is (a minor reformulation of) [
+Buz07, Theorem 3.3]. To see that u
+is invertible on KerQ∗(u), note that det(u| KerQ∗(u)) = Q∗(0)∈R×. To see that det(1−Tu|N ) =
+S, write S′ = det(1−Tu| N ) and note that F = det(1−Tu| KerQ∗(u)) det(1−Tu| N ) = QS′.
+HenceQ(S−S′) = 0 , andQ is not a zero divisor since Q(0) = 1 , soS =S′. □
+The following Lemma may be extracted from the proof of [ Buz07, Lemma 5.6]; we give the short proof
+for completeness.
+===== PDF PAGE 11 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 11
+Lemma 2.2.3. Assume that R is Noetherian. Let M and M ′ be two Banach R-modules with property
+(Pr) and assume that we have a continuous R-linear map v : M → M ′ and a compact R-linear map
+i :M ′→M . Set u =iv andu′ =vi. Then u andu′ are both compact and det(1−Tu ) = det(1−Tu ′);
+call this entire power series F . If F = QS is a factorization as in Theorem 2.2.2, then i restricts to an
+isomorphism between KerQ∗(u′) and KerQ∗(u).
+Proof. Compactness of u and u′ and the equality of their Fredholm determinants follows fro m [ Buz07,
+Proposition 2.7]. Now assume we have a factorization F =QS. If x′∈ KerQ∗(u′), thenQ∗(u)(i(x′)) =
+i(Q∗(u′)(x′)) = 0 so i(KerQ∗(u′)) ⊆ KerQ∗(u). Furthermore, if i(x′) = 0 then u′(x′) = 0 , so
+Q∗(u′)(x′) = Q∗(0).x′ = 0 and hence x′ = 0 , so i is injective on KerQ∗(u′). For surjectivity onto
+KerQ∗(u), let x∈ KerQ∗(u) and choose y∈ KerQ∗(u) withu(y) = x (possible by Theorem 2.2.2).
+Then one checks, similarly to the computation above, thatv(y)∈ KerQ∗(u′), and hencei(v(y)) = u(y) =
+x, which gives us surjectivity and ﬁnishes the proof. □
+Next, we let K be a ﬁeld, complete with respect to a non-trivial non-archim edean absolute value. We
+brieﬂy deﬁne the Newton polygon of a power series F ∈ K[[T ]], following [ AS, §4.2] (in this special
+case). A subset N ⊆R2 is said to be sup-convex if it is convex and, whenever a point (a,b )∈N ,N
+contains the whole half-line {(a,b +t)| t≥ 0} above it. Given an arbitrary subset S⊆ R2, there is a
+unique smallest sup-convex set containingS, which we will denote byH+(S). IfI⊆ Z≥0 andω : I→ R
+is a function, then any set of the form H+({(n,ω (n))| n∈ I} is called a Newton polygon . We refer to
+[AS, §4.2] for the notions of vertices, edges and slopes of a Newt on polygon.
+Deﬁnition 2.2.4. LetF = ∑
+n≥0anT n∈ K[[T ]]. Fix a pseudo-uniformizer ̟∈ K and consider the
+corresponding valuationv̟. The Newton polygon of F is the Newton polygonH+(S(F )), where
+S(F ) ={(n,v ̟(an))|n∈IF}⊆ R2
+withIF ={n∈ Z≥0|an̸= 0}.
+Leth∈ R. We say that a power series F∈ K[[T ]] has slope≤ h (or> h) if all slopes of its Newton
+polygon are≤h (or> h). Now consider a Banach–Tate ring R with a multiplicative pseudo-uniformizer
+̟. We say that F ∈ R[[T ]] has slope≤ h (or > h) if, for any x in the Gelfand spectrum M(R) with
+residue ﬁeld Kx, the specialization Fx∈Kx[[T ]] has slope≤h (or>h ).
+Deﬁnition 2.2.5. Let R be a Banach–Tate ring with a ﬁxed multiplicative pseudo-uni formizer ̟. Let
+F ∈ R{{T}} be a Fredholm series and let h∈ R. A slope≤ h-factorization of F is a factorization
+F = QS inR{{T}} whereQ is a multiplicative polynomial of slope ≤ h andS is a Fredholm series of
+slope>h .
+Remark 2.2.6. IfR is a complete Tate ring with a ﬁxed topologically nilpotent u nit̟, then the notions
+of slope factorizations and slope ≤ h or > h are independent of the choice of a norm on R with ̟
+multiplicative. Moreover, one can deﬁne all these notions d irectly without choosing a norm on R.
+Recall that an element a ∈ R is called quasinilpotent if its spectral seminorm 4|a|sp is 0. This is
+equivalent to|a|x = 0 for all x∈M (R) by [Ber90, Corollary 1.3.2]. The set of quasinilpotent elements
+form an ideal of R, which is the kernel of the Gelfand transform R → ∏
+x∈M(R)Kx. We note that
+it is easy to see that a quasinilpotent element is topologica lly nilpotent. For the kinds of ring R which
+appear in practice in this paper, the quasinilpotent elemen ts are just the nilpotent elements (this follows
+from Theorem A.7), and the proof of the following lemma is simpler. However, w e will avoid imposing
+additional technical assumptions at this stage.
+Lemma 2.2.7. Let R be a Banach–T ate ring with a ﬁxed multiplicative pseudo-uni formizer ̟ and let
+h∈ Q≥0. Let S be a Fredholm series of slope >h andQ a multiplicative polynomial of slope≤h. Then
+Q andS are relatively prime.
+Proof. We will use Coleman’s resultant Res, for which we refer to [
+Col97, §A3] (the reader may also
+beneﬁt from the discussion on [ Buz07, p. 74]). By [ Col97, Lemma A3.7] it sufﬁces to prove that Res(Q,S )
+is a unit in R{{T}}. Pick x∈M (R) and specialize to Kx. Then Res(Q,S )x = Res(Qx,S x) and since
+4The deﬁnition of the spectral seminorm is recalled in Append ix A.
+===== PDF PAGE 12 =====
+12 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Qx has slope ≤ h and Sx has slope > h we see that Res(Q,S )x ∈ Kx{{T}}× = K ×
+x . By [ Ber90,
+Corollary 1.2.4] we see that Res(Q,S ) = a0 +T.F (T ) where a0 ∈ R× and F (T ) ∈ R{{T}} has
+quasinilpotent coefﬁcients. Multiplying by a−1
+0 we see that it sufﬁces to prove that if F ∈ R{{T}} has
+quasinilpotent coefﬁcients, then 1−T.F (T )∈R{{T}}×.
+To prove this, we use an argument suggested to us by a referee, which is more efﬁcient than our original
+argument. First note that the formal inverse of 1−T.F (T ) isG(T ) = ∑
+n≥0T n.F (T )n, so we need to
+show that this is entire. Setting H(T ) = T.F (T ), it sufﬁces to show that if H(T ) is any entire power series
+withH(0) = 0 and with quasinilpotent coefﬁcients, then ∑
+n≥0H(T )n converges and is entire. In fact, it
+sufﬁces to prove that ∑
+n≥0H(T )n∈R⟨T⟩, since if we have proved this we can apply this to H(̟−NT )
+for allN (which still has quasinilpotent coefﬁcients) to deduce tha t∑
+n≥0H(T )n is entire.
+So, to show this, it sufﬁces to show that H(T ) is topologically nilpotent in R⟨T⟩, where we equip
+R⟨T⟩ with the Gauss norm coming from the norm on R. Since the coefﬁcients of H tend to 0, we may
+writeH(T ) = ∑ N
+n=1hnT n +∑
+n>NhnT n, with|hn| < 1 forn > N. Then the tail ∑
+n>NhnT n is
+topologically nilpotent (it has Gauss norm < 1) and the terms hnT n are topologically nilpotent for all n
+sincehn is quasinilpotent (and hence topologically nilpotent). So H(T ) is a ﬁnite sum of topologically
+nilpotent elements, hence topologically nilpotent. This ﬁ nishes the proof. □
+Continue to letR be a Banach–Tate ring with a ﬁxed multiplicative pseudo-uni formizer̟. The follow-
+ing is a minor variation of [
+AS, Deﬁnition 4.6.1].
+Deﬁnition 2.2.8. LetM be an (abstract) R-module, let u : M→M be an R-linear map and let h∈ Q.
+An element m∈ M is said to have slope ≤ h with respect to u if there is a multiplicative polynomial
+Q∈R[T ] such that
+(1) Q∗(u).m = 0;
+(2) The slope of Q is≤h.
+We letM≤h⊆M denote the subset of elements of slope ≤h.
+Lemma 2.2.9. ([AS, Proposition 4.6.2] )M≤h is anR-submodule ofM , which is stable under u.
+Proof. It is clear from the deﬁnition that M≤h is closed under multiplication, and stable under u. It there-
+fore sufﬁces to prove that it is closed under addition, for wh ich it sufﬁces to prove that if Q1 andQ2 are
+two multiplicative polynomials of slope ≤ h, then so is Q1Q2. To see this it sufﬁces to specialize to the
+case when R is a ﬁeld and the norm is an absolute value. The assertion is th en well known (for example,
+the argument in the proof of [ AS, Proposition 4.6.2] carries over without change). □
+Deﬁnition 2.2.10. ([AS, Deﬁnition 4.6.3]) Let M be an R-module with an R-linear map u : M→ M
+and leth∈ Q. A slope≤h-decomposition ofM is anR[u]-module decompositionM =Mh⊕M h such
+that
+(1) Mh is a ﬁnitely generated R-submodule ofM≤h;
+(2) For every multiplicative polynomial Q∈R[T ] of slope≤h, the map Q∗(u) : M h→M h is an
+isomorphism ofR-modules.
+Proposition 2.2.11. W e keep the above notation. If M has a slope ≤ h-decompositionMh⊕M h, then
+it is unique, and Mh = M≤h (in particular the latter is ﬁnitely generated over R). W e will from now on
+write M>h for the unique complement. Moreover , slope decompositions satisfy the following functorial
+properties:
+(1) Let f : M → N be a morphism of R[u]-modules with slope ≤ h-decompositions. Then
+f (M≤h)⊆ N≤h and f (M>h)⊆ N>h. Moreover , both Ker(f ) and Im(f ) have slope ≤ h-
+decompositions.
+(2) LetC• be a complex of R[u]-modules and suppose that each Ci has a slope≤ h-decomposition.
+Then every H i(C•) has a slope ≤ h-decomposition, explicitly given by H i(C•) = H i(C•
+≤h)⊕
+H i(C•
+>h).
+Proof. The proof is identical to that of [ AS, Lemma 4.6.4]: one equates slope ≤ h-decompositions with
+S-decompositions (as deﬁned and studied in [ AS, §4.1])) for the set S ⊆R[u] of all Q∗(u) where Q
+===== PDF PAGE 13 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 13
+is a multiplicative polynomial of slope ≤ h. The properties then stated follow from general facts about
+S-decompositions, recorded in [ AS, Proposition 4.1.2]. □
+Deﬁnition 2.2.12. Let R be a Banach–Tate ring with a ﬁxed multiplicative pseudo-uni formizer ̟ and
+letM be a Banach R-module. Assume that M has a slope-≤ h decompositionM = M≤h⊕M>h. If
+f : R → S is a bounded morphism of Banach–Tate rings such that f (̟) is a multiplicative pseudo-
+uniformizer in S, we say that the slope-≤h decomposition is functorial for R→ S if the decomposition
+Mˆ⊗RS = (M≤h⊗RS)⊕ (M>hˆ⊗RS) is a slope-≤ h decomposition of Mˆ⊗RS (usingf (̟) to deﬁne
+slopes forS). We say that the slope-≤h decomposition is functorial if it is functorial for all such bounded
+homomorphisms of Banach–Tate rings out of R.
+Theorem 2.2.13. LetR be a Noetherian Banach–T ate ring with a ﬁxed multiplicative pseudo-uniformizer
+̟, and let M be a Banach R-module with property (Pr). Let u be a compact R-linear operator on M ,
+with Fredholm determinantF (T ) = det(1−Tu ). IfM has a slope≤h-decomposition which is functorial
+with respect to R→Kx for allx∈M (R), then F has a slope≤h-factorization. Conversely, if F has a
+slope-≤h factorization, thenM has a functorial slope-≤h decomposition.
+Proof. Assume thatM has a slope-≤h decompositionM =M≤h⊕M>h with is functorial with respect
+toR→Kx for allx∈M (R). Then both of these spaces satisfy property (Pr) and are u-stable, and hence
+we have
+F = det(1−Tu|M≤h) det(1−Tu|M>h).
+We claim that this is a slope-≤h factorization. Put Q = det(1−Tu|M≤h),S = det(1−Tu|M>h).
+Pickx∈M (R) with residue ﬁeld Kx and specialize. We have Qx = det(1−Tu | M≤h⊗RKx) and
+Sx = det(1 −Tu | M>hˆ⊗RKx). By assumption Mˆ⊗RKx = (M≤h⊗R Kx)⊕ (M>hˆ⊗RKx) is a
+slope-≤ h decomposition, so Qx has slopes≤ h andSx has slopes > hand so F = QS is a slope-≤ h
+factorization.
+Conversely, assume that F has a slope-≤ h factorization F = QS. By Lemma 2.2.7 Q and S are
+relatively prime, so we may apply Theorem 2.2.2 to get a u-stable decomposition M = KerQ∗(u)⊕N .
+It is easy to see that this decomposition is functorial, as is a slope-≤ h factorization, so it sufﬁces to
+prove that this decomposition is a slope- ≤ h decomposition. First, since Q has slope≤ h we see that
+KerQ∗(u)⊆M≤h (and we know it’s ﬁnitely generated). It remains to show that for every multiplicative
+polynomial P of slope≤ h, P ∗(u) is invertible on N . By Lemma 2.2.7P and S are relatively prime.
+SinceS = det(1−Tu|N ) (by Theorem 2.2.2), it follows from [ Buz07, Lemma 3.1] that P ∗ is invertible
+onN , as desired. □
+Corollary 2.2.14. With notation and assumptions as in the theorem, a slope- ≤ h decomposition of M is
+functorial if and only if it is functorial for the natural map R→Kx for allx∈M (R).
+2.3. Fredholm hypersurfaces. In this section we discuss the notion of Fredholm hypersurfa ces and relate
+this to slope factorizations and decompositions. We will us e Huber’s adic spaces as our framework for
+non-archimedean geometry, and we will use standard notions and notation from this theory freely, refering
+to the basic references [ Hub94, Hub96].
+Any Tate ringR with a Noetherian ring of deﬁnition has an associated afﬁnoi d adic space Spa(R,R +),
+for any ring of integral elementsR+, by [Hub94, Theorem 2.5]. Fix anR+ and considerX = Spa(R,R +).
+We will frequently be interested in afﬁne 1-space over X. As an adic space over (Z, Z), we have A1 =
+Spa(Z[T ], Z); it represents the functor X ↦→ O(X) on the category of adic spaces (we note that the
+functorX↦→O+(X) is represented by the ‘closed unit disc’ Spa(Z[T ], Z[T ])). The ﬁbre product A1
+X :=
+X×Spa(Z,Z) A1 exists, but it is no longer afﬁnoid. Indeed, if we pick a topol ogically nilpotent unit̟∈R,
+it can be checked that the ﬁbre product is given by
+A1
+X =
+⋃
+m≥0
+Spa(R⟨̟mT⟩,R +⟨̟mT⟩)
+with respect to the transition maps coming from the natural i nclusions. The ring of global functions on
+A1
+X is the ring of entire power series R{{T}}. Pick a topologically nilpotent unit ̟∈R. If h∈ Q then,
+writingh =m/n withm∈ Z andn∈ Z≥1, we deﬁne an afﬁnoid subset BX,h⊆ A1
+X by
+BX,h ={|T n|≤| ̟−m|}⊆ A1
+X.
+===== PDF PAGE 14 =====
+14 CHRISTIAN JOHANSSON AND JAMES NEWTON
+We have A1
+X =⋃
+h∈Q BX,h.
+LetR be a complete Tate ring with a Noetherian ring of deﬁnition an d letF∈R{{T}} be a Fredholm
+series. Put X = Spa(R,R ◦). The closed subvariety Z(F ) := {F = 0}⊆ A1
+X is called the Fredholm
+hypersurface ofF , or sometimes the spectral variety ofF . It carries a projection map Z(F )→X, which
+is ﬂat, locally quasi-ﬁnite and partially proper by [
+AIP, Theoreme B.1].
+Deﬁnition 2.3.1. LetR be a complete Tate ring with a Noetherian ring of deﬁnition, a nd pick a topolog-
+ically nilpotent unit ̟∈ R. Let F be a Fredholm series with Fredholm hypersurface Z = Z(F )⊆ A1
+X ,
+whereX = Spa(R,R ◦). Let h∈ Q≥0 and letU⊆X be an open afﬁnoid in X; putZU,h =Z∩ BU,h⊆
+A1
+X (this is an open afﬁnoid subset of Z). We say that the pair (U,h ) is a slope datum for (X,F ) if
+ZU,h→U is ﬁnite of constant degree (if the pair (X,F ) is clear form the context, we occasionally just say
+that (U,h ) is a slope datum).
+Theorem 2.3.2. LetR be a complete T ate ring with a Noetherian ring of deﬁnition, and pick a topologically
+nilpotent unit ̟∈R. Let F be a Fredholm series over R with spectral variety Z = Z(F )⊆ A1
+X , where
+X = Spa(R,R ◦). Let U⊆X be an open afﬁnoid and let h∈ Q≥0. Then:
+(1) (U,h ) is a slope datum for (X,F ) if and only ifF has a slope≤h-factorization inOX (U ){{T}}.
+(2) The collection of all ZU,h for all slope data (U,h ) is an open cover of Z.
+Proof. This follows almost directly from [
+AIP, Theoreme B.1, Corollaire B.1]. The second assertion is
+shown by tracing through the proof of [ AIP, Lemma B.1, Theoreme B.1]; adapting the proof of [ AIP,
+Theoreme B.1] slightly one sees that one may take the sets to b e of the form ZU,h (the degree is locally
+constant on U , so constancy of the degree can be arranged). For the ﬁrst ass ertion, the statement that if
+(U,h ) is a slope datum then F has a slope-≤ h factorization inOX (U ){{T}} is [ AIP, Corollaire B.1].
+Conversely, if F = QS is a slope-≤ h factorization in OX (U ){{T}}, then S is a unit in O(BU,h).
+ThereforeO(ZU,h) =O(BU,h)/(F ) =O(BU,h)/(Q) is ﬁnite of constant degree equal to degQ overU ,
+and henceZU,h→U is ﬁnite of constant degree. □
+More generally, let X be an analytic adic space locally of the form Spa(R,R ◦) for R a complete
+Tate ring with a Noetherian ring of deﬁnition, and let F be a Fredholm series over X with Fredholm
+hypersurfaceZ. If U⊆X is an open afﬁnoid and h∈ Q≥0, we say that (U,h ) is a slope datum for (X,F )
+ifO(U ) is Tate and there is a topologically nilpotent unit ̟∈O (U ) such that ZU,h, deﬁned using this
+choice of̟, is ﬁnite ﬂat of constant degree over U .
+When constructing eigenvarieties, it will be useful to cons ider a slightly more general notion. Let X be
+an analytic adic space as above and let F be a Fredholm series over X, with associated hypersurface Z.
+Writeπ :Z→X for the projection. We let Cov(Z) denote the set of all open afﬁnoid V ⊆Z such that
+π(V )⊆ X is open afﬁnoid, O(π(V )) is Tate, and the map π|V :V →π(V ) is ﬁnite of constant degree.
+Then we have the following theorem.
+Theorem 2.3.3. Keep the notation and assumptions of the paragraph above. Th en Cov(Z) is an open
+cover of Z. If V ∈ Cov(Z), then there exists a factorization F = QS inO(π(V )){{T}}, where Q
+is a multiplicative polynomial of degree degπ|V , S is a Fredholm series, Q andS are relatively prime,
+and we have O(V ) = O(π(V ))[T ]/(Q) andO+(V ) = ( O(π(V ))[T ]/(Q))◦. Conversely, if such a
+factorization of F exists inO(U ){{T}}, where U ⊆ X is open afﬁnoid and O(U ) is T ate, then V =
+Spa(O(U )[T ]/(Q), (O(U )[T ]/(Q))◦) is naturally an element of Cov(Z).
+Proof. The assertions about rings of integral elements follow imme diately from the rest by Lemma
+A.3.
+The ﬁrst two parts are [ AIP, Theoreme B.1, Corollaire B.1]. Note that if π : V → U is a ﬁnite ﬂat
+morphism, with U⊂X andV ⊂Z open afﬁnoid, then π is open by [ Hub96, Lemma 1.7.9]. For the last
+part, it is clear that V →U is ﬁnite and surjective of constant degree degQ, so it remains to see that V is
+naturally an open subset of Z. For this we may work locally over U . Set B =O(U ). For each n we have
+compatible morphisms
+B[T ]/(Q)→B⟨̟nT⟩/(Q)←B⟨̟nT⟩/(F ).
+The second map is the projection onto the ﬁrst factor in the de compositionB⟨̟nT⟩/(F )∼
+=B⟨̟nT⟩/(Q)×
+B⟨̟nT⟩/(S) which results from the fact that Q andS are relatively prime. Thus {Q = 0}⊆ Z is open
+and closed in Z. Moreover, when n is sufﬁciently large, we claim that the ﬁrst map is an isomorp hism.
+===== PDF PAGE 15 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 15
+To see this, consider the quotient map p : B[T ] → B[T ]/(Q) and equip the target with a submulti-
+plicative norm that induces the canonical topology. For lar ge enough n we will have |p(̟nT )| ≤1
+and hence p(B0[̟nT ]) ⊆ (B[T ]/(Q))0 (here we are using −0 to denote unit balls), so p is continu-
+ous for the topology on B[T ] coming from the inclusion B[T ]⊆ B⟨̟nT⟩, and we may complete to
+obtain a morphism B⟨̟nT⟩ →B[T ]/(Q) with kernel QB⟨̟nT⟩. This gives an inverse to the map
+B[T ]/(Q)→ B⟨̟nT⟩/(Q), proving the claim. Thus we may identify V with{Q = 0}⊆ Z, which
+shows thatV is naturally an open subset of Z. □
+3. R ELATIVE DISTRIBUTION ALGEBRAS
+3.1. Relative distribution algebras and norms. Ap-adic analytic group will in this paper always mean
+a Qp-analytic group. Let R be a Banach–Tate ring. We denote the unit ball of R byR0. If there exists
+a norm-decreasing homomorphism Zp→ R, where we equip Zp with the usual norm |x|p = p−ordp(x),
+we call such R (together with the map Zp→ R) a Banach–T ate Zp-algebra. The goal of this section is
+to extend some of the constructions of [ ST03, §4] to the case of continuous functions and distributions
+valued in suchR. In particular, we construct R-valued analogues of (locally) analytic distribution alge bras
+for compact p-adic analytic groups. We begin with a lemma on the existence of Banach–Tate Zp-algebra
+norms.
+Lemma 3.1.1. Let R be a Noetherian Banach–T ate ring with norm |−| and a multiplicative pseudo-
+uniformizer̟. Assume that there exists a continuous homomorphism Zp→R (necessarily unique). Then
+there exists a Banach-T ate Zp-algebra norm|−| ′ onR which is bounded-equivalent to |−| s for some
+s> 0, and such that ̟ is a multiplicative pseudo-uniformizer for|−| ′.
+Proof. Note ﬁrst that a norm |−| ′ on R is a Banach–Tate Zp-algebra norm if and only if |p|′ ≤ p−1,
+so we need to check this. By continuity of Zp → R we have p∈ R◦◦. Choose m∈ Z≥1 such that
+|p|sp <|̟|2/m and consider the ﬁnite free R-algebraS = R[̟1/m] = R[X]/(X m−̟). We equip S
+with its canonical topology as a ﬁnite R-module; then the induced subspace topology on R⊆ S agrees
+with the original topology on S. Thus we have p,̟ 1/m∈ S◦◦. Now equip S with a submultiplicative
+R-Banach module norm|−| S that induces the canonical topology. Note that ̟ is a multiplicative pseudo-
+uniformizer for|−| S with|̟|S =|̟|, and that (R,|−| )→ (S,|−| S) is norm-decreasing. We then have
+|p̟−1/m|S,sp <|̟|1/m < 1 by construction, so p̟−1/m is topologically nilpotent in S. We can then
+choose a ring of deﬁnition S2 ofS containing̟1/m andp̟−1/m and consider the norm
+|s|2 = inf{|̟|k/m|s∈̟k/mS2}.
+Sincep∈̟1/mS2 we have|p|2 < 1, and we may hence ﬁnd s >0 such that|p|s
+2≤p−1. Restricting the
+norm|−| ′ :=|−| s
+2 toR⊆S then gives the desired norm. □
+Deﬁnition 3.1.2. LetX be a compact topological space and let A be a topological Zp-algebra.
+(1) We letC(X,A ) denote theA-module of all continuousA-valued functions onX , and letCsm(X,A )
+denote the subspace of all locally constant functions.
+(2) We put D(X,A ) = Hom A,cts(C(X,A ),A ).
+WhenA is a normed ring, we may topologize C(X,A ) andCsm(X,A ) using the supremum norm, and
+we may giveD(X,A ) the corresponding dual/operator norm. If A is complete, this makes C(X,A ) into
+a complete A-module. When the topology on X is proﬁnite, Csm(X,A ) is dense in C(X,A ) and, if R
+is a Banach–Tate Zp-algebra, the natural map C(X, Zp)ˆ⊗ZpR→C (X,R ) is a topological isomorphism.
+SimilarlyC(X, Zp)ˆ⊗ZpR0∼
+=C(X,R 0) whereR0 is the unit ball of R.
+Continue to letX be a proﬁnite set and R a Banach–Tate Zp-algebra with unit ball R0 and a multiplica-
+tive pseudo-uniformizer̟. Note thatD(X,R 0) = Hom R0 (C(X,R 0),R 0) (i.e. continuity with respect to
+the̟-adic topology is automatic) and that this is the unit ball in D(X,R ). We may equipD(X,R 0) with
+the weak topology coming from the family of mapsD(X,R 0)→R0 given byµ↦→µ(f ) forf∈C (X,R 0)
+and the ̟-adic topology on R0. We will refer to this topology as the weak-star topology onD(X,R 0).
+WhenX =G is a proﬁnite group, D(G,R ) carries a convolution product
+(µ∗ν)(f ) = µ(g↦→ν(h↦→f (gh))).
+===== PDF PAGE 16 =====
+16 CHRISTIAN JOHANSSON AND JAMES NEWTON
+One checks directly that δg∗δh =δgh for allg,h ∈G, whereδg denotes the Dirac distribution at g. This
+product preservesD(G,R 0). We sum up some basic properties of the weak-star topology.
+Lemma 3.1.3. IfX is ﬁnite (hence discrete) the weak-star topology onD(X,R 0) coincides with the̟-adic
+topology. In general, if X = lim←−nXn is an inverse limit of ﬁnite sets Xn, we have a natural isomorphism
+D(X,R 0)∼
+= lim
+←−nD(Xn,R 0) which identiﬁes the weak-star topology on the source with th e inverse limit
+topology whereD(Xn,R 0) is equipped with the ̟-adic topology. WhenX =G is a proﬁnite group this is
+a ring homomorphism, and multiplication on D(G,R 0) is jointly continuous with respect to the weak-star
+topology.
+Proof. The ﬁrst assertion is straightforward. For the second, note that the formation of D(X,R 0) is co-
+variantly functorial in X, so the maps X → Xn induce a natural map D(X,R 0)→ lim
+←−nD(Xn,R 0)
+which is continuous by the ﬁrst assertion when we equip the so urce and the target with the topologies in
+the statement of the lemma. Moreover it is easily checked to b e a ring homomorphism when X = G is a
+proﬁnite group. Unraveling, we see that this morphism is the natural morphism
+HomR0(C(X,R 0),R 0)→ HomR0 (Csm(X,R 0),R 0)
+induced by the inclusion Csm(X,R 0)⊆C (X,R 0). Since this subspace is dense for the ̟-adic topology,
+we see that the map is an isomorphism. To check that it also a ho meomorphism, note ﬁrst that by the
+same density one may deﬁne the weak-star topology using only locally constant functions. It is then
+straightforward to check that all basic opens from locally c onstant functions come by pullback from basic
+opens on theD(Xn,R 0), which implies that the map is a homeomorphism. Finally, multiplication is jointly
+continuous for the ̟-adic topology on D(Gn,R 0) for all n, and hence jointly continuous on the inverse
+limit. This implies the last assertion. □
+Let X = lim←−nXn be a countable inverse limit of ﬁnite sets, viewed as a proﬁni te set. We deﬁne
+R0[[X]] := lim←−nR0[Xn] andR[[X]] := (lim←−nR0[Xn])[1/̟]; these are R0- resp. R-modules and inde-
+pendent of the choice of the Xn’s (here, if B is a ring and S is a ﬁnite set, B[S] denotes the freeB-module
+generated by the set S). If the Xn are groups (so X is proﬁnite group) then they carry natural algebra
+structures. We may topologize R0[[X]] in two ways; either giving it the natural inverse limit topol ogy or
+the̟-adic topology. We give R[[X]] the topology induced from the ̟-adic topology on R0[[X]], which
+is compatible with viewing R[[X]] as anR-Banach module with unit ball R0[[X]].
+Proposition 3.1.4. LetX = lim←−nXn be a proﬁnite set. There is a natural R-Banach module isomorphism
+R[[X]]→D (X,R ) sending [x] toδx. It restricts to an R0-module isomorphism R0[[X]]→D (X,R 0)
+which identiﬁes the inverse limit topology on the source wit h the weak-star topology on the target. If
+X =G is a proﬁnite group, then these maps are ring homomorphisms.
+Proof. Deﬁne compatible maps R0[Xn]→ HomR0 (C(Xn,R 0),R 0) by [x]↦→δx; one checks directly
+that this is an isomorphism of topological R0-modules, and that it is a ring homomorphism when X is a
+proﬁnite group. Taking inverse limits we get
+R0[[X]]
+∼
+−→ HomR0 (Csm(X,R 0),R 0) =D(X,R 0).
+Lemma
+3.1.3 shows that this identiﬁes the inverse limit topology on the s ource with the weak-star
+topology on the target. Inverting ̟ we get the desired isomorphism R[[X]]→D (X,R ) which is clearly a
+Banach module isomophism since it identiﬁes the respective unit ballsR0[[X]] andD(X,R 0). □
+Recall the notion of a uniform pro- p group from [ DdSMS99, Deﬁnition 4.1]. When G is a uniform
+pro-p group, Zp[[G]] may be identiﬁed with a ring of non-commutative formal power series
+{∑
+α
+dαbα|dα∈ Zp
+}
+where d is the dimension of G, α = (α1,...,α d)∈ Zd
+≥0 is a multi-index, g1,...,g d is a minimal set
+of topological generators of G, bi = [gi]− 1 and bα := bα1
+1 ··· bαd
+d . Our next goal is to show that the
+analogous description holds for R0[[G]], with the same commutation relations between the bα.
+===== PDF PAGE 17 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 17
+Proposition 3.1.5. LetG = Zd
+p. F orα∈ Zd
+≥0, letEα : Zd
+p→ Zp denote the function
+Eα(x1,...,x d) =
+(x1
+α1
+)
+···
+(xd
+αd
+)
+.
+Then the Amice transform
+µ↦→
+∑
+α
+µ(Eα)T α1
+1 ··· T αd
+d
+deﬁnes an algebra isomorphism D(Zd
+p,R 0)
+∼
+−→R0[[T1,...,T d]] which identiﬁes the weak-star topology
+on the source with the product topology R0[[T1,...,T d]] =∏
+αR0.T α1
+1 ··· T αd
+d on the target.
+Proof. Once again this is a simple extension of a well known result, s o we content ourselves with a sketch.
+The key observation is thatC(Zd
+p,R 0)∼
+=C(Zd
+p, Zp)ˆ⊗ZpR0. Then it is clear that
+D(Zd
+p,R 0)
+∼
+−→
+∏
+α
+R0
+viaµ↦→(µ(Eα))α and it is straightforward to check that this identiﬁes the we ak topology on the source
+with the product topology on the target (it is the statement t hat the Eα sufﬁce to deﬁne the weak-star
+topology). To ﬁnish, we remark that the computation that the algebra structures match up is identical to the
+well known one in the case R0 = Zp. □
+Note that the topology on R0[[T1,...,T d]] described in the Proposition is equal to the (̟,T 1,...,T d)-
+adic topology. Let us return to the case of a general uniform p ro-p groupG. The ring Zp[[G]] is described
+by formal power series as above. Following [
+ST03], let us deﬁne elements cβγ,α∈ Zp by
+(3.1.1) bβbγ =
+∑
+α
+cβγ,α bα.
+We remark that, for ﬁxed α,cβγ,α→ 0 as|β| +|γ|→ +∞ (here and elsewhere, for a multi-index α we
+deﬁne |α| =α1 +··· +αd). This follows from [ ST03, Lemma 4.1(ii)].
+Proposition 3.1.6. Let G be a uniform pro- p group and use the notation above. Then R0[[G]] may be
+identiﬁed with the ring of formal power series
+{∑
+α
+dαbα|dα∈R0
+}
+with multiplication given by
+
+∑
+β
+dβbβ
+
+
+(∑
+γ
+eγbγ
+)
+=
+∑
+α
+
+∑
+β,γ
+dβeγcβγ,α
+
+ bα.
+Proof. The choice g1,...,g d of a minimal (ordered) set of topological generators identi ﬁes G, as p-adic
+analytic manifold, with Zd
+p. Thus we get a topological isomorphism R0[[G]]∼
+= R0[[Zd
+p]] ofR0-modules
+(for both the weak-star and the ̟-adic topology). Proposition
+3.1.5 then implies the description in terms
+of power series. To see that the multiplication works out as d escribed, note that the natural map Zp[[G]]→
+R0[[G]] is an algebra homomorphism, hence the above formula is true f or products of monomials. We can
+then deduce the formula in general by noting that R0 is central inR0[[G]] and that the subring generated by
+R0 and the image of Zp[[G]] (for which the formula holds) is dense in R0[[G]] with respect to the weak-star
+topology, and that multiplication is jointly continuous fo r the weak-star topology. □
+Inverting̟ we get an explicit description of R[[G]] whenG is uniform. Using this we may now deﬁne
+a family of norms on R[[G]] following [ST03, §4]. We continue to ﬁx a minimal ordered set of topological
+generatorsg1,...,g d.
+Deﬁnition 3.1.7. Letr∈ [1/p, 1). We deﬁne the r-norm||−|| r onR[[G]] by the formula
+||
+∑
+α
+dαbα||r = sup
+α
+|dα|r|α|.
+===== PDF PAGE 18 =====
+18 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Recall that we have ﬁxed a choice of norm |−| onR such that|z|≤| z|p for all z∈ Zp. This will
+be convenient for some calculations. Note that the deﬁnitio n of||−|| r a priori depends on the choice of
+generators. We remark that for all r∈ [1/p, 1),||−|| r induces the weak-star topology on R0[[G]] by
+Proposition 3.1.5 and a straightforward calculation. It follows that any homo morphismG→H of uniform
+groups induces a continuous homomorphism R0[[G]]→R0[[H]] when the source and target are equipped
+with (any)r-norms, since this is true for the weak-star topology using t he characterisation in Lemma 3.1.3.
+Proposition 3.1.8.||−|| r is independent of the choice of minimal ordered set of topolo gical generators for
+G, and is submultiplicative. Finally, if we replace the norm|−| onR by a bounded-equivalent Zp-algebra
+norm|−| ′, then the resulting norm||−|| ′
+r is bounded-equivalent to||−|| r.
+Proof. For the proof of independence, we follow the discussion afte r the proof of [
+ST03, Theorem 4.10].
+Letg′
+1,...,g ′
+d be a different choice and set b′
+i = [g′
+i]− 1∈ Zp[[G]] etc., and let||−|| ′
+r denote ther-norm
+with respect to this choice. We may write
+b′β =
+∑
+α
+cβ,αbα
+in Zp[[G]], and one has |cβ,α|pr|α|≤ r|β| (see loc. cit. ). Transporting this to R[[G]] we have the same
+identity, and the inequality |cβ,α|r|α|≤ r|β| (since|cβ,α|≤| cβ,α|p). Expanding out a general element
+µ∈R[[G]] we then have
+µ =
+∑
+β
+d′
+βb′β =
+∑
+α
+
+∑
+β
+d′
+βcβ,α
+
+ bα.
+We then have
+||µ||r≤ sup
+β,α
+|d′
+β|.|cβ,α|r|α|≤ sup
+β
+|d′
+β|r|β| =||µ||′
+r.
+By symmetry, we must have equality.
+To prove submultiplicativity, we follow the proof of [
+ST03, Proposition 4.2]. Recall the cβγ,α (3.1.1).
+By [ST03, Lemma 4.1(ii)] we have|cβγ,α|r|α|≤|cβγ,α|pr|α|≤r|β|+|γ| for allα,β,γ . Letµ =∑
+βdβbβ
+andν =∑
+γeγbγ be elements of R[[G]], then we have
+µ∗ν =
+∑
+α
+
+∑
+β,γ
+dβeγcβγ,α
+
+ bα
+and we can calculate
+||µν||r = sup
+α
+|
+∑
+β,γ
+dβeγcβγ,α|r|α|≤ sup
+β,γ
+|dβ||eγ|r|β|+|γ| =||µ||r||ν||r
+where we use submultiplicativity and |cβγ,α|r|α|≤ r|β|+|γ| to obtain the middle inequality. This ﬁnishes
+the proof of submultiplicativity.
+Finally, suppose we have C1|x| ≤ |x|′ ≤ C2|x| for all x ∈ R. Then C1|dα|r|α| ≤ |dα|′r|α| ≤
+C2|dα|r|α| for allα which implies that
+C1||
+∑
+α
+dαbα||r≤||
+∑
+α
+dαbα||′
+r≤C2||
+∑
+α
+dαbα||r
+as desired. □
+Before moving on to general compact p-adic analyticG, we record a few properties of the r-norms.
+Lemma 3.1.9. Let r∈ [1/p, 1). If g∈ G, then ||[g]||r = 1 and||[g]µ||r =||µ[g]||r =||µ||r for all
+µ ∈ R[[G]]. Moreover , if φ is an automorphism of G (of p-adic analytic groups), then φ induces an
+automorphism ofR[[G]] satisfying||φ(µ)||r =||µ||r for allµ∈R[[G]].
+Proof. The ﬁrst statement follows from the fact that the expansion o f [g] has coefﬁcients in Zp and the
+constant term is 1. The second is an easy consequence of the ﬁrst and submultipl icativity (since [g]−1 =
+[g−1] also has norm 1).
+===== PDF PAGE 19 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 19
+For the ﬁnal statement, observe that if g1,...,g d is a set of topological generators then so areφ(g1),...,φ (gd).
+Since ther-norms are independent of the choice of generators, we concl ude that if µ =∑
+αdαbα, then
+||φ(µ)||r =||
+∑
+α
+dα(φ(b))α||r = sup
+α
+|dα|r|α| =||µ||r.
+This ﬁnishes the proof. □
+We will use the last property mostly in the case when H is a compact p-adic analytic group, N⊆H is
+a uniform open normal subgroup, and φ is the automorphism of N given by conjugation by some h∈H.
+Now letG be an arbitrary compact p-analytic group. Pick a uniform open normal subgroup N and a set
+h1,...,h t of coset representatives of G/N. Any µ∈ R[[G]] may be written uniquely as µ =∑
+i[hi]µi
+withµi∈R[[N ]], and we deﬁne a norm ||−|| N,r onR[[G]] by
+||µ||N,r = sup
+i
+||µi||r.
+We could alternatively take a right coset decomposition µ = ∑
+iνi[hi] with νi ∈ R[[N ]], and deﬁne
+||−|| right
+N,r onR[[G]] by
+||µ||right
+N,r = sup
+i
+||νi||r.
+Proposition 3.1.10. W e have||−|| N,r =||−|| right
+N,r . The deﬁnition is also independent of the choice of
+coset representatives. Moreover ,||−|| N,r is submultiplicative and satisﬁes ||[g]||N,r = 1 and||[g]µ||N,r =
+||µ[g]||N,r =||µ||N,r for allg∈G andµ∈R[[G]].
+Proof. For left/right independence, note that µ =∑
+i([hi]µi[h−1
+i ])[hi] and hence
+||µ||right
+N,r = sup
+i
+||[hi]µi[h−1
+i ]||r = sup
+i
+||µi||r =||µ||N,r
+by Lemma
+3.1.9. For independence of the coset representatives, suppose we haveh′
+i a different set with
+hi =h′
+ini, thenµ =∑
+i[h′
+i]([ni]µi) and hence
+||µ||′
+N,r = sup
+i
+||[ni]µi||r = sup
+i
+||µi||r =||µ||N,r
+by Lemma
+3.1.9 again. Next we prove submultiplicativity. Deﬁne k(i,j ) by hihj = hk(i,j)nij. For
+µ =∑
+i[hi]µi andν =∑
+j[hj]νj inR[[G]], we have
+µν =
+∑
+k
+[hk]
+
+ ∑
+i,j : k(i,j)=k
+[nij]([h−1
+j ]µi[hj])νj
+
+.
+Using Lemma
+3.1.9 and submultiplicativity for||−||r onN one then sees easily that||µν||N,r≤||µ||N,r||ν||N,r .
+Next, letg∈G. Writingg =hin for somei andn∈N , we see that||[g]||N,r =||[n]||r = 1 by Lemma
+3.1.9. Finally, the last property then follows by the same argumen t as in the proof of Lemma 3.1.9. □
+As the notation suggests,||−|| N,r does depend on the choice of N . For a study of how the completions
+change when one changes the subgroup in certain situations, see [AW13, §10.6-10.8].
+3.2. Completions. In this section we study the case when G is a uniform pro-p group in more detail. Let
+R be a Banach–Tate Zp-algebra with multiplicative pseudo-uniformizer ̟ as usual.
+Deﬁnition 3.2.1. Forr∈ [1/p, 1), deﬁne Dr(G,R ) to be the completion of D(G,R ) with respect to the
+norm||−|| r, and we let D(G,R ) denote the completion of D(G,R ) with respect to the entire family of
+norms (||−|| r)r∈[1/p,1).
+Remark 3.2.2. Note that if we change the norm on R to a bounded-equivalent one, then the completion
+Dr(G,R ) is unchanged, by Proposition 3.1.8.
+===== PDF PAGE 20 =====
+20 CHRISTIAN JOHANSSON AND JAMES NEWTON
+The motivation for this deﬁnition is that if R is a Banach Qp-algebra, D(G,R ) is naturally isomorphic
+to the space of locally analytic R-valued distributions onG, by Proposition 3.2.9.
+Note that there are natural norm-decreasing injective maps Ds(G,R )→D r(G,R ) wheneverr≤ s
+(which we will think of as inclusions), and that they ﬁt toget her into an inverse system with limit D(G,R ).
+The explicit description of D(G,R ) from Proposition 3.1.6 gives us an explicit formal power series de-
+scription
+Dr(G,R ) =
+{∑
+α
+dαbα|dα∈R,|dα|r|α|→ 0
+}
+and the norm is still given by ||∑ dαbα||r = sup|dα|r|α|. We see that, unlike D(G,R ), theDr(G,K )
+are naturally potentially ON-able, with a potential ON-bas is given by the elements ̟−n(r,̟,α)bα, where
+(3.2.1) n(r,̟,α ) =
+⌊|α| logpr
+logp|̟|
+⌋
+.
+Lemma 3.2.3. Ifr < sthen the inclusion ι : Ds(G,R )֒D r(G,R ) is a compact map of R-Banach
+modules.
+Proof. For simplicity setDr :=Dr(G,R ) etc. for the duration of this proof. Choosing a minimal set of
+topological generatorsg1,...,g d ofG and setbi = [gi]− 1 as usual. For n≥ 1 deﬁne Tn :Ds→D r by
+Tn
+(∑
+α
+dαbα
+)
+=
+∑
+|α|<n
+dαbα.
+By deﬁnition we see that Tn is of ﬁnite rank. Then if ∑
+αdαbα is in the unit ball of Ds, i.e.|dα|s|α|≤ 1
+for allα, we have
+||(ι−Tn)(
+∑
+α
+dαbα)||r =||
+∑
+|α|≥n
+dαbα||r≤ (r/s)n.
+Thus||ι−Tn||≤ (r/s)n where||−|| is the operator norm on HomR,cts(Ds,Dr), and hence Tn→ι as
+n→∞ , soι is compact. □
+Lemma 3.2.4. LetG andH be two uniform pro-p groups and assume thatf : G→H is a homomorphism
+ofp-adic analytic groups such that f (G)⊆H pn
+for somen≥ 0. Then the induced map f∗ :D(G,R )→
+D(H,R ) is norm-decreasing when we equip D(G,R ) with||−|| r andD(H,R ) with||−|| r1/pn . As a
+consequence, we get an induced map
+f∗ :Dr(G,R )→D r(H,R )
+which factors through the natural map Dr1/pn
+(H,R )→D r(H,R ). In particular , when n≥ 1, f∗ is
+compact.
+Proof. We start with the ﬁrst assertion. Note that the general case f ollows from two special cases: n = 0,f
+arbitrary, andn = 1,G =H p withf the inclusion. Indeed the general case can be written as a com position
+of these cases.
+So, suppose ﬁrst that n = 0 . Scaling by powers of ̟, it sufﬁces to prove this for D(G,R 0). The map
+f∗ is continuous with respect to the norm ||−|| r (see the discussion after Deﬁnition
+3.1.7). Let g1,...,g d
+be a minimal set of topological generators for G and letbi = [gi]− 1 as usual. Using that ||[h]− 1||r≤r
+for allh∈H, we see that
+||f∗(
+∑
+dαbα)||r =||
+∑
+dαf∗(b)α||r≤ sup|dα|r|α| =||
+∑
+dαbα||r
+as desired, using continuity of f∗. This completes the proof of the ﬁrst special case.
+Next, we consider the second case G =H p⊆H. Let s =r1/p; since r≥p−1 we haves≥p−1/p >
+p−1/(p−1). Let h1,...,h d be a a minimal set of topological generators for H. Then hp
+1,...,h d
+1 form a
+minimal set of topological generators for H p. Set bi = [hp
+i ]− 1 andb′
+i = [hi]− 1 (apologies for the mild
+abuse of notation). Then, insideD(H,R ), we have
+||bi||s =||(1 +b′
+i)p− 1||s =||
+p∑
+k=1
+(p
+k
+)
+(b′
+i)k||s =sp =r
+===== PDF PAGE 21 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 21
+usings>p −1/(p−1) and|p|≤| p|p =p−1. Thus, if ∑ dαbα∈D (H p,R ), then insideD(H,R ) we have
+||
+∑
+dαbα||s≤ sup|dα|rα
+which is equal to ||∑ dαbα||r computed insideD(H p,R ). This ﬁnishes the proof of ﬁrst assertion. The
+remaining assertions are then easily veriﬁed (using Lemma 3.2.3 for last one). □
+Before discussing what happens when one changes the norm on R, we record the following important
+base change lemma.
+Lemma 3.2.5. Let R and S be Banach–T ate Zp-algebras, and let f : R→ S be a bounded ring ho-
+momorphism. Suppose that there is a multiplicative pseudo- uniformizer̟∈ R such that f (̟) is also
+multiplicative. Let r∈ [1/p, 1). Then the natural map Dr(G,R )ˆ⊗RS→D r(G,S ) is an isomorphism of
+BanachS-modules.
+Proof. Note that (since f is bounded) the fact that ̟ andf (̟) are both multiplicative implies that|̟| =
+|f (̟)|. We recall the potential ON-bases (̟−n(r,̟,α)bα)α and (f (̟)−n(r,f(̟),α)bα)α ofDr(G,R ) and
+Dr(G,S ), respectively. It is straightforward to check that the tens or product norm on
+(⨁
+α
+R(̟−n(r,̟,α)bα)
+)
+⊗RS =
+⨁
+α
+S(f (̟−n(r,̟,α))bα)
+induced by||−|| r onDr(G,R ) and the norm on S is bounded-equivalent to the norm induced by ||−|| r
+onDr(G,S ), and so we obtain isomorphic completions, which gives the de sired statement. □
+Our next goal is to prove that D(G,R ) is independent, as a topologicalR-module, of the choice of norm
+onR. Recall that we only consider norms for which there exists a m ultiplicative pseudo-uniformizer, and
+such that the natural map Zp→R is norm-decreasing.
+Proposition 3.2.6. D(G,R ) is independent of the choice of norm on R.
+Proof. Choose a norm on R and a minimal set of topological generators for G. Recall that D(G,R ) =
+lim
+←−rDr(G,R ) and thatDr(G,R ) can be described as
+Dr(G,R ) =
+{∑
+α
+dαbα|dα∈R,|dα|r|α|→ 0
+}
+.
+As a consequence, D(G,R ) consists of the formal sums ∑
+αdαbα for which |dα|r|α| → 0 for all
+r ∈ [1/p, 1). The topology is given by the family of norms (||−|| r)r∈[1/p,1), with ||∑
+αdαbα||r =
+supα|dα|r|α|. In particular, it is metrizable and translation-invarian t, so the topology is determined by the
+set of sequences that tend to 0.
+To prove independence, we start by proving that the conditio n|dα|r|α| → 0 for all r ∈ [1/p, 1) is
+independent of the choice of norm. Let |−| π and|−| ̟ be two equivalent norms on R with multiplicative
+pseudo-uniformizersπ and ̟, respectively. Choose t∈ [1/p, 1); by symmetry we need to show that if
+|dα|πr|α|→ 0 for all r∈ [1/p, 1), then|dα|̟t|α|→ 0. By Lemma
+2.1.6, if|dα|π < 1 then|dα|̟≤C1
+for some constant C1. As t< 1, we see that it remains to show |dα|̟t|α|→ 0 for the subsequence of α’s
+for which|dα|π≥ 1. But for those α, Lemma 2.1.6 gives us constantsC2,s> 0 such that
+|dα|̟t|α|≤C2|dα|s
+πt|α| =C2
+(
+|dα|π(t1/s)|α|
+)s
+.
+Sincet1/s∈ (0, 1),|dα|π(t1/s)|α|→ 0 by assumption, so|dα|̟t|α|→ 0 as desired.
+This shows that the R-module D(G,R ) is independent of the choice of norm, so we are left with
+checking independence of the topology, for which it sufﬁces to check that convergence to 0 is independent.
+Letµn =∑
+αd(n)
+α bα be a sequence in D(G,R ). Let t∈ [1/p, 1). By symmetry, we need to show that if
+supα|d(n)
+α |πr|α|→ 0 for allr∈ [1/p, 1), then supα|d(n)
+α |̟t|α|→ 0. Choose an arbitrary ǫ> 0; we need
+to show that supα|d(n)
+α |̟t|α|≤ǫ for large enough n.
+===== PDF PAGE 22 =====
+22 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Let C1,C 2,s > 0 be the constants from Lemma 2.1.6. There is a ﬁnite subset S of α’s such that if
+α /∈S, thenC1t|α|≤ǫ. Write
+sup
+α
+|d(n)
+α |̟t|α| = max
+{
+sup
+α∈S
+|d(n)
+α |̟t|α|, sup
+α /∈S
+|d(n)
+α |̟t|α|
+}
+.
+Note that for a ﬁxed α,|d(n)
+α |π→ 0, so by equivalence|d(n)
+α |̟→ 0. In particular, the term supα∈S|d(n)
+α |̟t|α|→
+0 sinceS is ﬁnite, so we can ﬁnd N1 such thatn≥N1 implies that supα∈S|d(n)
+α |̟t|α|≤ǫ. It then remains
+to treat the term supα /∈S|d(n)
+α |̟t|α|. Let α /∈S. If|d(n)
+α |π < 1, then
+|d(n)
+α |̟t|α|≤C1t|α|≤ǫ
+independent ofn. On the other hand, if |d(n)
+α |π≥ 1, then as above
+|d(n)
+α |̟t|α|≤C2
+(
+|d(n)
+α |π(t1/s)|α|
+)s
+and by assumption supα|d(n)
+α |π(t1/s)|α| → 0 as n → ∞, so we can ﬁnd N2 such n ≥ N2 implies
+supα /∈S|d(n)
+α |̟t|α| ≤ ǫ. Thus supα|d(n)
+α |̟t|α| ≤ ǫ for n≥ N = max(N1,N 2), which ﬁnishes the
+proof. □
+We now introduce a variant of the Dr(G,R ), which, when R is a Banach Qp-algebra, recovers the
+analytic distribution algebra (with ﬁxed radius of analyti city). Although we do not use this variant in our
+construction of eigenvarieties, it is used in Section 5 to construct Galois representations.
+Letr > s≥ 1/p. LetDr,◦(G,R ) ={∑ dαbα|| dα|r|α|≤ 1} denote the unit ball of Dr(G,R ). We
+deﬁne D<r,◦(G,R ) to be the closure of Dr,◦(G,R ) inDs(G,R ).D<r,◦(G,R ) is an R0-module, a priori
+depending on s, which carries two natural topologies (the ̟-adic topology and the subspace topology
+coming fromDs(G,R )).
+Proposition 3.2.7. W e have
+D<r,◦(G,R ) =
+{∑
+α
+dαbα∈D s(G,R )||dα|r|α|≤ 1
+}
+as a subset ofDs(G,R ). ThusD<r,◦(G,R ) is independent ofs. The subspace topology corresponds to the
+weak topology with respect to the family of maps (µ↦→dα(µ))α on the right hand side (and is therefore
+also independent of s). The ̟-adic topology is induced by the norm
+||
+∑
+dαbα||r = sup
+α
+|dα|′r|α|
+and is separated and complete.
+Proof. Let W ={∑ dαbα∈D s(G,R )|| dα|r|α|≤ 1}. Since the maps µ↦→dα(µ) are continuous
+we see that W is closed. On other hand, any ﬁnite truncation of an element i n W is inDr,◦(G,R ), so
+Dr,◦(G,R ) is dense inW . It follows that W =D<r,◦(G,R ). The subspace topology is given by the norm
+||−|| s, and one checks easily that this agrees with the weak topolog y in the statement of the proposition.
+The ﬁnal statement is similarly easy to check; we leave it to t he reader. □
+We then set D<r(G,R ) = D<r,◦(G,R )[1/̟]; this is naturally a Banach R-module which embeds
+intoDs(G,R ) for all s∈ [1/p,r ). The (D<r(G,R ))r>1/p form an inverse system and the natural map
+Dr(G,R )→D s(G,R ) factors overD<r(G,R ), so we therefore have
+D(G,R ) = lim←−r
+D<r(G,R )
+as well. Recall the potential ON-basis (̟−n(r,̟,α)bα)α ofDr(G,R ); we have
+D<r(G,R ) =
+{∑
+α
+dαbα||dα|r|α| bounded
+}
+=
+(∏
+α
+R0.̟−n(r,̟,α)bα
+)[1
+̟
+]
+.
+===== PDF PAGE 23 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 23
+We remark that if (̟−n(r,̟,α)bα)α is an ON-basis, we have D<r,◦(G,R ) = ∏
+αR0.̟−n(r,̟,α)bα and
+the weak topology on the left hand side is equal to the product topology on the right hand side. Next, we
+deﬁne some function modules in a similar fashion. We put
+C<r,◦(G,R ) ={f∈C (G,R )||µ(f )|≤ 1∀µ∈D (G,R )∩D r,◦(G,R )}
+and setC<r(G,R ) = C<r,◦(G,R )[1/̟]⊆C (G,R ). We note that f =∑
+αcαEα∈C <r(G,R ) if and
+only if̟−n(r,̟,α)bα(f ) = cα̟−n(r,̟,α) is bounded as α→∞ ; from this one sees that
+C<r(G,R ) =
+(∏
+α
+R0.̟n(r,̟,α)Eα
+)[1
+̟
+]
+and that it is the dual space ofDr(G,R ), and that the dual norm is given by||∑
+αcαEα||r = sup α|cα|r−|α|.
+Whenr>s ≥ 1/p, we letCr(G,R ) denote the closure ofC<s(G,R ) insideC<r(G,R ). Tracing through
+the deﬁnitions we get an explicit description
+Cr(G,R ) =
+{∑
+α
+cαEα||cα|r−|α|→ 0
+}
+=ˆ⨁
+α
+R.̟n(r,̟,α)Eα
+and see that the dual space of Cr(G,R ) isD<r(G,R ).
+Remark 3.2.8. The reader should compare our description ofCr(G,R ) with the construction of [ LWX17,
+Section 5.4]. Here, the authors give a deﬁnition of a ‘modiﬁe d’ space of continuous functions on Zp with
+values in Zp[[T,pT −1]] which is morally (apart from the slight difference in coefﬁc ients and the fact that
+we have only deﬁned Cr(G,R ) forr >1/p) the spaceC1/p(Zp,R ), where R is the Tate ring obtained as
+the rational localisation
+Zp[[T ]]⟨p
+T⟩
+[1
+T
+]
+of Zp[[T ]]. We giveR the norm with unit ball Zp[[T ]]⟨ p
+T⟩ and|T| = 1/p, deﬁned as in Remark 2.1.3. The
+deﬁnition which appears in [ LWX17] is therefore a useful motivation for the general construct ions of this
+article, although we will not use the modules Cr(G,R ) in this article. We will see in Theorem 6.3.4 that
+one may use the moduleD1/p(Zp,R ) (which is deﬁned) to prove the main results of [ LWX17].
+To ﬁnish this section we discuss the relationship between ou r constructions and the spaces of locally
+analytic functions resp. distributions when R is a Banach Qp-algebra. We may and do assume that Qp is
+isometrically embedded into R and that|p| = 1/p. Recall that the atlas on G induced from our choice of a
+topological basis identiﬁes Gpn
+with (pnZp)dim G. Amice’s theorem [ Col10, Th´ eor` eme I.4.7] tells us that
+the space of n-analytic functions on G with respect to this atlas is explicitly given as
+Cn−an(G, Qp) =ˆ⨁
+α
+Qp.kαEα
+wherekα :=⌊p−nα1⌋!···⌊ p−nαdim G⌋!. The space of n-analyticR-valued functions onG is then
+Cn−an(G,R ) =ˆ⨁
+α
+R.kαEα⊆C (G,R ).
+It is well known that |kα|∼ r|α|
+n withrn = p−1/pn(p−1), and it follows that Cn−an(G,R ) = Crn (G,R )
+as Qp-Banach spaces. Since rn→ 1 from below asn→∞ it follows that C (G,R ) is the space of locally
+analytic R-valued functions on G, with its usual locally convex topology. Dually, D(G,R ) is then the
+space of locally analytic R-valued distributions with its usual locally convex topolo gy. We sum up this
+discussion in a proposition.
+Proposition 3.2.9. WhenR is Banach Qp-algebra, C (G,R ) is canonically the space of locally analytic
+R-valued functions onG and D(G,R ) is dually the space of locally analytic R-valued distributions onG.
+===== PDF PAGE 24 =====
+24 CHRISTIAN JOHANSSON AND JAMES NEWTON
+3.3. Ash-Stevens distribution modules for Banach–T ate Zp-algebras. While the deﬁnitions in this sub-
+section will be of a local nature, let us nevertheless start b y introducing the global setup that we will need
+to deﬁne eigenvarieties. Let F be a number ﬁeld. We put G = Res F
+Q H, where H is a connected reductive
+group over F split at all places v|p. G is then a connected reductive group over Q. When v|p we write
+HOFv for a split model of HFv overOFv and choose a Borel subgroup Bv (with unipotent radical Nv)
+and a maximal torus Tv ⊆ Bv of HOFv . Set GZp = ∏
+v|p ResOFv
+Zp HOFv , B = ∏
+v|p ResOFv
+Zp Bv and
+T =∏
+v|p ResOFv
+Zp Tv and also put N =∏
+v|p ResOFv
+Zp Nv. We use overlines to denote opposite groups;
+e.g.
+B =∏
+v|p ResOFv
+Zp Bv where the Bv are the opposite Borels of Bv.
+We will also need notation for various subgroups of G := G(Qp). Set G0 = GZp (Zp),B0 = B(Zp),
+T0 = T(Zp),N0 = N(Zp). We let I denote the Iwahori subgroup of G deﬁned as the preimage of B(Fp)
+under the reduction map G0→ GZp (Fp), and we let Ks = Ker(G0→ GZp(Z/ps)) be the s-th principal
+congruence subgroup of G0, fors≥ 1. Again for s≥ 1, set
+Ts = Ker(T0→ T(Z/psZ));
+Ns = Ker(N0→ N(Z/psZ));
+N s = Ker(N(Zp)→ N(Z/psZ)).
+SetBs = TsNs fors≥ 0. We have Iwahori decompositions I = N 1T0N0 andKs = N sTsNs. Next,
+choose a splitting T := T(Qp)→T0 of the inclusion T0⊆T and put Σ = Ker( T→T0). We set
+Σ + =
+{
+t∈ Σ|tN 1t−1⊆N 1
+}
+;
+Σ cpt =
+{
+t∈ Σ|tN 1t−1⊆N 2
+}
+.
+We may then deﬁne ∆ p = IΣ +I; this is a monoid and (∆ p,I ) is a Hecke pair (which means that I and
+δIδ −1 are commensurable for all δ∈ ∆ p). The corresponding Hecke algebra (deﬁned over Zp) will be
+denoted by T(∆ p,I ).
+With these preparations let us now move on to the deﬁnition of analytic and locally analytic distribution
+modules for general Banach–Tate Zp-algebrasR. When R is a Banach Qp-algebra, these were deﬁned in
+[AS] using (locally) analytic functions on I. Recasting this in terms of the norms of the previous section ,
+we are able to extend the deﬁnition to all Banach–Tate Zp-algebras.
+Letκ : T0→R× be a continuous character. We will put some restrictions on t he choice of norm on R,
+according to the following lemma. We set ǫ = 1 ifp̸= 2 andǫ = 2 ifp = 2, and put q =pǫ.
+Lemma 3.3.1. Keep the above notation and assume that R is Noetherian. Write |−| for the given norm
+onR and let ̟ be a multiplicative pseudo-unformizer . Then there exists a Banach–T ate Zp-algebra norm
+|−| ′ onR, bounded-equivalent to|−| s for somes> 0, such that|κ(t)|′≤ 1 for allt∈T0,|κ(t)− 1|′< 1
+for allt∈Tǫ, and̟ is a multiplicative pseudo-uniformizer for|−| ′.
+Proof. The proof is similar to that of Lemma 3.1.1. Let t1,...,t a be a set of topological generators of T0
+and letta+1,...,t b be a set of topological generators for Tǫ; it sufﬁces to ﬁnd |−| ′ such that|κ(ti)|′≤ 1
+fori = 1,...,a ,|κ(ti)− 1|< 1 fori =a + 1,...,b , and|p|′≤p−1, which is bounded-equivalent to|−| s
+for somes> 0.
+SinceT0 is compact,κ(T0) is bounded, and henceti is powerbounded for alli. Moreover,Tǫ is pro-p and
+R◦/R◦◦ is a reduced discrete ring of characteristic p, so the continuous homomorphism Tǫ→ (R◦/R◦◦)×
+induced fromκ is trivial. We conclude thatκ(Tǫ)⊆ 1+R◦◦ and henceκ(ti)−1∈R◦◦ fori =a+1,...,b .
+We may now choosem such that|κ(ti)− 1|sp<|̟|2/m fori =a + 1,...,b and|p|sp <|̟|2/m. Arguing
+withS =R[̟1/m] as in Lemma 3.1.1 we may construct a norm|−| 2 onR for which̟ is a multiplicative
+pseudo-uniformizer with|̟|2 =|̟|,|κ(ti)|2≤ 1 fori = 1,...,a ,|κ(ti)− 1|2 < 1 fori =a + 1,...,b ,
+and|p|2< 1. Setting|−| ′ :=|−| s
+2 fors sufﬁciently large then gives the desired norm. □
+Deﬁnition 3.3.2. LetR be a Banach–Tate Zp-algebra and κ :T0→ R× a continuous character. We will
+say that the norm of R is adapted to κ ifκ(T0)⊆ R0 and|κ(t)− 1| < 1 for all t∈ Tǫ. Note that then
+|κ(t)| = 1 for allt∈T0 and there exists an r< 1 such that|κ(t)− 1|≤ r for allt∈Tǫ.
+===== PDF PAGE 25 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 25
+For the rest of the subsection we consider a Banach–Tate Zp-algebraR and characterκ :T0→R such
+that the norm on R is adapted toκ. We extendκ to a character of B0 by making it trivial on N0. We deﬁne
+Aκ⊆C (I,R ) to be the subset of functions such that f (gb) = κ(b)f (g) for all g∈ I andb∈ B0.Aκ
+is naturally a Banach R-module and carries a continuous right action of I by left translation. Restricting
+a function from I toN 1 gives a topological isomorphismAκ∼
+=C(
+N 1,R ). By deﬁnition, Σ + acts on the
+left on N 1 by conjugation, and via the previous isomorphism this induc es a right action of Σ + onAκ.
+These actions ﬁt together into a right action of ∆ p onAκ. We let Dκ denote the dual HomR,cts(Aκ,R ),
+equipped with the dual left ∆ p-action. SinceAκ is the B0-invariants ofC(I,R ) with respect to the action
+(f.b)(g) = κ(b)−1f (gb) (b∈B0,g∈I),Dκ is the Hausdorff B0-coinvariants ofD(I,R ) with respect to
+the dual (right) action. We record a more precise statement f or future use:
+Proposition 3.3.3. The natural surjectionD(I,R )→D κ is equivariant for the natural left I-actions on
+both sides. IdentifyingDκ withD(N 1,R ), the map is given by δ¯nb↦→κ(b)δ¯n.
+Proof. The inverse to the restriction map Aκ→C (N 1,R ) is given by f↦→(¯nb↦→κ(b)f (¯n)) (here and
+above ¯n∈ N 1 andb∈ B0). From this one sees directly that the dual map sends δ¯nb toκ(b)δ¯n. That this
+characterises the maps follows from R-linearity and continuity for the weak-star topology. □
+To apply the results from the previous subsection we will nee d to know that some groups are uniform.
+The following result is presumably well known to experts but we have been unable to ﬁnd a suitable
+reference. The proof we give is due to Konstantin Ardakov, an d we thank him for allowing us to include it
+here (any errors are due to the authors).
+Proposition 3.3.4. Ks and
+N s are uniform fors≥ǫ.
+Proof. By construction the groups are products Ks = ∏
+v|pKs,v, and similarly for N s,v, in a natural
+way, so it sufﬁces to prove that each Ks,v andN s,v is uniform. Fix v|p and let s≥ ǫ. First assume that
+Hv = GL n/OFv . Then we have the usual matrix logarithm log : Ks,v→ psMn(OFv ) and exponential
+exp : psMn(OFv ) → Ks,v. They converge and are inverse to each other (by our assumpti on on s)
+and the Lie algebra psMn(OFv ) is easily seen to be powerful by assumption, so by the deﬁniti on of the
+correspondence between powerful Lie algebras and uniform p ro-p groups [DdSMS99, Theorem 9.10] via
+the Campbell–Hausdorff series we see that Ks,v is the uniform group corresponding to psMn(OFv ). To
+get the result for N s,v we may by conjugation assume that Nv is the group of lower triangular unipotent
+matrices; the corresponding Lie algebra is that of lower tri angular nilpotent matrices and we then argue
+similarly.
+Now let Hv be arbitrary and choose a closed immersion Hv֒→GLn/OFv for some n. We thereby
+identify Hv with a closed subgroup of GLn/OFv . Writing B′
+v for the upper triangular Borel of GLn/OFv ,
+N′
+v for its unipotent radical, T′
+v and
+N
+′
+v for its opposite we may assume, after conjugating if necessa ry,
+that Tv ⊆ T′
+v etc. We write K ′
+s,v etc. for the corresponding principal congruence subgroups . With
+this setup, we now give the rest of the proof for the Ks,v only; the proof for
+N s,v proceeds in the same
+way. Note that Ks,v = Hv(OFv )∩K ′
+s,v. By [ DdSMS99, Theorem 4.5] we see that K ′
+s,v is torsion-
+free and that it sufﬁces to prove that Ks,v is powerful, i.e. that [Ks,v,K s,v]⊆ K q
+s,v, where [Ks,v,K s,v]
+is the derived subgroup of Ks,v and K q
+s,v is the subgroup generated by the q-th powers of elements in
+Ks,v (any compact p-adic analytic group is topologically ﬁnitely generated). We remark that it is easy
+to see that [K ′
+s,v,K ′
+s,v]⊆ K ′
+s+ǫ,v = (K ′
+s,v)q. Using this and Ks,v = Hv(OFv )∩K ′
+s,v, we see that
+[Ks,v,K s,v]⊆K ′
+s+ǫ,v∩ Hv(OFv ) = Ks+ǫ,v andK q
+s,v⊆Ks+ǫ,v.
+It remains to prove that Ks+ǫ,v⊆ K q
+s,v. We have Ts+ǫ,v = T q
+s,v using the logarithm and exponential
+(Tv is a split torus). We have an isomorphism of OFv -schemes ∏
+αxα : ∏
+α Ga
+∼
+−→ Nv where α
+ranges through the roots of Hv whose root subgroups are contained in Nv, and xα is a corresponding
+root homomorphism. Under this isomorphism Ns,v corresponds to∏
+αpsOFv , and by standard properties
+of xα one has xα(q.(psa)) = xα(psa)q for any a∈ OFv . It follows that Ns+ǫ,v = N q
+s,v. Similarly
+N s+ǫ,v =N
+q
+s,v. By the Iwahori decomposition we then see that Ks+ǫ,v⊆K q
+s,v as desired. □
+Remark 3.3.5. Note that the argument in the ﬁnal paragraph of the above proo f also implies that, for
+arbitraryp ands≥ 1, we have
+N s+1,v =N
+p
+s,v.
+===== PDF PAGE 26 =====
+26 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Deﬁnition 3.3.6. Letr∈ [1/p, 1).
+(1) We deﬁne a norm ||−|| sub
+r onDκ by transporting the norm||−||
+N ǫ,r (deﬁned before Proposition
+3.1.10) on D(N 1,R ) toDκ via the isomorphism D(N 1,R ) ∼
+= Dκ obtained by restriction of
+functions fromI to
+N 1.
+(2) We deﬁne a norm ||−|| quot
+r onDκ as the quotient norm induced from ||−|| Kǫ,r (deﬁned before
+Proposition
+3.1.10) via the natural surjectionD(I,R )→D κ.
+Note that||−|| quot
+r isI-invariant; this follows from I-equivariance of the surjection and Proposition
+3.1.10. The following is the key result of this subsection:
+Proposition 3.3.7. Suppose that|κ(t)− 1|≤ r for allt∈Tǫ. Then||−|| quot
+r =||−|| sub
+r onDκ.
+Proof. Let us ﬁrst assume that p̸= 2 . First we claim that ||−|| quot
+r is equal to the quotient norm on Dκ
+coming from the surjection D(K1,R )→D κ and the norm||−|| r on the source. To see this, pick a set
+(bi)i of coset representatives of I/K 1 lying in B0 and deﬁne a map πκ :D(I,R ) = ⨁
+iδbiD(K1,R )→
+D(K1,R ) by
+(δbiµi)i↦→
+∑
+i
+κ(bi)µi.
+We remark that composing this map with the natural surjectio nD(K1,R )→D κ gives the natural surjec-
+tionD(I,R )→D κ (this follows from the explicit formula in Proposition
+3.3.3). To prove the claim, it
+then sufﬁces to prove that ||−|| r is the quotient norm of||−|| K1,r viaπκ. Write||−|| ′
+r for this quotient
+norm. For simplicity assume that 1 is one of the coset representatives bi. Then our map is a section of the
+inclusionD(K1,R )⊆D (I,R ). It is then clear that ||−|| ′
+r≤ (||−|| K1,r)|D(K1,r) =||−|| r. Conversely,
+ifµ =∑
+iκ(bi)µi∈D (K1,R ) is the image of ∑
+iδbiµi∈D (I,R ), then
+||µ||r≤ sup
+i
+||κ(bi)µi||r≤ sup
+i
+||µi||r =||
+∑
+i
+δbiµi||K1,r.
+Taking the inﬁmum over such presentations we obtain ||−|| r≤||−|| ′
+r, and hence equality.
+Next, let ¯n1,..., ¯nk (resp. n1,...,n k) be a minimal set of topological generators of
+N 1 (resp. N1),
+and let t1,...,t l be a set of topological generators of T1. Put nα =∏
+i(δni− 1)αi and similarly for T1
+andN 1. By Proposition 3.3.3, the mapD(K1,R )→D κ is then given by
+∑
+α,β,γ
+dα,β,γ ¯nαtβnγ↦→
+∑
+α
+
+∑
+β
+dα,β,0
+∏
+i
+(κ(ti)− 1)βi
+
+ ¯nα.
+We then make a computation similar to the one in the proof of th e claim above. First, it’s clear that
+||−|| quot
+r ≤||−|| sub
+r since restricting||−|| r onD(K1,R ) toD(
+N 1,R ) gives (the intrinsically deﬁned)
+||−|| r, and the compositionD(N 1,R )→D (K1,R )→Dκ∼
+=D(
+N 1,R ) is the identity. Second, if
+∑
+α
+eα ¯nα =
+∑
+α
+
+∑
+β
+dα,β,0
+∏
+i
+(κ(ti)− 1)βi
+
+ ¯nα,
+then
+||
+∑
+α
+eα ¯nα||r≤ sup
+α,β
+(
+|dα,β,0
+|
+∏
+i
+|κ(ti)− 1|βir|α|
+)
+≤ sup
+α,β
+|dα,β,0|r|α|+|β|≤||
+∑
+α,β,γ
+dα,β,γ ¯nαtβnγ||r
+where we have used the assumption|κ(ti)− 1|≤ r for alli to obtain the second inequality. Hence, taking
+the inﬁmum over such presentations, we see that ||−|| sub
+r ≤||−|| quot
+r and equality follows.
+The case p = 2 is similar. We identify Dκ withD(
+N 1,R ) and consider the subspace D(N 2,R ). It
+carries the norm ||−|| r and also receives a quotient norm from the norm ||−|| r onD(K2,R ) via the
+surjectionϕ :D(K2,R )→D (N 2,R ). These two norms are equal by the same type of argument as in th e
+second part above. We then equipD(I,R ) with the norm||−|| K2,r andD(N 1,R ) with the norm||−|| sub
+r .
+===== PDF PAGE 27 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 27
+Pick coset representatives (ni)i ofN 1/N 2 and (bj)j ofB0/B2, both containing 1. We may then write the
+mapD(I,R )→D (N 1,R ) as
+⨁
+i,j
+δnibjD(K2,R )→
+⨁
+i
+δniD(N 2,R );
+(δnibjµij)i,j↦→
+
+δ
+ni
+∑
+j
+κ(bj)ϕ(µij )
+
+
+i
+.
+By a computation similar to that in the ﬁrst part of the proof i n the case p̸= 2 (using additionally the
+equality of the two norms onD(
+N 2,R ) asserted above) the norm||−|| quot
+r agrees with the norm||−|| sub
+r ,
+as desired. □
+Remark 3.3.8. It might happen that
+N 1 is uniform when p = 2 (e.g. when G = Res F
+Q GL2/F ). In this
+case, the norm||−|| sub
+r is bounded-equivalent to||−|| r1/2 onD(
+N 1,R ).
+Deﬁnition 3.3.9. Writerκ for the minimal r∈ [1/p, 1) such that|κ(t)− 1|≤ r for all t∈ Tǫ. When
+r≥ rκ, we write||−|| r for the norm||−|| sub
+r =||−|| quot
+r onDκ (we will never consider these norms
+whenr<r κ).
+Letr≥rκ. We deﬁne Dr
+κ to be the completion ofDκ with respect to||−|| r, and let Dκ = lim←−rDr
+κ.
+Dr
+κ is a Banach R-module with respect to its induced norm, and carries a left I-action (since I acts on
+Dκ by||−|| r-isometries, the action extends to the completion). When R is a Banach Qp-algebra, it follows
+from Proposition
+3.2.9 that Dκ is the locally analytic distribution module used in [AS, Han17]. We will also
+need to extend the action of Σ + to these modules, and prove that elements of Σ cpt give compact operators.
+For this, it is convenient to use the deﬁnition of ||−|| r as||−|| sub
+r . We have a natural identiﬁcation
+Dr
+κ∼
+=Dr(
+N 1,R ) whenp̸= 2; whenp = 2 we haveDr
+κ∼
+=
+⨁
+ni∈N 1/N 2
+δniDr(N 2,R ).
+Corollary 3.3.10. Ift∈ Σ +, then the action of t onDκ is norm-decreasing with respect to||−|| r for any
+r≥ rκ, and hence the action of t extends toDr
+κ. If t∈ Σ cpt, then t acts compactly onDr
+κ. Moreover , in
+this case the action of t is given by the composition of a norm-decreasing map
+Dr
+κ→D r1/p
+κ
+with the compact (norm-decreasing) inclusion
+Dr1/p
+κ֒D r
+κ.
+Proof. We use the identiﬁcation Dκ∼
+=D(
+N 1,R ), with regards to which t acts by the map induced from
+the homomorphism N 1 → N 1 given by n↦→tnt−1. First assume p̸= 2 . The ﬁrst assertion follows
+directly from Lemma 3.2.4. The second assertion follows from the third, so it remains t o prove the third
+assertion. If t∈ Σ cpt we havetN 1t−1⊆N 2 = (N 1)p by the deﬁnition of Σ cpt and Remark 3.3.5, so the
+third assertion follows from Lemmas 3.2.3 and 3.2.4.
+Now assume p = 2 and let (ni)i be a set of coset representatives of N 1/N 2. We have tN 2t−1⊆ N 2
+and n ↦→tnt−1 induces a map N 1/N 2 → N 1/N 2; moreover if t ∈ Σ cpt then tN 2t−1 ⊆ N 3, by
+Remark 3.3.5. Writing D(N 1,R ) = ⨁
+iδniD(N 2,R ) we see that t acts by a sum of maps of the form
+D(N 2,R )→D (N 2,R ) induced by n↦→tnt−1, and the proof now proceeds as in the case when p̸=
+2. □
+Continue to assume r≥ rκ. In the rest of this subsection, for simplicity of notation w e will assume
+p̸= 2 in the discussion, but everything we do works for p = 2 as well after minor adjustments, writing
+Dr
+κ∼
+=
+⨁
+iδ
+niDr(N 2,R ). Let n1,..., nt be a topological basis of N 1 and set ni = [ni]− 1∈D κ as
+usual. Then the description
+Dr(N 1,R ) =ˆ⨁
+α
+R.̟−n(r,̟,α)nα
+gives us an explicit description ofDr
+κ via the identiﬁcation Dr
+κ∼
+=Dr(
+N 1,R ). In particular we remark that
+theDr
+κ are potentially ON-able with a countable potential ON-basi s that we can actually write down. This
+is in contrast with the compact distribution modules consid ered in [ AS], which are potentially ON-able
+===== PDF PAGE 28 =====
+28 CHRISTIAN JOHANSSON AND JAMES NEWTON
+but one cannot write down an explicit basis (and the dimensio n is uncountable), as well as the distribution
+modules considered in [ Han17], which are not known to be potentially ON-able in general. O ur next goal
+is to introduce variants of the modules Dr
+κ, as well as modules Ar
+κ⊆A κ, which are analogous to those
+considered in [
+Han17].
+Letr >rκ and picks∈ [rκ,r ). The unit ball Dr,◦
+κ ofDr
+κ is ∆ -stable since ∆ acts by norm-decreasing
+operators. The natural mapDr
+κ→D s
+κ is injective, and may naturally be thought of as an inclusion . Doing
+so, we deﬁne D<r,◦
+κ to be the closure of Dr,◦
+κ insideDs
+κ. It is a ̟-torsion free R0-module and we set
+D<r
+κ =D<r,◦
+κ [1/̟]; this is an R-module which naturally embeds into Ds
+κ. SinceDr,◦
+κ ⊆D s
+κ is ∆ -stable
+we see thatD<r,◦
+κ andD<r
+κ are as well. We may then deﬁne
+A<r,◦
+κ ={f∈A κ||µ(f )|≤ 1∀µ∈D κ∩D r,◦
+κ }
+andA<r
+κ =A<r,◦
+κ [1/̟]⊆A κ. Then A<r
+κ is the dual space of Dr
+κ. We equip it with the norm dual
+to||−|| r, and deﬁne Ar
+κ ⊆ A<r
+κ to be the closure of A<s
+κ ⊆ A<r
+κ with respect to this norm. These
+spaces are ∆ -stable sinceDκ∩D r,◦
+κ is. Note that we have natural identiﬁcations D<r
+κ ∼
+=D<r(
+N 1,R ),
+A<r
+κ ∼
+=C<r(
+N 1,R ) andAr
+κ∼
+=Cr(
+N 1,R ), so the discussion in § 3.2 applies to give explicit descriptions
+of these spaces, and show that they are independent of the cho ice ofs.
+4. O VERCONVERGENT COHOMOLOGY AND EIGENVARIETIES
+In this section we establish the basic results on overconver gent cohomology needed to construct and
+analyse eigenvarieties. We retain the notation from § 3.3, but we will change our point of view slightly,
+from a functional-analytic point of view to a geometric one. Instead of working with Banach–Tate Zp-
+algebras, we will work with complete Tate Zp-algebras, which we will always assume to have a Noetherian
+ring of deﬁnition. A weight will therefore be a continuous homomorphism κ : T0→ R×, where R is a
+complete Tate Zp-algebra with a Noetherian ring of deﬁnition. We follow the s trategy of Hansen [ Han17,
+§3-4] to construct our eigenvarieties. A similar construct ion was also carried out by Xiang [ Xia12].
+4.1. Eigenvarieties. We retain the global setup from the beginning of § 3.3. To construct our eigenvari-
+eties, we will need some more notation as well as some concept s from [ AS] and [ Han17]. First, let us ﬁx
+a compact open subgroup Kℓ = Kℓ⊆ G(Qℓ) for each prime ℓ̸= p, which is hyperspecial for all but
+ﬁnitely many ℓ, and set K p =∏
+ℓ̸=pKℓ (the tame level) and K =K pI. We assume that K is neat (which
+is the case when K p is sufﬁciently small) 5. Let Z denote the center of G and putZ(K) = Z(Q)∩K. All
+weights in this section will be assumed to be trivial on Z(K)⊆T0.
+We also ﬁx a monoid ∆ ℓ⊆ G(Qℓ) containingKℓ, which is equal to G(Qℓ) whenKℓ is hyperspecial,
+such that (∆ ℓ,K ℓ) is a Hecke pair and the ℓ-Hecke algebra T(∆ ℓ,K ℓ) (deﬁned over Zp) is commutative.
+Set ∆ p = ∏ ′ ∆ ℓ (restricted product with respect to the Kℓ) and ∆ = ∆ p∆ p (recall that ∆ p = IΣ +I).
+Next, we ﬁx a choice C•(K,−) of an augmented Borel-Serre complex as in [ Han17, §2.1] and for any left
+∆ -moduleM we deﬁne C•(K,M ) as in [ Han17, §2.1]. C•(K,M ) carries an action of the Hecke algebra
+T(∆ ,K ). In general, if C• is a cochain complex we let C∗ = ⨁
+i∈ZCi and, similarly, we use H ∗ to
+denote the direct sum of all cohomology groups when cohomolo gy makes sense.
+Fix once and for all an element t∈ Σ cpt. Let κ :T0→R× be a weight, and choose a Banach–Tate Zp-
+algebra norm on R which is adapted to κ. We let ˜Uκ,r = ˜Ut,κ,r denote the corresponding Hecke operator
+onC•(K,Dr
+κ) (herer≥rκ). This operator is compact and we let
+F r
+κ (T ) = det
+(
+1−T˜Uκ,r|C∗(K,Dr
+κ)
+)
+denote its Fredholm determinant, which exists since C∗(K,Dr
+κ) is potentially ON-able (by basic propoer-
+ties of Borel-Serre complexes).
+Before proceeding, let us recall the deﬁnition of weight spa ce.
+Deﬁnition 4.1.1. Suppose (A,A +) is a complete sheafy afﬁnoid (Zp, Zp)-algebra. The functor
+(A,A +)↦→Homcts(T0/Z(K),A ×)
+5In fact it sufﬁces to assume that K contains a neat open normal subgroup with index prime to p.
+===== PDF PAGE 29 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 29
+from complete sheafy afﬁnoid (Zp, Zp)-algebras (A,A +) to sets is representable by the afﬁnoid ring
+(Zp[[T0/Z(K)]], Zp[[T0/Z(K)]]), and we let W denote the corresponding adic space. We remark that
+any continuous homomorphism T0/Z(K)→A× automatically lands in (A+)×. To see this, note that T0
+is non-canonically isomorphic to F× Zr
+p as a p-adic Lie group, where F is a ﬁnite group and r∈ Z≥0.
+The image of F lands in the roots of unity µ∞(A) inA, and the image of Zr
+p lands in 1 +A◦◦. Since A+
+is open and integrally closed in A (which is complete), µ∞(A) and 1 +A◦◦ are both subsets of (A+)×.
+We letW denote the analytic locus of W; this is an open subset. For any weight κ : T0→R× and ring
+of integral elementsR+⊆R◦, we obtain a mapU = Spa(R,R +)→W . If this map is an open immersion
+(so in particular we have R+ =R◦, by Corollary
+A.6), we will conﬂate the weight κ and the open subset
+U⊆W and refer toU as an open weight. In this case, we will also replace κ byU in our notation, writing
+DU et cetera.
+Proposition 4.1.2. The Fredholm seriesF r,|−|
+κ is independent of the choice of r≥rκ and on the choice of
+norm|−| onR.
+Proof. We assumep> 2 to simplify the notation, the proof for p = 2 is the same (except that one needs to
+write down the potential ON-basis below differently). Let |−| π and|−| ̟ be two adapted Banach–Tate
+Zp-algebra norms with multiplicative pseudouniformizers π and ̟, respectively, and let r,s ∈ [1/p, 1)
+be such that |κ(t)− 1|π ≤ r and|κ(t)− 1|̟ ≤ s for all t ∈ Tǫ. Consider Dr
+κ andDs
+κ, where the
+former is formed using |−| π and the latter is formed using |−| ̟. IdentifyDr
+κ andDs
+κ withDr(N 1,R )
+andDr(N 1,R ), respectively, and choose a minimal set of topological gene ratorsn1,...,n k ofN 1. Put
+nα = ∏
+i(δni− 1)αi. Then Dr(N 1,R ) has a potential ON-basis (π−n(r,π,α)nα) andD(N 1,R )s has a
+potential ON-basis (̟−n(r,̟,α)nα), cf. ( 3.2.1). In particular, these bases differ by scalars and produce
+potential ON-bases of C∗(K,Dr
+κ) and C∗(K,Ds
+κ) which also differ by scalars. It then follows that the
+inﬁnite matrices describing the actions ˜Uκ,r and ˜Uκ,s differ by the conjugation of an inﬁnite diagonal
+matrix. This then shows that F r,|−|π
+κ =F s,|−|̟
+κ . □
+In light of this we will from now on drop r from the notation and simply write Fκ.
+Proposition 4.1.3. Letκ : T0→R× be a weight and choose an adapted Banach–T ate Zp-algebra norm
+onR. Let ̟ be a multiplicative pseudo-uniformizer in R.
+(1) Assume that Fκ has a factorization Fκ = QS where Q is a multiplicative polynomial, S is a
+Fredholm series, andQ andS are relatively prime. Let s>r ≥rκ. The inclusion C•(K,Ds
+κ)⊆
+C•(K,Dr
+κ) induces an equality Ker•Q∗(˜Uκ,s) = Ker •Q∗(˜Uκ,r) (here and elsewhere we write
+Ker•Q∗(˜Uκ,r) for the complex withi-th term being the kernel of Q∗(˜Uκ,r) acting onCi(K,Dr
+κ)).
+(2) Let R′ be a complete T ate ring with a Noetherian ring of deﬁnition, w hich we assume to be
+equipped with a Banach–T ate Zp-algebra norm|−| ′ which induces the topology. Assume that
+we have a bounded homomorphism φ :R→R′ such that|−| ′ is adapted toκ′ =κ◦φ andφ(̟)
+is multiplicative for|−| ′. Then Fκ′ =φ(Fκ).
+If we assume moreover that Fκ has a factorization as in the previous part, we have a canonic al
+isomorphism (Ker•Q∗(˜Uκ,r))⊗RR′∼
+= Ker•Q∗(˜Uκ′,r).
+Proof. For assertion (1), we note that the general case follows from the cases≤r1/p. By Corollary
+3.3.10,
+˜Uκ,r factors as
+C∗(K,Dr
+κ)
+Φ
+→C∗(K,Ds
+κ)
+ι
+→C∗(K,Dr
+κ)
+whereι is induced by the natural compact inclusion Ds
+κ֒D r
+κ. We have ˜Uκ,s = Φ ◦ι. The result now
+follows from Lemma 2.2.3. For part (2), the ﬁrst assertion follows from Lemma 3.2.5 and [Buz07, Lemma
+2.13], and the second assertion follows from Lemma 3.2.5 upon writing C•(K,Dr
+κ) = Ker •Q∗(˜Uκ,r)⊕
+N • as in Theorem 2.2.2 sinceQ∗(˜Uκ,r) is invertible onN •. □
+Remark 4.1.4. The simple proof of Proposition 4.1.2 is an observation of Daniel Gulotta; see the beginning
+of [ Gul19, §4.4]. It replaces a more complicated argument in the publi shed version of this paper, which
+had the additional disadvantage of making use of the incorre ct version of Lemma 2.1.6.
+From the preceding two propositions, we can immediately ded uce the following corollary.
+===== PDF PAGE 30 =====
+30 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Corollary 4.1.5. LetU1⊆U 2 be open weights and let φ : OW (U2)→O W (U1) be the induced map.
+Thenφ(FU2 ) = FU1. Therefore, the Fredholm determinants (FU )U , whereU ranges over all open weights,
+glue together to a Fredholm series FW∈O (W){{T}} =O(A1
+W ).
+We write˜Uκ for the Hecke operator on C•(K, Dκ) coming from our ﬁxed t∈ Σ cpt.
+Proposition 4.1.6. Let κ : T0 → R× be a weight. Assume that Fκ has a factorization Fκ = QS
+whereQ is a multiplicative polynomial, S is a Fredholm series, and Q andS are relatively prime. Then
+Ker•Q∗(˜Uκ) is a complex of projective R-modules. If φ :R→R′ is a continuous homomorphism, where
+R′ is a complete T ate ring with a Noetherian ring of deﬁnition, t hen we have a canonical isomorphism
+(Ker•Q∗(˜Uκ))⊗RR′∼
+= Ker•Q∗(˜Uκ′) whereκ′ =κ◦φ.
+Proof. We have C•(K, Dκ) = lim←−r≥rκ
+C•(K,Dr
+κ). Since ˜Uκ = lim←−r≥rκ
+˜Uκ,r the result follows from
+Proposition
+4.1.3 upon noting that we may choose a topologically nilpotent uni t̟∈ R and norms on R
+andR′ such thatφ and̟ satisﬁes the assumptions of that Proposition (by Propositi on 3.2.6, the topologies
+on Dκ and Dκ′ are independent of these choices). □
+Next we study what happens when the factorization of Fκ changes. Keep the notation of Proposition
+4.1.6. We make Ker•Q∗(˜Uκ) into a complex of R[T ]/(Q(T ))-modules by letting T act as ˜U −1
+κ .
+Proposition 4.1.7. Letκ :T0→R× be a weight. Assume that Fκ has two factorizations Fκ = Q1S1 =
+Q2S2 where theQi are multiplicative polynomials, the Si are Fredholm series, and for each i theQi and
+Si are relatively prime. Assume further that Q1|Q2. Then we have a canonical isomorphism
+Ker•Q∗
+2(˜Uκ)⊗R[T ]/(Q2)R[T ]/(Q1)∼
+= Ker•(Q∗
+1(˜Uκ)).
+Proof. Let P be such that Q2 = PQ 1; P is then a multiplicative polynomial and one checks that it is
+relatively prime to Q1, so we may ﬁnd polynomials A,B ∈ R[T ] such that PA +Q1B = 1 . We then
+haveR[T ]/(Q2)∼
+=R[T ]/(Q1)×R[T ]/(P ) andPA∈R[T ]/(Q2) corresponds to (1, 0)∈R[T ]/(Q1)×
+R[T ]/(P ). The proposition now amounts to showing that PA. Ker•Q∗
+2(˜Uκ) = Ker •Q∗
+1(˜Uκ). If x∈
+Ker•Q∗
+2(˜Uκ), then
+Q∗
+1(˜Uκ).PAx = ˜U deg Q1
+κ AQ2x = 0,
+which gives us one inclusion. For the other, assume that y∈ Ker•Q∗
+1(˜Uκ). Note that degPA = degQ1B.
+Then
+y = ˜U − deg P A
+κ (P ∗(˜Uκ)A∗(˜Uκ) +B∗(˜Uκ)Q∗
+1(˜Uκ))y =P ∗(˜Uκ)A∗(˜Uκ)˜U − deg P A
+κ y,
+which gives us the other inclusion. □
+We now return to the Fredholm series FW from Corollary
+4.1.5. Let Z ⊆ A1
+W denote its Fredholm
+hypersurface. Consider Cov(Z ), the set of all open afﬁnoid V ⊆Z such thatπ(V )⊆X is open afﬁnoid,
+O(π(V )) is Tate, and the map π|V : V → π(V ) is ﬁnite of constant degree, where π : Z →W is the
+projection map. For V ∈ Cov(Z ), let us write FW =QVSV for the associated factorization of FW from
+Theorem
+2.3.3.
+Corollary 4.1.8. The assignmentV ↦→Ker•Q∗
+V (˜Uπ(V )), withV ∈ Cov(Z ), deﬁnes a bounded complex
+of coherent sheaves K • on Z .
+Proof. Cov(Z ) is an open cover of Z so we need to prove that whenever V1 ⊆ V2 are elements of
+Cov(Z ), we have (Ker•Q∗
+V2(˜Uπ(V2)))⊗O(V2)O(V1)∼
+= Ker•Q∗
+V1(˜Uπ(V1)) canonically. Deﬁne V3 =
+π|−1
+V2 (π(V1)). Then we have V1⊆V3⊆V2, so it sufﬁces to treat the inclusions V1⊆V3 andV3⊆V2. In
+the ﬁrst case we have π(V1) = π(V3) and the result follows from Proposition
+4.1.7, since V1⊆V3 forces
+QV1|QV3 . For the second we haveV3 =V2×π(V2)π(V1) and the result follows from Proposition 4.1.6. □
+This allows us to ﬁnish the construction of the eigenvariety . We deﬁne H ∗ = H ∗(K •); this is a
+coherent sheaf on Z . Since the projectors C•(K, Dπ(V ))→ Ker•Q∗
+V (˜Uπ(V )) commute with the action
+of T(∆ p,K p) (by construction, using the assertion about the projectors in Theorem
+2.2.2), we get an
+induced action T(∆ p,K p)→ EndZ (H ∗). Let T ⊆ EndZ (H ∗) denote the sub-presheaf generated
+overOZ by the image of T(∆ p,K p). It is a sheaf by ﬂatness of rational localization, hence a co herent
+sheaf ofOZ -algebras, and we deﬁne the eigenvariety X = XG,K p to be the relative Spa(T, T ◦)→ Z
+===== PDF PAGE 31 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 31
+(note that the sheaf of integral elements is determined by Le mma A.3). The morphism q : X → Z is
+ﬁnite by construction, and we have
+O(q−1(V )) = Im
+(
+T(∆ p,K p)⊗ZpO(V )→ EndO(V )(H ∗(Ker•Q∗
+V ))
+)
+for allV ∈ Cov(Z ). In particular, if (U,h ) is a slope datum for (W,F W ), we write TU ,h =O(q−1(ZU ,h))
+and have
+TU ,h = Im
+(
+T(∆ p,K p)⊗ZpO(ZU ,h)→ EndO(ZU,h)(H ∗(K, DU )≤h)
+)
+.
+Remark 4.1.9. Our eigenvariety X contains the eigenvariety constructed by Hansen in [
+Han17, §4] as
+the open subset {p̸= 0}. Indeed, our construction specializes to his over Banach Qp-algebras, with the
+minor difference that we use the complexes C•(K,Dr
+U ) to construct the auxiliary Fredholm hypersurface
+Z , whereas the complexes C•(K, A r
+U ) (in our notation) are used in [ Han17], giving a different auxiliary
+Fredholm hypersuface. However, working over the union of th e two Fredholm hypersurfaces, one sees
+that the coherent sheaf H ∗ on A1
+W rig , with its T(∆ p,K p)-action, is equal to the sheaf M ∗ on A1
+W rig (in
+the notation of [
+Han17, §4.3]), with its T(∆ p,K p)-action (here we have used W rig to denote the locus
+{p̸= 0}⊆W ).
+Remark 4.1.10. Like the other constructions, our construction of overconv ergent cohomology and eigen-
+varieties has numerous variations, which are sometimes use ful to keep in mind. For example, one may
+use compactly supported cohomology, homology or Borel-Moo re homology instead (cf. [ Han17, §3.3]),
+and/or one could use the modules Aκ instead of the Dκ. One can also add (or remove) Hecke operators, or
+work over some restricted family of weights, rather than the universal one.
+4.2. The T or-spectral sequence. We now give the analogue of the Tor spectral sequence in [ Han17, The-
+orem 3.3.1], which is a key tool in analyzing the eigenvariet ies. We phrase it in terms of slope decomposi-
+tions and Banach–Tate rings, though we could have formulate d it more generally for elements in Cov(Z ).
+Theorem 4.2.1. Let h ∈ Q≥0 and let κ : T0 → R× be a weight. W e ﬁx an adapted Banach–T ate
+Zp-algebra norm on R, and suppose that C•(K,Dr
+κ) has a slope-≤ h decomposition for some r≥ rκ.
+LetR→S be a bounded homomorphism of Banach–T ate Zp-algebras with adapted norms and write κS
+for the induced weight T0→ S×. Then there is a convergent Hecke-equivariant (cohomologi cal) second
+quadrant spectral sequence
+Eij
+2 = TorR
+−i(H j(K, Dκ)≤h,S ) =⇒ H i+j (K, DκS )≤h.
+Proof. We follow the proof of [
+Han17, Theorem 3.3.1]. Deﬁne a chain complex C• by Ci =C−i(K, Dκ)≤h
+and the obvious differentials (i.e. we are just reindexing a nd viewing C•(K, Dκ)≤h as chain complex).
+This is a bounded chain complex of ﬁnite projective R-modules. Thus
+T orR
+i+j(C•,S ) = Hi+j(C•⊗RS)
+where T ordenotes hyper- Tor. The hyper- Tor spectral sequence then gives us a homological spectral
+sequence
+E2
+ij = TorR
+i (Hj(C•),S ) =⇒ Hi+j(C•⊗RS)
+which is concentrated in the fourth quadrant. Reindexing we may turn this into a cohomological spectral
+sequence (cf. [
+Wei94, Dual deﬁnition 5.2.3])
+Eij
+2 = TorR
+−i(H−j (C•),S ) =⇒ H−i−j (C•⊗RS)
+which is concentrated in the second quadrant. Since H−j(C•) = H j(K, Dκ)≤h (by deﬁnition) and
+H−i−j(C•⊗RS)∼
+= H i+j(K, DκS )≤h (canonically, by our previous results) this gives the desir ed spec-
+tral sequence. Finally, Hecke-equivariance follows from t he functoriality of the hyper-Tor spectral se-
+quence. □
+As an application, we prove the following analogue of [
+Han17, Theorem 4.3.3]. We will use it in the
+next section when we construct Galois representations.
+===== PDF PAGE 32 =====
+32 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Proposition 4.2.2. Let (U,h ) be a slope datum and let m⊆O W (U) be a maximal ideal corresponding to
+a weight κ : T0→ L× whereL =OW (U)/m; this is a local ﬁeld by Proposition A.12. Fix an absolute
+value on L with|p| ≤p−1 (i.e. an adapted Banach–T ate Zp-algebra norm). Let T ⊆ T(∆ ,K ) be a
+Zp-subalgebra and put
+Tκ,h = Im(T⊗ZpL→ EndL(H ∗(K, Dκ)≤h));
+TU ,h = Im(T⊗ZpOW (U)→ EndOW (U )(H ∗(K, DU )≤h)).
+Then there is a natural isomorphism (TU ,h⊗OW (U )L)red∼
+= Tred
+κ,h.
+Proof. By the Tor-spectral sequence we see that, if T∈ T acts as 0 onH ∗(K, DU )≤h, then it acts nilpo-
+tently onH ∗(K, Dκ)≤h. It follows that we have a surjection TU ,h⊗OW (U )L ։ Tred
+κ,h of ﬁnite-dimensional
+commutativeL-algebras. To ﬁnish the proof it sufﬁces to show that if q is a maximal ideal of TU ,h⊗O(U )L
+then the localization (Tκ,h)q is non-zero. Let j be maximal such that (H j(K, DU )≤h)q̸= 0 and localize
+the entire Tor-spectral sequence with respect to q. Then the entry (E0,j
+2 )q is stable (i.e. (E0,j
+2 )q = (E0,j
+∞ )q)
+and it follows that (H j(K, Dκ)≤h)q̸= 0. Thus we must have (Tκ,h)q̸= 0 as desired. □
+Corollary 4.2.3. W e retain the notation of Proposition
+4.2.2. If we let Ut be the double coset opera-
+tor [KtK ]∈ T(∆ ,K ) for our ﬁxed t∈ Σ cpt, consider the commutative subalgebra T(∆ p,K p)[Ut]⊆
+T(∆ ,K ). Then we have a natural isomorphism (TU ,h⊗O(U )L)red∼
+= T(∆ p,K p)[Ut]red
+κ,h.
+Proof. By Proposition
+4.2.2 we have a natural isomorphism
+(T(∆ p,K p)[Ut]U ,h⊗O(U )L)red∼
+= T(∆ p,K p)[Ut]red
+κ,h
+so it sufﬁces to show that TU ,h ∼
+= T(∆ p,K p)[Ut]U ,h, which is clear from the deﬁnitions (note that
+EndO(ZU,h)(H ∗(K, DU )≤h)⊆ EndO(U )(H ∗(K, DU )≤h)). □
+5. G ALOIS REPRESENTATIONS
+We continue to assume that all weights are trivial on
+Z(K). Let G = Res F
+Q GLn/F , withF a totally real
+or CM ﬁeld. In this section we construct a Galois determinant (in the language of [
+Che14]) valued in the
+global sections of the reduced extended eigenvariety, satisfying the expected compatibility between Hecke
+eigenvalues and the characteristic polynomial of Frobeniu s at all unramiﬁed primes. The construction is an
+adaptation of a construction due to the ﬁrst author and David Hansen, to appear in [HJ] (in a slightly reﬁned
+form), which produces a Galois determinant over the reduced rigid eigenvariety as constructed in [ Han17].
+The key step is to produce the desired Galois determinant for all ‘points’ of the extended eigenvariety. In
+the rigid analytic setting one can then glue these individua l determinants together by an argument due to
+Bellaiche and Chenevier; we prove a version of this gluing te chnique in our setting. We will not assume
+that G = Res F
+Q GLn/F until §
+5.3.
+5.1. Filtrations. Letκ :T0→L× be a weight, whereL is a local ﬁeld equipped with an adapted absolute
+value; we let ̟ be a uniformizer of L. Let r >rκ and choose an auxiliary s∈ (rκ,r ). In this subsection,
+we construct a ﬁltration on the unit ball D<r,◦
+κ ofD<r
+κ with ﬁnite graded pieces, generalizing the ﬁltrations
+constructed by Hansen in [ Han]. We deﬁne
+FiljD<r,◦
+κ :=D<r,◦
+κ ∩̟jDs,◦
+κ .
+Whenκ andr are clear from the context we will simply write Filj for FiljD<r,◦
+κ (we will always omit the
+choice of s). By the deﬁnitions the Filj are open and closed in the subspace topology on D<r,◦
+κ coming
+fromDs
+κ (we recall that D<r,◦
+κ is compact with respect to this subspace topology since OL is compact).
+Therefore theD<r,◦
+κ / Filj are ﬁnite discrete OL-torsion modules and we have D<r,◦
+κ = lim←−jD<r,◦
+κ / Filj
+topologically. Note that Filj is ∆ -stable (being the intersection of two ∆ -stable subsets inDs
+κ), so theOL-
+torsion modulesD<r,◦
+κ / Filj inherit a ∆ -action and the equality in the previous sentence is ∆ -equivariant.
+We also record the following lemma.
+Lemma 5.1.1. W e haveH i(K,D<r,◦
+κ ) = lim←−jH i(K,D<r,◦
+κ / Filj) for alli.
+===== PDF PAGE 33 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 33
+Proof. On Borel-Serre complexes we haveC•(K,D<r,◦
+κ ) = lim←−jC•(K,D<r,◦
+κ / Filj) and these are bounded
+complexes of compact abelian Hausdorff groups. This catego ry is abelian and has exact inverse limits (e.g.
+by [Neu99, Proposition IV .2.7]), which gives us the result. □
+We remark that C•(K,D<r
+κ ) has a slope-≤ h decomposition for any h∈ Q≥0 (since we are working
+over the ﬁeld L) andC•(K,D<r
+κ )≤h =C•(K,Dr
+κ)≤h (since it is sandwiched between C•(K,Dr
+κ)≤h and
+C•(K,Ds
+κ)≤h, and these are equal). Thus, we may use the D<r
+κ instead of theDr
+κ to deﬁne overconvergent
+cohomology. We will do this to deﬁne Galois representations because of the fact that D<r,◦
+κ is proﬁnite
+with respect to topology coming from the Filj.
+5.2. A morphism of Hecke algebras. We continue with the notation of the previous subsection. In this
+subsection we will ﬁx a Zp-subalgebra T⊆ T(∆ ,K ) and, if A is any Zp-algebra, we will write TA for
+T⊗ZpA. Then TOL acts onH ∗(K,D<r,◦
+κ / Filj) for allr andj and we set
+Tr
+κ,j = Im
+(
+TOL→ EndOL (H ∗(K,D<r,◦
+κ / Filj)
+)
+;
+Tr
+κ,Fil = Im
+
+TOL→
+∏
+j
+Tr
+κ,j
+
+.
+We equip each Tr
+κ,j with the discrete topology (they are ﬁnite rings) and give ∏
+j Tr
+κ,j the product topology;
+we then give Tr
+κ,Fil the subspace topology. We let ˆTr
+κ,Fil denote the completion of Tr
+κ,Fil in∏
+j Tr
+κ,j; this
+is a compact Hausdorff ring.
+Fixh∈ Q≥0. We have natural mapsH ∗(K,D<r,◦
+κ )→H ∗(K,D<r
+κ )→H ∗(K,D<r
+κ )≤h and we deﬁne
+H ∗(K,D<r,◦
+κ )≤h to be the image of the composition.
+Lemma 5.2.1. H ∗(K,D<r,◦
+κ )≤h is an open and boundedOL-submodule ofH ∗(K,D<r
+κ )≤h (and hence a
+ﬁnite free OL-module).
+Proof. It is an OL-submodule which spans H ∗(K,D<r
+κ )≤h essentially by construction, so it sufﬁces to
+show that it is ﬁnitely generated. The morphisms H ∗(K,D<r,◦
+κ )→H ∗(K,D<r
+κ )→H ∗(K,D<r
+κ )≤h are
+induced by the morphisms
+C•(K,D<r,◦
+κ )→C•(K,D<r
+κ )→C•(K,D<r
+κ )≤h
+of complexes. Let C•(K,D<r,◦
+κ )≤h denote the image of the composition. Note that each Ci(K,D<r,◦
+κ )
+is bounded in Ci(K,D<r
+κ ), soCi(K,D<r,◦
+κ )≤h is bounded in Ci(K,D<r
+κ )≤h by continuity of the projec-
+tion. Thus C•(K,D<r,◦
+κ )≤h is a bounded complex of ﬁnite free OL-modules. Since H ∗(K,D<r,◦
+κ )≤h⊆
+Im(H ∗(C•(K,D<r,◦
+κ )≤h)→H ∗(K,D<r
+κ )≤h), ﬁnite generation of the former follows. □
+We deﬁne Tr,◦
+κ,≤h = Im( TOL→ EndOL(H ∗(K,D<r,◦
+κ )≤h)); by the above Lemma this is a ﬁnite OL-
+algebra and hence naturally a compact Hausdorff ring. Note t hat ifT∈ TOL is 0 in Tr
+κ,Fil, i.e. acts as 0 on
+allH ∗(K,D<r,◦
+κ / Filj), then it acts as 0 onH ∗(K,D<r,◦
+κ )≤h and so is 0 in Tr,◦
+κ,≤h. In other words we have
+a natural (surjective) map Tr
+κ,Fil→ Tr,◦
+κ,≤h. The goal of this section is to show that this map is continuou s
+and so extends to the completion ˆTr
+κ,Fil.
+To do this we introduce some special open sets. Let prj : Tr
+κ,Fil→ Tr
+κ,j denote the projection. We put
+Uj = Ker(prj ); this is an open ideal of Tr
+κ,Fil. On Tr,◦
+κ,≤h the opens that we will use are more delicate to
+construct. We have a commutative diagram
+H ∗(K,D<r,◦
+κ ) →→
+↓↓
+H ∗(K,D<r
+κ )≤h
+↓↓
+H ∗(K,Ds,◦
+κ ) →→H ∗(K,Ds
+κ)≤h
+where the right vertical map is an isomorphism, which we thin k of as an equality (the reader may trace
+through the deﬁnitions and see that this is a natural thing to do). Deﬁning H ∗(K,Ds,◦
+κ )≤h to be the
+image of H ∗(K,Ds,◦
+κ )→H ∗(K,Ds
+κ)≤h we see that H ∗(K,D<r,◦
+κ )≤h⊆H ∗(K,Ds,◦
+κ )≤h are both open
+===== PDF PAGE 34 =====
+34 CHRISTIAN JOHANSSON AND JAMES NEWTON
+lattices in H ∗(K,D<r
+κ )≤h = H ∗(K,Ds
+κ)≤h (Lemma 5.2.1 holds for H ∗(K,Ds,◦
+κ )≤h as well, with the
+same proof).
+Lemma 5.2.2. The ideals Vj ={T∈ Tr,◦
+κ,≤h|T (H ∗(K,D<r,◦
+κ )≤h)⊆̟jH ∗(K,Ds,◦
+κ )≤h} form a basis
+of open neighbourhoods of 0 in Tr,◦
+κ,≤h.
+Proof. It’s easy to check that theVj are ideals. By the preceding remarks the subgroups ̟jH ∗(K,Ds,◦
+κ )≤h
+form a basis of neighbourhoods of 0 inH ∗(K,D<r,◦
+κ )≤h (forj≫ 0). Using this the lemma is elementary.
+□
+We may now prove continuity. Denote the map Tr
+κ,Fil→ Tr,◦
+κ,≤h byφ.
+Proposition 5.2.3. W e haveφ(Uj )⊆Vj. Thus φ is continuous and extends to a continuous map ˆTr
+κ,Fil→
+Tr,◦
+κ,≤h.
+Proof. The second statement follows directly from the ﬁrst (by gene ral properties of linearly topologized
+groups and the fact that Tr,◦
+κ,≤h is complete). The ﬁrst statement amounts, by the deﬁnitions , to proving that
+ifT acts as 0 onH ∗(K,D<r,◦
+κ / Filj), then it maps H ∗(K,D<r,◦
+κ )≤h into̟jH ∗(K,Ds,◦
+κ )≤h, or in other
+words thatT acts as 0 on
+Im(H ∗(K,D<r,◦
+κ )≤h→H ∗(K,Ds,◦
+κ )≤h/̟j).
+By deﬁnition this image is equal to
+Im(H ∗(K,D<r,◦
+κ )→H ∗(K,Ds,◦
+κ )≤h/̟j).
+Assume now thatT acts as 0 onH ∗(K,D<r,◦
+κ / Filj). We may factorH ∗(K,D<r,◦
+κ )→H ∗(K,Ds,◦
+κ )≤h/̟j
+throughH ∗(K,Ds,◦
+κ )/̟j so it sufﬁces to prove that T acts as 0 on
+Im(H ∗(K,D<r,◦
+κ )→H ∗(K,Ds,◦
+κ )/̟j).
+From the long exact sequence attached to the short exact sequ ence
+0→D s,◦
+κ
+̟j
+→D s,◦
+κ →D s,◦
+κ /̟j→ 0
+we see that
+H ∗(K,Ds,◦
+κ )/̟j֒→H ∗(K,Ds,◦
+κ /̟j).
+By deﬁnition, we have a natural map D<r,◦
+κ / Filj →D s,◦
+κ /̟j. Assembling the last few sentences, we
+have a commutative diagram
+H ∗(K,D<r,◦
+κ ) →→
+↓↓
+H ∗(K,Ds,◦
+κ )/̟j
+↓↓
+H ∗(K,D<r,◦
+κ / Filj) →→H ∗(K,Ds,◦
+κ /̟j)
+where the right vertical map is injective. By assumption T acts as 0 onH ∗(K,D<r,◦
+κ / Filj), hence it acts
+as 0 on Im(H ∗(K,D<r,◦
+κ )→H ∗(K,Ds,◦
+κ /̟j)). But, since the right vertical map is injective, this image
+is isomorphic to Im(H ∗(K,D<r,◦
+κ )→ H ∗(K,Ds,◦
+κ )/̟j). Thus T acts as 0 on this, which is what we
+wanted to prove. □
+5.3. Galois representations. We now specialize to the case G = Res F
+Q GLn/F whereF is a totally real
+or CM number ﬁeld, and n≥ 2. When discussing Galois representations we will, for simpl icity of refer-
+encing, use the same conventions as in [
+Sch15, §5]. Let S′ denote the set of places w of Q such that either
+w =∞, or if w is ﬁnite then Kw is not hyperspecial. This is a ﬁnite set containing p and the primes which
+ramify inF . We let S denote the set of places in F lying above those in S′. We set
+T =
+⨂
+v /∈S
+Tv
+===== PDF PAGE 35 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 35
+where Tv = Zp[GLn(Fv)//GLn(OFv )] is the usual spherical Hecke algebra (we assume that K ⊆
+GLn(OF⊗ZˆZ)). We have T⊆ T(∆ ,K ) and we will use the notation and results of the previous subse c-
+tion for this choice of T. Let qv be the size of the residue ﬁeld at v. We have the (unnormalized) Satake
+isomorphism
+Tv[q1/2
+v ]∼
+= Zp[q1/2
+v ][x±1
+1 ,...,x ±1
+n ]Sn
+whereSn is the symmetric group on {1,...,n } permuting the variables x1,...,x n. If we let Ti,v denote
+thei-th elementary symmetric polynomial in x1,...,x n, thenqi(n+1)/2
+v Ti,v∈ Tv and we deﬁne
+(5.3.1) Pv(X) = 1−q(n+1)/2
+v T1,vX +qn+1
+v T2,vX 2−··· + (−1)nqn(n+1)/2
+v Tn,vX n∈ Tv[X].
+The following theorem is essentially a special case of [
+Sch15, Theorem 5.4.1]. We let GF,S denote the
+Galois group of the maximal algebraic extension ofF unramiﬁed outside S. For the notion of a determinant
+we refer to [ Che14].
+Theorem 5.3.1. (Scholze) There exists an integer M depending only on [F : Q] and n such that the
+following is true: for any j andr there exists an idealI r
+κ,j⊆ Tr
+κ,j with (I r
+κ,j )M = 0 and ann-dimensional
+continuous determinantD ofGF,S with values in Tr
+κ,j/I r
+κ,j such that
+D(1−XFrob v) = Pv(X)
+for allv /∈S.
+We remark that the local systems corresponding to the D<r,◦
+κ / Filj are not necessarily included in the
+formulation of [
+Sch15, Theorem 5.4.1], but the proof works the same: one ﬁrst appli es the Hochschild–
+Serre spectral sequence to reduce to the case of a trivial loc al system.
+Corollary 5.3.2. Keep the notation of Theorem 5.3.1.
+(1) There exists a closed ideal I⊆ˆTr
+κ,Fil such that I M = 0 and an n-dimensional continuous deter-
+minantD ofGF,S with values in ˆTr
+κ,Fil/I such thatD(1−XFrob v) = Pv(X) for allv /∈S.
+(2) Leth∈ Q≥0. Then there exists a closed idealJ⊆ Tr,◦
+κ,≤h such thatJ M = 0 and ann-dimensional
+continuous determinantD ofGF,S with values in Tr,◦
+κ,≤h/J such thatD(1−XFrob v) = Pv(X)
+for allv /∈S.
+Proof. Part (1) follows from the theorem and the deﬁnition and compa ctness ofˆTr
+κ,Fil via [
+Che14, Example
+2.32] (one sets I =ˆTr
+κ,Fil∩∏
+jI r
+κ,j). Assertion (2) then follows from (1) and Proposition
+5.2.3. □
+5.4. Gluing over the reduced eigenvariety. We now ﬁnish our construction of a Galois determinant over
+the reduced eigenvariety X red = X red
+G . See Deﬁnition A.10 for the deﬁnition of the reduced subspace.
+Keep the notation of the previous subsection. Let (U,h ) be a slope datum. We have a corresponding open
+afﬁnoid XU ,h⊆ X . If mκ is a maximal ideal of O(U) corresponding to the weight κ : T0→ L× with
+L =O(U)/mκ a local ﬁeld, then Corollary 4.2.3 gives us a natural identiﬁcation
+(O(XU ,h)/mκ)red =
+(
+O(X red
+U ,h )/mκ
+)red∼
+= T(∆ p,K p)[Ut]red
+κ,h.
+Fix r. Note that Tr
+κ,≤h = Tr,◦
+κ,≤h[1/̟] is naturally a closed L-subalgebra of T(∆ p,K p)[Ut]κ,h. From
+Corollary
+5.3.2 it follows that we have a Galois determinant into T(∆ p,K p)[Ut]red
+κ,h and therefore into(
+O(X red
+U ,h )/mκ
+)red
+. We record this discussion in the following convenient form :
+Lemma 5.4.1. Let (U,h ) be a slope datum and let m be a maximal ideal of O(X red
+U ,h ). Then there ex-
+ists an n-dimensional continuous determinant D of GF,S with values in O(X red
+U ,h )/m such that D(1−
+XFrob v) = Pv(X) for allv /∈S.
+Proof. This follows from the discussion above since the map SpecO(X red
+U ,h )→ SpecO(U) sends maxi-
+mal ideals to maximal ideals (the map is ﬁnite). □
+===== PDF PAGE 36 =====
+36 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Before we can glue we need some preparations. Let A be a reduced Zp-algebra which is ﬁnite and free
+as a Zp-module; we equip it with the p-adic topology. Consider the adic space Z an = A1
+San , where S =
+Spa(A[[X1,...,X d]],A [[X1,...,X d]]); hereA[[X1,...,X d]] carries the (p,X 1,...,X d)-adic topology.
+Fix an indexi∈{ 1,...,d }. Let T be a coordinate on A1
+San . We are interested in the open afﬁnoid subsets
+Vm ={|pm|,|X m
+1|,..., |X m
+d|≤| Xi|̸= 0,|X m
+i T|≤ 1} ofZ an form∈ Z≥1. Note that the union of the
+Vm is the locus V ={|Xi|̸= 0}⊆ Z an. The ringO(Vm) has a ring of deﬁnition
+Rm =A[[X1,...,X d]]
+⟨ pm
+Xi
+,X m
+1
+Xi
+,..., X m
+d
+Xi
+⟩
+⟨X m
+i T⟩
+(with the Xi-adic topology), and we have natural maps Rm+1 → Rm for all m. Note that O(Vm) =
+Rm[1/Xi] and thatO+(Vm) is the integral closure of Rm inO(Vm). By Theorem A.5 (and its proof), in
+fact we haveO+(Vm) =O(Vm)◦ andO(Vm)◦ is a ﬁnite Rm-algebra.
+Lemma 5.4.2. The image of Rm+1 inRm/X n
+i is ﬁnite for all m andn. More generally, if M is a ﬁnitely
+generatedRm+1-module, then the image of M inM⊗Rm+1Rm/X n
+i is ﬁnite.
+Proof. Fixm andn. We start with the ﬁrst assertion. It sufﬁces to check that th e kernel contains the ideal
+I =
+(
+pmn,X mn
+1 ,...,X mn
+d ,
+(pm+1
+Xi
+)mn
+,
+(X m+1
+1
+Xi
+)mn
+,...,
+(X m+1
+d
+Xi
+)mn
+, (X m+1
+i T )n
+)
+since it’s straightforward to check that Rm+1/I is ﬁnite. It’s also straightforward to check that the given
+generators of I are in the kernel. This ﬁnishes the (sketch of) proof of the ﬁr st assertion. For the second,
+there is an integer q≥ 0 and a surjection Rq
+m+1 ։ M ofRm+1-modules, which gives us a commuting
+diagram
+Rq
+m+1 →→
+↓↓
+Rq
+m/X n
+i
+↓↓
+M →→M⊗Rm+1 Rm/X n
+i
+where the vertical maps are surjections, and the second asse rtion then follows from the ﬁrst. □
+Proposition 5.4.3. With notation as above, let Y →V ={|Xi|̸= 0}⊂ Z an be a ﬁnite morphism of adic
+spaces, and assume that Y is reduced. ThenO+(Y ) is compact.
+Proof. WriteYm for the pullback of Vm; these form an increasing cover of Y consisting of open afﬁnoids.
+Since Ym → Vm is ﬁnite and O+(Vm) = O(Vm)◦ we know that O+(Ym) is integral over O(Vm)◦
+(by deﬁnition of a ﬁnite morphism). Since O(Ym) is reduced and O(Vm)◦ is Nagata (it is ﬁnite over
+Rm, which is Nagata by the proof of Theorem A.5) it follows that O+(Ym) is ﬁnite over O(Vm)◦. In
+particular,O+(Ym) is ﬁnite over Rm, hence Noetherian. We may also deduce from Lemma A.2 that
+O+(Ym) =O(Ym)◦.
+For anyn the mapO+(Ym+1)→O +(Ym)/X n
+i factors throughO+(Ym+1)⊗Rm+1Rm/X n
+i and hence
+the image is ﬁnite by Lemma 5.4.2. It follows that O+(Ym+1), when equipped with the weak topology
+with respect to the mapO+(Ym+1)→O +(Ym), is compact. We deduce that O+(Y ) = lim←−mO+(Ym) is
+compact, as desired. □
+Corollary 5.4.4. Assume that X → Z an is a ﬁnite morphism of adic spaces, with X reduced. Then
+O+(X) is compact.
+Proof. For each i∈{ 1,...,d } consider the locus Zi ={|Xi|̸= 0}⊆ Z an (i.e. what was previously
+denoted by V ) and set Z0 ={|p|̸= 0}. Let Xi, for i∈{ 0,...,d }, denote the corresponding pullbacks
+toX. Then we have a strict inclusion O+(X)⊆∏ d
+i=0O+(Xi) with closed image and the O+(Xi) are
+compact (for i = 1,...,d this is Proposition
+5.4.3 and for i = 0 this is [ BC09, Lemma 7.2.11]; note that
+X0 is nested in the terminology of [ BC09]), soO+(X) is compact as well. □
+We may then prove the main result of this section.
+===== PDF PAGE 37 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 37
+Theorem 5.4.5. There exists ann-dimensional continuous determinantD ofGF,S with values inO+(X red)
+such that
+D(1−XFrob v) = Pv(X)
+for allv /∈S.
+Proof. Fix a collection{(U,h )} of slope data such that the X red
+U ,h cover X red. We then have injections
+O+(X red)֒→
+∏
+(U ,h)
+O(X red
+U ,h )֒→
+∏
+(U ,h)
+∏
+m
+O(X red
+U ,h )/m
+where the m range over all maximal ideals of O(X red
+U ,h ). Note that we have an injection O(X red
+U ,h )֒→∏
+mO(X red
+U ,h )/m by Lemma A.1, so the second morphism really is an injection. Then note thatO+(X red)
+is compact; since X red is ﬁnite over Spa(Zp[[T0]], Zp[[T0]])an× A1 this follows from Corollary 5.4.4. To
+see that Zp[[T0]] is of the form A[[X1,...,X d]], we write T0∼
+= T tor
+0 ×T f ree
+0 whereT tor
+0 is the torsion
+subgroup of T0 (which is ﬁnitely generated) and T f ree
+0 ∼
+= Zdim T0
+p is a free complement (cf. e.g. [
+Neu99,
+Proposition II.5.7]). Set A = Zp[T tor
+0 ], then Zp[[T0]]∼
+= A⊗Zp Zp[[T f ree
+0 ]]∼
+= A[[X1,...,X d]]. Thus
+we may glue the determinants from Lemma
+5.4.1 into the desired determinant using [ Che14, Example
+2.32]. □
+6. T HE COLEMAN -M AZUR EIGENCURVE
+In this section we give a short discussion of the special case of the Coleman-Mazur eigencurve and the
+relationship between our work and that of Andreatta–Iovita –Pilloni [ AIP] and Liu–Wan–Xiao [ LWX17].
+6.1. The case G = GL 2/Q. Let us consider the special case G = GL 2/Q. We begin by ﬁxing choices
+of groups and Hecke algebras/operators. Let B be the upper triangular Borel, I the corresponding Iwahori
+and T the diagonal torus. We use the element t =
+(1 0
+0 p
+)
+∈ Σ cpt; the corresponding Hecke operator is the
+Up-operator. We choose the tame level K1(N ) = {g∈ GL2(ˆZp)| g≡ ( ∗ ∗
+0 1 ) mod N}, with N∈ Z≥5
+prime to p. Put ∆ ℓ = GL 2(Qℓ) ifℓ ∤N and ∆ ℓ = GL 2(Zℓ) ifℓ|N . With these choices everything else
+is determined and we use the notation of the main part of the pa per.
+In this case, overconvergent modular symbols were ﬁrst cons tructed by Stevens [
+Ste], and the corre-
+sponding eigencurve was constructed and shown to agree with the Coleman-Mazur eigencurve by Bel-
+laiche [Bel]. Stevens and Bellaiche worked with the compactly supporte d cohomologyH 1
+c , which admits
+a very explicit description in this case (it is given by the fu nctor denoted by Symb in [Bel, Ste]). Ordinary
+cohomology was ﬁrst considered in [ Han17]. For ordinary cohomology, one has
+H ∗(K, Dκ) = H 1(K, Dκ)
+for all weights κ, upon noting that the H i vanish automatically for all i≥ 2 and that H 0 vanishes by (a
+simpler version of) the argument in the proof of [ CHJ17, Lemma 5.4]. A consequence is the following
+lemma:
+Lemma 6.1.1. Letκ :T0→R× be a weight, and assume that Fκ has a slope-≤h factorization for some
+h∈ Q≥0 (slopes with respect to some multiplicative pseudo-unifor mizer̟∈R). Then H 1(K, Dκ)≤h is
+a ﬁnite projective R-module and is compatible with arbitrary base change.
+Proof. Letf :R→S be a continuous homomorphism of complete Tate rings and equi pS with a Banach–
+Tate Zp-algebra norm such that f (̟) is a multiplicative pseudo-uniformizer. Put κS = f◦κ. By the
+vanishing of the H i fori̸= 1 the Tor-spectral sequence collapses and gives us that
+H 1(K, Dκ)≤h⊗RS =H 1(K, DκS )≤h;
+TorR
+1 (H 1(K, Dκ)≤h,S ) = 0.
+The ﬁrst line is compatibility with base change. Putting S = R/J for an arbitrary ideal J ⊆ R (auto-
+matically closed) we see from the second line that H 1(K, Dκ)≤h is a ﬁnite ﬂat R-module, hence ﬁnite
+projective. □
+===== PDF PAGE 38 =====
+38 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Ifκ :T0→R× is a weight we write κi,i = 1, 2, for the characters Z×
+p →R× deﬁned by
+κ
+((a 0
+0 d
+))
+=κ1(a)κ2(d)
+and we identify
+N 1 withpZp via ( 1 0
+x 1 )↦→x. If we consider the eigenvariety X rig = X rig
+G constructed
+in [Han17], then it is equidimensional of dimension 2 by [Han17, Proposition B.1] since H ∗ =H 1. This
+object is usually referred to as the ‘eigensurface’. If we in stead do the eigenvariety construction over the
+partW rig
+0 of weight space where κ2 = 1 we obtain an eigenvariety that turns out to equal the Coleman -
+Mazur eigencurve; it is in particular reduced, equidimensi onal of dimension 1, and ﬂat over W rig
+0 . Let us
+denote this eigenvariety by E rig ; the properties of E rig stated in the previous sentence are presumably well
+known to experts but we will give a brief sketch of the proofs b elow. To begin with, it is equidimensional
+of dimension 1 (by the same argument as above for X rig ). For weights with κ2 = 1 we conﬂate κ andκ1,
+and we may write the action on Aκ explicitly as
+(f.γ )(x) = κ(a +bx)f
+(c +dx
+a +bx
+)
+forγ =
+(a b
+c d
+)
+∈ M2(Zp) such that a∈ Z×
+p ,c∈ pZp (this deﬁnes the submonoid ∆ p,0 of ∆ p generated
+byI andt), andx∈pZp (cf. [
+Han17, §2.2]). Using the anti-involution
+(a b
+c d
+)
+↦→
+(a c/p
+pb d
+)
+on ∆ p,0 and rescalingf byp−1 in the argument to a function on Zp one sees this right action corresponds
+to the left action deﬁned in [ Ste]. To prove that E rig is reduced one uses a criterion of Chenevier [ Che05,
+Proposition 3.9]; see [ Bel, Theorem IV .2.1] for the analogous statement for the H 1
+c . Unfortunately, the
+notion of a ‘classical structure’ in [ Che05] is based on the input data for the eigenvariety constructio n
+in [ Buz07] and is therefore not directly applicable to the situation i n [ Han17]. Let us state a version of
+[Che05, Proposition 3.9] applicable to the situation in [ Han17, Deﬁnition 4.2.1]. We use the notation and
+terminology of [ Han17, §4-5] freely; in particular we use the language of classica l rigid geometry for this
+Proposition.
+Proposition 6.1.2. Let O = ( W, Z, M, T,ψ ) be an eigenvariety datum. If (U,h ) is a slope datum,
+assume that M (ZU,h) is a projective O(U )-module. Assume moreover that there exists a very Zariski
+dense set W cl⊆ W such that, if (U,h ) is a slope datum, there is a Zariski open and dense subset WU,h of
+W cl∩U such that M (ZU,h)x is a semisimple T[T −1]-module. Here T is the parameter on A1
+W , which
+naturally acts invertibly on M (ZU,h), and the set W cl is given the Zariski topology. Then the eigenvariety
+XO is reduced.
+The proof is virtually identical to that of [
+Che05, Proposition 3.9]; we omit it. Using this, one proves
+that E rig is reduced in the same way as in the proof of [ Bel, Theorem IV .2.1(i)], using the control theorem
+of Stevens (cf. [ Han17, Theorem 3.2.5]); recall that our Hecke algebra T(∆ p,K p) contains no Hecke
+operators at primes dividing N . That E rig is equal to the Coleman-Mazur eigencurve is then proved usin g
+the control theorems of Coleman and Stevens and the Eichler- Shimura isomorphism together with [ Han17,
+Theorem 5.1.2] (this type of argument is well known to experts, see for example the proof of [Bel, Theorem
+IV .2.1(i)]). The argument for ﬂatness will be given below. T his ﬁnishes our review of the basic properties
+of E rig .
+Let us now return to the constructions of this paper. Our eige nvariety construction gives an extension
+E of E rig deﬁned over the locus W0⊆W whereκ2 = 1 . Another such extension E ′ was constructed
+by Andreatta, Iovita and Pilloni [ AIP]. Note that W0 is naturally the analytic locus of the formal weight
+space W0 withκ2 = 1. We have W0∼
+= Spa(Zp[[Z×
+p ]], Zp[[Z×
+p ]]). When p̸= 2, Zp[[Z×
+p ]] is a regular ring.
+Whenp = 2 this is no longer the case; we have Z2[[Z×
+2 ]]∼
+= Z2[Z/2][[X]] and Z2[Z/2] is not regular. We
+will instead work over the normalization A of Z2[[Z×
+2 ]], which is isomorphic to Z2[[X]]× Z2[[X]]. The
+normalization map
+Z2[Z/2][[X]]→ Z2[[X]]× Z2[[X]]
+===== PDF PAGE 39 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 39
+is explicitly given by
+∑
+n≥0
+(an +bng)X n↦→
+
+∑
+n≥0
+(an +bn)X n,
+∑
+n≥0
+(an−bn)X n
+
+
+wherean,b n∈ Z2 andg∈ Z/2 is the non-trivial element. Using this map we get a weight int oA, and we
+let˜W0 = Spa(A,A ) and put˜W0 =˜Wan
+0 . We remark that˜W rig
+0 ∼
+=W rig
+0 canonically via the normalization
+map. To make our notation uniform, we set ˜W0 =W0 whenp̸= 2 . We may perform our construction
+over˜W0, and one may pull back the Banach modules that are used to cons truct the eigencurve in [
+AIP] to
+˜W0, and construct the eigencurve over ˜W0 instead. Let us denote the corresponding eigenvarieties by ˜E
+and ˜E ′, though we hasten to remark that these should not be thought of as normalizations of E and E ′.
+Lemma 6.1.3. LetU⊂ ˜W0 be a connected open afﬁnoid subset such that O(U ) is a T ate ring. ThenO(U)
+is a Dedekind domain.
+Proof. We ﬁrst show that O(U) is regular of Krull dimension 1. The connected components of ˜W0 are iso-
+morphic to Spa(Zp[[X]], Zp[[X]]) so we may takeU to be an open afﬁnoid subset of Spa(Zp[[X]], Zp[[X]]).
+Let q be a maximal ideal ofO(U) and let p be its preimage in A = Zp[[X]]. By Proposition
+A.15 the nat-
+ural mapAp→O (U)q induces an isomorphism on completions. By Lemma A.13 p deﬁnes a closed point
+of SpecA\{ (p,X )}. Since A is a regular local ring of dimension 2, it follows that Ap is a regular local
+ring of dimension 1, and hence the same is true for O(U)q (since ifR is a Noetherian local ring with com-
+pletion ˆR,R is regular if and only if ˆR is regular, and dimR = dim ˆR). It follows that O(U) is a product
+of regular integral domains of dimension 1. Since U is connectedO(U) does not contain any nontrivial
+idempotents, soO(U) is an integral domain. This ﬁnishes the proof. □
+Let (U,h ) be a connected slope datum for ˜E (by which we mean a slope datum for the construction
+that produces ˜E such thatU is connected; we will use the terminology ‘(connected) slop e datum for ˜E ′’
+similarly). ThenO(˜EU ,h) is, by deﬁnition, an O(U)-submodule of EndO(U )(H 1(K, DU )≤h). The latter is
+projective by Lemma 6.1.1, so the former is also projective since O(U) is Dedekind. Thus the natural map
+˜EU ,h→U is ﬁnite ﬂat, and hence ˜E→ ˜W0 is ﬂat. The same applies to ˜E ′.
+Now let (U,h ) be a slope datum for ˜E and ˜E ′. Let (Ui)i∈I be an open afﬁnoid cover of U rig . Then the
+natural mapO(U)→∏
+i∈IO(Ui) is an injection (since U\U rig does not contain any open subset of U)
+so tensoring with the ﬁnite projective O(U)-moduleO(˜EU ,h) we get an injection
+O(˜EU ,h)֒→
+∏
+i∈I
+O(Ui)
+)
+⊗O(U )O(˜EU ,h)∼
+=
+∏
+i∈I
+O(˜EUi,h),
+which in particular shows that O(˜EU ,h) is reduced. The image of O(˜EU ,h) inside∏
+i∈IO(˜EUi,h) is equal
+to theO(U)-span of the image of T(∆ p,K p)[Up] in∏
+i∈IO(˜EUi,h). The same holds replacing ˜E by ˜E ′,
+so since we have canonical isomorphisms
+O(˜EUi,h)∼
+=O(˜E ′
+Ui,h)
+we obtain a canonical isomorphism O(˜EU ,h)∼
+=O(˜E ′
+U ,h), compatible with the way the eigencurves are
+built. As a result we have a canonical isomorphism ˜E∼
+= ˜E ′ extending the canonical isomorphism ˜E rig∼
+=
+(˜E ′)rig . We summarize the discussion above in the following theorem :
+Theorem 6.1.4. The eigenvariety ˜E is reduced and ﬂat over ˜W0. Moreover , it is canonically isomorphic
+to the eigencurve ˜E ′ constructed by Andreatta–Iovita–Pilloni [
+AIP].
+Remark 6.1.5. In fact, it is possible to show that E and E ′ are isomorphic for all p (i.e including p = 2 ),
+using the interpolation theorem [JN17, Theorem 3.2.1], since both E and E ′ are reduced with Zariski dense
+sets of classical points which naturally match up.
+===== PDF PAGE 40 =====
+40 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Fix a character η : ( Z/q)× → F×
+p (recall that q = 4 if p = 2 and q = p otherwise). We have a
+natural isomorphism Z×
+p ∼
+= (Z/q)×× (1 +qZp) deﬁned by z↦→(
+z,z/ω (z)) where− denotes reduction
+moduloq andω denotes the Teichm¨ uller lift. Let us write⟨z⟩ :=z/ω(z). Then we may deﬁne a character
+κη : Z×
+p → Zp[[X]]× by
+κη(z) = ω(η(
+z))
+∞∑
+n=0
+(p−1 log⟨z⟩
+n
+)
+X n.
+We let
+κη denote its reduction modulo p. This is a character Z×
+p → Fp((X))× which we may think of as a
+characterT0→ Fp((X))× withκ2 = 1. We remark that if p = 2 thenη, and hence
+κη, is unique.
+Corollary 6.1.6. There are inﬁnitely many (non-ordinary) ﬁnite slope Up-eigenvectors inH 1(K, Dκη ).
+Proof. By Corollary 4.2.3, its analogue for ˜E ′ (which is simpler, and is essentially [ Buz07, Lemma 5.9])
+and Theorem 6.1.4 we see that H 1(K, Dκη ) and the module M
+†
+κη (N ) of overconvergent modular forms
+of weightκη and tame levelN constructed in [ AIP] contain the same ﬁnite slope systems of Hecke eigen-
+values. By [ BP16, Corollary A.1], M
+†
+κη (N ) has inﬁnitely many ﬁnite slope Up-eigenvectors, so we are
+done. □
+Remark 6.1.7. It is possible to prove Corollary 6.1.6 directly from [ BP16, Theorem A] (using the obser-
+vation in the Remark following [ BP16, Corollary A.2]) without any reference to [ AIP].
+6.2. Estimates for the Newton polygon of Up. In this and the following section we give a short proof
+of the estimates obtained in [ LWX17, Theorem 3.16] for the Newton polygon of Up acting on spaces of
+overconvergent automorphic forms for a deﬁnite quaternion algebra over Q.
+We ﬁx an odd prime p and assume that we are in the setting of Section 3.3. Suppose that N 1∼
+= Zp and
+ﬁx a topological generator
+n. Let f be a norm-decreasing R-linear map
+f :
+t⨁
+i=1
+Dr
+κ→
+t⨁
+i=1
+Dr1/p
+κ
+and recall that we have a compact inclusion
+ι :
+t⨁
+i=1
+Dr1/p
+κ֒→
+t⨁
+i=1
+Dr
+κ.
+We setU =ι◦f . Then U is a compact endomorphism of M =⨁ t
+i=1Dr
+κ. Recall that we have a potential
+ON-basis forDr
+κ given by the elements er,α :=̟−n(r,̟,α)
+nα forα∈ Z≥0.
+We consider the potential ON-basis for M given by
+e1
+r,0 = (er,0, 0,..., 0),...,e t
+r,0 = (0,..., 0,e r,0),e 1
+r,1 = (er,1, 0,..., 0),...
+Lemma 6.2.1. Assume that there is no x ∈ R with 1 < |x| < |̟|−1. Then U maps ei
+r,α to a sum∑
+j,βaj
+βej
+r,β with
+|aj
+β|≤| ̟|n(r,̟,β)−n(r1/p,̟,β ).
+If we deﬁne
+λ(0) = 0,λ (i + 1) = λ(i) +n(r,̟,⌊i/t⌋)−n(r1/p,̟,⌊i/t⌋)
+the Fredholm series
+det(1−TU|M ) =
+∑
+n≥0
+cnT n∈R{{T}}
+satisﬁes |cn|≤| ̟|λ(n).
+Proof. We ﬁrst prove the estimate on the matrix coefﬁcients of U . Apply f to ei
+r,α. We get a sum∑
+j,βbj
+βej
+r1/p,β, and the fact that f is norm-decreasing is equivalent to
+|bj
+β|≤| ̟|n(r1/p,̟,β )−n(r,̟,α)r|α|−|β|/p
+===== PDF PAGE 41 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 41
+for all j,β . Since |̟| <|̟|−n(r,̟,α)r|α|,|̟|−n(r1/p,̟,β )r|β|/p ≤ 1 by construction, we deduce that
+|bj
+β|<|̟|−1 for allj,β . By our assumption on R, it follows that|bj
+β|≤ 1 for allj,β . We then have
+ej
+r1/p,β =̟−n(r1/p,̟,β )
+nβ =̟n(r,̟,β)−n(r1/p,̟,β )ej
+r,β
+so we conclude that
+Ue i
+r,α =
+∑
+j,β
+aj
+βej
+r,β
+whereaj
+β =̟n(r,̟,β)−n(r1/p,̟,β )bj
+β, and therefore
+|aj
+β|≤| ̟|n(r,̟,β)−n(r1/p,̟,β ).
+In other words, the ith row of the matrix for U (we begin indexing rows at i = 0) has entries with norm
+≤| ̟|n(r,̟,⌊i/t⌋)−n(r1/p,̟,⌊i/t⌋). We deduce immediately that |cn|≤| ̟|λ(n), since cn is an alternating
+sum of products of matrix entries coming from n distinct rows ([
+Ser62, Proposition 7]), and each of these
+products has norm≤|̟|λ(n). □
+6.3. Deﬁnite quaternion algebras over Q. As an application of Lemma 6.2.1, we give a new proof of
+[LWX17, Theorem 3.16]. In this section we assume that p is odd. We need to set up things so that we can
+apply the machinery of sections 3.3, 4. Let D/Q be a deﬁnite quaternion algebra, split at p, and let G be
+the reductive group over Q deﬁned by G(R) = ( D⊗QR)×, for Q-algebrasR. We ﬁx an isomorphism
+Dp∼
+=M2(Qp) and henceforth identify Dp withM2(Qp) via this isomorphism. Let GZp be the Zp-model
+for G given by GZp (R) = (M2(Zp)⊗ZpR)×, for Zp-algebrasR. We let B be the upper triangular Borel
+in GZp and let T be the diagonal maximal torus.
+Fix a tame level K p =∏
+l̸=pKl withKl⊂ G(Ql) compact open, let K =K pI, and assume that K is
+neat.
+Fix a character η : Z×
+p → F×
+p and let Λ = Zp[[Z×
+p ]]. We have an induced map πη : Λ → Fp and we
+denote its kernel by mη. We write Λ η for the localisation Λ mη . We have a universal character
+[·]η : Z×
+p → Λ ×
+η
+We give the complete local ring Λ η the mη-adic topology. Fixing a topological generator γ of 1 +pZp
+gives an isomorphism
+Zp[[X]]→ Λ η
+X↦→[γ]η− 1.
+Let Wη = Spa(Λ η, Λ η), denote its analytic locus by Wη and letU1⊂W η be the rational subdomain
+of Wη
+U1 ={|p|≤| X|̸= 0}.
+Pulling backU1 to the open unit discW rig
+η gives the ‘boundary annulus’ |X|p≥p−1.
+We letRη =O(U1). More explicitly, Rη = R◦
+η[ 1
+X ] whereR◦
+η is a ring of deﬁnition for Rη, given by
+theX-adic completion of Zp[[X]][ p
+X ], with the X-adic topology.
+Even more explicitly, we can describe the elements of R◦
+η as formal power series
+{∑
+n∈Z
+anX n :an∈ Zp,|an|pp−n≤ 1,|an|pp−n→ 0 asn→−∞
+}
+X is a topologically nilpotent unit in Rη and so equipping Rη with the norm |r| = inf{p−n | r∈
+X nR◦
+η,n∈ Z} makesRη into a Banach–Tate Zp-algebra. This norm has the explicit description:
+(6.3.1) |
+∑
+n∈Z
+anX n| = sup{|an|pp−n}.
+Note that if r∈ Λ η, we have|r| = inf{p−n|r∈ mn
+η,n∈ Z}.
+We now deﬁne a continuous character
+κη :T0→R×
+η
+===== PDF PAGE 42 =====
+42 CHRISTIAN JOHANSSON AND JAMES NEWTON
+by
+κη
+(
+a 0
+0 d
+)
+= [a]η.
+Lemma 6.3.1. The norm we have deﬁned on Rη is adapted to κη. Moreover , fort∈T1 we have|κη(t)−
+1|≤ 1/p.
+Proof. Ift∈T1 we haveκ(t)− 1 = (1 + X)α− 1 =∑
+n≥1
+(α
+n
+)
+X n for someα∈ Zp. So|κη(t)− 1|≤
+1/p. □
+We can now apply the theory of Section4 to the space of overconvergent automorphic formsH 0(K,D1/p
+κη ).
+Note that we have the concrete description:
+H 0(K,D1/p
+κη ) ={f :D×\(D⊗ Af )×/K p→D 1/p
+κη |f (gk) = k−1f (g) fork∈I}
+andH 0(K,D1/p
+κη ) is a Banach Rη-module with norm|f| = sup g∈(D⊗Af )×||f (g)||1/p.
+In particular, we consider the action on H 0(K,D1/p
+κη ) of the Hecke operator Uκη attached to the ele-
+ment
+(1 0
+0 p
+)
+∈ Σ cpt. As a simple consequence of our results, we obtain the follow ing theorem, which is
+essentially due to Liu–Wan–Xiao — compare with [
+LWX17, Theorem 3.16, §5.4].
+Theorem 6.3.2. The Hecke operatorUκη is compact. Consider the Fredholm series
+Fκη (T ) =
+∑
+n≥0
+cnT n = det
+(
+1−TU κη|H 0(K,D1/p
+κη )
+)
+.
+Lett =|D×\(D⊗ Af )×/K|. W e havecn∈ Λ η and moreover we have
+cn∈ mλ(n)
+η forn∈ Z≥0,
+whereλ(0) = 0,λ (1),... is a sequence of integers determined by
+λ(0) = 0,λ (i + 1) = λ(i) +⌊i/t⌋−⌊ i/pt⌋
+Proof. Compactness of Uκη follows from Corollary 3.3.10. The fact that cn∈ Λ η follows from Corollary
+4.1.5, sinceFκη (T ) extends to a Fredholm series overWη, andO(Wη) = Λ η.
+The rest of the Theorem follows from Lemma 6.2.1 (note that the norm on Rη satisﬁes the assumption
+of that Lemma), using the fact that if we choose representati vesg1,...,g t for the double cosets D×\(D⊗
+Af )×/K andr∈ [p−1, 1) we have an isomorphism of potentially ON-able Rη-modules:
+H 0(K,Dr
+κη )∼
+=⊕t
+i=1Dr
+κη
+f↦→(f (gi))t
+i=1
+We take ̟ = X, and compute that n(p−1,X,⌊i/t⌋) = ⌊i/t⌋ and n(p−1/p,X,⌊i/t⌋) = ⌊1/p⌊i/t⌋⌋ =
+⌊i/pt⌋. □
+As in §
+6.1, our eigenvariety construction, applied to the modules H 0(K,Dr
+κ) with κ2 = 1 , gives an
+eigenvariety Eη which is ﬂat over Wη. The open subspace E rig
+η deﬁned by |p|̸= 0 is the eigenvariety
+constructed by Buzzard [ Buz04].
+We end this section with our interpretation of [LWX17, Theorem 1.3, Theorem 1.5]. First we need some
+extra notation. For m≤n positive integers we deﬁne
+Um/n ={|pm|≤| X n|̸= 0}⊆W η.
+We setU =U1.
+For a real number α∈ (0, 1] we denote byW >p−α
+η the open subspace of Wη obtained as the union of
+open afﬁnoids
+W >p−α
+η =
+⋃
+m/n<α
+Um/n.
+Note that X is a topologically nilpotent unit in O(Um/n) for all m,n . We denote the pullback of Eη to
+W >p−α
+η by E >p−α
+η . The eigenvariety Eη comes equipped with a map to the spectral variety Z(Fκη ), and
+===== PDF PAGE 43 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 43
+therefore it comes equipped with a map to A1
+U . For h =m/n∈ Q withm∈ Z andn∈ Z≥1 we deﬁne an
+afﬁnoid subspace BU ,=h⊂ A1
+U by
+BU ,=h ={|T n| =|X −m|}.
+Similarly, ifh =m/n≤h′ =m′/n are rational numbers, we deﬁne
+BU ,[h,h′] ={|X −m|≤| T n|≤| X −m′
+|}.
+Lemma 6.3.3. LetL/Qp be a ﬁnite extension and let x∈L with|x|p =p−α, where 0<α ≤ 1. Consider
+the closed immersion ι : Spa(L,OL)֒U induced by the continuous Zp-algebra map Rη→ L sending
+X tox. Let Bx,=h be the pullback of BU ,=h alongι. Then Bx,=h֒→A1
+L is the afﬁnoid open deﬁned by
+Bx,=h ={|T|p =p−αh}.
+Proof. The afﬁnoid Bx,=h is given by{|T n| =|x−m| =|pαm|}⊂ A1
+L. □
+Theorem 6.3.4 ([
+LWX17]). The space E >p−1
+η is a disjoint countable union of adic spaces ﬁnite and ﬂat
+overW >p−1
+η .
+Moreover , there is an explicitα depending only on K p, with 0<α< 1, such that
+E >p−α
+η =
+∐
+i≥0
+Xη,i
+with Xη,i ﬁnite ﬂat over W >p−α
+η and each piece Xη,i of the eigenvariety has constant slope, in the sense
+that each map Xη,i→ A1
+U factors through the afﬁnoid subspace BU ,=hi⊂ A1
+U , for some hi∈ Q≥0. In
+particular , if we measure slopes onX rig
+η,i with the usualp-adic valuation, then the slope of a point in X rig
+η,i
+is given by hivp(T ).
+Proof. This follows from Theorems 1.3, 1.5 and Remark 3.25 of [
+LWX17]. Remark 3.25 shows that,
+after restricting to W >p−1
+η , the Fredholm series Fκη factorises as a countable product of multiplicative
+polynomials∏
+i≥0Pi, with each ﬁnite product ∏ N
+i≥0Pi a factor in a slope factorization over every afﬁnoid
+subspace of W >p−1
+η . This establishes the claim about E >p−1
+η . Theorem 1.5 shows moreover that (for
+some explicit α) the restriction of Fκη toW >p−α
+η factorises as ∏
+i≥0Qi, such that the specialization of
+Qi at every classical rigid analytic point of W >p−α
+η has constant slope equal to hi for some hi∈ Q≥0
+(independent of the specialization). We obtain a decomposi tion of Z(Fκη ) as a disjoint union of spaces
+Zi, ﬁnite ﬂat over W >p−α
+η , such that every classical rigid analytic point of Zi is contained in BU ,=hi. The
+space Xη,i is deﬁned to be the inverse image of Zi in E >p−α
+η . It now remains to show that every point
+ofZi is contained in BU ,=hi. First we check this for rank 1 points: a rank 1 point of Zi which is not in
+BU ,=hi is contained in BU ,[h,h′] for some interval [h,h ′] which does not contain hi. But then BU ,[h,h′]∩Zi
+is a non-empty open subset in Zi which contains no classical rigid analytic point, which is i mpossible
+since Zi is ﬁnite ﬂat over W >p−α
+η (in particular the map Zi→W >p−α
+η is open). Let V be an afﬁnoid
+open inW >p−α
+η . Then Zi|V∩ BU ,=hi is an afﬁnoid open in Zi|V such that the complement contains no
+rank 1 point. We have Zi|V = Spa(A,A ◦) for some Tate ring A with a Noetherian ring of deﬁnition.
+So [
+Hub93, Lemma 3.4] (c.f the proof of [ Hub93, Corollary 4.2]) implies that rank 1 points are dense in
+the constructible topology of Spa(A,A ◦) and we deduce that Zi|V ∩ BU ,=hi = Zi|V . Therefore Zi is
+contained in BU ,=hi, as desired. The ﬁnal sentence of the Theorem follows from Le mma 6.3.3. □
+Note that [LWX17] proves moreover that the slopes appearing in the above theorem (with multiplicities)
+are given by a ﬁnite union of arithmetic progressions.
+APPENDIX A. S OME ALGEBRAIC PROPERTIES OF TATE RINGS
+In this section we prove some properties of the kinds of Tate r ings and adic spaces that we need. We
+start with a ring theoretic lemma.
+Lemma A.1. LetR be a complete T ate ring with a Noetherian ring of deﬁnition R0. Then R is Jacobson.
+===== PDF PAGE 44 =====
+44 CHRISTIAN JOHANSSON AND JAMES NEWTON
+Proof. Let ̟∈ R0 be a topologically nilpotent unit in R. R0 is a Zariski ring when equipped with its
+̟-adic topology (since it is complete), so SpecR0\{̟ = 0} is a Jacobson scheme by [ Gro66, (10.5.7)].
+But SpecR0\{̟ = 0} = SpecR, soR is Jacobson as desired. □
+We record another simple lemma that will prove to be useful.
+Lemma A.2. LetR be a complete T ate ring with a Noetherian ring of deﬁnition R0. If S⊆R is an open
+and bounded subring (i.e. a ring of deﬁnition) containing R0, then S is a ﬁnitely generated R0-module,
+hence Noetherian, and integral over R0. Moreover ,R◦ is the integral closure of R0 inR.
+Proof. Pick a topologically nilpotent unit ̟∈ R contained in R0. Since S is bounded we have S ⊆
+̟−NR0 for someN , and henceS is anR0-submodule of the cyclicR0-module̟−NR0. The lemma now
+follows sinceR0 is Noetherian. For the last assertion, ﬁrst note that the int egral closure is contained in R◦.
+SinceR◦ is the union of all open and bounded subrings and any two open b ounded subrings are contained
+in a third, the assertion follows from the ﬁrst part. □
+One consequence of the above lemma is a version for Tate rings (with our Noetherian hypothesis) of
+[BGR84, 6.3.4/Proposition 1]:
+Lemma A.3. Let R be a complete T ate ring with a Noetherian ring of deﬁnition. L et S be a ﬁnite R-
+algebra, equipped with the natural R-module topology. Then S is a complete T ate ring with a Noetherian
+ring of deﬁnition.
+Moreover , the integral closure ofR◦ inS is equal toS◦. In particular , the morphism(R,R ◦)→ (S,S ◦)
+is a ﬁnite morphism of afﬁnoid rings [Hub96, 1.4.2] and Spa(S,S ◦)→ Spa(R,R ◦) is a ﬁnite morphism
+of adic spaces [Hub96, 1.4.4].
+Proof. We letR0 denote a Noetherian ring of deﬁnition for R, let ̟ denote a topologically nilpotent unit
+in R and let s1,...,s n denote R-module generators of S. Each si is integral over R, and multiplying
+by a large enough power of ̟ we may assume that each si is integral over R0. Let S0 be the subring of
+S generated by R0 ands1,...,s n. Now S0 is a ﬁnite R0-module and is in particular a Noetherian ring.
+MoreoverS0 with the ̟-adic topology is an open subring of S. In particular, S is an f -adic topological
+ring, and since ̟ is a topologically nilpotent unit we see that S is a Tate ring with a Noetherian ring of
+deﬁnition. Completeness of S follows from completeness of ﬁnitely generated modules ove r Noetherian
+adic rings (this is [ Hub94, Lemma 2.3 (ii)]).
+Finally we show that the integral closure R◦ inS is equal to S◦. It is clear from the deﬁnition of the
+topology on S thatR◦ maps to S◦ so the integral closure of R◦ inS is contained in S◦. Conversely, by
+Lemma A.2,S◦ is the integral closure of S0 inS. Since S0 is integral over R0, we see that S◦ is integral
+overR0, and therefore it is integral over R◦. □
+Next we recall the notion of uniformity. If R is a normed ring, then the spectral seminorm |−| sp
+onR is deﬁned by |r|sp = lim n→∞|rn|1/n. It is well known that this limit exists and deﬁnes a power-
+multiplicative seminorm. Whenever it is a norm, we will refe r to it as the spectral norm on R. Conversely,
+if we mention ‘the spectral norm of R’, we are implicitly stating (or assuming) that the spectral seminorm
+is a norm.
+Deﬁnition A.4. Let R be a complete Tate ring. We say that R is uniform if the set of power-bounded
+elementsR◦ is bounded. We say that R is stably uniform if any rational localization of R is also uniform.
+IfR is a Banach–Tate ring, we say that R is uniform if the norm is power-multiplicative.
+Note that, if R is Banach–Tate ring whose underlying complete Tate ring is u niform, then the given
+norm on R is equivalent to the corresponding spectral norm, which is p ower-multiplicative. In this case,
+[
+Ber90, Theorem 1.3] says that the spectral norm is equal to the Gelf and norm supx∈M(R)|−| x. If R is in
+addition stably uniform, then if ̟∈R is a multiplicative pseudo-uniformizer and U⊆X = Spa(R,R +)
+is a rational subdomain, we may equateM(OX (U )) with the rank 1 points inU using̟ and equipOX (U )
+with the corresponding Gelfand norm.
+We may extend the deﬁnition of stable uniformity to arbitrar y analytic adic spaces, i.e. those that are
+locally the adic spectra of complete Tate rings. We say that such anX is stably uniform if there is a cover of
+open afﬁnoid subsets Ui⊆X such thatOX (U ) is stably uniform. We remark that if R is complete sheafy
+===== PDF PAGE 45 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 45
+Tate ring such that Spa(R,R +) is stably uniform, then R is stably uniform (this is a short argument; cf.
+[KL15, Remark 2.8.12]). When R has a Noetherian ring of deﬁnition, many naturally occurrin g complete
+Tate rings are stably uniform. Below we will prove some resul ts in this direction.
+Theorem A.5. Let A be a reduced quasi-excellent ring. Let I be an ideal of A and give A the I-adic
+topology. IfU is a rational subdomain of X = Spa(A,A ) andOX (U ) is T ate, thenOX (U ) is uniform. In
+other words, the analytic locus X an⊆X is stably uniform. W e also haveO+
+X (U ) =OX (U )◦.
+Moreover , ifU⊂ X an is an arbitrary open afﬁnoid then O+
+X an (U ) = OX an (U )◦ andOX an (U )◦ is
+bounded inOX an (U ).
+Proof. Letf1,...,f n,g ∈ A such that f1,...,f n generate an open ideal and let U ={|f1|,..., |fn|≤
+|g|̸= 0}. Put R =OX (U ); recall that R may be constructed as completion of the f-adic ring T =A[1/g]
+with ring of deﬁnition T0 =A[f1/g,...,f n/g]⊆T and ideal of deﬁnition J =I[f1/g,...,f n/g]⊆T0.
+LetR0 be theJ-adic completion ofT0; this is a ring of deﬁnition of R, with ideal of deﬁnition JR 0. Since
+A is reduced, so is T and hence T0, moreover T0 is quasi-excellent since it is ﬁnitely generated over A.
+Recall that a Noetherian ring is reduced if and only if Serre’ s conditions R0 and S1 hold (we apologize
+for the unfortunate clash of notations). By [ Gro65, (7.8.3.1)], R0 inherits these properties from T0 and is
+therefore reduced. Moreover, T0 and hence T0/J = R0/JR 0 is Nagata (since they are ﬁnitely generated
+overA, which is quasi-excellent, hence Nagata). By [ Mar75, Proposition 2.3], R0 is Nagata (note that
+there is a trivial misprint in the reference).
+Pick a topologically nilpotent unit ̟∈R (recall that R is Tate by assumption); without loss of gener-
+ality assume ̟∈ R0. Then R = R0[1/̟], so R is contained in the total ring of fractions Q(R0) ofR0.
+SinceR0 is reduced and Nagata, it follows that the integral closure R′ ofR0 inR is a ﬁnitely generated
+R0-module, hence is bounded. Now R′ =R◦ by Lemma A.2, soR◦ is bounded as desired.
+For the assertion about O+
+X (U ), let T + denote the integral closure of T0 in T . By deﬁnition, the
+completion of T + isR+ :=O+
+X (U ). In particular, R+ containsR0 and the assertion now follows from
+Lemma A.2.
+To check the assertion about an open afﬁnoid U = Spa(OX (U ),O+
+X (U )), note thatU has a ﬁnite cover
+by Tate rational subdomains (Ui)i∈I ofX. Since the maps O(U )→O (Ui) are bounded (the Ui are also
+rational subdomains of U ), the strict embedding
+O(U )֒→
+∏
+i∈I
+O(Ui)
+induces an embedding
+O(U )◦֒O (U )∩
+∏
+i∈I
+O(Ui)◦
+but the right hand side equals
+O(U )∩
+∏
+i∈I
+O+(Ui) =O+(U )
+by the ﬁrst part of the Theorem, so we are done because by deﬁni tionO+(U )⊆O (U )◦ which implies that
+we have equality. Finally, the boundedness ofOX an (U )◦ follows from the boundedness of theO(Ui)◦. □
+Corollary A.6. LetO be a complete discrete valuation ring and let A be a reduced complete Noetherian
+adic ring formally of ﬁnite type over O, i.e. such that A/A◦◦ is a ﬁnitely generated O-algebra. Then the
+analytic locus X an⊆ X is stably uniform. Moreover , if U ⊂ X an is an open afﬁnoid subspace then
+O+
+X an (U ) =OX an (U )◦ andOX an (U )◦ is bounded inOX an (U ).
+Proof. A is excellent by [ V al75, Proposition 7] and [ V al76, Theorem 9] (cf. [ Con99], near the end of the
+Introduction). Thus, Theorem A.5 applies. □
+We also note that the proof of Theorem A.5 applies essentially verbatim to prove the following simila r
+result.
+Theorem A.7. Let R be a complete T ate ring and assume that R has a ring of deﬁnition R0 which is
+quasi-excellent and reduced. Then R is stably uniform. Moreover , ifX = Spa(R,R ◦), and U⊂X is an
+open afﬁnoid subspace, then O+
+X (U ) =OX (U )◦ and andOX (U )◦ is bounded inOX (U ). In particular ,
+OX (U ) is reduced.
+===== PDF PAGE 46 =====
+46 CHRISTIAN JOHANSSON AND JAMES NEWTON
+This Theorem also allows us to develop the theory of the nilre duction of an adic space. We only give a
+sketch here — one can check that everything in [ BGR84, §9.5.1] works in our setting.
+Deﬁnition A.8. LetX be an adic space. Deﬁne the nilradical radOX to be the sheaf associated to the
+presheafU↦→rad(OX (U )), where rad(OX (U )) is the nilradical of the ringOX (U ).
+Proposition A.9. LetR be a complete T ate ring and assume that R has a ring of deﬁnition R0 which is
+quasi-excellent. Let X = Spa(R,R ◦). Then radOX ⊂O X is a coherent OX -ideal, associated to the
+ideal rad(R) ofR.
+More generally, if X is an adic space which is locally of the form Spa(R,R ◦) whereR is a complete
+T ate ring with a quasi-excellent ring of deﬁnition, then radOX is a coherentOX -ideal.
+Proof. The key point is that if U⊂X = Spa(R,R ◦) is a rational subdomain, then
+Spa(OX (U )/ rad(R), (OX (U )/ rad(R))◦)→ Spa(Rred, (Rred)◦)
+is a rational subdomain, so Theorem A.7 implies that OX (U )/ rad(R) is reduced, which implies that
+rad(OX (U )) = rad(R)OX (U ). □
+Deﬁnition A.10. LetX be an adic space which is locally of the form Spa(R,R ◦), whereR is a complete
+Tate ring with a quasi-excellent ring of deﬁnition. Then we d eﬁne X red to be the closed subspace of X cut
+out by radOX (see [Hub96, 1.4]).
+In this paper the analytic adic spaces encountered will loca lly be of the form Spa(R,R ◦), where R is
+a complete Tate ring with a ring of deﬁnition R0 which is formally of ﬁnite type over Zp. We will need
+a few properties of these rings, all of which follow from the m aterial in [ Abb10]. We recall the following
+deﬁnition from [ Abb10], specialized to our Noetherian situation.
+Deﬁnition A.11. A Noetherian adic ring B is called a 1-valuative order if it is an integral domain which
+is local of Krull dimension 1, and has no J-torsion, whereJ is an ideal of deﬁnition (this is independent of
+the choice of ideal of deﬁnition).
+This is [ Abb10, Deﬁnition 1.11.1], except that we demand that B is Noetherian. If B is a 1-valuative
+order, then the integral closureB inL = Frac(B) is ﬁnite over B and is a complete discrete valuation ring,
+soL is a complete discrete valuation ﬁeld [ Abb10, Proposition 1.11.4]. If A is any Noetherian adic ring
+with an ideal of deﬁnition I and p∈ SpecA, then A/p is a 1-valuative order if and only if p is a closed
+point in SpecA\V (I) [Abb10, Proposition 1.11.8].
+Lemma A.12. LetR be a complete T ate ring with a ring of deﬁnition R0 which is formally of ﬁnite type
+over Zp, and let m⊆R be a maximal ideal. Then R/m is a local ﬁeld.
+Proof. Let p = R0∩ m and let ̟∈ R0 be a topologically nilpotent unit. Then p is a closed point in
+SpecR0\V ((̟)) = Spec R, soR0/p is a 1-valuative order and hence its fraction ﬁeld R/m is a complete
+discrete valuation ﬁeld. It remains to prove that the residu e ﬁeld is ﬁnite. For this, it sufﬁces to show that
+the residue ﬁeld of the local ring R0/p is ﬁnite since the integral closure of R0/p inR/m is ﬁnite over
+R0/p. Pick an adic surjection A = Zp[[T1,...,T m]]⟨X1,...,X n⟩ ։ R0 for some m,n ∈ Z≥0. The
+maximal ideal ofR0/p is open and so corresponds to an open maximal ideal of A, and hence to a maximal
+ideal of Fp[X1,...,X n] in a way that preserves residue ﬁelds. It follows that R0/p is ﬁnite as desired. □
+Lemma A.13. Letf :A→B be a morphism of topologically ﬁnite type between Noetheria n adic rings.
+LetI be an ideal of deﬁnition of A and assume that A/I is Jacobson. Let J = IB ; this is an ideal of
+deﬁnition of B. If q∈ SpecB\V (J) is a closed point, then p =f −1(q) is a closed point in SpecA\V (I).
+Proof. The morphism A → B/q is topologically of ﬁnite type and B/q is a 1-valuative order, so by
+[Abb10, Proposition 1.11.2] A → B/q is ﬁnite. It is then easy to check that this forces A/p to be a
+1-valuative order as well, and hence p to be closed in SpecA\V (I) by [Abb10, Proposition 1.11.8]. □
+Corollary A.14. Letg :R→S be a continuous morphism between between two complete T ate rings with
+a ring of deﬁnition that is formally of ﬁnite type over Zp. Then g is topologically of ﬁnite type 6 and pulls
+back maximal ideals to maximal ideals.
+6i.e. g factors through a surjective, continuous and open morphism R⟨X1, . . . , Xn⟩ → S, see [ Hub94, Lemma 3.3]
+===== PDF PAGE 47 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 47
+Proof. Choose a ring of deﬁnition R0 forR which is formally of ﬁnite type over Zp. By [ Hub93, Proposi-
+tion 1.10] g is adic, and therefore g(R0) is contained in a ring of deﬁnition for S. Since any two rings of
+deﬁnition are contained in another, we can ﬁnd a ring of deﬁni tionS0 forS such that g(R0)⊆S0 andS0
+contains a ring of deﬁnition S1 which is formally of ﬁnite type over Zp. It follows from Lemma A.2 that
+S0 is ﬁnite over S1, and hence S0 is also formally of ﬁnite type over Zp.
+Let ̟∈ R0 be a topologically nilpotent unit in R. Then I = ̟R0 and J = g(̟)S0 are ideals of
+deﬁnition, and R0/I→S0/J is of ﬁnite type. Therefore R0→S0 is topologically of ﬁnite type, hence so
+isg. This proves the ﬁrst assertion. The second then follows fro m Lemma A.13, since maximal ideals of R
+(resp.S) correspond to closed points in SpecR = SpecR0\V (I) (resp. SpecS = SpecS0\V (J)). □
+Proposition A.15. LetS be a complete T ate ring with a Noetherian ring of deﬁnitionS0 and a topologically
+nilpotent unitπ∈S0 such thatS0/πS0 is Jacobson.
+(1) Let A be a Noetherian adic ring with an ideal of deﬁnition I such that A/I is Jacobson. Let
+f : A→ S be a continuous morphism such that the induced map Spa(S,S ◦)→ Spa(A,A ) is
+an open immersion, and let q be a maximal ideal of S with preimage p = f −1(q) in A. Then
+the natural map Ap→ Sq induces an isomorphism on completions (with respect to the m aximal
+ideals).
+(2) LetR be a complete T ate ring with a Noetherian ring of deﬁnition R0 and a topologically nilpotent
+unit̟∈ R0 such that R0/̟ is Jacobson. Let h : R→ S be a continuous morphism such that
+the induced map Spa(S,S ◦)→ Spa(R,R ◦) is an open immersion, and let q′ be a maximal ideal
+ofS with preimage p′ =h−1(q′) inR. Then the natural map Rp′→Sq′ induces an isomorphism
+on completions (with respect to the maximal ideals).
+Proof. We prove part (1); the proof of part (2) is virtually identica l. Since S/q is a complete discretely
+valued ﬁeld it deﬁnes a point v in Spa(S,S ◦)⊆ Spa(A,A ); let U ={|f1|,..., |fn| ≤ |g| ̸= 0} be
+a rational subdomain of Spa(A,A ) which contains this point and is contained in Spa(S,S ◦). Let T =
+A[f1/g,...,f n/g]⊆A[1/g] and let ˆT be theIT -adic completion ofT . Since ˆT [1/g] =O(U ) we see that
+the valuationv extends to a valuation w on ˆT [1/g], and hence q extends to a maximal ideal r = Kerw of
+ˆT [1/g]. We will abuse notation and let r denote its preimage in any of the rings T,T [1/g] and ˆT as well;
+then r is a closed point in SpecˆT\V (IˆT ).
+By [ Abb10, Proposition 1.12.18], the natural map Tr→ ˆTr induces an isomorphism of completions.
+We claim that the natural maps Ap→Tr and ˆTr→ ˆT [1/g]r are isomorphisms. For the second map this is
+clear (by the general fact that if B is any ring, f∈ B, and P∈ SpecB[1/f ]⊆ SpecB, then the natural
+mapBP→B[1/f ]P is an isomorphism). For the ﬁrst map, we have natural maps Ap→Tr→T [1/g]r =
+A[1/g]r and it is clear that the second map and the composite are isomo rphisms, so the ﬁrst map is an
+isomorphism as well. Summing up, we see that the natural map Ap→O (U )r induces an isomorphism on
+completions. By an almost identical argument, the natural m apSq→O (U )r induces an isomorphism on
+completions. It then follows that the natural map Ap→ Sq induces an isomorphism on completions, as
+desired. □
+REFERENCES
+[Abb10] Ahmed Abbes. ´El´ ements de g´ eom´ etrie rigide. Volume I, volume 286 of Progress in Mathematics. Birkh¨ auser/Springer
+Basel AG, Basel, 2010. Construction et ´ etude g´ eom´ etrique des espaces rigides. [Construction and geometric study of
+rigid spaces], With a preface by Michel Raynaud.
+[AIP] Fabrizio Andreatta, Adrian Iovita, and Vincent Pillo ni. Le halo spectral. To appear in Ann. Sci. ENS, available at
+http://www.mat.unimi.it/users/andreat/SpectralHalo.pdf.
+[AIP16] Fabrizio Andreatta, Adrian Iovita, and Vincent Pil loni. The adic, cuspidal, Hilbert eigenvarieties. Research in the Math-
+ematical Sciences, 3(1):34, 2016.
+[AS] Avner Ash and Glenn Stevens. p-adic deformations of arithmetic cohomology. Preprint,
+http://math.bu.edu/people/ghs/preprints/Ash-Stevens -02-08.pdf.
+[AW13] Konstantin Ardakov and Simon Wadsley. On irreducibl e representations of compact p-adic analytic groups. Ann. of
+Math. (2), 178(2):453–557, 2013.
+[BC09] Jo¨ el Bella¨ ıche and Ga¨ etan Chenevier. Families of Galois representations and Selmer groups. Ast´ erisque, (324):xii+314,
+2009.
+[Bel] Jo¨ el Bella¨ ıche. Eigenvarieties and p-adic L-functions. Preprint.
+===== PDF PAGE 48 =====
+48 CHRISTIAN JOHANSSON AND JAMES NEWTON
+[Ber90] Vladimir G. Berkovich. Spectral theory and analytic geometry over non-Archimedean ﬁelds , volume 33 of Mathematical
+Surveys and Monographs. American Mathematical Society, Providence, RI, 1990.
+[BGR84] Siegfried Bosch, Ulrich G¨ untzer, and Reinhold Rem mert. Non-Archimedean analysis, volume 261 of Grundlehren der
+Mathematischen Wissenschaften [Fundamental Principles of Mathematical Sciences]. Springer-V erlag, Berlin, 1984. A
+systematic approach to rigid analytic geometry.
+[BHS17] Christophe Breuil, Eugen Hellmann, and Benjamin Sc hraen. Une interpr´ etation modulaire de la vari´ et´ e trianguline.
+Mathematische Annalen, 367(3):1587–1645, 2017.
+[BK05] Kevin Buzzard and L. J. P . Kilford. The 2-adic eigencu rve at the boundary of weight space. Compos. Math., 141(3):605–
+619, 2005.
+[BP16] John Bergdall and Robert Pollack. Arithmetic proper ties of Fredholm series for p-adic modular forms. Proceedings of
+the London Mathematical Society , 113(4):419, 2016.
+[Buz04] Kevin Buzzard. On p-adic families of automorphic forms. In Modular curves and abelian varieties , volume 224 of
+Progr . Math., pages 23–44. Birkh¨ auser, Basel, 2004.
+[Buz07] Kevin Buzzard. Eigenvarieties. In L-functions and Galois representations , volume 320 of London Math. Soc. Lecture
+Note Ser ., pages 59–120. Cambridge Univ. Press, Cambridge, 2007.
+[Che04] Ga¨ etan Chenevier. Familles p-adiques de formes automorphes pour GLn. J. Reine Angew. Math., 570:143–217, 2004.
+[Che05] Ga¨ etan Chenevier. Une correspondance de Jacquet– Langlands p-adique. Duke Math. J., 126(1):161–194, 2005.
+[Che14] Ga¨ etan Chenevier. The p-adic analytic space of pseudocharacters of a proﬁnite grou p and pseudorepresentations over
+arbitrary rings. In Automorphic forms and Galois representations, V olume 1, volume 414 of London Math. Soc. Lecture
+Note Ser ., pages 221–285. Cambridge Univ. Press, Cambridge, 2014.
+[CHJ17] Przemysław Chojecki, David Hansen, and Christian J ohansson. Overconvergent modular forms and perfectoid Shi mura
+curves. Doc. Math., 22:191–262, 2017.
+[CM98] R. Coleman and B. Mazur. The eigencurve. In Galois representations in arithmetic algebraic geometry (Durham, 1996),
+volume 254 of London Math. Soc. Lecture Note Ser ., pages 1–113. Cambridge Univ. Press, Cambridge, 1998.
+[Col97] Robert F. Coleman. p-adic Banach spaces and families of modular forms. Invent. Math., 127(3):417–479, 1997.
+[Col10] Pierre Colmez. Fonctions d’une variable p-adique. Ast´ erisque, (330):13–59, 2010.
+[Con99] Brian Conrad. Irreducible components of rigid spac es. Ann. Inst. F ourier (Grenoble), 49(2):473–541, 1999.
+[DdSMS99] J. D. Dixon, M. P . F. du Sautoy, A. Mann, and D. Segal . Analytic pro-p groups, volume 61 of Cambridge Studies in
+Advanced Mathematics. Cambridge University Press, Cambridge, second edition, 1 999.
+[Gro65] Alexander Grothendieck. ´El´ ements de g´ eom´ etrie alg´ ebrique. IV.´Etude locale des sch´ emas et des morphismes de
+sch´ emas. II.Inst. Hautes ´Etudes Sci. Publ. Math. , (24):231, 1965.
+[Gro66] Alexander Grothendieck. ´El´ ements de g´ eom´ etrie alg´ ebrique. IV.´Etude locale des sch´ emas et des morphismes de
+sch´ emas. III.Inst. Hautes ´Etudes Sci. Publ. Math. , (28):255, 1966.
+[Gul19] Daniel R. Gulotta. Equidimensional adic eigenvari eties for groups with discrete series. Algebra Number Theory ,
+13(8):1907–1940, 2019.
+[Han] David Hansen. Iwasawa theory of overconvergent modul ar forms, I: Critical p-adic L-functions. Preprint,
+http://arxiv.org/abs/1508.03982.
+[Han17] David Hansen. Universal eigenvarieties, triangul ine Galois representations, and p-adic Langlands functoriality. J. Reine
+Angew. Math., 730:1–64, 2017. With an appendix by James Newton.
+[HJ] David Hansen and Christian Johansson. Completed and ov erconvergent cohomology. In preparation.
+[Hub93] Roland Huber. Continuous valuations. Math. Z., 212(3):455–477, 1993.
+[Hub94] Roland Huber. A generalization of formal schemes an d rigid analytic varieties. Math. Z., 217(4):513–551, 1994.
+[Hub96] Roland Huber. ´Etale cohomology of rigid analytic varieties and adic space s. Aspects of Mathematics, E30. Friedr.
+Vieweg & Sohn, Braunschweig, 1996.
+[JN] Christian Johansson and James Newton. Erratum to [ JN19].
+[JN17] Christian Johansson and James Newton. Irreducible c omponents of extended eigenvarieties and interpolating La nglands
+functoriality. ArXiv e-prints, March 2017. To appear in MRL.
+[JN18] C. Johansson and J. Newton. Parallel weight 2 points o n Hilbert modular eigenvarieties and the parity conjecture . ArXiv
+e-prints, January 2018.
+[JN19] Christian Johansson and James Newton. Extended eige nvarieties for overconvergent cohomology.Algebra Number The-
+ory, 13(1):93–158, 2019.
+[KL15] Kiran S. Kedlaya and Ruochuan Liu. Relative p-adic Hodge theory: foundations. Ast´ erisque, (371):239, 2015.
+[Loe11] David Loefﬂer. Overconvergent algebraic automorp hic forms. Proc. Lond. Math. Soc. (3) , 102(2):193–228, 2011.
+[LWX17] Ruochuan Liu, Daqing Wan, and Liang Xiao. The eigenc urve over the boundary of weight space. Duke Math. J. ,
+166(9):1739–1787, 06 2017.
+[Mar75] Jean Marot. Sur les anneaux universellement japona is. Bull. Soc. Math. France, 103(1):103–111, 1975.
+[Neu99] J¨ urgen Neukirch. Algebraic number theory , volume 322 of Grundlehren der Mathematischen Wissenschaften [Funda-
+mental Principles of Mathematical Sciences] . Springer-V erlag, Berlin, 1999. Translated from the 1992 German original
+and with a note by Norbert Schappacher, With a foreword by G. H arder.
+[PX] Jonathan Pottharst and Liang Xiao. On the parity conjec ture in ﬁnite-slope families. Preprint,
+http://arxiv.org/abs/1410.5050.
+[Sch15] Peter Scholze. On torsion in the cohomology of local ly symmetric varieties. Ann. of Math. (2) , 182(3):945–1066, 2015.
+[Ser62] Jean-Pierre Serre. Endomorphismes compl` etement continus des espaces de Banach p-adiques. Inst. Hautes ´Etudes Sci.
+Publ. Math., (12):69–85, 1962.
+===== PDF PAGE 49 =====
+EXTENDED EIGENV ARIETIES FOR OVERCONVERGENT COHOMOLOGY 49
+[ST03] Peter Schneider and Jeremy Teitelbaum. Algebras of p-adic distributions and admissible representations. Invent. Math.,
+153(1):145–196, 2003.
+[Ste] Glenn Stevens. Rigid analytic modular symbols. Prepr int, http://math.bu.edu/people/ghs/preprints/OC-Symbs-04 -94.pdf.
+[Urb11] Eric Urban. Eigenvarieties for reductive groups. Ann. of Math. (2) , 174(3):1685–1784, 2011.
+[V al75] Paolo V alabrega. On the excellent property for powe r series rings over polynomial rings. J. Math. Kyoto Univ. ,
+15(2):387–395, 1975.
+[V al76] Paolo V alabrega. A few theorems on completion of exc ellent rings. Nagoya Math. J., 61:127–133, 1976.
+[Wei94] Charles A. Weibel. An introduction to homological algebra, volume 38 of Cambridge Studies in Advanced Mathematics.
+Cambridge University Press, Cambridge, 1994.
+[Xia12] Zhengyu Xiang. A construction of the full eigenvari ety of a reductive group. J. Number Theory, 132(5):938–952, 2012.
+DEPARTMENT OF MATHEMATICAL SCIENCES , CHALMERS UNIVERSITY OF TECHNOLOGY AND THE UNIVERSITY OF GOTHEN -
+BURG , G OTHENBURG , S WEDEN
+Email address: chrjohv@chalmers.se
+DEPARTMENT OF MATHEMATICS , KING ’ S COLLEGE LONDON , S TRAND , L ONDON WC2R 2LS, UK
+Email address: j.newton@kcl.ac.uk

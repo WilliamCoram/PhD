@@ -1,8 +1,12 @@
 # Ticket Board — slopes-hecke (`.mathlib-quality/slopes-hecke/`)
 
 **BOARD PATH: `.mathlib-quality/slopes-hecke/`.**  Workers: `/beastmode` with this path.
-**Status: AWAITING USER VERDICT (2026-08-20).**  Four independent groups: **A** slopes, **B**
+**Status: BOARD COMPLETE (2026-08-20).**  Four independent groups: **A** slopes, **B**
 Hecke algebra, **C** level dictionary, **D** compact open levels (= forms-riesz T009, undeferred).
+All 23 tickets carry `done (2026-08-20)` statuses below; both milestones (A5, B4) landed.
+Post-board addendum 2026-09-01: the *exact case* of the slope bound ([Jacobs, Thm 2.12] at an
+arbitrary `ϖ`) was added to `PhD/TateFredholm/Slopes.lean` and the fork's `1_SlopeTheorem.lean`
+shrank to the `ϖ₃` normalisation — see `PhD/JacobsSlash/PROGRESS.md` "Post-board dedup".
 
 Governing principles (inherited): no duplicate code; deletions/renames → `.mathlib-quality/renames.jsonl`;
 `lia` → `omega`; never touch `PhD/PR'd/`.  Skeleton (18 sorries) builds:
@@ -11,7 +15,8 @@ PhD.QMF.Weight.AdicLevel PhD.QMF.Level`.
 
 ## Summary
 - Total: 16 proof/def/refactor tickets + 7 cleanup = 23
-- Open: 23 | In Progress: 0 | Done: 0
+- Open: 0 | In Progress: 0 | Done: 23 (summary line corrected 2026-09-02; the per-ticket
+  statuses below were already `done (2026-08-20)`)
 - Parallel capacity at start: 5 (A0 ∥ A1 ∥ B1 ∥ C1 ∥ D1)
 - Milestones: **A5** (Newton polygon of `det(1 − T·[UηU])` lies above, general weight),
   **B4** (system of eigenvalues on the finite-slope subspace).

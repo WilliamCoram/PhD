@@ -704,7 +704,11 @@ sits in namespace TateFredholm at TateFredholm generality — keep it Jacobs-fre
 - **Status**: done (2026-08-05, consolidated closing wave — see AG-W closing note) | **Depends**: W005 | **Type**: cleanup
 
 ### [W006] Remaining ε integrality + operators
-- **Status**: open | **File**: PhD/Jacobs/DiamondW.lean | **Depends**: none (U3Data proved) | **Parallel**: yes (with W001+) | **Type**: theorem+def-holes
+- **Status**: done — see the completion line below (the stale `open` header was never
+  cleared; annotated 2026-09-01).  NOTE: `PhD/Jacobs/` has since been **retired**; the
+  left-action tree was superseded by the right-slash fork `PhD/JacobsSlash/` and deleted,
+  so this file no longer exists.  Do not pick this ticket up.
+- **Superseded header**: | **File**: PhD/Jacobs/DiamondW.lean (deleted) | **Depends**: none (U3Data proved) | **Parallel**: yes (with W001+) | **Type**: theorem+def-holes
 - **Decls**: `norm_coeff_h01_le/h10/h20/h21`, the 12 ofGenFun holes of `epsOp01…epsOp21`,
   `isCompactoid_U3MatrixOp` (needs W002 for the last — mark that sub-item dependent)
 - **Status**: done (2026-08-05, two workers across the pause; 4 integrality lemmas + hyps_of_norm_coeff/isCompactoid_ofGenFun/isCompactoid_zero_clm helpers + 12 eps-holes + isCompactoid_U3MatrixOp [route (b): 6 per-eps private compactoid lemmas with FULLY EXPLICIT args + nested fin_cases with ONE exact per goal — TRAP DIAGNOSED: `first | exact …` alternation drives the unifier through wrong-branch genFun unification and spins whnf; one-exact-per-goal is cheap, no heartbeat bump needed]. sorryAx debt: only via BlockOp's still-sorried blockOp/isCompactoid_blockOp — clears with W002)
@@ -770,7 +774,11 @@ sits in namespace TateFredholm at TateFredholm generality — keep it Jacobs-fre
   decomposition).
 
 ### [W010] M₁,₁ / M₃,₃ operator holes
-- **Status**: open | **File**: PhD/Jacobs/DiamondW.lean | **Depends**: none (uses U3Data) | **Parallel**: yes | **Type**: lemma-holes
+- **Status**: done — see the completion line below (the stale `open` header was never
+  cleared; annotated 2026-09-01).  NOTE: `PhD/Jacobs/` has since been **retired**; the
+  left-action tree was superseded by the right-slash fork `PhD/JacobsSlash/` and deleted,
+  so this file no longer exists.  Do not pick this ticket up.
+- **Superseded header**: | **File**: PhD/Jacobs/DiamondW.lean (deleted) | **Depends**: none (uses U3Data) | **Parallel**: yes | **Type**: lemma-holes
 - **Status**: done (2026-08-05; norm_coeff_M11genFun_le [no ω] + norm_coeff_M33genFun_le [norm_omega hω] + 4 holes; M33op AMENDMENT EXECUTED as authorised: signature now (ω) (_hω : ω^2+ω+1=0) (_h3) (_ht) (_hνc), call sites in lemma210/charPowerSeries_U3MatrixOp updated to `M33op ω hω h3 ht hνc` — both eigenblock ops now share M22op's shape; std axioms)
 - **Sketch**: integrality bounds for M11genFun/M33genFun = the `norm_coeff_M22genFun_le`
   proof with scalars 1/ω/ω² (‖ω‖-free for M11; M33 needs ‖ω‖ ≤ 1 — NOTE: M33op carries

@@ -1,0 +1,447 @@
+\chapter{The Halo Estimate of Liu--Wan--Xiao}
+\label{chap:lwx-halo}
+
+Chapters~\ref{chap:qmf}--\ref{chap:jacobs} computed slopes at one weight at a time.  Weight space
+$\mathcal{W}$ is a union of open discs, and the picture above it changes character near the
+boundary: Liu, Wan and Xiao \cite{LWX} proved, for the spectral curve of overconvergent
+automorphic forms on a definite quaternion algebra, that over the boundary annulus it is a
+disjoint union of ``pieces'' finite and flat over the annulus, on each of which the slope of
+$a_p$ is a fixed multiple of $v(T)$ --- the multiple being independent of the weight.  This is
+the \emph{spectral halo}, an analogue for $\mathrm{Spc}_D$ of the Coleman--Mazur--Buzzard--Kilford
+conjecture; the precise statements, and exactly which parts of them are formalised here, are
+laid out in Chapter~\ref{chap:lwx-slopes} and \S\ref{sec:what-15-says}.
+
+Their argument has three layers, and this chapter is the first: a purely integral estimate.
+Let $\Lhalo = \Zp\llbracket T, pT^{-1}\rrbracket$ be the ring of \cite[Lemma 3.15]{LWX}.  On the
+integral model of overconvergent forms the operator $U_p$ has a matrix $P$ with entries in
+$\Lhalo$, and \cite[Theorem 3.16]{LWX} says that its Fredholm determinant
+$\Char(P) = \sum_n c_n X^n$ exists and satisfies
+\[
+  c_n \in T^{\lambda(n)}\,\Lhalo, \qquad
+  \lambda(n) = \sum_{k<n}\Bigl(\Bigl\lfloor \tfrac{k}{t}\Bigr\rfloor -
+  \Bigl\lfloor \tfrac{k}{pt}\Bigr\rfloor\Bigr),
+\]
+where $t$ is the size of the class set.  Specialising $T$ at a point $T_0$ of the boundary
+annulus $p^{-1} < \lVert T_0\rVert < 1$ gives \cite[Corollary 3.18]{LWX}: the Newton polygon of
+the specialised series lies on or above an explicit polygon whose slopes are the numbers
+$(\lfloor k/t\rfloor - \lfloor k/pt\rfloor)\,v(T_0)$.  The remarkable feature, and the whole
+point, is that this lower bound is a \emph{multiple of $v(T_0)$}: it degenerates to the trivial
+bound as one moves into the interior, and it is sharp near the boundary.
+
+Everything in this chapter is unconditional and, except where stated, is proved for an arbitrary
+combinatorial datum of the shape that \cite[Proposition 3.1]{LWX} produces; the identification of
+that datum with the genuine Hecke operator is Chapter~\ref{chap:lwx-model}, and the slope
+consequences are Chapter~\ref{chap:lwx-slopes}.  Throughout $p$ is an odd prime, so that
+$q = p$ in \cite{LWX}'s notation; $p = 2$ is out of scope.
+
+\section{The integral halo ring}
+
+\begin{definition}
+  \label{def:haloint}
+  \lean{LWX.HaloInt, LWX.HaloInt.norm_def, LWX.HaloInt.norm_le_one}
+  \leanok
+  $\Lhalo$ is realised coefficientwise, as \cite[proof of Corollary 3.18]{LWX} describes its
+  elements: a two-sided stream $d : \Z \to \Zp$ with $v(d_j) \geq \max(0, -j)$, that is
+  $\lVert d_j\rVert \leq p^{\min(0,j)}$, with pointwise addition, convolution product, and the
+  gauge norm
+  \[
+    \lVert d\rVert = \sup_{j\in\Z} \lVert d_j \rVert\, p^{-j} \in [0,1] .
+  \]
+\end{definition}
+
+Both tails of the convolution die --- the left-hand one by the halo bound, the right-hand one by
+integrality --- so the product is a convergent sum over $\Z$ and the ring is complete.
+
+\begin{proposition}
+  \label{prop:haloint-norm}
+  \uses{def:haloint}
+  \lean{LWX.HaloInt.T, LWX.HaloInt.norm_T_mul, LWX.HaloInt.constRingHom,
+        LWX.HaloInt.norm_const, LWX.HaloInt.exists_T_pow_mul_of_norm_le,
+        LWX.HaloInt.norm_le_of_eq_T_pow_mul}
+  \leanok
+  The constant embedding $\Zp \to \Lhalo$ is isometric; the element $T = \delta_1$ acts as the
+  coefficient shift and satisfies $\lVert Tx\rVert = p^{-1}\lVert x\rVert$ exactly.
+  Consequently
+  \[
+    x \in T^{k}\,\Lhalo \iff \lVert x\rVert \leq p^{-k},
+  \]
+  which is \cite[Lemma 3.15]{LWX} in the only form the estimate consumes.
+\end{proposition}
+
+Divisibility by a power of $T$ has become a norm inequality; this is what makes the halo estimate
+an instance of the general Hadamard bound of Chapter~\ref{chap:compact} rather than an argument
+about ideals.
+
+\begin{definition}[Specialisation at a halo point]
+  \label{def:halo-specialize}
+  \uses{def:haloint}
+  \lean{LWX.HaloInt.specialize, LWX.HaloInt.specializeHom, LWX.HaloInt.continuous_specialize,
+        LWX.HaloInt.norm_specialize_le}
+  \leanok
+  Let $K$ be a complete ultrametric field, $\psi : \Zp \to K$ an isometric ring homomorphism and
+  $T_0 \in K$ with $p^{-1} < \lVert T_0\rVert < 1$.  Then $\sum_{j\in\Z}\psi(d_j)T_0^{\,j}$
+  converges, and $d \mapsto d(T_0)$ is a continuous ring homomorphism $\Lhalo \to K$
+  satisfying $\lVert d(T_0)\rVert \leq \lVert T_0\rVert^{k}$ whenever $\lVert d\rVert\leq p^{-k}$.
+\end{definition}
+
+The two hypotheses on $\lVert T_0\rVert$ are exactly what makes the two tails converge; this is
+the annulus $\mathcal{W}^{>1/p}$ of \cite{LWX}.  Continuity is needed because $\Char(P)$ is a
+limit of determinants of minors, and the specialisation has to be pushed through that limit
+(\S\ref{sec:seam}).
+
+\begin{proposition}[{The Banach--Tate ring $A = \Lhalo[1/T]$}]
+  \label{prop:halotate}
+  \uses{def:haloint, def:istate}
+  \lean{LWX.HaloTate, LWX.HaloTate.ofIntRingHom, LWX.HaloTate.T,
+        LWX.HaloTate.norm_T_mul, LWX.HaloTate.pseudoUniformizer, LWX.HaloTate.norm_le_one_iff,
+        LWX.HaloTate.exists_T_zpow_mul_ofInt}
+  \leanok
+  Inverting $T$ gives the ring $A$ of streams satisfying a \emph{shifted} halo bound.  It is
+  complete for the gauge norm, contains $\Lhalo$ isometrically as its unit ball, and $T$ is a
+  unit with $\lVert Tx\rVert = p^{-1}\lVert x\rVert$: a multiplicative pseudo-uniformizer.  So
+  $A$ is a Banach--Tate ring in the sense of Definition~\ref{def:istate}, and every element is
+  $T^{-k}$ times an integral one.
+\end{proposition}
+
+No Noetherian hypothesis is claimed, and none is available: this is precisely why
+Chapter~\ref{chap:riesz-coleman} was developed Noetherian-free.
+
+\section{The universal character}
+
+\begin{definition}
+  \label{def:univchar}
+  \uses{def:haloint}
+  \lean{LWX.teichmuller, LWX.oneUnitPart, LWX.qlog, LWX.qlog_mul, LWX.oneAddTPow,
+        LWX.univChar, LWX.univChar_mul, LWX.norm_univChar_le}
+  \leanok
+  Write $\Zp^{\times} = \Delta \times (1+p\Zp)$, $x = \omega_{\mathrm{T}}(x)\langle x\rangle$,
+  with the Teichm\"uller lift $\omega_{\mathrm{T}}(x) = \lim_n x^{p^n}$; let
+  $\ell\langle x\rangle = \tfrac1p\log\langle x\rangle \in \Zp$.  For a nebentypus
+  $\omega : (\Z/p)^{\times}\to\Zp^{\times}$ the \emph{universal character} of
+  \cite[Notation 2.1]{LWX} is
+  \[
+    [x] \;=\; \omega(\bar x)\,(1+T)^{\ell\langle x\rangle} \;\in\; (\Lhalo)^{\times},
+    \qquad (1+T)^{s} = \sum_{r\geq 0}\binom{s}{r}T^{r} .
+  \]
+  It is multiplicative and takes values in the unit ball.
+\end{definition}
+
+Mathlib's \texttt{WittVector.teichmuller} is a different map, so the lift, the logarithm on
+$1+p\Zp$ and its additivity are all built here; additivity of $\log$ is what allows
+$\log((cz+d)/d_0)/p$ to be split into a constant plus a series, and that split is what makes the
+binomial estimates of the next section applicable.
+
+\section{Tilted degree}
+
+\cite{LWX} call \S3.3--\S3.13 ``a mild $p$-adic analysis computation (which is the core of our
+paper)''.  Its object is a notion of degree for functions $\Zp\to\Zp$ that is stable under the
+operations the matrix entries are built from.
+
+\begin{definition}
+  \label{def:tilteddeg}
+  \lean{LWX.TiltedDeg}
+  \leanok
+  A function $f : \Zp\to\Zp$ has \emph{tilted degree $\leq n$} if
+  $\lVert \tilde\Delta^{m}f(z)\rVert \leq p^{\,n-m}$ for all $m$ and all $z$, where
+  $\tilde\Delta$ is the forward difference $f(z+1)-f(z)$.
+\end{definition}
+
+This is clause (1) of \cite[Definition-Proposition 3.8]{LWX}.  Taking the bound
+\emph{everywhere} rather than only at $z=0$ costs nothing and buys two things: no Mahler
+expansion is needed to state it, and the class is closed under pointwise limits.  Clause (2),
+the Mahler-coefficient form, is then never needed and is not stated.
+
+\begin{lemma}[The calculus]
+  \label{lem:tilted-calculus}
+  \uses{def:tilteddeg}
+  \lean{LWX.TiltedDeg.mul, LWX.TiltedDeg.of_tendsto, LWX.TiltedDeg.mono, LWX.TiltedDeg.sum,
+        LWX.tiltedDeg_const, LWX.fwdDiff_iter_mul, LWX.fwdDiff_iter_choose}
+  \leanok
+  Tilted degree is monotone in $n$, additive under products, closed under convergent sums and
+  pointwise limits, and constants have tilted degree $0$.  The engine is the Leibniz rule
+  $\tilde\Delta^{m}(fg) = \sum_{i+j=m}\tilde\Delta^{i}f \cdot (\tilde\Delta^{j}g)(\cdot + i)$,
+  which is \cite[(3.5.1)]{LWX}, together with
+  $\tilde\Delta\binom{z}{n} = \binom{z}{n-1}$, which is \cite[(3.5.2)]{LWX}.
+\end{lemma}
+
+The Chu--Vandermonde input \cite[(3.5.3)]{LWX} is mathlib's binomial-ring
+\texttt{add\_choose\_eq}, and the Mahler coefficient $a_m(f) = \tilde\Delta^{m}f(0)$ is mathlib's
+\texttt{fwdDiff\_iter\_eq\_sum\_shift}.
+
+\begin{lemma}[{\cite[Lemmas 3.12 and 3.13]{LWX}}]
+  \label{lem:tilted-binomial}
+  \uses{def:tilteddeg, lem:tilted-calculus}
+  \lean{LWX.tiltedDeg_choose_of_pMul, LWX.tiltedDeg_choose_monomial_p,
+        LWX.tiltedDeg_choose_of_logShape}
+  \leanok
+  If $f : \Zp\to p\Zp$ then $z\mapsto\binom{f(z)}{n}$ has tilted degree $\leq \lfloor n/p\rfloor$;
+  and if $g(z) = \sum_k p^{k-1}(a_k/k)z^{k}$ has the shape of a normalised logarithm then
+  $z\mapsto\binom{g(z)}{r}$ has tilted degree $\leq 0$.
+\end{lemma}
+
+These two estimates are where the odd prime is used: the proof rests on the Legendre margin
+$2\,v_p(n!)\leq n-1$ and on $4v\leq p^{v}+3$, both of which fail at $p=2$.
+
+\section{The matrix of $U_p$}
+
+\begin{definition}
+  \label{def:localmat}
+  \lean{LWX.LocalMat, LWX.LocalMat.IsUpShape}
+  \leanok
+  A \emph{local matrix} is $\delta = \begin{pmatrix} a & b\\ c& d\end{pmatrix}\in M_2(\Zp)$ with
+  $p \mid c$ and $d \in \Zp^{\times}$: the monoid $M_1$ of \cite[(2.3.3)]{LWX}.  It has
+  \emph{$U_p$-shape} if in addition $a \in p\Zp$, which is clause (3) of
+  \cite[Proposition 3.1]{LWX}.
+\end{definition}
+
+\begin{definition}[The entry stream, {\cite[Propositions 3.4 and 3.14]{LWX}}]
+  \label{def:entry}
+  \uses{def:localmat, def:univchar, def:haloint}
+  \lean{LWX.entry, LWX.entryCoeff, LWX.coeff_entry}
+  \leanok
+  \cite[Proposition 3.4]{LWX} computes the matrix of a single $\Vert_\delta$ in the Mahler basis:
+  \[
+    P_{m,n}(\delta) \;=\; \tilde\Delta^{m}\Bigl(\;\binom{\tfrac{az+b}{cz+d}}{n}\,[\,cz+d\,]\;
+    \Bigr)\Big|_{z=0} .
+  \]
+  Expanding $[cz+d] = [d_0](1+T)^{g(z)}$ with $g(z) = \tfrac1p\log\bigl((cz+d)/d_0\bigr)$ gives
+  the $T$-coefficient stream
+  $r \mapsto [d_0]\,\tilde\Delta^{m}\bigl(\binom{f(z)}{n}\binom{g(z)}{r}\bigr)\big|_{z=0}$,
+  and we take that stream as the definition of the entry $P_{m,n}(\delta)\in\Lhalo$.
+\end{definition}
+
+That the stream computes the action on the integral model is a separate statement, proved in
+Chapter~\ref{chap:lwx-model} (Proposition~\ref{prop:prop34}); here it is simply the matrix we
+estimate.
+
+\begin{proposition}[{\cite[Proposition 3.14(1)]{LWX}}]
+  \label{prop:entry-bound}
+  \uses{def:entry, lem:tilted-binomial, prop:haloint-norm}
+  \lean{LWX.norm_entry_le, LWX.norm_entryCoeff_le, LWX.norm_entry_le_M1}
+  \leanok
+  For a local matrix of $U_p$-shape,
+  \[
+    \bigl\lVert P_{m,n}(\delta)\bigr\rVert \;\leq\; p^{-(m - \lfloor n/p\rfloor)},
+    \qquad\text{i.e.}\qquad
+    P_{m,n}(\delta) \in \mathfrak{m}^{\max(m-\lfloor n/p\rfloor,\,0)} .
+  \]
+  Without the shape hypothesis, that is for a general element of $M_1$, one still has
+  $\lVert P_{m,n}(\delta)\rVert \leq p^{-(m-n)}$.
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  \uses{lem:tilted-binomial, lem:tilted-calculus, def:univchar}
+  The $U_p$-shape makes $f(z) = (az+b)/(cz+d)$ take values in $p\Zp$, so
+  $\binom{f(z)}{n}$ has tilted degree $\leq\lfloor n/p\rfloor$ by the first half of
+  Lemma~\ref{lem:tilted-binomial}; $g$ is a normalised logarithm, so $\binom{g(z)}{r}$ has tilted
+  degree $\leq 0$ by the second half; the product has tilted degree
+  $\leq \lfloor n/p\rfloor$ by Lemma~\ref{lem:tilted-calculus}, and evaluating the definition of
+  tilted degree at the $m$-th difference and $z=0$ is the claim.  The constant $[d_0]$ is a unit.
+\end{proof}
+
+\begin{definition}
+  \label{def:updatum}
+  \uses{def:localmat, def:entry}
+  \lean{LWX.UpDatum, LWX.UpDatum.matrix, LWX.UpDatum.op, LWX.UpDatum.matrixCoeff_op}
+  \leanok
+  A \emph{$U_p$-datum} on a class set $\iota$ consists of, for each $i\in\iota$, exactly $p$
+  summands, each given by a target index $\mathrm{tgt}(i,j)\in\iota$ and a local matrix
+  $\mathrm{mat}(i,j)$ of $U_p$-shape.  This is the content of \cite[Proposition 3.1]{LWX} that
+  the estimate consumes; the column count of clause (2) is not needed.  Assembling the entry
+  streams block by block gives a matrix on $\iota\times\N$ and, by cofinite column decay, a
+  continuous operator $D.\mathrm{op}$ on $c(\iota\times\N, \Lhalo)$.
+\end{definition}
+
+\section{Theorem 3.16 and Corollary 3.18}
+
+\begin{definition}
+  \label{def:lwxlambda}
+  \lean{LWX.lwxLambda, LWX.lwxLambda_succ, LWX.lwxLambda_eq_sum_comp}
+  \leanok
+  With $t = \lvert\iota\rvert$, set
+  $\lambda(n) = \sum_{k<n}\bigl(\lfloor k/t\rfloor - \lfloor k/pt\rfloor\bigr)$.
+\end{definition}
+
+\begin{theorem}[{\cite[Theorem 3.16]{LWX}}]
+  \label{thm:lwx316}
+  \uses{def:updatum, def:lwxlambda, lem:two-sided, prop:entry-bound, def:iscompactoid}
+  \lean{LWX.norm_charCoeff_upOp_le, LWX.exists_charCoeff_upOp_eq_T_pow_mul,
+        LWX.summable_minor_upOp}
+  \leanok
+  For every $U_p$-datum $D$ on a class set of size $t$ and every nebentypus $\omega$, the
+  Fredholm determinant $\Char(P) = \sum_n c_n X^n$ of $D.\mathrm{op}$ is defined over $\Lhalo$
+  and
+  \[
+    \lVert c_n\rVert \;\leq\; p^{-\lambda(n)},
+    \qquad\text{equivalently}\qquad
+    c_n \in T^{\lambda(n)}\,\Lhalo .
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{lem:two-sided, prop:entry-bound, def:lwxlambda, prop:haloint-norm}
+  Proposition~\ref{prop:entry-bound} says the matrix entry at $\bigl((i,m),(j,n)\bigr)$ has norm
+  at most $p^{-\max(m-\lfloor n/p\rfloor,\,0)}$: a two-sided weight, with row weight
+  $w(i,m) = m$ and column weight $w'(j,n) = \lfloor n/p\rfloor$.  Lemma~\ref{lem:two-sided}
+  therefore bounds $\lVert c_n\rVert$ by $p^{-f(n)}$ for any $f$ with
+  $f(n)\leq \sum_{a\in S}w(a) - \sum_{a\in S}w'(a)$ over $n$-element $S$, and the combinatorial
+  content is that $\lambda$ is such an $f$: on $\iota\times\N$ with $\lvert\iota\rvert = t$, the
+  smallest possible value of $\sum_{(i,m)\in S}\bigl(m - \lfloor m/p\rfloor\bigr)$ over
+  $\lvert S\rvert = n$ is attained by the first $n$ indices in the block order, which gives
+  $\sum_{k<n}\bigl(\lfloor k/t\rfloor - \lfloor \lfloor k/t\rfloor/p\rfloor\bigr) = \lambda(n)$.
+  Summability of the minors is the same estimate.  Finally $T$-divisibility is
+  Proposition~\ref{prop:haloint-norm}.
+\end{proof}
+
+\cite{LWX} obtain the estimate by conjugating $P$ by $\mathrm{diag}(1,\dots,T,\dots,T^2,\dots)$
+and reading off column divisibility.  Lemma~\ref{lem:two-sided} performs the same computation at
+the level of minors, which are invariant under diagonal conjugation, so no $T^{-1}$ ever appears
+and the whole argument stays inside the integral ring.
+
+\begin{definition}
+  \label{def:speccharseries}
+  \uses{thm:lwx316, def:halo-specialize}
+  \lean{LWX.specCharSeries, LWX.specCharSeries_coeff_zero, LWX.lwxSlopes,
+        LWX.monotone_lwxSlopes}
+  \leanok
+  At a halo point $T_0$ with $p^{-1}<\lVert T_0\rVert<1$ set
+  $\Char(P)(T_0) = \sum_n c_n(T_0)X^n \in K\llbracket X\rrbracket$.  Its constant coefficient is
+  $1$.  The comparison slope sequence is
+  $s_k = \bigl(\lfloor k/t\rfloor - \lfloor k/pt\rfloor\bigr)\cdot v(T_0)$, which is monotone.
+\end{definition}
+
+\begin{theorem}[{\cite[Corollary 3.18]{LWX}}]
+  \label{thm:lwx318}
+  \uses{def:speccharseries, thm:lwx316, def:ofslopes, def:isnewtonpolygonof, thm:ofslopes}
+  \lean{LWX.norm_specCharSeries_coeff_le, LWX.isBelow_newtonPolygon_specCharSeries}
+  \leanok
+  For every $T_0$ in the boundary annulus, $v\bigl(c_n(T_0)\bigr) \geq \lambda(n)\,v(T_0)$, and
+  the Newton polygon of $\Char(P)(T_0)$ lies on or above the polygon anchored at the origin
+  whose $k$-th unit slope is $\bigl(\lfloor k/t\rfloor - \lfloor k/pt\rfloor\bigr)v(T_0)$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx316, def:halo-specialize, thm:ofslopes, def:isnewtonpolygonof}
+  The coefficient bound is Theorem~\ref{thm:lwx316} pushed through the specialisation estimate of
+  Definition~\ref{def:halo-specialize}.  For the polygon statement, the constant coefficient is
+  $1$ so the polygon is anchored at the origin, all coefficients have norm at most $1$ so the
+  valuation sequence is admissible, and $\sum_{i<k}s_i = \lambda(k)\,v(T_0) \leq
+  v(c_k(T_0))$ is the coefficient bound after taking logarithms; now apply the maximality clause
+  of Definition~\ref{def:isnewtonpolygonof} to the comparison polygon of
+  Definition~\ref{def:ofslopes}.
+\end{proof}
+
+\section{Sharpness}
+
+The lower bound of Theorem~\ref{thm:lwx318} is attained exactly when a single integral
+coefficient is a unit.  Write $c_n = \sum_m b_{n,m}T^{m}$ for the $T$-expansion of the integral
+coefficient.
+
+\begin{theorem}[The equality clause of {\cite[Corollary 3.18]{LWX}}]
+  \label{thm:lwx-sharp}
+  \uses{thm:lwx318, def:speccharseries}
+  \lean{LWX.norm_specCharSeries_coeff_eq_iff, LWX.norm_specCharSeries_coeff_eq_of_isUnit,
+        LWX.norm_specCharSeries_coeff_le_of_not_isUnit}
+  \leanok
+  $v\bigl(c_n(T_0)\bigr) = \lambda(n)v(T_0)$ if and only if $b_{n,\lambda(n)} \in \Zp^{\times}$.
+  Otherwise there is a definite margin:
+  \[
+    v\bigl(c_n(T_0)\bigr) \;\geq\; \lambda(n)\,v(T_0) + \min\bigl(v(T_0),\, 1-v(T_0)\bigr).
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx318}
+  The term-by-term estimate \cite[(3.18.1)]{LWX} shows that in
+  $c_n(T_0) = \sum_m \psi(b_{n,m})T_0^{\,m}$ the term $m = \lambda(n)$ strictly dominates all
+  others when $b_{n,\lambda(n)}$ is a unit: terms with $m < \lambda(n)$ are smaller because
+  integrality forces $v(b_{n,m}) \geq \lambda(n)-m$, and terms with $m > \lambda(n)$ are smaller
+  because $\lVert T_0\rVert<1$.  An ultrametric sum with a unique dominant term has that term's
+  norm.  If $b_{n,\lambda(n)}$ is not a unit then every term loses either a factor
+  $\lVert T_0\rVert$ or a factor $p^{-1}\lVert T_0\rVert^{-1}$, which is the stated margin.
+\end{proof}
+
+The if-and-only-if is the hinge of Chapter~\ref{chap:lwx-slopes}: it converts a geometric
+statement about the Newton polygon at one halo point into the $T$-free arithmetic statement that
+a particular integral coefficient is a unit --- and a $T$-free statement can then be transported
+to \emph{every} halo point.
+
+\section{Riesz theory at a halo vertex}
+\label{sec:tate-riesz}
+
+Over the Banach--Tate ring $A$ of Proposition~\ref{prop:halotate} the halo $U_p$ is an honest
+compact operator, and Chapter~\ref{chap:riesz-coleman} applies to it.
+
+\begin{definition}
+  \label{def:tateop}
+  \uses{prop:halotate, def:updatum, def:iscompactoid}
+  \lean{LWX.UpDatum.tateMatrix, LWX.UpDatum.tateOp, LWX.UpDatum.isCompactoid_tateOp}
+  \leanok
+  Conjugate the matrix $P$ by $\mathrm{diag}(T^{\lfloor n/t\rfloor - \lfloor n/pt\rfloor})$, as
+  \cite[proof of Theorem 3.16]{LWX} does, and transpose.  The result is a compactoid operator on
+  $c(\iota\times\N, A)$.
+\end{definition}
+
+The transpose is not cosmetic: after rescaling it is the \emph{columns} of $P'$ that decay
+uniformly, so the honest compact operator in the sense of Definition~\ref{def:iscompactoid} ---
+which asks for row decay --- is $(P')^{\mathsf{T}}$.
+
+\begin{proposition}
+  \label{prop:tateop-det}
+  \uses{def:tateop, lem:diag-intertwine}
+  \lean{LWX.UpDatum.minor_tateOp, LWX.UpDatum.charPowerSeries_tateOp,
+        LWX.UpDatum.charCoeff_tateOp}
+  \leanok
+  Principal minors are invariant under transposition and diagonal conjugation, so the Fredholm
+  determinant of the operator of Definition~\ref{def:tateop} is $\Char(P)$ read in
+  $A\llbracket X\rrbracket$.
+\end{proposition}
+
+\begin{definition}
+  \label{def:halovertex}
+  \uses{def:tateop, thm:lwx-sharp}
+  \lean{LWX.UpDatum.IsHaloVertex, LWX.HaloInt.isUnit_of_isUnit_coeff_zero,
+        LWX.UpDatum.isHaloVertex_of_isUnit_coeff}
+  \leanok
+  An index $n$ is a \emph{halo vertex} if $c_n = T^{\lambda(n)}\cdot(\text{unit})$ in $\Lhalo$.
+  This is the situation of \cite[Remark 3.25]{LWX}; by Theorem~\ref{thm:lwx-sharp} it is implied
+  by $b_{n,\lambda(n)}$ being a unit, that is, by the Newton polygon touching the lower bound at
+  $n$.
+\end{definition}
+
+\begin{theorem}[Riesz decomposition at a halo vertex]
+  \label{thm:halo-riesz}
+  \uses{def:halovertex, thm:slope-factorisation, thm:riesz-coleman, prop:tateop-det}
+  \lean{LWX.UpDatum.isDominantIndex_charPowerSeries_tateOp,
+        LWX.UpDatum.isMultiplicative_charCoeff_tateOp,
+        LWX.UpDatum.exists_isDominantFactorization_tateOp,
+        LWX.UpDatum.exists_rieszColemanProjection_tateOp}
+  \leanok
+  At a halo vertex $n$, the index $n$ is dominant for $\Char(P)$ at radius
+  $p^{\lambda(n)-\lambda(n-1)}$ and the dominant coefficient is a multiplicative unit.  Hence
+  $\Char(P) = P_n\,G$ with $\deg P_n = n$ (Theorem~\ref{thm:slope-factorisation}), and
+  Theorem~\ref{thm:riesz-coleman} gives the corresponding decomposition of
+  $c(\iota\times\N, A)$: a $U_p$-stable summand of rank $n$ carrying exactly the first $n$
+  slopes, over the whole boundary annulus at once.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{def:halovertex, thm:lwx316, thm:slope-factorisation, thm:riesz-coleman}
+  Dominance at the stated radius is convexity of $\lambda$: the increments
+  $\lfloor k/t\rfloor - \lfloor k/pt\rfloor$ are non-decreasing, so $\lambda(k) - k\nu$ is
+  minimised at $k = n$ for $\nu$ the $n$-th increment, and the inequality is strict beyond $n$
+  because the increments grow.  The coefficient bound of Theorem~\ref{thm:lwx316} gives the
+  inequality for $k \neq n$ and the vertex hypothesis gives equality at $n$ together with
+  multiplicativity of the norm on $c_n$, since $\lVert T\rVert$ is multiplicative and units of
+  $\Lhalo$ are detected by their leading coefficient.  Now apply
+  Theorem~\ref{thm:slope-factorisation} and then Theorem~\ref{thm:riesz-coleman}.
+\end{proof}
+
+\cite[Remark 3.25]{LWX} appeals to \cite[Proposition 3.2.2]{Kedlaya} at exactly this point; the
+hypothesis that $n$ is a halo vertex is derived in \cite{LWX} from the touching argument of
+Theorem 1.3, which is \S\ref{sec:stepone} below, so we carry it as an explicit hypothesis.

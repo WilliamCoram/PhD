@@ -25,7 +25,9 @@ statement-form rules 1–6) and `decomposition.md` (Q-leaves + Result P port spe
 - S-tranche (QMF layer): S-SKEL + S01–S11 proof tickets + 6 cleanups
 - P-tranche (fork): P01–P22 port tickets + per-file cleanups + CLEANUP-ALL + MILESTONE
 - GATE-1 blocks all proof/port work; S-SKEL precedes GATE-1.
-- Open: all | Done: 0
+- Open: 0 | Done: all (summary line corrected 2026-09-02; the tranche records below show
+  S-tranche and the analytic layer complete, board finished 2026-08-06 — right-slash fork
+  `PhD/JacobsSlash/` fully sorry-free, see its `PROGRESS.md`)
 
 ## Dependency graph (condensed)
 ```
