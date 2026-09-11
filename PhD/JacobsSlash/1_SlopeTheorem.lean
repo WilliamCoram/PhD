@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Slopes
+import PhD.TateFredholm.«06_Slopes»
 
 /-!
 # The Jacobs normalisation `ϖ₃`
@@ -11,7 +11,7 @@ import PhD.TateFredholm.Slopes
 The abstract slope theorem — [Jacobs, *Slopes of Compact Hecke Operators*, Theorem 2.12]: row
 divisibility `‖matrixCoeff u j i‖ ≤ ‖ϖ‖ ^ j` plus unit top-left minors of the rescaled matrix
 force `‖c_m(u)‖ = ‖ϖ‖ ^ (m.choose 2)` — is proved at an arbitrary `ϖ` in
-`PhD.TateFredholm.Slopes` (`TateFredholm.norm_charCoeff_of_unit_minors`,
+`PhD.TateFredholm.«06_Slopes»` (`TateFredholm.norm_charCoeff_of_unit_minors`,
 `TateFredholm.val_charCoeff_of_unit_minors`); it was generalised out of this file on 2026-09-01,
 having been pinned at `ϖ = 3` here.
 
@@ -48,7 +48,7 @@ omit [IsUltrametricDist K] [CompleteSpace K] in
 
 -- NOTE(cleanup): `charCoeff_smul` below is `3`-free and field-general; a differently-shaped
 -- `TateFredholm.charCoeff_smul` (over a Tate ring, with a compactoid hypothesis) already exists
--- in `PhD/TateFredholm/Riesz.lean`, so hoisting this one means resolving that name collision —
+-- in `PhD/TateFredholm/09_Riesz.lean`, so hoisting this one means resolving that name collision —
 -- deferred to the cleanup pass.
 
 /-- Scalars scale the characteristic coefficients geometrically:

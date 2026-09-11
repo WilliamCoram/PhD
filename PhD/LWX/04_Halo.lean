@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.UpMatrix
-import PhD.TateFredholm.TwoSidedBound
+import PhD.LWX.«03_UpMatrix»
+import PhD.TateFredholm.«06_TwoSidedBound»
 import PhD.NewtonPolygons.OfSlopes
 import PhD.NewtonPolygons.CoeffVal
 import Mathlib.LinearAlgebra.Matrix.Notation

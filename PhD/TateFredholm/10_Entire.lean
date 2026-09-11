@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import Mathlib.Algebra.Polynomial.HasseDeriv
-import PhD.TateFredholm.Riesz
+import PhD.TateFredholm.«09_Riesz»
 
 /-!
 # Entire power series: the ring `R{{T}}`, Euclidean division, good zeros
@@ -13,7 +13,7 @@ import PhD.TateFredholm.Riesz
 `∑ aₙTⁿ` with `|aₙ|Cⁿ → 0` for every `C > 0`; [JN] §2.1 writes it `R{{T}}` as well and
 calls a series with constant term `1` a *Fredholm series* ([JN] Definition 2.2.1).  This
 file packages the predicate `IsEntire` (the hypothesis `∀ c > 0, IsRestricted c f` already
-used throughout `Riesz.lean`), the subring it defines, and the three pieces of
+used throughout `09_Riesz.lean`), the subring it defines, and the three pieces of
 [Bel] §II.2 that the Riesz–Coleman theory consumes:
 
 * **Euclidean division** by a polynomial with invertible leading coefficient

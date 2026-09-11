@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.GenFun
-import PhD.TateFredholm.WeightGenFun
-import PhD.TateFredholm.Compose
+import PhD.TateFredholm.«05_GenFun»
+import PhD.TateFredholm.«06_WeightGenFun»
+import PhD.TateFredholm.«00_Compose»
 
 /-!
 # Abstract weight data for the weight-`κ` action (Jacobs, Definition 1.27)
@@ -24,15 +24,15 @@ the five facts the action laws consume — normalisation at the identity, row de
 the level `ρ`, summability, and the κ-cocycle.
 
 **Status: engine, not API.**  `WeightSeries` is the implementation record on which the
-action theory (`PhD/QMF/Weight/SlashAction.lean`) is proved once.  The public notion of
-a weight is `QMF.AnalyticWeight U S ρ` (`PhD/QMF/Weight/Char.lean`: an honest character
+action theory (`PhD/QMF/Weight/03_SlashAction.lean`) is proved once.  The public notion of
+a weight is `QMF.AnalyticWeight U S ρ` (`PhD/QMF/Weight/04_Char.lean`: an honest character
 analytic at the wild level), whose `toWeightSeries` feeds this engine and which re-exports
 the action API (`AnalyticWeight.kappaSlash`, `_one`, `_mul`, `matrixCoeff_kappaSlash`,
 `kappaSlashAction`); the forms space `QMF.Weight.Forms` takes an `AnalyticWeight`.
 Downstream code should not need to name `WeightSeries`.  The Jacobs weight (`κ(u) = exp₃(t·log₃ u)`,
 `PhD/JacobsSlash/`), the classical algebraic weights (`κ(u) = u^(n+2)`,
-`PhD/QMF/Weight/Algebraic.lean`) and honest character expansions
-(`PhD/QMF/Weight/Char.lean`) are all instances.
+`PhD/QMF/Weight/06_Algebraic.lean`) and honest character expansions
+(`PhD/QMF/Weight/04_Char.lean`) are all instances.
 
 * `QMF.SigmaNorm K ρ hρ0 hρ` — the norm-form of Def 1.27's `Σ_α`: integral entries,
   `‖c‖ ≤ ρ`, `‖d‖ = 1`, `det ≠ 0`.  The archetype level monoid; instances may act
@@ -46,7 +46,7 @@ Downstream code should not need to name `WeightSeries`.  The Jacobs weight (`κ(
 * `QMF.yExtend` — a one-variable series as a `y`-degree-`0` two-variable series.
 * `QMF.WeightSeries.genFun` — `κcol·(linSeries γ)⁻¹·(quadSeries γ)⁻¹`, the generating
   function of [Jacobs, Prop 2.6], taken as the definition of the action
-  (`PhD/QMF/Weight/SlashAction.lean`).
+  (`PhD/QMF/Weight/03_SlashAction.lean`).
 -/
 
 open TateFredholm PowerSeries

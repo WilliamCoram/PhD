@@ -3,13 +3,13 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Conjugation
+import PhD.TateFredholm.«07_Conjugation»
 
 /-!
 # Block-diagonal maps between block models with different fibres — SKELETON
 
-`blockDiag f` (`Conjugation.lean`) applies one operator `f : c(I, R) →L[R] c(I, R)` in every
-diagonal block of `c(σ × I, R)`.  The disc model of `S^{D,†,m}` (`PhD/LWX/DiscModel.lean`) needs
+`blockDiag f` (`07_Conjugation.lean`) applies one operator `f : c(I, R) →L[R] c(I, R)` in every
+diagonal block of `c(σ × I, R)`.  The disc model of `S^{D,†,m}` (`PhD/LWX/09_DiscModel.lean`) needs
 the same construction for a map `f : c(I, R) →L[R] c(I', R)` **changing the fibre**
 (`I = ℤ/pʰ × ℕ`, `I' = ℕ`: the monomial-to-Mahler map at level `h`), together with the rectangular
 block operators `blockOpMap T`, `T : σ → σ → (c(I, R) →L[R] c(I', R))`, and the composition rules

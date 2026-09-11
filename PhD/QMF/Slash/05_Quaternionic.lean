@@ -3,16 +3,16 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Quaternionic
-import PhD.QMF.UpiElement
-import PhD.QMF.Slash.WeightModule
-import PhD.QMF.Slash.HeckeMatrix
+import PhD.QMF.«03_Quaternionic»
+import PhD.QMF.«04_UpiElement»
+import PhD.QMF.Slash.«03_WeightModule»
+import PhD.QMF.Slash.«04_HeckeMatrix»
 
 /-!
 # Quaternionic modular forms with the classical right slash
 
-Right-handed mirror of `PhD/QMF/Quaternionic.lean` (+ the `etaAdelic` layer of
-`PhD/QMF/UpiElement.lean`): the specialisation of the slash theory to a quaternion
+Right-handed mirror of `PhD/QMF/03_Quaternionic.lean` (+ the `etaAdelic` layer of
+`PhD/QMF/04_UpiElement.lean`): the specialisation of the slash theory to a quaternion
 algebra `D` over a number field `F`, in the classical convention of
 [Buzzard, *Eigenvarieties*, §9] — the space `S^D_{k,w}(U) = L(U, L_{n,v})` with
 `L_{n,v}` a *right* `Mₜ`-module and `f∣u` the classical slash.
@@ -29,7 +29,7 @@ mirrored:
 * `SpaceSlash` — quaternionic modular forms with the classical right slash;
 * `spaceSlash_eq_space` — the FLT-facing agreement corollary: under the pointwise
   `detNorm`-dictionary on the level group, the right-slash space *equals* the
-  left-action space of `PhD/QMF/Quaternionic.lean`.
+  left-action space of `PhD/QMF/03_Quaternionic.lean`.
 -/
 
 open scoped TensorProduct Pointwise QMF
@@ -181,7 +181,7 @@ noncomputable def heckeOperatorQSlash (U : Subgroup (Dfx F D))
 
 /-- **The FLT-facing agreement corollary**: under the pointwise dictionary between the
 coefficient slash and the coefficient left action on `U`-elements, the right-slash
-space *equals* the left-action space of `PhD/QMF/Quaternionic.lean`.  Instantiation of
+space *equals* the left-action space of `PhD/QMF/03_Quaternionic.lean`.  Instantiation of
 the abstract seam theorem (`levelSubmoduleSlash_eq_levelSubmodule`); the hypothesis is
 discharged per weight module via the `detNorm`-identity (board decomposition, T-CRIT
 resolution). -/

@@ -6,7 +6,7 @@ Authors: William Coram
 import PhD.Jacobs.DiamondW
 import PhD.Jacobs.U3.Factorisations
 import PhD.Jacobs.U3.KappaAction
-import PhD.QMF.HeckeMatrix
+import PhD.QMF.«03_HeckeMatrix»
 
 /-!
 # AG-B: the matrix of `U₃` is the transcribed matrix

@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.HaloRing
-import PhD.LWX.TiltedDegree
-import PhD.TateFredholm.Matrix
+import PhD.LWX.«00_HaloRing»
+import PhD.LWX.«02_TiltedDegree»
+import PhD.TateFredholm.«04_Matrix»
 
 /-!
 # The integral `U_p`-matrix — SKELETON (lwx-halo board)

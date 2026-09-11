@@ -25,6 +25,65 @@ algebraic automorphic forms*, Def. 3.3.2], and FLT's `WeightTwoAutomorphicForm`.
 
 ---
 
+## 0. File order
+
+The project's own modules — `PhD/QMF/*.lean`, `Weight/` and `Slash/`, 31 files — are numbered.
+Each filename carries **its depth in this folder's own import graph**: a file `NN_Name.lean`
+imports only files of this folder with a strictly smaller `NN` (plus `PhD/TateFredholm/`, `PhD/ForMathlib/` and `PhD/QMF/FLTstuff/`).  Files that share a number
+are independent of one another and can be read in any order.  Because the module names start with a
+digit they are imported in French quotes:
+
+```lean
+import PhD.QMF.Weight.«08_Slopes»
+```
+
+`PhD/QMF/FLTstuff/` (92 files) is **not** numbered: it mirrors the upstream FLT paths so that it
+stays diffable against that project, and nothing in it imports the modules above.
+
+- **00** — `HeckeMonoid`, `Sigma0`, `Weight/Series`
+- **01** — `AutomorphicFunction`, `Slash/Sigma0`, `WeightModule`
+- **02** — `Decomposition`, `Slash/Basic`
+- **03** — `HeckeMatrix`, `Quaternionic`, `Slash/AutomorphicFunction`, `Slash/HeckeMonoid`, `Slash/WeightModule`, `Weight/SlashAction`
+- **04** — `Finiteness`, `Level`, `Slash/HeckeMatrix`, `UpiElement`, `Weight/AdicLevel`, `Weight/Char`
+- **05** — `FiniteDimensional`, `Slash/Quaternionic`, `Weight/Forms`
+- **06** — `Weight/Algebraic`, `Weight/Compact`
+- **07** — `Weight/Fredholm`, `Weight/Quaternionic`
+- **08** — `Weight/BaseChange`, `Weight/HeckeAlgebra`, `Weight/Pr`, `Weight/Slopes`
+
+| file | imports in this folder | what it is |
+|---|---|---|
+| `00_HeckeMonoid.lean` | — | Abstract Hecke operators for a submonoid of a group |
+| `Weight/00_Series.lean` | — *(+ TateFredholm)* | Abstract weight data for the weight-`κ` action (Jacobs, Definition 1.27) |
+| `00_Sigma0.lean` | — | The local monoid `Σ₀(γ)` at a nonarchimedean place |
+| `01_AutomorphicFunction.lean` | `00_HeckeMonoid` | Abstract automorphic functions with monoid-twisted level action |
+| `Slash/01_Sigma0.lean` | `00_Sigma0` | The right-handed monoid `Σ₀'(γ)` and the adjugate dictionary |
+| `01_WeightModule.lean` | `00_Sigma0` | Classical weight modules `L_{n,ν}` |
+| `Slash/02_Basic.lean` | `01_Sigma0` | The right-slash action class |
+| `02_Decomposition.lean` | `01_AutomorphicFunction` | Decomposition of `L(U, A)` over the class set |
+| `Slash/03_AutomorphicFunction.lean` | `01_AutomorphicFunction`, `02_Basic` | The right slash on automorphic functions, and slash-form level spaces |
+| `03_HeckeMatrix.lean` | `02_Decomposition` | The matrix of a Hecke operator in the class-set basis |
+| `Slash/03_HeckeMonoid.lean` | `00_HeckeMonoid`, `02_Basic` | Abstract Hecke operators for the right slash |
+| `03_Quaternionic.lean` | `01_WeightModule`, `02_Decomposition` | Quaternionic modular forms of general weight |
+| `Weight/03_SlashAction.lean` | `00_Series`, `01_Sigma0`, `02_Basic` | The weight-`κ` action of an abstract weight on the Tate algebra |
+| `Slash/03_WeightModule.lean` | `01_WeightModule`, `02_Basic` | The right slash on classical weight modules |
+| `Weight/04_AdicLevel.lean` | `03_SlashAction` *(+ ForMathlib)* | Wild levels at a finite place |
+| `Weight/04_Char.lean` | `03_SlashAction` | Honest locally analytic characters and their weight data |
+| `04_Finiteness.lean` | `03_Quaternionic` *(+ QMF)* | Finiteness of the class set, and of the decomposition of `QMF.Space` |
+| `Slash/04_HeckeMatrix.lean` | `03_AutomorphicFunction`, `03_HeckeMonoid` | The matrix of a right-slash Hecke operator, and the class-set decomposition |
+| `04_Level.lean` | `03_HeckeMonoid`, `03_Quaternionic` *(+ QMF)* | Compact open levels |
+| `04_UpiElement.lean` | `03_Quaternionic` *(+ QMF)* | The standard `U_ϖ` Hecke element |
+| `05_FiniteDimensional.lean` | `04_Finiteness` | Finite-dimensionality of the space of quaternionic modular forms |
+| `Weight/05_Forms.lean` | `03_AutomorphicFunction`, `03_HeckeMonoid`, `04_Char` | Overconvergent automorphic forms at an abstract weight (Jacobs, Def 1.28–1.32) |
+| `Slash/05_Quaternionic.lean` | `03_Quaternionic`, `03_WeightModule`, `04_HeckeMatrix`, `04_UpiElement` | Quaternionic modular forms with the classical right slash |
+| `Weight/06_Algebraic.lean` | `03_WeightModule`, `05_Forms` | The classical algebraic weights as an instance of the abstract weight action |
+| `Weight/06_Compact.lean` | `04_HeckeMatrix`, `05_Forms` *(+ TateFredholm)* | Compactness of `U_ϖ` on the forms of weight `κ` (Jacobs Lemma 2.7, Buzzard Lemma 12.2) |
+| `Weight/07_Fredholm.lean` | `06_Compact` | The Fredholm determinant of a Hecke operator on `S_κ(U)` |
+| `Weight/07_Quaternionic.lean` | `04_Finiteness`, `05_Quaternionic`, `06_Compact` *(+ ForMathlib)* | Overconvergent quaternionic modular forms `S^D_κ(U)` |
+| `Weight/08_BaseChange.lean` | `07_Fredholm` *(+ ForMathlib, TateFredholm)* | Base change of weights, Hecke blocks and Fredholm determinants |
+| `Weight/08_HeckeAlgebra.lean` | `07_Fredholm` | The Hecke algebra acting on `S_κ(U)` |
+| `Weight/08_Pr.lean` | `07_Fredholm` | Non-neat levels: the Fredholm determinant on `S_κ(U)` as a direct summand |
+| `Weight/08_Slopes.lean` | `07_Fredholm` *(+ NewtonPolygons, TateFredholm)* | Slopes of `det(1 − T·[UηU])` at a general analytic weight |
+
 ## 1. The four layers
 
 | Layer | Files | Content |
@@ -33,10 +92,10 @@ algebraic automorphic forms*, Def. 3.3.2], and FLT's `WeightTwoAutomorphicForm`.
 | **Left-action core** | `Sigma0`, `WeightModule`, `AutomorphicFunction`, `Decomposition`, `HeckeMonoid`, `HeckeMatrix`, `Quaternionic`, `UpiElement`, `Finiteness`, `FiniteDimensional` | Classical weight `(n, ν)`: the monoid `Σ₀(γ)`, `L_{n,ν} = Symⁿ ⊗ ν`, abstract `L(U, A)` for a monoid-twisted action, class-set decomposition `L(U,A) ≅ ∏ A^{Γ_λ}`, Hecke operators `[UgV]` for a *submonoid* `Δ ≤ G`, the `U_ϖ` element, `QMF.Space` (= Buzzard's `S^D_{k,w}(U)`), finite-dimensionality via Fujisaki. |
 | **Right-slash dialect** | `Slash/Sigma0`, `Slash/Basic`, `Slash/WeightModule`, `Slash/AutomorphicFunction`, `Slash/HeckeMonoid`, `Slash/HeckeMatrix`, `Slash/Quaternionic` | The same theory in the sources' right-handed convention: `Σ₀'` (Buzzard's `Mₜ`), `RightSlashAction Δ A` with `a ∣ₛ δ`, Buzzard's slash on `L_{n,ν}`, `levelSubmoduleSlash`, right-coset Hecke operators, `SpaceSlash`, and the **seam theorems** identifying each with its left-handed original through the adjugate dictionary. |
 | **General weights** | `Weight/Series`, `Weight/SlashAction`, `Weight/Char`, `Weight/Forms`, `Weight/Algebraic`, `Weight/Compact`, `Weight/Fredholm`, `Weight/BaseChange`, `Weight/Pr`, `Weight/Quaternionic` | Jacobs Def 1.27–1.32 for an *arbitrary* analytic weight: the `WeightSeries` engine and the weight-κ action on the Tate algebra `c(ℕ, K)` (Prop 2.6 by construction), honest characters (`ExpansionData`, **`AnalyticWeight`**), the headline space **`Forms Γ θ κ U hU (χ := 1)`** and its Hecke operators, the classical bridge (`polyEmbed`, `algWeight`, `classicalForms`, *classical = polynomial-valued overconvergent*), the **compactness theorem** (`Weight/Compact`: the block model `evalAtReps`, **Buzzard's decomposition at a neat level** `bijective_evalAtReps`/`formsModelEquiv`, the certificate blocks `heckeBlock`, the transport `evalAtReps_heckeOperator`, and `isCompactoid_heckeBlockOp` — Jacobs Lemma 2.7 / Buzzard Lemma 12.2 at every analytic weight), the **Fredholm determinant** `det(1 − T·[UηU])` on `S_κ(U)` (`Weight/Fredholm`: `heckeCharPowerSeries`, the eigenform criterion `evalT_heckeCharPowerSeries_eq_zero_iff`, independence of the representatives `heckeCharPowerSeries_eq_of_reps`), the **quaternionic instantiation** (`Weight/Quaternionic`: `FormsQ` = Buzzard's `S^D_κ(U)`, `heckeUpiQ` = `U_ϖ`, `isCompactoid_heckeBlockOp_etaAdelic'` = Buzzard Lemma 12.2, Hecke finiteness at compact open level), **base change** (`Weight/BaseChange`: weight actions, Hecke blocks and `det(1 − T·[UηU])` commute with a homomorphism of the coefficient field — Buzzard Lemma 2.13) and **non-neat levels** (`Weight/Pr`: the averaging projectors `stabAvg`/`stabProj` onto `∏ A^{Γ_λ}`, the determinant `heckeCharPowerSeriesPr` on the (Pr) summand, its independence of the projector, and the eigenform criterion at any level — Buzzard §2 pp. 18–19, §10 p. 73). |
-| **Slopes & Hecke algebra** | `Weight/Slopes`, `Weight/HeckeAlgebra`, `Weight/AdicLevel`, `Level` | (slopes-hecke board, complete 2026-08-20.)  **The slope bound at a general analytic weight** (`Weight/Slopes`: row decay of the certificate blocks, `norm_charCoeff_heckeCharPowerSeries_le`, and `isBelow_newtonPolygon_heckeCharPowerSeries` — the Newton polygon of `det(1 − T·[UηU])` lies on or above the polygon with unit slopes `⌊k/t⌋·(−log σ)`, `t` = the class number; the abstract engine is `PhD/TateFredholm/Slopes.lean`, where the exact case landed 2026-09-01); **the Hecke algebra as data** (`Weight/HeckeAlgebra`, Buzzard §5: a commutative algebra `𝕋` acting on `Forms` with a distinguished compact `[UηU]`, everything in `𝕋` preserves the Riesz finite-slope subspace, which carries a system of eigenvalues); **the valuation ↔ norm level dictionary** (`Weight/AdicLevel`: `Σ₀(γ)`/`Σ₁(p^k)` stated by valuations on a `Valued` field, retiring the fork's hand-made lemmas); **compact open levels** (`Level`: the integral order is compact, unit groups of compact multiplicatively-closed sets are compact, Hecke finiteness at any compact open level — Buzzard §9). |
+| **Slopes & Hecke algebra** | `Weight/Slopes`, `Weight/HeckeAlgebra`, `Weight/AdicLevel`, `Level` | (slopes-hecke board, complete 2026-08-20.)  **The slope bound at a general analytic weight** (`Weight/Slopes`: row decay of the certificate blocks, `norm_charCoeff_heckeCharPowerSeries_le`, and `isBelow_newtonPolygon_heckeCharPowerSeries` — the Newton polygon of `det(1 − T·[UηU])` lies on or above the polygon with unit slopes `⌊k/t⌋·(−log σ)`, `t` = the class number; the abstract engine is `PhD/TateFredholm/06_Slopes.lean`, where the exact case landed 2026-09-01); **the Hecke algebra as data** (`Weight/HeckeAlgebra`, Buzzard §5: a commutative algebra `𝕋` acting on `Forms` with a distinguished compact `[UηU]`, everything in `𝕋` preserves the Riesz finite-slope subspace, which carries a system of eigenvalues); **the valuation ↔ norm level dictionary** (`Weight/AdicLevel`: `Σ₀(γ)`/`Σ₁(p^k)` stated by valuations on a `Valued` field, retiring the fork's hand-made lemmas); **compact open levels** (`Level`: the integral order is compact, unit groups of compact multiplicatively-closed sets are compact, Hecke finiteness at any compact open level — Buzzard §9). |
 
 The block-operator calculus the compactness theorem assembles on (`blockOp`, `blockIncl`/
-`blockProj`, `isCompactoid_blockOp`) is `PhD/TateFredholm/BlockOp.lean` (moved there from
+`blockProj`, `isCompactoid_blockOp`) is `PhD/TateFredholm/06_BlockOp.lean` (moved there from
 the Jacobs fork on 2026-08-19; `isCompactoid_zero`, `IsCompactoid.finset_sum`,
 `isCompactoid_of_row_decay'`, `RowIntAt.mono` live next to their definitions in
 `TateFredholm/`).
@@ -103,7 +162,7 @@ preserves the level entry (up to sign): it is *the* level-preserving anti-automo
 On `L_{n,ν}` the adjugate transport of the left action agrees with Buzzard's formula only
 after the signed variable swap `jTwist` (`(adj δ)ᵀ = J δ J⁻¹`; the `Z = X/Y` vs `Y/X`
 homogenisation seam); no determinant correction is needed since `det(adj δ) = det δ` in
-dimension 2.  Design notes in `Sigma0.lean` and `Slash/WeightModule.lean`.
+dimension 2.  Design notes in `00_Sigma0.lean` and `Slash/WeightModule.lean`.
 
 **The general-weight layer is natively right-handed.**  Jacobs's `‖_κ` *is* a right
 action; `WeightSeries.kappaSlashAction : RightSlashAction S c(ℕ, K)` is proved directly
@@ -115,7 +174,7 @@ world through `detTwist ν` (ν read on `Σ₀'` via the adjugate) and `RightSla
 
 ## 3. Design decision B — classical vs locally analytic weights
 
-**Classical (`WeightModule.lean`).**  A weight is a pair `(n, ν)`: `n : ℕ` is the `Symⁿ`
+**Classical (`01_WeightModule.lean`).**  A weight is a pair `(n, ν)`: `n : ℕ` is the `Symⁿ`
 degree and `ν : Σ₀(γ) →* Rˣ` is an *arbitrary* character of the **whole monoid** — a
 one-dimensional scalar twist, so `WeightModule R n ν = Symⁿ ⊗ ν` as a `Σ₀(γ)`-module
 (Buzzard's `det^v` is `ν = detChar w`; classical weight `(k, w)` is
@@ -238,7 +297,7 @@ and how one *computes* with it (`kappaSlash_toWeightSeries_eq`, `col_eq_of_mem`)
 `AnalyticWeight` is the **API**: it re-exports `kappaSlash`, `_one`, `_mul`,
 `matrixCoeff_kappaSlash`, `kappaSlashAction`, `smulSlashClass`, `isCompactoid_kappaSlash`,
 `restrict`/`kappaSlash_restrict`, `restrictRadius`.  Downstream code should never need to name
-`WeightSeries` (the headers of `Series.lean`/`SlashAction.lean` say so): `Forms.lean` builds the
+`WeightSeries` (the headers of `00_Series.lean`/`03_SlashAction.lean` say so): `05_Forms.lean` builds the
 level action from `κ.kappaSlashAction`, and the fork names `WeightSeries` only in
 `genFun_jacobsWeight`, the one place the thesis's generating function is identified.
 
@@ -325,12 +384,12 @@ Open:
    `R⟨z⟩`); `WeightSeries`/`SlashAction` assume a field.  The object that varies in the family is
    `heckeCharPowerSeries` at fixed certificates; `Weight/BaseChange.lean` is the specialisation half.
    *lwx-seam board (complete 2026-09-05):* the halo weight `κ_{T₀}` of [LWX] is the first
-   `AnalyticWeight` coming from a family (`PhD/LWX/HaloWeight.lean`: character `x ↦ x²·κ_{T₀}(x)` on
+   `AnalyticWeight` coming from a family (`PhD/LWX/06_HaloWeight.lean`: character `x ↦ x²·κ_{T₀}(x)` on
    `haloUnits`, column `(cz+d)²·κ_{T₀}(d)·∑ C(s,m)(c/d)^m z^m`, radius `‖T₀‖√p`, on the sub-annulus
    `p⁻¹ < ‖T₀‖`, `‖T₀‖² < p⁻¹`).  With `heckeCharPowerSeries_eq_of_reps`, [LWX, Prop 2.17] at
-   `m = 1` (`PhD/LWX/Seam.lean`, `specCharSeries_ofCerts_eq_heckeCharPowerSeries`) is the
+   `m = 1` (`PhD/LWX/07_Seam.lean`, `specCharSeries_ofCerts_eq_heckeCharPowerSeries`) is the
    specialisation half of the family: `Char(P)(T₀) = det(1 − X·U_p)` on `S^D_{κ_{T₀}}(U)`, and
-   `PhD/LWX/Quaternionic.lean` reads it on `D/ℚ` with the spectral interpretation
+   `PhD/LWX/08_Quaternionic.lean` reads it on `D/ℚ` with the spectral interpretation
    (`evalT_specCharSeries_eq_zero_iff`).
 4. **Slope theory at general weight** — DONE 2026-08-20 (`Weight/Slopes.lean`); what is still open
    on this front is the *exact*-slope statement (the fork's unit-minor equality) at a general

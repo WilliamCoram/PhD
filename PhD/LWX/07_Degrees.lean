@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Vertices
+import PhD.LWX.«06_Vertices»
 
 /-!
 # Step III of [LWX, Theorem 1.3]: the ordinary dimension at the coefficient level — SKELETON
@@ -20,7 +20,7 @@ level (`lwx.txt:1717–1722`):
 
 So the ordinary dimension is `ordDim D ω`, the largest index whose characteristic-series
 coefficient is a unit in the halo ring, and Step III's degree formulas are stated against it.
-This is in the same register as `IsUnitCoeff` (`PhD/LWX/Vertices.lean`) and needs neither
+This is in the same register as `IsUnitCoeff` (`PhD/LWX/06_Vertices.lean`) and needs neither
 Jacquet–Langlands nor any geometry; see `.mathlib-quality/lwx-stepone/JL-AUDIT.md`.
 
 The theta exact sequence's right-exactness (hypothesis H2) is the *other* Step III input and is
@@ -131,6 +131,12 @@ theorem bddAbove_isUnit_charCoeff (D : UpDatum p ι) (ω : (ZMod p)ˣ →* ℤ_[
 theorem isUnit_charCoeff_ordDim (D : UpDatum p ι) (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) :
     IsUnit (charCoeff (D.op ω) (ordDim D ω)) :=
   Nat.sSup_mem ⟨0, by simp⟩ (bddAbove_isUnit_charCoeff D ω)
+
+/-- `r_ord(ω) ≤ t`: the ordinary dimension is at most the number of blocks
+(`le_card_of_isUnit_charCoeff` at the unit coefficient `ordDim`). -/
+theorem ordDim_le_card (D : UpDatum p ι) (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) :
+    ordDim D ω ≤ Fintype.card ι :=
+  le_card_of_isUnit_charCoeff D ω (isUnit_charCoeff_ordDim D ω)
 
 /-- No coefficient beyond `ordDim` is a unit. -/
 theorem not_isUnit_charCoeff_of_ordDim_lt (D : UpDatum p ι) (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) {n : ℕ}

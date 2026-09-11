@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Quaternionic
+import PhD.QMF.«03_Quaternionic»
 import PhD.QMF.FLTstuff.Mathlib.Topology.Algebra.RestrictedProduct.Basic
 import Mathlib.Tactic.NoncommRing
 

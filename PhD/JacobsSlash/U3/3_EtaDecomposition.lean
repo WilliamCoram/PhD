@@ -5,7 +5,7 @@ Authors: William Coram
 -/
 import Mathlib.NumberTheory.Padics.RingHoms
 import PhD.JacobsSlash.U3.«2_Level»
-import PhD.QMF.UpiElement
+import PhD.QMF.«04_UpiElement»
 
 /-!
 # The right-coset decomposition of `U₁(9)·η₃·U₁(9)` [Jacobs, Lemma 2.3]

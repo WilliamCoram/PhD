@@ -6,8 +6,8 @@ Authors: William Coram
 import Mathlib.Analysis.Normed.Group.Tannery
 import Mathlib.Topology.Instances.Matrix
 import PhD.ForMathlib.RingTheory.Polynomial.GaussNorm
-import PhD.TateFredholm.Entire
-import PhD.TateFredholm.Resultant
+import PhD.TateFredholm.«10_Entire»
+import PhD.TateFredholm.«00_Resultant»
 
 /-!
 # Coleman's `D(B, P)` and the spectral mapping formula

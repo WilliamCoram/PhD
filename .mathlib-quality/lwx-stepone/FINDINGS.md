@@ -188,9 +188,9 @@ not theta, not the degree formulas.
 
 | Target | Input required | Status |
 |---|---|---|
-| `HasUnitBand D ω k` for all `k`; hence the **unconditional** form of everything already proved (`unitSlope_specCharSeries_eq_iff`, `unitSlope_specCharSeries_eq_slopeRatio`, `SlopesSeam.lean`) | Step I at conductor `q²`: Prop 2.15, Prop 3.22 (**H1**), (3.21.1), plus the initial-segment comparison | the single hook; `hasUnitBand_of_height_discHeckeCharPowerSeries_eq` is built to receive it |
-| [LWX, Thm 1.3]'s degree formulas `deg X_{n,ω} = r_ord(ω⁻¹ω₀^{2n−2}) + r_ord(ωω₀^{−2n})` | Step III: Cor 3.21 (Hida) + theta right-exactness (**H2**) | not formalised; H2 is the JL half of [Bu04, Prop 4] |
-| [LWX, Thm 1.5] **second half**, (1.5.2) | Step I's inputs at conductor `p^M` for **every** admissible `M`, plus statements ranging over the `ω₀²`-orbit of nebentypi | not formalised; **not implied by Steps I and III as such** |
+| `HasUnitBand D ω k` for all `k`; hence the **unconditional** form of everything already proved (`unitSlope_specCharSeries_eq_iff`, `unitSlope_specCharSeries_eq_slopeRatio`, `SlopesSeam.lean`) | Step I at conductor `q²`: Prop 2.15, Prop 3.22 (**H1**), (3.21.1), plus the initial-segment comparison | **closed** (2026-09-11, board `lwx-conductor`): `HasUnitBand D ω n` at every vertex `n` and every disc `ω`, granted the adelic data family (`LWX.hasUnitBand_of_atkinLehnerFamily`; at one weight `LWX.hasUnitBand_of_atkinLehnerData`), hence [LWX, Thm 1.5 (1.5.1)] for the genuine `U_p` (`LWX.unitSlope_discHeckeCharPowerSeries_eq_slopeRatio_of_atkinLehnerFamily`) |
+| [LWX, Thm 1.3]'s degree formulas `deg X_{n,ω} = r_ord(ω⁻¹ω₀^{2n−2}) + r_ord(ωω₀^{−2n})` | Step III: Cor 3.21 (Hida) + theta right-exactness (**H2**) | **closed at the coefficient level** (2026-09-11, boards `lwx-theta-h2`, `lwx-h1`, `lwx-degrees`; JL-free): H2 is `LWX.isThetaExact_classicalData`, H1 is `LWX.atkinLehnerHypothesis_of_atkinLehnerData`; at every classical weight, granted the adelic data family, `deg X_{k+1,ω} = r_ord(ω⁻¹ω₀^{2k}) + r_ord(ωω₀^{−2k−2})` (`LWX.degX_succ_of_atkinLehnerFamily`; `deg X_{0,ω} = r_ord(ω)` is `LWX.degX_zero`), `deg X_{(n,n+1),ω} = qt − r_ord(ω⁻¹ω₀^{2n}) − r_ord(ωω₀^{−2n})` for every `n ≥ 0` (`LWX.degXint_of_atkinLehnerFamily`) and `> 0` (`LWX.degXint_pos_of_atkinLehnerFamily`), and [LWX, Cor 1.4]: the shift `deg X_{I,ω} = deg X_{I+1,ωω₀²}` (`LWX.degX_succ_mul_teichChar_sq` for `I = n ≥ 1`, `LWX.degXint_mul_teichChar_sq` for `I = (n,n+1)`, `n ≥ 0`) and the periodicity modulo `(p−1)/2` (`LWX.degX_succ_add_period`, `LWX.degXint_add_period`); the shift is false at `I = 0` in general, matching the source's list `I = (0,1), 1, (1,2), …`; the reading as degrees of the components `X_{I,ω}` of `Spc` is row 4 (rigid geometry, deferred) |
+| [LWX, Thm 1.5] **second half**, (1.5.2) | Step I's inputs at conductor `p^M` for **every** admissible `M`, plus statements ranging over the `ω₀²`-orbit of nebentypi | **polygon level proved** (2026-09-11, board `lwx-conductor`): the reflection at conductor `p^{h+1}` (`LWX.slopeRatio_add_slopeRatio_partnerChar_of_atkinLehnerFamilyH`), (4.2.5) (`LWX.slopeRatio_partnerChar_succ`), (4.2.6) = (1.5.2) (`LWX.slopeRatio_mul_teichChar_sq`) and the arithmetic progressions (`LWX.slopeRatio_add_period`), granted the adelic data families and the region condition `(p²−1)t + 8 < 8p^{h−1}(p−1)`; the rigid-geometric reading is row 4 |
 | `Spc^{>λ}_{D,ω} = ∐_i Y_{i,ω}` finite flat | rigid analytic geometry | out of scope for the thesis (eigenvarieties excluded by the blueprint introduction) |
 
 Two properties of the third row worth keeping in view:
@@ -203,6 +203,8 @@ Two properties of the third row worth keeping in view:
    single fixed `ω`.  No periodicity statement can currently even be *phrased*.
 
 ## The five objects that would have to be built
+
+**Status 2026-09-11: all five now exist** (boards `lwx-theta`, `lwx-theta-h2`, `lwx-h1`, `lwx-conductor`, `lwx-degrees`); the blueprint's §ledger, synced the same day, says where.  What remains is the instantiation of the adelic data (`AtkinLehnerData`/`AtkinLehnerFamily`) for a definite quaternion algebra and the rigid-analytic packaging (row 4).  The list below is the 2026-09-07 record.
 
 None exists yet.  Items 1–4 are Steps I and III; item 5 is the extra layer the second half of
 Thm 1.5 needs on top of them.
@@ -240,3 +242,46 @@ The options in the previous section are unchanged, but the *payoff* of each is n
 * Adding H2 buys **row 2**.
 * **Row 3 is a separate project** and should get its own board when the time comes; do not
   fold it into a Step I board on the assumption that it comes for free.
+
+## Decision: `p = 2` deferred (user, 2026-09-11)
+
+[LWX] state Theorems 1.3 and 1.5 for `p = 2` too (with `q = 4`, `Δ = (ℤ/4)^×`, `m ≥ 2`, `M ≥ 4`),
+but every proof restricts to `p > 2` ("the case `p = 2` being similar", `lwx.txt:2174`, `2229`).
+There is no written argument to transcribe, and `p ≠ 2` is used essentially from the exp/log layer
+up (309 occurrences in 31 of the 49 `PhD/LWX/` files).  It stays a standing hypothesis; the next
+generalisation target is the conductor `p^M` (level `h`), which unlocks Thm 1.5's second half.
+
+## Decision: rigid-analytic geometry deferred (user, 2026-09-11)
+
+Deferred until later, like `p = 2`: the rigid-analytic content of [LWX, Thms 1.3 and 1.5] — the
+decompositions `Spc^{>1/p}_D = ∐ X_I` and `Spc^{>λ}_{D,ω} = ∐ Y_{i,ω}` into rigid spaces finite and
+flat over weight space, and the compatibility of Remark 1.6(1) (ledger row 4).  What is formalised
+is the Newton-polygon content: slopes, multiplicities as slope counts, and the degree formulas at
+the coefficient level.
+
+## Parked idea: Step III at level `h` (recorded 2026-09-11 at the user's request; not scheduled)
+
+**What.**  The level-`h` analogue of [LWX, §3.23 Step III]: at the classical weights of conductor
+`p^{h+1}`, identify the two gaps of the unit band at the level-`h` touching vertex `(k+1)p^{h−1}`
+with ordinary dimensions — as `touchX_sub_leftIndex_eq_ordDim` and `rightIndex_sub_touchX_eq_ordDim`
+(`StepThree.lean`) do at level `1` — and hence degree formulas for the multiplicities there.
+
+**Why it is not needed.**  [LWX] state no degree formula at conductor `p^M`.  The second half of
+Thm 1.5 uses only Step I's inputs (Remark 1.6(4)), and Thm 1.3's degree formulas live at level `1`,
+where they are proved (`degX_zero`, `degX_succ_of_atkinLehnerData`, `degXint_zero`).  So this would
+go beyond the paper, and a precise statement has to be designed first: the source gives none.
+
+**Why it looks within reach.**  Much of the input is already level-general:
+- theta right-exactness (H2) is stated at every level (`IsThetaExact`), and
+  `isThetaExact_of_isClassicalShape` proves it from level-`h` classical and target shapes, which
+  `ClassicalDataH.shape` and `TargetDataH.shape` supply;
+- the complement bound `le_unitSlope_compl` and the slope-0 count
+  `faceRight_zero_specCharSeries_eq_ordDim` are level-free (the latter at any halo point with
+  `p⁻¹ < ‖T‖ < 1`, which covers the level-`h` target points), so no separate level-`h` Hida input
+  (Cor 3.21) appears to be needed — to be confirmed when planned;
+- the unit band at `(k+1)p^{h−1}` is `hasUnitBand_of_atkinLehnerHypothesisH`, and H1 at level `h` is
+  `atkinLehnerHypothesis_of_atkinLehnerDataH`.
+
+**What would have to be built.**  Level-`h` versions of the two gap lemmas, of `degX`/`degXint`
+indexed by the level-`h` vertices, and of the family wrappers — after fixing what the level-`h`
+multiplicities should count.

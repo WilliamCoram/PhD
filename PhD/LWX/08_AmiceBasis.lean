@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.AmiceValuation
-import PhD.LWX.PowSubOne
-import PhD.TateFredholm.Unitriangular
+import PhD.LWX.«01_AmiceValuation»
+import PhD.LWX.«07_PowSubOne»
+import PhD.TateFredholm.«06_Unitriangular»
 
 /-!
 # Amice's theorem at level `h`: the Colmez basis of the disc model — SKELETON
@@ -22,7 +22,7 @@ triangular … each diagonal block lower triangular with invertible diagonal ent
 same order is `discIdx (a, k) = k·pʰ + (pʰ − 1 − a)` on the disc model (increasing in the Taylor
 degree `k`, **decreasing** in the disc `a`), and the position of `g_n` in it is `revIdx (pʰ) n`,
 the reversal of each block of `pʰ` consecutive integers.  Reindexing the columns by that same
-involution makes the matrix a perturbed unitriangular matrix (`Unitriangular.lean`), hence an
+involution makes the matrix a perturbed unitriangular matrix (`06_Unitriangular.lean`), hence an
 isometric equivalence `colmezDiscEquiv`; the two reindexings cancel in
 `matrixCoeff_colmezToDisc`, so `colmezToDisc` sends `eₙ` to the disc model of `g_n` on the nose.
 
@@ -167,7 +167,7 @@ def discCoeff (h n : ℕ) (x : ZMod (p ^ h) × ℕ) : ℚ_[p] := (discPoly h n x
 
 /-- **The unitriangularity criterion in Colmez's order**: a position `x` lies strictly beyond the
 diagonal position of `g_n` iff its Taylor degree exceeds `⌊n/pʰ⌋`, or equals it on a disc below
-`n mod pʰ` — exactly the two cases in which `AmiceValuation.lean` gives a `p`-divisible
+`n mod pʰ` — exactly the two cases in which `01_AmiceValuation.lean` gives a `p`-divisible
 coefficient. -/
 theorem lt_discIdx_iff (h n : ℕ) (x : ZMod (p ^ h) × ℕ) :
     revIdx (p ^ h) n < discIdx (p := p) h x

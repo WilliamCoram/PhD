@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Riesz
+import PhD.TateFredholm.«09_Riesz»
 import PhD.NewtonPolygons.PowerSeriesZeros
 import PhD.NewtonPolygons.PolynomialRoots
 import PhD.NewtonPolygons.Product
@@ -13,7 +13,7 @@ import Mathlib.Topology.Algebra.Valued.NormedValued
 /-!
 # The `TateFredholm` × `NewtonPolygons` seam: slopes are zeros
 
-The composition point of the two pipelines of this development — `PhD.TateFredholm.Riesz`
+The composition point of the two pipelines of this development — `PhD.TateFredholm.«09_Riesz»`
 (zeros of the Fredholm determinant `det(1 − T·u)` of a compactoid operator are reciprocal
 eigenvalues, [Serre1962, §7 Props. 11–12]) and `PhD.NewtonPolygons` (every finite
 Newton-polygon slope of an entire series is attained by a zero, via the Weierstrass
@@ -35,7 +35,7 @@ field `K`.  `IsAlgClosed` enters exactly once, through the §5.11 root count ove
 `AlgebraicClosure K` (transported back along the isomorphism `K ≃+* AlgebraicClosure K`).
 
 These declarations were factored out of `PhD/JacobsSlash/5_EigenSlopes.lean`, which had kept
-them "until folder ownership with the eigenvalue board is settled"; `PhD/LWX/StepThree.lean`
+them "until folder ownership with the eigenvalue board is settled"; `PhD/LWX/15_StepThree.lean`
 is the second consumer.  They cannot live in `PhD/NewtonPolygons/` because `PowerSeries.evalT`
 is `TateFredholm` API.
 -/

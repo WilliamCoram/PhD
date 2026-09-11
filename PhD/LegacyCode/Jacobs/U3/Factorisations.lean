@@ -64,7 +64,7 @@ search, not a re-derivation of Lemmas 2.4/2.5.
 
 Jacobs factorises `cᵢ v_t⁻¹` (right-action convention); we factorise `classRep i · etaRep t`
 (left).  The tables are therefore the *adjugate transports* of the thesis's, and must be
-recomputed rather than copied — see `PhD/QMF/Sigma0.lean`'s header for why the library is
+recomputed rather than copied — see `PhD/QMF/00_Sigma0.lean`'s header for why the library is
 left-handed and why the adjugate is the standard dictionary.
 
 ## The computed tables (2026-08-05): see `certificate_search.py`
@@ -1933,7 +1933,7 @@ private theorem adjParams_acting₂₂ :
       push_cast
       ring
 
--- The three class determinants, cast to `K₃` (public: `Matrix.lean` reuses them for the
+-- The three class determinants, cast to `K₃` (public: `04_Matrix.lean` reuses them for the
 -- determinant-twist coboundary).
 theorem cd0 : ((classDet (0 : Fin 3) : ℤ) : K₃) = 1 :=
   mod_cast show classDet (0 : Fin 3) = 1 by decide
@@ -2098,7 +2098,7 @@ private theorem hs_10_28 : ‖((10 : K₃) / (28 : K₃)) - 1‖ ≤ ‖(3 : K�
 private theorem hs_1_28 : ‖((1 : K₃) / (28 : K₃)) - 1‖ ≤ ‖(3 : K₃)‖ :=
   norm_div_sub_one_le norm_one_sub_one_le norm_twentyEight_sub_one_le
 
-/-- **The `ε`-identification, series level** (the form consumed by `Matrix.lean`): for
+/-- **The `ε`-identification, series level** (the form consumed by `04_Matrix.lean`): for
 each `(i, j)` with `j ≠ i`, the sum of `weightGenFun tw` over the acting matrices of
 `{t' | σ(i,t') = j}` is the transcribed block generating function `h_{i,j}` of
 `PhD.Jacobs.U3Data`, up to the handedness scalar `κ(s)·s⁻²`, `s = classDet j / classDet i`

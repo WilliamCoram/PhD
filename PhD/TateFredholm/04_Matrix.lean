@@ -1,16 +1,16 @@
-import PhD.TateFredholm.ModelSpace
+import PhD.TateFredholm.«03_ModelSpace»
 
 /-!
 # Matrices, truncations, and the compactness criterion
 ([Bel] §II.1.3: Lemma II.1.8, Proposition II.1.9, Scholium II.1.10; blueprint 6.11,
-6.14.  See `Tate.lean` for the development's overview and dictionary.)
+6.14.  See `00_Tate.lean` for the development's overview and dictionary.)
 
 The organising notion is `IsCompactoid` (cofinite row decay): the determinant theory
 consumes it Noetherian-free, `IsCompactoid.isCompletelyContinuous` holds unconditionally,
 and `isCompletelyContinuous_iff_rowNorm` recovers [JN]'s criterion under
 `[IsNoetherianRing R]`.  The equivalence of compactoid with completely continuous is *not*
 Noetherian-free: it rests on the closedness of finitely generated submodules ([Bel]
-Hypothesis 3.1.8), so the converse direction lives in `Noetherian.lean`.  See
+Hypothesis 3.1.8), so the converse direction lives in `05_Noetherian.lean`.  See
 `exists_truncation_near`'s docstring for why closedness cannot be dropped. -/
 
 open Filter Topology
@@ -428,7 +428,7 @@ theorem rowNorm_nonneg (u : c(I, R) →L[R] c(J, R)) (j : J) : 0 ≤ rowNorm u j
 theory actually consumes, and the reason that theory needs no Noetherian hypothesis.
 `IsCompactoid.isCompletelyContinuous` holds unconditionally; the converse needs the
 closedness of finitely generated submodules ([Bel] Hypothesis 3.1.8), supplied over
-Noetherian bases in `Noetherian.lean`. -/
+Noetherian bases in `05_Noetherian.lean`. -/
 def IsCompactoid (u : c(I, R) →L[R] c(J, R)) : Prop :=
   Tendsto (rowNorm u) cofinite (𝓝 0)
 
@@ -503,7 +503,7 @@ theorem IsCompactoid.isCompletelyContinuous [IsTate R] {u : c(I, R) →L[R] c(J,
   _ < ε := half_lt_self hε
 
 -- The bridge `IsCompletelyContinuous.isCompactoid` and the recovered criterion
--- `isCompletelyContinuous_iff_rowNorm` live in `Noetherian.lean`: they consume the
+-- `isCompletelyContinuous_iff_rowNorm` live in `05_Noetherian.lean`: they consume the
 -- closedness of finitely generated submodules ([Bel] Hypothesis 3.1.8).
 
 /-- **[Bel] Scholium II.1.10 over a Tate ring**, compactoid form: truncations of a

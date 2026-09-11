@@ -36,7 +36,7 @@ that the resulting object really is the classical additive valuation.
 
 ## Files in this directory
 
-* `Basic.lean` (this file) — `addVal`, `addValValueGroup`;
+* `02_Basic.lean` (this file) — `addVal`, `addValValueGroup`;
 * `RankOne.lean` — the real additive valuation `x ↦ -log ‖x‖` of a rank-one valuation;
 * `Commensurable.lean` — rational rank one normalised at an element, and `addValQ`;
 * `Discrete.lean` — the honest `ℤ`-valued additive valuation of a discrete valuation.

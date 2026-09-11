@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Touching
+import PhD.LWX.«14_Touching»
 import Mathlib.RingTheory.RootsOfUnity.Lemmas
 import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
 
@@ -16,7 +16,7 @@ import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
 `T_{χ_k} = χ_k(exp p) − 1 = ζ·exp(pk) − 1` for `ζ = ψ(exp p)` a primitive `p`-th root of unity,
 and `v(T_{χ_k}) = v(ζ − 1) = 1/(p−1)`.
 
-This file supplies what `Touching.lean`'s `ClassicalData` asks of such a point, at level `h = 1`
+This file supplies what `14_Touching.lean`'s `ClassicalData` asks of such a point, at level `h = 1`
 (conductor `p²`, [LWX]'s `Iw_{q²}`):
 
 * the halo conditions `p⁻¹ < ‖T_{χ_k}‖ < 1` and `‖T'_1‖² < p⁻¹` (`T'_1 = (1+T_{χ_k})^p − 1
@@ -30,7 +30,7 @@ This file supplies what `Touching.lean`'s `ClassicalData` asks of such a point, 
 What is **not** done here: identifying `haloCharFunH` at a classical point with `d ↦ d^k ψ(d)`.
 Step I does not need it (the constants `u` are carried abstractly); Step III's intertwining
 needs the constants of the source weight `(k, ψ)` and the target weight `(−k−2, ψ)` to agree,
-which does need it — see `StepThree.lean` and the gap `AG-ζ` on the board.
+which does need it — see `15_StepThree.lean` and the gap `AG-ζ` on the board.
 -/
 
 open Filter Topology TateFredholm QMF QMF.Weight
@@ -445,7 +445,7 @@ theorem isClassicalShape_haloWeightH_classicalPoint (hp2 : p ≠ 2) (hψ : ∀ x
   fun i t a => autFactor_haloWeightH_classicalPoint ψ ω hp2 hψ hζ k h0 h1 hT
     (discConjK 1 (certM1 θG U hU vRep hvΔ uu i t) a ψ)
 
-/-- **The classical datum at a classical point**: everything `Touching.lean`'s Step I asks of
+/-- **The classical datum at a classical point**: everything `14_Touching.lean`'s Step I asks of
 `T_{χ_k}`, assembled. -/
 def classicalData (hp2 : p ≠ 2) (hψ : ∀ x, ‖ψ x‖ = ‖x‖) {ζ : K} (hζ : IsPrimitiveRoot ζ p)
     (hpK : ‖((p : ℕ) : K)‖ = (p : ℝ)⁻¹) (k : ℕ) :

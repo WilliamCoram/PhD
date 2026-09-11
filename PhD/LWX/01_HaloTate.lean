@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.HaloRing
+import PhD.LWX.«00_HaloRing»
 
 /-!
 # The Banach–Tate ring `A = Λ^{>1/p}[1/T]`
@@ -11,13 +11,13 @@ import PhD.LWX.HaloRing
 The localisation of the integral halo ring `HaloInt p = ℤ_p⟦T, pT⁻¹⟧` ([LWX, Lemma 3.15])
 at `T`, realised concretely: two-sided coefficient streams `d : ℤ → ℤ_[p]` with
 `‖d j‖ ≤ p^{min(0, j+k)}` for some `k` (i.e. `T^k d ∈ HaloInt p`), with the gauge norm
-`‖d‖ = ⨆ j, ‖d j‖ p^{−j}` extended from `HaloRing.lean`.  `T` becomes a unit with
+`‖d‖ = ⨆ j, ‖d j‖ p^{−j}` extended from `00_HaloRing.lean`.  `T` becomes a unit with
 `‖T·x‖ = p⁻¹‖x‖`, so it is a *multiplicative pseudo-uniformizer* in the sense of [JN]
 Definition 2.1.2, and `A` is a Banach–Tate ring — the coefficient ring over which [JN]
 §2.2 applies to the halo `U_p`.
 
 No Noetherian hypothesis is claimed or needed: the Riesz–Coleman theory of
-`PhD/TateFredholm/RieszColeman.lean` is Noetherian-free.
+`PhD/TateFredholm/12_RieszColeman.lean` is Noetherian-free.
 
 ## Main definitions
 

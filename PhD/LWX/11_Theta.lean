@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.DiscForms
-import PhD.TateFredholm.BlockMap
+import PhD.LWX.«10_DiscForms»
+import PhD.TateFredholm.«08_BlockMap»
 
 /-!
 # The theta operator on the disc model, and the classical subspace — SKELETON
@@ -13,7 +13,7 @@ import PhD.TateFredholm.BlockMap
 `θ^{1−k} : S^D_κ(U,1) → S^D_{κ'}(U,1)`, `κ' = (2−k, ε_p)`, by
 `(θ^{1−k} f)(g) = (|ν(g)| det g_p)^{1−k} · d^{k−1}f(g)/dz^{k−1}`; [LWX, §3.23 Step III] writes the
 same map as `(d/dz)^{k+1}` in its own weight indexing.  This file builds the derivative half on the
-disc model of `PhD/LWX/DiscModel.lean`, where it is completely explicit.
+disc model of `PhD/LWX/09_DiscModel.lean`, where it is completely explicit.
 
 **Why the disc model makes this easy.**  A disc-model element of `c(ZMod (p^h) × ℕ, K)` *is* the
 family of Taylor coefficients of a function on each disc `a + pʰℤ_p`, in the coordinate
@@ -42,7 +42,7 @@ so differentiating leaves a term the other side cannot match ([Bu04, §7]'s disp
 carries no nebentypus factor at all).  Those three statements were removed on 2026-09-09; the
 correct ones — together with Bol's identity `LWX.bol`, which is what they rest on — are
 `LWX.thetaOne_comp_kappaSlash_of_autFactor`, `LWX.thetaDisc_comp_discSlash_of_autFactor` and
-`LWX.thetaDisc_comp_discHeckeBlock_of_autFactor` in `PhD/LWX/Bol.lean`, all sorry-free.  The
+`LWX.thetaDisc_comp_discHeckeBlock_of_autFactor` in `PhD/LWX/12_Bol.lean`, all sorry-free.  The
 counterexample is recorded in `.mathlib-quality/lwx-theta/b2_log.jsonl`.
 
 See `.mathlib-quality/lwx-stepone/JL-AUDIT.md`: nothing in this file depends on
@@ -98,7 +98,7 @@ def thetaDisc (h r : ℕ) : c(ZMod (p ^ h) × ℕ, K) →L[K] c(ZMod (p ^ h) × 
 
 omit hp [CharZero K] in
 /-- A block-diagonal operator acts on each block separately.  (Stated here rather than in
-`PhD/TateFredholm/BlockMap.lean` to avoid a rebuild of the whole `TateFredholm` tree; moving it
+`PhD/TateFredholm/08_BlockMap.lean` to avoid a rebuild of the whole `TateFredholm` tree; moving it
 there is a `/cleanup` decision.) -/
 theorem blockMap_apply_prod {σ : Type*} [Fintype σ] [DecidableEq σ]
     {I I' : Type*} (f : c(I, K) →L[K] c(I', K))

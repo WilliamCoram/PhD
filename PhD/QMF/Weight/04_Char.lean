@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.SlashAction
+import PhD.QMF.Weight.«03_SlashAction»
 
 /-!
 # Honest locally analytic characters and their weight data
@@ -781,7 +781,7 @@ The wild level is part of the *weight* (and not only of the level `U`) because
 analyticity is a joint condition on `κ` and `α`: the action of `(a b; c d)` evaluates
 `κ` on the disc `d + c·(closed unit ball)`, whose radius is the wild level, and the
 weight-`κ` module `A_κ` (the right-`Σ_α`-module of Def 1.27) exists only for `α` beyond
-the analyticity radius of `κ` — see the design note in `PhD/QMF/Weight/Forms.lean`.
+the analyticity radius of `κ` — see the design note in `PhD/QMF/Weight/05_Forms.lean`.
 `AnalyticWeight.restrict` passes to finer levels.
 
 This is the public weight API; the underlying `WeightSeries` (the expansion with its

@@ -3,10 +3,10 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Touching
-import PhD.LWX.Degrees
-import PhD.TateFredholm.NewtonSlopes
-import PhD.LWX.TateRiesz
+import PhD.LWX.«14_Touching»
+import PhD.LWX.«07_Degrees»
+import PhD.TateFredholm.«10_NewtonSlopes»
+import PhD.LWX.«05_TateRiesz»
 import Mathlib.LinearAlgebra.Eigenspace.Charpoly
 import PhD.NewtonPolygons.RootFaces
 
@@ -15,7 +15,7 @@ import PhD.NewtonPolygons.RootFaces
 
 [LWX, §3.23 Step III] (`lwx.txt:2014–2088`) computes the degrees `deg X_{I,ω}` from the two
 gaps `n_{k+1} − n⁻_{k+1}` and `n⁺_{k+1} − n_{k+1}` at the touching points of Step I.  At the
-coefficient level the degrees are differences of the unit indices of `PhD/LWX/Vertices.lean`,
+coefficient level the degrees are differences of the unit indices of `PhD/LWX/06_Vertices.lean`,
 and the two gaps are:
 
 * **the left gap** `n_{k+1} − n⁻_{k+1}` — "the dimension of the slope `k+1` subspace in
@@ -27,7 +27,7 @@ and the two gaps are:
   slope zero subspace of `S^{D,†}_{(−k−2,ψ)}` by the exact sequence.  Using Corollary 3.21, …
   `= r_ord(ωω₀^{−2k−2})`".
 
-Here `r_ord` is `LWX.ordDim` (`Degrees.lean`), the slope-zero count at the coefficient level:
+Here `r_ord` is `LWX.ordDim` (`07_Degrees.lean`), the slope-zero count at the coefficient level:
 [LWX, Cor 3.21] is `faceRight_zero_specCharSeries_eq_ordDim`, proved from Step II's band
 structure at `k = 0`.  The multiplicities are face lengths of Newton polygons
 (`NewtonPolygon₀.faceLeft`/`faceRight`, `PhD/NewtonPolygons/Face.lean`), the polygon of the
@@ -571,8 +571,8 @@ theorem faceLeft_charpolyRev_matrix_eq [Nonempty ι] [IsAlgClosed K] {hp2 : p �
   omega
 
 /-- **The Fredholm determinant at a classical datum splits** as the complement factor times the
-characteristic polynomial of `U_p` on the classical subspace: the seam of `SeamH.lean` followed by
-`charPowerSeries_eq_mul_of_stable`, with `Touching.lean`'s coordinate-vs-basis bridge. -/
+characteristic polynomial of `U_p` on the classical subspace: the seam of `11_SeamH.lean` followed by
+`charPowerSeries_eq_mul_of_stable`, with `14_Touching.lean`'s coordinate-vs-basis bridge. -/
 private theorem specCharSeries_eq_mul_charpolyRev {hp2 : p ≠ 2} {hψ : ∀ x, ‖ψ x‖ = ‖x‖}
     [Nonempty ι] (hshape : ∀ i t, (M1.toLocalMat (certM1 θG U hU vRep hvΔ uu i t)).IsUpShape)
     {ω : (ZMod p)ˣ →* ℤ_[p]ˣ} {T₀ : K} {k : ℕ}
@@ -702,8 +702,7 @@ theorem touchX_sub_leftIndex_eq_ordDim (hp2 : p ≠ 2) [Nonempty ι] [IsAlgClose
   have hAL11 := faceLeft_charpolyRev_matrix_eq idx c c' hAL
   have hord : ordDim (UpDatum.ofCerts θG U hU vRep hvΔ idx uu hshape) ω'
       ≤ Fintype.card ι * ((k + 1) * p ^ 1) := by
-    refine le_trans (le_card_of_isUnit_charCoeff _ ω'
-      (isUnit_charCoeff_ordDim _ ω')) ?_
+    refine le_trans (ordDim_le_card _ ω') ?_
     have h1 : 1 ≤ (k + 1) * p ^ 1 := Nat.one_le_iff_ne_zero.2
       (Nat.mul_ne_zero (Nat.succ_ne_zero k) (pow_ne_zero 1 hp.out.ne_zero))
     nlinarith [Fintype.card_pos (α := ι)]
@@ -944,7 +943,7 @@ theorem degX_succ (hp2 : p ≠ 2) [Nonempty ι] [IsAlgClosed K] (hψ : ∀ x, �
   have hord : ordDim (UpDatum.ofCerts θG U hU vRep hvΔ idx uu hshape) ω'
       ≤ touchX p (Fintype.card ι) (k + 1) := by
     rw [touchX_succ_eq]
-    refine le_trans (le_card_of_isUnit_charCoeff _ ω' (isUnit_charCoeff_ordDim _ ω')) ?_
+    refine le_trans (ordDim_le_card _ ω') ?_
     have h1 : 1 ≤ (k + 1) * p ^ 1 := Nat.one_le_iff_ne_zero.2
       (Nat.mul_ne_zero (Nat.succ_ne_zero k) (pow_ne_zero 1 hp.out.ne_zero))
     nlinarith [Fintype.card_pos (α := ι)]

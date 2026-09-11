@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.JacobsSlash.U3.«2_Level»
-import PhD.QMF.Level
+import PhD.QMF.«04_Level»
 
 /-!
 # The Hurwitz basis, and the levels `U₀(1)`, `U₁(9)` as compact open subgroups
@@ -12,7 +12,7 @@ import PhD.QMF.Level
 [Buzzard, *Eigenvarieties*, §9 p. 68] takes the level `U ⊆ D_f^×` to be **compact open**;
 that hypothesis is what makes the double-coset decomposition `UηU = ∐ U x_i` finite
 (`AbstractHeckeOperatorSlash.finite_image_doubleCoset_of_isOpen_of_isCompact`).  This file
-supplies it for the fork's levels, on the route of `PhD/QMF/Level.lean`:
+supplies it for the fork's levels, on the route of `PhD/QMF/04_Level.lean`:
 
 * the Hurwitz order is the `ℤ`-span of `1, i, j, ω` with `ω = ½(1 + i + j + k)`
   (`JacobsSlash.hurwitzBasis`, packaging the fork's `hurwitzCoord` /
@@ -23,7 +23,7 @@ supplies it for the fork's levels, on the route of `PhD/QMF/Level.lean`:
   cuts out `U₁(9)` by a clopen condition.
 
 The topology on `D ⊗[ℚ] 𝔸_f` is the `𝔸_f`-module topology of the `TensorProduct.RightActions`
-scope, as in `PhD/QMF/Level.lean`.
+scope, as in `PhD/QMF/04_Level.lean`.
 -/
 
 open scoped TensorProduct TensorProduct.RightActions Quaternion Pointwise

@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import Mathlib.Analysis.Normed.Group.FunctionSeries
-import PhD.LWX.HaloWeight
+import PhD.LWX.«06_HaloWeight»
 
 /-!
 # `(1+T)^{pʰ}` and the binomial power identity — SKELETON

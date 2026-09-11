@@ -3,14 +3,14 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Vertices
-import PhD.LWX.Claim
+import PhD.LWX.«06_Vertices»
+import PhD.LWX.«06_Claim»
 
 /-!
 # Slope ratios near the boundary: [LWX, Theorem 1.5], first half
 
-Granting the Claim of [LWX, §4.2] (`Claim.lean`) and the touching hypothesis at every `n_k`
-(`HasUnitBand`, `Vertices.lean`), [LWX] concludes that for `T` in the small annulus
+Granting the Claim of [LWX, §4.2] (`06_Claim.lean`) and the touching hypothesis at every `n_k`
+(`HasUnitBand`, `06_Vertices.lean`), [LWX] concludes that for `T` in the small annulus
 `0 < v(T) < 8/((p²−1)t+8)` the Newton polygon of `∑ c_n(T)Xⁿ` is the convex hull of the
 `T`-free point set `{(n_k, λ(n_k))} ∐ {(l, m(l)) : l strictly below the upper polygon}`,
 scaled by `v(T)`; "it is then clear that the ratios to `v(T)` of the slopes of this polygon

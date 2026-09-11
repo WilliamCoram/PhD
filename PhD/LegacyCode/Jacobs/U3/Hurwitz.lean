@@ -30,7 +30,7 @@ ideal is principal (11.1.8-style descent), hence the idelic class set is trivial
 to cover it upstream — the class-number-one chain (`exists_div_rem`,
 `right_ideal_principal`, the dictionary) is **deferred** and lives OFF the live chain in
 `PhD/Jacobs/U3/ClassNumberOneFallback.lean`; the single live dependency is the interface
-`Jacobs.U3.hClassNumberOne` (`Level.lean`).  Everything in THIS file IS scheduled work:
+`Jacobs.U3.hClassNumberOne` (`04_Level.lean`).  Everything in THIS file IS scheduled work:
 the order, its norm and its 24 units feed Theorem 2.1's orbit computation and Lemma 2.2
 regardless of how (1.4.4) is eventually discharged.
 

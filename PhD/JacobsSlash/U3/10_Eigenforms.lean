@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.JacobsSlash.U3.«9_EigenvaluesU3»
-import PhD.QMF.Weight.BaseChange
+import PhD.QMF.Weight.«08_BaseChange»
 
 /-!
 # The Jacobs crux as a statement about eigenforms

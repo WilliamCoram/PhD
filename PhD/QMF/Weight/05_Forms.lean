@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Char
-import PhD.QMF.Slash.AutomorphicFunction
-import PhD.QMF.Slash.HeckeMonoid
+import PhD.QMF.Weight.«04_Char»
+import PhD.QMF.Slash.«03_AutomorphicFunction»
+import PhD.QMF.Slash.«03_HeckeMonoid»
 
 /-!
 # Overconvergent automorphic forms at an abstract weight (Jacobs, Def 1.28–1.32)
@@ -22,7 +22,7 @@ import PhD.QMF.Slash.HeckeMonoid
 The existing right-slash layer (`levelSubmoduleSlash`, `heckeOperatorSlash`) already
 implements `L(U, A)` for **any** coefficient right-module — Def 1.30's phrase "any
 right Σ_α-module" is the existing design.  This file instantiates it at the Tate
-algebra with the abstract weight-`κ` action of `PhD/QMF/Weight/SlashAction.lean`.
+algebra with the abstract weight-`κ` action of `PhD/QMF/Weight/03_SlashAction.lean`.
 
 The wild-level mechanism is abstracted exactly as in Def 1.28: a group `G` (the adelic
 units) with a monoid homomorphism `θ : G →* M₂(K)` (the `p`-component / `toMatrix`),
@@ -105,7 +105,7 @@ noncomputable def kappaLevelSlashAction (κ : AnalyticWeight UK S ρ) :
 `f ∣ₛ δ = χ(θ δ) • (f ∣_κ θ δ)`.  The scalar character `χ` of the acting monoid is
 Buzzard's second weight component `v(det γ)` [*Eigenvarieties*, §10 p. 72:
 `(h.γ)(z, x) := n(cz + d, x)(v(det γ)(x)) h((az + b)/(cz + d), x)`]; the classical
-determinant character `ν` enters as `χ = detTwist ν` (`PhD/QMF/Weight/Algebraic.lean`),
+determinant character `ν` enters as `χ = detTwist ν` (`PhD/QMF/Weight/06_Algebraic.lean`),
 and [Jacobs, Def 1.27] is the untwisted case `χ = 1`. -/
 @[instance_reducible]
 noncomputable def kappaLevelSlashActionTwisted (κ : AnalyticWeight UK S ρ) (χ : S →* Kˣ) :

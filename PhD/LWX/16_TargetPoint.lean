@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.ClassicalPoint
-import PhD.LWX.StepThree
+import PhD.LWX.«15_ClassicalPoint»
+import PhD.LWX.«15_StepThree»
 
 /-!
 # The theta target of a classical point
@@ -12,10 +12,10 @@ import PhD.LWX.StepThree
 [LWX, §3.23 Step III] applies the theta sequence at the classical weight `χ_k = (k, ψ)` and
 reads off the target weight `(−k−2, ψ)`; its restriction to `Δ = 𝔽_p^×` is `ω·ω₀^{−2k−2}`
 ("`n⁺_{k+1} − n_{k+1} = r_ord(ψ|_Δ · ω₀^{−k−2}) = r_ord(ωω₀^{−2k−2})`", `lwx.txt:2070–2076`).
-`StepThree.lean` packages what Step III needs of the target as `TargetData`: a halo point `T₁`
+`15_StepThree.lean` packages what Step III needs of the target as `TargetData`: a halo point `T₁`
 of the weight `(−k−2, ψ)` whose halo weight has the *target shape* `autFactor · L^{k+2} = C u`
 with the **same** nebentypus constants `u` as the classical datum.  This file constructs it at
-the classical points of `ClassicalPoint.lean`.
+the classical points of `15_ClassicalPoint.lean`.
 
 * `weightPoint p s ζ = ζ·exp(p s) − 1` is the `T`-coordinate of the weight `(s, ψ)` for `s ∈ ℤ`
   (`ψ(exp p) = ζ`, [LWX, §3.23]: "the corresponding `T`-coordinates `T_{χ_k}`"); at `s = k` it
@@ -28,6 +28,8 @@ the classical points of `ClassicalPoint.lean`.
   binomial series at the two points differ by `exp(p(2k+2)·ψ ℓ)` — an identity of continuous
   functions of `ℓ ∈ ℤ_p` checked on `ℕ` (`PadicInt.denseRange_natCast`) — and the residue
   characters differ by `ω₀^{2k+2}`.  Hence `targetChar ω k = ω·ω₀^{−2k−2}`.
+* The shift `(k, ω) ↦ (k + 1, ωω₀²)` of [LWX, Cor 1.4] on the characters:
+  `targetChar (ωω₀²) (k + 1) = targetChar ω k`, and the identities in `ω₀^{2m}` it is iterated with.
 
 No Jacquet–Langlands input; see `.mathlib-quality/lwx-stepone/JL-AUDIT.md`.
 -/
@@ -70,6 +72,51 @@ def targetChar (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (k : ℕ) : (ZMod p)ˣ →* ℤ_
 theorem targetChar_apply (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (k : ℕ) (r : (ZMod p)ˣ) :
     targetChar p ω k r = ω r * (teichRes r ^ (2 * k + 2))⁻¹ := by
   rw [targetChar, MonoidHom.mul_apply, MonoidHom.inv_apply, MonoidHom.pow_apply, teichChar_apply]
+
+/-! ### The shift `(k, ω) ↦ (k + 1, ωω₀²)` on the characters ([LWX, Cor 1.4]) -/
+
+/-- `ω·ω₀^{2·0} = ω`. -/
+theorem mul_teichChar_pow_zero (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) : ω * teichChar p ^ (2 * 0) = ω := by
+  refine MonoidHom.ext fun r => ?_
+  rw [MonoidHom.mul_apply, MonoidHom.pow_apply, Nat.mul_zero, pow_zero, mul_one]
+
+/-- `ω·ω₀^{2(m+1)} = (ω·ω₀^{2m})·ω₀²`. -/
+theorem mul_teichChar_pow_succ (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (m : ℕ) :
+    ω * teichChar p ^ (2 * (m + 1)) = ω * teichChar p ^ (2 * m) * teichChar p ^ 2 := by
+  refine MonoidHom.ext fun r => ?_
+  rw [MonoidHom.mul_apply, MonoidHom.mul_apply, MonoidHom.mul_apply, MonoidHom.pow_apply,
+    MonoidHom.pow_apply, MonoidHom.pow_apply, mul_assoc, ← pow_add, mul_add, mul_one]
+
+/-- `ω·ω₀^{−2·0} = ω`. -/
+theorem mul_inv_teichChar_pow_zero (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) :
+    ω * (teichChar p ^ (2 * 0))⁻¹ = ω := by
+  refine MonoidHom.ext fun r => ?_
+  rw [MonoidHom.mul_apply, MonoidHom.inv_apply, MonoidHom.pow_apply, Nat.mul_zero, pow_zero,
+    inv_one, mul_one]
+
+/-- `ωω₀²·ω₀^{−2(n+1)} = ω·ω₀^{−2n}` ([LWX, Cor 1.4], `lwx.txt:164–166`). -/
+theorem mul_teichChar_sq_mul_inv_teichChar_pow_succ (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (n : ℕ) :
+    ω * teichChar p ^ 2 * (teichChar p ^ (2 * (n + 1)))⁻¹ = ω * (teichChar p ^ (2 * n))⁻¹ := by
+  refine MonoidHom.ext fun r => ?_
+  rw [MonoidHom.mul_apply, MonoidHom.mul_apply, MonoidHom.mul_apply, MonoidHom.inv_apply,
+    MonoidHom.inv_apply, MonoidHom.pow_apply, MonoidHom.pow_apply, MonoidHom.pow_apply,
+    show 2 * (n + 1) = 2 + 2 * n by ring, pow_add (teichChar p r) 2 (2 * n), mul_inv, mul_assoc,
+    mul_inv_cancel_left]
+
+/-- The target nebentypus `ωω₀^{−2k−2}` of weight `k` is `ωω₀^{−2(k+1)}`
+([LWX, §3.23 Step III], `lwx.txt:2079–2097`: the second term of `deg X_{(k,k+1),ω}` at `k + 1`). -/
+theorem targetChar_eq_mul_inv_teichChar_pow (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (k : ℕ) :
+    targetChar p ω k = ω * (teichChar p ^ (2 * (k + 1)))⁻¹ :=
+  rfl
+
+/-- The target nebentypus of `(ωω₀², k+1)` is that of `(ω, k)`:
+`ωω₀²·ω₀^{−2(k+1)−2} = ωω₀^{−2k−2}` ([LWX, Cor 1.4], `lwx.txt:164–166`). -/
+theorem targetChar_mul_teichChar_sq_succ (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (k : ℕ) :
+    targetChar p (ω * teichChar p ^ 2) (k + 1) = targetChar p ω k := by
+  refine MonoidHom.ext fun r => ?_
+  rw [targetChar_apply, targetChar_apply, MonoidHom.mul_apply, MonoidHom.pow_apply, teichChar_apply,
+    show 2 * (k + 1) + 2 = 2 + (2 * k + 2) by ring, pow_add (teichRes r) 2 (2 * k + 2), mul_inv,
+    mul_assoc, mul_inv_cancel_left]
 
 /-! ### The `T`-coordinate of the weight `(s, ψ)` -/
 
@@ -499,7 +546,7 @@ theorem targetConst_eq_classicalData_u (hp2 : p ≠ 2) (hψ : ∀ x, ‖ψ x‖ 
 /-! ### The target datum -/
 
 /-- **The theta target of the classical datum at a classical point**: the halo point
-`T_{(−k−2,ψ)}` with the nebentypus `ω·ω₀^{−2k−2}`, everything `StepThree.lean`'s Step III asks
+`T_{(−k−2,ψ)}` with the nebentypus `ω·ω₀^{−2k−2}`, everything `15_StepThree.lean`'s Step III asks
 of it assembled. -/
 theorem targetData_classicalPoint (hp2 : p ≠ 2) (hψ : ∀ x, ‖ψ x‖ = ‖x‖) {ζ : K}
     (hζ : IsPrimitiveRoot ζ p) (hpK : ‖((p : ℕ) : K)‖ = (p : ℝ)⁻¹) (k : ℕ) :

@@ -3,15 +3,15 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.SeamH
-import PhD.LWX.Quaternionic
+import PhD.LWX.«11_SeamH»
+import PhD.LWX.«08_Quaternionic»
 
 /-!
 # `S^{D,†,m}` and [LWX, Prop 2.17] for a definite quaternion algebra over `ℚ` — SKELETON
 
 [LWX, §2.4–2.7] for `D/ℚ` split at `p`, at every analyticity level `m = h + 1`.  Unlike the
-`m = 1` seam (`PhD/LWX/Quaternionic.lean`), the disc model is built directly on the **integral**
-component map `thetaInt : (D ⊗ 𝔸_f)ˣ →* M₂(ℚ_p)` — the disc action of `PhD/LWX/DiscModel.lean`
+`m = 1` seam (`PhD/LWX/08_Quaternionic.lean`), the disc model is built directly on the **integral**
+component map `thetaInt : (D ⊗ 𝔸_f)ˣ →* M₂(ℚ_p)` — the disc action of `PhD/LWX/09_DiscModel.lean`
 takes `M₁`-matrices over `ℚ_p`, so no comparison with `K_p`-matrices is needed on the level side;
 the field `K_p` enters only through the coefficients `ψ = E : ℚ_p ≃ K_p`.
 

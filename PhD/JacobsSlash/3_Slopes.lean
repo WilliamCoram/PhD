@@ -1147,7 +1147,7 @@ makes that legitimate, and the two one-sided lemmas below are the halves of
 -/
 
 -- Operators on `c(ℕ, K)` are determined by their matrices: `TateFredholm.ext_matrixCoeff`
--- (`GenFun.lean`), whose index-generic statement subsumes the copy that used to live
+-- (`05_GenFun.lean`), whose index-generic statement subsumes the copy that used to live
 -- here (removed 2026-08-05 — the two declarations collided once `GenFun` gained the
 -- general form).
 

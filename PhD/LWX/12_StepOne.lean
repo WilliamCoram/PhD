@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Theta
-import PhD.LWX.Vertices
-import PhD.LWX.ConjChar
+import PhD.LWX.«11_Theta»
+import PhD.LWX.«06_Vertices»
+import PhD.LWX.«07_ConjChar»
 
 /-!
 # Step I of [LWX, Theorem 1.3]: the touching — SKELETON (the parts stateable today)
@@ -24,7 +24,7 @@ instantiation of the Atkin–Lehner reduction):
   whose eigenvalue is larger in norm than that scalar.  This is [Bu04, Prop 4]'s
   Jacquet–Langlands-free half with the automorphic setup stripped away; the concrete
   `classical_of_slope_lt` is this lemma applied to
-  `thetaDisc_comp_discHeckeBlock_of_autFactor` (`PhD/LWX/Bol.lean`).
+  `thetaDisc_comp_discHeckeBlock_of_autFactor` (`PhD/LWX/12_Bol.lean`).
 * **The classical subspace of the block model** and its dimension, the global form of
   [LWX, (3.21.1)] with the class-number factor.
 
@@ -102,7 +102,7 @@ closes the goal.  It is kept because the statement is the ticketed one (SO2) and
 records the intended reading, `θ f` being a `P'`-eigenvector of eigenvalue `μ / c`.
 
 The scalars are `[Module K E] [IsBoundedSMul K E]` rather than `[NormedSpace K E]`, because the
-model space `c(I, K)` of `PhD/TateFredholm/ModelSpace.lean` carries exactly those (and no
+model space `c(I, K)` of `PhD/TateFredholm/03_ModelSpace.lean` carries exactly those (and no
 `NormedSpace` instance); `‖P'‖` is then `TateFredholm`'s scoped operator norm, and `‖μ • x‖` is
 only bounded, not computed — the proof scales back by `μ⁻¹` instead of using `norm_smul`. -/
 theorem eq_zero_of_intertwine_of_norm_lt {E : Type*} [NormedAddCommGroup E] [Module K E]
@@ -159,7 +159,7 @@ private theorem triple_val_inj {h k : ℕ} {x y : ι × ZMod (p ^ h) × Fin (k +
   exact ⟨hxy.1, hxy.2.1, Fin.ext hxy.2.2⟩
 
 /-- The block-model classical subspace is `(ι × ZMod (p^h) × Fin (k+1))`-many coordinates.  The
-block form of `Theta.lean`'s `locPolyDegEquiv`.  (Made public by ticket T5.17: `Touching.lean`
+block form of `11_Theta.lean`'s `locPolyDegEquiv`.  (Made public by ticket T5.17: `14_Touching.lean`
 builds the classical basis from it.) -/
 def locPolyDegBlockEquiv (h k : ℕ) :
     locPolyDegSubmoduleBlock (p := p) (K := K) (ι := ι) h k ≃ₗ[K]

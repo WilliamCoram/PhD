@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.SlopeRatios
-import PhD.LWX.QuaternionicH
+import PhD.LWX.«07_SlopeRatios»
+import PhD.LWX.«12_QuaternionicH»
 
 /-!
 # The halo estimates and slope theorems, read on the genuine `U_p`
@@ -12,7 +12,7 @@ import PhD.LWX.QuaternionicH
 `PhD/LWX/{Halo,Sharpness,UpperPolygon,Vertices,Claim,SlopeRatios}.lean` prove [LWX]'s halo
 estimate ([LWX, Thm 3.16], [LWX, Cor 3.18]) and slope theorems ([LWX, Thm 1.3], [LWX, Thm 1.5])
 about `LWX.specCharSeries`, the specialisation at `T₀` of the characteristic series of the
-**integral matrix** of a certificate datum.  `PhD/LWX/SeamH.lean` identifies that series with
+**integral matrix** of a certificate datum.  `PhD/LWX/11_SeamH.lean` identifies that series with
 the Fredholm determinant `det(1 − X·U_p)` of the genuine Hecke operator on `S^{D,†,m}` at every
 analyticity level `m = h + 1` ([LWX, Prop 2.17]).
 
@@ -28,12 +28,12 @@ through `discEvalAtReps_discHeckeOperator` and `bijective_discEvalAtReps_of_stab
 statements below carry no neatness hypothesis because they do not need one.
 
 The definite-quaternion case of [LWX, §2.4] is the instantiation `θ = LWX.thetaInt p D`,
-`ψ = LWX.padicComparison p` (as in `PhD/LWX/QuaternionicH.lean`); no separate statement is
+`ψ = LWX.padicComparison p` (as in `PhD/LWX/12_QuaternionicH.lean`); no separate statement is
 given for it here.
 
 The two remaining clauses of [LWX, Thm 1.5]'s first half, that the ratios are increasing and
 tend to infinity, are `T`-free statements about `LWX.slopeRatio` and live in
-`PhD/LWX/SlopeGrowth.lean`; they apply verbatim to the ratios appearing below.
+`PhD/LWX/08_SlopeGrowth.lean`; they apply verbatim to the ratios appearing below.
 
 ## Main declarations
 

@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Entire
-import PhD.TateFredholm.Tate
+import PhD.TateFredholm.«10_Entire»
+import PhD.TateFredholm.«00_Tate»
 
 /-!
 # The vertex (slope) factorisation of an entire series

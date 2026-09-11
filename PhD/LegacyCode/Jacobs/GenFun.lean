@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Matrix
+import PhD.TateFredholm.«04_Matrix»
 import Mathlib.RingTheory.MvPowerSeries.Basic
 
 /-!

@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Slash.Basic
-import PhD.QMF.HeckeMonoid
+import PhD.QMF.Slash.«02_Basic»
+import PhD.QMF.«00_HeckeMonoid»
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.Group.Pointwise.Set.Basic
@@ -17,7 +17,7 @@ import Mathlib.Topology.Algebra.Group.Quotient
 /-!
 # Abstract Hecke operators for the right slash
 
-The right-handed mirror of `PhD/QMF/HeckeMonoid.lean`, in Buzzard's own shape
+The right-handed mirror of `PhD/QMF/00_HeckeMonoid.lean`, in Buzzard's own shape
 [*Eigenvarieties*, §9 p. 69]:
 
 > "If `η ∈ D^×_f` and `ηₚ ∈ Mₜ` then one can define an endomorphism `[UηU]` of `L(U,A)` as

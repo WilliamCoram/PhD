@@ -3,14 +3,14 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.StepOne
-import PhD.LWX.AtkinLehner
-import PhD.LWX.Bol
+import PhD.LWX.«12_StepOne»
+import PhD.LWX.«05_AtkinLehner»
+import PhD.LWX.«12_Bol»
 
 /-!
 # Instantiating the Atkin–Lehner reduction at the classical space — SKELETON
 
-`PhD/LWX/AtkinLehner.lean` proves [LWX, Prop 3.22] for *abstract* matrices
+`PhD/LWX/05_AtkinLehner.lean` proves [LWX, Prop 3.22] for *abstract* matrices
 (`roots_charpoly_atkinLehner`): given the matrix `A` of `U_p` on the `ψ`-space, `B` of `U'_p` on
 the `ψ`-space, `A'` of `U_p` on the `ψ⁻¹`-space, a conjugation `A' = P B Q`, `Q P = 1`, and the
 operator identity `A B = p^{k+1}`, the characteristic roots pair.  This file supplies the
@@ -22,7 +22,7 @@ operator identity `A B = p^{k+1}`, the characteristic roots pair.  This file sup
   `thetaBlock_eq_zero_iff`: its kernel at `r = k+1` is the classical subspace
   `locPolyDegSubmoduleBlock`.
 * `thetaBlock_comp_discHeckeBlockOp_of_autFactor` — the `U_p` intertwining at the block-operator
-  level (the `blockOp` sum of `PhD/LWX/Bol.lean`'s `thetaDisc_comp_discHeckeBlock_of_autFactor`).
+  level (the `blockOp` sum of `PhD/LWX/12_Bol.lean`'s `thetaDisc_comp_discHeckeBlock_of_autFactor`).
 * `mem_locPolyDegSubmoduleBlock_discHeckeBlockOp_of_autFactor` — **the classical subspace is
   `U_p`-stable**: if `θ f = 0` then `θ (U_p f) = c^r · U_p' (θ f) = 0`.
 * `upMatrix` — the matrix of a block operator restricted to the classical subspace, in the basis
@@ -37,7 +37,7 @@ operator identity `A B = p^{k+1}`, the characteristic roots pair.  This file sup
 The conjugation `(P, Q)` — the Atkin–Lehner element `w = (0, 1; −p^m, 0)` acting on classical
 forms — is **not** constructible through the disc model.  Two independent obstructions:
 
-1. `w ∉ M1 p`: `M1` requires `‖g 1 1‖ = 1` (`IntegralModel.lean:228`) and `w` has `g 1 1 = 0`, so
+1. `w ∉ M1 p`: `M1` requires `‖g 1 1‖ = 1` (`04_IntegralModel.lean:228`) and `w` has `g 1 1 = 0`, so
    `discSlash`, `discHeckeOperator` and every weight action in the project are undefined at `w`
    (all require `η ∈ levelM1`).
 2. `w` does not preserve `ℤ_p`: it acts by `z ↦ 1/(−p^m z)`, sending `ℤ_p^×` outside `ℤ_p`, so it
@@ -109,7 +109,7 @@ variable {G : Type*} [Group G] {Γ : Subgroup G} (θG : G →* Matrix (Fin 2) (F
 
 /-! ### The intertwining and `U_p`-stability
 
-Built on `PhD/LWX/Bol.lean`'s `thetaDisc_comp_discHeckeBlock_of_autFactor`.  The weight hypotheses
+Built on `PhD/LWX/12_Bol.lean`'s `thetaDisc_comp_discHeckeBlock_of_autFactor`.  The weight hypotheses
 are on the **automorphy factors** of the disc conjugates of the certificate matrices, which is what
 Bol's identity actually consumes.  (Earlier drafts of these two statements shared an arbitrary
 finite part `ν : UK →* Kˣ` between the two weights; that is false, since `ν(cz + d)` need not be

@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Slash.HeckeMonoid
-import PhD.QMF.Quaternionic
+import PhD.QMF.Slash.«03_HeckeMonoid»
+import PhD.QMF.«03_Quaternionic»
 import PhD.QMF.FLTstuff.Hacks.RightActionInstances
 import PhD.QMF.FLTstuff.Mathlib.NumberTheory.NumberField.FiniteAdeleRing
 import PhD.QMF.FLTstuff.NumberField.Completion.Finite

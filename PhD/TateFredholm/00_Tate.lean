@@ -44,7 +44,7 @@ and compatible.  This development records their common refinement:
 
 > **Hypotheses**: a commutative nonarchimedean Banach–Tate ring `R` (`[IsTate R]`: there
 > is a multiplicative pseudo-uniformizer `ϖ ∈ R^×`, `‖ϖ‖ < 1`) — no ground field, and
-> **no Noetherian hypothesis** anywhere except `Noetherian.lean` (the closedness of
+> **no Noetherian hypothesis** anywhere except `05_Noetherian.lean` (the closedness of
 > finitely generated submodules, the bridge `IsCompletelyContinuous.isCompactoid`, and
 > the recovered criterion `isCompletelyContinuous_iff_rowNorm`).  The determinant theory
 > itself runs on `IsCompactoid` (cofinite row decay) and is Noetherian-free, and so is
@@ -60,30 +60,30 @@ and compatible.  This development records their common refinement:
 
 ## Module map
 
-* `Tate.lean` (this file) — the index type, Banach–Tate rings, the bridge from Banach
+* `00_Tate.lean` (this file) — the index type, Banach–Tate rings, the bridge from Banach
   algebras over fields
-* `OperatorNorm.lean` — the operator norm on `Hom_R(M, N)`, boundedness, completeness,
+* `01_OperatorNorm.lean` — the operator norm on `Hom_R(M, N)`, boundedness, completeness,
   the Open Mapping Theorem
-* `Compact.lean` — finite-rank and completely continuous operators
-* `ModelSpace.lean` — the model space `c(I, R)`, ON-able / potentially ON-able / (Pr)
-* `Matrix.lean` — matrix coefficients, truncations, the compactness criterion
-* `Fredholm.lean` — the Fredholm determinant `det(1 − Tu)` and its invariances
-* `Pr.lean` — the lifting property, projectivity, [Bel] Proposition II.1.21 (Noetherian-free)
-* `Entire.lean` — entire power series, Euclidean division by a polynomial with unit leading
+* `02_Compact.lean` — finite-rank and completely continuous operators
+* `03_ModelSpace.lean` — the model space `c(I, R)`, ON-able / potentially ON-able / (Pr)
+* `04_Matrix.lean` — matrix coefficients, truncations, the compactness criterion
+* `05_Fredholm.lean` — the Fredholm determinant `det(1 − Tu)` and its invariances
+* `06_Pr.lean` — the lifting property, projectivity, [Bel] Proposition II.1.21 (Noetherian-free)
+* `10_Entire.lean` — entire power series, Euclidean division by a polynomial with unit leading
   coefficient, `IsEntireCoprime`, good zeros
-* `Resultant.lean` — `Res(charpoly A, g) = det g(A)`
-* `Coleman.lean` — Coleman's `D(B, P)` and the spectral mapping `det(1 − T·B(u))`
-* `Charpoly.lean` — `charpolyRev` under base change; Sylvester; unipotent matrices over a field
-* `RieszColeman.lean` — [JN] Theorem 2.2.2: the Riesz–Coleman decomposition for a coprime
+* `00_Resultant.lean` — `Res(charpoly A, g) = det g(A)`
+* `11_Coleman.lean` — Coleman's `D(B, P)` and the spectral mapping `det(1 − T·B(u))`
+* `00_Charpoly.lean` — `charpolyRev` under base change; Sylvester; unipotent matrices over a field
+* `12_RieszColeman.lean` — [JN] Theorem 2.2.2: the Riesz–Coleman decomposition for a coprime
   factorisation `det(1 − Tu) = QS`
-* `SlopeFactor.lean` — the vertex (slope) factorisation of an entire series ([Bel] II.3.6)
-* `Residue.lean` — residue machinery for Serre's theorem
-* `BaseChange.lean` — norm comparison, equivalent-norm invariance, bounded base change,
+* `11_SlopeFactor.lean` — the vertex (slope) factorisation of an entire series ([Bel] II.3.6)
+* `07_Residue.lean` — residue machinery for Serre's theorem
+* `08_BaseChange.lean` — norm comparison, equivalent-norm invariance, bounded base change,
   and the classical (field) specialisations
-* `Noetherian.lean` — closedness of finitely generated submodules over Noetherian bases
+* `05_Noetherian.lean` — closedness of finitely generated submodules over Noetherian bases
   ([FvdP] 1.2.3, [Buz07] Lemma 2.3) and the bridge from `IsCompletelyContinuous` to
   `IsCompactoid`
-* `AddVal.lean` — the seam between `v_ϖ` and `ForMathlib`'s additive-valuation API: over an
+* `01_AddVal.lean` — the seam between `v_ϖ` and `ForMathlib`'s additive-valuation API: over an
   ultrametric normed field the two agree up to the normalisation `-log ‖ϖ‖`
 
 ## How the three blueprints are recovered
@@ -104,10 +104,10 @@ and compatible.  This development records their common refinement:
 Three statements resist the merge and are recorded accordingly:
 * Serre's theorem (every Banach space over a *discretely valued field* is potentially
   ON-able) is intrinsically a field statement — kept in the "classical specialisations"
-  section of `BaseChange.lean`, phrased over a field via the bridge, with its residue
-  machinery in `Residue.lean`;
+  section of `08_BaseChange.lean`, phrased over a field via the bridge, with its residue
+  machinery in `07_Residue.lean`;
 * Bellaïche's Proposition II.1.21 (compact `u`, `1 − u` nilpotent ⟹ finite projective) was
-  proved Noetherian-free in 2026-09-06 (`Pr.lean`, `finite_of_one_sub_compact_nilpotent`);
+  proved Noetherian-free in 2026-09-06 (`06_Pr.lean`, `finite_of_one_sub_compact_nilpotent`);
 * [JN]'s norm-comparison Lemmas 2.1.6–2.1.7 are Tate-specific and hold here as stated —
   they never made sense in the field-only files.
 
@@ -128,7 +128,7 @@ merged ones.
 | `isTate_of_normedAlgebra` (the bridge)   | —            | —           | —         |
 | `negLogNorm` (`ForMathlib`)              | —            | —           | —         |
 | `PseudoUniformizer.val` (`WithTop ℝ`, `v_ϖ`) | —        | Def 2.1.2   | ch. 5     |
-| `PseudoUniformizer.val_eq_map_normAddVal` (`AddVal.lean`) | — | —      | —         |
+| `PseudoUniformizer.val_eq_map_normAddVal` (`01_AddVal.lean`) | — | —      | —         |
 | `instNorm`, `le_opNorm`, `norm_add_le`   | II.1.1       | Def 2.1.4   | 6.8–6.10  |
 | `exists_preimage_norm_le` (OMT)          | II.1.1       | Def 2.1.4   | —         |
 | `IsFiniteRank`, `IsCompletelyContinuous` | Def II.1.3   | Def 2.1.5   | 6.13      |
@@ -139,9 +139,9 @@ merged ones.
 | `truncation`, `exists_truncation_near` (+ `IsClosed` = Hyp 3.1.8) | Lem 3.1.12 / II.1.8 | — | — |
 | `IsCompactoid` (row decay; the working notion, **no Noetherian**) | — | §2.2 usage | 6.14 |
 | `IsCompactoid.isCompletelyContinuous` (**no Noetherian**) | Prop II.1.9 ⇐ | — | — |
-| `IsCompletelyContinuous.isCompactoid`, `isCompletelyContinuous_iff_rowNorm` (**Noetherian**, `Noetherian.lean`) | Prop II.1.9 ⇒ | Def 2.1.5 | 6.14 |
+| `IsCompletelyContinuous.isCompactoid`, `isCompletelyContinuous_iff_rowNorm` (**Noetherian**, `05_Noetherian.lean`) | Prop II.1.9 ⇒ | Def 2.1.5 | 6.14 |
 | `tendsto_truncation_comp`, `IsCompactoid.comp_left/right` | Schol II.1.10, Lem II.1.4 | — | — |
-| `isClosed_of_finite`, `isClosed_of_fg` (`Noetherian.lean`) | — | p. 7 remark | — |
+| `isClosed_of_finite`, `isClosed_of_fg` (`05_Noetherian.lean`) | — | p. 7 remark | — |
 | `minor`, `summable_minor`, `charCoeff`, `charPowerSeries` | §II.1.5 | p.67 recipe | 6.16–6.17 |
 | `charPowerSeries_isEntire` (`PowerSeries.IsRestricted` at every radius) | Lem II.1.14 | `R{{T}}` | 6.16(2) |
 | `norm_charCoeff_sub_le` (quantitative)   | Lem II.1.15  | —           | 6.16(3)   |
@@ -282,7 +282,7 @@ makes a vanishing coefficient drop out of the lower convex hull instead of sitti
 **This is not an `AddValuation`.**  The norm of a Banach–Tate ring is only submultiplicative,
 so `v_ϖ` is only *super*additive on products (`val_mul_le`), with equality exactly under
 `[NormMulClass A]` (`val_mul`).  Over an ultrametric normed field it is
-`NormedField.normAddVal` rescaled by `-log ‖ϖ‖`; see `PhD/TateFredholm/AddVal.lean`. -/
+`NormedField.normAddVal` rescaled by `-log ‖ϖ‖`; see `PhD/TateFredholm/01_AddVal.lean`. -/
 def PseudoUniformizer.val (ϖ : PseudoUniformizer A) (r : A) : WithTop ℝ :=
   (AddMonoidHom.mulRight (-Real.log ‖(ϖ : A)‖)⁻¹).withTopMap (negLogNorm r)
 

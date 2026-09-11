@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.JacobsSlash.U3.«4_KappaColumn»
-import PhD.QMF.Weight.Char
-import PhD.QMF.Weight.AdicLevel
+import PhD.QMF.Weight.«04_Char»
+import PhD.QMF.Weight.«04_AdicLevel»
 
 /-!
 # The thesis weight `κ_t` as an honest analytic weight

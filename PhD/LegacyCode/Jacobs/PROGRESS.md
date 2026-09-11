@@ -44,7 +44,7 @@ permanent `sorry`; every consumer takes `hcn` as an explicit hypothesis).
 | File | Contains / proves |
 |---|---|
 | `PadicAnalytic.lean` | `padicLog`, `padicExp`, `unitPow`, `binomialCoeff`; convergence and norm bounds on the discs; `padicExp_add`, `padicExp_padicLog`, `padicLog_mul` (Iwasawa-limit route); residue-char-3 norm lemmas (`norm_natCast_eq_pow_padicValNat`, `sq_norm_factorial_ge`).  Sorry-free.  [Kob84 Ch. IV] facts behind [Jac pp. 29, 38–39]. |
-| `GenFun.lean` | matrices ↔ generating functions ↔ operators on `c(ℕ,K)`: `idx`, `ofCoeffs`/`ofGenFun` + `matrixCoeff_ofCoeffs`, `hyps_of_row_decay`, `diagRescale` calculus (`diagRescale_mul`, …), `diagOp` + `matrixCoeff_diagOp_comp`, `isCompactoid_of_row_decay`.  Sorry-free.  [Jac §1.1 Prop 1.3, §1.2 Prop 1.7, Cor 1.10]. |
+| `05_GenFun.lean` | matrices ↔ generating functions ↔ operators on `c(ℕ,K)`: `idx`, `ofCoeffs`/`ofGenFun` + `matrixCoeff_ofCoeffs`, `hyps_of_row_decay`, `diagRescale` calculus (`diagRescale_mul`, …), `diagOp` + `matrixCoeff_diagOp_comp`, `isCompactoid_of_row_decay`.  Sorry-free.  [Jac §1.1 Prop 1.3, §1.2 Prop 1.7, Cor 1.10]. |
 | `BinomialTheorem.lean` | the `p`-adic binomial theorem `∑ₙ (t choose n) zⁿ = unitPow t (1+z)` (density-in-exponent proof).  Sorry-free.  [Jac p. 29 display]. |
 | `BaseChange.lean` | `TateFredholm.charCoeff_map`/`charPowerSeries_map` (Fredholm determinant base change along isometric ring homs), `MvPowerSeries.map_inv₀`, map-compatibility of the analytic layer (`map_padicLog/Exp/binomialCoeff/unitPow`) and of `kappaSeries₂`/`linSeries`/`quadSeries`/`weightGenFun`/the six `h`'s.  Sorry-free (2026-08-06). |
 
@@ -62,7 +62,7 @@ permanent `sorry`; every consumer takes `hcn` as an explicit hypothesis).
 
 | File | Contains / proves |
 |---|---|
-| `BlockOp.lean` | TateFredholm-generality block machinery: `inclSubtype`/`projSubtype`/`restrictOp`/`reindexOp`, `blockIncl`/`blockProj`/`blockOp`/`blockCorner`, `charPowerSeries_reindexOp`, **[Jac Lemma 1.15] = [Ser62 Lemme 2]** (`charPowerSeries_partition`), `charPowerSeries_blockDiag`, coboundary invariance `charPowerSeries_blockOp_twist`.  Sorry-free. |
+| `06_BlockOp.lean` | TateFredholm-generality block machinery: `inclSubtype`/`projSubtype`/`restrictOp`/`reindexOp`, `blockIncl`/`blockProj`/`blockOp`/`blockCorner`, `charPowerSeries_reindexOp`, **[Jac Lemma 1.15] = [Ser62 Lemme 2]** (`charPowerSeries_partition`), `charPowerSeries_blockDiag`, coboundary invariance `charPowerSeries_blockOp_twist`.  Sorry-free. |
 | `DiamondW.lean` | remaining **[Jac Lemma 2.7]** integrality (`norm_coeff_h01/h10/h20/h21_le`), the six `epsOp**` + compactoids, `U3MatrixOp` + `isCompactoid_U3MatrixOp`, the `δ`-blocks and `Wop` with **[Jac Rem 2.8.2]** `Wop_cube` (`W³ = 1`), `Bop`/`Binvop` + both inverse relations, **[Jac Lemma 2.10]** (`lemma210`: `B⁻¹AB` block-diagonal), `M11op`/`M33op`, **milestone** `charPowerSeries_U3MatrixOp` (`det(1−T·A) = ∏ det(1−T·M_{t,t})`), `charPowerSeries_twist_U3MatrixOp`.  Sorry-free. |
 
 ### Adelic layer (AG-B, concrete `K₃` = `v₃`-adic completion of `ℚ`)
@@ -86,11 +86,11 @@ permanent `sorry`; every consumer takes `hcn` as an explicit hypothesis).
 
 - `PhD/TateFredholm/` — [Ser62] / [Jac §1.2]: `charCoeff`/`charPowerSeries`
   (`Fredholm.lean`), **[Jac Prop 1.14]** trace property (`charPowerSeries_comm`),
-  `matrixCoeff`/`IsCompactoid`/`rowNorm` (`Matrix.lean`), `IsTate`/`PseudoUniformizer`
-  (`Tate.lean`), Riesz eigenvalue theory (`Riesz.lean`, tatefredholm-eigen board).
+  `matrixCoeff`/`IsCompactoid`/`rowNorm` (`04_Matrix.lean`), `IsTate`/`PseudoUniformizer`
+  (`00_Tate.lean`), Riesz eigenvalue theory (`09_Riesz.lean`, tatefredholm-eigen board).
 - `PhD/QMF/` — abstract automorphic machinery: `AutomorphicFunction`,
   `levelSubmodule`, `heckeOperator`, `heckeOperator_apply_rep` (`HeckeMatrix.lean`),
-  `evalAtReps` + `bijective_evalAtReps` (`Decomposition.lean`) — the [Buz07 §9]
+  `evalAtReps` + `bijective_evalAtReps` (`02_Decomposition.lean`) — the [Buz07 §9]
   isomorphism `L(U,A) ≅ ∏ A^{Γ_λ}`.
 - `PhD/NewtonPolygons/` — the Newton-polygon spec/construction the slope reading
   consumes (parallel board; stable API).
@@ -99,11 +99,11 @@ permanent `sorry`; every consumer takes `hcn` as an explicit hypothesis).
 
 | [Jacobs] result | Lean | File | Status |
 |---|---|---|---|
-| Prop 1.3 (rescale gen. fun.) | `diagRescale` calculus, `matrixCoeff_diagOp_comp` | `GenFun.lean` | proved |
-| Prop 1.7 (= Ser62 Prop 3) | `ofCoeffs`, `matrixCoeff_ofCoeffs` (∃-form `TateFredholm.exists_coeffEquiv`) | `GenFun.lean` | proved |
-| Cor 1.10 (compactness criterion) | `isCompactoid_of_row_decay` | `GenFun.lean` | proved |
+| Prop 1.3 (rescale gen. fun.) | `diagRescale` calculus, `matrixCoeff_diagOp_comp` | `05_GenFun.lean` | proved |
+| Prop 1.7 (= Ser62 Prop 3) | `ofCoeffs`, `matrixCoeff_ofCoeffs` (∃-form `TateFredholm.exists_coeffEquiv`) | `05_GenFun.lean` | proved |
+| Cor 1.10 (compactness criterion) | `isCompactoid_of_row_decay` | `05_GenFun.lean` | proved |
 | Prop 1.14 (trace property) | `TateFredholm.charPowerSeries_comm` | `TateFredholm/Fredholm.lean` | proved |
-| Lemma 1.15 (= Ser62 Lemme 2) | `charPowerSeries_partition`, `_blockDiag` | `BlockOp.lean` | proved |
+| Lemma 1.15 (= Ser62 Lemme 2) | `charPowerSeries_partition`, `_blockDiag` | `06_BlockOp.lean` | proved |
 | Lemma 1.22 / (1.4.4) (class no. 1) | `HClassNumberOne`, `hClassNumberOne` | `U3/Level.lean` | **contracted `sorry`** (FLT) |
 | Def 1.27 + action law | `kappaOp`, `kappaOp_mul` | `U3/KappaAction.lean` (+ `Compose`, `BinomialTheorem`) | proved |
 | Def 1.30 (`L(U, A₃)`) | `kappaForms` | `U3/Matrix.lean` | defined |

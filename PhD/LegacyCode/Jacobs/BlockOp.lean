@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.«05_Fredholm»
 
 /-!
 # Block operators and the multiplicativity of the Fredholm determinant
@@ -23,7 +23,7 @@ diagonal corners, and the proof is the factorisation of the principal minors of 
 block-triangular matrix.  Iterating over a `Fintype σ` gives the block-diagonal product
 `det(1 − tu) = ∏_a det(1 − t u_{aa})` consumed by [Jacobs, pp. 32–34].
 
-Stated over the same generality as `PhD.TateFredholm.Fredholm` (Banach ultrametric
+Stated over the same generality as `PhD.TateFredholm.«05_Fredholm»` (Banach ultrametric
 `NormedCommRing`, arbitrary decidable index); candidates for upstreaming into
 `PhD/TateFredholm/`.
 

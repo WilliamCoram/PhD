@@ -3,15 +3,15 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.HaloTate
-import PhD.LWX.Halo
-import PhD.TateFredholm.RieszColeman
-import PhD.TateFredholm.SlopeFactor
+import PhD.LWX.«01_HaloTate»
+import PhD.LWX.«04_Halo»
+import PhD.TateFredholm.«12_RieszColeman»
+import PhD.TateFredholm.«11_SlopeFactor»
 
 /-!
 # The halo `U_p` over the Tate ring `A`: Riesz theory at a vertex
 
-Over `A = Λ^{>1/p}[1/T]` the integral `U_p`-matrix `P` of `UpMatrix.lean` is conjugated, as
+Over `A = Λ^{>1/p}[1/T]` the integral `U_p`-matrix `P` of `03_UpMatrix.lean` is conjugated, as
 in the proof of [LWX, Theorem 3.16] ("We now conjugate the matrix `P` by the infinite diagonal
 matrix whose diagonal entries are `1, …, T, …, T², …`; let `P'` denote the matrix we get this
 way … the entries of `P'` in the `n`-th column all lie in `T^{⌊n/t⌋−⌊n/pt⌋}Λ^{>1/p}`"), and

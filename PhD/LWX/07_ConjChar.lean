@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Vertices
+import PhD.LWX.«06_Vertices»
 
 /-!
 # The conjugate nebentypus `ω⁻¹` — SKELETON
@@ -14,7 +14,7 @@ Proposition 3.22 pins the total of the two.  Everything in the halo layer is alr
 arbitrary `ω`, so the second instance costs nothing once `ω⁻¹` exists as a term — but it does not
 exist anywhere in the project.  This file supplies it.
 
-Note that the *same* `UpDatum` serves both characters: `UpMatrix.lean`'s `UpDatum` carries only the
+Note that the *same* `UpDatum` serves both characters: `03_UpMatrix.lean`'s `UpDatum` carries only the
 coset data (`tgt`, `mat`), and the nebentypus enters at `UpDatum.matrix D ω` through `entry ω`.  So
 the `ψ⁻¹`-space is `D` at `invChar ω`, not a different datum — which is why this file is small.
 

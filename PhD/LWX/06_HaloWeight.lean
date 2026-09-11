@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Binomial
-import PhD.LWX.Specialize
+import PhD.LWX.«01_Binomial»
+import PhD.LWX.«05_Specialize»
 
 /-!
 # The halo weight `κ_{T₀}` as an analytic weight
@@ -23,7 +23,7 @@ point `T₀` of the halo annulus is the character `κ_{T₀}(x) = ω(x̄)·(1+T�
   normalisation of [Jacobs, Def 1.27], so that the automorphy factor `κ(cz+d)/(cz+d)²` of
   `QMF.Weight.kappaSlash` is exactly [LWX, (2.3.2)]'s `χ(cz + d)`;
 * the column is `(cz+d)²·κ_{T₀}(d)·∑_m C(s, m)(c/d)^m z^m` — `κ_{T₀}(1 + wz) = (1 + wz)^s`
-  expanded by the binomial theorem `PhD/LWX/Binomial.lean` — with decay
+  expanded by the binomial theorem `PhD/LWX/01_Binomial.lean` — with decay
   `ρ = ‖T₀‖·√p`, valid on the **sub-annulus `p⁻¹ < ‖T₀‖`, `‖T₀‖² < p⁻¹`** (`v(T₀) > 1/2`),
   where `κ_{T₀}` is `1`-analytic.  ([LWX, §2.7] only records the crude radius
   `W^{≤ p^{−1/p^{m₀−4}}}` for `m₀`-analyticity — "the radius here is not optimal"; the

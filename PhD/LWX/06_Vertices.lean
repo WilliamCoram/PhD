@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Sharpness
-import PhD.LWX.UpperPolygon
+import PhD.LWX.«05_Sharpness»
+import PhD.LWX.«05_UpperPolygon»
 import PhD.NewtonPolygons.Support
 
 /-!
@@ -152,7 +152,7 @@ theorem bandLine_add_one (p t k : ℕ) (vT : ℝ) (x : ℤ) :
   push_cast
   ring
 
-/-- On the band the line is `λ(n)·v(T)` (the band identities of `UpperPolygon.lean`). -/
+/-- On the band the line is `λ(n)·v(T)` (the band identities of `05_UpperPolygon.lean`). -/
 theorem bandLine_eq_of_mem_band (p t k : ℕ) (hp : 0 < p) (ht : 0 < t) (vT : ℝ) {n : ℕ}
     (h1 : touchX p t k ≤ n + t) (h2 : n ≤ touchX p t k + t) :
     bandLine p t k vT n = (lwxLambda p t n : ℝ) * vT := by

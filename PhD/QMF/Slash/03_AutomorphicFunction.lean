@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.AutomorphicFunction
-import PhD.QMF.Slash.Basic
+import PhD.QMF.«01_AutomorphicFunction»
+import PhD.QMF.Slash.«02_Basic»
 
 /-!
 # The right slash on automorphic functions, and slash-form level spaces
@@ -19,7 +19,7 @@ component acts on the coefficients on the right): for a coefficient
 `RightSlashAction Δ' A` we set `(φ ∣ₛ δ)(g) := φ(g·δ⁻¹) ∣ₛ δ` — the inverse is taken
 in the ambient group `G`, so no invertibility in `Δ'` is needed.  This is the literal
 Buzzard/Jacobs formula; the library's left action `(δ • φ)(g) = δ • φ(g·δ)`
-(`PhD/QMF/AutomorphicFunction.lean`) is its adjugate shadow.
+(`PhD/QMF/01_AutomorphicFunction.lean`) is its adjugate shadow.
 
 * `AutomorphicFunction` gains a `RightSlashAction Δ'` instance;
 * `levelSubmoduleSlash` — Buzzard's `L(U, A) = {f : f∣u = f for u ∈ U}` verbatim;
@@ -63,7 +63,7 @@ variable (R : Type*) [Semiring R] [Module R A]
 
 /-- The slash on automorphic functions commutes with the scalars whenever the
 coefficient slash does (mirror of the library's `SMulCommClass` instance,
-`AutomorphicFunction.lean:162`). -/
+`03_AutomorphicFunction.lean:162`). -/
 instance : RightSlashAction.SMulSlashClass R Δ' (AutomorphicFunction G Γ A) where
   smul_slash r φ δ := ext fun g => by
     simp [RightSlashAction.SMulSlashClass.smul_slash]

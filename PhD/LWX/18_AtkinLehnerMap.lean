@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.SymPow
-import PhD.LWX.NebChar
-import PhD.LWX.AtkinLehnerLocal
+import PhD.LWX.«15_SymPow»
+import PhD.LWX.«17_NebChar»
+import PhD.LWX.«10_AtkinLehnerLocal»
 
 /-!
 # The Atkin–Lehner map on classical disc forms

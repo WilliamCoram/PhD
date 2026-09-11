@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.JacobsSlash.U3.«6_Matrix»
-import PhD.QMF.Weight.Fredholm
+import PhD.QMF.Weight.«07_Fredholm»
 
 /-!
 # `det(1 − T·U₃)`: the Fredholm determinant of the genuine Hecke operator
@@ -35,7 +35,7 @@ two into a model isomorphism and defines the object the slope theory is about:
 `ε`-operators on the nose (`blockEntry_eq_epsOp`), so the determinant bridge is the
 definitional `charPowerSeries_blockEntry_eq_U3MatrixOp`.  The whole block layer
 (`evalU3`, `blockEntry`, `evalU3_heckeU3`, `isCompactoid_blockOpU3`) is the general
-`PhD/QMF/Weight/Compact.lean` model instantiated at the Jacobs data — nothing here is
+`PhD/QMF/Weight/06_Compact.lean` model instantiated at the Jacobs data — nothing here is
 Jacobs-specific except the certificates.
 
 The extension-field factorisation into the `M`-eigenblocks and the slope reading are in
@@ -48,7 +48,7 @@ open AbstractHeckeOperatorSlash RightSlashAction
 namespace JacobsSlash
 
 /-- `K₃` is a Tate ring: `3` is a pseudo-uniformizer.  (Required by the compactoid
-closure lemmas; the `[IsTate _]`-hypothesis pattern of `PhD.TateFredholm.BlockOp`.) -/
+closure lemmas; the `[IsTate _]`-hypothesis pattern of `PhD.TateFredholm.«06_BlockOp»`.) -/
 instance : IsTate K₃ :=
   ⟨⟨PseudoUniformizer.ofNormLtOne (by norm_num : (3 : K₃) ≠ 0) norm_three_lt_one⟩⟩
 

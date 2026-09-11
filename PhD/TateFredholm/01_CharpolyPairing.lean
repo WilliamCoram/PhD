@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Charpoly
+import PhD.TateFredholm.«00_Charpoly»
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 
 /-!
@@ -13,7 +13,7 @@ If two square matrices satisfy `A * B = c • 1` then `A` is invertible with `B 
 spectra of `A` and `B` are exchanged by `x ↦ c / x`.  This file records that exchange at three
 levels of strength: determinants, characteristic polynomials, and root multisets.
 
-This is the linear-algebra half of the Atkin–Lehner reduction (`PhD/LWX/AtkinLehner.lean`): with
+This is the linear-algebra half of the Atkin–Lehner reduction (`PhD/LWX/05_AtkinLehner.lean`): with
 `A` the matrix of `U_p`, `B` the matrix of the Atkin–Lehner conjugate `U'_p`, and
 `c = p^{k+1}`, the root-multiset statement is [LWX, Prop 3.22]'s slope symmetry.  Nothing here is
 `p`-adic or automorphic; the results are stated for an arbitrary commutative ring (determinant and
@@ -30,7 +30,7 @@ characteristic-polynomial levels) or algebraically closed field (root level).
 * `Matrix.roots_charpoly_of_mul_eq_smul` — `(charpoly B).roots = (charpoly A).roots.map (c / ·)`.
 
 The slope form (norms of the roots) is the one-line corollary
-`LWX.norm_roots_charpoly_atkinLehner` in `PhD/LWX/AtkinLehner.lean`; it is kept there so that this
+`LWX.norm_roots_charpoly_atkinLehner` in `PhD/LWX/05_AtkinLehner.lean`; it is kept there so that this
 file stays purely algebraic and free of analysis imports.
 
 ## Design note

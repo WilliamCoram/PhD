@@ -6,7 +6,7 @@ Authors: William Coram
 import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import PhD.LWX.PadicExpLog
+import PhD.LWX.«00_PadicExpLog»
 
 /-!
 # The disc-restricted Colmez polynomials and their `p`-adic valuations — SKELETON
@@ -32,7 +32,7 @@ to a monic polynomial of degree `|K_{n,a}|`, `K_{n,a} = {k < n : k ≡ a (pʰ)}`
   `LWX.discConst`, `LWX.discPoly_eq`.
 * `LWX.norm_discConst`, `LWX.norm_coeff_discFactor_le`, `LWX.norm_coeff_discFactor_le_of_lt`,
   `LWX.norm_coeff_discFactor_card`.
-* The three coefficient facts consumed by `AmiceBasis.lean`: `LWX.norm_coeff_discPoly_le`,
+* The three coefficient facts consumed by `08_AmiceBasis.lean`: `LWX.norm_coeff_discPoly_le`,
   `LWX.norm_coeff_discPoly_le_inv_of_lt`, `LWX.norm_coeff_discPoly_le_inv_of_res_lt`,
   `LWX.norm_coeff_discPoly_diag`.
 -/

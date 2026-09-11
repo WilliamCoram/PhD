@@ -7,7 +7,7 @@ import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Mathlib.Analysis.Normed.Group.Ultra
 import Mathlib.Analysis.Normed.Ring.Ultra
-import PhD.TateFredholm.Tate
+import PhD.TateFredholm.«00_Tate»
 
 /-!
 # The integral halo ring `Λ^{>1/p}` — SKELETON (lwx-halo board)

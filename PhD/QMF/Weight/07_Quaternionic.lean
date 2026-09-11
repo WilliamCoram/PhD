@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Compact
-import PhD.QMF.Slash.Quaternionic
-import PhD.QMF.Finiteness
+import PhD.QMF.Weight.«06_Compact»
+import PhD.QMF.Slash.«05_Quaternionic»
+import PhD.QMF.«04_Finiteness»
 import PhD.ForMathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 /-!

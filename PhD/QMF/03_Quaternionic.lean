@@ -3,14 +3,14 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Decomposition
-import PhD.QMF.WeightModule
+import PhD.QMF.«02_Decomposition»
+import PhD.QMF.«01_WeightModule»
 import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 
 /-!
 # Quaternionic modular forms of general weight
 
-The instantiation of the abstract theory (`PhD.QMF.AutomorphicFunction`) for a quaternion
+The instantiation of the abstract theory (`PhD.QMF.«01_AutomorphicFunction»`) for a quaternion
 algebra `D` over a number field `F`, following [Buzzard, *Eigenvarieties*, §9]:
 
 > "Now let `D` be a quaternion algebra over `F` ramified at all infinite places.  Let us

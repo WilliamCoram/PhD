@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Forms
-import PhD.QMF.Slash.WeightModule
+import PhD.QMF.Weight.«05_Forms»
+import PhD.QMF.Slash.«03_WeightModule»
 
 /-!
 # The classical algebraic weights as an instance of the abstract weight action
@@ -696,7 +696,7 @@ variable {G : Type*} [Group G] {Γ : Subgroup G}
 /-- The classical coefficient action of the wild-level monoid `θ⁻¹(Σ₀'(γ))` on the
 weight module, through the corestriction of `θ` (Buzzard's convention; for
 `G = Dfx F D`, `θ = toMatrix F D v` the monoid is `QMF.levelMonoid'` and this is the
-`WeightModule` slash instance of `PhD/QMF/Slash/Quaternionic.lean` on the nose). -/
+`WeightModule` slash instance of `PhD/QMF/Slash/05_Quaternionic.lean` on the nose). -/
 @[instance_reducible]
 noncomputable def classicalWeightAction (θ : G →* Matrix (Fin 2) (Fin 2) K) (n : ℕ)
     (ν : Sigma0 K γv hγv →* Kˣ) :

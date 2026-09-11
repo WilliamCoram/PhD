@@ -3,13 +3,13 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.SlopeRatios
+import PhD.LWX.«07_SlopeRatios»
 
 /-!
 # The slope ratios increase to infinity
 
 [LWX, Theorem 1.5] asks for the `T`-free ratios `α₀(ω), α₁(ω), …` to be "in increasing order
-and tending to infinity".  `PhD/LWX/SlopeRatios.lean` proves the identity
+and tending to infinity".  `PhD/LWX/07_SlopeRatios.lean` proves the identity
 `slope_j(T) = v(T)·slopeRatio j` but says nothing about how the ratios themselves behave; this
 file supplies the two missing clauses.
 

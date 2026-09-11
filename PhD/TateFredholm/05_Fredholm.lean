@@ -1,4 +1,4 @@
-import PhD.TateFredholm.Matrix
+import PhD.TateFredholm.«04_Matrix»
 import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Basic
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
@@ -7,7 +7,7 @@ import Mathlib.LinearAlgebra.Alternating.Basic
 /-!
 # The Fredholm determinant
 ([Bel] §II.1.5 architecture under [JN]'s hypotheses; blueprint 6.16–6.17.  See
-`Tate.lean` for the development's overview and dictionary.)
+`00_Tate.lean` for the development's overview and dictionary.)
 
 Definitions are norm-free given the topology; the theorems carry `[IsTate R]` (through
 the compactness criterion) and **no Noetherian hypothesis** — each statement below

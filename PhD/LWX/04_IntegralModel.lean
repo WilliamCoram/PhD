@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.UpMatrix
-import PhD.QMF.Slash.HeckeMatrix
-import PhD.TateFredholm.BlockOp
+import PhD.LWX.«03_UpMatrix»
+import PhD.QMF.Slash.«04_HeckeMatrix»
+import PhD.TateFredholm.«06_BlockOp»
 import Mathlib.Topology.ContinuousMap.Compact
 
 /-!
@@ -18,18 +18,18 @@ import Mathlib.Topology.ContinuousMap.Compact
 model `c(ℕ, Λ^{>1/p})` realises `C(ℤ_p, Λ^{>1/p})` through the **plain** Mahler
 basis `{binom(z,n)}` (Mahler's theorem, applicable since `Λ^{>1/p}` is an
 ultrametric `ℤ_p`-Banach algebra): these are the coordinates of [LWX, Prop 3.4],
-in which the matrix of `‖_δ` is the entry stream `P_{m,n}(δ)` of `UpMatrix.lean`.
+in which the matrix of `‖_δ` is the entry stream `P_{m,n}(δ)` of `03_UpMatrix.lean`.
 The `T`-rescaled submodule `⊕̂ₙ Tⁿ Λ^{>1/p}·binom(z,n)` of [LWX, (5.4.1)] is
 realised by `mahlerEmbed`; the rescaling lives in the *estimates*
 ([LWX, Prop 3.14]), not in the model coordinates — the (2.3.2)-action does not
 preserve c₀-coordinates in the rescaled basis (see the H4 section comment).
 
 This tranche instantiates the repo's ring-generic slash layer
-(`PhD/QMF/Slash/HeckeMonoid.lean`, `HeckeMatrix.lean` — `AutomorphicFunction`,
+(`PhD/QMF/Slash/03_HeckeMonoid.lean`, `04_HeckeMatrix.lean` — `AutomorphicFunction`,
 `RightSlashAction`, `slashFixedPointsOfLE`, `heckeOperatorSlash`,
 `bijective_evalAtRepsSlash`, all over an arbitrary `Semiring R`) at
 `R = HaloInt p`, so that [LWX, (2.11.1)] and the Prop 3.1 display are **reused, not
-re-proved**, and [LWX, Prop 3.4] — definitional in `UpMatrix.lean` — becomes a
+re-proved**, and [LWX, Prop 3.4] — definitional in `03_UpMatrix.lean` — becomes a
 theorem (`cfunSlash_mahlerON`).
 
 Contents: the universal character `[·] : ℤ_p^× →* (Λ^{>1/p})^×` ([LWX, Notation
@@ -989,7 +989,7 @@ The action (2.3.2) does **not** preserve the `T`-rescaled coordinates of
 `mahlerEmbed` inside `c(ℕ, Λ^{>1/p})` (for `g = [[p,0],[p,1]]` the slash of the
 constant `1` is `(1+T)^{ℓ(1+pz)}`, whose rescaled coefficients have norm `1` for
 every `m`).  [LWX, Prop 3.4] expands the slash in the *plain* Mahler basis, where
-the matrix is exactly the entry streams `P_{m,n}(δ)` of `UpMatrix.lean` — matching
+the matrix is exactly the entry streams `P_{m,n}(δ)` of `03_UpMatrix.lean` — matching
 `UpDatum.matrix` — and c₀-decay of the coefficients is Bojanić–Mahler
 (`PadicInt.fwdDiff_tendsto_zero`); the `T`-rescaling lives in the *estimates*
 ([LWX, Prop 3.14]), not in the module coordinates. -/
@@ -1143,7 +1143,7 @@ private theorem coeff_const_mul_oneAddTPow_mul_const (A B s : ℤ_[p]) (r : ℤ)
   split_ifs <;> simp
 
 /-- The `T`-coefficients of a slashed basis function: `ω(d̄)·binom(g(z), r)`
-against `binom(f(z), n)`.  (Public: `SeamH.lean` reproduces `entry_eq_fwdDiff` for the
+against `binom(f(z), n)`.  (Public: `11_SeamH.lean` reproduces `entry_eq_fwdDiff` for the
 disc model from it.) -/
 theorem coeff_univChar_mul_const (hp2 : p ≠ 2) (ω : (ZMod p)ˣ →* ℤ_[p]ˣ)
     (δ : LocalMat p) (n : ℕ) (z : ℤ_[p]) (r : ℤ) :
@@ -1268,7 +1268,7 @@ private theorem fwdDiff_cfunSlash_mahlerON (hp2 : p ≠ 2) (ω : (ZMod p)ˣ →*
 
 /-- **[LWX, Prop 3.4] as a theorem + [LWX, §5.4]'s stability**: the (2.3.2)-action
 maps the plain Mahler model to itself, with matrix the entry streams of
-`UpMatrix.lean`: `bₘ = ∑ₙ aₙ·P_{m,n}(δ)`.  Shared-witness existential: the
+`03_UpMatrix.lean`: `bₘ = ∑ₙ aₙ·P_{m,n}(δ)`.  Shared-witness existential: the
 coefficient stream `b` (c₀ by Bojanić–Mahler decay). -/
 theorem cfunSlash_mahlerON (hp2 : p ≠ 2) (ω : (ZMod p)ˣ →* ℤ_[p]ˣ)
     (g : M1 p) (a : c(ℕ, HaloInt p)) :

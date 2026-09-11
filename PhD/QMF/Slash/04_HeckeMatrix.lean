@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Slash.AutomorphicFunction
-import PhD.QMF.Slash.HeckeMonoid
+import PhD.QMF.Slash.«03_AutomorphicFunction»
+import PhD.QMF.Slash.«03_HeckeMonoid»
 import Mathlib.Algebra.Module.Pi
 import Mathlib.GroupTheory.DoubleCoset
 import Mathlib.Tactic.Group
@@ -12,7 +12,7 @@ import Mathlib.Tactic.Group
 /-!
 # The matrix of a right-slash Hecke operator, and the class-set decomposition
 
-Right-handed mirror of `PhD/QMF/HeckeMatrix.lean` + `PhD/QMF/Decomposition.lean`, in the
+Right-handed mirror of `PhD/QMF/03_HeckeMatrix.lean` + `PhD/QMF/02_Decomposition.lean`, in the
 thesis's own shape [Jacobs, Ch. 1 §1.6 pp. 20–21]:
 
 > "(Up φ)(cᵢ) = Σ_t (φ|vₜ)(cᵢ) … Next, we decompose cᵢv_t⁻¹ as d(i,t)c(i,t)u(i,t) with

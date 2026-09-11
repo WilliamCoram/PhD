@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.DiscForms
-import PhD.LWX.Seam
-import PhD.TateFredholm.BlockMap
+import PhD.LWX.«10_DiscForms»
+import PhD.LWX.«07_Seam»
+import PhD.TateFredholm.«08_BlockMap»
 
 /-!
 # [LWX, Proposition 2.17] at every analyticity level — SKELETON
@@ -14,7 +14,7 @@ import PhD.TateFredholm.BlockMap
 > `det(I_∞ − X·P)`, where `P` is the matrix of `U_p` with respect to the orthonormal basis
 > `⌊n/(q⁻¹pᵐ)⌋!·(z choose n)` of Colmez."
 
-The `m = 1` case is `PhD/LWX/Seam.lean`.  This file does every `m = h + 1`, so that the seam
+The `m = 1` case is `PhD/LWX/07_Seam.lean`.  This file does every `m = h + 1`, so that the seam
 covers the whole boundary annulus `p⁻¹ < ‖T₀‖ < 1` rather than only the sub-annulus
 `‖T₀‖² < p⁻¹` where the weight is `1`-locally analytic.
 

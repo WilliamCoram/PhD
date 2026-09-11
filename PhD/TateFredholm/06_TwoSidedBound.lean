@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.«05_Fredholm»
 
 /-!
 # Two-sided weight bounds for the Fredholm determinant — SKELETON (lwx-halo board)
@@ -17,7 +17,7 @@ from every row and every column of `S`, and for a permutation `π` of `S`
 `∑_{a ∈ S} w' (π a) = ∑_{a ∈ S} w' a`, so
 `‖minor u S‖ ≤ σ ^ (∑_{a ∈ S} w a − ∑_{a ∈ S} w' a)` (truncated subtraction).
 
-Unlike the row-weight file `PhD.TateFredholm.Slopes` (stated over a field), everything
+Unlike the row-weight file `PhD.TateFredholm.«06_Slopes»` (stated over a field), everything
 here runs over an arbitrary complete ultrametric `NormedCommRing` with `‖1‖ = 1` and
 carries **no** `IsTate` hypothesis: the definitions consumed (`matrixCoeff`, `minor`,
 `charCoeff`) are norm-free, and summability comes from `summable_of_tendsto_cofinite`.

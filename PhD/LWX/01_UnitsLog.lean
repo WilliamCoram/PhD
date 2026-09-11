@@ -5,8 +5,8 @@ Authors: William Coram
 -/
 import Mathlib.NumberTheory.Padics.MahlerBasis
 import Mathlib.NumberTheory.Basic
-import PhD.LWX.PadicExpLog
-import PhD.TateFredholm.Tate
+import PhD.LWX.«00_PadicExpLog»
+import PhD.TateFredholm.«00_Tate»
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.FieldTheory.Finite.Basic
 
@@ -20,7 +20,7 @@ with `ℤ_p` via `(1/q)·log`.  [LWX, Prop 3.14 proof] uses exactly three conseq
 * the Teichmüller lift `ωT(x) = lim_n x^{pⁿ}` splitting `x = ωT(x)·⟨x⟩` with
   `⟨x⟩ ∈ 1 + pℤ_p` (AG1: not in mathlib — `WittVector.teichmuller` is a different map);
 * the logarithm `qlog` on `1 + pℤ_p` (the restriction of the general ultrametric
-  `PhD/LWX/PadicExpLog.lean` along `ℤ_p ⊆ ℚ_p`): integrality bound and
+  `PhD/LWX/00_PadicExpLog.lean` along `ℤ_p ⊆ ℚ_p`): integrality bound and
   **additivity** (needed to split `g(z) = log((cz+d)/d₀)/q` into a constant plus a
   series of [LWX, Lemma 3.13]'s shape — the split is what makes Lemma 3.13
   applicable);
@@ -199,7 +199,7 @@ theorem norm_oneUnitPart_sub_one_le (x : ℤ_[p]ˣ) :
 /-- The (un-normalised) `p`-adic logarithm `qlog u = ∑_{k≥1} (−1)^{k+1}(u−1)^k/k`
 valued in `ℚ_p`; junk outside `‖u − 1‖ ≤ p⁻¹`.  [LWX, Prop 3.14 proof]'s
 `log((cz+d)/d₀)`.  Definitionally the restriction of the general ultrametric
-logarithm `PhD/LWX/PadicExpLog.lean` along `ℤ_p ⊆ ℚ_p`. -/
+logarithm `PhD/LWX/00_PadicExpLog.lean` along `ℤ_p ⊆ ℚ_p`. -/
 def qlog (u : ℤ_[p]) : ℚ_[p] := PadicExpLog.padicLog ((u : ℚ_[p]))
 
 /-- The series formula for `qlog` (the sign-unfolded form of `padicLog`'s series). -/

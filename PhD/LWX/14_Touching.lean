@@ -3,11 +3,11 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.AtkinLehnerInst
-import PhD.LWX.SlopesSeam
-import PhD.TateFredholm.RieszColeman
+import PhD.LWX.«13_AtkinLehnerInst»
+import PhD.LWX.«13_SlopesSeam»
+import PhD.TateFredholm.«12_RieszColeman»
 import PhD.NewtonPolygons.Product
-import PhD.QMF.Weight.Algebraic
+import PhD.QMF.Weight.«06_Algebraic»
 
 /-!
 # Step I of [LWX, Theorem 1.3]: the squeeze — SKELETON (tranche 5 of `lwx-theta`)
@@ -164,7 +164,7 @@ def certConj (i : ι) (t : Fin p) (a : ZMod (p ^ h)) : Matrix (Fin 2) (Fin 2) K 
 
 /-- **The classical shape of exponent `k`**: at every disc conjugate of every certificate matrix
 the automorphy factor is `u · (cz + d)^k`, i.e. `autFactor · L = C u · L^{k+1}`, with a constant
-`u` (the nebentypus at `d`) depending on the block.  This is exactly what `Bol.lean`'s
+`u` (the nebentypus at `d`) depending on the block.  This is exactly what `12_Bol.lean`'s
 equivariance consumes, and what a classical weight `(k, ψ)` of conductor `p²` has at level
 `h ≥ 1`. -/
 def IsClassicalShape (κ : AnalyticWeight UK (M1Kh h ψ) ρ) (k : ℕ)
@@ -203,8 +203,8 @@ theorem autFactor_mul_mobius_pow_of_shape {S : Submonoid (Matrix (Fin 2) (Fin 2)
 
 omit hp [CharZero K] in
 /-- **[T5.9a]** A block of a `blockOp`, applied.  (`LWX.blockProj_blockOp` in
-`PhD/LWX/DiscModel.lean` is this at `σ = ZMod (p ^ h)` and is `private`; its proper home is
-`PhD/TateFredholm/BlockOp.lean` next to `blockOp_blockIncl`.) -/
+`PhD/LWX/09_DiscModel.lean` is this at `σ = ZMod (p ^ h)` and is `private`; its proper home is
+`PhD/TateFredholm/06_BlockOp.lean` next to `blockOp_blockIncl`.) -/
 private theorem blockProj_blockOp' {σ : Type*} [Fintype σ] [DecidableEq σ] {I : Type*}
     [DecidableEq I] (T : σ → σ → (c(I, K) →L[K] c(I, K))) (f : c(σ × I, K)) (a : σ) :
     cSpace.blockProj a (blockOp T f) = ∑ b : σ, T a b (cSpace.blockProj b f) := by
@@ -291,7 +291,7 @@ def classicalMatrix [Nonempty ι] (κ : AnalyticWeight UK (M1Kh h ψ) ρ) {k : �
 /-! ### The finite factor -/
 
 omit hp [Fintype ι] [DecidableEq ι] [CharZero K] in
-/-- On the block index, forgetting the `Fin` bound is injective (the `StepOne.lean` helper
+/-- On the block index, forgetting the `Fin` bound is injective (the `12_StepOne.lean` helper
 `triple_val_inj`, restated as an `Function.Injective` for `Finset.card_image_of_injective`). -/
 private theorem triple_val_inj' {k : ℕ} :
     Function.Injective (fun x : ι × ZMod (p ^ h) × Fin (k + 1) =>

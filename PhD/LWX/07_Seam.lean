@@ -3,11 +3,11 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.HaloWeight
-import PhD.LWX.Colmez
-import PhD.LWX.Certificates
-import PhD.TateFredholm.Conjugation
-import PhD.QMF.Weight.Fredholm
+import PhD.LWX.«06_HaloWeight»
+import PhD.LWX.«00_Colmez»
+import PhD.LWX.«05_Certificates»
+import PhD.TateFredholm.«07_Conjugation»
+import PhD.QMF.Weight.«07_Fredholm»
 
 /-!
 # [LWX, Proposition 2.17]: the integral `Char(P)` specialises to `Char(U_p; S^{D,†,1})`
@@ -23,8 +23,8 @@ infinite diagonal matrix … So taking the limit of the characteristic polynomia
 `r × r`-minors … gives `Char(U_p; S^{D,†,m}_{[−]_m}) = det(I∞ − XP′) = det(I∞ − XP)`."
 
 This file proves the `m = 1` case on the sub-annulus `p⁻¹ < ‖T₀‖`, `‖T₀‖² < p⁻¹` (where the
-halo weight is `1`-analytic, `PhD/LWX/HaloWeight.lean`), identifying
-`specCharSeries D ω ψ T₀` (`Char(P)` evaluated at `T₀`, `PhD/LWX/Halo.lean`) with the
+halo weight is `1`-analytic, `PhD/LWX/06_HaloWeight.lean`), identifying
+`specCharSeries D ω ψ T₀` (`Char(P)` evaluated at `T₀`, `PhD/LWX/04_Halo.lean`) with the
 general-weight layer's `QMF.Weight.heckeCharPowerSeries` at the halo weight — the Fredholm
 determinant of `U_p` on Buzzard's `S^{D,†,1}` in the monomial basis of the Tate algebra:
 
@@ -35,7 +35,7 @@ determinant of `U_p` on Buzzard's `S^{D,†,1}` in the monomial basis of the Tat
    certificate matrix with `P(T₀)` — both are `f ↦ χ(cz+d)·f(möb z)` read at `ℕ`-points
    (`monomialToMahler_comp_kappaSlash`), hence blockwise for `[UηU]`
    (`monomialToMahlerBlock_comp_heckeBlockOp`);
-3. `monomialToMahler = diag(m!) ∘ colmezEquiv.symm` (`PhD/LWX/Colmez.lean`), so the Colmez-basis
+3. `monomialToMahler = diag(m!) ∘ colmezEquiv.symm` (`PhD/LWX/00_Colmez.lean`), so the Colmez-basis
    matrix `P′ = colmezEquiv⁻¹·[UηU]·colmezEquiv` satisfies `diag(m!)·P′ = P(T₀)·diag(m!)`, and
    `charPowerSeries_eq_of_diag_intertwine` gives `det(I − XP′) = det(I − XP(T₀))`;
 4. `charPowerSeries_conj` (basis independence, [Buzzard, Cor 2.6]) gives

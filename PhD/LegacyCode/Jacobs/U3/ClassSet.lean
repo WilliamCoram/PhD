@@ -5,7 +5,7 @@ Authors: William Coram
 -/
 import Mathlib.NumberTheory.Padics.RingHoms
 import PhD.Jacobs.U3.Level
-import PhD.QMF.UpiElement
+import PhD.QMF.«04_UpiElement»
 
 /-!
 # Theorem 2.1: the class set of `U₁(9)`, and Lemma 2.2: trivial stabilisers
@@ -61,7 +61,7 @@ namespace Jacobs.U3
 /-- The adelic representative `cᵢ` [Jacobs, Thm 2.1]: trivial away from `3`, and the
 diagonal matrix `θ₃⁻¹ (dᵢ 0; 0 eᵢ)` at `3`, for `(d,e) = (1,1), (5,2), (7,4)`.
 (Constructed through the rigidification and the `v₃`-component splitting of
-`PhD.QMF.UpiElement`; `det = dᵢeᵢ ∈ {1, 10, 28}` is a `3`-adic unit, so this is a unit
+`PhD.QMF.«04_UpiElement»`; `det = dᵢeᵢ ∈ {1, 10, 28}` is a `3`-adic unit, so this is a unit
 of the local order and defines an element of `D_f^×`.) -/
 noncomputable def diagUnit (a b : K₃) (ha : a ≠ 0) (hb : b ≠ 0) :
     (Matrix (Fin 2) (Fin 2) K₃)ˣ where

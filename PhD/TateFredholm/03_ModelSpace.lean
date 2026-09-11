@@ -1,9 +1,9 @@
-import PhD.TateFredholm.Compact
+import PhD.TateFredholm.«02_Compact»
 
 /-!
 # The model space, ON-able modules, property (Pr)
 ([Bel] Definitions II.1.5–II.1.6, Example II.1.7; [JN] Definition 2.1.5; blueprint
-6.3–6.7.  See `Tate.lean` for the development's overview and dictionary.)
+6.3–6.7.  See `00_Tate.lean` for the development's overview and dictionary.)
 
 Definitional choice: as in [JN], (potentially) ON-able is *defined* by (isometric)
 isomorphism to the model space; the `ONBasis`-structure formulation and the equivalence

@@ -4,9 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import PhD.TateFredholm.Charpoly
-import PhD.TateFredholm.Coleman
-import PhD.TateFredholm.Pr
+import PhD.TateFredholm.«00_Charpoly»
+import PhD.TateFredholm.«11_Coleman»
+import PhD.TateFredholm.«06_Pr»
 
 /-!
 # Riesz theory for a coprime factorisation `det(1 − Tu) = Q·S`
@@ -25,7 +25,7 @@ The proof is Bellaïche's: `φ' = 1 − Q*(φ)/Q*(0)` is compact with Fredholm d
 `D(1 − Q̃*, P_φ)` ([Bel] II.2.16, `Coleman.charPowerSeries_aeval`), which has a good zero of
 order `deg Q` at `1` ([Bel] II.2.15, `Coleman.isGoodZero_dSeries_bQ`); Serre's projector
 `exists_rieszProjection_isOpLimit` at `a = 1` then gives the decomposition, with the projector
-and its inverse witness in the closure of `R[u]` (`IsOpLimitAeval`, Riesz.lean), so that they
+and its inverse witness in the closure of `R[u]` (`IsOpLimitAeval`, 09_Riesz.lean), so that they
 commute with `u` and not merely with `φ'`.  The refinements — that
 `Q*(u)` is *zero* (not merely nilpotent) on `N`, the rank, and the determinant identities —
 follow [Buz07] Proposition 3.2 / Theorem 3.3 and [JN]'s last sentence.

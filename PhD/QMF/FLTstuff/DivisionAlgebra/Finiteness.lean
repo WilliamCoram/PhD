@@ -54,7 +54,7 @@ Most of the definitions in this file are auxiliary definitions, in an `Aux` name
 
 -- TODO -- the nature of this file has changed; there are now also a bunch of results
 relating `D ⊗ 𝔸` to `D ⊗ 𝔸ᶠ × D × K∞` which probably should be elsewhere. The
-title of the file "Finiteness.lean" should be referring to the fundamental finiteness
+title of the file "04_Finiteness.lean" should be referring to the fundamental finiteness
 result of Fujisaki rather than all the intermediate stuff.
 
 ## Main theorem

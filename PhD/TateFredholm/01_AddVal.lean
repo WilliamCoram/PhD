@@ -3,12 +3,12 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Tate
+import PhD.TateFredholm.«00_Tate»
 import PhD.ForMathlib.Topology.Algebra.Valued.AddVal
 
 /-!
 # The seam between `v_ϖ` and the additive-valuation API
-(See `Tate.lean` for the development's overview and dictionary.)
+(See `00_Tate.lean` for the development's overview and dictionary.)
 
 `PseudoUniformizer.val` (`v_ϖ`) and `ForMathlib`'s `Valuation.addVal` family solve the same
 problem in incomparable settings, and this file pins them together.

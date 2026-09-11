@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.HeckeMonoid
+import PhD.QMF.«00_HeckeMonoid»
 
 /-!
 # Abstract automorphic functions with monoid-twisted level action
@@ -145,7 +145,7 @@ left form here is obtained through the adjugate anti-isomorphism on the acting m
 which is also what turns Buzzard's `Mₜ` into Pollack–Stevens' `Σ₀(p)`.  The full rationale
 — why left (mathlib's `Module`/`DistribMulAction` are left-handed), and why the adjugate
 specifically (`g ↦ g⁻¹` is unavailable since `Σ₀` is a monoid, not a group; the transpose
-moves the level condition to the wrong entry) — is in `PhD/QMF/Sigma0.lean`'s header. -/
+moves the level condition to the wrong entry) — is in `PhD/QMF/00_Sigma0.lean`'s header. -/
 instance : SMul Δ (AutomorphicFunction G Γ A) :=
   ⟨fun δ φ => ⟨fun g => δ • φ (g * δ), fun γ hγ g => by
     rw [mul_assoc, φ.left_invt' hγ]⟩⟩

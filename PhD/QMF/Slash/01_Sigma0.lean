@@ -3,13 +3,13 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Sigma0
+import PhD.QMF.«00_Sigma0»
 import Mathlib.LinearAlgebra.Matrix.Adjugate
 
 /-!
 # The right-handed monoid `Σ₀'(γ)` and the adjugate dictionary
 
-`Sigma0 K γ hγ` (see `PhD/QMF/Sigma0.lean`, incl. the design note on the left/right
+`Sigma0 K γ hγ` (see `PhD/QMF/00_Sigma0.lean`, incl. the design note on the left/right
 convention seam) is the *left-handed* (Pollack–Stevens) monoid: `(0,0)`-entry a unit.
 This file introduces its right-handed mirror `Sigma0' K γ hγ` — Buzzard's `Mₜ`
 [*Eigenvarieties*, §9 p. 68: entries integral, `d` a unit, `π^t ∣ c`, nonzero
@@ -25,7 +25,7 @@ determinant] — together with the adjugate dictionary between the two:
 * `Sigma0'.eta` — the thesis-form `η = (ϖ 0; 0 1)` [Jacobs `η₃ = (3 0; 0 1)`], with
   `adj_eta` identifying its adjugate with the library's `Sigma0.eta = (1 0; 0 ϖ)`.
 
-This is the foundation of the right-slash dialect (`PhD/QMF/Slash/Basic.lean`): statements
+This is the foundation of the right-slash dialect (`PhD/QMF/Slash/02_Basic.lean`): statements
 in the classical/Buzzard/Jacobs right-handed convention are *stated* over `Σ₀'` and
 *proved* by transport along `adj` to the left-handed library.
 -/

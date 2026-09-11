@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.Jacobs.U3Data
-import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.«05_Fredholm»
 
 /-!
 # Base change of Fredholm determinants and of the Jacobs analytic layer

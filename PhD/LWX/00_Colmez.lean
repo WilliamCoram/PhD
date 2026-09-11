@@ -6,9 +6,9 @@ Authors: William Coram
 import Mathlib.Algebra.Group.ForwardDiff
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.NumberTheory.Padics.MahlerBasis
-import PhD.TateFredholm.GenFun
-import PhD.TateFredholm.BlockOp
-import PhD.QMF.Weight.Char
+import PhD.TateFredholm.«05_GenFun»
+import PhD.TateFredholm.«06_BlockOp»
+import PhD.QMF.Weight.«04_Char»
 
 /-!
 # Colmez's basis of the Tate algebra, and the Mahler coordinates of monomials

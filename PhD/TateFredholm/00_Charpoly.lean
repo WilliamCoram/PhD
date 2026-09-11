@@ -11,7 +11,7 @@ import Mathlib.LinearAlgebra.Matrix.SchurComplement
 # Reversed characteristic polynomials: base change and unipotent matrices
 
 Facts about `Matrix.charpolyRev M = det (1 − X·M)` used in the rank and degree computations of
-the Riesz–Coleman decomposition (`PhD.TateFredholm.RieszColeman`):
+the Riesz–Coleman decomposition (`PhD.TateFredholm.«12_RieszColeman»`):
 
 * `Matrix.charpolyRev_map`: `charpolyRev` commutes with ring homomorphisms.
 * `Matrix.charpolyRev_mul_comm`, `Matrix.charpolyRev_eq_of_mul_eq`: Sylvester's identity

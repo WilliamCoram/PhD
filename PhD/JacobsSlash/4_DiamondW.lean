@@ -5,7 +5,7 @@ Authors: William Coram
 -/
 import PhD.JacobsSlash.«3_Slopes»
 import PhD.JacobsSlash.«3_BaseChange»
-import PhD.TateFredholm.BlockOp
+import PhD.TateFredholm.«06_BlockOp»
 
 /-!
 # The diamond operator `W` and the eigenspace splitting of `U₃` ([Jacobs, §2.1 pp. 31–34])

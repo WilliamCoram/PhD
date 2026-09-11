@@ -5,8 +5,8 @@ Authors: William Coram
 -/
 import PhD.JacobsSlash.«4_SlopeReading»
 import PhD.JacobsSlash.«4_DiamondW»
-import PhD.TateFredholm.Riesz
-import PhD.TateFredholm.NewtonSlopes
+import PhD.TateFredholm.«09_Riesz»
+import PhD.TateFredholm.«10_NewtonSlopes»
 import PhD.NewtonPolygons.PowerSeriesZeros
 import PhD.NewtonPolygons.PolynomialRoots
 import Mathlib.Topology.Algebra.Valued.NormedValued
@@ -14,7 +14,7 @@ import Mathlib.Topology.Algebra.Valued.NormedValued
 /-!
 # Newton-polygon slopes are valuations of reciprocal eigenvalues
 
-The composition point of the two pipelines of this development — `PhD.TateFredholm.Riesz`
+The composition point of the two pipelines of this development — `PhD.TateFredholm.«09_Riesz»`
 (zeros of the Fredholm determinant `det(1 − T·u)` of a compactoid operator are reciprocal
 eigenvalues, [Serre1962, §7 Props. 11–12]) and `PhD.NewtonPolygons` (every finite
 Newton-polygon slope of an entire series is attained by a zero, via the Weierstrass
@@ -28,7 +28,7 @@ factorisation §5.13, the root count §5.11 and the zero identification §5.14):
 The statement is **fully general** — arbitrary complete algebraically closed ultrametric
 field `K`, arbitrary index type `I`, arbitrary compactoid operator — and Jacobs-free.  Its
 `NewtonPolygons` half, `TateFredholm.exists_evalT_zero_of_slope`, now lives at the seam in
-`PhD/TateFredholm/NewtonSlopes.lean`, where `PhD/LWX/StepThree.lean` also consumes it.
+`PhD/TateFredholm/10_NewtonSlopes.lean`, where `PhD/LWX/15_StepThree.lean` also consumes it.
 
 The second half instantiates the bridge at the thesis's middle block:
 

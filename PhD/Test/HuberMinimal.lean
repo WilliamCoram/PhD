@@ -2,7 +2,7 @@
 Copyright (c) 2026. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
-import PhD.TateFredholm.HandClean.TateRings
+import PhD.TateFredholm.HandClean.«00_TateRings»
 
 /-!
 # Minimal Huber input for the converse of `isTateRing_of_isTate`
@@ -17,7 +17,7 @@ construction needs — the gauge norm `‖a‖ = (1/2)^{v(a)}`, `v(a) = sup {n :
 built on top of a principal pair and nothing else.
 
 `PairOfDefinition`, `IsHuberRing` and `IsTateRing` come from
-`PhD/TateFredholm/HandClean/TateRings.lean`, where they are already quoted.
+`PhD/TateFredholm/HandClean/00_TateRings.lean`, where they are already quoted.
 
 Everything below is lifted **unchanged** from the original file: these are exactly the
 declarations that needed no porting onto this repository's `ForMathlib` API.  In particular

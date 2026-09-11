@@ -1,10 +1,10 @@
-import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.«05_Fredholm»
 import Mathlib.RingTheory.Finiteness.Cardinality
 import Mathlib.Topology.MetricSpace.Ultra.Pi
 
 /-!
 # Property (Pr) as a lifting property; the one Noetherian statement
-([Bel] Exercise II.1.19, Propositions II.1.20–II.1.21.  See `Tate.lean` for the
+([Bel] Exercise II.1.19, Propositions II.1.20–II.1.21.  See `00_Tate.lean` for the
 development's overview and dictionary.) -/
 
 open Filter Topology

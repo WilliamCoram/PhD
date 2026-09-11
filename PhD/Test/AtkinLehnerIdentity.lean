@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.AtkinLehner
+import PhD.LWX.«05_AtkinLehner»
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 
 /-!
@@ -15,7 +15,7 @@ board.  Sorries here are deliberate: this is where we try to discharge the one h
 
 ## The hypothesis
 
-`PhD/LWX/AtkinLehner.lean` proves [LWX, Prop 3.22] *granted* the operator identity
+`PhD/LWX/05_AtkinLehner.lean` proves [LWX, Prop 3.22] *granted* the operator identity
 
   `U_p ∘ U'_p = p^{k+1}`  on `S^D_{k+2}(K^p Iw_{p^m}; ψ)`,   `ψ` of conductor exactly `p^m`,
 
@@ -260,7 +260,7 @@ With Step 1 now proved, `upRep_mul_upAdjRep` + `obstruction_mul_lowerUni` + `obs
 
 This needs `S^D_{k+2}(K^p Iw_{p^m}; ψ)` and its `U_p`-action, which the theta layer on the
 companion board supplies.  Until then the identity stays a hypothesis in
-`PhD/LWX/AtkinLehner.lean`.
+`PhD/LWX/05_AtkinLehner.lean`.
 -/
 
 /-! ## Step 1 — the character sum

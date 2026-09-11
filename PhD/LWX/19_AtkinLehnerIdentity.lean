@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.AtkinLehnerMap
-import PhD.LWX.DegreeFormula
+import PhD.LWX.«18_AtkinLehnerMap»
+import PhD.LWX.«17_DegreeFormula»
 
 /-!
 # `U_p ∘ U'_p = p^{k+1}` and hypothesis H1
@@ -27,7 +27,7 @@ nebentypus"; classical statement Miyake Thm 4.6.17 as cited at `bu04.txt:1122–
 both follows by transporting along the block model of the classical forms at a neat level.
 
 **The deliverable**: `atkinLehnerHypothesis_of_atkinLehnerData` — hypothesis H1 of
-`PhD/LWX/AtkinLehnerInst.lean` holds at the classical points, with the partner datum at the
+`PhD/LWX/13_AtkinLehnerInst.lean` holds at the classical points, with the partner datum at the
 nebentypus `ω⁻¹ω₀^{2k}` and the point `T_{χ_k}(ζ⁻¹)`; and `degX_succ_of_atkinLehnerData` —
 [LWX, Thm 1.3]'s degree formula with **no hypothesis left**, granted the adelic data.
 -/

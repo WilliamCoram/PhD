@@ -203,3 +203,30 @@ level, the Hecke character `ψ_A ∘ ν`, and `w` normalising the disc-`0` part 
 with neatness and the certificates — all statements about `D^×` and its level provable by class
 field theory and the shape of `K^p·Iw_p`, not by Jacquet–Langlands.  With this, the Step I /
 Step III development contains **no** Jacquet–Langlands dependency, granted that data.
+
+**Addendum (2026-09-11, board `lwx-conductor` — EXECUTED).**  [LWX, Prop 3.22] at **every**
+conductor `p^{h+1}`, `h ≥ 1`, is avoided concretely: `LWX.atkinLehnerHypothesis_of_atkinLehnerDataH`
+proves hypothesis H1 at the classical points of conductor `p^{h+1}` from the level-`h` adelic data
+`LWX.AtkinLehnerDataH`, by the same double-coset expansion as at level `1`
+(`LWX.discHeckeClH_comp_atkinLehnerH`, with `w_h = (0 p^h; −p 0)` and the factorisation
+`w_h v_b w_h⁻¹ v_c = ℓ_{b,c} · (p·1) · s_{−b p^{h−1}}`); the non-central terms cancel because the
+conductor is exactly `p^{h+1}` (`LWX.isPrimitiveRoot_nebCharH_oneAddPPowMul_one`,
+`LWX.sum_inv_nebCharKH_eq_zero`).  The slope identification of [LWX, §4.2] ("the `U_p`-slopes of
+`S^D_{k+2}(K^pIw_{p^M}, ψ)` are …") is done **without Prop 2.15**: the classical factor's slopes
+are `≤ k+1` by H1 and `‖U_p‖ ≤ 1`, the complement's are `≥ k+1` through the theta target
+(`LWX.unitSlope_specCharSeries_eq_unitSlope_charpolyRev_matrixH`).  The slope reflection
+(`LWX.slopeRatio_add_slopeRatio_partnerChar_of_atkinLehnerFamilyH`), (4.2.5)
+(`LWX.slopeRatio_partnerChar_succ`), (4.2.6) = (1.5.2) (`LWX.slopeRatio_mul_teichChar_sq`) and
+the arithmetic progressions of [LWX, Thm 1.5] (`LWX.slopeRatio_add_period`) follow with no
+hypothesis beyond the adelic data families `LWX.AtkinLehnerFamily` / `LWX.AtkinLehnerFamilyH`
+(class field theory and the shape of the level for `D^×`, not Jacquet–Langlands).  No
+Jacquet–Langlands input is used anywhere on the board.
+
+**Addendum (2026-09-11, board `lwx-degrees` — EXECUTED).**  [LWX, Thm 1.3]'s degree formulas at
+every classical weight and [LWX, Cor 1.4] add **no** new input.  They are the level-`1` gap lemmas
+of `StepThree.lean` (H2 = `LWX.isThetaExact_classicalData`, JL-free) with H1 from the adelic data
+(`LWX.atkinLehnerHypothesis_of_atkinLehnerData`, JL-free), applied at the family
+`LWX.AtkinLehnerFamily` (`LWX.degX_succ_of_atkinLehnerFamily`, `LWX.degXint_of_atkinLehnerFamily`,
+`LWX.degXint_pos_of_atkinLehnerFamily`), followed by character algebra in `(ZMod p)ˣ →* ℤ_[p]ˣ`
+(`LWX.degX_succ_mul_teichChar_sq`, `LWX.degXint_mul_teichChar_sq`, `LWX.degX_succ_add_period`,
+`LWX.degXint_add_period`).  No Jacquet–Langlands input is used anywhere on the board.

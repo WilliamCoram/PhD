@@ -117,7 +117,7 @@ theorem evalU3_heckeU3 (φ : kappaForms t ht) :
   exact Finset.sum_comm
 
 -- Public-API candidate (BlockOp/TateFredholm): duplicates `TateFredholm.IsCompactoid.smul`
--- (Riesz.lean, outside this file's import closure); deduplicate once the BlockOp import
+-- (09_Riesz.lean, outside this file's import closure); deduplicate once the BlockOp import
 -- chain reaches Riesz.  Compactoidness is closed under scalar multiples: rows scale by `‖s‖`.
 private theorem isCompactoid_smul (s : K₃) {u : c(ℕ, K₃) →L[K₃] c(ℕ, K₃)}
     (hu : IsCompactoid u) : IsCompactoid (s • u) := by

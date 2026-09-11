@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.DiscModel
-import PhD.LWX.Certificates
-import PhD.QMF.Weight.Fredholm
+import PhD.LWX.«09_DiscModel»
+import PhD.LWX.«05_Certificates»
+import PhD.QMF.Weight.«07_Fredholm»
 
 /-!
 # `S^{D,†,m}` in the disc model, and `U_p` on it — SKELETON
@@ -13,7 +13,7 @@ import PhD.QMF.Weight.Fredholm
 [LWX, §2.4–2.5] at analyticity level `m = h + 1`: the space of `m`-locally analytic automorphic
 forms `S^{D,†,m}_κ(U)` is the space of functions `φ : (D ⊗ 𝔸_f)ˣ → OB_{qp^{-m}}`, left-invariant
 under the global units and satisfying `φ(gu) = φ(g) ∣ u_p` for `u ∈ U`; and `U_p = [UηU]` acts by
-the same formula (2.5.1).  In the disc model of `OB_{qp^{-m}}` (`DiscModel.lean`) this is the
+the same formula (2.5.1).  In the disc model of `OB_{qp^{-m}}` (`09_DiscModel.lean`) this is the
 `slashFixedPointsOfLE` of the disc action pulled back along the component map, and — at a family
 of class representatives with trivial stabilisers — the Hecke operator becomes the block operator
 of the certificate matrices of [LWX, Prop 3.1], now acting on `c(ι × (ℤ/pʰ × ℕ), K)`.

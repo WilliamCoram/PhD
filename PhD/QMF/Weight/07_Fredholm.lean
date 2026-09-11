@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Compact
+import PhD.QMF.Weight.«06_Compact»
 
 /-!
 # The Fredholm determinant of a Hecke operator on `S_κ(U)`

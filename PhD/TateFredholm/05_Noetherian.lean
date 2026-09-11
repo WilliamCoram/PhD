@@ -1,10 +1,10 @@
-import PhD.TateFredholm.Matrix
+import PhD.TateFredholm.«04_Matrix»
 import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 # The Noetherian bridge: closedness of finitely generated submodules
 ([FvdP] Lemma 1.2.3; [Buz07] Lemmas 2.2–2.3; [Lud24] Lemma 2.24, Lemma 2.26,
-Exercise 2.27.  See `Tate.lean` for the development's overview.)
+Exercise 2.27.  See `00_Tate.lean` for the development's overview.)
 
 Over a **Noetherian** Banach–Tate ring, finitely generated submodules of Banach modules
 are complete: first for submodules of *module-finite* Banach modules ([FvdP] 1.2.3 —

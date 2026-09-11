@@ -8,7 +8,7 @@ import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.Analysis.Normed.Ring.Ultra
 import Mathlib.Data.Nat.Choose.Dvd
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import PhD.LWX.UnitsLog
+import PhD.LWX.«01_UnitsLog»
 
 /-!
 # Tilted degree: the Mahler calculus of [LWX] §3.3–§3.13 — SKELETON (lwx-halo board)

@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Series
-import PhD.QMF.Slash.Sigma0
-import PhD.QMF.Slash.Basic
+import PhD.QMF.Weight.«00_Series»
+import PhD.QMF.Slash.«01_Sigma0»
+import PhD.QMF.Slash.«02_Basic»
 
 /-!
 # The weight-`κ` action of an abstract weight on the Tate algebra
@@ -22,7 +22,7 @@ character-abstracted port): the action of `g` is `ofGenFun` of `W.genFun g`, so
 composition (`mobius_mul`, character-free) plus the κ-cocycle (a `WeightSeries` field).
 
 **Status: engine, not API.**  Everything here is stated for the implementation record
-`WeightSeries`; the public weight is `QMF.AnalyticWeight` (`PhD/QMF/Weight/Char.lean`),
+`WeightSeries`; the public weight is `QMF.AnalyticWeight` (`PhD/QMF/Weight/04_Char.lean`),
 which re-exports `kappaSlash`, `kappaSlash_one/_mul`, `matrixCoeff_kappaSlash`,
 `kappaSlashAction`, `smulSlashClass` on itself.  Use those downstream.
 

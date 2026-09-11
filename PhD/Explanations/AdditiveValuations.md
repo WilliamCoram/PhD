@@ -95,7 +95,7 @@ about valuations at all:
   file only applies it to a value group.
 
 Within the valuation directory the cuts follow mathlib's own `RingTheory/Valuation/Discrete/`
-precedent (`Basic.lean` + `RankOne.lean` in a directory named for the hypothesis). Each of
+precedent (`02_Basic.lean` + `RankOne.lean` in a directory named for the hypothesis). Each of
 `RankOne`, `Commensurable`, `Discrete` is one hypothesis on the valuation and one codomain:
 `WithTop ℝ`, `WithTop ℚ`, `WithTop ℤ`.
 
@@ -185,7 +185,7 @@ case it was written to escape. It also keeps the import weight off everything do
 
 ## 3. Setting (3): `v_ϖ` on a Banach–Tate ring, and the seam
 
-`PhD/TateFredholm/Tate.lean` defines, for a multiplicative pseudo-uniformizer `ϖ`,
+`PhD/TateFredholm/00_Tate.lean` defines, for a multiplicative pseudo-uniformizer `ϖ`,
 
 ```lean
 def PseudoUniformizer.val (ϖ : PseudoUniformizer A) (r : A) : WithTop ℝ :=
@@ -215,7 +215,7 @@ every integer, on the integer powers of `ϖ` — the source of the polygon's ver
 
 ### The seam
 
-`PhD/TateFredholm/AddVal.lean` is a leaf that nothing depends on. It exists only to pin (2) and
+`PhD/TateFredholm/01_AddVal.lean` is a leaf that nothing depends on. It exists only to pin (2) and
 (3) to (1):
 
 ```lean
@@ -256,7 +256,7 @@ Before any of this goes upstream:
 * **`PhD/Test/CompactOperatorsJohanssonNewton.lean`** still contains the old `ℝ`-valued
   `PseudoUniformizer.val`. That file is a frozen source blueprint and was left alone
   deliberately.
-* Two pre-existing `overlappingInstances` linter warnings in `Tate.lean`, on `IsMultiplicative`
+* Two pre-existing `overlappingInstances` linter warnings in `00_Tate.lean`, on `IsMultiplicative`
   and `instCoeHeadPseudoUniformizer` (`[NormedRing A]` together with `[Norm A]` / `[Mul A]`).
   They predate this work and are a one-line fix each.
 

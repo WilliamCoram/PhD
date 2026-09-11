@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.TateFredholm.Matrix
+import PhD.TateFredholm.«04_Matrix»
 import Mathlib.RingTheory.MvPowerSeries.Basic
 
 /-!
@@ -57,7 +57,7 @@ theorem idx_injective : Function.Injective fun p : ℕ × ℕ => idx p.1 p.2 := 
   exact Prod.ext h0 h1
 
 /- `ext_matrixCoeff` deleted here: superseded by the more general
-`TateFredholm.ext_matrixCoeff` in `PhD/TateFredholm/Matrix.lean`. -/
+`TateFredholm.ext_matrixCoeff` in `PhD/TateFredholm/04_Matrix.lean`. -/
 
 section OfCoeffs
 

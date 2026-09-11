@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Sigma0
+import PhD.QMF.«00_Sigma0»
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 /-!

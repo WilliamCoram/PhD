@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import Mathlib.RingTheory.PowerSeries.Basic
-import PhD.LWX.PadicExpLog
+import PhD.LWX.«00_PadicExpLog»
 
 /-!
 # `p`-adic analytic functions on `1`-units (`p = 3`)
@@ -15,7 +15,7 @@ power-series version `κ(cx + d)` enters through the binomial expansion
 `4^ρ = ∑ₕ 3^h (ρ choose h)` (loc. cit.).
 
 The ultrametric exponential and logarithm themselves, with their convergence discs, live in
-the `p`-generic development `PhD/LWX/PadicExpLog.lean` (namespace `LWX.PadicExpLog`, over an
+the `p`-generic development `PhD/LWX/00_PadicExpLog.lean` (namespace `LWX.PadicExpLog`, over an
 abstract complete ultrametric field `K` with `‖p‖ < 1`, `p ≠ 2`).  This file is its `p = 3`
 instance: the `p`-free declarations are re-exported into `JacobsSlash` unchanged, the
 `‖3‖ < 1`-lemmas used downstream are restated in their original `p = 3` form (one-line

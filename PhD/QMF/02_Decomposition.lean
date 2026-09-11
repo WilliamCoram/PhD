@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.AutomorphicFunction
+import PhD.QMF.«01_AutomorphicFunction»
 import Mathlib.Algebra.Module.Pi
 import Mathlib.GroupTheory.DoubleCoset
 import Mathlib.Tactic.Group

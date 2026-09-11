@@ -3,14 +3,14 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Halo
+import PhD.LWX.«04_Halo»
 
 /-!
 # Sharpness of the halo estimate: [LWX, Cor 3.18]'s equality clause
 
 For the specialized characteristic series `∑ c_n(T₀) Xⁿ` at a halo point `p⁻¹ < ‖T₀‖ < 1`,
 [LWX, Cor 3.18] refines `v(c_n(T₀)) ≥ λ(n)·v(T₀)` (proved as
-`norm_specCharSeries_coeff_le` in `Halo.lean`) to
+`norm_specCharSeries_coeff_le` in `04_Halo.lean`) to
 
 * equality **iff** `b_{n,λ(n)} ∈ ℤ_p^×` (`norm_specCharSeries_coeff_eq_iff`), and
 * the margin `v(c_n(T₀)) ≥ λ(n)·v(T₀) + min{v(T₀), 1 − v(T₀)}` when `b_{n,λ(n)}` is not a

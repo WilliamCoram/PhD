@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.PowSubOne
+import PhD.LWX.«07_PowSubOne»
 
 /-!
 # The halo weight at analyticity level `h` — SKELETON
@@ -16,11 +16,11 @@ import PhD.LWX.PowSubOne
 like `(‖T'_h‖·√p)^m` (`norm_choose_haloExponentH_mul_pow_le`, the level-`h` form of
 [LWX, Prop 3.14]'s estimate).  Packaged as an `AnalyticWeight` at the level `M1Kh h ψ` — the
 `ψ`-image of the matrices with `p^{h+1} ∣ c` (the conjugates `t_{a'}⁻¹·δ·t_a` of the level `M₁` by
-the disc maps `t_a(w) = a + pʰw`, `DiscModel.lean`) — on the level-`h` halo units
+the disc maps `t_a(w) = a + pʰw`, `09_DiscModel.lean`) — on the level-`h` halo units
 `ψ(ℤ_p^×)·(1 + p^{h+1}𝒪_K)`, of radius `haloRhoH p h T₀ = max(p^{−(h+1)}, ‖T'_h‖)·√p`.
 
-The construction mirrors `HaloWeight.lean` (`h = 0`) step for step; the two are related by the
-**binomial power identity** `oneAddPow_pow_mul` (`PowSubOne.lean`): on a `1`-unit
+The construction mirrors `06_HaloWeight.lean` (`h = 0`) step for step; the two are related by the
+**binomial power identity** `oneAddPow_pow_mul` (`07_PowSubOne.lean`): on a `1`-unit
 `u ∈ 1 + p^{h+1}ℤ_p` the universal character specialises to
 `(1+T₀)^{log u/p} = (1+T'_h)^{log u/p^{h+1}} = exp(s_h·log u)` (`specialize_univChar_eq_padicExp`).
 
@@ -50,7 +50,7 @@ section Level
 variable (p) in
 /-- **The level-`h` monoid** `M_h`: integral matrices with `p^{h+1} ∣ c`, `d` a unit and nonzero
 determinant (`M_0 = M₁`, [LWX, (2.3.3)]).  The disc conjugates `t_{a'}⁻¹·δ·t_a` of `δ ∈ M₁` lie in
-`M_h` (`DiscModel.lean`). -/
+`M_h` (`09_DiscModel.lean`). -/
 def Mh (h : ℕ) : Submonoid (Matrix (Fin 2) (Fin 2) ℚ_[p]) where
   carrier :=
     {g | (∀ i j, ‖g i j‖ ≤ 1) ∧ ‖g 1 0‖ ≤ (p : ℝ)⁻¹ ^ (h + 1) ∧ ‖g 1 1‖ = 1 ∧ g.det ≠ 0}

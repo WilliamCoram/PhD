@@ -5,8 +5,8 @@ Authors: William Coram
 -/
 import Mathlib.RingTheory.Binomial
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import PhD.LWX.PadicExpLog
-import PhD.QMF.Weight.Char
+import PhD.LWX.«00_PadicExpLog»
+import PhD.QMF.Weight.«04_Char»
 
 /-!
 # The `p`-adic binomial theorem for an arbitrary exponent

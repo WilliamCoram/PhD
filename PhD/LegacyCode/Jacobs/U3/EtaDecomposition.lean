@@ -5,7 +5,7 @@ Authors: William Coram
 -/
 import Mathlib.NumberTheory.Padics.RingHoms
 import PhD.Jacobs.U3.Level
-import PhD.QMF.UpiElement
+import PhD.QMF.«04_UpiElement»
 
 /-!
 # Lemma 2.3: the double-coset decomposition of `U η₃ U`
@@ -30,7 +30,7 @@ are exchanged, so `⊔ₜ G·vₜ` (thesis) becomes `⊔ₜ wₜ·U` (here), and
 recomputed rather than copied.  The reason the library is left-handed, and the reason the
 adjugate — rather than `g ↦ g⁻¹`, which does not exist on the monoid `Σ₀` precisely
 because `η` is not invertible in it — is the bridge, is documented in
-`PhD/QMF/Sigma0.lean`'s header.
+`PhD/QMF/00_Sigma0.lean`'s header.
 
 Concretely, the adjugate of the thesis's `v_t = (3 0; 9t 1)` is `(1 0; −9t 3)`, and
 `{0, −9, −18} = {0, 18, 9}` modulo `27`; so the family used here is `w_t = (1 0; 9t 3)`,

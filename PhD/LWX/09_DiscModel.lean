@@ -3,16 +3,16 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.AmiceBasis
-import PhD.LWX.HaloWeightH
-import PhD.LWX.Seam
+import PhD.LWX.«08_AmiceBasis»
+import PhD.LWX.«08_HaloWeightH»
+import PhD.LWX.«07_Seam»
 
 /-!
 # The disc model of the induced representation at level `h`, and the `M₁`-action — SKELETON
 
 [LWX, (2.3.1)] at analyticity level `m = h + 1`: `OB_{qp^{-m}}` is the space of functions on `ℤ_p`
 which are analytic on every disc `a + pʰℤ_p` (`a` running over `ℤ/pʰ`), with the maximum of the
-Gauss norms of the `pʰ` Taylor expansions; its model is `c(ℤ/pʰ × ℕ, K)` (`AmiceBasis.lean`).
+Gauss norms of the `pʰ` Taylor expansions; its model is `c(ℤ/pʰ × ℕ, K)` (`08_AmiceBasis.lean`).
 
 The level `M₁` of [LWX, (2.3.3)] acts on it by the same formula (2.3.2)
 `(f ∣ δ)(z) = [cz+d]·f((az+b)/(cz+d))`, but the formula no longer preserves a single disc: it
@@ -23,7 +23,7 @@ The level `M₁` of [LWX, (2.3.3)] acts on it by the same formula (2.3.2)
 
 (`discConj`, `discConj_mem_Mh`) says the action carries the Taylor expansion on the disc `a'` to
 the Taylor expansion on the disc `a`, through the *single-disc* weight action of `δ'` at the
-level `M_h` — which is exactly `HaloWeightH.lean`'s `AnalyticWeight` action.  So the disc action
+level `M_h` — which is exactly `08_HaloWeightH.lean`'s `AnalyticWeight` action.  So the disc action
 is a `blockOp` of `kappaSlash`s, one per disc, permuted by `discImage` (`discSlash`), and it is a
 right action because `discImage`/`discConj` satisfy the cocycle rules
 (`discImage_mul`, `discConj_mul`).

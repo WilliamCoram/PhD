@@ -1,9 +1,9 @@
-import PhD.TateFredholm.OperatorNorm
+import PhD.TateFredholm.«01_OperatorNorm»
 
 /-!
 # Finite-rank and completely continuous operators
 ([Bel] Definition II.1.3, Lemma II.1.4; [JN] Definition 2.1.5; blueprint 6.13.  See
-`Tate.lean` for the development's overview and dictionary.)
+`00_Tate.lean` for the development's overview and dictionary.)
 
 The two definitions and everything provable about them by pure algebra live in the
 `Definitions` section, under the weakest hypotheses that make them typecheck: a semiring
@@ -91,7 +91,7 @@ variable {M N P : Type*}
   [NormedAddCommGroup P] [Module R P] [IsBoundedSMul R P]
 
 /-- The operator norm is submultiplicative under composition.  (Homed here rather than in
-`OperatorNorm.lean` for organisational reasons; consumed by the ideal lemmas below.) -/
+`01_OperatorNorm.lean` for organisational reasons; consumed by the ideal lemmas below.) -/
 theorem opNorm_comp_le [IsTate R] (f : N →L[R] P) (u : M →L[R] N) :
     ‖f.comp u‖ ≤ ‖f‖ * ‖u‖ :=
   opNorm_le_of_forall _ (mul_nonneg (opNorm_nonneg f) (opNorm_nonneg u)) fun x => by

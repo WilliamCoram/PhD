@@ -1,4 +1,4 @@
-import PhD.TateFredholm.OperatorNorm
+import PhD.TateFredholm.«01_OperatorNorm»
 import Mathlib.Analysis.Normed.Operator.Basic
 
 /-!
@@ -28,7 +28,7 @@ this project's `TateFredholm.instNorm` (over a Banach–Tate ring), so the PR le
 project delete its own instance instead of maintaining a second `Norm` on the same type.
 
 Reference for the Tate side: [JN] Definition 2.1.4, [Bel] II.1.1; see
-`PhD/TateFredholm/OperatorNorm.lean`.
+`PhD/TateFredholm/01_OperatorNorm.lean`.
 -/
 
 open Set
@@ -134,7 +134,7 @@ one: every `NontriviallyNormedField` is `IsTate` (the instance `TateFredholm.ins
 in the `Field` section below, which is a proof of Mathlib's statement.  So this tier
 generalises too, on hypotheses `[NormedRing R] [NormOneClass R] [IsTate R]` together
 with `[Module R M] [IsBoundedSMul R M]`: no commutativity (verified by rebuilding
-`OperatorNorm.lean` with `NormedRing` in place of `NormedCommRing`), and `IsBoundedSMul`
+`01_OperatorNorm.lean` with `NormedRing` in place of `NormedCommRing`), and `IsBoundedSMul`
 in place of `NormedSpace`, exactly as in the tiers above.
 
 Two gaps remain before this tier could replace Mathlib's:
@@ -189,7 +189,7 @@ variable {R M N : Type*} [NormedCommRing R] [NormOneClass R]
   [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N]
 
 /-- Over a Banach–Tate ring the generalised norm is this project's `instNorm`, again
-definitionally — so the PR would let `PhD/TateFredholm/OperatorNorm.lean` drop its own
+definitionally — so the PR would let `PhD/TateFredholm/01_OperatorNorm.lean` drop its own
 `Norm` instance and the duplicated `norm_def` / `opNorm_nonneg` / `opNorm_le_of_forall` /
 `opNorm_zero` / `opNorm_neg` / `opNorm_sub_comm`. -/
 example : (hasOpNorm : Norm (M →L[R] N)) = TateFredholm.instNorm := rfl

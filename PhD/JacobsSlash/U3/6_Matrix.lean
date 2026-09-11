@@ -7,8 +7,8 @@ import PhD.JacobsSlash.«4_DiamondW»
 import PhD.JacobsSlash.CN1.«4_Dictionary»
 import PhD.JacobsSlash.U3.«5_Factorisations»
 import PhD.JacobsSlash.U3.«5_KappaWeight»
-import PhD.QMF.Slash.HeckeMatrix
-import PhD.QMF.Weight.Quaternionic
+import PhD.QMF.Slash.«04_HeckeMatrix»
+import PhD.QMF.Weight.«07_Quaternionic»
 
 /-!
 # The matrix of `U₃` is the transcribed matrix — twist-free

@@ -12,7 +12,7 @@ import PhD.JacobsSlash.U3.«7_DiamondHecke»
 /-!
 # The eigenvalues of `U₃` have valuation `j + ½`
 
-**The culmination of the development** — Riesz theory (`PhD.TateFredholm.Riesz`), the
+**The culmination of the development** — Riesz theory (`PhD.TateFredholm.«09_Riesz»`), the
 Newton-polygon zero theory (`PhD.NewtonPolygons`), and the fork's identification of the
 genuine Hecke operator (`PhD.JacobsSlash`), composed:
 

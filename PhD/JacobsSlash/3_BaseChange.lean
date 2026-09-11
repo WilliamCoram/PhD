@@ -5,8 +5,8 @@ Authors: William Coram
 -/
 import PhD.JacobsSlash.«2_U3Data»
 import PhD.ForMathlib.RingTheory.MvPowerSeries.Inverse
-import PhD.TateFredholm.BaseChange
-import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.«08_BaseChange»
+import PhD.TateFredholm.«05_Fredholm»
 
 /-!
 # Base change of Fredholm determinants and of the Jacobs analytic layer
@@ -17,10 +17,10 @@ Two layers, both consumed by `PhD.JacobsSlash.U3.HeckeSlopes` (the endgame board
 * The Fredholm-determinant half moved to the general layer on 2026-08-20 (forms-riesz
   board, T001): `TateFredholm.charCoeff_map` / `TateFredholm.charPowerSeries_map` are the
   isometric corollaries of `charCoeff_baseChange` / `charPowerSeries_baseChange`
-  (`PhD/TateFredholm/BaseChange.lean`), and `MvPowerSeries.map_inv₀`,
+  (`PhD/TateFredholm/08_BaseChange.lean`), and `MvPowerSeries.map_inv₀`,
   `TateFredholm.map_linSeries`, `TateFredholm.map_quadSeries` live next to their
   definitions (`PhD/ForMathlib/RingTheory/MvPowerSeries/Inverse.lean`,
-  `PhD/TateFredholm/WeightGenFun.lean`).
+  `PhD/TateFredholm/06_WeightGenFun.lean`).
 
 * The `Jacobs` analytic layer commutes with isometric field embeddings: `padicLog`,
   `padicExp`, `unitPow`, `binomialCoeff` and the generating-function layer

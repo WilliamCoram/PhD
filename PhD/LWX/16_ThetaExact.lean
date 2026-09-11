@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.StepThree
-import PhD.TateFredholm.Conjugation
+import PhD.LWX.«15_StepThree»
+import PhD.TateFredholm.«07_Conjugation»
 
 /-!
 # Hypothesis H2 from the classical shapes
@@ -13,7 +13,7 @@ import PhD.TateFredholm.Conjugation
 `0 → S^D_{k+2}(K^p Iw_{q²}, ψ) → S^{D,†}_{(k,ψ)} → S^{D,†}_{(−k−2,ψ)} → 0`, "equivariant for the
 `U_p`-action on the first two spaces, and the `p^{k+1}U_p`-action on the third", to conclude
 that the characteristic power series of `U_p` on the complement of the classical subspace is
-that of `p^{k+1}U_p` on the target space.  `StepThree.lean` records exactly this determinant
+that of `p^{k+1}U_p` on the target space.  `15_StepThree.lean` records exactly this determinant
 identity as the hypothesis `IsThetaExact` (H2).  This file discharges it from the classical
 shapes of the two weights.
 

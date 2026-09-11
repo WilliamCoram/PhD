@@ -584,7 +584,7 @@ submodules is exactly the Noetherian input ([JN, p. 7]).  Over a general Banach�
 base there is a counterexample (`R = ℚₚ ⊕ c(ℕ, ℚₚ)` pointwise, `P = R·(pʲeⱼ)ⱼ`, whose
 unit vectors `p⁻ⁿeₙ • g` concentrate at coordinate `n`).  In this file's Banach-algebra
 setting the statement should carry an `IsClosed (P : Set c(I, R))` hypothesis unless `R`
-is Noetherian or a field.  The merged development (`PhD.TateFredholm.Matrix`) states it
+is Noetherian or a field.  The merged development (`PhD.TateFredholm.«04_Matrix»`) states it
 with the explicit hypothesis; see the b2 log there for the full analysis. -/
 theorem exists_truncation_near (P : Submodule R c(I, R)) (hP : P.FG) {ε : ℝ} (hε : 0 < ε) :
     ∃ S : Finset I, ∀ p ∈ P, ‖truncation S p - p‖ ≤ ε * ‖p‖ := by

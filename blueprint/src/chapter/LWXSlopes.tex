@@ -35,8 +35,10 @@ arithmetic (\S2), and the analytic Claim of \cite[\S4.2]{LWX} which controls the
 between (\S3).  Section~4 assembles the polygon-level form of Theorem 1.5, and
 \S\ref{sec:what-15-says} says precisely how much of \cite[Theorem 1.5]{LWX} that is.
 Section~5 transports everything to the genuine Hecke operator, and
-Section~\ref{sec:stepone} records what is still missing for
-\cite[Theorem 1.3]{LWX} itself.
+Section~\ref{sec:stepone} discharges the hypothesis (Steps I and III of \cite[\S3.23]{LWX}),
+granted adelic Atkin--Lehner data, and proves the degree formulas of \cite[Theorem 1.3]{LWX},
+\cite[Corollary 1.4]{LWX} and the second half of \cite[Theorem 1.5]{LWX} at the level of Newton
+polygons.
 
 \section{The upper bound polygon}
 
@@ -335,8 +337,10 @@ explicit $T$-free polygon (Definition~\ref{def:shapepolygon}), on exactly \cite{
 Theorem~\ref{thm:slope-growth} adds the two clauses ``in increasing order and tending to
 infinity''.  We prove it over any complete ultrametric field receiving $\Zp$ isometrically, not
 only $\Cp$, and --- through Theorem~\ref{thm:lwx-slopes-seam} --- for the genuine $U_p$ rather
-than for the integral matrix.  It is conditional on the touching hypothesis
-$\mathrm{HasUnitBand}$; see \S\ref{sec:stepone}.
+than for the integral matrix.  As stated it is conditional on the touching hypothesis
+$\mathrm{HasUnitBand}$; Theorem~\ref{thm:lwx-unitband} discharges that hypothesis at every vertex
+and on every disc, granted the adelic data of Definition~\ref{def:al-data}, so that for the genuine
+$U_p$ (1.5.1) holds with no further hypothesis.
 
 \paragraph{(b) The geometric decomposition.}  The passage from ``the slope ratios are
 $T$-independent'' to ``$\mathrm{Spc}^{>\lambda}_{D,\omega} = \coprod_i Y_{i,\omega}$ with each
@@ -351,38 +355,35 @@ Fredholm determinant is the corresponding polynomial factor --- which is the alg
 the finite flat piece.  Assembling those into a rigid space, and identifying the summands with
 connected components, is the missing step.
 
-\paragraph{(c) The arithmetic progressions.}  This is the ``Moreover'' clause, (1.5.2), and it is
-\emph{not} formalised and \emph{not} a consequence of Theorem~\ref{thm:lwx15}.  This is the point
-at which our statement is genuinely weaker than \cite{LWX}'s, and the reason is structural rather
-than a matter of effort: (1.5.2) relates the sequence at the nebentypus $\omega$ to the sequence
-at $\omega\omega_0^{2}$ --- two \emph{different} characters, shifted by the square of the
-Teichm\"uller character --- whereas everything in
-Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is proved at a single fixed $\omega$, one
-weight disc at a time.  Nothing in our development compares two nebentypi, so no periodicity
-statement can even be phrased, let alone proved.
+\paragraph{(c) The arithmetic progressions.}  This is the ``Moreover'' clause, (1.5.2).  It is
+\emph{not} a consequence of Theorem~\ref{thm:lwx15}: (1.5.2) relates the sequence at the
+nebentypus $\omega$ to the sequence at $\omega\omega_0^{2}$ --- two \emph{different} characters,
+shifted by the square of the Teichm\"uller character --- whereas Theorem~\ref{thm:lwx15} is a
+statement at a single fixed $\omega$, one weight disc at a time.  \cite[Remark 1.6(4)]{LWX} says
+where it comes from: ``The second half of Theorem 1.5 follows from the first half by classicality
+results and Atkin--Lehner theory'' (an argument found independently by Bergdall and Pollack).
+That is the route formalised in Theorem~\ref{thm:lwx152}, at the level of Newton polygons.  The
+Atkin--Lehner input of \cite[\S3.23 Step I]{LWX} is supplied at conductor $p^{h+1}$ for every
+level $h \geq 1$ and at every classical weight at once, by \emph{families} of adelic data
+(Definition~\ref{def:al-data}); the slopes of the classical subspace are identified without the
+classicality theorem \cite[Proposition 2.15]{LWX}; and the slope reflection, (4.2.5),
+(4.2.6) $=$ (1.5.2) and the arithmetic progressions are then bookkeeping in the characters of
+$\Delta$.  The same comparison of two weight discs is behind \cite[Corollary 1.4]{LWX}, the
+periodicity of $\deg X_{I,\omega}$ modulo $\varphi(q)/2$, which is formalised as
+Corollary~\ref{cor:lwx14}.
 
-\cite[Remark 1.6(4)]{LWX} says where it comes from: ``The second half of Theorem 1.5 follows from
-the first half by classicality results and Atkin--Lehner theory'' (an argument found
-independently by Bergdall and Pollack).  Those are exactly the two ingredients of
-\cite[\S3.23 Step I]{LWX}, and \S\ref{sec:stepone} below records their status here: the
-Atkin--Lehner slope pairing is proved modulo one operator identity carried as a hypothesis
-(Proposition~\ref{prop:atkin-lehner}), the classical subspace and the theta operator are stated
-but unproved (Proposition~\ref{prop:theta}), and the conjugate character $\omega^{-1}$ exists as
-a definition (Definition~\ref{def:conjchar}) precisely so that a two-character argument could be
-phrased later.  The same remark applies to \cite[Corollary 1.4]{LWX}, the periodicity of
-$\deg X_{I,\omega}$ modulo $\varphi(q)/2$, which is a statement about two weight discs and is
-likewise not formalised.
-
-\paragraph{Degrees.}  One further difference is worth flagging.  Our
-Corollary~\ref{cor:lwx13-slopes} gives the multiplicities as
+\paragraph{Degrees.}  Corollary~\ref{cor:lwx13-slopes} gives the multiplicities as
 $\deg X_k = n_k^{+} - n_k^{-}$ and $\deg X_{(k,k+1)} = n_{k+1}^{-} - n_k^{+}$, which is what the
 vertex analysis produces and is enough for $T$-independence.  \cite[Theorem 1.3]{LWX} additionally
 evaluates them, at a neat tame level, as
 $\deg X_{n,\omega} = r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n-2}) + r_{\mathrm{ord}}(\omega\omega_0^{-2n})$
 and $\deg X_{(n,n+1),\omega} = qt - r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n}) -
 r_{\mathrm{ord}}(\omega\omega_0^{-2n})$ in terms of dimensions of ordinary subspaces.  Those
-identifications are again Step I, and again involve several nebentypi at once; they are not
-formalised.
+identifications are Step III, and they too involve several nebentypi at once.  They are formalised
+at the coefficient level, with $r_{\mathrm{ord}}$ the largest index of a unit coefficient of the
+characteristic series --- which is how \cite{LWX} prove their Theorem 3.19 --- as
+Theorem~\ref{thm:lwx13-degrees}; only their reading as degrees of rigid analytic components is
+not, as in (b).
 
 \section{Reading it on the genuine $U_p$}
 
@@ -412,29 +413,39 @@ neatness hypothesis is needed, because none of the polygon statements uses one.
 The last item deserves emphasis: \emph{the touching hypothesis has to be verified only once, at a
 single weight}, and Lemma~\ref{lem:unitband-from-touching} then supplies it everywhere.
 
-\section{Towards Theorem 1.3: what remains}
+\section{Theorem 1.3: Steps I and III}
 \label{sec:stepone}
 
 \cite[Theorem 1.3]{LWX} --- the statement that the spectral curve over the boundary annulus is a
 disjoint union of pieces finite and flat over it, with the slope of $a_p$ on the piece $X_I$
-lying in $\varphi(q)v(T)\cdot I$ --- needs the touching hypothesis to be discharged.
-\cite[\S3.23]{LWX} do this in three steps.  \emph{Step I} compares the slopes on the whole space
-with those on the finite-dimensional classical subspace, and uses Atkin--Lehner theory to pin
-their total; this is what supplies the touching.  \emph{Step II} is the vertex analysis of \S2
-above, and is formalised.  \emph{Step III} computes the degrees $\deg X_{I,\omega}$ in terms of
-dimensions of ordinary subspaces, using Hida theory and the theta exact sequence; we prove the
-degrees only in the form $n_k^{+}-n_k^{-}$, which is what \S2 produces.  So Step II is done and
-Steps I and III are not.  This section records exactly what is and is not there, and
-\S\ref{sec:ledger} tabulates what each of the missing steps would buy.
+lying in $\varphi(q)v(T)\cdot I$ and with explicit degrees --- needs the touching hypothesis to be
+discharged.  \cite[\S3.23]{LWX} do this in three steps.  \emph{Step I} compares the slopes on the
+whole space with those on the finite-dimensional classical subspace, and uses Atkin--Lehner
+theory to pin their total; this is what supplies the touching.  \emph{Step II} is the vertex
+analysis of \S2 above.  \emph{Step III} computes the degrees $\deg X_{I,\omega}$ in terms of
+dimensions of ordinary subspaces, using Hida theory and the theta exact sequence.  All three steps
+are formalised, at the level of characteristic series and Newton polygons, granted the adelic
+data of Definition~\ref{def:al-data}; \S\ref{sec:ledger} records what each of them bought.
 
-\begin{definition}[The conjugate nebentypus]
+No step uses Jacquet--Langlands.  \cite{LWX}'s proofs of their Proposition 3.22 (Atkin--Lehner)
+and Proposition 2.15 (classicality) both appeal to it; here the first is replaced by a
+double-coset computation (Proposition~\ref{prop:al-identity}) and the second is not needed.  A
+per-result audit of every use of Jacquet--Langlands, and of our avoidance of it, is maintained
+alongside the sources.
+
+\begin{definition}[The conjugate, partner and target nebentypi]
   \label{def:conjchar}
-  The character $\omega^{-1} : u \mapsto \omega(u)^{-1}$ (stated in Lean, proof still a
-  skeleton).  Step I runs the argument at the pair
-  $(\omega, \omega^{-1})$ simultaneously; since every statement of
-  Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is proved for an arbitrary $\omega$, the
-  second instance costs nothing.  The same $U_p$-datum serves both, the nebentypus entering only
-  through the entry streams.
+  \lean{LWX.invChar, LWX.teichChar, LWX.partnerChar, LWX.targetChar}
+  \leanok
+  Let $\omega$ be a character of $\Delta$, $\omega_0$ the Teichm\"uller character and $k \geq 0$,
+  and let $(k,\psi)$ be a classical weight on the disc $\omega$, so that
+  $\psi|_\Delta = \omega\omega_0^{-k}$.  The \emph{conjugate} nebentypus is
+  $\omega^{-1} : u \mapsto \omega(u)^{-1}$; the \emph{partner} nebentypus
+  $\omega^{-1}\omega_0^{2k}$ is the disc of the Atkin--Lehner partner $(k,\psi^{-1})$; and the
+  \emph{target} nebentypus $\omega\omega_0^{-2k-2}$ is the disc of the theta target
+  $(-k-2,\psi)$.  Since every statement of Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is
+  proved for an arbitrary $\omega$, these further instances cost nothing, and the same $U_p$-datum
+  serves all of them, the nebentypus entering only through the entry streams.
 \end{definition}
 
 \begin{proposition}[Atkin--Lehner, reduced]
@@ -453,56 +464,269 @@ Steps I and III are not.  This section records exactly what is and is not there,
 \end{proposition}
 
 The proof of \cite[Proposition 3.22]{LWX} on \cite[p.~24]{LWX} applies Jacquet--Langlands and
-classifies the local component as a principal series.  Neither is available in Lean, so what is
-formalised is a \emph{reduction}: everything except the single operator identity
-$U_p U'_p = p^{k+1}$, which is carried as an explicit hypothesis.  The expected route to it ---
-expanding the product over coset representatives, so that all non-central contributions are
-traces from level $p^{m-1}$ and vanish by character orthogonality when the conductor is $p^{m}$
---- has no source we could find stated in the quaternionic setting, so it is not claimed.  A
-per-result audit of every use of Jacquet--Langlands, and of our avoidance of it, is maintained
-alongside the sources.
+classifies the local component as a principal series; neither is available in Lean.  The operator
+identity is instead proved directly, from adelic data of the following kind, by expanding the
+composite over the coset representatives of $U_p$.
+
+\begin{definition}[Adelic Atkin--Lehner data]
+  \label{def:al-data}
+  \lean{LWX.AtkinLehnerData, LWX.AtkinLehnerFamily, LWX.AtkinLehnerDataH,
+        LWX.AtkinLehnerFamilyH}
+  \leanok
+  \emph{Atkin--Lehner data} of conductor $p^{h+1}$ at a nebentypus $\psi$ consist of a section
+  $\iota_p : \mathrm{GL}_2(\mathbb{Q}_p) \to G$ of the $p$-component such that the level contains
+  the lifts of the Iwahori subgroup, the central element $p$ at $p$ is a global central element
+  times an element of the level, and the Atkin--Lehner element of level $p^{h+1}$ normalises the
+  disc-$0$ part of the level; together with a Hecke character restricting to $\psi$ on the level.
+  A \emph{family} of such data is a single section with a Hecke character for every disc $\omega$
+  and every weight $k$.  The $U_p$-representatives are built from the section alone, so one
+  $U_p$-datum serves every classical weight of the family at once.
+\end{definition}
+
+\begin{proposition}[The Atkin--Lehner identity]
+  \label{prop:al-identity}
+  \uses{def:al-data, prop:atkin-lehner, prop:theta}
+  \lean{LWX.ClassicalDiscForms, LWX.atkinLehnerEquiv, LWX.discHeckeCl_comp_atkinLehner,
+        LWX.atkinLehnerHypothesis_of_atkinLehnerData, LWX.discHeckeClH_comp_atkinLehnerH,
+        LWX.atkinLehnerHypothesis_of_atkinLehnerDataH}
+  \leanok
+  Grant Atkin--Lehner data of conductor $p^{h+1}$ at $\psi$.  On the classical forms
+  $S^{D}_{k+2}(K^{p}\Iw_{p^{h+1}};\psi)$ --- in the disc model, the forms with values in the
+  locally polynomial functions of degree $\leq k$ --- the Atkin--Lehner element induces an
+  isomorphism $W$ onto the classical forms at $\psi^{-1}$, and
+  \[
+    U_p \circ W^{-1} \circ U_p^{(\psi^{-1})} \circ W \;=\; p^{k+1} .
+  \]
+  Hence the hypothesis of Proposition~\ref{prop:atkin-lehner} holds at the classical points, and
+  the $U_p$-slopes at $\psi$ and at $\psi^{-1}$ pair up to $k+1$.
+\end{proposition}
+
+\begin{proof}
+  \leanok
+  \uses{prop:atkin-lehner}
+  Expand the composite over the coset representatives of $U_p$.  The term with trivial
+  representative is central and contributes $p^{k+1}$.  After conjugation by the Atkin--Lehner
+  element every other term is a sum of the nebentypus over the cosets of $1 + p^{h+1}\Zp$ in
+  $1 + p^{h}\Zp$, which vanishes because the conductor is exactly $p^{h+1}$.
+  Proposition~\ref{prop:atkin-lehner} then gives the pairing.
+\end{proof}
 
 \begin{proposition}[The theta operator and the classical subspace]
   \label{prop:theta}
   \uses{def:discforms, def:blockmaps}
+  \lean{LWX.thetaDisc, LWX.thetaBlock, LWX.thetaDisc_eq_zero_iff, LWX.thetaBlock_eq_zero_iff,
+        LWX.finrank_locPolyDegSubmodule, LWX.bol, LWX.thetaDisc_comp_discHeckeBlock_of_autFactor,
+        LWX.thetaBlock_comp_discHeckeBlockOp_of_autFactor}
+  \leanok
   In the disc model an element \emph{is} the family of Taylor coefficients on each disc, so
   $\theta^{r}$ --- $r$-fold differentiation, \cite[\S7]{Bu04} --- is the shift
   $(a,j)\mapsto (j+1)\cdots(j+r)\,c(a,j+r)$: a diagonal of integers composed with a shift,
   bounded by $1$ and column-finite, hence continuous, and block-diagonal over the discs.  Its
   kernel at $r = k+1$ is exactly the locally polynomial functions of degree $\leq k$, which is
   the first sentence of \cite[Proposition 4]{Bu04}, of dimension $(k+1)p^{h}$ per disc --- the
-  local half of \cite[(3.21.1)]{LWX}.  The weight equivariance holds on each disc and hence on
-  the model.
+  local half of \cite[(3.21.1)]{LWX}.  If the automorphy factors of two weights have the classical
+  shape of exponent $k$ and the target shape of exponent $k+2$, with the same constants, then
+  $\theta^{k+1}$ intertwines $U_p$ at the first weight with $p^{k+1}U_p$ at the second.
 \end{proposition}
 
-This proposition is \emph{stated but not yet proved}: it lives in a skeleton file, which is why
-it carries no Lean reference above and is not reachable from the project's root module.  The $U_p$
-intertwining $\theta U_p = p^{k+1}U_p\theta$, which follows by summing the equivariance over the
-coset decomposition, is not yet assembled.  Nothing in it depends on Jacquet--Langlands:
-\cite[Proposition 4]{Bu04}'s first sentence and its small-slope half are Jacquet--Langlands-free,
-and the converse half --- which does use it --- is never imported; the converse is instead
-derived from an explicit hypothesis.
+The intertwining is \cite[\S7]{Bu04}'s displayed identity: Bol's identity
+$\partial^{r}\bigl(u^{j+r}L^{-(j+1)}\bigr) = (\det\gamma)^{r}\,(j+r)_{r}\,u^{j}L^{-(j+r+1)}$, for
+$u$ and $L$ the numerator and the denominator of the M\"obius transformation of $\gamma$, summed
+over the coset decomposition of $U_p$.  Its hypotheses are placed on the automorphy factors, not on
+the characters: a version in which the two weights shared an arbitrary finite part is false, since
+$\theta$ differentiates that part when it is not locally constant.  Nothing here depends on
+Jacquet--Langlands: \cite[Proposition 4]{Bu04}'s first sentence and its small-slope half are
+Jacquet--Langlands-free, and its converse half, which does use it, is never imported.
+
+\begin{proposition}[The theta sequence, in determinant form]
+  \label{prop:theta-exact}
+  \uses{prop:theta, lem:diag-intertwine, def:conjchar}
+  \lean{LWX.IsThetaExact, LWX.TargetData, LWX.charPowerSeries_comp_one_sub_truncation_eq_rescale,
+        LWX.isThetaExact_classicalData, LWX.targetData_classicalPoint}
+  \leanok
+  At the classical point of weight $k$ on the disc $\omega$, the Fredholm determinant of $U_p$ on
+  the complement of the classical subspace equals the Fredholm determinant of $p^{k+1}U_p$ at the
+  theta target $(-k-2,\psi)$, a halo point on the disc of the target nebentypus
+  $\omega\omega_0^{-2k-2}$.
+\end{proposition}
+
+This is all that \cite[\S3.23 Step III]{LWX} uses of the exact sequence
+$0 \to S^{D}_{k+2} \to S^{D,\dagger}_{(k,\psi)} \xrightarrow{(d/dz)^{k+1}}
+S^{D,\dagger}_{(-k-2,\psi)} \to 0$.  Writing $\theta^{k+1}$ as a diagonal composed with a shift,
+and choosing a section of the shift, turns the intertwining of Proposition~\ref{prop:theta} into
+a \emph{diagonal} intertwining on the complement, and Lemma~\ref{lem:diag-intertwine} gives the
+identity of determinants.  The operator $\theta^{k+1}$ is not surjective on the Banach model ---
+the inverse diagonal is unbounded --- so the right-exactness of the sequence is neither proved nor
+needed.
 
 \begin{proposition}[The finite factor]
   \label{prop:finite-factor}
   \uses{prop:det-summand, lem:charpolyrev}
+  \lean{TateFredholm.charPowerSeries_eq_mul_polynomial, LWX.charPowerSeries_eq_mul_of_stable}
+  \leanok
   If a compactoid $u$ commutes with an idempotent whose range is finite free, its Fredholm
   determinant splits as the reversed characteristic polynomial of the finite piece times the
   determinant of the complement.
 \end{proposition}
 
 Step I uses exactly this, the classical subspace being a finite-dimensional $U_p$-stable piece.
-Both ingredients (Proposition~\ref{prop:det-summand} and Lemma~\ref{lem:charpolyrev}) are
-proved; the assembly is stated but not yet finished --- again in a skeleton file, hence no Lean
-reference --- and the further comparison --- that the
-finite factor contributes an \emph{initial segment} of the Newton polygon --- is a separate gap.
+
+\begin{theorem}[{\cite[\S3.23 Step I]{LWX}}: the touching]
+  \label{thm:lwx-stepone}
+  \uses{prop:finite-factor, prop:atkin-lehner, prop:theta, thm:lwx318,
+        lem:unitband-from-touching}
+  \lean{LWX.ClassicalData, LWX.classicalData, LWX.isStepOneTouching_of_atkinLehnerHypothesis,
+        LWX.hasUnitBand_of_atkinLehnerHypothesis}
+  \leanok
+  Let $T_0$ be the classical point of a weight $(k,\psi)$ with $\psi$ of conductor $p^{2}$, and
+  suppose that the hypothesis of Proposition~\ref{prop:atkin-lehner} holds between $T_0$ and its
+  Atkin--Lehner partner.  Then the Newton polygon of $\Char(P)(T_0)$ passes through
+  $\bigl(n_{k+1}, \lambda(n_{k+1})v(T_0)\bigr)$; hence $\mathrm{HasUnitBand}(k+1)$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{prop:finite-factor, prop:atkin-lehner, thm:lwx318, lem:unitband-from-touching}
+  By Proposition~\ref{prop:finite-factor} the characteristic series at $T_0$ is the determinant of
+  the complement times the reversed characteristic polynomial of $U_p$ on the classical subspace,
+  of dimension $n_{k+1} = (k+1)pt$ by Proposition~\ref{prop:theta}; so the height of the polygon at
+  $n_{k+1}$ is at most $v(\det U_p)$ on that subspace, and the same holds at the partner point.
+  The hypothesis gives $v(\det U_p) + v(\det U'_p) = n_{k+1}(k+1)v(p) = 2\lambda(n_{k+1})v(T_0)$,
+  the partner point having the same norm as $T_0$.  With the lower bound of
+  Theorem~\ref{thm:lwx318} at both points, both inequalities are equalities, and
+  Lemma~\ref{lem:unitband-from-touching} converts touching into $\mathrm{HasUnitBand}(k+1)$.
+\end{proof}
+
+\begin{theorem}[The touching hypothesis, discharged]
+  \label{thm:lwx-unitband}
+  \uses{thm:lwx-stepone, prop:al-identity, def:al-data, thm:lwx-slopes-seam}
+  \lean{LWX.hasUnitBand_of_atkinLehnerData, LWX.hasUnitBand_of_atkinLehnerFamily,
+        LWX.unitSlope_discHeckeCharPowerSeries_eq_slopeRatio_of_atkinLehnerFamily}
+  \leanok
+  Grant a family of Atkin--Lehner data of conductor $p^{2}$.  Then $\mathrm{HasUnitBand}(k)$ holds
+  for every $k$ and on every disc $\omega$.  Consequently Corollary~\ref{cor:lwx13-slopes} and
+  Theorems~\ref{thm:lwx15} and \ref{thm:lwx-slopes-seam} hold with the touching hypothesis replaced
+  by the family of data; in particular (1.5.1) holds for the genuine $U_p$ at every analyticity
+  level.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx-stepone, prop:al-identity}
+  At $k = 0$ the band is automatic.  For $k+1$, the classical point of weight $k$ on the disc
+  $\omega$ lies in the halo, and Proposition~\ref{prop:al-identity} at the member of the family
+  of weight $k$ on the disc $\omega$ supplies the hypothesis of Theorem~\ref{thm:lwx-stepone}
+  there; the $U_p$-datum does not depend on $(\omega,k)$ because the family has a single section.
+\end{proof}
+
+\begin{theorem}[{\cite[Theorem 1.3]{LWX}}, the degrees]
+  \label{thm:lwx13-degrees}
+  \uses{thm:lwx-unitband, prop:theta-exact, prop:al-identity, def:conjchar, cor:lwx13-slopes}
+  \lean{LWX.ordDim, LWX.ordDim_le_card, LWX.degX, LWX.degXint, LWX.degX_zero, LWX.degX_succ,
+        LWX.degXint_zero, LWX.degX_succ_classicalPoint, LWX.degX_succ_of_atkinLehnerData,
+        LWX.degX_succ_of_atkinLehnerFamily, LWX.degXint_of_atkinLehnerFamily,
+        LWX.degXint_pos_of_atkinLehnerFamily}
+  \leanok
+  Let $r_{\mathrm{ord}}(\omega)$ be the largest index $d$ such that the $d$-th coefficient of the
+  characteristic series on the disc $\omega$ is a unit of the halo ring; it is at most $t$.  With
+  $\deg X_{k,\omega} = n_k^{+} - n_k^{-}$ and $\deg X_{(k,k+1),\omega} = n_{k+1}^{-} - n_k^{+}$ as
+  in Corollary~\ref{cor:lwx13-slopes}, $\deg X_{0,\omega} = r_{\mathrm{ord}}(\omega)$; and, granted
+  a family of Atkin--Lehner data of conductor $p^{2}$, for every disc $\omega$ and every $n \geq 0$
+  \[
+    \deg X_{n+1,\omega} = r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n})
+      + r_{\mathrm{ord}}(\omega\omega_0^{-2n-2}),
+    \qquad
+    \deg X_{(n,n+1),\omega} = pt - r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n})
+      - r_{\mathrm{ord}}(\omega\omega_0^{-2n}) \;>\; 0 .
+  \]
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx-unitband, prop:theta-exact, prop:al-identity}
+  At $n_{k+1}$ the unit band splits the degree into the left gap $n_{k+1} - n_{k+1}^{-}$ and the
+  right gap $n_{k+1}^{+} - n_{k+1}$, and the finite factor splits the polygon: the classical
+  slopes are at most $(k+1)v(p)$ and those of the complement at least $(k+1)v(p)$.  The left gap
+  counts the classical slopes equal to $(k+1)v(p)$; the Atkin--Lehner pairing of
+  Proposition~\ref{prop:al-identity} matches them with the classical slopes $0$ at the partner
+  point, which are all its ordinary slopes, so the left gap is
+  $r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2k})$.  The right gap counts the slopes of the complement
+  equal to $(k+1)v(p)$; by Proposition~\ref{prop:theta-exact} these are the ordinary slopes of the
+  theta target, so the right gap is $r_{\mathrm{ord}}(\omega\omega_0^{-2k-2})$.  The interval
+  degrees are $pt$ minus the two gaps at consecutive vertices, an exact subtraction because
+  $n_k^{+} \leq n_{k+1}^{-}$; positivity is $r_{\mathrm{ord}} \leq t$ with $p \geq 3$.
+\end{proof}
+
+\begin{corollary}[{\cite[Corollary 1.4]{LWX}}]
+  \label{cor:lwx14}
+  \uses{thm:lwx13-degrees, def:conjchar}
+  \lean{LWX.degX_succ_mul_teichChar_sq, LWX.degXint_mul_teichChar_sq,
+        LWX.degX_succ_mul_teichChar_pow, LWX.degXint_mul_teichChar_pow, LWX.degX_succ_add_period,
+        LWX.degXint_add_period}
+  \leanok
+  Granted a family of Atkin--Lehner data of conductor $p^{2}$,
+  $\deg X_{I,\omega} = \deg X_{I+1,\omega\omega_0^{2}}$ for $I = (0,1), 1, (1,2), 2, \dots$, and
+  hence $\deg X_{I,\omega}$ is periodic in $I$, on the same range, modulo
+  $\varphi(q)/2 = (p-1)/2$.
+\end{corollary}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx13-degrees}
+  Substitute $(n,\omega) \mapsto (n+1,\omega\omega_0^{2})$ in the formulas of
+  Theorem~\ref{thm:lwx13-degrees}: the partner and target nebentypi of
+  Definition~\ref{def:conjchar} do not change.  Iterate, and use $\omega_0^{p-1} = 1$.
+\end{proof}
+
+The source's list of intervals starts at $(0,1)$ and omits $I = 0$, and rightly: the identity
+fails there in general, since $\deg X_{0,\omega} = r_{\mathrm{ord}}(\omega)$ while
+$\deg X_{1,\omega\omega_0^{2}} = r_{\mathrm{ord}}(\omega^{-1}\omega_0^{-2}) +
+r_{\mathrm{ord}}(\omega)$.
+
+\begin{theorem}[{\cite[Theorem 1.5]{LWX}}, second half, at the polygon level]
+  \label{thm:lwx152}
+  \uses{thm:lwx-unitband, prop:al-identity, def:al-data, def:conjchar, def:shapepolygon}
+  \lean{LWX.atkinLehnerHypothesis_of_atkinLehnerDataH,
+        LWX.slopeRatio_add_slopeRatio_partnerChar_of_atkinLehnerFamilyH,
+        LWX.slopeRatio_partnerChar_succ, LWX.slopeRatio_mul_teichChar_sq,
+        LWX.slopeRatio_mul_teichChar_pow, LWX.slopeRatio_add_period}
+  \leanok
+  Let $h \geq 1$ satisfy $(p^{2}-1)t + 8 < 8p^{h-1}(p-1)$, and grant families of Atkin--Lehner
+  data of conductors $p^{2}$ and $p^{h+1}$ over a single section.  Then for every disc $\omega$,
+  every $k \geq 0$, every $i < N = t(k+1)p^{h}$ and every $j \geq 0$,
+  \begin{align*}
+    \mathrm{slopeRatio}_{\omega^{-1}\omega_0^{2k}}(N-1-i) + \mathrm{slopeRatio}_{\omega}(i)
+      &= (k+1)\,p^{h-1}(p-1), \\
+    \mathrm{slopeRatio}_{\omega\omega_0^{2}}(j + p^{h}t)
+      &= \mathrm{slopeRatio}_{\omega}(j) + p^{h-1}(p-1), \\
+    \mathrm{slopeRatio}_{\omega}\bigl(j + \tfrac{p-1}{2}\,p^{h}t\bigr)
+      &= \mathrm{slopeRatio}_{\omega}(j) + \tfrac{p-1}{2}\,p^{h-1}(p-1).
+  \end{align*}
+  With $M = h+1$ and $\mathrm{slopeRatio} = \varphi(q)\tilde\alpha$, the second line is (1.5.2),
+  and the third says that $\tilde\alpha_0(\omega), \tilde\alpha_1(\omega), \dots$ is a disjoint
+  union of $(p-1)p^{M-1}t/2$ arithmetic progressions with common difference
+  $\varphi(q)p^{M}/2q^{2}$.
+\end{theorem}
+
+\begin{proof}
+  \leanok
+  \uses{thm:lwx-unitband, prop:al-identity}
+  At a classical point of conductor $p^{h+1}$ in the slope-reading region, the classical subspace
+  carries exactly the first $N$ slopes: they are at most $(k+1)v(p)$ by
+  Proposition~\ref{prop:al-identity} and $\lVert U_p\rVert \leq 1$, while those of the complement
+  are at least $(k+1)v(p)$, through the theta target.  The Atkin--Lehner pairing reverses them
+  against the partner nebentypus, which with (1.5.1) at both discs
+  (Theorem~\ref{thm:lwx-unitband}) is the first line.  The first line at $(\omega,k)$ and at
+  $(\omega,k+1)$, subtracted, is \cite[(4.2.5)]{LWX}; taking the disc $\omega^{-1}\omega_0^{2k}$
+  gives (4.2.6), the second line; and $\omega_0^{p-1} = 1$ iterates it into the third.
+\end{proof}
 
 \section{The dependency ledger}
 \label{sec:ledger}
 
-It is worth recording, once, exactly which unformalised input buys which unformalised
-conclusion, since the three missing statements have genuinely different requirements and the
-obvious guess --- that Steps I and III together give everything --- is not right.
+It is worth recording, once, which input bought which conclusion, since the statements have
+genuinely different requirements and the obvious guess --- that Steps I and III together give
+everything --- is not right.
 
 \begin{center}
 \small
@@ -513,24 +737,22 @@ obvious guess --- that Steps I and III together give everything --- is not right
   $\mathrm{HasUnitBand}(k)$ for all $k$; hence unconditional
     Corollary~\ref{cor:lwx13-slopes}, Theorems~\ref{thm:lwx15}, \ref{thm:slope-growth},
     \ref{thm:lwx-slopes-seam}
-  & Step I at conductor $q^{2}$: classicality \cite[Prop.~2.15]{LWX}, Atkin--Lehner
-    \cite[Prop.~3.22]{LWX}, the dimension count \cite[(3.21.1)]{LWX}, and the initial-segment
-    comparison
-  & the single hook; Lemma~\ref{lem:unitband-from-touching} is built to receive it \\
+  & Step I at conductor $q^{2}$: Atkin--Lehner \cite[Prop.~3.22]{LWX}, the dimension count
+    \cite[(3.21.1)]{LWX}, and the initial-segment comparison (classicality
+    \cite[Prop.~2.15]{LWX} turns out not to be needed)
+  & formalised, granted adelic data: Theorem~\ref{thm:lwx-unitband} \\
   \hline
-  \cite[Thm.~1.3]{LWX}'s degree formulas
-    $\deg X_{n,\omega} = r_{\mathrm{ord}}(\omega^{-1}\omega_0^{2n-2}) +
-     r_{\mathrm{ord}}(\omega\omega_0^{-2n})$
-  & Step III: Hida's \cite[Cor.~3.21]{LWX}, and the theta exact sequence
+  \cite[Thm.~1.3]{LWX}'s degree formulas, and \cite[Cor.~1.4]{LWX}
+  & Step III: Hida's \cite[Cor.~3.21]{LWX} at the coefficient level, and the theta exact sequence
     $0 \to S^{D}_{k+2} \to S^{D,\dagger}_{(k,\psi)} \xrightarrow{(d/dz)^{k+1}}
-     S^{D,\dagger}_{(-k-2,\psi)} \to 0$, \emph{including} its surjectivity
-  & not formalised; surjectivity is the Jacquet--Langlands half of \cite[Prop.~4]{Bu04}, which we
-    do not import \\
+     S^{D,\dagger}_{(-k-2,\psi)} \to 0$ in determinant form
+  & formalised at the coefficient level, granted adelic data: Theorem~\ref{thm:lwx13-degrees},
+    Corollary~\ref{cor:lwx14} \\
   \hline
   \cite[Thm.~1.5]{LWX}'s second half: (1.5.2) and the arithmetic progressions
-  & Step I's two inputs again, but at conductor $p^{M}$ for every admissible $M$, together with
-    statements ranging over the $\omega_0^{2}$-orbit of nebentypi
-  & not formalised, and \emph{not} implied by Steps I and III as such \\
+  & Step I's Atkin--Lehner input again, but at conductor $p^{M}$ for every admissible $M$,
+    together with statements ranging over the $\omega_0^{2}$-orbit of nebentypi
+  & formalised at the polygon level, granted adelic data: Theorem~\ref{thm:lwx152} \\
   \hline
   The decomposition $\mathrm{Spc}^{>\lambda}_{D,\omega} = \coprod_i Y_{i,\omega}$, finite flat
   & rigid analytic geometry
@@ -542,42 +764,55 @@ obvious guess --- that Steps I and III together give everything --- is not right
 Two remarks on the third row, since it is the one that is easy to misjudge.  First, (1.5.2) is a
 statement about $\tilde\alpha$, the slope-ratio sequence counted with multiplicity --- our
 $\mathrm{slopeRatio}$ --- so it is a \emph{polygon-level} statement and needs none of the rigid
-geometry of the fourth row.  Second, it nonetheless does not follow from Step I plus Step III: it
-uses no theta operator and no degree formula, but it does need the classical space at
+geometry of the fourth row.  Second, it does not follow from Steps I and III as such: it uses no
+degree formula, but it needs the classical space and the Atkin--Lehner identity at
 \emph{arbitrary} level $p^{M}$ rather than at $q^{2}$, and it compares the sequence at $\omega$
-with the sequence at $\omega\omega_0^{2}$, whereas everything in
-Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} is proved at a single fixed $\omega$.
+with the sequence at $\omega\omega_0^{2}$, whereas
+Chapters~\ref{chap:lwx-halo}--\ref{chap:lwx-slopes} work at a single fixed $\omega$.
 
-Concretely, five objects would have to be built, none of which exists yet:
+Concretely, five objects had to be built on top of those chapters, and all five now exist:
 
 \begin{enumerate}
-  \item the classical space $S^{D}_{k+2}(K^{p}\Iw_{p^{m}};\psi)$ itself, at every $m$ --- the
-    overconvergent side is already available at every analyticity level by
-    Theorem~\ref{thm:lwx-prop217-h}, but its classical subspace is not;
-  \item the operator identity $U_p \circ U'_p = p^{k+1}$ on that space, the standing hypothesis
-    of Proposition~\ref{prop:atkin-lehner};
-  \item the theta operator's remaining clauses (Proposition~\ref{prop:theta}) and the $U_p$
-    intertwining $\theta U_p = p^{k+1}U_p\theta$, obtained by summing the weight equivariance
-    over the coset decomposition;
-  \item the initial-segment comparison: that a finite-dimensional $U_p$-stable summand
-    contributes an initial segment of the Newton polygon, which turns
-    Proposition~\ref{prop:finite-factor} into a statement about slopes;
-  \item a nebentypus-varying layer: the halo weight at the classical weights $(k,\psi)$ with
-    $\psi$ of conductor $p^{M}$, the computation $v(T_{(k,\psi)}) = q/((p-1)p^{M-1})$ placing
-    them in the small annulus, and statements indexed by $\psi|_\Delta\cdot\omega_0^{k}$ rather
-    than by one $\omega$.  Definition~\ref{def:conjchar} supplies $\omega^{-1}$; the
-    $\omega_0^{2}$-twist has no counterpart yet.
+  \item the classical space $S^{D}_{k+2}(K^{p}\Iw_{p^{m}};\psi)$ itself, as the forms with values
+    in the locally polynomial functions of degree $\leq k$, at conductor $p^{2}$ and at every
+    conductor $p^{h+1}$, with its dimension (Proposition~\ref{prop:theta});
+  \item the operator identity $U_p \circ W^{-1} U_p^{(\psi^{-1})} W = p^{k+1}$ on that space
+    (Proposition~\ref{prop:al-identity}), which replaces the standing hypothesis of
+    Proposition~\ref{prop:atkin-lehner};
+  \item the theta operator's intertwining, in the form of Proposition~\ref{prop:theta}, and the
+    theta sequence in determinant form (Proposition~\ref{prop:theta-exact});
+  \item the initial-segment comparison, which needs no new theory: faces of Newton polygons add
+    under products (Theorem~\ref{thm:np-product}), and the classical and complementary slopes are
+    separated by $(k+1)v(p)$;
+  \item a nebentypus-varying layer: the classical points of conductor $p^{h+1}$ and their halo
+    weights, the partner and target nebentypi (Definition~\ref{def:conjchar}), families of adelic
+    data (Definition~\ref{def:al-data}), and statements over the $\omega_0^{2}$-orbit
+    (Corollary~\ref{cor:lwx14}, Theorem~\ref{thm:lwx152}).
 \end{enumerate}
 
+What is \emph{not} formalised is the adelic data itself: Definition~\ref{def:al-data} is carried as
+a hypothesis.  For the finite ad\`eles of a definite quaternion algebra each of its fields is class
+field theory or a local computation at $p$, but that instantiation has not been carried out.
+
+A remark on the prime $2$.  \cite{LWX} \emph{state} Theorems~1.3 and~1.5 for $p = 2$ as well
+(with $q = 4$, $\Delta = (\mathbb{Z}/4)^\times$, and the analyticity thresholds $m \ge 2$,
+$M \ge 4$), but every proof in the paper is written for $p > 2$ only --- ``we assume $p > 2$, the
+case $p = 2$ being similar'' (\S4.1 and \S4.2).  There is therefore no written argument to
+transcribe for $p = 2$, and it is used essentially throughout this development from the
+exponential and logarithm onwards; $p \ne 2$ is a standing hypothesis here, and the results
+formalised are the cases the paper actually proves, which are narrower than its stated theorems.
+
 Items (1)--(4) are Step I and Step III; item (5) is what the second half of
-\cite[Theorem 1.5]{LWX} needs on top of them.
+\cite[Theorem 1.5]{LWX} and \cite[Corollary 1.4]{LWX} need on top of them.
 
 To summarise the status of \cite{LWX}: \S2 and \S3's estimates
 (Theorems~\ref{thm:lwx316}, \ref{thm:lwx318}, \ref{thm:lwx-sharp}), the model identifications
-(Theorems~\ref{thm:prop31}, \ref{thm:lwx-prop217}, \ref{thm:lwx-prop217-h}) and the slope
-theorems conditional on touching (Corollary~\ref{cor:lwx13-slopes},
-Theorems~\ref{thm:lwx15}, \ref{thm:slope-growth}, \ref{thm:lwx-slopes-seam}) are formalised and
-free of \texttt{sorry}.  Step I, Step III, and the nebentypus-varying layer are not; with them
-would come, in that order, the unconditional form of \cite[Theorem 1.3]{LWX}'s slope reading, its
-degree formulas, and the second half of \cite[Theorem 1.5]{LWX} --- everything, that is, except
-the passage from Newton polygons to rigid analytic spaces.
+(Theorems~\ref{thm:prop31}, \ref{thm:lwx-prop217}, \ref{thm:lwx-prop217-h}), the slope theorems
+(Corollary~\ref{cor:lwx13-slopes}, Theorems~\ref{thm:lwx15}, \ref{thm:slope-growth},
+\ref{thm:lwx-slopes-seam}), the touching hypothesis (Theorem~\ref{thm:lwx-unitband}), the degree
+formulas of \cite[Theorem 1.3]{LWX} (Theorem~\ref{thm:lwx13-degrees}), \cite[Corollary 1.4]{LWX}
+(Corollary~\ref{cor:lwx14}) and the second half of \cite[Theorem 1.5]{LWX}
+(Theorem~\ref{thm:lwx152}) are formalised and free of \texttt{sorry}, for $p \neq 2$, granted the
+adelic data of Definition~\ref{def:al-data}, and with no use of Jacquet--Langlands.  What remains
+is the instantiation of that data for a definite quaternion algebra, and the passage from Newton
+polygons to rigid analytic spaces.

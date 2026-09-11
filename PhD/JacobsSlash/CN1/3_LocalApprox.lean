@@ -19,7 +19,7 @@ finitely many other places.  This file provides exactly that, for the coordinate
 
 * `JacobsSlash.hurwitzGen`: the basis tuple `![1, qi, qj, qomega]`.
 * `JacobsSlash.mem_localOrder_iff_exists_coords`: `localOrder w` is the set of
-  `𝓞_w`-combinations of the basis (the public form of `Level.lean`'s
+  `𝓞_w`-combinations of the basis (the public form of `04_Level.lean`'s
   `localOrder ≤ localSpan` bridge).
 * `JacobsSlash.exists_intCast_valued_sub_le`: density of `ℤ` in `𝓞_w`
   (via mathlib's `denseRange_algebraMap` for the adic completion).
@@ -34,7 +34,7 @@ open Quaternion IsDedekindDomain NumberField QMF
 open scoped TensorProduct
 
 /- See `Setting.lean`: pin the adic `Algebra ℚ K_w` instance path used by the `QMF`
-framework, keeping statements syntactically aligned with `Level.lean`'s. -/
+framework, keeping statements syntactically aligned with `04_Level.lean`'s. -/
 attribute [local instance 2000]
   IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
 
@@ -67,7 +67,7 @@ private theorem exists_intCast_smul_eq {d : D} (hd : d ∈ hurwitzOrder) :
     linarith
 
 /-- The set of `𝓞_w`-combinations of `1 ⊗ 1, i ⊗ 1, j ⊗ 1, ω ⊗ 1`, as an additive
-submonoid.  (Presented additively for the same reason as `Level.lean`'s `localSpan`: the
+submonoid.  (Presented additively for the same reason as `04_Level.lean`'s `localSpan`: the
 only closure property needing real work is multiplicativity.) -/
 private noncomputable def coordSpan (w : HeightOneSpectrum (RingOfIntegers ℚ)) :
     AddSubmonoid (D ⊗[ℚ] w.adicCompletion ℚ) where

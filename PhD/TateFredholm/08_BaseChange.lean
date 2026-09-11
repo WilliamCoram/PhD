@@ -1,9 +1,9 @@
-import PhD.TateFredholm.Residue
+import PhD.TateFredholm.«07_Residue»
 
 /-!
 # Changing the norm, base change, and the classical specialisations
 ([JN] Lemmas 2.1.6–2.1.7, Proposition 2.1.8; [Buz07, Corollaries 2.9–2.10];
-[Bel] Lemma II.1.23, matrix-wise; [Bel] Theorem II.1.13 (Serre).  See `Tate.lean` for
+[Bel] Lemma II.1.23, matrix-wise; [Bel] Theorem II.1.13 (Serre).  See `00_Tate.lean` for
 the development's overview and dictionary.)
 
 The Tate-specific norm-comparison lemmas hold in the merged setting as stated by [JN];
@@ -498,7 +498,7 @@ end NormChange
 
 Statements that are intrinsically about the field case, phrased against the merged
 definitions so that the parent files' versions are literal instances.  The residue
-machinery feeding the proof lives in `Residue.lean`. -/
+machinery feeding the proof lives in `07_Residue.lean`. -/
 
 section Classical
 
@@ -559,7 +559,7 @@ private theorem rescale_le_inv_mul (π : K) (hπ0 : 0 < ‖π‖) (hπ1 : ‖π�
   · exact (le_rescale_and_rescale_lt π hπ0 hπ1 m hm).2.le
 
 /-- The rescaled norm makes `Rescaled π E` a normed group.  The axioms are the residue
-lemmas of `Residue.lean`: `map_zero'`/definiteness from `rescale (0) = 0` and
+lemmas of `07_Residue.lean`: `map_zero'`/definiteness from `rescale (0) = 0` and
 `rescale_pos`, the (ultrametric, hence ordinary) triangle inequality from `rescale_add_le`,
 and neg-invariance from `rescale_neg`. -/
 private instance instNormedAddCommGroupRescaled (π : K) [h : Fact (uniformizerFact π)] :
@@ -629,7 +629,7 @@ Banach–Tate ring not every Banach module is potentially ON-able (which is exac
 property (Pr) exists).
 
 *Proof sketch.*  Rescale the norm into `‖K‖` (`rescale`, lemmas R7a–R7c of
-`Residue.lean`), then apply `isONable_of_discrete_norms` to the rescaled space and
+`07_Residue.lean`), then apply `isONable_of_discrete_norms` to the rescaled space and
 transport along the identity homeomorphism. -/
 theorem isPotentiallyONable_of_uniformizer (K : Type*) [NontriviallyNormedField K]
     [IsUltrametricDist K] [CompleteSpace K]

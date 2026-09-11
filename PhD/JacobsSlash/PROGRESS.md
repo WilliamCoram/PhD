@@ -21,7 +21,7 @@ right-slash layer `PhD.QMF.Slash`), `PhD.NewtonPolygons`, and earlier
   1 + max prefix among its JacobsSlash imports.  Module names need guillemets:
   `import PhD.JacobsSlash.U3.«6_Matrix»`.
 * Everything lives in the flat namespace `JacobsSlash` (no `.U3` subnamespace).
-* Right slash throughout: `RightSlashAction` / `f ∣ₛ δ` (`PhD.QMF.Slash.Basic`),
+* Right slash throughout: `RightSlashAction` / `f ∣ₛ δ` (`PhD.QMF.Slash.«02_Basic»`),
   right cosets `Quotient (QuotientGroup.rightRel U)`, the Hecke recipe
   `heckeOperatorSlash_apply_rep` in the thesis's `Σₜ φ(cᵢₜ)|κ(uₜvₜ)` display shape.
 * `Σ₀'` is the d-unit form; `Σ₁(9)` is the thesis's `c ≡ 0, d ≡ 1 mod 9` congruence,
@@ -40,7 +40,7 @@ right-slash layer `PhD.QMF.Slash`), `PhD.NewtonPolygons`, and earlier
    the general matrix recipe `QMF.Weight.heckeOperator_apply_rep` at the `«5_Factorisations»`
    certificates, with `blockEntry := QMF.Weight.heckeBlock … etaRep … sigmaTable uTable`
    (2026-08-19, forms-headline T016: the fork's block layer is the general
-   `PhD/QMF/Weight/Compact.lean` model instantiated — `evalU3 := evalAtReps … classRep`,
+   `PhD/QMF/Weight/06_Compact.lean` model instantiated — `evalU3 := evalAtReps … classRep`,
    `evalU3_heckeU3 := evalAtReps_heckeOperator`, `isCompactoid_blockOpU3 :=
    isCompactoid_heckeBlockOp` at `‖det (η₃)₃‖ = ‖3‖`).
 3. **Twist-free identification** (`U3/5_Factorisations` + `U3/6_Matrix`): the
@@ -82,9 +82,9 @@ Root (analytic layer, ports of the left originals):
 
 | file | role |
 |---|---|
-| `1_PadicAnalytic` | `p = 3` instance of the general `PhD/LWX/PadicExpLog.lean` (exp/log re-exported + 8 `‖3‖ < 1` shims) plus the `p = 3`-specific `unitPow`/binomial-series sections; deduplicated 2026-09-05 (board `.mathlib-quality/jacobs-explog/`) |
+| `1_PadicAnalytic` | `p = 3` instance of the general `PhD/LWX/00_PadicExpLog.lean` (exp/log re-exported + 8 `‖3‖ < 1` shims) plus the `p = 3`-specific `unitPow`/binomial-series sections; deduplicated 2026-09-05 (board `.mathlib-quality/jacobs-explog/`) |
 | `1_GenFun` | generating-function calculus, `idx`, `ext_matrixCoeff` norm form |
-| ~~`1_BlockOp`~~ → `PhD/TateFredholm/BlockOp.lean` (moved 2026-08-18, namespace `TateFredholm`; forms-headline board R0) | `cSpace` blocks, `blockOp`, `matrixCoeff_*`, compactoid closure |
+| ~~`1_BlockOp`~~ → `PhD/TateFredholm/06_BlockOp.lean` (moved 2026-08-18, namespace `TateFredholm`; forms-headline board R0) | `cSpace` blocks, `blockOp`, `matrixCoeff_*`, compactoid closure |
 | `1_SlopeTheorem` | the slope machinery endpoint |
 | `2_U3Data` | the transcribed [Jacobs p. 28] `ε`-displays + `h01…h21` (misprint at `eps12M2` corrected) |
 | `3_BinomialTheorem` | p-adic binomial theorem at `K₃` |
@@ -206,7 +206,7 @@ an `ω`-eigenvector of the base change of the matrix of the genuine `W`*; the ol
 ## slopes-hecke board (2026-08-20)
 
 * `1_SlopeTheorem.lean` no longer carries its own Hadamard/minor/combinatorics lemmas: the
-  σ-general versions live in `PhD/TateFredholm/Slopes.lean` (`norm_det_le_pow_of_row_bound`,
+  σ-general versions live in `PhD/TateFredholm/06_Slopes.lean` (`norm_det_le_pow_of_row_bound`,
   `norm_minor_le_pow_sum`, `choose_two_le_sum`, `choose_two_lt_sum_of_ne_range`,
   `norm_charCoeff_le_pow`), and the fork's *equality* (unit minors) is what stays here.
 * `4_SlopeReading.lean` keeps only the two Jacobs cases; `NewtonPolygon₀.ofSlopes` and the four
@@ -227,9 +227,9 @@ an `ω`-eigenvector of the base change of the matrix of the genuine `W`*; the ol
 `1_SlopeTheorem.lean` shrank to the normalisation: the abstract slope theorem
 (`norm_charCoeff_of_unit_minors`, its `val` reading, `norm_tsum_eq_of_dominant`,
 `det_row_smul_pow`, `norm_minor_range`, `ne_zero_of_unit_minors`) now lives ϖ-generally in
-`PhD/TateFredholm/Slopes.lean`; the fork keeps `ϖ₃`/`coe_ϖ₃` and applies the general theorems at
+`PhD/TateFredholm/06_Slopes.lean`; the fork keeps `ϖ₃`/`coe_ϖ₃` and applies the general theorems at
 `ϖ₃` (`3_Slopes` unchanged, `4_SlopeReading` call sites now pass `(ϖ₃ h3)`).  `charCoeff_smul`
-stays fork-side pending the name collision with `TateFredholm.charCoeff_smul` (Riesz.lean) — see
+stays fork-side pending the name collision with `TateFredholm.charCoeff_smul` (09_Riesz.lean) — see
 the NOTE(cleanup) in the file.
 
 ## Relation to the rest of the repo

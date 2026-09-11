@@ -5,7 +5,7 @@ Authors: William Coram
 -/
 import PhD.JacobsSlash.U3.«1_Hurwitz»
 import PhD.JacobsSlash.U3.«1_Setting»
-import PhD.QMF.UpiElement
+import PhD.QMF.«04_UpiElement»
 
 /-!
 # The level structures `U₀(1)` and `U₁(9)`, and class number one

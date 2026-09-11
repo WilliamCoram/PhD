@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.TargetPoint
+import PhD.LWX.«16_TargetPoint»
 
 /-!
 # The nebentypus character at a classical point 
@@ -11,7 +11,7 @@ import PhD.LWX.TargetPoint
 At the classical point `T_{χ_k}` of the weight `χ_k = (k, ψ)` ([LWX, §3.23]) the halo character
 is `κ(a) = a^k ψ(a)` ([LWX, §2.1]: "a continuous character `χ` of `ℤ_p^×` is classical if it
 sends `x` to `x^k ψ(x)`"), so the **nebentypus** `ψ` is recovered as `a ↦ κ(a)·a^{−k}` — the
-constants `u = haloCharFunH(d)·d^{−k}` of `ClassicalPoint.lean`'s classical shape, now read as
+constants `u = haloCharFunH(d)·d^{−k}` of `15_ClassicalPoint.lean`'s classical shape, now read as
 a character of `ℤ_p^×`.  This file establishes what the Atkin–Lehner argument needs of it:
 
 * it is multiplicative (`nebChar_mul`) and trivial on `1 + p²ℤ_p` (`nebChar_of_norm_sub_one_le_sq`)
@@ -22,7 +22,8 @@ a character of `ℤ_p^×`.  This file establishes what the Atkin–Lehner argume
   (`sum_nebChar_oneAddPMul_mul_eq_zero`);
 * the **partner nebentypus** `ω' = ω⁻¹ω₀^{2k}` ([LWX, §3.23 Step III], `lwx.txt:2028–2036`:
   "`ψ⁻¹|_Δ · ω₀^k = χ_k⁻¹|_Δ · ω₀^{2k} = ω⁻¹ω₀^{2k}`") at the classical point of `ζ⁻¹` has
-  nebentypus `ψ⁻¹` (`nebChar_partnerChar`) — the other half of the old gap AG-ω₀.
+  nebentypus `ψ⁻¹` (`nebChar_partnerChar`) — the other half of the old gap AG-ω₀; under the shift
+  `(k, ω) ↦ (k + 1, ωω₀²)` of [LWX, Cor 1.4] it is unchanged (`partnerChar_mul_teichChar_sq_succ`).
 
 No Jacquet–Langlands input; see `.mathlib-quality/lwx-stepone/JL-AUDIT.md`.
 -/
@@ -340,7 +341,7 @@ theorem sum_inv_nebCharK_eq_zero (hp2 : p ≠ 2) (hψ : ∀ x, ‖ψ x‖ = ‖x
     show (((1 + (p : ℤ_[p]) * ((b : ℤ_[p]) * c) : ℤ_[p]) : ℚ_[p])) = 1 + (b : ℚ_[p]) * c * p by
       push_cast; ring]
 
-/-! ### The three abstract hypotheses of `AtkinLehnerMap.lean`, discharged -/
+/-! ### The three abstract hypotheses of `18_AtkinLehnerMap.lean`, discharged -/
 
 /-- `hmul`: `nebCharK` is multiplicative on `ψ`-images of `p`-adic units (`nebChar_mul` at the
 units `⟨x, _⟩`, `⟨y, _⟩` of `ℤ_p`). -/
@@ -401,6 +402,15 @@ theorem partnerChar_apply (r : (ZMod p)ˣ) :
     partnerChar p ω k r = (ω r)⁻¹ * teichRes r ^ (2 * k) := by
   rw [partnerChar, MonoidHom.mul_apply, MonoidHom.pow_apply, teichChar_apply]
   rfl
+
+/-- The partner nebentypus of `(ωω₀², k+1)` is that of `(ω, k)`:
+`(ωω₀²)⁻¹ω₀^{2(k+1)} = ω⁻¹ω₀^{2k}` ([LWX, Cor 1.4], `lwx.txt:164–166`). -/
+theorem partnerChar_mul_teichChar_sq_succ :
+    partnerChar p (ω * teichChar p ^ 2) (k + 1) = partnerChar p ω k := by
+  refine MonoidHom.ext fun r => ?_
+  rw [partnerChar_apply, partnerChar_apply, MonoidHom.mul_apply, MonoidHom.pow_apply,
+    teichChar_apply, mul_inv, show 2 * (k + 1) = 2 + 2 * k by ring, pow_add (teichRes r) 2 (2 * k),
+    mul_assoc, inv_mul_cancel_left]
 
 /-- `(1+T)^ℓ` at `T = ζ⁻¹ − 1` and at `T = ζ − 1` are inverse to each other. -/
 theorem oneAddPow_inv_sub_one_mul (hp2 : p ≠ 2) (hψ : ∀ x, ‖ψ x‖ = ‖x‖)

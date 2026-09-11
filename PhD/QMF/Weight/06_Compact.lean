@@ -3,10 +3,10 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Forms
-import PhD.QMF.Slash.HeckeMatrix
-import PhD.TateFredholm.BlockOp
-import PhD.TateFredholm.Riesz
+import PhD.QMF.Weight.«05_Forms»
+import PhD.QMF.Slash.«04_HeckeMatrix»
+import PhD.TateFredholm.«06_BlockOp»
+import PhD.TateFredholm.«09_Riesz»
 
 /-!
 # Compactness of `U_ϖ` on the forms of weight `κ` (Jacobs Lemma 2.7, Buzzard Lemma 12.2)

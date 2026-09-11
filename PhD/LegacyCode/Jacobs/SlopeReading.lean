@@ -37,7 +37,7 @@ is `3` viewed as a pseudo-uniformizer.  `PseudoUniformizer.val` is
 `v_ϖ(x) = log‖x‖ / log‖ϖ‖`, so `v_ϖ(ϖ) = 1`; taking `ϖ = 3` makes it the thesis's `v₃`, and
 the numbers `0, 1, 2, …` / `1/2, 3/2, 5/2, …` below are slopes *in that normalisation*.
 
-`ϖ₃` is a **definition**, not a hypothesis: `PseudoUniformizer` (`PhD/TateFredholm/Tate.lean`)
+`ϖ₃` is a **definition**, not a hypothesis: `PseudoUniformizer` (`PhD/TateFredholm/00_Tate.lean`)
 asks only for a unit with `‖ϖ‖ < 1` and multiplicative norm, all three of which `3` satisfies
 under `h3 : ‖(3 : K)‖ < 1` and `[CharZero K]` (see `PseudoUniformizer.ofNormLtOne`).  So the
 only hypothesis the statements carry is `h3`, the residue-characteristic-`3` condition (in

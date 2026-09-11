@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Theta
+import PhD.LWX.«11_Theta»
 
 /-!
 # Bol's identity, and the repaired theta equivariance
@@ -28,7 +28,7 @@ constant `C a · L − C c · u = C (det γ)`.  No Leibniz rule and no binomial 
 
 ## Why this file exists
 
-A first draft of the equivariance (in `PhD/LWX/Theta.lean`, removed on 2026-09-09) let the two
+A first draft of the equivariance (in `PhD/LWX/11_Theta.lean`, removed on 2026-09-09) let the two
 weights share an arbitrary finite part `ν : UK →* Kˣ`.  That is false: `ν` is only a monoid hom, so
 `ν(cz + d)` need not be constant in `z`, and differentiating leaves a term the other side cannot
 match.  Counterexample at `r = 1`: take `ν` to be the inclusion `UK ↪ Kˣ`, so `κ = (·)^3` and
@@ -123,7 +123,7 @@ theorem C_mul_linX_sub_C_mul_numX (γ : Matrix (Fin 2) (Fin 2) K) :
 
 omit [IsUltrametricDist K] [CompleteSpace K] in
 /-- Coefficients of a power of a linear series vanish above the exponent.  (The same statement is
-`private` in `PhD/QMF/Weight/Algebraic.lean`; reproved here rather than de-privatising it, which
+`private` in `PhD/QMF/Weight/06_Algebraic.lean`; reproved here rather than de-privatising it, which
 would rebuild the whole `QMF` tree.) -/
 private theorem coeff_linear_pow_eq_zero {c d : K} {k j : ℕ} (hjk : k < j) :
     PowerSeries.coeff j ((PowerSeries.C d + PowerSeries.C c * PowerSeries.X) ^ k) = 0 := by
@@ -359,7 +359,7 @@ variable {p : ℕ} [hp : Fact p.Prime] [CharZero K]
 /-- The determinant is unchanged by the disc conjugation `t_{a'}⁻¹·δ·t_a`: the two
 parametrisations have reciprocal determinants.  (The computation already occurs inside
 `LWX.discConjMat_mem_Mh`; it is isolated here because the equivariance needs it on its own.  Its
-proper home is `PhD/LWX/DiscModel.lean`; stated here to avoid rebuilding that tree.) -/
+proper home is `PhD/LWX/09_DiscModel.lean`; stated here to avoid rebuilding that tree.) -/
 theorem det_discConjMat (h : ℕ) (δ : M1 p) (a : ZMod (p ^ h)) :
     (discConjMat h δ a).det = (δ : Matrix (Fin 2) (Fin 2) ℚ_[p]).det := by
   have hpne : ((p : ℚ_[p])) ^ h ≠ 0 := pow_ne_zero _ (by exact_mod_cast hp.out.ne_zero)
@@ -376,7 +376,7 @@ theorem det_discConjK (h : ℕ) (ψ : ℚ_[p] →+* K) (δ : M1 p) (a : ZMod (p 
 
 omit hp [CharZero K] in
 /-- A scalar passes through a rectangular block operator.  (Its proper home is
-`PhD/TateFredholm/BlockMap.lean`; kept here to avoid rebuilding that tree.) -/
+`PhD/TateFredholm/08_BlockMap.lean`; kept here to avoid rebuilding that tree.) -/
 theorem smul_blockOpMap {σ : Type*} [Fintype σ] [DecidableEq σ] {I I' : Type*}
     [DecidableEq I] [DecidableEq I'] (c : K) (T : σ → σ → (c(I, K) →L[K] c(I', K))) :
     c • blockOpMap T = blockOpMap fun a b => c • T a b := by

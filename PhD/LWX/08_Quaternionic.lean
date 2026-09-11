@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Seam
-import PhD.QMF.Weight.Quaternionic
+import PhD.LWX.«07_Seam»
+import PhD.QMF.Weight.«07_Quaternionic»
 import PhD.ForMathlib.NumberTheory.Padics.AdicCompletionEquiv
 
 /-!
@@ -14,13 +14,13 @@ import PhD.ForMathlib.NumberTheory.Padics.AdicCompletionEquiv
 fix an isomorphism `D ⊗ ℚ_p ≃ M₂(ℚ_p)` … We fix the tame level structure `K^p` …"; [LWX, §2.5]:
 `U_p` is the double coset `Iw_q (p 0; 0 1) Iw_q = ∐_j Iw_q v_j`, `v_j = (p 0; jq 1)`.
 
-The general-weight layer's quaternionic instantiation (`PhD/QMF/Weight/Quaternionic.lean`)
+The general-weight layer's quaternionic instantiation (`PhD/QMF/Weight/07_Quaternionic.lean`)
 works over a number field `F` at a place `v` with `K = F_v = v.adicCompletion F`; the integral
-model of `PhD/LWX/IntegralModel.lean` needs `ℤ_p`-entries, i.e. `θ` valued in `M₂(ℚ_p)`.  At
+model of `PhD/LWX/04_IntegralModel.lean` needs `ℤ_p`-entries, i.e. `θ` valued in `M₂(ℚ_p)`.  At
 `F = ℚ`, `v = (p)`, mathlib's comparison `Padic.adicCompletionEquiv : ℚ_[p] ≃A[ℚ] ℚ_v` (an
 isometry, `PhD/ForMathlib/…/AdicCompletionEquiv.lean`) transports one to the other: with
 `ψ = E : ℚ_p → K_p` and `θ = E⁻¹ ∘ toMatrix ℚ D v`, the `K`-side map `thetaK ψ θ` of
-`PhD/LWX/Seam.lean` is literally `toMatrix ℚ D v`, so `IntForms θ … U` is [LWX]'s `S^D_int` at
+`PhD/LWX/07_Seam.lean` is literally `toMatrix ℚ D v`, so `IntForms θ … U` is [LWX]'s `S^D_int` at
 the tame level `U` and the seam theorem lands on Buzzard's `S^D_κ(U) = FormsQ ℚ D v κ U`.
 
 ## Main declarations

@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.ThetaExact
-import PhD.LWX.TargetPoint
+import PhD.LWX.«16_ThetaExact»
+import PhD.LWX.«16_TargetPoint»
 
 /-!
 # The degree formula granted H1 alone

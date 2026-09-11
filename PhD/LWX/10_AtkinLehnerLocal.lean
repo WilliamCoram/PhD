@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.AtkinLehner
-import PhD.LWX.DiscModel
+import PhD.LWX.«05_AtkinLehner»
+import PhD.LWX.«09_DiscModel»
 
 /-!
 # The local matrix identities behind `U_p ∘ U'_p = p^{k+1}`
@@ -25,7 +25,7 @@ are transplanted here):
 — a `U'_p`-representative times a `U_p`-representative is an Iwahori element (whose `d`-entry
 `1 + bcp` carries the nebentypus) times the central `p` times a translation.  For `b = 0` the
 translation is trivial and the term is central; for `b ≠ 0` the sum over `c` of the nebentypus
-values vanishes (`NebChar.lean`).
+values vanishes (`17_NebChar.lean`).
 -/
 
 open Matrix
@@ -143,7 +143,7 @@ theorem tMatInv_zero_mul_sQ_mul_tMat_zero (b : ℚ_[p]) :
   fin_cases i <;> fin_cases j <;> simp [tMatInv, sQ, tMat, Matrix.mul_apply, Fin.sum_univ_two, hp0]
   field_simp
 
-/-- `t₀⁻¹ wQ t₀ = (0 1; −p² 0)` is the level-`p²` Atkin–Lehner element of `AtkinLehner.lean`. -/
+/-- `t₀⁻¹ wQ t₀ = (0 1; −p² 0)` is the level-`p²` Atkin–Lehner element of `05_AtkinLehner.lean`. -/
 theorem discConjMat_wQ :
     !![(p : ℚ_[p])⁻¹, 0; 0, 1] * wQ p * !![(p : ℚ_[p]), 0; 0, 1] = atkinLehner p 2 := by
   have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero

@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.IntegralModel
-import PhD.TateFredholm.CharpolyPairing
+import PhD.LWX.«04_IntegralModel»
+import PhD.TateFredholm.«01_CharpolyPairing»
 
 /-!
 # The Atkin–Lehner element, and the reduction of [LWX, Prop 3.22]

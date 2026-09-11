@@ -1,12 +1,12 @@
-import PhD.TateFredholm.BaseChange
-import PhD.TateFredholm.Noetherian
+import PhD.TateFredholm.«08_BaseChange»
+import PhD.TateFredholm.«05_Noetherian»
 
 /-!
 # Moved: the merged compact-operator development now lives in `PhD/TateFredholm/`
 
 This file was the fourth (merged, most general) compact-operator blueprint.  It became
 the primary development and was split into the module tree `PhD/TateFredholm/` —
-see `PhD/TateFredholm/Tate.lean` for the overview, module map, dictionary, and
+see `PhD/TateFredholm/00_Tate.lean` for the overview, module map, dictionary, and
 references.  This stub re-exports the whole development so existing
 `import PhD.Test.CompactOperatorsMerged` lines and build targets keep working.
 

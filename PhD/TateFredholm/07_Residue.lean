@@ -1,10 +1,10 @@
-import PhD.TateFredholm.Pr
+import PhD.TateFredholm.«06_Pr»
 import PhD.ForMathlib.Analysis.Normed.Ring.PowerBounded
 
 /-!
 # Residue machinery for Serre's theorem
 
-Sub-development for `isPotentiallyONable_of_uniformizer` (see `BaseChange.lean`),
+Sub-development for `isPotentiallyONable_of_uniformizer` (see `08_BaseChange.lean`),
 produced by the `/develop --decompose` pass.  Source: [Bel] §II.1.4 (Hypothesis II.1.11,
 Lemma II.1.12, Theorem II.1.13, p. 58); ultimately [Serre] Prop. 1.  The tree:
 discreteness of the value group (`R1`), the unit ball and its residue field (`R2`–`R4`),

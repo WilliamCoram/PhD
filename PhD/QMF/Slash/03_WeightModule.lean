@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.WeightModule
-import PhD.QMF.Slash.Basic
+import PhD.QMF.«01_WeightModule»
+import PhD.QMF.Slash.«02_Basic»
 
 /-!
 # The right slash on classical weight modules
@@ -19,7 +19,7 @@ library's left action.
 
 ## The bridge (design note)
 
-The left action (`PhD/QMF/WeightModule.lean`) is `g • P = ν g • P(gᵀ·(X,Y))`
+The left action (`PhD/QMF/01_WeightModule.lean`) is `g • P = ν g • P(gᵀ·(X,Y))`
 (*transposed* substitution).  Since `(adjugate δ)ᵀ = J δ J⁻¹` for `J = (0 1; −1 0)`,
 the adjugate transport of the left action agrees with Buzzard's formula only up to
 the change of variables `J` — classically, the `Z = X/Y` vs `Z = Y/X` homogenisation
@@ -43,7 +43,7 @@ variable {K : Type*} [Field K] {R : Type*} [CommRing R] [Algebra K R]
 /-- Untransposed substitution action of a `2×2` matrix on two-variable polynomials:
 `P ∣ g = P(aX + bY, cX + dY)` (substitution by the matrix itself, which makes this a
 *right* monoid action: `matrixSubstR (g*h) = matrixSubstR h ∘ matrixSubstR g`).
-Companion of the left-handed `matrixSubst` (`PhD/QMF/WeightModule.lean`). -/
+Companion of the left-handed `matrixSubst` (`PhD/QMF/01_WeightModule.lean`). -/
 noncomputable def matrixSubstR (g : Matrix (Fin 2) (Fin 2) K) :
     MvPolynomial (Fin 2) R →ₐ[R] MvPolynomial (Fin 2) R :=
   aeval fun i => ∑ j, algebraMap K R (g i j) • (X j : MvPolynomial (Fin 2) R)

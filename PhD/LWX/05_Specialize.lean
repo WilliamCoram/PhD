@@ -3,13 +3,13 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.IntegralModel
+import PhD.LWX.«04_IntegralModel»
 
 /-!
 # Specialization of `Λ^{>1/p}` at a halo point, as a continuous ring homomorphism
 
 [LWX, Cor 3.18] evaluates the `T`-expansions of the coefficients `c_n ∈ Λ^{>1/p}` at a point
-`T₀` of the halo annulus `p⁻¹ < ‖T₀‖ < 1`; `PhD/LWX/HaloRing.lean` defines that evaluation
+`T₀` of the halo annulus `p⁻¹ < ‖T₀‖ < 1`; `PhD/LWX/00_HaloRing.lean` defines that evaluation
 `HaloInt.specialize ψ T₀ : Λ^{>1/p} → K` and proves the coefficient estimate.  [LWX, Prop
 2.17] needs more: the specialization must be pushed through determinants (`Char(P)` is a
 limit of determinants of minors of `P`) and through the convergent Mahler/entry sums of

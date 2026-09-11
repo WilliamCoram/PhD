@@ -3,8 +3,8 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Weight.Fredholm
-import PhD.TateFredholm.Slopes
+import PhD.QMF.Weight.«07_Fredholm»
+import PhD.TateFredholm.«06_Slopes»
 import PhD.NewtonPolygons.OfSlopes
 import PhD.NewtonPolygons.CoeffVal
 

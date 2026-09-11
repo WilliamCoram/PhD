@@ -4,13 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.Complete
-import PhD.TateFredholm.ModelSpace
+import PhD.TateFredholm.«03_ModelSpace»
 
 /-!
 # The Tate algebra is the model space
 
 `PowerSeries.Restricted K 1` — restricted power series at radius `1`, i.e. the Tate algebra
-`K⟨X⟩` — and the model space `c(ℕ, K)` of `ModelSpace.lean` are *the same Banach
+`K⟨X⟩` — and the model space `c(ℕ, K)` of `03_ModelSpace.lean` are *the same Banach
 `K`-module*: membership is the same condition (`‖coeff n f‖ → 0` along the cofinite filter,
 `PowerSeries.isRestricted_iff` versus `cSpace.tendsto_cofinite`), and the Gauss norm at radius
 `1` is the sup norm (`PowerSeries.gaussNorm_eq` versus `cSpace.norm_eq_iSup`).  This file
@@ -20,7 +20,7 @@ with orthonormal basis the monomials `{Xⁿ}`.
 The two presentations are kept apart on purpose, and the seam is here rather than in either
 side's development:
 
-* the Fredholm theory of `Fredholm.lean` is *coordinatised at the definition* —
+* the Fredholm theory of `05_Fredholm.lean` is *coordinatised at the definition* —
   `TateFredholm.charPowerSeries` is a sum of principal minors of `TateFredholm.matrixCoeff`,
   so it needs a distinguished basis, and every statement about it has the model space in its
   type.  `TateFredholm.IsONable` is likewise *defined* by isometry to a model space,
@@ -218,7 +218,7 @@ theorem isONable_restricted : IsONable K (PowerSeries.Restricted K 1) :=
 
 /-- The Tate algebra has property (Pr) ([Bel] §II.1.6) — immediate from
 `isONable_restricted`, recorded because (Pr) is the hypothesis of the lifting and
-projectivity statements of `Pr.lean`. -/
+projectivity statements of `06_Pr.lean`. -/
 theorem hasPr_restricted : HasPr K (PowerSeries.Restricted K 1) :=
   isONable_restricted.isPotentiallyONable.hasPr
 

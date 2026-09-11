@@ -9,8 +9,8 @@ import Mathlib.Topology.Algebra.Module.Complement
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 import PhD.ForMathlib.RingTheory.PowerSeries.Restricted.MulWeierstrassDivision
-import PhD.TateFredholm.BaseChange
-import PhD.TateFredholm.Fredholm
+import PhD.TateFredholm.«08_BaseChange»
+import PhD.TateFredholm.«05_Fredholm»
 
 /-!
 # Riesz theory: zeros of the characteristic power series are eigenvalues
@@ -626,7 +626,7 @@ theorem matrixCoeff_neg (u : c(I, R) →L[R] c(J, R)) (j : J) (i : I) :
 
 omit [DecidableEq J] in
 /-- Public form of the row bound `‖matrixCoeff u j i‖ ≤ ‖u‖` (private in
-`Fredholm.lean`). -/
+`05_Fredholm.lean`). -/
 theorem norm_matrixCoeff_le' [IsTate R] (u : c(I, R) →L[R] c(J, R)) (j : J) (i : I) :
     ‖matrixCoeff u j i‖ ≤ ‖u‖ :=
   calc ‖matrixCoeff u j i‖ ≤ ‖u (cSpace.single i 1)‖ := cSpace.norm_apply_le _ _
@@ -842,7 +842,7 @@ private theorem norm_det_le_of_row_bounds' {n : Type*} [Fintype n] [DecidableEq 
   exact (Finset.norm_prod_le _ _).trans <|
     Finset.prod_le_prod (fun i _ ↦ norm_nonneg _) fun i _ ↦ hf (σ i) i
 
--- Restated because the `Fredholm.lean` original is `private`.
+-- Restated because the `05_Fredholm.lean` original is `private`.
 private theorem norm_neg_one_pow' (m : ℕ) : ‖(-1 : R) ^ m‖ = 1 := by
   obtain h | h := neg_one_pow_eq_or R m <;> simp [h]
 
@@ -927,7 +927,7 @@ private theorem norm_coeff_det_le {n : Type*} [Fintype n] [DecidableEq n]
   · rw [if_neg hs, norm_zero]
     exact hc
 
--- Duplicated from `Matrix.lean` and `Fredholm.lean`, where `norm_matrixCoeff_le_rowNorm`
+-- Duplicated from `04_Matrix.lean` and `05_Fredholm.lean`, where `norm_matrixCoeff_le_rowNorm`
 -- is `private`.
 private theorem norm_matrixCoeff_le_rowNorm' [IsTate R] (u : c(I, R) →L[R] c(I, R)) (j i : I) :
     ‖matrixCoeff u j i‖ ≤ rowNorm u j := le_ciSup (bddAbove_range_norm_matrixCoeff u j) i
@@ -967,7 +967,7 @@ private theorem norm_resolventCoeff_le_of_rows [IsTate R] (w : c(I, R) →L[R] c
   (norm_eq_iSup_matrixCoeff _).trans_le <| Real.iSup_le
     (fun j ↦ Real.iSup_le (norm_matrixCoeff_resolventCoeff_le_of_rows w S hS m hc hcT j) hc) hc
 
--- Duplicated from `Fredholm.lean`, where `rowNorm_le_opNorm` is `private`.
+-- Duplicated from `05_Fredholm.lean`, where `rowNorm_le_opNorm` is `private`.
 private theorem rowNorm_le_opNorm' [IsTate R] (u : c(I, R) →L[R] c(I, R)) (j : I) :
     rowNorm u j ≤ ‖u‖ :=
   Real.iSup_le (norm_matrixCoeff_le' u j) (opNorm_nonneg u)
@@ -1610,7 +1610,7 @@ private theorem norm_det_sub_det_le_of_row_eq {n : Type*} [Fintype n] [Decidable
     exact mul_le_mul_of_nonneg_left hprod hε
 
 /- Serre's "somme de produits de différences" [Serre1962, §5 p. 77].  Refines
-`norm_det_sub_det_le` (private in `Fredholm.lean`), whose uniform bound `max ‖u‖ ‖v‖ ^ (m−1)`
+`norm_det_sub_det_le` (private in `05_Fredholm.lean`), whose uniform bound `max ‖u‖ ‖v‖ ^ (m−1)`
 diverges at radius `M ≥ 1` and is therefore insufficient for Proposition 8. -/
 private theorem norm_det_sub_det_le' {n : Type*} [Fintype n] [DecidableEq n] (A B : Matrix n n R)
     (f : n → ℝ) {ε c : ℝ} (hε : 0 ≤ ε) (hc : 0 ≤ c) (hA : ∀ p q, ‖A p q‖ ≤ f p)
@@ -1790,11 +1790,11 @@ theorem eventually_norm_charCoeff_sub_le [IsTate R] {u : c(I, R) →L[R] c(I, R)
     _ ≤ ε := hfinal
 
 -- The `*`-form of the truncation matrix coefficients; `matrixCoeff_truncation_comp_sub` in
--- `Matrix.lean` is private and states only the `- u` version.
+-- `04_Matrix.lean` is private and states only the `- u` version.
 private theorem matrixCoeff_truncation_mul (u : c(I, R) →L[R] c(I, R)) (S : Finset I) (j i : I) :
     matrixCoeff (truncation S * u) j i = if j ∈ S then matrixCoeff u j i else 0 := rfl
 
--- The `*`-form of the tail bound; `norm_truncation_comp_sub_le` in `Matrix.lean` is private.
+-- The `*`-form of the tail bound; `norm_truncation_comp_sub_le` in `04_Matrix.lean` is private.
 private theorem norm_truncation_mul_sub_le [IsTate R] (u : c(I, R) →L[R] c(I, R)) (S : Finset I)
     {ε : ℝ} (hε : 0 ≤ ε) (hrow : ∀ j ∉ S, rowNorm u j ≤ ε) : ‖truncation S * u - u‖ ≤ ε := by
   rw [norm_eq_iSup_matrixCoeff]
@@ -2457,7 +2457,7 @@ finite-dimensional [Serre1962, §7 Prop. 12: "la dimension de N(a) est finie"]: 
 `1 - (a•u)` is nilpotent, so the identity is a polynomial in the compact operator
 `(a•u)|_N`, hence compact; a finite-rank approximation within Neumann distance of the
 identity is then invertible.  (Run directly on the closed subspace; the `HasPr` route of
-`Pr.lean` is deliberately avoided — its model-space index must be a subset of the module,
+`06_Pr.lean` is deliberately avoided — its model-space index must be a subset of the module,
 which small `N` inside a large `c(I, K)` need not admit.) -/
 theorem finite_ker_one_sub_smul_pow (hu : IsCompactoid u) (hh : 1 ≤ h)
     (h0 : ∀ s < h, PowerSeries.evalT a (PowerSeries.hasseDeriv s (charPowerSeries u)) = 0)

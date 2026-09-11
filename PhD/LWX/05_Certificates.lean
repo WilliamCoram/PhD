@@ -3,9 +3,9 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.LWX.Halo
-import PhD.LWX.IntegralModel
-import PhD.QMF.Weight.Compact
+import PhD.LWX.«04_Halo»
+import PhD.LWX.«04_IntegralModel»
+import PhD.QMF.Weight.«06_Compact»
 
 /-!
 # `U_p` on `S^D_int` from coset certificates: [LWX, Prop 3.1] in full
@@ -20,7 +20,7 @@ writes `γ_i v_j⁻¹ = δ_{i,j}⁻¹ γ_{λ_{i,j}} u_{i,j}` and finds
 
 The repo's ring-generic Hecke layer already proves the display
 (`AutomorphicFunction.heckeOperatorSlash_apply_rep`, [Jacobs, pp. 20–21] verbatim) and the seam
-`intEvalAtReps_comm` (`PhD/LWX/IntegralModel.lean`: any operator satisfying the display at the
+`intEvalAtReps_comm` (`PhD/LWX/04_IntegralModel.lean`: any operator satisfying the display at the
 representatives intertwines `intEvalAtReps` with `UpDatum.op`).  This file closes the loop for
 the **genuine** integral Hecke operator `[UηU]` on `S^D_int`:
 

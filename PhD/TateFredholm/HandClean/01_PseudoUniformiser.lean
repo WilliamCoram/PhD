@@ -1,4 +1,4 @@
-import PhD.TateFredholm.HandClean.TateRings
+import PhD.TateFredholm.HandClean.«00_TateRings»
 import PhD.ForMathlib.Analysis.Normed.Ring.NegLogNorm
 
 open TateFredholm

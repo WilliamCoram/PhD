@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
 import PhD.JacobsSlash.«1_PadicAnalytic»
-import PhD.TateFredholm.GenFun
-import PhD.TateFredholm.WeightGenFun
+import PhD.TateFredholm.«05_GenFun»
+import PhD.TateFredholm.«06_WeightGenFun»
 import Mathlib.RingTheory.MvPowerSeries.Inverse
 import Mathlib.LinearAlgebra.Matrix.Notation
 
@@ -202,7 +202,7 @@ end Data
 section WeightGenFun
 
 /- `linSeries` and `quadSeries` (the two universal factors of the weight generating
-function) now live in `PhD/TateFredholm/WeightGenFun.lean` (namespace `TateFredholm`),
+function) now live in `PhD/TateFredholm/06_WeightGenFun.lean` (namespace `TateFredholm`),
 so the general weight layer can consume them. -/
 
 /-- The power series `κ(cx + d) = κ(d) · ∑ₙ (t choose n) (c/d)ⁿ xⁿ` in two variables
@@ -432,7 +432,7 @@ becomes integral after the substitution `x ↦ x / 3` ([Jacobs, Lemma 2.7]). -/
 def RowInt (φ : MvPowerSeries (Fin 2) K) : Prop :=
   ∀ p : Fin 2 →₀ ℕ, ‖coeff p φ‖ ≤ ‖(3 : K)‖ ^ p 0
 
-/- `fin2_eq_zero` moved to `PhD/TateFredholm/WeightGenFun.lean`. -/
+/- `fin2_eq_zero` moved to `PhD/TateFredholm/06_WeightGenFun.lean`. -/
 
 omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
 /-- A monomial whose coefficient obeys the row bound is row-integral. -/
@@ -514,7 +514,7 @@ lemma rowInt_inv {φ : MvPowerSeries (Fin 2) K} (hφ : RowInt φ)
         · simp [pow_nonneg (norm_nonneg (3 : K)) (p 0)]
   exact fun p => key _ p rfl
 
-/- `linSeries_eq` / `quadSeries_eq` moved to `PhD/TateFredholm/WeightGenFun.lean`. -/
+/- `linSeries_eq` / `quadSeries_eq` moved to `PhD/TateFredholm/06_WeightGenFun.lean`. -/
 
 omit [CompleteSpace K] [CharZero K] in
 /-- The linear factor is row-integral when `‖d‖ ≤ 1` and `‖c‖ ≤ ‖3‖`. -/
@@ -539,7 +539,7 @@ lemma rowInt_quadSeries {γ : Matrix (Fin 2) (Fin 2) K} (hd : ‖γ 1 1‖ ≤ 1
   · simpa using hb
 
 /- `constantCoeff_linSeries` / `constantCoeff_quadSeries` moved to
-`PhD/TateFredholm/WeightGenFun.lean`. -/
+`PhD/TateFredholm/06_WeightGenFun.lean`. -/
 
 omit [CompleteSpace K] [CharZero K] in
 /-- `‖3‖ ^ n ≤ ‖n !‖`: the unsquared form of `sq_norm_factorial_ge` (`v₃(n!) ≤ n`). -/

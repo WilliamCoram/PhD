@@ -6,7 +6,7 @@ Authors: William Coram
 import PhD.JacobsSlash.«3_BinomialTheorem»
 import PhD.JacobsSlash.U3.«1_Setting»
 import PhD.JacobsSlash.«2_U3Data»
-import PhD.QMF.Weight.SlashAction
+import PhD.QMF.Weight.«03_SlashAction»
 
 /-!
 # The Jacobs κ-column and the `Σ₁(3)` bounds

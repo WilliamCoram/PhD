@@ -30,7 +30,7 @@ open Quaternion IsDedekindDomain NumberField QMF
 open scoped TensorProduct
 
 /- See `Setting.lean`: pin the adic `Algebra ℚ K_w` instance path used by the `QMF`
-framework, keeping statements syntactically aligned with `Level.lean`'s. -/
+framework, keeping statements syntactically aligned with `04_Level.lean`'s. -/
 attribute [local instance 2000]
   IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
 

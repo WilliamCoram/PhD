@@ -1,10 +1,10 @@
-import PhD.TateFredholm.Tate
+import PhD.TateFredholm.«00_Tate»
 import Mathlib.Topology.Baire.CompleteMetrizable
 import Mathlib.Algebra.Order.Field.GeomSum
 
 /-!
 # The operator norm on `Hom_R(M, N)` over a Banach–Tate ring
-([Bel] II.1.1 under [JN]'s hypotheses; blueprint 6.8–6.10.  See `Tate.lean` for the
+([Bel] II.1.1 under [JN]'s hypotheses; blueprint 6.8–6.10.  See `00_Tate.lean` for the
 development's overview and dictionary.)
 
 Banach `R`-modules are the usual package.  The operator norm is the `sInf` formula (no
@@ -524,7 +524,7 @@ theorem opNorm_eq_zero_iff (u : M →L[R] N) : ‖u‖ = 0 ↔ u = 0 := by
 
 /-- Submultiplicativity of the operator norm on endomorphisms, for the ring product
 (`*` is composition, `ContinuousLinearMap.mul_def`).  Proved inline here — the general
-`opNorm_comp_le` lives downstream in `Compact.lean` — to power the Neumann series below. -/
+`opNorm_comp_le` lives downstream in `02_Compact.lean` — to power the Neumann series below. -/
 theorem opNorm_mul_le (f g : M →L[R] M) : ‖f * g‖ ≤ ‖f‖ * ‖g‖ := by
   rw [ContinuousLinearMap.mul_def]
   refine opNorm_le_of_forall _ (mul_nonneg (opNorm_nonneg f) (opNorm_nonneg g)) fun x => ?_

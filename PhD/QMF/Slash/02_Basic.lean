@@ -3,7 +3,7 @@ Copyright (c) 2026 William Coram. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: William Coram
 -/
-import PhD.QMF.Slash.Sigma0
+import PhD.QMF.Slash.«01_Sigma0»
 import Mathlib.Algebra.Group.Action.Defs
 
 /-!
@@ -20,7 +20,7 @@ so we use a weight-free variant with the same axiom names.
 instances are constructed from existing left `DistribMulAction`s (via
 `RightSlashAction.ofAntiHom`, transport along an anti-homomorphism such as
 `Sigma0'.adj`) or directly from a literature formula (the `WeightModule` instance in
-`PhD/QMF/Slash/WeightModule.lean` uses Buzzard's own formula).  Proof obligations are
+`PhD/QMF/Slash/03_WeightModule.lean` uses Buzzard's own formula).  Proof obligations are
 always discharged through the left-handed library; no right-handed theory is
 developed on top of this class.
 -/
