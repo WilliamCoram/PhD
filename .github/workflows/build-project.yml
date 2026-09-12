@@ -54,5 +54,18 @@ jobs:
           key: LakeBuild-${{ runner.os }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}
           restore-keys: LakeBuild-
 
+      - name: Check the Main and TauCeti chains stay separate
+        run: |
+          rc=0
+          if [ -d PhD/TauCeti ] && grep -rn '^import PhD\.Main\.' PhD/TauCeti --include='*.lean'; then
+            echo "::error::PhD/TauCeti must not import PhD.Main.* — the restated chain is self-contained."
+            rc=1
+          fi
+          if [ -d PhD/Main ] && grep -rn '^import PhD\.TauCeti\.' PhD/Main --include='*.lean'; then
+            echo "::error::PhD/Main must not import PhD.TauCeti.* — that would pull the restated chain into the main build."
+            rc=1
+          fi
+          exit $rc
+
       - name: Build project
         run: ~/.elan/bin/lake build PhD
