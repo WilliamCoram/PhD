@@ -1083,7 +1083,7 @@ check the orientation against convention 6 rather than assuming it.
 ## Existing Lean work
 
 The principal source of existing code is `github.com/WilliamCoram/PhD` (Apache-2.0), at commit
-`1f43221` (2026-09-11): the directories `PhD/Main/NewtonPolygons/` and
+`fdc44e2` (2026-09-12): the directories `PhD/Main/NewtonPolygons/` and
 `PhD/Main/ForMathlib/NumberTheory/NewtonPolygon/` for Layers 0 and 2–5, and the six files
 `PhD/Main/ForMathlib/RingTheory/Valuation/AddVal/{Basic,RankOne,Commensurable,Discrete}.lean`,
 `PhD/Main/ForMathlib/Topology/Algebra/Valued/AddVal.lean` and `PhD/Main/ForMathlib/NumberTheory/Padics/AddVal.lean`
@@ -1098,10 +1098,12 @@ anything copied must be checked file-by-file rather than directory-by-directory.
 Two separate audits are recorded below, for the reason the adic-spaces roadmap gives: a declaration
 with no direct `sorry` is not the same as a theorem whose dependency cone is axiom-clean. The direct
 column is a file-level `grep` count, which over-counts (comments match) and sees no cross-file
-dependence. At the pin above, every file listed has a direct count of **0**. The transitive column
-must be regenerated at migration by a `#print axioms` gate on the capstones in Tau Ceti CI; the
-source project reports every directory listed clean on `propext`, `Classical.choice` and
-`Quot.sound`, and that claim is to be re-verified, not carried over.
+dependence. At the pin above, every file listed has a direct count of **0**. That pin
+names the commit at which the source tree acquired its present layout; the mathematics it records
+was complete at commit `1f43221` (2026-09-11). The transitive column must be regenerated at
+migration by a `#print axioms` gate on the capstones in Tau Ceti CI; the source project reports
+every directory listed clean on `propext`, `Classical.choice` and `Quot.sound`, and that claim is
+to be re-verified, not carried over.
 
 | Roadmap section | Existing source | Direct status at the pin | Transitive status | Roadmap status |
 |---|---|---|---|---|
