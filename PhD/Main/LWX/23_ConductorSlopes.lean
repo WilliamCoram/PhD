@@ -34,8 +34,8 @@ With `M = h + 1`, `q = p`, `N = t(k+1)p^h` and `slopeRatio D ω j = ϕ(q)·α̃_
   then starts with the classical factor's slopes
   (`unitSlope_newtonPolygon₀OfPowerSeries_mul_of_forall_le`).  This replaces [LWX]'s appeal
   to classicality (Prop 2.15), exactly as in `14_Touching.lean`;
-* **the reflection**: H1 (`roots_charpoly_of_atkinLehnerHypothesis`) gives the roots of the
-  partner's classical factor as `p^{k+1}/x`, and counting roots in balls
+* **the reflection**: H1 (`norm_roots_charpoly_of_atkinLehnerHypothesis`) gives the norms of the
+  roots of the partner's classical factor as `‖p^{k+1}‖/‖x‖`, and counting roots in balls
   (`faceRight_eq_card_roots_le_self`, `faceLeft_eq_card_roots_lt_self`) turns that into the
   reflection `s'_{N−1−i} = (k+1)v(p) − s_i` of the sorted slopes
   (`toReal_unitSlope_charpolyRev_reflect`);
@@ -115,25 +115,33 @@ theorem atkinLehnerHypothesis_symm {k : ℕ}
       (Fin (Fintype.card ι * ((k + 1) * p ^ h))) K}
     (hAL : AtkinLehnerHypothesis (p := p) (K := K) (ι := ι) ψ h k A B A') :
     ∃ B', AtkinLehnerHypothesis (p := p) (K := K) (ι := ι) ψ h k A' B' A := by
-  obtain ⟨hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hc0 : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 :=
     pow_ne_zero _ ((map_ne_zero ψ).2 (Nat.cast_ne_zero.2 hp.out.ne_zero))
   have hPQ : P * Q = 1 := mul_eq_one_comm.mp hQP
-  have hAinv : A * (((ψ (p : ℚ_[p])) ^ (k + 1))⁻¹ • B) = 1 := by
-    rw [Matrix.mul_smul, hAB, smul_smul, inv_mul_cancel₀ hc0, one_smul]
-  have hBA : B * A = (ψ (p : ℚ_[p])) ^ (k + 1) • (1 : Matrix _ _ K) := by
-    have h1 : (((ψ (p : ℚ_[p])) ^ (k + 1))⁻¹ • B) * A = 1 := mul_eq_one_comm.mp hAinv
-    rw [Matrix.smul_mul] at h1
-    calc B * A = (ψ (p : ℚ_[p])) ^ (k + 1) • (((ψ (p : ℚ_[p])) ^ (k + 1))⁻¹ • (B * A)) := by
-          rw [smul_smul, mul_inv_cancel₀ hc0, one_smul]
-      _ = (ψ (p : ℚ_[p])) ^ (k + 1) • (1 : Matrix _ _ K) := by rw [h1]
-  refine ⟨P * A * Q, ?_, Q, P, hPQ, ?_⟩
+  have hBA : B * A = (ψ (p : ℚ_[p])) ^ (k + 1) • Zm :=
+    Matrix.mul_eq_smul_mul_symm hc0 hAB hZmA hNm hZmN
+  have hZB : Zm * B = B * Zm := Matrix.mul_comm_of_mul_eq_smul_mul hc0 hAB hZmA hNm hZmN
+  have hpowPQ : ∀ m : ℕ, (P * Zm * Q) ^ m = P * Zm ^ m * Q := by
+    intro m
+    induction m with
+    | zero => rw [pow_zero, pow_zero, Matrix.mul_one, hPQ]
+    | succ m ih =>
+      rw [pow_succ (P * Zm * Q) m, ih, pow_succ Zm m]
+      calc P * Zm ^ m * Q * (P * Zm * Q) = P * (Zm ^ m * (Q * P) * Zm) * Q := by
+            simp only [Matrix.mul_assoc]
+        _ = P * (Zm ^ m * Zm) * Q := by rw [hQP, Matrix.mul_one]
+  refine ⟨P * A * Q, ⟨P * Zm * Q, Nm, hNm, ?_, ?_, ?_⟩, Q, P, hPQ, ?_⟩
   · calc A' * (P * A * Q) = P * B * Q * (P * A * Q) := by rw [hA']
       _ = P * (B * (Q * P) * A) * Q := by simp only [Matrix.mul_assoc]
       _ = P * (B * A) * Q := by rw [hQP, Matrix.mul_one]
-      _ = (ψ (p : ℚ_[p])) ^ (k + 1) • (P * Q) := by
-          rw [hBA, Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul]
-      _ = (ψ (p : ℚ_[p])) ^ (k + 1) • (1 : Matrix _ _ K) := by rw [hPQ]
+      _ = (ψ (p : ℚ_[p])) ^ (k + 1) • (P * Zm * Q) := by
+          rw [hBA, Matrix.mul_smul, Matrix.smul_mul]
+  · rw [hA']
+    calc P * Zm * Q * (P * B * Q) = P * (Zm * (Q * P) * B) * Q := by simp only [Matrix.mul_assoc]
+      _ = P * (B * (Q * P) * Zm) * Q := by rw [hQP, Matrix.mul_one, Matrix.mul_one, hZB]
+      _ = P * B * Q * (P * Zm * Q) := by simp only [Matrix.mul_assoc]
+  · rw [hpowPQ, hZmN, Matrix.mul_one, hPQ]
   · calc A = Q * P * A * (Q * P) := by rw [hQP, Matrix.one_mul, Matrix.mul_one]
       _ = Q * (P * A * Q) * P := by simp only [Matrix.mul_assoc]
 
@@ -149,11 +157,11 @@ theorem norm_pow_le_of_mem_roots_charpoly_matrixH [Nonempty ι] [IsAlgClosed K]
     {x : K} (hx : x ∈ (c.matrix idx).charpoly.roots) :
     ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ ≤ ‖x‖ := by
   classical
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun h0 =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [h0, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
   have hone : ∀ y ∈ (c'.matrix idx).charpoly.roots, ‖y‖ ≤ 1 := fun y hy =>
     norm_le_one_of_isRoot_charpoly_upMatrix idx c'.weight k _ (Polynomial.mem_roots'.1 hy).2
   have hxne : x ≠ 0 := by
@@ -161,7 +169,7 @@ theorem norm_pow_le_of_mem_roots_charpoly_matrixH [Nonempty ι] [IsAlgClosed K]
     exact hA0 (by rw [Matrix.det_eq_prod_roots_charpoly]; exact Multiset.prod_eq_zero (h0 ▸ hx))
   have hmem : ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ / ‖x‖
       ∈ (c'.matrix idx).charpoly.roots.map (fun y => ‖y‖) := by
-    rw [norm_roots_charpoly_atkinLehner hcne hAB hQP hA']
+    rw [norm_roots_charpoly_atkinLehnerZ hcne hAB hZmA hNm hZmN hQP hA']
     exact Multiset.mem_map_of_mem _ hx
   obtain ⟨y, hy, hyeq⟩ := Multiset.mem_map.1 hmem
   have hy1 := hone y hy
@@ -179,14 +187,15 @@ theorem unitSlope_charpolyRev_matrix_leH [Nonempty ι] [IsAlgClosed K]
     (newtonPolygon₀OfPowerSeries negLogNorm
         (((c.matrix idx).charpolyRev : Polynomial K) : PowerSeries K)).unitSlope j
       ≤ ((((k + 1 : ℕ) : ℝ) * (-Real.log ‖ψ p‖) : ℝ) : WithBotTop ℝ) := by
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun h0 =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [h0, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
   have hccpos : (0 : ℝ) < ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ := norm_pos_iff.2 hcne
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
   have hlow : ∀ x ∈ (c.matrix idx).charpoly.roots, ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ ≤ ‖x‖ :=
-    fun x hx => norm_pow_le_of_mem_roots_charpoly_matrixH idx c c' ⟨B, hAB, P, Q, hQP, hA'⟩ hx
+    fun x hx => norm_pow_le_of_mem_roots_charpoly_matrixH idx c c'
+      ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ hx
   have hGres : ∀ cst : ℝ, 0 < cst →
       PowerSeries.IsRestricted cst ((c.matrix idx).charpolyRev : PowerSeries K) :=
     fun cst _ => Polynomial.isRestricted_toPowerSeries _ _
@@ -316,15 +325,16 @@ end Datum
 
 /-! ### The reflection of the sorted slopes -/
 
-/-- **[LWX, Prop 3.22] in sorted-slope form**: if the characteristic roots of `A'` are
-`c/x` for the roots `x` of `A` (with multiplicity), then the `(n−1−i)`-th unit slope of
+/-- **[LWX, Prop 3.22] in sorted-slope form**: if the norms of the characteristic roots of `A'` are
+`‖c‖/‖x‖` for the roots `x` of `A` (with multiplicity), then the `(n−1−i)`-th unit slope of
 `det(1 − X·A')` is `v(c)` minus the `i`-th unit slope of `det(1 − X·A)`.  Counting roots in
 balls (`faceRight_eq_card_roots_le_self`, `faceLeft_eq_card_roots_lt_self`, `roots_charpolyRev`):
 `faceRight_{A'} σ = n − faceLeft_A (v(c) − σ)`, and the face API of `Face.lean` turns that into
 the reflection of the unit slopes. -/
 theorem toReal_unitSlope_charpolyRev_reflect [IsAlgClosed K] {n : Type*} [Fintype n]
     [DecidableEq n] {A A' : Matrix n n K} {c : K} (hc : c ≠ 0) (hA : A.det ≠ 0)
-    (hroots : A'.charpoly.roots = A.charpoly.roots.map (fun x => c / x)) {i : ℕ}
+    (hroots : A'.charpoly.roots.map (fun x => ‖x‖) = A.charpoly.roots.map (fun x => ‖c‖ / ‖x‖))
+    {i : ℕ}
     (hi : i < Fintype.card n) :
     NewtonPolygon.toReal ((newtonPolygon₀OfPowerSeries negLogNorm
         ((A'.charpolyRev : Polynomial K) : PowerSeries K)).unitSlope (Fintype.card n - 1 - i))
@@ -338,10 +348,13 @@ theorem toReal_unitSlope_charpolyRev_reflect [IsAlgClosed K] {n : Type*} [Fintyp
   have hroot0 : ∀ x ∈ A.charpoly.roots, x ≠ 0 := fun x hx h0 =>
     hA (by rw [Matrix.det_eq_prod_roots_charpoly]; exact Multiset.prod_eq_zero (h0 ▸ hx))
   have hA' : A'.det ≠ 0 := by
-    rw [Matrix.det_eq_prod_roots_charpoly, hroots]
+    rw [Matrix.det_eq_prod_roots_charpoly]
     refine Multiset.prod_ne_zero fun h0 => ?_
-    obtain ⟨x, hx, hx0⟩ := Multiset.mem_map.1 h0
-    exact div_ne_zero hc (hroot0 x hx) hx0
+    have hmem : ‖(0 : K)‖ ∈ A'.charpoly.roots.map (fun x => ‖x‖) := Multiset.mem_map_of_mem _ h0
+    rw [hroots] at hmem
+    obtain ⟨x, hx, hx0⟩ := Multiset.mem_map.1 hmem
+    rw [norm_zero] at hx0
+    exact div_ne_zero (norm_ne_zero_iff.2 hc) (norm_ne_zero_iff.2 (hroot0 x hx)) hx0
   have hcard : A.charpoly.roots.card = Fintype.card n := by
     rw [← (IsAlgClosed.splits A.charpoly).natDegree_eq_card_roots,
       Matrix.charpoly_natDegree_eq_dim]
@@ -371,19 +384,25 @@ theorem toReal_unitSlope_charpolyRev_reflect [IsAlgClosed K] {n : Type*} [Fintyp
         = Fintype.card n - (newtonPolygon₀OfPowerSeries negLogNorm
           ((A.charpolyRev : Polynomial K) : PowerSeries K)).faceLeft (-Real.log ‖c‖ - σ) := by
     intro σ
+    have hnormOnly : ∀ s : Multiset K,
+        Multiset.countP (fun y : K => ‖y⁻¹‖ ≤ Real.exp σ) s
+          = Multiset.countP (fun r : ℝ => r⁻¹ ≤ Real.exp σ) (s.map fun y => ‖y‖) := by
+      intro s
+      rw [Multiset.countP_map, ← Multiset.countP_eq_card_filter]
+      exact Multiset.countP_congr rfl fun y _ => by rw [norm_inv]
     rw [faceRight_eq_card_roots_le_self _ hf'0, faceLeft_eq_card_roots_lt_self _ hf0,
       Matrix.roots_charpolyRev hA', Matrix.roots_charpolyRev hA,
       ← Multiset.countP_eq_card_filter, ← Multiset.countP_eq_card_filter,
       Multiset.countP_map, Multiset.countP_map, ← Multiset.countP_eq_card_filter,
-      ← Multiset.countP_eq_card_filter, hroots, Multiset.countP_map,
+      ← Multiset.countP_eq_card_filter, hnormOnly, hroots, Multiset.countP_map,
       ← Multiset.countP_eq_card_filter]
     have hcpos : (0 : ℝ) < ‖c‖ := norm_pos_iff.2 hc
     have hcompl : ∀ x ∈ A.charpoly.roots,
-        (‖(c / x)⁻¹‖ ≤ Real.exp σ) = ¬ (‖x⁻¹‖ < Real.exp (-Real.log ‖c‖ - σ)) := by
+        ((‖c‖ / ‖x‖)⁻¹ ≤ Real.exp σ) = ¬ (‖x⁻¹‖ < Real.exp (-Real.log ‖c‖ - σ)) := by
       intro x hx
       have hxpos : (0 : ℝ) < ‖x‖ := norm_pos_iff.2 (hroot0 x hx)
       refine propext ?_
-      rw [inv_div, norm_div, norm_inv, not_lt,
+      rw [inv_div, norm_inv, not_lt,
         show Real.exp (-Real.log ‖c‖ - σ) = (‖c‖ * Real.exp σ)⁻¹ by
           rw [Real.exp_sub, Real.exp_neg, Real.exp_log hcpos, mul_inv, div_eq_mul_inv],
         inv_le_inv₀ (mul_pos hcpos (Real.exp_pos σ)) hxpos, div_le_iff₀ hcpos,
@@ -475,10 +494,10 @@ theorem slopeRatio_add_slopeRatio_eq_of_atkinLehnerHypothesisH [Nonempty ι] [Is
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [h0, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
   have hA0 : (c.matrix idx).det ≠ 0 := by
-    obtain ⟨hAB, -⟩ := hB
-    exact det_ne_zero_of_mul_eq_smul' hcne hAB
+    obtain ⟨⟨Zm, Nm, hNm, hAB, -, hZmN⟩, -⟩ := hB
+    exact Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
   have hrefl := toReal_unitSlope_charpolyRev_reflect hcne hA0
-    (roots_charpoly_of_atkinLehnerHypothesis (hAL := hB)) (i := i)
+    (norm_roots_charpoly_of_atkinLehnerHypothesis (hAL := hB)) (i := i)
     (by rw [Fintype.card_fin]; exact hi)
   rw [Fintype.card_fin] at hrefl
   have hr := congrArg NewtonPolygon.toReal hread

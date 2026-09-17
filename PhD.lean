@@ -112,3 +112,9 @@ import PhD.Main.LWX.«23_ConductorSlopes»
 -- Board `lwx-degrees`: the degrees of [LWX, Thm 1.3] at every classical weight and
 -- [LWX, Cor 1.4] (periodicity modulo `ϕ(q)/2`) — complete, sorry-free.
 import PhD.Main.LWX.«24_DegreePeriodicity»
+-- Board `lwx-quaternion`: the Atkin–Lehner identity at every neat tame level (the tame central
+-- operator), the determinant certificate from normalised representatives, and the adelic data for
+-- a definite quaternion algebra over `ℚ`, with its headline theorems — complete, sorry-free.
+import PhD.Main.TateFredholm.«02_CharpolyPairingZ»
+import PhD.Main.LWX.«23_QuaternionData»
+import PhD.Main.LWX.«25_QuaternionSlopes»

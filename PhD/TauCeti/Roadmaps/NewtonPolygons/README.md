@@ -30,8 +30,9 @@ irreducibility criterion.
 The roadmap includes the following material.
 
 - Convex sequences and their increments; convex minorants of a point sequence; the Newton polygon
-  of an arbitrary sequence `v : ℕ → WithTop ℝ` as the greatest convex minorant, with its
-  construction, its uniqueness, and the exact hypothesis under which it exists.
+  of an arbitrary sequence `v : ι → WithTop ℝ` on a discrete linear order `ι` — `ℕ` for polynomials
+  and power series, `ℤ` for Laurent series — as the greatest convex minorant, with its uniqueness,
+  the exact hypothesis under which it exists, and on `ℕ` its construction by the vertex walk.
 - Slopes, vertices, segments, lengths and the slope multiset; supporting lines, chords, and faces;
   the two counting functions that a face determines; the Minkowski sum (min-convolution) of two
   polygons.
@@ -167,8 +168,13 @@ reasons are given because an implementor who does not know them will reintroduce
 5. **`⊤` is the only junk value.** The set `{k | h k ≠ ⊤}` is an interval of `ℕ`: it is
    `[i₀, i₁]` for a polynomial, where `i₀` is the first index with `aᵢ ≠ 0`, and `[i₀, ∞)` for a
    series with infinitely many nonzero coefficients. Convexity is required on that interval.
-   There is no `⊥`, and no `WithBotTop`: a one-sided polygon never needs a value below the
-   bottom of its range.
+   There is no `⊥`, and no `WithBotTop`: a polygon never needs a value below the bottom of its
+   range. In particular the *vertical* case — points whose slopes out of some point are unbounded
+   below, such as `v k = -k²`, for which the textbooks draw a vertical line — is not represented by
+   a `⊥` height: no convex minorant exists, the specification is unsatisfiable, and the case is
+   *named* by a predicate (`IsVertical`, §0.2.3) and identified with radius of convergence `0`
+   (§4.4). Encoding it as a height `⊥` would reintroduce three-valued junk rules at both ends of the
+   polygon, which is exactly what convention 1 removes.
 
 6. **Slopes increase from left to right; slope `m` means roots of valuation `-m`.** The `j`-th
    increment `h (j+1) - h j` is the `j`-th unit slope, the unit slopes are monotone, and the slope
@@ -302,13 +308,20 @@ mathlib4#43580 as described above.
 ## Layer 0: convex minorants and the polygon of a sequence
 
 No arithmetic. Everything in this layer is about a sequence of extended reals, and all of it should
-be usable by anyone who needs a discrete convex hull. The points are `v : ℕ → WithTop ℝ`; Layer 2
-supplies them from an additive valuation by pushing `WithTop Γ` into `WithTop ℝ`.
+be usable by anyone who needs a discrete convex hull. The points are `v : ι → WithTop ℝ` for a
+discrete linear order `ι` (`[LinearOrder ι] [SuccOrder ι]`, with `[IsSuccArchimedean ι]
+[LocallyFiniteOrder ι] [NoMaxOrder ι]` wherever a proof walks along successors or sums over an
+interval); `ℕ` and `ℤ` are the instances that matter, and on both `Order.succ j = j + 1` and the
+cardinality of `Finset.Ico a c` is `c - a`. §0.1 and §0.2 are stated for `ι`; §0.3–§0.6 — everything
+that needs a first point — are stated for `ℕ`, and §0.2.6 reduces a `ℤ`-indexed point set with
+nothing to the left to that case. Layer 2 supplies the points from an additive valuation by pushing
+`WithTop Γ` into `WithTop ℝ`.
 
 ### 0.1 Convex sequences
 
-Develop the basic theory of convexity for a function `h : ℕ → WithTop ℝ` whose finiteness set is an
-interval.
+Develop the basic theory of convexity for a function `h : ι → WithTop ℝ` whose finiteness set is an
+interval. Statements that need a coordinate on the index type — affine sequences, the bridge to
+`ConvexOn` — are stated for `ℕ` (and, where Layer 0.2.6 needs them, for `ℤ`).
 
 1. Define the increment (unit slope) sequence and fix the convention for its value outside the
    finiteness interval. Define `IsConvexSeq h` to say that the increments are monotone on that
@@ -316,8 +329,8 @@ interval.
 2. The chord inequality (discrete Jensen): a convex sequence lies on or below the chord joining any
    two of its points, and on or above every extension of one of its increments. State both as
    comparisons of `h` with an affine function of the index.
-3. A convex sequence is determined by its value at one point together with its increments. The
-   pointwise maximum of two convex sequences is convex, and so is the pointwise supremum of any
+3. A convex sequence is determined by its value at one finite point together with its increments
+   (both sequences convex: a `⊤` gap would hide the values beyond it). The pointwise maximum of two convex sequences is convex, and so is the pointwise supremum of any
    family of convex sequences that is bounded above at each index; the pointwise *minimum* of two
    convex sequences is **not** convex in general, and the counterexample is to be recorded. The
    supremum statement is what makes the greatest convex minorant of §0.2 exist, and it is the
@@ -330,27 +343,38 @@ interval.
 
 ### 0.2 The Newton polygon of a sequence
 
-Fix `v : ℕ → WithTop ℝ`, thought of as the point set `{(i, v i) | v i ≠ ⊤}`.
+Fix `v : ι → WithTop ℝ`, thought of as the point set `{(i, v i) | v i ≠ ⊤}`.
 
-1. Define `IsNewtonPolygonOf v h`: `h` is convex in the sense of §0.1, is anchored at the first
-   index where `v` is finite (with the same value there), satisfies `h ≤ v` pointwise, and is the
-   greatest such function. Make the anchoring condition and the greatest-minorant condition separate
-   fields, so that each can be used alone.
+1. Define `IsNewtonPolygonOf v h`: `h` is convex in the sense of §0.1, satisfies `h ≤ v` pointwise,
+   and is the greatest such function. These three fields are the whole specification; there is no
+   anchoring field, because on `ℤ` there may be no first point. On `ℕ` the anchoring facts are
+   theorems (item 5).
 2. **Uniqueness.** Two functions satisfying `IsNewtonPolygonOf v` are equal. This is where
-   convention 1 pays: the statement is equality, not equality of a derived height.
-3. **Admissibility.** Define `IsAdmissible v`, the condition that some line through the anchor lies
-   on or below every point — equivalently, that the slopes from the anchor to the later points are
-   bounded below. Prove that it is exactly the condition for a minorant to exist:
-   `IsNewtonPolygonOf v h` for some `h` implies `IsAdmissible v`, and the converse is §0.3. Record
-   the failing example `v k = -k²`, for which the hull is vertical and no convex minorant anchored
-   at `0` exists.
-4. Define `newtonPolygon v` as a total function returning the polygon when `v` is admissible and has
-   a finite value, with a documented junk value otherwise, and prove
-   `IsNewtonPolygonOf v (newtonPolygon v)` under those hypotheses. Every statement in the later
-   layers is phrased with `newtonPolygon` and its characterisation, never with the construction of
-   §0.3.
-5. Monotonicity and invariance: `newtonPolygon` is unchanged by adding a constant to `v`, is
-   translated by an affine shear `v i ↦ v i + m·i`, and is monotone in `v` pointwise.
+   convention 1 pays: the statement is equality, not equality of a derived height, and the proof is
+   antisymmetry of the greatest-minorant field.
+3. **Existence and admissibility.** A polygon exists exactly when some convex minorant exists; this
+   is the index-agnostic condition, and it holds for every sequence on or above a single line.
+   On `ℕ` define `IsAdmissible v`, the condition that from every point some line lies on or below
+   every later point — equivalently, that the slopes from each point to the later points are bounded
+   below — and prove it is exactly the existence of a convex minorant. Define `IsVertical v`: `v`
+   has a point and is not admissible; then no polygon exists, the lower convex hull is `−∞` at every
+   later index, and the textbooks draw a vertical line. Record the example `v k = -k²`. Prove the
+   dichotomy: a sequence with a point has a Newton polygon or is vertical. Nothing represents the
+   vertical polygon as an object (convention 5).
+4. Define `newtonPolygon v` as a total function returning the polygon when a convex minorant exists,
+   with a documented junk value otherwise, and prove `IsNewtonPolygonOf v (newtonPolygon v)` under
+   that hypothesis. Every statement in the later layers is phrased with `newtonPolygon` and its
+   characterisation, never with the construction of §0.3.
+5. **Anchoring, on `ℕ`.** The polygon passes through the first point, is `⊤` before it, and is `⊤`
+   beyond the last point; and `newtonPolygon` is unchanged by adding a constant to `v`, is translated
+   by an affine shear `v i ↦ v i + m·i`, and is monotone in `v` pointwise.
+6. **The doubly-infinite case.** On `ℤ`, prove that a convex minorant exists exactly when the points
+   lie on or above a single line. ⚠ The pointwise condition — slopes bounded below to the right and
+   above to the left from every point — is *not* sufficient: `v k = -|k|` satisfies it at every point
+   and has no convex minorant. Define the extension of a `ℕ`-indexed sequence by `⊤` on the
+   negatives, and prove that its `ℤ`-polygon is the extension of its `ℕ`-polygon: every statement of
+   §0.3–§0.6 about a `ℤ`-indexed point set with nothing to the left is obtained by this reduction.
+   No one-sided API is developed on `ℤ`.
 
 ### 0.3 Existence by construction
 
@@ -361,7 +385,12 @@ Fix `v : ℕ → WithTop ℝ`, thought of as the point set `{(i, v i) | v i ≠ 
 2. Handle the two ways the walk can fail to reach a next vertex: the sequence has no further finite
    value (the polygon stops, and `h` is `⊤` beyond the last point), and the infimum of the slopes is
    not attained (the polygon ends in a ray of that slope, of infinite length). Prove that in the
-   second case the limiting slope is the supremum of the unit slopes.
+   second case the limiting slope is the supremum of the unit slopes. Name the second case on the
+   polygon — `EndsInRay h m`: the unit slopes are eventually the constant `m` — and prove that the
+   walk detects it in both directions: a terminal vertex with later points gives a polygon ending in
+   the ray of its minimal slope, and a polygon ending in a ray of slope `m` has such a terminal
+   vertex with minimal slope `m`; at a terminal vertex either no later point or infinitely many lie
+   on the minimal line.
 3. For a finitely supported `v` the polygon has finitely many segments and its last vertex is the
    last finite index.
 4. Prove the minorant half ("the polygon lies below the points") and the maximality half
@@ -381,8 +410,11 @@ Fix `v : ℕ → WithTop ℝ`, thought of as the point set `{(i, v i) | v i ≠ 
 3. Define `IsPure h m`: the polygon is a single segment of slope `m`, equivalently every unit slope
    equals `m`. Prove `IsPure` is equivalent to the slope multiset being a constant multiset.
 4. Define the first break of a polygon: the first slope together with the length of the first
-   segment, and characterise it by an inequality on the points — `v k ≥ v i₀ + m(k - i₀)` for all
-   `k`, with equality at the end of the segment.
+   segment, and characterise it by inequalities on the points: `v k ≥ v i₀ + m(k - i₀)` for all `k`,
+   equality at the end `i₀ + l` of the segment, and some line of slope *strictly greater* than `m`
+   through `(i₀ + l, v (i₀ + l))` on or below every later point. ⚠ The last clause is necessary:
+   points approaching the first line asymptotically (`v k = m k + 1/k`) lie strictly above it while
+   the polygon is an infinite ray of slope `m` with no break at all.
 5. Prove that the polygon of the restriction of `v` to `[0, n]` agrees with the polygon of `v` up to
    the last vertex at or before `n`, and that the polygon of `v` determines and is determined by its
    unit slope sequence.
@@ -405,7 +437,11 @@ Fix `v : ℕ → WithTop ℝ`, thought of as the point set `{(i, v i) | v i ≠ 
 4. Prove both face endpoints are finite exactly when the unit slopes are unbounded, define
    `SlopesUnbounded` for that condition, and prove it holds when `v` is finitely supported and when
    `v k / k → ∞`. ⚠ This hypothesis is not cosmetic: it is exactly what the product formula of
-   Layer 5 needs, and §5.1 records the counterexample without it.
+   Layer 5 needs, and §5.1 records the counterexample without it. Prove the trichotomy for a convex
+   sequence anchored at `0`: its slopes are unbounded, or it ends in a ray (`EndsInRay`, §0.3.2), or
+   its slopes stay strictly below their supremum and tend to it. On a terminal ray of slope `m`,
+   `faceLeft m` is honest while no unit slope exceeds `m`, so `faceRight m` is junk: this is the face
+   of infinite length, which §4.3.2 treats separately.
 5. Prove the multiplicity of `σ` in the slope multiset is `faceRight σ - faceLeft σ`, and that
    `faceRight` is the right-continuous counting function of the slope multiset.
 
@@ -429,8 +465,9 @@ Compute the polygon, the slope multiset and both face counting functions for: a 
 finite value; the affine sequence `v i = a + m·i`; `v i = i²`; the sequence
 `v = (0, 1, 0, 1, 0, …)`, whose polygon is the zero function; a finitely supported sequence whose
 hull has a genuinely collinear middle point, demonstrating that the vertex set is a strict subset of
-the set of points lying on the polygon; and `v k = ⌈k√2⌉`, whose polygon is the ray of slope `√2`
-and whose slopes from the anchor are all rational.
+the set of points lying on the polygon; `v k = ⌈k√2⌉`, whose polygon is the ray of slope `√2`
+and whose slopes from the anchor are all rational; and on `ℤ`, `v k = |k|`, whose polygon is itself
+(two rays), against `v k = -|k|`, which has no polygon.
 
 ### Dependencies
 
@@ -819,7 +856,14 @@ statement here must be instantiated at it.
    `coeff 0 f = 1` and the factorisation `f = g·h` of §3.3 at a vertex ending at `j₀`, a point of the
    closed ball of radius `b ^ m` is a zero of `f` if and only if it is a root of `g`. Deduce that `f`
    has exactly `faceRight m` zeros in that ball, with multiplicity, and exactly `l` zeros of
-   valuation `-m` when `m` is a slope of multiplicity `l`.
+   valuation `-m` when `m` is a slope of multiplicity `l`. ⚠ Both counts presuppose that the face of
+   slope `m` is bounded — some unit slope exceeds `m` — which holds for every `m` below the supremum
+   of the slopes and, under `SlopesUnbounded`, for every `m`. When the polygon ends in the ray of
+   slope `m` (`EndsInRay`, §0.3.2), `faceRight m` is junk and §3.3 does not apply (there is no vertex
+   to factor at); state that case separately: restrictedness at `b ^ m` leaves only finitely many
+   points of the sequence on the ray, the last of them, `d`, is the terminal vertex of the walk
+   (§0.3.2) and the Weierstrass degree of `f` at `b ^ m` (§3.1), and `f` has exactly `d` zeros in the
+   closed ball, `d - faceLeft m` of them of valuation `-m`.
 3. Every zero of `f` in the closed ball of radius `b ^ m` has valuation `-μ` for some unit slope
    `μ ≤ m`: no zeros off the spheres cut out by the slopes.
 4. The multiplicity of a zero of `f` is its multiplicity as a root of `g`, so multiplicities are
@@ -839,6 +883,10 @@ statement here must be instantiated at it.
    while the slopes are bounded. State the polynomial case separately rather than carrying a
    hypothesis that hides it.
 4. `f` is entire (restricted at every radius) if and only if its unit slopes tend to `+∞`.
+5. **Radius zero is the vertical case**: `radiusOfConvergence f = 0 ↔ IsVertical (coeffVal f)`. An
+   admissible sequence lies above a line of slope `s`, which gives restrictedness at every radius
+   `c < b ^ s`, so the formula of clause 2 carries admissibility as a hypothesis and this clause is
+   the other branch.
 
 ### 4.5 Entire series and their zeros
 
@@ -857,7 +905,12 @@ statement here must be instantiated at it.
 Over `ℚ_p` and `ℂ_p` with `v p = 1`: the zeros of `1 - X` and `1 - pX`; `Φ_p(X + 1) / p` has all
 roots of valuation `1/(p-1)`; `∑ Xⁱ/i!` has radius of convergence `p^{-1/(p-1)}` and no zero inside
 it; `∑ pⁱ² Xⁱ` is entire with one zero of valuation `-(2i+1)` for each `i`; a series whose polygon
-ends in a ray of slope `m` has radius exactly `b ^ m` and no zero of valuation `-m`.
+ends in a ray of slope `m` has radius exactly `b ^ m`, and its zeros of valuation `-m` are counted by
+the points of the sequence on the ray beyond its start — none when the ray carries no such point,
+and none when `f` is not restricted at `b ^ m` (the sphere of radius `b ^ m` is then outside the
+domain of convergence). ⚠ Not none in general: the coefficient valuations `(0, m, 2m + √2, 3m + √3, …)`
+give a series restricted at `b ^ m` whose polygon is the ray of slope `m` through the origin and which
+has exactly one zero of valuation `-m` (§4.3.2, ray case).
 
 ### Dependencies
 

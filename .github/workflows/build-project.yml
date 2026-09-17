@@ -69,3 +69,6 @@ jobs:
 
       - name: Build project
         run: ~/.elan/bin/lake build PhD
+
+      - name: Build the TauCeti chain
+        run: ~/.elan/bin/lake build PhD.TauCeti

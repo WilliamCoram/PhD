@@ -16,8 +16,8 @@ vertex `n` and every disc `ω`, which `13_SlopesSeam.lean`'s slope reading consu
 the adelic data (`AtkinLehnerData`) at every pair `(ω, k)` **with one and the same section
 `ιp`** (so that the `U_p`-representatives, hence the `UpDatum`, do not depend on `(ω, k)`).
 
-* `AtkinLehnerFamily θG ψ U Γ ζ` — one section `ιp` (with the level, central and
-  `w`-normalisation properties of `AtkinLehnerData`) and, for every disc `ω` and exponent `k`, a
+* `AtkinLehnerFamily θG ψ U Γ ζ` — one section `ιp` (with the level, `ιp_pGL_comm`, `central_pow`
+  and `w`-normalisation properties of `AtkinLehnerData`) and, for every disc `ω` and exponent `k`, a
   Hecke character `χ ω k` restricting to the nebentypus `nebCharK ψ ω k ζ` on `U`
   (`ζ` a fixed primitive `p`-th root of unity, conductor `p²`).  `toData ω k` is the
   `AtkinLehnerData` at `(ω, k)`; `vRepD (toData ω k)` is `vRepF` definitionally.
@@ -27,8 +27,9 @@ the adelic data (`AtkinLehnerData`) at every pair `(ω, k)` **with one and the s
   partnerChar p ω k · ω₀²`, `partnerChar p (ω⁻¹ω₀^{2k}) k = ω`, and `ω₀^{p−1} = 1`
   (`lwx.txt:2361`: "since ω₀^{ϕ(q)} = 1"), in the form `ω·ω₀^{2·(p−1)/2} = ω` for odd `p`.
 
-For the finite adèles of a definite quaternion algebra every field is class field theory or a
-local computation (`lwx-h1/plan.md`, design decision 4); here they are hypotheses.
+For a definite quaternion algebra over `ℚ` both families are constructed in
+`23_QuaternionData.lean` (`QuaternionInput.atkinLehnerFamily` and its level-`h` twin); here the
+fields are hypotheses.
 -/
 
 open Filter Topology TateFredholm QMF QMF.Weight AbstractHeckeOperatorSlash RightSlashAction
@@ -56,9 +57,14 @@ structure AtkinLehnerFamily (Γ : Subgroup G) (ζ : K) where
   theta_ιp : ∀ g, θG (ιp g) = (g : Matrix (Fin 2) (Fin 2) ℚ_[p])
   /-- The level contains the lifts of the local Iwahori subgroup `Iw_p`. -/
   ιp_mem_U : ∀ g : GL (Fin 2) ℚ_[p], (g : Matrix (Fin 2) (Fin 2) ℚ_[p]) ∈ Iw p 1 → ιp g ∈ U
-  /-- The central element `p` (at `p`) is a global central element times an element of the
-  level with trivial `p`-component. -/
-  central : ∃ γ ∈ Γ, ∃ u ∈ U, ιp (pGL p) = γ * u ∧ θG u = 1 ∧ ∀ x, γ * x = x * γ
+  /-- The local central element `p·1` is central in `G` (it is a scalar at `p` and `1` away
+  from `p`). -/
+  ιp_pGL_comm : ∀ x, ιp (pGL p) * x = x * ιp (pGL p)
+  /-- Some power of the central element `p` (at `p`) is a global central element times an element
+  of the level with trivial `p`-component: `p_p^N = p^N_global · ((p^{(p)})^N)⁻¹` — true for every
+  open tame level, since the tame scalars form a compact group. -/
+  central_pow : ∃ N, 0 < N ∧ ∃ γ ∈ Γ, ∃ u ∈ U,
+    ιp (pGL p) ^ N = γ * u ∧ θG u = 1 ∧ ∀ x, γ * x = x * γ
   /-- `w` normalises the disc-`0` part of the level. -/
   w_conj_mem_U : ∀ u ∈ U, ‖(θG u) 0 1‖ ≤ (p : ℝ)⁻¹ →
     ιp (wGL p) * u * (ιp (wGL p))⁻¹ ∈ U ∧ (ιp (wGL p))⁻¹ * u * ιp (wGL p) ∈ U
@@ -77,7 +83,8 @@ def AtkinLehnerFamily.toData (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (k : ℕ) :
   ιp := F.ιp
   theta_ιp := F.theta_ιp
   ιp_mem_U := F.ιp_mem_U
-  central := F.central
+  ιp_pGL_comm := F.ιp_pGL_comm
+  central_pow := F.central_pow
   χ := F.χ ω k
   χ_Γ := F.χ_Γ ω k
   χ_U := F.χ_U ω k
@@ -137,7 +144,8 @@ def AtkinLehnerFamilyH.toDataH (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (k : ℕ) :
   ιp := F.ιp
   theta_ιp := F.theta_ιp
   ιp_mem_U := F.ιp_mem_U
-  central := F.central
+  ιp_pGL_comm := F.ιp_pGL_comm
+  central_pow := F.central_pow
   χ := X.χ ω k
   χ_Γ := X.χ_Γ ω k
   χ_U := X.χ_U ω k

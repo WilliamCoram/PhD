@@ -44,7 +44,7 @@ import PhD.Main.TateFredholm.«09_Riesz»
 
 - **00** — `Charpoly`, `Compose`, `HandClean/TateRings`, `Resultant`, `Tate`
 - **01** — `AddVal`, `CharpolyPairing`, `HandClean/PseudoUniformiser`, `OperatorNorm`
-- **02** — `Compact`
+- **02** — `CharpolyPairingZ`, `Compact`
 - **03** — `ModelSpace`
 - **04** — `Matrix`, `TateAlgebra`
 - **05** — `Fredholm`, `GenFun`, `Noetherian`
@@ -265,6 +265,7 @@ application board.  All sorry-free.
 | `06_Unitriangular.lean` | `lwx-seam-m` board, 2026-09-06 | **`IsUnitriangularPerturbation M q`** — entries of norm `≤ 1`, unit diagonal, below-diagonal entries of norm `≤ q < 1`, finitely supported columns — and the resulting **isometric** self-equivalence of `c(ℕ, R)` (`equivOfPerturbation`, `norm_ofPerturbation`).  Proved directly by a largest-index argument plus a successive-approximation surjectivity, so it needs **no discretely valued residue field**: it replaces Colmez's reduction-mod-`p` criterion (Astérisque 330, Prop 1.1.5) and works over any complete ultrametric field.  Used for Amice's theorem at analyticity level `h` |
 | `08_BlockMap.lean` | `lwx-seam-m` board, 2026-09-06 | block operators between *different* fibres: `blockOpMap`, the block-diagonal `blockMap f : c(σ × I, R) →L c(σ × I', R)`, its composition laws with `blockOp` on either side (`blockMap_comp_blockOp`, `blockOp_comp_blockMap`), functoriality (`blockMap_comp`), and the induced equivalence `blockMapEquiv`.  `06_BlockOp.lean`'s `blockDiag` is the case `I = I'` (`blockMap_eq_blockDiag`).  Needed because the disc model `c(ℤ/pʰ × ℕ, K)` and the Mahler model `c(ℕ, K)` have different fibres |
 | `06_TwoSidedBound.lean` | `lwx-halo` board, tranche E (2026-09-03) | minor-level **two-sided** Hadamard bound: for a matrix with `‖A_{a,b}‖ ≤ r(a)·s(b)` and `r·s`-summability, `‖minor‖ ≤ ∏ r·∏ s` (`norm_minor_le_pow_sub`), summability of the minor expansion without any `IsTate` hypothesis (`summable_minor_of_two_sided`), the characteristic-coefficient bound `norm_charCoeff_le_pow_two_sided`, and the monotone comparison `sum_comp_div_le_sum_monotone` — the engine behind [LWX] Theorem 3.16's halo estimate (`PhD/Main/LWX/04_Halo.lean`) |
+| `02_CharpolyPairingZ.lean` | `lwx-quaternion` board, 2026-09-14 | the pairing of characteristic roots **up to a finite-order operator**: from `A B = c·Z` with `Z` commuting with `A` and `Z^N = 1`, over an algebraically closed normed field of characteristic zero, the norms of the roots of `B` are `‖c‖/‖x‖` for the roots `x` of `A`, with multiplicity (`Matrix.norm_roots_charpoly_of_mul_eq_smul_mul`) — `Z` is semisimple and the characteristic polynomial splits along its eigenspaces (`Module.End.norm_roots_charpoly_mul_of_iSup_eigenspace_eq_top`).  The input of the Atkin–Lehner reflection at every neat tame level (`PhD/Main/LWX/05_AtkinLehner.lean`'s `norm_roots_charpoly_atkinLehnerZ`) |
 
 ---
 

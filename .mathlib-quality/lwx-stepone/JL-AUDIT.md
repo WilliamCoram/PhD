@@ -230,3 +230,25 @@ of `StepThree.lean` (H2 = `LWX.isThetaExact_classicalData`, JL-free) with H1 fro
 `LWX.degXint_pos_of_atkinLehnerFamily`), followed by character algebra in `(ZMod p)ˣ →* ℤ_[p]ˣ`
 (`LWX.degX_succ_mul_teichChar_sq`, `LWX.degXint_mul_teichChar_sq`, `LWX.degX_succ_add_period`,
 `LWX.degXint_add_period`).  No Jacquet–Langlands input is used anywhere on the board.
+
+**Addendum (2026-09-14, board `lwx-quaternion` — EXECUTED).**  Two assumptions of the adelic data are
+removed and the data are instantiated for `D/ℚ`, still with **no** Jacquet–Langlands input.
+(1) The field `AtkinLehnerData.central` (the tame scalar `p^{(p)}` lies in the level — false for
+[LWX]'s neat levels in general) is replaced by `ιp_pGL_comm` and `central_pow`; hypothesis H1 now
+reads `U_p ∘ W⁻¹ ∘ U_p^{ψ⁻¹} ∘ W = p^{k+1}·Z` with `Z` the tame central operator
+(`LWX.translateOp`, `LWX.centralOpCl`, finite order and commuting with `U_p`), proved by the same
+double-coset expansion (`LWX.discHeckeCl_comp_atkinLehner`, `LWX.atkinLehnerHypothesis_of_atkinLehnerData`
+and their level-`h` twins).  The eigenvalue statement is the norm-multiset pairing
+(`Matrix.norm_roots_charpoly_of_mul_eq_smul_mul`, via semisimplicity of `Z` and
+`Module.End.norm_roots_charpoly_mul_of_iSup_eigenspace_eq_top`); the classical form
+`a_p(f)·a_p(f|W) = χ_M(p)·p^{k+1}` (Miyake, Thm 4.6.17, cited at `bu04.txt:1120–1124`, which also
+invokes Jacquet–Langlands) is **cited, not used**.  (2) The determinant certificate `det(u_{i,t} v_t) = p`
+is proved from normalised class representatives (`LWX.QuaternionInput.det_certM1_eq`).  (3) For a
+definite quaternion algebra over `ℚ` split at `p`, `LWX.QuaternionInput` (tame level, norm class,
+normalised neat representatives) yields `LWX.QuaternionInput.atkinLehnerFamily`/`…H`, the `U_p`-datum,
+and the headline theorems (`LWX.QuaternionInput.hasUnitBand`, `degX_succ`, `degXint_eq`, `degXint_pos`,
+`degX_succ_add_period`, `degXint_add_period`, `unitSlope_discHeckeCharPowerSeries_eq_slopeRatio`,
+`slopeRatio_add_period`).  The inputs of `QuaternionInput` are the reduced norm's properties,
+Hasse–Schilling–Maass plus weak approximation (Voight Thm 14.7.4, §28.5) and neatness — none is
+Jacquet–Langlands.
+

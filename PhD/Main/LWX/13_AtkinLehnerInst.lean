@@ -27,10 +27,12 @@ operator identity `A B = p^{k+1}`, the characteristic roots pair.  This file sup
   `U_p`-stable**: if `θ f = 0` then `θ (U_p f) = c^r · U_p' (θ f) = 0`.
 * `upMatrix` — the matrix of a block operator restricted to the classical subspace, in the basis
   `Module.finBasisOfFinrankEq` supplied by [LWX, (3.21.1)].
-* `AtkinLehnerHypothesis` — **H1, named on the genuine spaces**: the operator identity together
-  with the existence of a conjugation between the `ψ`- and `ψ⁻¹`-matrices.
-* `roots_charpoly_upMatrix_of_atkinLehner` — H1 discharges to the multiset pairing; a one-line
-  application of board one's lemma whose value is fixing the *types* Step I consumes.
+* `AtkinLehnerHypothesis` — **H1, named on the genuine spaces**: the operator identity
+  `A B = p^{k+1}·Z` up to a finite-order operator `Z` commuting with `A` (the tame central
+  operator), together with the existence of a conjugation between the `ψ`- and `ψ⁻¹`-matrices.
+* `norm_roots_charpoly_of_atkinLehnerHypothesis` — H1 discharges to the pairing of the norms of
+  the characteristic roots (`norm_roots_charpoly_atkinLehnerZ`); its value is fixing the *types*
+  Step I consumes.
 
 ## What is deliberately NOT built here, and why
 
@@ -47,9 +49,9 @@ On the *classical subspace* it does act — `Sym^k` is a representation of all o
 acts by the twisted polynomial reversal `f(z) ↦ (−p^m z)^k f(1/(−p^m z))` together with a
 permutation of the class set — but that action must be built on the finite-dimensional classical
 space directly, not obtained by restricting an overconvergent one.  That construction is
-hypothesis **H1a**, recorded on the board with the `Sym^k` route; the operator identity is
-**H1b**, being worked in `PhD/Main/Test/AtkinLehnerIdentity.lean`.  `AtkinLehnerHypothesis` is exactly
-`H1a ∧ H1b`.
+hypothesis **H1a** and the operator identity is **H1b**; both are proved from the adelic
+Atkin–Lehner data in `19_AtkinLehnerIdentity.lean` and `21_AtkinLehnerIdentityH.lean`
+(`atkinLehnerHypothesis_of_atkinLehnerData`).  `AtkinLehnerHypothesis` is exactly `H1b ∧ H1a`.
 
 See `.mathlib-quality/lwx-stepone/JL-AUDIT.md`.
 -/
@@ -213,30 +215,34 @@ def upMatrix [Nonempty ι] (h k : ℕ)
   LinearMap.toMatrix b b ((T : c(ι × (ZMod (p ^ h) × ℕ), K) →ₗ[K] _).restrict hT)
 
 variable (p K ι) in
-/-- **Hypothesis H1, named on the genuine classical spaces.**  `A` is `U_p` at `ψ`, `B` is `U'_p`
-at `ψ`, `A'` is `U_p` at `ψ⁻¹`, all as matrices on the classical subspace; the hypothesis is
-* **H1b** the operator identity `A B = p^{k+1}` (worked in `PhD/Main/Test/AtkinLehnerIdentity.lean`), and
-* **H1a** a conjugation `A' = P B Q`, `Q P = 1` — the Atkin–Lehner element acting on classical
+/-- **Hypothesis H1, named on the genuine classical spaces** (at a general tame level):
+* **H1b** the operator identity `A B = p^{k+1}·Z` with `Z` the tame central operator — commuting
+  with `A` and of finite order (`central_pow`); its eigenvalues are the values `χ_M(p)` of the tame
+  central characters ([Miyake, Thm 4.6.17]: `a_p(f)·a_p(f|W) = χ_M(p)·p^{k+1}`), and
+* **H1a** the conjugation `A' = P B Q`, `Q P = 1` — the Atkin–Lehner element acting on classical
   forms, which does *not* factor through the disc model (see the module docstring). -/
 def AtkinLehnerHypothesis (h k : ℕ)
     (A B A' : Matrix (Fin (Fintype.card ι * ((k + 1) * p ^ h)))
       (Fin (Fintype.card ι * ((k + 1) * p ^ h))) K) : Prop :=
-  A * B = (ψ p) ^ (k + 1) • (1 : Matrix _ _ K) ∧
+  (∃ (Z : Matrix (Fin (Fintype.card ι * ((k + 1) * p ^ h)))
+      (Fin (Fintype.card ι * ((k + 1) * p ^ h))) K) (N : ℕ),
+      0 < N ∧ A * B = (ψ p) ^ (k + 1) • Z ∧ Z * A = A * Z ∧ Z ^ N = 1) ∧
     ∃ P Q : Matrix (Fin (Fintype.card ι * ((k + 1) * p ^ h)))
       (Fin (Fintype.card ι * ((k + 1) * p ^ h))) K, Q * P = 1 ∧ A' = P * B * Q
 
-omit [DecidableEq ι] [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
-/-- **[LWX, Prop 3.22] at the genuine classical space, granted H1**: the characteristic roots of
-`U_p` on the `ψ⁻¹`-classical space are those on the `ψ`-classical space inverted and scaled by
-`p^{k+1}`.  One application of `roots_charpoly_atkinLehner`. -/
-theorem roots_charpoly_of_atkinLehnerHypothesis [IsAlgClosed K] (h k : ℕ)
+omit [DecidableEq ι] [IsUltrametricDist K] [CompleteSpace K] in
+/-- **[LWX, Prop 3.22] at a general tame level, granted H1**: the norms of the characteristic roots
+of `U_p` on the `ψ⁻¹`-classical space are `‖p‖^{k+1}` divided by those on the `ψ`-classical space,
+with multiplicity (`norm_roots_charpoly_atkinLehnerZ`). -/
+theorem norm_roots_charpoly_of_atkinLehnerHypothesis [IsAlgClosed K] (h k : ℕ)
     {A B A' : Matrix (Fin (Fintype.card ι * ((k + 1) * p ^ h)))
       (Fin (Fintype.card ι * ((k + 1) * p ^ h))) K}
     (hAL : AtkinLehnerHypothesis (p := p) (K := K) (ι := ι) ψ h k A B A') :
-    A'.charpoly.roots = A.charpoly.roots.map (fun x => (ψ p) ^ (k + 1) / x) := by
-  obtain ⟨hAB, P, Q, hQP, hA'⟩ := hAL
+    A'.charpoly.roots.map (fun x => ‖x‖)
+      = A.charpoly.roots.map (fun x => ‖(ψ p) ^ (k + 1)‖ / ‖x‖) := by
+  obtain ⟨⟨Z, N, hN, hAB, hZA, hZN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun hcon =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [hcon, map_zero]))
-  exact roots_charpoly_atkinLehner (pow_ne_zero _ hψp) hAB hQP hA'
+  exact norm_roots_charpoly_atkinLehnerZ (pow_ne_zero _ hψp) hAB hZA hN hZN hQP hA'
 
 end LWX

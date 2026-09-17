@@ -5,6 +5,7 @@ Authors: William Coram
 -/
 import PhD.Main.LWX.«04_IntegralModel»
 import PhD.Main.TateFredholm.«01_CharpolyPairing»
+import PhD.Main.TateFredholm.«02_CharpolyPairingZ»
 
 /-!
 # The Atkin–Lehner element, and the reduction of [LWX, Prop 3.22]
@@ -281,5 +282,23 @@ theorem norm_roots_charpoly_atkinLehner {A B A' P Q : Matrix ι ι K} {c : K} (h
   exact Multiset.map_congr rfl fun x _ => norm_div c x
 
 end Slopes
+
+section SlopesZ
+
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] {K : Type*} [NormedField K] [IsAlgClosed K]
+  [CharZero K]
+
+/-- **The reduction, slope form, at a general tame level**: with
+`A B = c·Z`, `Z` commuting with `A` and of finite order, `Q P = 1` and `A' = P B Q`, the norms of
+the characteristic roots on the `ψ⁻¹`-space are `‖c‖` divided by those on the `ψ`-space, with
+multiplicity (`Matrix.norm_roots_charpoly_of_mul_eq_smul_mul`, `Matrix.charpoly_conj`). -/
+theorem norm_roots_charpoly_atkinLehnerZ {A B A' P Q Z : Matrix ι ι K} {c : K} (hc : c ≠ 0)
+    (hAB : A * B = c • Z) (hZA : Z * A = A * Z) {N : ℕ} (hN : 0 < N) (hZ : Z ^ N = 1)
+    (hQP : Q * P = 1) (hA' : A' = P * B * Q) :
+    A'.charpoly.roots.map (fun x => ‖x‖) = A.charpoly.roots.map (fun x => ‖c‖ / ‖x‖) := by
+  rw [hA', Matrix.charpoly_conj P Q B hQP]
+  exact Matrix.norm_roots_charpoly_of_mul_eq_smul_mul hc hAB hZA hN hZ
+
+end SlopesZ
 
 end LWX

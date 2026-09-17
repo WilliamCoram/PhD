@@ -22,21 +22,24 @@ open scoped Classical NNReal
 
 /-! ## Layer 0: convex minorants and the polygon of a sequence -/
 
-/-- Convexity of a sequence of extended reals, in the midpoint form, which needs no subtraction and
-has the right behaviour at `⊤`: the condition is vacuous where `h k` or `h (k + 2)` is `⊤`, and
-fails where `h (k + 1)` is `⊤` but its neighbours are not. So a convex sequence automatically has an
-interval as its finiteness set (README convention 5). -/
-def IsConvexSeq (h : ℕ → WithTop ℝ) : Prop :=
-  ∀ k, h (k + 1) + h (k + 1) ≤ h k + h (k + 2)
-
 /-- The `j`-th unit slope of a height function, `h (j + 1) - h j`, with the convention that it is
-`⊤` as soon as either end is `⊤`. For a convex sequence this is monotone, which is the content of
-convexity. -/
+`⊤` as soon as either end is `⊤`. (In the development the index type is any discrete linear order,
+`ℕ` or `ℤ`, with `Order.succ j` in place of `j + 1`.) -/
 noncomputable def unitSlope (h : ℕ → WithTop ℝ) (j : ℕ) : WithTop ℝ :=
   if h j = ⊤ ∨ h (j + 1) = ⊤ then ⊤
   else (((h (j + 1)).untop₀ - (h j).untop₀ : ℝ) : WithTop ℝ)
 
-theorem unitSlope_mono {h : ℕ → WithTop ℝ} (hh : IsConvexSeq h) : Monotone (unitSlope h) :=
+/-- Convexity: the finiteness set is an interval and the unit slopes are monotone *on it* (README
+§0.1.1, convention 5). ⚠ Global monotonicity of `unitSlope h` is false as soon as the first finite
+index is past `0`: the unit slopes run `⊤, …, ⊤, s₀, s₁, …`. The midpoint form
+`h (k+1) + h (k+1) ≤ h k + h (k+2)` is equivalent given order-connectedness, and alone it admits gaps
+(`(0, ⊤, ⊤, 0)` satisfies it). -/
+structure IsConvexSeq (h : ℕ → WithTop ℝ) : Prop where
+  ordConnected : {j | h j ≠ ⊤}.OrdConnected
+  monotoneOn : MonotoneOn (unitSlope h) {j | h j ≠ ⊤}
+
+theorem IsConvexSeq.midpoint {h : ℕ → WithTop ℝ} (hh : IsConvexSeq h) (k : ℕ) :
+    h (k + 1) + h (k + 1) ≤ h k + h (k + 2) :=
   sorry
 
 /-- The chord inequality: a convex sequence lies on or below the chord through two of its points.
@@ -63,38 +66,67 @@ def IsAdmissible (v : ℕ → WithTop ℝ) : Prop :=
   ∀ i, v i ≠ ⊤ → ∃ s : ℝ, ∀ k, i ≤ k → v i + (k - i : ℕ) • (s : WithTop ℝ) ≤ v k
 
 /-- `IsNewtonPolygonOf v h`: `h` is *the* Newton polygon of the points `(k, v k)` — the greatest
-convex minorant anchored at the first point. The four conditions are kept separate because later
-layers use them separately; `le_points` and `greatest` are the two halves of the existence proof. -/
+convex minorant. Three fields and no mention of a first point, so the same specification serves
+`ℤ`-indexed points (Laurent series), where there may be none; on `ℕ` the anchoring facts (the polygon
+passes through the first point and is `⊤` before it) are theorems. -/
 structure IsNewtonPolygonOf (v h : ℕ → WithTop ℝ) : Prop where
   /-- The polygon is convex. -/
   convex : IsConvexSeq h
-  /-- The polygon is `⊤` exactly to the left of the first point of `v`, and agrees with `v` there. -/
-  anchor : ∀ i, (∀ k < i, v k = ⊤) → v i ≠ ⊤ → (h i = v i ∧ ∀ k < i, h k = ⊤)
   /-- The polygon lies on or below every point. -/
   le_points : ∀ k, h k ≤ v k
-  /-- It is the greatest such: any convex minorant with the same anchor lies below it. -/
-  greatest : ∀ g, IsConvexSeq g → (∀ k, g k ≤ v k) → (∀ i, h i = ⊤ → g i = ⊤) → ∀ k, g k ≤ h k
+  /-- It is the greatest convex minorant. -/
+  greatest : ∀ g, IsConvexSeq g → (∀ k, g k ≤ v k) → ∀ k, g k ≤ h k
 
-/-- **Uniqueness**, on the nose. This is the statement that convention 1 buys: with a
-segment-decorated structure as the primary object it is false, and only height equality survives. -/
+/-- **Uniqueness**, on the nose — antisymmetry of `greatest`. This is the statement that
+convention 1 buys: with a segment-decorated structure as the primary object it is false, and only
+height equality survives. -/
 theorem IsNewtonPolygonOf.unique {v h₁ h₂ : ℕ → WithTop ℝ} (h₁' : IsNewtonPolygonOf v h₁)
     (h₂' : IsNewtonPolygonOf v h₂) : h₁ = h₂ :=
-  sorry
+  funext fun k ↦ le_antisymm (h₂'.greatest h₁ h₁'.convex h₁'.le_points k)
+    (h₁'.greatest h₂ h₂'.convex h₂'.le_points k)
 
-/-- The Newton polygon of a sequence, as a total function. Junk outside the hypotheses of
-`isNewtonPolygonOf_newtonPolygon`; every later statement goes through the characterisation. -/
+/-- The Newton polygon of a sequence, as a total function: the pointwise supremum of all convex
+minorants (§0.2.4). Junk when no convex minorant exists (the vertical case); every later statement
+goes through the characterisation. -/
 noncomputable def newtonPolygon (v : ℕ → WithTop ℝ) : ℕ → WithTop ℝ :=
   sorry
 
-/-- **Existence.** The construction is the vertex walk; admissibility is exactly what it needs. -/
-theorem isNewtonPolygonOf_newtonPolygon {v : ℕ → WithTop ℝ} (hv : IsAdmissible v)
-    (hv' : ∃ i, v i ≠ ⊤) : IsNewtonPolygonOf v (newtonPolygon v) :=
+/-- **Existence.** Admissibility is exactly what it needs; `v ≡ ⊤` is admissible and has the
+polygon `⊤`. §0.3 constructs the same polygon by the vertex walk. -/
+theorem isNewtonPolygonOf_newtonPolygon {v : ℕ → WithTop ℝ} (hv : IsAdmissible v) :
+    IsNewtonPolygonOf v (newtonPolygon v) :=
   sorry
 
 /-- Admissibility is necessary as well as sufficient. -/
 theorem IsNewtonPolygonOf.isAdmissible {v h : ℕ → WithTop ℝ} (hh : IsNewtonPolygonOf v h) :
     IsAdmissible v :=
   sorry
+
+/-- **The vertical case.** Points with a finite value whose slopes are unbounded below — `v k = -k²`
+— have no convex minorant: the lower convex hull is `−∞` at every later index and the textbooks draw
+a vertical line. There is no polygon object and no `⊥` (convention 5); the case is *named*, and
+Layer 4 identifies it with radius of convergence `0`. -/
+def IsVertical (v : ℕ → WithTop ℝ) : Prop := (∃ i, v i ≠ ⊤) ∧ ¬ IsAdmissible v
+
+theorem isVertical_neg_sq : IsVertical fun k : ℕ ↦ ((-(k : ℝ) ^ 2 : ℝ) : WithTop ℝ) :=
+  sorry
+
+/-! #### The doubly-infinite case (§0.2.6)
+
+In the development `unitSlope`, `IsConvexSeq`, `IsNewtonPolygonOf` and `newtonPolygon` are stated
+for `ι → WithTop ℝ` with `ι` any discrete linear order (`[LinearOrder ι] [SuccOrder ι]`, plus
+`[IsSuccArchimedean ι] [LocallyFiniteOrder ι] [NoMaxOrder ι]` where proofs sum over intervals); the
+forms above are their `ι = ℕ` instances. Two statements connect `ℤ` to `ℕ`:
+
+* `newtonPolygon (extendTop v) = extendTop (newtonPolygon v)` for admissible `v`, so every result of
+  §0.3–§0.6 about a `ℤ`-indexed point set with nothing to the left is read off from `ℕ`;
+* on `ℤ` a convex minorant exists iff the points lie on or above one line,
+  `∃ y σ : ℝ, ∀ k : ℤ, ((y + σ * k : ℝ) : WithTop ℝ) ≤ v k`. ⚠ The pointwise two-sided slope
+  condition is not sufficient: `v k = -|k|` satisfies it at every point and has no convex minorant. -/
+
+/-- A `ℕ`-indexed sequence, extended by `⊤` on the negatives. -/
+noncomputable def extendTop (v : ℕ → WithTop ℝ) : ℤ → WithTop ℝ :=
+  fun k ↦ if 0 ≤ k then v k.toNat else ⊤
 
 /-! ### Slopes, faces, and the slope multiset -/
 
@@ -140,6 +172,13 @@ theorem faceRight_sub_faceLeft {v h : ℕ → WithTop ℝ} (hh : IsNewtonPolygon
     (hu : SlopesUnbounded h) (d : ℕ) (σ : ℝ) :
     (slopeMultiset h d).count σ = faceRight h σ - faceLeft h σ :=
   sorry
+
+/-- The polygon *ends in a ray of slope `m`* — the face of infinite length (§0.3.2, §0.5.4): its unit
+slopes are eventually the constant `m`. For a convex sequence this is "`m` is a slope that no slope
+exceeds"; `faceRight m` is junk exactly here, and the vertex walk detects it (no next vertex although
+later points exist). The slopes of a convex sequence anchored at `0` are unbounded, or end in a ray,
+or stay strictly below their supremum and tend to it. -/
+def EndsInRay (h : ℕ → WithTop ℝ) (m : ℝ) : Prop := ∃ N, ∀ j, N ≤ j → unitSlope h j = m
 
 /-! ### Minkowski sums -/
 

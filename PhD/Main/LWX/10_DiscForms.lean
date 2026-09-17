@@ -292,6 +292,128 @@ theorem evalT_discHeckeCharPowerSeries_eq_zero_iff (hρ : 0 ≤ ρ) (hσ : max �
 
 end Hecke
 
+/-! ### Right translation by a central element: the tame central operator -/
+
+section Translate
+
+variable {h}
+variable (U : Subgroup G) (hU : (U : Set G) ⊆ levelM1 (p := p) θ)
+
+/-- **Right translation** by `z`: `(translateOp z φ)(x) = φ(x·z⁻¹)`.  For `z = ιp(p·1)` the local
+central element, this is the tame central operator `Z` of the Atkin–Lehner identity
+`U_p ∘ W⁻¹ ∘ U_p^{ψ⁻¹} ∘ W = p^{k+1}·Z` at a general tame level. -/
+def translateOp (z : G) (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) :
+    AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K) where
+  toFun x := φ (x * z⁻¹)
+  left_invt γ hγ g := by rw [mul_assoc]; exact φ.left_invt γ hγ _
+
+omit hp [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
+@[simp] theorem translateOp_apply (z : G) (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K))
+    (x : G) : translateOp z φ x = φ (x * z⁻¹) :=
+  rfl
+
+omit hp [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
+theorem translateOp_add (z : G) (φ φ' : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) :
+    translateOp z (φ + φ') = translateOp z φ + translateOp z φ' :=
+  AutomorphicFunction.ext fun _ => rfl
+
+omit hp [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
+theorem translateOp_smul (z : G) (r : K) (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) :
+    translateOp z (r • φ) = r • translateOp z φ :=
+  AutomorphicFunction.ext fun _ => rfl
+
+omit hp [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
+theorem translateOp_one (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) :
+    translateOp (1 : G) φ = φ :=
+  AutomorphicFunction.ext fun x => by rw [translateOp_apply, inv_one, mul_one]
+
+omit hp [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
+theorem translateOp_translateOp (z z' : G) (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) :
+    translateOp z (translateOp z' φ) = translateOp (z' * z) φ :=
+  AutomorphicFunction.ext fun x => by
+    simp only [translateOp_apply, mul_inv_rev, mul_assoc]
+
+omit [CharZero K] in
+/-- **A level element with trivial `p`-component acts trivially** on disc forms at every level. -/
+theorem apply_mul_of_theta_eq_one' {φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)}
+    (hφ : φ ∈ DiscForms (Γ := Γ) θ h ψ κ U hU) (x : G) {u : G} (hu : u ∈ U) (hθ : θ u = 1) :
+    φ (x * u) = φ x := by
+  have h1 := (mem_discForms_iff θ h ψ κ U hU φ).1 hφ ⟨u, hu⟩ x
+  have h2 : (⟨θ ((⟨u, hu⟩ : U) : G), hU (⟨u, hu⟩ : U).2⟩ : M1 p) = 1 := Subtype.ext hθ
+  rw [h2, discSlash_one] at h1
+  exact h1
+
+omit [CharZero K] in
+/-- Translation by an element commuting with the level preserves the disc forms. -/
+theorem translateOp_mem_discForms {z : G} (hz : ∀ u ∈ U, z * u = u * z)
+    {φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)}
+    (hφ : φ ∈ DiscForms (Γ := Γ) θ h ψ κ U hU) :
+    translateOp z φ ∈ DiscForms (Γ := Γ) θ h ψ κ U hU := by
+  rw [mem_discForms_iff] at hφ ⊢
+  intro u g
+  have hz' : z⁻¹ * (u : G) = u * z⁻¹ := by
+    rw [inv_mul_eq_iff_eq_mul, ← mul_assoc, hz u u.2, mul_inv_cancel_right]
+  show φ (g * u * z⁻¹) = discSlash h ψ κ ⟨θ u, hU u.2⟩ (φ (g * z⁻¹))
+  rw [mul_assoc, ← hz', ← mul_assoc]
+  exact hφ u (g * z⁻¹)
+
+omit [CharZero K] in
+/-- Translation by `γ u`, `γ ∈ Γ` central, `u ∈ U`, `θ u = 1`, is the identity on disc forms. -/
+theorem translateOp_eq_self_of_eq_mul {z γ u : G} (hγ : γ ∈ Γ) (hγc : ∀ x, γ * x = x * γ)
+    (hu : u ∈ U) (hθ : θ u = 1) (hz : z = γ * u)
+    {φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)}
+    (hφ : φ ∈ DiscForms (Γ := Γ) θ h ψ κ U hU) : translateOp z φ = φ := by
+  have hθinv : θ u⁻¹ = 1 := by
+    have h1 := map_mul θ u u⁻¹
+    rw [mul_inv_cancel, map_one, hθ, one_mul] at h1
+    exact h1.symm
+  have hγc' : ∀ y : G, γ⁻¹ * y = y * γ⁻¹ := fun y => by
+    rw [inv_mul_eq_iff_eq_mul, ← mul_assoc, hγc y, mul_inv_cancel_right]
+  refine AutomorphicFunction.ext fun x => ?_
+  rw [translateOp_apply, hz, mul_inv_rev, ← mul_assoc, ← hγc' (x * u⁻¹),
+    AutomorphicFunction.left_invt' φ (inv_mem hγ)]
+  exact apply_mul_of_theta_eq_one' θ ψ κ U hU hφ x (inv_mem hu) hθinv
+
+omit [CharZero K] in
+/-- Translation by a central element commutes with `U_p`. -/
+theorem translateOp_discHeckeOperator {z : G} (hz : ∀ x, z * x = x * z) {η : G}
+    (hη : η ∈ levelM1 (p := p) θ)
+    (hfin : (((Quotient.mk'' : G → RightCosets U) '' (({η} : Set G) * (U : Set G))) :
+      Set (RightCosets U)).Finite) (φ : DiscForms (Γ := Γ) θ h ψ κ U hU) :
+    ((discHeckeOperator θ h ψ κ U hU hη hfin
+        ⟨translateOp z φ.1, translateOp_mem_discForms θ ψ κ U hU (fun u _ => hz u) φ.2⟩ :
+          DiscForms (Γ := Γ) θ h ψ κ U hU) : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K))
+      = translateOp z (discHeckeOperator θ h ψ κ U hU hη hfin φ :
+          AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) := by
+  letI := discLevelSlashAction θ h ψ κ
+  letI := discLevelSMulSlashClass θ h ψ κ
+  have : Fintype (((Quotient.mk'' : G → RightCosets U) '' (({η} : Set G) * (U : Set G))) :
+      Set (RightCosets U)) := hfin.fintype
+  have hev : ∀ (s : Finset (((Quotient.mk'' : G → RightCosets U) '' (({η} : Set G) *
+        (U : Set G))) : Set (RightCosets U)))
+      (F : _ → AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) (g : G),
+      (∑ i ∈ s, F i) g = ∑ i ∈ s, F i g := fun s F g =>
+    map_sum (AddMonoidHom.mk' (fun φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K) => φ g)
+      (fun _ _ => rfl)) F s
+  have hz' : ∀ y : G, z⁻¹ * y = y * z⁻¹ := fun y => by
+    rw [inv_mul_eq_iff_eq_mul, ← mul_assoc, hz y, mul_inv_cancel_right]
+  refine AutomorphicFunction.ext fun x => ?_
+  show (∑ᶠ y : (((Quotient.mk'' : G → RightCosets U) '' (({η} : Set G) * (U : Set G))) :
+        Set (RightCosets U)),
+      translateOp z (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) ∣ₛ
+        (⟨(y : RightCosets U).out, _⟩ : levelM1 (p := p) θ)) x
+    = (∑ᶠ y : (((Quotient.mk'' : G → RightCosets U) '' (({η} : Set G) * (U : Set G))) :
+        Set (RightCosets U)),
+      (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) ∣ₛ
+        (⟨(y : RightCosets U).out, _⟩ : levelM1 (p := p) θ)) (x * z⁻¹)
+  rw [finsum_eq_sum_of_fintype, finsum_eq_sum_of_fintype, hev, hev]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  simp only [AutomorphicFunction.slash_apply, translateOp_apply]
+  congr 2
+  rw [mul_assoc, mul_assoc, hz']
+
+end Translate
+
 end LWX
 
 end

@@ -425,4 +425,113 @@ theorem discConj_sQ_zero {b : ℕ} (hb : b < p) :
   field_simp
   ring
 
+/-! ### The Iwahori decomposition of `Iw_p·(p 0; 0 1)·Iw_p` -/
+
+/-- `Iw_p` is closed under inversion: `(a b; c d)⁻¹ = det⁻¹·(d, −b; −c, a)` has integral entries,
+`‖−c/det‖ ≤ p⁻¹` and unit determinant. -/
+theorem inv_mem_Iw {g : Matrix (Fin 2) (Fin 2) ℚ_[p]} (hg : g ∈ Iw p 1) : g⁻¹ ∈ Iw p 1 := by
+  obtain ⟨h1, h2, h3⟩ := hg
+  have hdet : ‖g⁻¹.det‖ = 1 := by
+    rw [Matrix.det_nonsing_inv, Ring.inverse_eq_inv, norm_inv, h3, inv_one]
+  rw [Matrix.inv_def, Ring.inverse_eq_inv, Matrix.adjugate_fin_two] at hdet ⊢
+  refine mem_Iw_iff.2 ⟨fun i j => ?_, ?_, hdet⟩
+  · fin_cases i <;> fin_cases j <;> simp [h1, h3]
+  · simpa [h3] using h2
+
+/-- **The Iwahori decomposition** ([LWX, §2.5]: "`Iw_q (p 0; 0 1) Iw_q = ∐_{j=0}^{p−1} Iw_q v_j`,
+for example with `v_j = (p 0; jq 1)`"): `(p 0; 0 1)·k`, `k ∈ Iw_p`, lies in `Iw_p·v_c` for some
+`c < p`. -/
+theorem exists_mem_Iw_mul_vQ {k : Matrix (Fin 2) (Fin 2) ℚ_[p]} (hk : k ∈ Iw p 1) :
+    ∃ c : Fin p, ∃ k' ∈ Iw p 1, vQ p 0 * k = k' * vQ p (c : ℕ) := by
+  haveI : NeZero p := ⟨hp.out.ne_zero⟩
+  have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
+  have hnp : ‖(p : ℚ_[p])‖ = (p : ℝ)⁻¹ := Padic.norm_p
+  have hppos : (0 : ℝ) < p := by exact_mod_cast hp.out.pos
+  have hpinv : (p : ℝ)⁻¹ ≤ 1 := inv_le_one_of_one_le₀ (by exact_mod_cast hp.out.one_le)
+  have hp1 : ‖(p : ℚ_[p])‖ ≤ 1 := by rw [hnp]; exact hpinv
+  obtain ⟨h1, h2, h3⟩ := hk
+  rw [pow_one] at h2
+  -- the `d`-entry is a unit
+  have hd1 : ‖k 1 1‖ = 1 := by
+    have hsw : (!![k 1 1, k 0 1; k 1 0, k 0 0] : Matrix (Fin 2) (Fin 2) ℚ_[p]) ∈ Iw p 1 := by
+      refine mem_Iw_iff.2 ⟨fun i j => ?_, by simpa using h2, ?_⟩
+      · fin_cases i <;> fin_cases j <;> simp [h1]
+      · rw [Matrix.det_fin_two_of, ← h3, Matrix.det_fin_two]
+        congr 1
+        ring
+    simpa using norm_apply_zero_zero_of_mem_Iw one_ne_zero hsw
+  have hd0 : k 1 1 ≠ 0 := by intro h0; rw [h0, norm_zero] at hd1; exact zero_ne_one hd1
+  -- the residue of `(c/p)·d⁻¹` modulo `p`
+  obtain ⟨x, hxdef⟩ : ∃ x : ℚ_[p], x = k 1 0 / p * (k 1 1)⁻¹ := ⟨_, rfl⟩
+  have hx : ‖x‖ ≤ 1 := by
+    rw [hxdef, norm_mul, norm_div, norm_inv, hd1, inv_one, mul_one, hnp, div_inv_eq_mul]
+    calc ‖k 1 0‖ * p ≤ (p : ℝ)⁻¹ * p := mul_le_mul_of_nonneg_right h2 hppos.le
+      _ = 1 := inv_mul_cancel₀ hppos.ne'
+  obtain ⟨xZ, hxZ⟩ : ∃ xZ : ℤ_[p], (xZ : ℚ_[p]) = x := ⟨⟨x, hx⟩, rfl⟩
+  have hmem := PadicInt.toZMod_spec xZ
+  rw [PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton'] at hmem
+  obtain ⟨b', hb'⟩ := hmem
+  obtain ⟨j, hjdef⟩ : ∃ j : ℕ, j = (PadicInt.toZMod xZ).val := ⟨_, rfl⟩
+  have hjlt : j < p := hjdef ▸ ZMod.val_lt _
+  have hres : ‖x - (j : ℚ_[p])‖ ≤ (p : ℝ)⁻¹ := by
+    have hcast : ((b' * p : ℤ_[p]) : ℚ_[p]) = x - (j : ℚ_[p]) := by
+      rw [hb', PadicInt.coe_sub, ZMod.cast_eq_val, PadicInt.coe_natCast, ← hjdef, hxZ]
+    rw [← hcast, PadicInt.coe_mul, norm_mul, PadicInt.coe_natCast, hnp]
+    exact mul_le_of_le_one_left (by positivity) (PadicInt.norm_le_one b')
+  have hj1 : ‖(j : ℚ_[p])‖ ≤ 1 := IsUltrametricDist.norm_natCast_le_one ℚ_[p] j
+  have h10 : k 1 0 / p - j * k 1 1 = k 1 1 * (x - j) := by
+    rw [hxdef]
+    field_simp
+  have hll : ‖k 1 0 / p - j * k 1 1‖ ≤ (p : ℝ)⁻¹ := by
+    rw [h10, norm_mul, hd1, one_mul]
+    exact hres
+  have h00 : ‖k 0 0 - j * p * k 0 1‖ ≤ 1 := by
+    rw [sub_eq_add_neg]
+    refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h1 0 0) ?_)
+    rw [norm_neg, norm_mul, norm_mul]
+    exact mul_le_one₀ (mul_le_one₀ hj1 (norm_nonneg _) hp1) (norm_nonneg _) (h1 0 1)
+  have h01 : ‖(p : ℚ_[p]) * k 0 1‖ ≤ 1 := by
+    rw [norm_mul]
+    exact mul_le_one₀ hp1 (norm_nonneg _) (h1 0 1)
+  refine ⟨⟨j, hjlt⟩, !![k 0 0 - j * p * k 0 1, p * k 0 1; k 1 0 / p - j * k 1 1, k 1 1], ?_, ?_⟩
+  · refine mem_Iw_iff.2 ⟨fun i l => ?_, ?_, ?_⟩
+    · fin_cases i <;> fin_cases l
+      · simpa using h00
+      · simpa using h01
+      · simpa using hll.trans hpinv
+      · simpa using h1 1 1
+    · simpa using hll
+    · rw [Matrix.det_fin_two_of, ← h3, Matrix.det_fin_two]
+      congr 1
+      field_simp
+      ring
+  · ext i l
+    fin_cases i <;> fin_cases l <;>
+      simp [vQ, Matrix.mul_apply, Fin.sum_univ_two, sub_mul, div_mul_cancel₀ _ hp0] <;> ring
+
+/-- The cosets `Iw_p·v_c`, `c < p`, are pairwise distinct. -/
+theorem eq_of_vQ_eq_mul_vQ {b c : Fin p} {k : Matrix (Fin 2) (Fin 2) ℚ_[p]} (hk : k ∈ Iw p 1)
+    (h : vQ p (b : ℕ) = k * vQ p (c : ℕ)) : b = c := by
+  have hp0 : (p : ℚ_[p]) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
+  obtain ⟨-, h2, -⟩ := hk
+  have e11 : k 1 1 = 1 := by
+    have := congrFun (congrFun h 1) 1
+    simpa [vQ, Matrix.mul_apply, Fin.sum_univ_two] using this.symm
+  have e10 : ((b : ℕ) : ℚ_[p]) * p = k 1 0 * p + k 1 1 * (((c : ℕ) : ℚ_[p]) * p) := by
+    have := congrFun (congrFun h 1) 0
+    simpa [vQ, Matrix.mul_apply, Fin.sum_univ_two] using this
+  have hk10 : k 1 0 = ((((b : ℕ) : ℤ) - ((c : ℕ) : ℤ) : ℤ) : ℚ_[p]) := by
+    apply mul_right_cancel₀ hp0
+    push_cast
+    linear_combination -e10 - (((c : ℕ) : ℚ_[p]) * p) * e11
+  rw [hk10, pow_one, ← zpow_neg_one] at h2
+  have hdvd : ((p : ℤ) ^ 1 : ℤ) ∣ (((b : ℕ) : ℤ) - ((c : ℕ) : ℤ)) :=
+    (Padic.norm_int_le_pow_iff_dvd _ 1).1 (by exact_mod_cast h2)
+  rw [pow_one] at hdvd
+  have habs : |(((b : ℕ) : ℤ) - ((c : ℕ) : ℤ))| < (p : ℤ) :=
+    abs_sub_lt_iff.2 ⟨by have := b.isLt; have := c.isLt; omega,
+      by have := b.isLt; have := c.isLt; omega⟩
+  have h0 := Int.eq_zero_of_abs_lt_dvd hdvd habs
+  exact Fin.ext (by omega)
+
 end LWX

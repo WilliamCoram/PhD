@@ -5,12 +5,14 @@ Liu–Wan–Xiao's spectral halo for overconvergent quaternionic modular forms
 the halo estimate [LWX, Thm 3.16, Cor 3.18], the integral model and the seam with the genuine
 `U_p`, the vertex analysis of [LWX, Thm 1.3], the slope theorems of [LWX, Thm 1.5], Steps I and
 III of [LWX, §3.23] (Atkin–Lehner and the theta operator), and the degree formulas with
-[LWX, Cor 1.4].  Everything is granted the adelic Atkin–Lehner data (`22_AtkinLehnerFamily.lean`);
+[LWX, Cor 1.4].  Everything is granted the adelic Atkin–Lehner data (`22_AtkinLehnerFamily.lean`),
+which `23_QuaternionData.lean` builds for a definite quaternion algebra over `ℚ` from the arithmetic
+input `QuaternionInput` (`25_QuaternionSlopes.lean` reads off the headline theorems for it);
 nothing uses Jacquet–Langlands — see `.mathlib-quality/lwx-stepone/JL-AUDIT.md`.
 
 Blueprint chapters: `blueprint/src/chapter/LWXHalo.tex`, `LWXModel.tex`, `LWXSlopes.tex`.
 Boards: `.mathlib-quality/lwx-halo/`, `lwx-slopes/`, `lwx-seam/`, `lwx-seam-m/`, `lwx-theta/`,
-`lwx-theta-h2/`, `lwx-h1/`, `lwx-conductor/`, `lwx-degrees/`.
+`lwx-theta-h2/`, `lwx-h1/`, `lwx-conductor/`, `lwx-degrees/`, `lwx-quaternion/`.
 
 ## How the numbering works
 
@@ -48,8 +50,9 @@ import PhD.Main.LWX.«24_DegreePeriodicity»
 - **20** — `AtkinLehnerMapH`
 - **21** — `AtkinLehnerIdentityH`
 - **22** — `AtkinLehnerFamily`
-- **23** — `ConductorSlopes`
+- **23** — `ConductorSlopes`, `QuaternionData`
 - **24** — `DegreePeriodicity`
+- **25** — `QuaternionSlopes`
 
 ## Files
 
@@ -107,10 +110,12 @@ import PhD.Main.LWX.«24_DegreePeriodicity»
 | `17_NebChar.lean` | `16_TargetPoint` | The nebentypus character at a classical point |
 | `18_AtkinLehnerMap.lean` | `10_AtkinLehnerLocal`, `15_SymPow`, `17_NebChar` | The Atkin–Lehner map on classical disc forms |
 | `18_TargetPointH.lean` | `17_ClassicalPointH` | The theta target of a classical point of conductor `p^{h+1}` |
-| `19_AtkinLehnerIdentity.lean` | `17_DegreeFormula`, `18_AtkinLehnerMap` | `U_p ∘ U'_p = p^{k+1}` and hypothesis H1 |
+| `19_AtkinLehnerIdentity.lean` | `17_DegreeFormula`, `18_AtkinLehnerMap` | `U_p ∘ U'_p = p^{k+1}·Z` and hypothesis H1 |
 | `19_NebCharH.lean` | `17_NebChar`, `18_TargetPointH` | The nebentypus character at a classical point of conductor `p^{h+1}` |
 | `20_AtkinLehnerMapH.lean` | `11_AtkinLehnerLocalH`, `18_AtkinLehnerMap`, `19_NebCharH` | The Atkin–Lehner map on classical disc forms at conductor `p^{h+1}` |
-| `21_AtkinLehnerIdentityH.lean` | `19_AtkinLehnerIdentity`, `20_AtkinLehnerMapH` | `U_p ∘ U'_p = p^{k+1}` and hypothesis H1 at conductor `p^{h+1}` |
+| `21_AtkinLehnerIdentityH.lean` | `19_AtkinLehnerIdentity`, `20_AtkinLehnerMapH` | `U_p ∘ U'_p = p^{k+1}·Z` and hypothesis H1 at conductor `p^{h+1}` |
 | `22_AtkinLehnerFamily.lean` | `21_AtkinLehnerIdentityH` | The Atkin–Lehner data at every classical weight |
 | `23_ConductorSlopes.lean` | `13_SlopesSeam`, `22_AtkinLehnerFamily` *(+ NewtonPolygons)* | The slope reflection at conductor `p^{h+1}` |
+| `23_QuaternionData.lean` | `12_QuaternionicH`, `22_AtkinLehnerFamily` *(+ QMF)* | The Atkin–Lehner data of a definite quaternion algebra over `ℚ` |
 | `24_DegreePeriodicity.lean` | `23_ConductorSlopes` | The degrees at every classical weight, and [LWX, Corollary 1.4] |
+| `25_QuaternionSlopes.lean` | `23_QuaternionData`, `24_DegreePeriodicity` | [LWX, Theorems 1.3, 1.5, Corollary 1.4] for a definite quaternion algebra over `ℚ` |

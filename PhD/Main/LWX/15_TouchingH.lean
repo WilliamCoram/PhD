@@ -197,12 +197,13 @@ theorem isStepOneTouching_of_atkinLehnerHypothesisH (hp2 : p ≠ 2) [Nonempty ι
       (c'.matrix idx)) :
     IsStepOneTouching (UpDatum.ofCerts θG U hU vRep hvΔ idx uu hshape) ω (intHom ψ) T₀
       ((k + 1) * p ^ (h - 1)) := by
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, -, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun hcon =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [hcon, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
-  have hA'0 : (c'.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul_conj hcne hAB hQP hA'
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
+  have hA'0 : (c'.matrix idx).det ≠ 0 :=
+    det_ne_zero_of_mul_eq_smul_mul_conj hcne hAB hNm hZmN hQP hA'
   -- The index `n = t·(k+1)·p^h`, in the two spellings.
   have hidx : ((Fintype.card ι : ℤ) * (((k : ℤ) + 1) * (p : ℤ) ^ h))
       = ((touchX p (Fintype.card ι) ((k + 1) * p ^ (h - 1)) : ℕ) : ℤ) := by
@@ -248,7 +249,7 @@ theorem isStepOneTouching_of_atkinLehnerHypothesisH (hp2 : p ≠ 2) [Nonempty ι
   have hsum : -Real.log ‖(c.matrix idx).det‖ + -Real.log ‖(c'.matrix idx).det‖
       = ((Fintype.card ι * ((k + 1) * p ^ h) : ℕ) : ℝ)
           * (((k : ℝ) + 1) * (-Real.log ‖ψ (p : ℚ_[p])‖)) := by
-    have hAL := neg_log_norm_det_add_of_mul_eq_smul hcne hAB hQP hA'
+    have hAL := neg_log_norm_det_add_of_mul_eq_smul_mul hcne hAB hNm hZmN hQP hA'
     rw [Fintype.card_fin, norm_pow, Real.log_pow] at hAL
     rw [hAL]
     push_cast

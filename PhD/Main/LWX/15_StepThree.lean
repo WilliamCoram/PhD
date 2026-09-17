@@ -412,11 +412,11 @@ theorem norm_pow_le_of_mem_roots_charpoly_matrix [Nonempty ι] [IsAlgClosed K] {
     {x : K} (hx : x ∈ (c.matrix idx).charpoly.roots) :
     ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ ≤ ‖x‖ := by
   classical
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun h0 =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [h0, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
   have hone : ∀ y ∈ (c'.matrix idx).charpoly.roots, ‖y‖ ≤ 1 := fun y hy =>
     norm_le_one_of_isRoot_charpoly_upMatrix idx c'.weight k _ (Polynomial.mem_roots'.1 hy).2
   have hxne : x ≠ 0 := by
@@ -424,7 +424,7 @@ theorem norm_pow_le_of_mem_roots_charpoly_matrix [Nonempty ι] [IsAlgClosed K] {
     exact hA0 (by rw [Matrix.det_eq_prod_roots_charpoly]; exact Multiset.prod_eq_zero (h0 ▸ hx))
   have hmem : ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ / ‖x‖
       ∈ (c'.matrix idx).charpoly.roots.map (fun y => ‖y‖) := by
-    rw [norm_roots_charpoly_atkinLehner hcne hAB hQP hA']
+    rw [norm_roots_charpoly_atkinLehnerZ hcne hAB hZmA hNm hZmN hQP hA']
     exact Multiset.mem_map_of_mem _ hx
   obtain ⟨y, hy, hyeq⟩ := Multiset.mem_map.1 hmem
   have hy1 := hone y hy
@@ -444,14 +444,15 @@ theorem unitSlope_charpolyRev_matrix_le [Nonempty ι] [IsAlgClosed K] {hp2 : p �
     (newtonPolygon₀OfPowerSeries negLogNorm
         ((c.matrix idx).charpolyRev : PowerSeries K)).unitSlope j
       ≤ ((((k + 1 : ℕ) : ℝ) * (-Real.log ‖ψ p‖) : ℝ) : WithBotTop ℝ) := by
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun h0 =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [h0, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
   have hccpos : (0 : ℝ) < ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ := norm_pos_iff.2 hcne
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
   have hlow : ∀ x ∈ (c.matrix idx).charpoly.roots, ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ ≤ ‖x‖ :=
-    fun x hx => norm_pow_le_of_mem_roots_charpoly_matrix idx c c' ⟨B, hAB, P, Q, hQP, hA'⟩ hx
+    fun x hx => norm_pow_le_of_mem_roots_charpoly_matrix idx c c'
+      ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ hx
   -- the `j`-th unit slope of the classical factor is a real number
   have hGres : ∀ cst : ℝ, 0 < cst →
       PowerSeries.IsRestricted cst ((c.matrix idx).charpolyRev : PowerSeries K) :=
@@ -514,13 +515,14 @@ theorem faceLeft_charpolyRev_matrix_eq [Nonempty ι] [IsAlgClosed K] {hp2 : p �
         - (newtonPolygon₀OfPowerSeries negLogNorm
             ((c'.matrix idx).charpolyRev : PowerSeries K)).faceRight 0 := by
   classical
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun h0 =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [h0, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
   have hccpos : (0 : ℝ) < ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ := norm_pos_iff.2 hcne
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
-  have hA'0 : (c'.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul_conj hcne hAB hQP hA'
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
+  have hA'0 : (c'.matrix idx).det ≠ 0 :=
+    det_ne_zero_of_mul_eq_smul_mul_conj hcne hAB hNm hZmN hQP hA'
   have hcf0 : ((c.matrix idx).charpolyRev).coeff 0 = 1 := by
     rw [Polynomial.coeff_zero_eq_eval_zero, Matrix.eval_charpolyRev]
   have hcf0' : ((c'.matrix idx).charpolyRev).coeff 0 = 1 := by
@@ -544,8 +546,8 @@ theorem faceLeft_charpolyRev_matrix_eq [Nonempty ι] [IsAlgClosed K] {hp2 : p �
     intro s
     rw [Multiset.countP_map, ← Multiset.countP_eq_card_filter]
     exact Multiset.countP_congr rfl fun y _ => by rw [norm_inv]
-  rw [hnormOnly, norm_roots_charpoly_atkinLehner hcne hAB hQP hA', Multiset.countP_map,
-    ← Multiset.countP_eq_card_filter]
+  rw [hnormOnly, norm_roots_charpoly_atkinLehnerZ hcne hAB hZmA hNm hZmN hQP hA',
+    Multiset.countP_map, ← Multiset.countP_eq_card_filter]
   -- the two predicates on the `ψ`-eigenvalues are complementary
   have hcompl : ∀ x ∈ (c.matrix idx).charpoly.roots,
       ((‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ / ‖x‖)⁻¹ ≤ Real.exp 0)
@@ -743,8 +745,8 @@ theorem rightIndex_sub_touchX_eq_ordDim (hp2 : p ≠ 2) [Nonempty ι] [IsAlgClos
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
   have hccpos : (0 : ℝ) < ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖ := norm_pos_iff.2 hcne
   have hA0 : (c.matrix idx).det ≠ 0 := by
-    obtain ⟨B, hAB, -⟩ := hAL
-    exact det_ne_zero_of_mul_eq_smul' hcne hAB
+    obtain ⟨B, ⟨Zm, Nm, hNm, hAB, -, hZmN⟩, -⟩ := hAL
+    exact Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
   have hexpσ : Real.exp (((k + 1 : ℕ) : ℝ) * (-Real.log ‖ψ (p : ℚ_[p])‖))
       = ‖(ψ (p : ℚ_[p])) ^ (k + 1)‖⁻¹ := by
     have hp0 : (0 : ℝ) < ‖ψ (p : ℚ_[p])‖ := norm_pos_iff.2 hψp

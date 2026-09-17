@@ -7,24 +7,29 @@ import PhD.Main.LWX.«18_AtkinLehnerMap»
 import PhD.Main.LWX.«17_DegreeFormula»
 
 /-!
-# `U_p ∘ U'_p = p^{k+1}` and hypothesis H1
+# `U_p ∘ U'_p = p^{k+1}·Z` and hypothesis H1
 
 **H1b.**  With `U'_p := W⁻¹ ∘ U_p^{(ψ⁻¹)} ∘ W` (the Atkin–Lehner conjugate of `U_p` at the partner
-nebentypus), `U_p ∘ U'_p = p^{k+1}` on the classical disc forms of `(k, ψ)`.  Expanding both
+nebentypus), `U_p ∘ U'_p = p^{k+1}·Z` on the classical disc forms of `(k, ψ)`, where `Z` is the
+tame central operator `(Zφ)(x) = φ(x·ιp(p·1)⁻¹)` (`centralOpCl`).  Expanding both
 Hecke operators over the representatives `v_c = (p 0; cp 1)` and `W` over `w`, the composite at
 `x` is `∑_{b,c} φ(x·(w v_b w⁻¹ v_c)⁻¹) ∣_k (w v_b w⁻¹ v_c)`, and the key factorisation
 `w v_b w⁻¹ v_c = ℓ_{b,c} · (p·1) · s_{−b}` (`wGL_mul_vGL_mul_wGL_inv_mul_vGL`) with
 `ℓ_{b,c} ∈ Iw_p` fixing disc `0` turns the `(b,c)`-term into
-`ψ_neb(1 + bcp)⁻¹ · (p^k · (disc b of φ(x)) ∣_k n(−b/p))`: the level-equivariance at `ℓ_{b,c}⁻¹`
-produces the nebentypus value, the central `p` acts trivially (`AtkinLehnerData.central`) and
-`Sym^k(p·1) = p^k`.  Summing over `c`: the `b = 0` terms give `p · p^k · φ(x)`, and for `b ≠ 0`
+`ψ_neb(1 + bcp)⁻¹ · (p^k · (disc b of (Zφ)(x)) ∣_k n(−b/p))`: the level-equivariance at
+`ℓ_{b,c}⁻¹` produces the nebentypus value, the central `p·1` commutes past everything
+(`AtkinLehnerData.ιp_pGL_comm`) and becomes the translation `Z`, and `Sym^k(p·1) = p^k`.
+Summing over `c`: the `b = 0` terms give `p · p^k · (Zφ)(x)`, and for `b ≠ 0`
 the sum `∑_c ψ_neb(1 + bcp)⁻¹` vanishes because the conductor is exactly `p²`
 (`sum_inv_nebCharK_eq_zero`).  This is the double-coset expansion whose matrix identities were
 worked out in `PhD/Main/Test/AtkinLehnerIdentity.lean` ("`U_p` is invertible at ramified
-nebentypus"; classical statement Miyake Thm 4.6.17 as cited at `bu04.txt:1122–1124`).
+nebentypus"; classical statement Miyake Thm 4.6.17 as cited at `bu04.txt:1122–1124`, where `Z`
+acts through the value `χ_M(p)` of the tame central character).
 
 **H1a** is then `A' = W B W⁻¹` by the definition of `B := W⁻¹ A' W`, and the matrix form of
-both follows by transporting along the block model of the classical forms at a neat level.
+both follows by transporting along the block model of the classical forms at a neat level;
+`Z` commutes with `U_p` (`discHeckeOperatorCl_comp_centralOpCl`) and has finite order
+(`centralOpCl_pow_eq_one`, from `AtkinLehnerData.central_pow`).
 
 **The deliverable**: `atkinLehnerHypothesis_of_atkinLehnerData` — hypothesis H1 of
 `PhD/Main/LWX/13_AtkinLehnerInst.lean` holds at the classical points, with the partner datum at the
@@ -117,24 +122,6 @@ theorem blockProj_zero_discSlash_of_shape {u : K → K}
   exact kappaSlash_eq_smul_symAct_of_shape κ (discConjK 1 δ 0 ψ) (hκ _) hf'
 
 omit [CharZero K] in
-/-- **The central element acts trivially**: `φ(x · ιp(p·1)) = φ(x)` on disc forms
-(`AtkinLehnerData.central`: `ιp(p·1) = γ u` with `γ ∈ Γ` central and `θ u = 1`). -/
-theorem apply_mul_ιp_pGL {φ : AutomorphicFunction G Γ c(ZMod (p ^ 1) × ℕ, K)}
-    (hφ : φ ∈ DiscForms (Γ := Γ) θG 1 ψ κ U hU) (x : G) :
-    φ (x * D.ιp (pGL p)) = φ x := by
-  obtain ⟨γ, hγ, u, hu, hP, hθu, hcomm⟩ := D.central
-  rw [hP, ← mul_assoc, ← hcomm x, mul_assoc, AutomorphicFunction.left_invt' φ hγ]
-  exact apply_mul_of_theta_eq_one θG ψ U hU κ hφ x hu hθu
-
-omit [CharZero K] in
-theorem apply_mul_ιp_pGL_inv {φ : AutomorphicFunction G Γ c(ZMod (p ^ 1) × ℕ, K)}
-    (hφ : φ ∈ DiscForms (Γ := Γ) θG 1 ψ κ U hU) (x : G) :
-    φ (x * (D.ιp (pGL p))⁻¹) = φ x := by
-  have h := apply_mul_ιp_pGL θG ψ U hU κ D hφ (x * (D.ιp (pGL p))⁻¹)
-  rw [inv_mul_cancel_right] at h
-  exact h.symm
-
-omit [CharZero K] in
 /-- Level-equivariance at a lift `ιp g` of an Iwahori element fixing disc `0`, read on disc `0`
 (`blockProj_zero_apply_mul_mem_U` at `v = ιp g`, `ιp_mem_U`, `theta_ιp`). -/
 theorem blockProj_zero_apply_mul_ιp {u : K → K}
@@ -177,9 +164,13 @@ theorem term_elt_eq (x : G) (b c : ℚ_[p]) :
   simp only [mul_assoc] at h ⊢
   rw [h]
 
+/-! ### The identity -/
+
+variable {UK' : Subgroup Kˣ} {ρ' : ℝ} (κ' : AnalyticWeight UK' (M1Kh 1 ψ) ρ')
+
 omit [CharZero K] in
-/-- **Disc `0` of `φ(x s_b p⁻¹ ℓ⁻¹)`**: the central `p` acts trivially and `ℓ⁻¹` fixes disc `0`
-with `d`-entry `1 − bcp`, so it is `nebK(1 − bcp) · symAct(conj ℓ⁻¹)(φ(x)|_b)`. -/
+/-- **Disc `0` of `φ(x s_b p⁻¹ ℓ⁻¹)` at a general tame level**: the central `p⁻¹` is the tame
+central operator `Z` (`ιp_pGL_comm`), and `ℓ⁻¹` fixes disc `0`. -/
 theorem blockProj_zero_apply_term_elt
     (hκ : ∀ g : M1Kh 1 ψ, κ.toWeightSeries.autFactor g.1 * linX g.1
       = PowerSeries.C (nebK (g.1 1 1)) * linX g.1 ^ (k + 1))
@@ -189,30 +180,16 @@ theorem blockProj_zero_apply_term_elt
         (φ (x * D.ιp (sGL p (b : ℕ)) * (D.ιp (pGL p))⁻¹ * (D.ιp (ℓGL p (b : ℕ) (c : ℕ)))⁻¹))
       = nebK (ψ (1 - (b : ℚ_[p]) * c * p)) •
         symAct K k (RingHom.mapMatrix ψ (tMatInv p 0 * ℓQinv p (b : ℕ) (c : ℕ) * tMat p 0))
-          (cSpace.blockProj (b : ZMod (p ^ 1)) (φ x)) := by
-  obtain ⟨γ, hγ, u, hu, hP, hθu, hcomm⟩ := D.central
+          (cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ x)) := by
   have hb : ‖((b : ℕ) : ℚ_[p])‖ ≤ 1 := IsUltrametricDist.norm_natCast_le_one ℚ_[p] _
   have hc : ‖((c : ℕ) : ℚ_[p])‖ ≤ 1 := IsUltrametricDist.norm_natCast_le_one ℚ_[p] _
+  have hZφ := centralOp_mem_classicalDiscForms θG ψ U hU k D κ hφ
   set y := x * D.ιp (sGL p (b : ℕ)) with hy
   set ℓ := D.ιp (ℓGL p (b : ℕ) (c : ℕ)) with hℓ
-  have hℓU : ℓ ∈ U := D.ιp_mem_U _ (ℓQ_mem_Iw hb hc)
-  have hγc : ∀ z, γ⁻¹ * z = z * γ⁻¹ := fun z => by
-    rw [inv_mul_eq_iff_eq_mul, ← mul_assoc, hcomm z, mul_inv_cancel_right]
-  have e1 : y * (u⁻¹ * γ⁻¹) * ℓ⁻¹ = γ⁻¹ * (y * u⁻¹ * ℓ⁻¹) := by
-    rw [hγc (y * u⁻¹ * ℓ⁻¹)]
-    simp only [mul_assoc]
-    rw [hγc]
-  have e2 : y * u⁻¹ * ℓ⁻¹ = y * ℓ⁻¹ * (ℓ * u⁻¹ * ℓ⁻¹) := by group
-  have hθinv : θG u⁻¹ = 1 := by
-    have h := map_mul θG u u⁻¹
-    rw [mul_inv_cancel, map_one, hθu, one_mul] at h
-    exact h.symm
-  have hθ1 : θG (ℓ * u⁻¹ * ℓ⁻¹) = 1 := by
-    rw [map_mul, map_mul, hθinv, mul_one, ← map_mul, mul_inv_cancel, map_one]
-  have hmove : φ (y * (D.ιp (pGL p))⁻¹ * ℓ⁻¹) = φ (y * ℓ⁻¹) := by
-    rw [hP, mul_inv_rev, e1, AutomorphicFunction.left_invt' φ (inv_mem hγ), e2]
-    exact apply_mul_of_theta_eq_one θG ψ U hU κ hφ.1 _
-      (mul_mem (mul_mem hℓU (inv_mem hu)) (inv_mem hℓU)) hθ1
+  have hmove : φ (y * (D.ιp (pGL p))⁻¹ * ℓ⁻¹) = centralOp θG ψ U D φ (y * ℓ⁻¹) := by
+    have hc' : (D.ιp (pGL p))⁻¹ * ℓ⁻¹ = ℓ⁻¹ * (D.ιp (pGL p))⁻¹ := by
+      rw [← mul_inv_rev, ← mul_inv_rev, D.ιp_pGL_comm ℓ]
+    rw [centralOp_apply, mul_assoc y, hc', ← mul_assoc y]
   have hg : (((ℓGL p (b : ℕ) (c : ℕ))⁻¹ : GL (Fin 2) ℚ_[p]) : Matrix (Fin 2) (Fin 2) ℚ_[p])
       ∈ Iw p 1 := by
     rw [coe_ℓGL_inv]; exact ℓQinv_mem_Iw hb hc
@@ -222,23 +199,17 @@ theorem blockProj_zero_apply_term_elt
   have hg0 : discImage 1 (⟨(((ℓGL p (b : ℕ) (c : ℕ))⁻¹ : GL (Fin 2) ℚ_[p]) :
       Matrix (Fin 2) (Fin 2) ℚ_[p]), Iw_one_le_M1 hg⟩ : M1 p) 0 = 0 :=
     (congrArg (fun δ => discImage 1 δ 0) hgM).trans (discImage_ℓQinv_zero hb hc)
-  have hmain := blockProj_zero_apply_mul_ιp θG ψ U hU k κ D hκ hφ y hg hg0
+  have hmain := blockProj_zero_apply_mul_ιp θG ψ U hU k κ D hκ hZφ y hg hg0
   rw [map_inv] at hmain
-  have hsh : cSpace.blockProj 0 (φ y) = cSpace.blockProj (b : ZMod (p ^ 1)) (φ x) := by
-    rw [shapiro_blockProj θG ψ U hU D κ hφ.1 x (b : ZMod (p ^ 1)), ZMod.val_natCast,
+  have hsh : cSpace.blockProj 0 (centralOp θG ψ U D φ y)
+      = cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ x) := by
+    rw [shapiro_blockProj θG ψ U hU D κ hZφ.1 x (b : ZMod (p ^ 1)), ZMod.val_natCast,
       Nat.mod_eq_of_lt (by rw [pow_one]; exact b.isLt)]
   rw [hmove, hmain, hgM, discConj_ℓQinv_zero_one_one hb hc, coe_discConj,
     discConjMat_zero_of_discImage_zero _ (discImage_ℓQinv_zero hb hc), hsh]
 
-/-! ### The identity -/
-
-variable {UK' : Subgroup Kˣ} {ρ' : ℝ} (κ' : AnalyticWeight UK' (M1Kh 1 ψ) ρ')
-
-/-- The `(b, c)`-term of the double-coset expansion, read on disc `0`: the outer `U_p`
-contributes `symAct(conj v_c)`, `W'` contributes `χ(x v_c⁻¹) · symAct w₂⁻¹`, the inner
-`U_p^{(ψ⁻¹)}` contributes `symAct(conj v_b)`, and `W` is evaluated at `x v_c⁻¹ w v_b⁻¹`.  With
-`w v_b w⁻¹ v_c = ℓ_{b,c} · p · s_{−b}` the term is `ψ_neb(1 + bcp)⁻¹` times a vector independent
-of `c`: `p^k · (disc b of φ(x)) ∣_k (1 −b/p; 0 1)`. -/
+/-- The `(b, c)`-term of the double-coset expansion at a general tame level: as
+`atkinLehner_term_eq`, with `Zφ` in place of `φ`. -/
 theorem atkinLehner_term_eq
     (hmul : ∀ x y : ℚ_[p], ‖x‖ = 1 → ‖y‖ = 1 → nebK (ψ (x * y)) = nebK (ψ x) * nebK (ψ y))
     (hne : ∀ x : ℚ_[p], ‖x‖ = 1 → nebK (ψ x) ≠ 0)
@@ -262,11 +233,13 @@ theorem atkinLehner_term_eq
                 (x * (vRepD θG ψ U D c)⁻¹ * D.ιp (wGL p) * (vRepD θG ψ U D b)⁻¹)))))
       = (nebK (ψ (1 + (b : ℚ_[p]) * c * p)))⁻¹ •
         ((ψ p) ^ k • symAct K k (RingHom.mapMatrix ψ !![1, -((b : ℚ_[p]) / p); 0, 1])
-          (cSpace.blockProj (b : ZMod (p ^ 1)) (φ.1 x))) := by
+          (cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ.1 x))) := by
   have hb : ‖((b : ℕ) : ℚ_[p])‖ ≤ 1 := IsUltrametricDist.norm_natCast_le_one ℚ_[p] _
   have hc : ‖((c : ℕ) : ℚ_[p])‖ ≤ 1 := IsUltrametricDist.norm_natCast_le_one ℚ_[p] _
-  have hV : cSpace.blockProj (b : ZMod (p ^ 1)) (φ.1 x) ∈ polySubmodule K k := fun j hj => by
-    rw [cSpace.blockProj_apply]; exact φ.2.2 x _ j hj
+  have hV : cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ.1 x) ∈ polySubmodule K k :=
+    fun j hj => by
+      rw [cSpace.blockProj_apply]
+      exact (centralOp_mem_classicalDiscForms θG ψ U hU k D κ φ.2).2 x _ j hj
   have hMb : ((discConj 1 (⟨vQ p (b : ℕ), vQ_mem_M1 hb⟩ : M1 p) 0 : M1 p) :
       Matrix (Fin 2) (Fin 2) ℚ_[p]) = tMatInv p 0 * vQ p (b : ℕ) * tMat p 0 := by
     rw [coe_discConj, discConjMat_zero_of_discImage_zero _ (discImage_vQ_zero hb)]
@@ -279,7 +252,7 @@ theorem atkinLehner_term_eq
         (x * (vRepD θG ψ U D c)⁻¹ * D.ιp (wGL p) * (vRepD θG ψ U D b)⁻¹))
       = ((D.χ (x * (vRepD θG ψ U D c)⁻¹) : Kˣ) : K)⁻¹ • nebK (ψ (1 - (b : ℚ_[p]) * c * p)) •
         symAct K k (RingHom.mapMatrix ψ (tMatInv p 0 * ℓQinv p (b : ℕ) (c : ℕ) * tMat p 0)
-          * atkinLehnerK ψ) (cSpace.blockProj (b : ZMod (p ^ 1)) (φ.1 x)) := by
+          * atkinLehnerK ψ) (cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ.1 x)) := by
     change cSpace.blockProj 0 (atkinLehnerFun θG ψ U k D φ.1 _) = _
     rw [atkinLehnerFun_blockProj_zero]
     have hχ : D.χ (x * (vRepD θG ψ U D c)⁻¹ * D.ιp (wGL p) * (vRepD θG ψ U D b)⁻¹)
@@ -323,8 +296,7 @@ theorem atkinLehner_term_eq
     nebK_one_sub_eq_inv ψ hmul hne hcond hbcp]
 
 set_option maxHeartbeats 1000000 in
-/-- **`U_p ∘ W⁻¹ ∘ U_p^{(ψ⁻¹)} ∘ W = p^{k+1}` on disc `0`**: the double-coset expansion, the
-key factorisation, and the character sum. -/
+/-- **`U_p ∘ W⁻¹ ∘ U_p^{(ψ⁻¹)} ∘ W = p^{k+1}·Z` on disc `0`** at a general tame level. -/
 theorem blockProj_zero_discHecke_atkinLehner
     (hmul : ∀ x y : ℚ_[p], ‖x‖ = 1 → ‖y‖ = 1 → nebK (ψ (x * y)) = nebK (ψ x) * nebK (ψ y))
     (hne : ∀ x : ℚ_[p], ‖x‖ = 1 → nebK (ψ x) ≠ 0)
@@ -349,7 +321,7 @@ theorem blockProj_zero_discHecke_atkinLehner
             (upEltD_mem_levelM1 θG ψ U D) hfin
             (atkinLehnerMap θG ψ U hU k D κ κ' hmul hne hcond hκ hκ' φ))) :
         AutomorphicFunction G Γ c(ZMod (p ^ 1) × ℕ, K)) x)
-      = (ψ p) ^ (k + 1) • cSpace.blockProj 0 (φ.1 x) := by
+      = (ψ p) ^ (k + 1) • cSpace.blockProj 0 (centralOp θG ψ U D φ.1 x) := by
   have hnebK1 : nebK (ψ 1) = 1 := nebK_one ψ hcond
   have hvc : ∀ c : Fin p, (⟨θG (vRepD θG ψ U D c), vRepD_mem_levelM1 θG ψ U D c⟩ : M1 p)
       = ⟨vQ p (c : ℕ), vQ_mem_M1 (IsUltrametricDist.norm_natCast_le_one ℚ_[p] _)⟩ :=
@@ -382,7 +354,7 @@ theorem blockProj_zero_discHecke_atkinLehner
         (cSpace.blockProj 0 (Φ₃.1 (x * (vRepD θG ψ U D c)⁻¹)))
       = ∑ b : Fin p, (nebK (ψ (1 + (b : ℚ_[p]) * c * p)))⁻¹ •
         ((ψ p) ^ k • symAct K k (RingHom.mapMatrix ψ !![1, -((b : ℚ_[p]) / p); 0, 1])
-          (cSpace.blockProj (b : ZMod (p ^ 1)) (φ.1 x))) := by
+          (cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ.1 x))) := by
     intro c
     change symAct K k _ (cSpace.blockProj 0
       (atkinLehnerFunInv θG ψ U k D Φ₂.1 (x * (vRepD θG ψ U D c)⁻¹))) = _
@@ -397,7 +369,7 @@ theorem blockProj_zero_discHecke_atkinLehner
         ((⟨Φ₃.1, Φ₃.2.1⟩ : DiscForms (Γ := Γ) θG 1 ψ κ U hU).1 (x * (vRepD θG ψ U D c)⁻¹)))
       = ∑ b : Fin p, (nebK (ψ (1 + (b : ℚ_[p]) * c * p)))⁻¹ •
         ((ψ p) ^ k • symAct K k (RingHom.mapMatrix ψ !![1, -((b : ℚ_[p]) / p); 0, 1])
-          (cSpace.blockProj (b : ZMod (p ^ 1)) (φ.1 x))) := by
+          (cSpace.blockProj (b : ZMod (p ^ 1)) (centralOp θG ψ U D φ.1 x))) := by
     intro c
     rw [hvc c, blockProj_zero_discSlash_of_shape ψ k κ hκ _
       (discImage_vQ_zero (IsUltrametricDist.norm_natCast_le_one ℚ_[p] _)) (Φ₃.2.2 _), hvc11,
@@ -407,8 +379,9 @@ theorem blockProj_zero_discHecke_atkinLehner
   simp_rw [← Finset.sum_smul]
   rw [Finset.sum_eq_single (0 : Fin p)]
   · haveI : NeZero p := ⟨hp.out.ne_zero⟩
-    have hV0 : cSpace.blockProj 0 (φ.1 x) ∈ polySubmodule K k := fun j hj => by
-      rw [cSpace.blockProj_apply]; exact φ.2.2 x 0 j hj
+    have hV0 : cSpace.blockProj 0 (centralOp θG ψ U D φ.1 x) ∈ polySubmodule K k := fun j hj => by
+      rw [cSpace.blockProj_apply]
+      exact (centralOp_mem_classicalDiscForms θG ψ U hU k D κ φ.2).2 x 0 j hj
     simp only [Fin.val_zero, Nat.cast_zero, zero_mul, add_zero, hnebK1, inv_one, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one, zero_div, neg_zero]
     rw [← Matrix.one_fin_two, map_one, symAct_one k hV0, smul_smul, ← map_natCast ψ p, ← pow_succ']
@@ -422,10 +395,9 @@ theorem blockProj_zero_discHecke_atkinLehner
   · intro h
     exact absurd (Finset.mem_univ _) h
 
-
 set_option maxHeartbeats 1000000 in
-/-- **The operator identity** `U_p ∘ (W⁻¹ ∘ U_p^{(ψ⁻¹)} ∘ W) = p^{k+1}` on the classical disc
-forms (`shapiro_blockProj` carries the disc-`0` identity to every disc). -/
+/-- **The operator identity at a general tame level**:
+`U_p ∘ (W⁻¹ ∘ U_p^{(ψ⁻¹)} ∘ W) = p^{k+1}·Z` on the classical disc forms. -/
 theorem discHeckeCl_comp_atkinLehner
     (hmul : ∀ x y : ℚ_[p], ‖x‖ = 1 → ‖y‖ = 1 → nebK (ψ (x * y)) = nebK (ψ x) * nebK (ψ y))
     (hne : ∀ x : ℚ_[p], ‖x‖ = 1 → nebK (ψ x) ≠ 0)
@@ -447,17 +419,17 @@ theorem discHeckeCl_comp_atkinLehner
           ((discHeckeOperatorCl θG ψ U hU k κ' (u := fun x => (nebK x)⁻¹) hκ'
             (upEltD_mem_levelM1 θG ψ U D) hfin).comp
             (atkinLehnerMap θG ψ U hU k D κ κ' hmul hne hcond hκ hκ')))
-      = (ψ p) ^ (k + 1) • LinearMap.id := by
+      = (ψ p) ^ (k + 1) • centralOpCl θG ψ U hU k D κ := by
   refine LinearMap.ext fun φ => Subtype.ext (AutomorphicFunction.ext fun x => ?_)
   refine cSpace_ext_blockProj fun a => ?_
-  rw [LinearMap.smul_apply, LinearMap.id_apply]
+  rw [LinearMap.smul_apply]
   set Ψ := ((discHeckeOperatorCl θG ψ U hU k κ hκ (upEltD_mem_levelM1 θG ψ U D) hfin).comp
       ((atkinLehnerMapInv θG ψ U hU k D κ κ' hmul hne hcond hκ hκ').comp
         ((discHeckeOperatorCl θG ψ U hU k κ' (u := fun x => (nebK x)⁻¹) hκ'
           (upEltD_mem_levelM1 θG ψ U D) hfin).comp
           (atkinLehnerMap θG ψ U hU k D κ κ' hmul hne hcond hκ hκ')))) φ with hΨ
   have hL := shapiro_blockProj θG ψ U hU D κ Ψ.2.1 x a
-  have hR := shapiro_blockProj θG ψ U hU D κ φ.2.1 x a
+  have hR := shapiro_blockProj θG ψ U hU D κ (centralOpCl θG ψ U hU k D κ φ).2.1 x a
   rw [hL, Submodule.coe_smul, AutomorphicFunction.smul_apply, map_smul, hR]
   exact blockProj_zero_discHecke_atkinLehner θG ψ U hU k κ D κ' hmul hne hcond hsum hκ hκ' hfin hv
     hvinj φ _
@@ -504,14 +476,28 @@ theorem atkinLehnerHypothesis_of_conj
     (hS : S₁ * S = 1) (hS' : S₁' * S' = 1) (_hS'' : S' * S₁' = 1) :
     AtkinLehnerHypothesis (p := p) (K := K) (ι := ι) ψ 1 k (S * A * S₁) (S * B * S₁)
       (S' * A' * S₁') := by
-  obtain ⟨hAB, P, Q, hQP, hA'⟩ := h
+  obtain ⟨⟨Zm, Nm, hNm, hAB, hZmA, hZmN⟩, P, Q, hQP, hA'⟩ := h
   have hSS₁ : S * S₁ = 1 := mul_eq_one_comm.mp hS
-  refine ⟨?_, S' * P * S₁, S * Q * S₁', ?_, ?_⟩
-  · calc S * A * S₁ * (S * B * S₁) = S * (A * (S₁ * S) * B) * S₁ := by simp only [Matrix.mul_assoc]
+  have hpowS : ∀ m : ℕ, (S * Zm * S₁) ^ m = S * Zm ^ m * S₁ := by
+    intro m
+    induction m with
+    | zero => rw [pow_zero, pow_zero, Matrix.mul_one, hSS₁]
+    | succ m ih =>
+      rw [pow_succ (S * Zm * S₁) m, ih, pow_succ Zm m]
+      calc S * Zm ^ m * S₁ * (S * Zm * S₁) = S * (Zm ^ m * (S₁ * S) * Zm) * S₁ := by
+            simp only [Matrix.mul_assoc]
+        _ = S * (Zm ^ m * Zm) * S₁ := by rw [hS, Matrix.mul_one]
+  refine ⟨⟨S * Zm * S₁, Nm, hNm, ?_, ?_, ?_⟩, S' * P * S₁, S * Q * S₁', ?_, ?_⟩
+  · calc S * A * S₁ * (S * B * S₁) = S * (A * (S₁ * S) * B) * S₁ := by
+          simp only [Matrix.mul_assoc]
       _ = S * (A * B) * S₁ := by rw [hS, Matrix.mul_one]
-      _ = (ψ p) ^ (k + 1) • (S * S₁) := by
-        rw [hAB, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one]
-      _ = _ := by rw [hSS₁]
+      _ = (ψ p) ^ (k + 1) • (S * Zm * S₁) := by
+        rw [hAB, Matrix.mul_smul, Matrix.smul_mul]
+  · calc S * Zm * S₁ * (S * A * S₁) = S * (Zm * (S₁ * S) * A) * S₁ := by
+          simp only [Matrix.mul_assoc]
+      _ = S * (A * (S₁ * S) * Zm) * S₁ := by rw [hS, Matrix.mul_one, Matrix.mul_one, hZmA]
+      _ = S * A * S₁ * (S * Zm * S₁) := by simp only [Matrix.mul_assoc]
+  · rw [hpowS, hZmN, Matrix.mul_one, hSS₁]
   · calc S * Q * S₁' * (S' * P * S₁) = S * (Q * (S₁' * S') * P) * S₁ := by
           simp only [Matrix.mul_assoc]
       _ = S * (Q * P) * S₁ := by rw [hS', Matrix.mul_one]
@@ -521,10 +507,10 @@ theorem atkinLehnerHypothesis_of_conj
       _ = S' * P * S₁ * (S * B * S₁) * (S * Q * S₁') := by simp only [Matrix.mul_assoc]
 
 set_option maxHeartbeats 2000000 in
-/-- **Hypothesis H1 at the classical points, from the Atkin–Lehner data.**  With `A` the matrix
-of `U_p` at `(k, ψ)`, `A'` at the partner `(k, ψ⁻¹)` (nebentypus `ω⁻¹ω₀^{2k}`, point
-`T_{χ_k}(ζ⁻¹)`), and `B := W⁻¹ A' W`: `A B = p^{k+1}` is `discHeckeCl_comp_atkinLehner` in
-the block model, and `A' = W B W⁻¹` by construction. -/
+/-- **Hypothesis H1 at the classical points, at a general tame level**:
+`A B = p^{k+1}·Z` with `Z` the matrix of the tame central operator on the classical block model,
+commuting with `A` (`discHeckeOperatorCl_comp_centralOpCl`) and of finite order
+(`centralOpCl_pow_eq_one`), and `A' = W B W⁻¹`. -/
 theorem atkinLehnerHypothesis_of_atkinLehnerData [Nonempty ι]
     (ω : (ZMod p)ˣ →* ℤ_[p]ˣ) (hp2 : p ≠ 2) (hψ : ∀ x, ‖ψ x‖ = ‖x‖) {ζ : K}
     (hζ : IsPrimitiveRoot ζ p) (hpK : ‖((p : ℕ) : K)‖ = (p : ℝ)⁻¹)
@@ -592,8 +578,12 @@ theorem atkinLehnerHypothesis_of_atkinLehnerData [Nonempty ι]
       (u := fun x => (nebCharK ψ ω k ζ x)⁻¹) hκ' (upEltD_mem_levelM1 θG ψ U D) hfin g) := fun g =>
     Subtype.ext (discEvalAtRepsCl_discHeckeOperatorCl θG ψ U hU k cd'.weight D
       (u := fun x => (nebCharK ψ ω k ζ x)⁻¹) hκ' hfin c hc hstab hv hvinj idx uu d hd hfact g).symm
+  obtain ⟨N, hN, hZN⟩ := centralOpCl_pow_eq_one θG ψ U hU k D cd.weight
+  have hcommZ := discHeckeOperatorCl_comp_centralOpCl θG ψ U hU k D cd.weight hκ
+    (upEltD_mem_levelM1 θG ψ U D) hfin
   have hkey : T ∘ₗ (Wb.symm.toLinearMap ∘ₗ T' ∘ₗ Wb.toLinearMap)
-      = (ψ p) ^ (k + 1) • LinearMap.id := by
+      = (ψ p) ^ (k + 1) • (E.toLinearMap ∘ₗ centralOpCl θG ψ U hU k D cd.weight
+        ∘ₗ E.symm.toLinearMap) := by
     refine LinearMap.ext fun f => ?_
     obtain ⟨g, rfl⟩ := E.surjective f
     have h1 : Wb (E g) = E' (AL g) := by
@@ -603,24 +593,53 @@ theorem atkinLehnerHypothesis_of_atkinLehnerData [Nonempty ι]
         LinearEquiv.symm_apply_apply, LinearEquiv.symm_symm]
     have h3 := LinearMap.congr_fun (discHeckeCl_comp_atkinLehner θG ψ U hU k cd.weight D cd'.weight
       hmul hne hcond hsum hκ hκ' hfin hv hvinj) g
-    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.smul_apply,
-      LinearMap.id_apply] at h3 ⊢
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.smul_apply] at h3 ⊢
     rw [h1, hTE', h2, hTE]
     change E (discHeckeOperatorCl θG ψ U hU k cd.weight hκ (upEltD_mem_levelM1 θG ψ U D) hfin
       (atkinLehnerMapInv θG ψ U hU k D cd.weight cd'.weight hmul hne hcond hκ hκ'
         (discHeckeOperatorCl θG ψ U hU k cd'.weight (u := fun x => (nebCharK ψ ω k ζ x)⁻¹) hκ'
           (upEltD_mem_levelM1 θG ψ U D) hfin
           (atkinLehnerMap θG ψ U hU k D cd.weight cd'.weight hmul hne hcond hκ hκ' g)))) = _
-    rw [h3, map_smul]
-  refine ⟨LinearMap.toMatrix bas bas (Wb.symm.toLinearMap ∘ₗ T' ∘ₗ Wb.toLinearMap), ?_,
+    rw [h3, map_smul, LinearEquiv.symm_apply_apply]
+  have hpowM : ∀ (f : Module.End K (locPolyDegSubmoduleBlock p ι K 1 k)) (m : ℕ),
+      LinearMap.toMatrix bas bas f ^ m = LinearMap.toMatrix bas bas (f ^ m) := by
+    intro f m
+    induction m with
+    | zero => rw [pow_zero, pow_zero, Module.End.one_eq_id, LinearMap.toMatrix_id]
+    | succ m ih =>
+      rw [pow_succ (LinearMap.toMatrix bas bas f) m, ih, pow_succ f m, Module.End.mul_eq_comp,
+        ← LinearMap.toMatrix_comp]
+  have hconjpow : ∀ m : ℕ, (E.toLinearMap ∘ₗ centralOpCl θG ψ U hU k D cd.weight
+      ∘ₗ E.symm.toLinearMap) ^ m
+      = E.toLinearMap ∘ₗ (centralOpCl θG ψ U hU k D cd.weight ^ m) ∘ₗ E.symm.toLinearMap := by
+    intro m
+    induction m with
+    | zero => exact LinearMap.ext fun f => by simp
+    | succ m ih =>
+      rw [pow_succ (E.toLinearMap ∘ₗ centralOpCl θG ψ U hU k D cd.weight ∘ₗ E.symm.toLinearMap) m,
+        ih, pow_succ (centralOpCl θG ψ U hU k D cd.weight) m]
+      exact LinearMap.ext fun f => by simp [Module.End.mul_apply]
+  refine ⟨LinearMap.toMatrix bas bas (Wb.symm.toLinearMap ∘ₗ T' ∘ₗ Wb.toLinearMap),
+    ⟨LinearMap.toMatrix bas bas (E.toLinearMap ∘ₗ centralOpCl θG ψ U hU k D cd.weight
+      ∘ₗ E.symm.toLinearMap), N, hN, ?_, ?_, ?_⟩,
     LinearMap.toMatrix bas bas Wb.toLinearMap, LinearMap.toMatrix bas bas Wb.symm.toLinearMap, ?_, ?_⟩
-  · rw [hA, ← LinearMap.toMatrix_comp, hkey, map_smul, LinearMap.toMatrix_id]
+  · rw [hA, ← LinearMap.toMatrix_comp, hkey, map_smul]
+  · rw [hA, ← LinearMap.toMatrix_comp, ← LinearMap.toMatrix_comp]
+    congr 1
+    refine LinearMap.ext fun f => ?_
+    obtain ⟨g, rfl⟩ := E.surjective f
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
+    rw [hTE g, LinearEquiv.symm_apply_apply, hTE (centralOpCl θG ψ U hU k D cd.weight g)]
+    congr 1
+    exact (LinearMap.congr_fun hcommZ g).symm
+  · rw [hpowM, hconjpow, hZN,
+      show E.toLinearMap ∘ₗ (1 : Module.End K _) ∘ₗ E.symm.toLinearMap = LinearMap.id from
+        LinearMap.ext fun f => by simp, LinearMap.toMatrix_id]
   · rw [← LinearMap.toMatrix_comp, LinearEquiv.symm_comp, LinearMap.toMatrix_id]
   · have hcomp : (Wb.toLinearMap ∘ₗ (Wb.symm.toLinearMap ∘ₗ T' ∘ₗ Wb.toLinearMap))
         ∘ₗ Wb.symm.toLinearMap = T' := LinearMap.ext fun f => by
       simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply]
     rw [hA', ← LinearMap.toMatrix_comp, ← LinearMap.toMatrix_comp, hcomp]
-
 
 /-- **[LWX, Thm 1.3]'s degree formula with no hypothesis left**, granted the adelic data:
 `deg X_{k+1,ω} = r_ord(ω⁻¹ω₀^{2k}) + r_ord(ωω₀^{−2k−2})`. -/

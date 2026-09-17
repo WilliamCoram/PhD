@@ -101,18 +101,18 @@ theorem coeff_charpolyRev_card {n : Type*} [Fintype n] [DecidableEq n] (A : Matr
     h2, one_mul]
 
 omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
-/-- **H1 on determinants** ([LWX, Prop 3.22]'s "the total sum of the `U_p`-slopes … is
-`(k+1)²q⁻¹pᵐt`"): from `A·B = c·1`, `Q·P = 1` and `A' = P·B·Q`,
-`−log‖det A‖ − log‖det A'‖ = card·(−log‖c‖)`. -/
-theorem neg_log_norm_det_add_of_mul_eq_smul {n : Type*} [Fintype n] [DecidableEq n]
-    {A B A' P Q : Matrix n n K} {c : K} (hc : c ≠ 0) (hAB : A * B = c • (1 : Matrix n n K))
-    (hQP : Q * P = 1) (hA' : A' = P * B * Q) :
+/-- **H1 on determinants at a general tame level**: from `A·B = c·Z`,
+`Z^N = 1`, `Q·P = 1` and `A' = P·B·Q`, `−log‖det A‖ − log‖det A'‖ = card·(−log‖c‖)`, since
+`‖det Z‖ = 1` (`Matrix.norm_det_eq_one_of_pow_eq_one`). -/
+theorem neg_log_norm_det_add_of_mul_eq_smul_mul {n : Type*} [Fintype n] [DecidableEq n]
+    {A B A' P Q Z : Matrix n n K} {c : K} (hc : c ≠ 0) (hAB : A * B = c • Z) {N : ℕ}
+    (hN : 0 < N) (hZ : Z ^ N = 1) (hQP : Q * P = 1) (hA' : A' = P * B * Q) :
     -Real.log ‖A.det‖ + -Real.log ‖A'.det‖ = Fintype.card n * (-Real.log ‖c‖) := by
-  have hprod : A.det * B.det = c ^ Fintype.card n := Matrix.det_mul_det_of_mul_eq_smul hAB
-  have hA0 : A.det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul hc hAB
-  have hB0 : B.det ≠ 0 := fun h0 => by
-    rw [h0, mul_zero] at hprod
-    exact pow_ne_zero _ hc hprod.symm
+  have hprod : A.det * B.det = c ^ Fintype.card n * Z.det :=
+    Matrix.det_mul_det_of_mul_eq_smul_mul hAB
+  have hA0 : A.det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hc hAB hN hZ
+  have hB0 : B.det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul' hc hAB hN hZ
+  have hZ1 : ‖Z.det‖ = 1 := Matrix.norm_det_eq_one_of_pow_eq_one hN hZ
   have hQP' : Q.det * P.det = 1 := by rw [← Matrix.det_mul, hQP, Matrix.det_one]
   have hA'B : A'.det = B.det := by
     rw [hA', Matrix.det_mul, Matrix.det_mul]
@@ -121,28 +121,16 @@ theorem neg_log_norm_det_add_of_mul_eq_smul {n : Type*} [Fintype n] [DecidableEq
   have hlog : Real.log ‖A.det‖ + Real.log ‖B.det‖
       = (Fintype.card n : ℝ) * Real.log ‖c‖ := by
     rw [← Real.log_mul (norm_ne_zero_iff.2 hA0) (norm_ne_zero_iff.2 hB0), ← norm_mul, hprod,
-      norm_pow, Real.log_pow]
+      norm_mul, hZ1, mul_one, norm_pow, Real.log_pow]
   rw [hA'B]
   linarith
 
 omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
-/-- The determinants under H1 are nonzero. -/
-theorem det_ne_zero_of_mul_eq_smul' {n : Type*} [Fintype n] [DecidableEq n]
-    {A B : Matrix n n K} {c : K} (hc : c ≠ 0) (hAB : A * B = c • (1 : Matrix n n K)) :
-    A.det ≠ 0 :=
-  Matrix.det_ne_zero_of_mul_eq_smul hc hAB
-
-omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
-/-- The Atkin–Lehner partner's determinant is nonzero as well: `det A' = det B`, and
-`det A · det B = c^N ≠ 0`. -/
-theorem det_ne_zero_of_mul_eq_smul_conj {n : Type*} [Fintype n] [DecidableEq n]
-    {A B A' P Q : Matrix n n K} {c : K} (hc : c ≠ 0) (hAB : A * B = c • (1 : Matrix n n K))
-    (hQP : Q * P = 1) (hA' : A' = P * B * Q) :
-    A'.det ≠ 0 := by
-  have hprod : A.det * B.det = c ^ Fintype.card n := Matrix.det_mul_det_of_mul_eq_smul hAB
-  have hB0 : B.det ≠ 0 := fun h0 => by
-    rw [h0, mul_zero] at hprod
-    exact pow_ne_zero _ hc hprod.symm
+/-- The Atkin–Lehner partner's determinant is nonzero at a general tame level. -/
+theorem det_ne_zero_of_mul_eq_smul_mul_conj {n : Type*} [Fintype n] [DecidableEq n]
+    {A B A' P Q Z : Matrix n n K} {c : K} (hc : c ≠ 0) (hAB : A * B = c • Z) {N : ℕ}
+    (hN : 0 < N) (hZ : Z ^ N = 1) (hQP : Q * P = 1) (hA' : A' = P * B * Q) : A'.det ≠ 0 := by
+  have hB0 : B.det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul' hc hAB hN hZ
   have hQP' : Q.det * P.det = 1 := by rw [← Matrix.det_mul, hQP, Matrix.det_one]
   have hP0 : P.det ≠ 0 := fun h0 => by rw [h0, mul_zero] at hQP'; exact one_ne_zero hQP'.symm
   have hQ0 : Q.det ≠ 0 := fun h0 => by rw [h0, zero_mul] at hQP'; exact one_ne_zero hQP'.symm
@@ -699,15 +687,16 @@ theorem isStepOneTouching_of_atkinLehnerHypothesis (hp2 : p ≠ 2) [Nonempty ι]
     (hAL : ∃ B, AtkinLehnerHypothesis (p := p) (K := K) (ι := ι) ψ 1 k (c.matrix idx) B
       (c'.matrix idx)) :
     IsStepOneTouching (UpDatum.ofCerts θG U hU vRep hvΔ idx uu hshape) ω (intHom ψ) T₀ (k + 1) := by
-  obtain ⟨B, hAB, P, Q, hQP, hA'⟩ := hAL
+  obtain ⟨B, ⟨Zm, Nm, hNm, hAB, -, hZmN⟩, P, Q, hQP, hA'⟩ := hAL
   have hp0 : (0 : ℝ) < (p : ℝ)⁻¹ := inv_pos.2 (by exact_mod_cast hp.out.pos)
   have hT0 : (0 : ℝ) < ‖T₀‖ := hp0.trans c.h0
   have hT0' : (0 : ℝ) < ‖T₀'‖ := hp0.trans c'.h0
   have hψp : ψ (p : ℚ_[p]) ≠ 0 := fun hcon =>
     (Nat.cast_ne_zero.2 hp.out.ne_zero) (ψ.injective (by rw [hcon, map_zero]))
   have hcne : (ψ (p : ℚ_[p])) ^ (k + 1) ≠ 0 := pow_ne_zero _ hψp
-  have hA0 : (c.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul' hcne hAB
-  have hA'0 : (c'.matrix idx).det ≠ 0 := det_ne_zero_of_mul_eq_smul_conj hcne hAB hQP hA'
+  have hA0 : (c.matrix idx).det ≠ 0 := Matrix.det_ne_zero_of_mul_eq_smul_mul hcne hAB hNm hZmN
+  have hA'0 : (c'.matrix idx).det ≠ 0 :=
+    det_ne_zero_of_mul_eq_smul_mul_conj hcne hAB hNm hZmN hQP hA'
   -- The index `n_{k+1} = t·(k+1)·p`, in the two spellings.
   have hidx : ((Fintype.card ι : ℤ) * (((k : ℤ) + 1) * (p : ℤ) ^ 1))
       = ((touchX p (Fintype.card ι) (k + 1) : ℕ) : ℤ) := by
@@ -751,7 +740,7 @@ theorem isStepOneTouching_of_atkinLehnerHypothesis (hp2 : p ≠ 2) [Nonempty ι]
   have hsum : -Real.log ‖(c.matrix idx).det‖ + -Real.log ‖(c'.matrix idx).det‖
       = ((Fintype.card ι * ((k + 1) * p ^ 1) : ℕ) : ℝ)
           * (((k : ℝ) + 1) * (-Real.log ‖ψ (p : ℚ_[p])‖)) := by
-    have hAL := neg_log_norm_det_add_of_mul_eq_smul hcne hAB hQP hA'
+    have hAL := neg_log_norm_det_add_of_mul_eq_smul_mul hcne hAB hNm hZmN hQP hA'
     rw [Fintype.card_fin, norm_pow, Real.log_pow] at hAL
     rw [hAL]
     push_cast

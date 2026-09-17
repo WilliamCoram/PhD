@@ -24,8 +24,9 @@ acting on the disc-`0` polynomial vectors through `t₀⁻¹ w_h t₀ = (0 1; �
 
 `AtkinLehnerDataH` is `AtkinLehnerData` with `w` replaced by `w_h` and the disc-`0` part of
 the level replaced by the level-`p^{h+1}` part `{u ∈ U : p^h ∣ b(θ u)}`, which `w_h`
-normalises (`wQH_conj_mem_Iw`).  The section `ιp`, the central element and the character
-are unchanged; level `1` is `AtkinLehnerData.toH`.
+normalises (`wQH_conj_mem_Iw`).  The section `ιp`, the central element `ιp(p·1)` (with
+`ιp_pGL_comm` and `central_pow`) and the character are unchanged; level `1` is
+`AtkinLehnerData.toH`.
 
 ## The disc model at level `h`
 
@@ -150,9 +151,14 @@ structure AtkinLehnerDataH (Γ : Subgroup G) (nebK : K → K) where
   theta_ιp : ∀ g, θG (ιp g) = (g : Matrix (Fin 2) (Fin 2) ℚ_[p])
   /-- The level contains the lifts of the local Iwahori subgroup `Iw_p`. -/
   ιp_mem_U : ∀ g : GL (Fin 2) ℚ_[p], (g : Matrix (Fin 2) (Fin 2) ℚ_[p]) ∈ Iw p 1 → ιp g ∈ U
-  /-- The central element `p` (at `p`) is a global central element times an element of the
-  level with trivial `p`-component. -/
-  central : ∃ γ ∈ Γ, ∃ u ∈ U, ιp (pGL p) = γ * u ∧ θG u = 1 ∧ ∀ x, γ * x = x * γ
+  /-- The local central element `p·1` is central in `G` (it is a scalar at `p` and `1` away
+  from `p`). -/
+  ιp_pGL_comm : ∀ x, ιp (pGL p) * x = x * ιp (pGL p)
+  /-- Some power of the central element `p` (at `p`) is a global central element times an element
+  of the level with trivial `p`-component: `p_p^N = p^N_global · ((p^{(p)})^N)⁻¹` — true for every
+  open tame level, since the tame scalars form a compact group. -/
+  central_pow : ∃ N, 0 < N ∧ ∃ γ ∈ Γ, ∃ u ∈ U,
+    ιp (pGL p) ^ N = γ * u ∧ θG u = 1 ∧ ∀ x, γ * x = x * γ
   /-- The Hecke character `ψ_A ∘ ν`. -/
   χ : G →* Kˣ
   χ_Γ : ∀ γ ∈ Γ, χ γ = 1
@@ -180,7 +186,8 @@ def _root_.LWX.AtkinLehnerData.toH (D₁ : AtkinLehnerData θG ψ U Γ nebK) :
   ιp := D₁.ιp
   theta_ιp := D₁.theta_ιp
   ιp_mem_U := D₁.ιp_mem_U
-  central := D₁.central
+  ιp_pGL_comm := D₁.ιp_pGL_comm
+  central_pow := D₁.central_pow
   χ := D₁.χ
   χ_Γ := D₁.χ_Γ
   χ_U := D₁.χ_U
@@ -192,7 +199,7 @@ def _root_.LWX.AtkinLehnerData.toH (D₁ : AtkinLehnerData θG ψ U Γ nebK) :
 end Bridge
 
 omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
-/-- The central element `p` (at `p`) acts trivially on the level: `θ(ιp p) = p • 1`. -/
+/-- The `p`-component of the central element `ιp(p·1)` is the scalar `p`: `θ(ιp p) = p • 1`. -/
 theorem theta_ιp_pGLH :
     θG (D.ιp (pGL p)) = (p : ℚ_[p]) • (1 : Matrix (Fin 2) (Fin 2) ℚ_[p]) :=
   D.theta_ιp (pGL p)
@@ -419,6 +426,68 @@ def discHeckeOperatorClH {u : K → K}
       DiscForms (Γ := Γ) θG h ψ κ U hU).1 = _
     rw [map_smul]
     rfl
+
+/-! ### The tame central operator on the level-`h` classical disc forms -/
+
+/-- **The tame central operator** at level `h`: `(Zφ)(x) = φ(x·ιp(p·1)⁻¹)`. -/
+def centralOpH (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) :
+    AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K) :=
+  translateOp (D.ιp (pGL p)) φ
+
+omit [IsUltrametricDist K] [CompleteSpace K] [CharZero K] in
+theorem centralOpH_apply (φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) (x : G) :
+    centralOpH θG ψ U h D φ x = φ (x * (D.ιp (pGL p))⁻¹) :=
+  rfl
+
+omit [CharZero K] in
+theorem centralOpH_mem_classicalDiscFormsH {φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)}
+    (hφ : φ ∈ ClassicalDiscFormsH (Γ := Γ) θG ψ U hU h k κ) :
+    centralOpH θG ψ U h D φ ∈ ClassicalDiscFormsH (Γ := Γ) θG ψ U hU h k κ :=
+  ⟨translateOp_mem_discForms θG ψ κ U hU (fun u _ => D.ιp_pGL_comm u) hφ.1, fun _ => hφ.2 _⟩
+
+/-- `Z` as a linear endomorphism of the level-`h` classical disc forms. -/
+def centralOpClH :
+    ClassicalDiscFormsH (Γ := Γ) θG ψ U hU h k κ →ₗ[K]
+      ClassicalDiscFormsH (Γ := Γ) θG ψ U hU h k κ where
+  toFun φ := ⟨centralOpH θG ψ U h D φ.1, centralOpH_mem_classicalDiscFormsH θG ψ U hU h k D κ φ.2⟩
+  map_add' _ _ := Subtype.ext (translateOp_add _ _ _)
+  map_smul' _ _ := Subtype.ext (translateOp_smul _ _ _)
+
+omit [CharZero K] in
+theorem centralOpClH_apply (φ : ClassicalDiscFormsH (Γ := Γ) θG ψ U hU h k κ) :
+    (centralOpClH θG ψ U hU h k D κ φ : AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K))
+      = centralOpH θG ψ U h D φ.1 :=
+  rfl
+
+omit [CharZero K] in
+/-- `Z` has finite order (`central_pow`). -/
+theorem centralOpClH_pow_eq_one : ∃ N, 0 < N ∧ centralOpClH θG ψ U hU h k D κ ^ N = 1 := by
+  obtain ⟨N, hN, γ, hγ, u, hu, hP, hθu, hcomm⟩ := D.central_pow
+  refine ⟨N, hN, LinearMap.ext fun φ => Subtype.ext ?_⟩
+  have hiter : ∀ m : ℕ, ((centralOpClH θG ψ U hU h k D κ ^ m) φ :
+      AutomorphicFunction G Γ c(ZMod (p ^ h) × ℕ, K)) = translateOp (D.ιp (pGL p) ^ m) φ.1 := by
+    intro m
+    induction m with
+    | zero => simp [translateOp_one]
+    | succ m ih =>
+      rw [pow_succ' (centralOpClH θG ψ U hU h k D κ) m, Module.End.mul_apply, centralOpClH_apply,
+        centralOpH, ih, translateOp_translateOp, pow_succ (D.ιp (pGL p)) m]
+  rw [hiter, hP]
+  exact translateOp_eq_self_of_eq_mul θG ψ κ U hU hγ hcomm hu hθu rfl φ.2.1
+
+omit [CharZero K] in
+/-- `Z` commutes with `U_p`. -/
+theorem discHeckeOperatorClH_comp_centralOpClH
+    (hκ : ∀ g : M1Kh h ψ, κ.toWeightSeries.autFactor g.1 * linX g.1
+      = PowerSeries.C (nebK (g.1 1 1)) * linX g.1 ^ (k + 1))
+    {η : G} (hη : η ∈ levelM1 (p := p) θG)
+    (hfin : (((Quotient.mk'' : G → RightCosets U) '' (({η} : Set G) * (U : Set G))) :
+      Set (RightCosets U)).Finite) :
+    (discHeckeOperatorClH θG ψ U hU h k κ hκ hη hfin).comp (centralOpClH θG ψ U hU h k D κ)
+      = (centralOpClH θG ψ U hU h k D κ).comp
+          (discHeckeOperatorClH θG ψ U hU h k κ hκ hη hfin) :=
+  LinearMap.ext fun φ => Subtype.ext
+    (translateOp_discHeckeOperator θG ψ κ U hU D.ιp_pGL_comm hη hfin ⟨φ.1, φ.2.1⟩)
 
 /-! ### Reading disc `a` as disc `0` -/
 
