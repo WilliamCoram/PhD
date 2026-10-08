@@ -16,4 +16,14 @@ The project root `PhD.lean` must **not** import this module: both chains develop
 -/
 import PhD.TauCeti.Code.NewtonPolygons.Examples
 import PhD.TauCeti.Code.NewtonPolygons.Int
+import PhD.TauCeti.Code.NewtonPolygons.AddVal.Examples
+import PhD.TauCeti.Code.NewtonPolygons.Coeff.Examples
 import PhD.TauCeti.Code.NewtonPolygons.Minkowski
+import PhD.TauCeti.Code.OverconvergentForms.Examples
+import PhD.TauCeti.Code.OverconvergentForms.Weight.Examples
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Examples
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.NormComparison
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Operator.Examples
+import PhD.TauCeti.Code.RigidAnalyticGeometry.Affinoid.Examples
+import PhD.TauCeti.Code.RigidAnalyticGeometry.Affinoid.SupExamples
+import PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Examples

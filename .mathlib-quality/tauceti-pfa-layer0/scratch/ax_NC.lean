@@ -1,0 +1,6 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.NormComparison
+#print axioms NormedRing.exists_norm_le_of_norm_map_le_one
+#print axioms NormedRing.exists_norm_le_mul_rpow_norm_map
+#print axioms NormedRing.logb_norm_map_pos
+#print axioms NormedRing.exists_norm_map_le_mul_rpow
+#print axioms NormedRing.exists_mul_rpow_le_norm_map

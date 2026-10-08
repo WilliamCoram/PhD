@@ -485,6 +485,22 @@ the norm from each. §1.5 carries them to algebraic extensions, to `ℚ_p`'s alg
 `ℂ_p`. Nothing in this layer mentions polygons, and all of it is reusable by anyone working with
 nonarchimedean valuations in additive form.
 
+**Status (2026-10-06).** Layer 1 is implemented in this repository in
+`PhD/TauCeti/Code/NewtonPolygons/AddVal/` (`NegLog`, `RatLog`, `Basic`, `RankOne`, `Commensurable`,
+`Discrete`, `Normed`, `Padic`, `LaurentSeries`, `Extension`, `PadicComplex`, `Examples`), from the
+ticket board `.mathlib-quality/tauceti-np-layer1/`: every declaration is proved, the twelve modules
+pass Mathlib's linter, and the milestones (`Valuation.addVal_map`, `Valuation.addValQ_unique`,
+`NormedField.normAddValZ_padic`, the ramification formula `NormedField.normAddValZ_algebraMap`, and
+`PadicComplex.range_normAddValQ` with `PadicComplex.isCommensurable_p`) depend only on `propext`,
+`Classical.choice` and `Quot.sound`. §1.1 uses the names of mathlib4#43578 and mathlib4#43580. The
+board's deviations from the text below (D1–D6 of its `plan.md`) are: the Laurent-series clause of
+§1.3.5 is stated for the `Valued` field `K⸨X⸩` over any field `K`; §1.3.6 takes the discreteness of
+`L` as a hypothesis and defines the ramification index by the value of a uniformiser of `K`, with no
+finiteness hypothesis; §1.5.3 is stated for `Valued` fields; the ultrametricity and norm extension
+of §1.5.1 are Mathlib's `IsUltrametricDist.of_normedAlgebra` and `norm_algebraMap'`; §1.2.1's
+invariance is `RankOne.addVal_eq_of_hom_eq`; and the `ℚ_p(√p)` example is stated for any algebraic
+ultrametric normed `ℚ_p`-algebra field containing a square root of `p`.
+
 ### 1.1 Additive valuations with a usable target
 
 Mathlib's `Valuation.toAddValuation` lands in a type synonym for the value group, not in a type of

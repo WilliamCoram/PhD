@@ -355,7 +355,7 @@ elements — and `I = ⊔_𝔭 I_𝔭` with `I_𝔭 = Hom_{ℚ_p}(F_𝔭, K)`, s
    (Voight, Chapter 10) and is unique up to conjugation when `D` is definite only locally, not
    globally. Define the Hurwitz order `ℤ⟨i, j, (1 + i + j + k)/2⟩ ⊆ ℍ[ℚ]`, prove it is a maximal
    order with exactly `24` units, and prove it is right-Euclidean for the reduced norm (Voight,
-   Theorem 11.3.2), so that every right ideal is principal (11.3.4). ⚠ Nothing about orders is in
+   Lemma 11.3.2), so that every right ideal is principal (Proposition 11.3.4). ⚠ Nothing about orders is in
    Mathlib; only what §0.3 and the acceptance examples consume is specified.
 
 ### 0.2 The adelic group
@@ -417,12 +417,12 @@ elements — and `I = ⊔_𝔭 I_𝔭` with `I_𝔭 = Hom_{ℚ_p}(F_𝔭, K)`, s
    Hida's Lemma 7.1), which is all that §2.6 needs.
 4. **Finiteness of coset decompositions.** For `U` compact open and any `η ∈ D_f^×`, the double
    coset `U η U` is compact and open, hence a finite union of right cosets `U x_t` and of left
-   cosets `x_t' U`; the number of right cosets is `[U : U ∩ η U η^{−1}]`. Consequently, for a
+   cosets `x_t' U`; the number of right cosets is `[U : U ∩ η^{−1} U η]`. Consequently, for a
    submonoid `Δ ⊆ D_f^×` containing `U`, the pair `(Δ, U)` is a Hecke triple in the sense of
    Mathlib's `IsHeckeTriple`, and every `η ∈ Δ` defines an element of `HeckeRing Δ U ℤ`.
 5. **Class number one.** `D_f^× = D^× · U₀(1)` for `D = ℍ[ℚ]` with the Hurwitz order: every right
    ideal of a right-Euclidean order is principal (§0.1.4), and the idelic dictionary between right
-   ideal classes and `D^× \ D_f^× / U₀(1)` (Voight, Theorem 27.6.8) turns this into the triviality
+   ideal classes and `D^× \ D_f^× / U₀(1)` (Voight, Lemma 27.6.8) turns this into the triviality
    of the class set. ⚠ Jacobs (Lemma 1.22) derives this from the absence of weight-two cusp forms
    through Jacquet–Langlands; the route above is the one to formalise (convention 8).
 
@@ -438,7 +438,8 @@ elements — and `I = ⊔_𝔭 I_𝔭` with `I_𝔭 = Hom_{ℚ_p}(F_𝔭, K)`, s
    dictionary with the norm form `‖c‖ ≤ ‖ϖ‖^t`, `‖d‖ = 1` (Layer 1's `SigmaNorm`), which is the form
    the analysis uses.
 2. **The coset decomposition of `U η U`.** For `U_𝔭 = Iw(𝔭^t)` — or any subgroup with
-   `Iw(𝔭^{t'}) ⊆ U_𝔭 ⊆ Iw(𝔭^t)`, `t' ≥ t`, in particular `U₁`-type subgroups —
+   `Iw₁₁(𝔭^t) ⊆ U_𝔭 ⊆ Iw(𝔭^t)`, where `Iw₁₁(𝔭^t) := {γ ∈ Iw(𝔭^t) | a ≡ d ≡ 1 mod ϖ^t}` is the kernel
+   of the diagonal residues, in particular `U₁`-type subgroups —
    `U_𝔭 η U_𝔭 = ∐_{α ∈ 𝒪/𝔭} U_𝔭 · ((ϖ 0), (α ϖ^t 1))` as right cosets (Buzzard, proof of Lemma 12.1,
    the left-coset form; Jacobs, Lemma 2.3 at `p = 3`, `t = 2`), and correspondingly
    `= ∐_β ((ϖ β), (0 1)) U_𝔭` as left cosets. The representatives are `x_α := η u_α` with
@@ -497,6 +498,19 @@ provenance section).
 ---
 
 ## Layer 1: weights and weight modules
+
+**Status (2026-10-06).** Layer 1 is implemented in this repository in
+`PhD/TauCeti/Code/OverconvergentForms/Weight/` (`Level`, `Dictionary`, `Mobius`, `Identity`,
+`Action`, `Expansion`, `Algebraic`, `Classical`, `Examples`), from the ticket board
+`.mathlib-quality/tauceti-of-layer1/`: every declaration is proved, `lake build PhD.TauCeti` passes,
+and the milestone theorems (the right action `WeightData.kappaSlash_mul` with its row bound, the
+identity theorem `Embeddings.eq_zero_of_forall_evalPoint_eq_zero`, the derived cocycle
+`AnalyticWeight.autFactor_mul` and `AnalyticWeight.kappaSlash_eq_of_n_eq`, the bridge
+`toTate_symAct` with `finrank_symPow`, and the product over the places `WeightData.pi`) depend only
+on `propext`, `Classical.choice` and `Quot.sound`. Not implemented: §1.2.7 (existence of expansion
+data) and the `u ↦ u^s` example, which need the `p`-adic-functional-analysis roadmap's §4.5 and
+§§5.4–5.5, absent from the chain; every consumer takes an `AnalyticWeight` (convention 3). The
+plan's decisions and errata (E1–E6) are recorded in `plan.md`, not applied here.
 
 `𝔭 ∈ 𝔓`, `𝒪 = 𝒪_𝔭`, `ϖ = ϖ_𝔭`, `I_𝔭 = Hom_{ℚ_p}(F_𝔭, K)` with `d := |I_𝔭|`, and
 `A := K⟨z_i : i ∈ I_𝔭⟩`, the Tate algebra in `d` variables, which is the model space
@@ -1346,9 +1360,9 @@ roadmap's trace formula meets through Eichler's basis problem.
   Chapter IV — Fujisaki's lemma. Formalised in the FLT project as
   `NumberField.FiniteAdeleRing.DivisionAlgebra.finiteDoubleCoset` (see the provenance section).
 - J. Voight, *Quaternion Algebras*, GTM 288, Springer (2021) — [Voi21]. Chapter 2 (quaternion
-  algebras and the reduced norm), Chapter 10 (orders), Theorem 11.3.2 and Corollary 11.3.4 (the
-  Hurwitz order is Euclidean and its right ideals are principal), Theorem 27.6.8 (the idelic class
-  set), Chapter 41 (Brandt matrices, cited in "Beyond").
+  algebras and the reduced norm), Chapter 10 (orders), Lemma 11.1.2, Lemma 11.3.2 and Proposition
+  11.3.4 (the Hurwitz order is maximal, Euclidean, and its right ideals are principal), Lemma 27.6.8
+  (the idelic class set), Chapter 41 (Brandt matrices, cited in "Beyond").
 - G. Shimura, *Introduction to the Arithmetic Theory of Automorphic Functions*, Princeton (1971),
   Chapter 3 — [Shi71]. §3.1 (the Hecke ring `R(Γ, Δ)` and its action on `Γ`-invariants), Proposition
   3.8 (commutativity via an anti-automorphism), Theorem 3.24 (elementary divisors); and A. Krieg,

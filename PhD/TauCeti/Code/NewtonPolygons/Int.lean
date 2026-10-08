@@ -90,30 +90,27 @@ theorem unitSlope_extendTop_natCast (h : ℕ → WithTop ℝ) (n : ℕ) :
 theorem IsConvexSeq.comp_natCast {G : ℤ → WithTop ℝ} (hG : IsConvexSeq G) :
     IsConvexSeq fun n : ℕ ↦ G (n : ℤ) := by
   refine ⟨⟨fun a ha c hc b hb ↦ ?_⟩, fun a ha b hb hab ↦ ?_⟩
-  · exact mem_finiteSet.2 (mem_finiteSet.1 (hG.ordConnected.out
-      (mem_finiteSet.2 (mem_finiteSet.1 ha)) (mem_finiteSet.2 (mem_finiteSet.1 hc))
-      ⟨Nat.cast_le.2 hb.1, Nat.cast_le.2 hb.2⟩))
+  · exact hG.ne_top_of_le_of_le ha hc (Nat.cast_le.2 hb.1) (Nat.cast_le.2 hb.2)
   · rw [unitSlope_comp_natCast, unitSlope_comp_natCast]
-    exact hG.monotoneOn (mem_finiteSet.2 (mem_finiteSet.1 ha))
-      (mem_finiteSet.2 (mem_finiteSet.1 hb)) (Nat.cast_le.2 hab)
+    exact hG.monotoneOn (mem_finiteSupport.2 (mem_finiteSupport.1 ha))
+      (mem_finiteSupport.2 (mem_finiteSupport.1 hb)) (Nat.cast_le.2 hab)
 
 /-- The extension is convex exactly when the original sequence is. -/
 theorem isConvexSeq_extendTop_iff : IsConvexSeq (extendTop h) ↔ IsConvexSeq h := by
   refine ⟨fun hc ↦ ?_, fun hc ↦ ⟨⟨fun a ha c hc' b hb ↦ ?_⟩, fun a ha b hb hab ↦ ?_⟩⟩
   · have := hc.comp_natCast
     simpa only [extendTop_natCast] using this
-  · have ha0 : 0 ≤ a := nonneg_of_extendTop_ne_top h (mem_finiteSet.1 ha)
+  · have ha0 : 0 ≤ a := nonneg_of_extendTop_ne_top h (mem_finiteSupport.1 ha)
     have hb0 : 0 ≤ b := ha0.trans hb.1
-    refine mem_finiteSet.2 ?_
+    refine mem_finiteSupport.2 ?_
     rw [extendTop_of_nonneg h hb0]
-    refine mem_finiteSet.1 (hc.ordConnected.out (mem_finiteSet.2 ?_) (mem_finiteSet.2 ?_)
-      ⟨Int.toNat_le_toNat hb.1, Int.toNat_le_toNat hb.2⟩)
+    refine hc.ne_top_of_le_of_le ?_ ?_ (Int.toNat_le_toNat hb.1) (Int.toNat_le_toNat hb.2)
     · rw [← extendTop_of_nonneg h ha0]
-      exact mem_finiteSet.1 ha
+      exact mem_finiteSupport.1 ha
     · rw [← extendTop_of_nonneg h (hb0.trans hb.2)]
-      exact mem_finiteSet.1 hc'
-  · have ha0 : 0 ≤ a := nonneg_of_extendTop_ne_top h (mem_finiteSet.1 ha)
-    have hb0 : 0 ≤ b := nonneg_of_extendTop_ne_top h (mem_finiteSet.1 hb)
+      exact mem_finiteSupport.1 hc'
+  · have ha0 : 0 ≤ a := nonneg_of_extendTop_ne_top h (mem_finiteSupport.1 ha)
+    have hb0 : 0 ≤ b := nonneg_of_extendTop_ne_top h (mem_finiteSupport.1 hb)
     have hua : unitSlope (extendTop h) a = unitSlope h a.toNat := by
       conv_lhs => rw [← Int.toNat_of_nonneg ha0]
       rw [unitSlope_extendTop_natCast]
@@ -121,11 +118,11 @@ theorem isConvexSeq_extendTop_iff : IsConvexSeq (extendTop h) ↔ IsConvexSeq h 
       conv_lhs => rw [← Int.toNat_of_nonneg hb0]
       rw [unitSlope_extendTop_natCast]
     rw [hua, hub]
-    refine hc.monotoneOn (mem_finiteSet.2 ?_) (mem_finiteSet.2 ?_) (Int.toNat_le_toNat hab)
+    refine hc.monotoneOn (mem_finiteSupport.2 ?_) (mem_finiteSupport.2 ?_) (Int.toNat_le_toNat hab)
     · rw [← extendTop_of_nonneg h ha0]
-      exact mem_finiteSet.1 ha
+      exact mem_finiteSupport.1 ha
     · rw [← extendTop_of_nonneg h hb0]
-      exact mem_finiteSet.1 hb
+      exact mem_finiteSupport.1 hb
 
 /-- Convex minorants transport along the extension. -/
 theorem isConvexMinorant_extendTop_iff :
@@ -187,8 +184,8 @@ theorem isConvexSeq_affine_int (y σ : ℝ) :
     rw [← WithTop.coe_add, WithTop.coe_inj, Order.succ_eq_add_one]
     push_cast
     ring
-  have hfs : finiteSet (fun k : ℤ ↦ ((y + σ * k : ℝ) : WithTop ℝ)) = Set.univ :=
-    Set.eq_univ_of_forall fun _ ↦ mem_finiteSet.2 WithTop.coe_ne_top
+  have hfs : finiteSupport (fun k : ℤ ↦ ((y + σ * k : ℝ) : WithTop ℝ)) = Set.univ :=
+    Set.eq_univ_of_forall fun _ ↦ mem_finiteSupport.2 WithTop.coe_ne_top
   exact ⟨by rw [hfs]; exact Set.ordConnected_univ, fun a _ b _ _ ↦ by rw [hu, hu]⟩
 
 /-- **A convex minorant exists exactly when the points lie on or above a single line.** The line is
@@ -238,8 +235,7 @@ theorem exists_isConvexMinorant_iff_exists_line {v : ℤ → WithTop ℝ} :
           exact absurd hx hi
       have hgk : g k = ⊤ := by
         by_contra hc
-        exact (mem_finiteSet.1 (hgc.ordConnected.out (mem_finiteSet.2 hc) (mem_finiteSet.2 hi)
-          ⟨by omega, by omega⟩)) hgm
+        exact (hgc.ne_top_of_le_of_le hc hi (by omega) (by omega)) hgm
       rw [htopv k hgk]
       exact le_top
     by_cases hgk : g k = ⊤
@@ -252,7 +248,7 @@ theorem exists_isConvexMinorant_iff_exists_line {v : ℤ → WithTop ℝ} :
       · rw [hsdef, if_pos hus, ← hsm, WithTop.untop₀_coe]
       · rw [hsdef, if_neg hus]
         have hgm : g (i - 1) ≠ ⊤ := fun hx ↦ husm (unitSlope_eq_top_iff.2 (Or.inl hx))
-        have hmono := hgc.monotoneOn (mem_finiteSet.2 hgm) (mem_finiteSet.2 hi) (by omega)
+        have hmono := hgc.monotoneOn (mem_finiteSupport.2 hgm) (mem_finiteSupport.2 hi) (by omega)
         have hfin := WithTop.untop₀_le_untop₀ hus hmono
         rw [← hsm] at hfin
         simpa using hfin
@@ -291,46 +287,6 @@ theorem exists_isConvexMinorant_iff_exists_line {v : ℤ → WithTop ℝ} :
       rw [← hB, WithTop.coe_le_coe, hs', ← hu]
       simp only [WithTop.untop₀_coe]
       nlinarith [hbound]
-
-/-- A `ℤ`-indexed polygon is `⊤` to the left of every point. -/
-theorem IsNewtonPolygonOf.eq_top_of_forall_lt {v h : ℤ → WithTop ℝ} (hh : IsNewtonPolygonOf v h)
-    {k : ℤ} (hk : ∀ j ≤ k, v j = ⊤) : h k = ⊤ := by
-  obtain ⟨y, s, hline⟩ := exists_isConvexMinorant_iff_exists_line.1 ⟨h, hh.isConvexMinorant⟩
-  have key : ∀ c : ℝ, y + s * k ≤ c → ((c : ℝ) : WithTop ℝ) ≤ h k := by
-    intro c hc
-    have hconv : IsConvexSeq
-        (fun j : ℤ ↦ ((c + (s - (c - (y + s * k))) * ((j : ℝ) - k) : ℝ) : WithTop ℝ)) := by
-      have heq : (fun j : ℤ ↦ ((c + (s - (c - (y + s * k))) * ((j : ℝ) - k) : ℝ) : WithTop ℝ))
-          = fun j : ℤ ↦ (((c - (s - (c - (y + s * k))) * k)
-            + (s - (c - (y + s * k))) * j : ℝ) : WithTop ℝ) := by
-        funext j
-        congr 1
-        ring
-      rw [heq]
-      exact isConvexSeq_affine_int _ _
-    have hmin : ∀ j : ℤ,
-        ((c + (s - (c - (y + s * k))) * ((j : ℝ) - k) : ℝ) : WithTop ℝ) ≤ v j := by
-      intro j
-      rcases le_or_gt j k with hj | hj
-      · rw [hk j hj]
-        exact le_top
-      refine le_trans ?_ (hline j)
-      rw [WithTop.coe_le_coe]
-      have h1 : (1 : ℝ) ≤ (j : ℝ) - k := by
-        have : (k : ℝ) + 1 ≤ (j : ℝ) := by
-          have : k + 1 ≤ j := by omega
-          exact_mod_cast this
-        linarith
-      nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ c - (y + s * k))
-        (by linarith : (0 : ℝ) ≤ (j : ℝ) - k - 1)]
-    have hge := hh.greatest _ hconv hmin k
-    simpa using hge
-  by_contra hne
-  obtain ⟨b, hb⟩ := WithTop.ne_top_iff_exists.1 hne
-  have hmax := key (max (b + 1) (y + s * k)) (le_max_right _ _)
-  rw [← hb, WithTop.coe_le_coe] at hmax
-  have : b + 1 ≤ max (b + 1) (y + s * k) := le_max_left _ _
-  linarith
 
 /-- The pointwise two-sided slope condition does not suffice on `ℤ`: `v k = -|k|` has its slopes
 bounded below to the right and above to the left from every point, and no convex minorant. -/

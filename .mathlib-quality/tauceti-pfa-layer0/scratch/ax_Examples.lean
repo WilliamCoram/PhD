@@ -1,0 +1,22 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Examples
+#print axioms NormedRing.unitClosedBall_padic
+#print axioms NormedRing.ideal_padic_eq_openUnitBallIdeal
+#print axioms NormedRing.nonempty_residueRing_padic_equiv_zmod
+#print axioms NormedRing.norm_zpow_mul_mem_Ioc_iff
+#print axioms NormedRing.not_isTate_padicInt
+#print axioms NormedRing.norm_tsum_pow_padicInt
+#print axioms NormedRing.norm_tsum_pow_padicInt_sub_one
+#print axioms NormedRing.exists_norm_p_lt_norm_lt_one_padicComplex
+#print axioms NormedRing.exists_zpowCeil_norm_ne_padicComplex
+#print axioms NormedRing.ideal_padicComplex_ne_openUnitBallIdeal
+#print axioms NormedRing.isPowerBounded_int
+#print axioms NormedRing.norm_two_int
+#print axioms NormedRing.not_neBot_nhdsNE_zero_int
+#print axioms L1Pair
+#print axioms L1Pair.addGroupNorm
+#print axioms L1Pair.norm_def
+#print axioms L1Pair.norm_mul_le
+#print axioms L1Pair.oneSubTwoX
+#print axioms L1Pair.oneSubTwoX_sq
+#print axioms L1Pair.norm_oneSubTwoX
+#print axioms L1Pair.isPowerBounded_oneSubTwoX

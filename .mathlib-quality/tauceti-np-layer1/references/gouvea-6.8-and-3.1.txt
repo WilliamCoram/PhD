@@ -1,0 +1,619 @@
+
+----- Gouvea PDF p.58 -----
+3T h e p-adic Numbers
+Having built our foundation, we can now apply the general theory to the
+speciﬁc case of the ﬁeld Q of rational numbers. Extending our scope to
+include all ﬁelds of algebraic numbers (i.e., ﬁnite extensions ofQ), or even
+to include what the experts call “global ﬁelds” in general, would not be
+very hard. Nevertheless, we have preferred to stick, at ﬁrst, to the most
+concrete example available. In a later chapter, we will consider some aspects
+of the problem of extending valuations fromQ to larger ﬁelds. More details
+about the theory of valuations on global ﬁelds can be found in several of the
+references.
+3.1 Absolute Values on Q
+We have already found a few examples of absolute values on the ﬁeldQ of
+rational numbers. The next step will be to show that these are essentially
+all the possible absolute values; for that we will need to introduce a reﬁned
+notion of what it means for two absolute values to be “the same.” Up to
+that notion of equivalence, we will be able to show that the absolute values
+we have are the complete list of possible absolute values onQ. Finally, we
+will prove theproduct formulaas an initial example of how all the absolute
+values work together in the arithmetic ofQ.
+We begin by recording what has been achieved so far, namely that we
+have constructed the following absolute values on the ﬁeldQ:
+• the trivial absolute value;
+• the “usual” absolute value|| ∞, which we have called the “absolute value
+at inﬁnity,” and which is associated to the real numbers;
+• for each primep,t h ep-adic absolute value|| p.
+Notice that, except for the trivial absolute value (which we will tend to
+ignore), we have written all of these in the form|| p,w h e r ep is either a
+prime or∞. It turns out to be convenient to think of the symbol∞ as some
+sort of prime number inZ, and refer to it as “the inﬁnite prime,” and to
+the corresponding absolute value as the “∞-adic” absolute value. This will
+allow us to say things like “|| p for all primes p ≤∞ .” Though there are
+© Springer Nature Switzerland AG 2020  
+F
+. Q. Gouvêa, p-adic Numbers, Universitext, https://doi.org/10.1007/978-3-030-47295-5_  3
+53
+----- Gouvea PDF p.59 -----
+54 3 The p-adic Numbers
+some reasons1 for doing this, at this point we will use it only as a notational
+convenience.
+To be able to state our main theorem in this section, we must ﬁrst make
+a good deﬁnition of when two absolute values are “the same.” The main idea
+here is that we use absolute values on a ﬁeldk to introduce a topology (open
+and closed sets, connectedness, etc.) onk. So it is reasonable to deﬁne:
+Deﬁnition 3.1.1 Two absolute values || 1 and || 2 on a ﬁeld k are called
+equivalent if they deﬁne the same topology onk, that is, if every set that is
+open with respect to one is also open with respect to the other.
+This is easier to say than to check, so we had better ﬁnd a more accessible
+criterion. Noticeﬁrstthat thefact thatasequ enceconvergescanbe expressed
+in terms of open sets, and so equivalent absolute values will have the same
+convergent sequences.
+Lemma 3.1.2 Let k b eaﬁ e l dw i t ha na b s o l u t ev a l u e|| . The following are
+equivalent:
+i) lim
+n→∞
+xn = a.
+ii) Any open set containinga also contains all but ﬁnitely many of thexn.
+(This lemma serves also as an excuse to remind the reader what it means for
+a sequence to converge.)
+Proof: Assume (ii). Since an open ball B(a,ε) centered ata is an open
+set, all but ﬁnitely manyxn will be in the open ball, and so there is anN
+such that n ≥ N implies a ∈ B(a,ε). Therefore for any ε an N such that
+n ≥ N implies |x−a| <ε , i.e.,xn → a.
+Conversely, supposexn → a and letU be an open set containinga.S i n c e
+U is open there exists anr such thatB(a,r) ⊂ U. Therefore there is anN
+such that |x − a| <r for all n ≥ N. Hence for all but ﬁnitely manyn we
+have xn ∈ B(a,r) ⊂ U.
+This gives a deﬁnition of convergent sequence (in a valued ﬁeld) in terms
+of open sets. Hence if two absolute values deﬁne the same open sets they
+will also deﬁne the same convergent sequences. This is the ﬁrst of several
+equivalent ways to characterize equivalent of absolute values.
+1The reasons hinge on the close connection between primes and absolute values that
+we are about to establish. If all the other absolute values correspond to primes, then so
+should the usual absolute value. As to why it should be called theinﬁnite prime, that
+is far less clear. In fact, John H. Conway has been heard to argue quite vigorously that
+the “usual” absolute value should be attached to the “prime”−1, and this does seem to
+make more sense. (Think of the±1 that appears in prime factorizations.) Unfortunately,
+number theorists are too used to talking of “primes at inﬁnity” for this to change easily,
+and we have preferred to go along with convention.
+----- Gouvea PDF p.60 -----
+3.1 Absolute Values on Q 55
+Proposition 3.1.3 Let || 1 and || 2 be absolute values on a ﬁeld k.T h e
+following statements are equivalent.
+i) || 1 and || 2 are equivalent absolute values.
+ii) For any sequence(xn) in k we have xn → a with respect to|| 1 if and
+only ifxn → a with respect to|| 2.
+iii) For any x ∈ k we have|x|1 < 1 if and only if|x|2 < 1.
+iv) There exists a positive real numberα such that for everyx ∈ k we have
+|x|1 = |x|α
+2 .
+Proof: We follow the usual method of proving a circle of implications.
+• First, suppose (i), i.e., that || 1 and || 2 are equivalent. By the lemma,
+any sequence that converges with respect to one absolute value must also
+converge in the other, which is (ii).
+• Suppose (ii). Given any x ∈ k, it is easy to see that lim
+n→∞
+xn =0w i t h
+respect to the topology induced by an absolute value|| if and only if
+|x| < 1. This gives (iii).
+• We leave it to the reader to prove that (iii) implies (iv), not because it is
+easy, but because it is the hardest part of the theorem, and the convoluted
+argument that one ends up resorting to can only be appreciated after one
+has become convinced that easier methods don’t work. The next problem
+includes some hints and a complete solution is in AppendixB.
+• Finally, if we assume (iv), we get that
+|x−a|1 <r ⇐⇒ |x−a|α
+2 <r ⇐⇒ |x−a|2 <r 1/α,
+so that any open ball with respect to|| 1 is also an open ball (albeit of
+diﬀerent radius) with respect to || 2. This is enough to show that the
+topologies deﬁned by the two absolute values are identical.
+Problem 72 Prove the missing step, i.e., that (iii)=⇒(iv). The ﬁrst hurdle is ﬁnding
+the numberα. For that, just choose any appropriatex0 and chooseα to be the unique
+real number that will make|x0|1 = |x0|α
+2 . The proof will be done if you can show that
+the same equation will hold for everyx ∈ k;i ti sh e r et h a ty o uh a v et oﬁ n daw a yt o
+use condition (iii). (This is quite hard, but worth a try. The argument suggested in
+Appendix B is quite sophisticated, and it will be hard to understand why it is needed
+unless some eﬀort has been expended to try to do it in an easier way.)
+----- Gouvea PDF p.61 -----
+56 3 The p-adic Numbers
+Problem 73 Let || 1 and || 2 be two absolute values on a ﬁeldk.I fe v e r yo p e nb a l l
+with respect to one of these is also an open ball with respect to the other, show that
+the induced topologies are identical, i.e., that every set that is open with respect to
+one is open with respect to the other.
+Problem 74 Show that we can add the following condition to the list in the propo-
+sition:
+v)f o ra n yx ∈ k,w eh a v e|x|1 ≤ 1 if and only if|x|2 ≤ 1.
+Problem 75 Suppose that || is an absolute value that is equivalent to the trivial
+absolute value. Must it be the trivial absolute value? Do we need to change the
+deﬁnition of “nontrivial”?
+Problem 76 Show that ifp and q are two diﬀerent primes, thep-adic and theq-adic
+absolute values are not equivalent. Do the same whenp is a prime andq = ∞.
+Problem 77 Show that in general a non-archimedean absolute value cannot be equiv-
+alent to an archimedean absolute value.
+As an example, recall that we considered, in Problem 39, an absolute
+value deﬁned by
+|x| = c−vp (x),
+where c> 1 was a real number. Now we can check that this is equivalent to
+the p-adic absolute value—just chooseα so that cα = p. W ew i l ls e el a t e r
+that the choice c = p is dictated by “global” considerations (namely, the
+product formula).
+The main theorem in this section says that we have already found all the
+absolute values onQ.
+Theorem 3.1.4 (Ostrowski)Every non-trivial absolute value onQ is equiv-
+alent to one of the absolute values|| p, where eitherp is a prime number or
+p = ∞.
+Proof: Let || be a non-trivial absolute value onQ. We will consider the
+possible cases.
+a) Suppose, ﬁrst, that|| is archimedean. We want to show that it is equiva-
+lent to the “usual” (∞-adic) absolute value.
+Let n0 be the least positive integer for which|n0| > 1 (there has to be
+one, because otherwise|| would be non-archimedean). Now of course we can
+ﬁnd a positive real numberα so that
+|n0| = nα
+0.
+(Finding a formula forα is an easy exercise on logarithms.) We claim that
+this α will do, that is, that it will realize the equivalence between|| and || ∞.
+This means that we want to prove that for everyx ∈ Q we have|x| = |x|α
+∞.
+----- Gouvea PDF p.62 -----
+3.1 Absolute Values on Q 57
+Given the known properties of absolute values, this will follow if we know it
+for positive integers, that is, if we show that|n| = nα for any positive integer
+n.( C h e c kt h i s ! )
+We know that the equality holds forn = n0. To prove it in general, we
+use a little trick. Take an arbitrary integern, and write “in basen0,” i.e., in
+the form
+n = a0 +a1n0 +a2n2
+0 +··· +aknk
+0,
+with 0 ≤ ai ≤ n0 − 1a n dak ⁄= 0. Notice that k is determined by the
+inequality nk
+0 ≤ n<n k+1
+0 ,w h i c hs a y st h a t
+k =
+⌊log n
+log n0
+⌋
+,
+where ⌊x⌋denotes the “ﬂoor” ofx, that is, the largest integer that is less
+than or equal tox. Now take absolute values. We get
+|n| = |a0 +a1n0 +a2n2
+0 +··· +aknk
+0|
+≤| a0|+|a1|nα
+0 +|a2|n2α
+0 +··· +|ak|nkα
+0 .
+Since we chosen0 to be thesmallest integer whose absolute value was greater
+than 1, we know that|ai|≤ 1, so we get
+|n|≤ 1+n α
+0 +n2α
+0 +··· +nkα
+0
+= nkα
+0
+(
+1+n −α
+0 +n−2α
+0 +··· +n−kα
+0
+)
+= nkα
+0
+k∑
+i=0
+n−iα
+0
+≤ nkα
+0
+∞∑
+i=0
+n−iα
+0
+= nkα
+0
+nα
+0
+nα
+0 −1.
+If we setC = nα
+0/(nα
+0 −1) (which is, the reader will note, a positive number),
+we can read this as saying that
+|n|≤ Cnkα
+0 ≤ Cnα.
+Now we use a dirty trick. This formula applies for everyn (since the one we
+chose was arbitrary); applying it to an integer of the formnN we get
+|nN|≤ CnNα
+----- Gouvea PDF p.218 -----
+6.8 On to Cp 215
+n
+ vp(n)
+ vp(πn
+n )
+n =1 ,...,p −1
+ 0
+ n
+p−1
+n = p
+ 1
+ p
+p−1 −1= 1
+p−1
+n = p+1,...,2 p−1
+ 0
+ n
+p−1
+n =2 p
+ 1
+ 2p
+p−1 −1=1+ 2
+p−1
+...
+ ...
+ ...
+n = p2
+ 2
+ p2
+p−1 −2=p −1+ 1
+p−1
+Table 6.1: Computingvp(πn/n)
+6.8 On to Cp
+We now want to go on to consider the algebraic closure
+Qp in earnest. We
+have already constructed its absolute value, and the next order of business is
+to show that it isnot complete with respect to this absolute value. We will
+then go to its completion, of course, and we will be able to prove that the
+completion is algebraically closed.
+To do all that, we need to know a little more about the algebraic closure,
+and we begin by proving a few useful facts. The ﬁrst of these is known as
+“Krasner’s Lemma.” To be able to state it we need to remind ourselves of
+what it means for two elements of
+Qp to be “conjugate.” This is a concept
+that really comes from Galois theory, but we state it here in a minimalistic
+fashion.
+Deﬁnition 6.8.1 Let K be a subﬁeld of
+Qp. Two elements a and a′of
+ Qp
+are calledconjugate over K when they are roots of the same monic irreducible
+polynomial with coeﬃcients in K.
+As we have pointed out above, an equivalent way of saying this is to
+say that two elements are conjugate when there exists an automorphism
+σ :
+ Qp −→
+Qp which induces the identity map onK and sends a to a′.I t
+----- Gouvea PDF p.219 -----
+216 6 Vector Spaces and Field Extensions
+is clear, from either characterization, that conjugate elements have the same
+absolute value. (Yes? Good.)
+It is worth pointing out that this deﬁnition has nothing “p-adic” about it:
+it works just as well for an arbitrary ﬁeldK of characteristic zero, provided
+we replace
+Qp by an algebraic closure ofK.
+What Krasner’s Lemma says is that if an elementb is “close enough” to
+a (what this means is deﬁned by the statement of the lemma, in terms of the
+conjugates ofa), thena belongs to the ﬁeld generated byb. Perhaps we can
+use the description “b is more complicated thana” to mean that adjoiningb
+gives a ﬁeld which contains the ﬁeld generated bya. In that language, the
+lemma says thatb can only be “very close” toa if it is more complicated than
+a. (Thinking this way makes Krasner’s result resemble standard theorems in
+diophantine approximation.)
+This is a somewhat surprising conclusion, since to say that the ﬁeld gen-
+erated bya is contained in the ﬁeld generated byb amounts to saying that
+a c a nb ew r i t t e na sap o l y n o m i a li nb. Viewed at from this angle, Krasner’s
+Lemma looks like the prototypicalp-adic theorem: it deduces an algebraic
+fact (a can be written as a polynomial inb)f r o ma na n a l y t i cf a c t(b is very
+close toa).
+Here is the precise statement, where we have taken care to be very general
+in order to be able to use the theorem at a crucial juncture below. The reader
+should feel free to replace “K”b y“Qp” everywhere in this and the following
+result if the added generality proves to be a hindrance.
+Theorem 6.8.2 (Krasner’s Lemma)Let K be a non-archimedean com-
+plete valued ﬁeld of characteristic zero, and leta and b be elements of the
+algebraic closure ofK.L e ta1 = a, a2,...,a n be the conjugates ofa over K.
+Suppose thatb is closer toa than any of the conjugates ofa, i.e.,
+|b−a| < |a−ai|
+for i =2 , 3,...,n .T h e nK(a) ⊂ K(b).
+Proof: This is short and sweet, but uses ﬁeld theory a bit more seriously
+than other results we have proved. LetL = K(b) and suppose the theorem
+is false, that is, thata ⁄∈L. Well, then look atL(a) (which, remember, is
+the smallest extension ofL which containsa). Since we are assuming that
+a ⁄∈L, the degreem =[ L(a): L] is bigger than one. Now, there must be
+m homomorphisms σ : L(a) −→
+K which are the identity onL (and senda
+to one of its conjugates, of course). There is at least one suchσ for which
+σ(a) ⁄=a (because if σ(a)= a then σ is the identity on L(a), and we’re
+assuming that there’s at least one otherσ besides the identity); call itσ0.
+Since we know, by the uniqueness of the extension of an absolute value, that
+|σ(x)| = |x| for anyσ and anyx ∈
+ K,w eh a v e
+|σ0(b)−σ0(a)| = |b−a|.
+----- Gouvea PDF p.220 -----
+6.8 On to Cp 217
+But σ0 ﬁxes L,a n db is inL,s oσ0(b)= b, and the last equality now says
+|b−σ0(a)| = |b−a|.
+But then
+|a−σ0(a)|≤ max{|a−b|,|b−σ0(a)|} =m a x{|a−b|,|b−a|} = |b−a|,
+and that’s not allowed, since our assumption was thatb was closer toa than
+any of its conjugates, one of which isσ0(a). The contradiction shows that
+our assumption was wrong, that is, thata does belong toL,a n dt h a ts h o w s
+that K(a) ⊂ K(b).
+Problem 279 Use Krasner’s Lemma to give another proof that the ﬁeldQp(ζp) ob-
+tained by adjoining ap-th root of unity contains a(p− 1)-st root of−p.
+A really important corollary of Krasner’s Lemma tells us that if we have
+a monic irreducible polynomial f(X), then any polynomial which is close
+enough to our f(X) shares two main properties off(X): it is irreducible,
+and it has a root in the ﬁeld extension determined by a root off(X). How
+close is “close enough” may depend on the speciﬁcf(X), of course. Here’s
+the precise statement.
+Corollary 6.8.3 Let K be a non-archimedean complete valued ﬁeld of char-
+acteristic zero. Let
+f(X)= Xn +an−1Xn−1 +··· +a1X +a0 ∈ K[X]
+be a monic irreducible polynomial of degreen with coeﬃcients inK,l e tλ be
+ar o o to ff(X),a n dl e tL = K(λ) be the extension ofK obtained by adjoining
+that root. Then there exists a real numberε> 0 such that the following holds:
+• If g(X)= Xn +bn−1Xn−1 +··· +b1X +b0 is any monic polynomial
+of degreen for which we have
+|ai −bi| <ε for all i =0 , 1,...,n −1,
+then g(X) is irreducible overK and has a root inL.
+Proof: The proof (which is based on the one given in[3]) has two parts.
+First, we establish that under certain conditions the conclusion holds, and
+then we show that we can chooseε so that the conditions must hold. We use
+the notations in the theorem, soλ is a root off(X)a n dL = K(λ). Since f
+is irreducible we have [L: K]= n.
+Let λ1 = λ, λ2,...,λ n be the roots off(X)i n
+K, and let
+r =m i n
+i⁄=j
+|λi −λj|.
+----- Gouvea PDF p.221 -----
+218 6 Vector Spaces and Field Extensions
+Let g(X) be as in the statement: a monic polynomial of degree n.L e t
+μ1,μ 2,...,μ n be the roots (listed with multiplicities, of course) ofg(X)i n
+K,s ot h a tg(X)= ∏(X −μj). Let
+D =
+∏
+i
+g(λi)=
+∏
+i,j
+(λi −μj).
+Claim 1: If|D| <r n2
+,t h e ng(X) is irreducible overK and has a root in
+L = K(λ).
+Proof of Claim 1:If |D| <r n2
+, then at least one of then2 factors ofD
+must have absolute value less thanr. In other words, there must be a pair
+(i,j) such that|λi − μj| <r .S i n c er is the minimum distance betweenλi
+and its conjugates, we can apply Krasner’s Lemma to conclude thatK(λi) ⊂
+K(μj). Hence
+[K(μj): K] ≥ [K(λi): K]= n.
+But μj is a root of a polynomial of degreen, so the only way this can happen
+is when the polynomial is irreducible and the degree is exactlyn.S i n c eb o t h
+ﬁelds are then of degreen, and one is contained in the other, they must in
+fact be equal.
+Thus, we have shown thatg(X) is irreducible, and thatK(λi)= K(μj).
+If i = 1, this is what we wanted to prove. If not, there is a little step
+more: there is certainly an automorphism of
+K that sendsλi to λ,a n dt h i s
+automorphism must sendμj to some other rootμ = μj1 of g(X). Applying
+the automorphism to the equalityK(λi)= K(μj)g i v e sL = K(λ)= K(μ),
+so that g(X)h a sar o o tμ that belongs to L, which is what we wanted to
+prove.
+Claim 2: There exists a real numberε> 0 such that if|ai −bi| <ε ,t h e n
+|D| <r n2
+.
+P r o o fo fC l a i m2 :We leave this one to the reader. It is a matter of
+expressing howD depends on the coeﬃcients of the polynomials involved.
+Problem 280 Prove “Claim 2.” Suggestion: try to show that the function that maps
+(a0,a 1,...,a n−1,b 0,b 1,...,b n−1) ↦→D
+is a continuous function. Why does this do the trick?
+Problem 281 (For those conﬁdent of their abstract algebra) In the last two results
+we imposed a litany of conditions on our ﬁeld: “non-archimedean complete valued ﬁeld
+of characteristic zero.” Which of these conditions are seriously needed? Are there
+weaker forms of these results which are valid in more generality?
+One way of grasping what the corollarysays is to think of it as saying that
+at least some aspect of the “root structure” of a polynomial varies “continu-
+ously” as a function of the coeﬃcients of the polynomial. Speciﬁcally, it says
+----- Gouvea PDF p.222 -----
+6.8 On to Cp 219
+(or, to be precise, its proof shows) that when two irreducible polynomials are
+“close enough” (in the sense that the coeﬃcients are close) there will be a
+root of one “close” to any root of the other. The next problem gives a result
+in the same spirit.
+Problem 282 The point of this problem is to state (and have the reader prove) a
+version of the statement that “the roots of a polynomial are continuous functions of the
+coeﬃcients.” For this, letf (X)= ∑aiXi be a polynomial of degreen whose roots
+in
+ Qp are all distinct. Show that given anε> 0 there exists aδ> 0 such that for any
+other polynomialg(X)= ∑biXi of degreen such that|ai−bi| <δ fori =0 , 1,...,n
+and every rootλ of f (X) there exists exactly one rootμ of g(X) satisfying |μ−λ| <ε .
+(Ooﬀ! That’s quite a mouthful!)
+Problem 283 Is the hypothesis (in both the corollary and the previous problem) that
+the polynomials have the same degree really necessary?
+Problem 284 Is the “continuity of the roots as functions of the coeﬃcients” true for
+polynomials with real and/or complex coeﬃcients?
+We now proceed to the big result in this section.
+Theorem 6.8.4 The algebraic closure
+Qp is not complete with respect to the
+(extended) p-adic absolute value.
+Proof: Proving the theorem is going to require us to come up with a
+Cauchy sequence in
+Qp which does not converge. Since ﬁnite extensions of
+Qp are complete, this sequence must involve numbers from bigger and bigger
+extensions as it proceeds (because otherwise we could ﬁnd a ﬁnite extension
+containing all the terms of the sequence, and it would have to converge). So
+this is going to be a complicated sequence!
+In fact, it is going to be an inﬁnite series whose general term tends to zero,
+but which does not converge. That is good enough, of course, since we’ve
+already shown that the partial sums of such a series form a Cauchy sequence.
+We’ll construct our example slowly and carefully, in the hope that no one
+gets lost on the way. Each term in our series will belong to anunramiﬁed
+extension ofQp, so that our example will actually show that the unionQunr
+p
+of all the unramiﬁed extensions ofQp is already not a complete ﬁeld.
+Enough preliminaries: here goes. Remember that one gets unramiﬁed
+extensions ofQp by adjoining roots of unity of order prime top.W eb e g i nb y
+putting together a large list of these. Choose integersf0,f 1,f 2,... such that
+fi <f i+1 and fi|fi+1. Notice that thefi will get arbitrarily large asi grows,
+since fi+1 ≥ 2fi.F o re a c hi,l e tmi = pfi −1 and letζi be a primitivemi-th
+root of unity, so thatQp(ζi) is the unique unramiﬁed extension of degreefi.
+Now construct the series ∞∑
+i=0
+ζi pi.
+----- Gouvea PDF p.223 -----
+220 6 Vector Spaces and Field Extensions
+The partial sums of this series clearly form a Cauchy sequence in
+Qp (and
+in fact even inQunr
+p ). We want to prove that this sequence does not have a
+limit in
+Qp.
+Well, suppose it did, and call the limitc ∈
+ Qp.W h a t e v e r i t i s ,c must
+be a root of some irreducible polynomial over Qp, since it is an element
+of the algebraic closure. Say that this polynomial has degree d,s ot h a t
+[Qp(c): Qp]= d.
+Now we want to use Corollary6.5.6. We have
+c = ζ0 +ζ1p+ζ2p2 +...,
+so c ≡ ζ0 (mod p). By the Corollary, this implies Qp(ζ0) ⊂ Qp(c), which
+implies d =[ Qp(c): Qp] ≥ [Qp(ζ0): Qp]= f0.
+Now letc1 =( c−ζ0)/p.S i n c eζ0 ∈ Qp(c), we havec1 ∈ Qp(c) as well. But
+clearly c1 ≡ ζ1 (mod p). Using the Corollary again we getQp(ζ1) ⊂ Qp(c)
+and henced ≥ f1.
+Continuing this way (or, if you prefer, by induction), we getd>f i for all
+i, which is impossible becausefi →∞ as i grows.
+In fact, since all theζi were roots of unity of order prime top,w eh a v e
+also proved:
+Theorem 6.8.5 The maximal unramiﬁed extensionQunr
+p of Qp,o b t a i n e db y
+adjoining all the roots of unity of order prime top, is not complete with
+respect to the (extended)p-adic absolute value.
+Notice that our proofhas constructedan explicit element that is transcen-
+dental overQp. One can use the basic idea of the proof to obtain a general
+method for showing that the sums of certain series are transcendental.
+Problem 285 Explain the statement: “the expression of cn as a series is actually
+its p-adic expansion.” Does this observation make the proof/construction easier to
+understand?
+Well, “c’est la vie.” Since
+ Qp is not complete, we need to construct a
+completion. This is done exactly as in the case ofQp, by playing with the
+ring of all Cauchy sequences in
+Qp. (In fact, our construction in Chapter3
+clearly works in utter generality.) The upshot is the following:
+Proposition 6.8.6 There exists a ﬁeldCp and an absolute value|| on Cp
+such that:
+• Cp contains
+ Qp, and the restriction of|| to
+ Qp coincides with thep-adic
+absolute value;
+• Cp is complete with respect to|| ;a n d
+•
+ Qp is dense inCp.
+----- Gouvea PDF p.224 -----
+6.8 On to Cp 221
+Recall that whenever we have a convergent sequencexn → x ⁄= 0 in a
+non-archimedean ﬁeld, there exists an N such that |xn| = |x| for n ≥ N
+(this is Lemma3.2.10, except that we are saying that it works for any non-
+archimedeanﬁeld...whichitclearlydoes).Thismeansthatthesetofpossible
+absolute values inCp is exactly the same as in
+Qp.I no t h e rw o r d s ,
+Proposition 6.8.7 If x ∈ Cp, x ⁄=0, then there exists a rational number
+v ∈ Q such that |x| = p−v. In other words, thep-adic valuation vp extends
+to Cp,a n dt h ei m a g eo fC×
+p under vp is Q.
+Problem 286 Convince yourself that the last two propositions are true. (In both
+cases, it is just a matter of seeing that arguments we presented before in the case of
+Qp extend without any diﬃculty.)
+Problem 287 Since we have a valuation, we have a valuation ring, its valuation ideal,
+etc. Give explicit deﬁnitions. Can you describe the residue ﬁeld? Is the valuation ideal
+principal? Does the concept of a uniformizer still make sense?
+We writeO for the valuation ring ofCp, i.e.,
+O = {x ∈ Cp : |x|≤ 1}.
+This contains the valuation ideal
+P = {x ∈ Cp : |x| < 1}.
+As always, O is a local ring.
+Problem 288 Show that any element ofCp c a nb ew r i t t e na sap r o d u c to f( i )ar o o t
+of unity, (ii) a1-unit, and (iii) a fractional power ofp.
+Cp is an enormous ﬁeld, gotten by a series of complicated operations:
+start withQ and thep-adic absolute value, take a completion, take the alge-
+braic closure of the result, and then complete once again! One might wonder
+whether the process will ever stop, i.e., whether one might need to take an-
+other algebraicclosure, and so proceedwithout everending. On the contrary:
+Proposition 6.8.8 Cp is algebraically closed.
+Proof: We give a jazzy proof, and ask the reader to come up with a more
+direct proof in a problem.
+Take an irreducible polynomialf(X) with coeﬃcients inCp.S i n c e
+Qp is
+dense inCp, we can ﬁnd polynomials of the same degree and with coeﬃcients
+in
+ Qp whose coeﬃcients are as close as we like to the coeﬃcients off(X). By
+Corollary 6.8.3, if we choose such anf0(X) with coeﬃcients close enough to
+those off(X), it will be irreducible overCp,a n da fortiori also irreducible
+over
+ Qp.S i n c e
+Qp is algebraically closed, this means thatf0(X) will have
+----- Gouvea PDF p.225 -----
+222 6 Vector Spaces and Field Extensions
+degree one. Sincef(X)a n df0(X) have the same degree, it follows thatf(X)
+has degree one.
+This shows that any irreducible polynomial inCp must be of degree one,
+which means thatCp is algebraically closed.
+Problem 289 Here’s an idea for a more direct proof (which might be technically
+more diﬃcult). Take any polynomialf (X) ∈ Cp [X]; we can assume it has no repeated
+roots (do you see why?). Build a sequence of polynomialsfi(X) ∈
+ Qp[X],a l lo ft h e
+same degree, whose coeﬃcients approach those off (X). Show, using Problem 282,
+that one can choose a root of each of thefi(X) so as to form a Cauchy sequence in
+Qp which converges to a root off (X) in Cp.
+Problem 290 Show thatCp is not locally compact.
+In fact, one can show that any locallycompact (and therefore complete)
+valued ﬁeld of characteristic zero must be isomorphic to eitherR, C,o ra
+ﬁnite extension ofQp.O n ec a ne v en16 start the whole thing from here, i.e.,
+start with a locally compact ﬁeld of characteristic zero,and reconstruct the
+absolute value from the Haar measure on that ﬁeld.
+Let’s conclude with two somewhat surprising remarks. The ﬁrst is this:
+if we ignore the absolute value,Cp is just an algebraically closed ﬁeld of
+characteristic 0. It’s easy to work out that it has the same cardinality as the
+ﬁeld of complex numbers. But there is only one such ﬁeld up to isomorphism!
+Theorem 6.8.9 (Steinitz) Any two uncountable algebraically closed ﬁelds
+with the same characteristic and the same cardinality are isomorphic.
+The idea of the proof is to show that any such ﬁeld is isomorphic to the
+result of starting fromQ or Fp, adjoining a transcendence basis of the right
+cardinality, and then passing to the algebraic closure. (But since the result
+is false for countable algebraically closed ﬁelds, there are subtleties.) The
+isomorphism comes from choosing a bijection between transcendence bases,
+so in fact there are inﬁnitely many distinct isomorphisms, but all of them
+will ﬁx the elements ofQ and all will map algebraic elements to algebraic
+elements. So we can always, if we want to, choose a ﬁeld17 isomorphism
+ϕ : Cp −→ C and use it to identify the algebraic closure ofQ inside Cp
+and the algebraic closure ofQ inside C. This is a very common move in
+applications to algebraic number theory.
+The second surprising remark is that for some applications Cp is still
+too small. It turns out that in applications to functional analysis we often
+want more than just completeness. Instead, we needspherical completeness.
+16Mumbo-jumbo alert: this sentence talks about high-powered stuﬀ which we really
+don’t think our readers know about.
+17Not an isomorphism of valued ﬁelds, of course.
+----- Gouvea PDF p.226 -----
+6.8 On to Cp 223
+Suppose are working in a valued ﬁeldK and we have sequencesan ∈ K,
+rn ∈ R for which we get a nested sequence of closed balls
+B(an,rn):
+B(a1,r 1) ⊃
+ B(a2,r 2) ⊃···⊃
+ B(an,rn) ⊃
+ B(an+1,rn+1) ⊃ ...
+We say that a valued ﬁeldK is spherically complete if any such sequence
+of closed balls has non-empty intersection. IfK is complete and the radii
+rn are a decreasing sequence with lim
+n→∞
+rn = 0, then we can prove that the
+intersection is non-empty. (This is Problem 79.) But if we don’t require
+the radii to tend to zero, it is possible to get empty intersection even ifK
+is complete. Indeed, as the reader has probably guessed, C is spherically
+complete, butCp is not. As a result, for certain applications we need to use
+an even bigger ﬁeld. See[53, III.1] for details and for a construction.

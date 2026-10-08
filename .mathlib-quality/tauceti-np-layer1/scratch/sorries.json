@@ -1,0 +1,1298 @@
+[
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 50,
+  "kind": "lemma",
+  "name": "negLog_zero",
+  "statement": "@[simp] lemma negLog_zero : negLog (0 : Mᵐ⁰) = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 52,
+  "kind": "lemma",
+  "name": "negLog_exp",
+  "statement": "@[simp] lemma negLog_exp (m : M) : negLog (exp m) = ((-m : M) : WithTop M)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 54,
+  "kind": "lemma",
+  "name": "negLog_eq_top",
+  "statement": "@[simp] lemma negLog_eq_top {x : Mᵐ⁰} : negLog x = ⊤ ↔ x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 56,
+  "kind": "lemma",
+  "name": "negLog_one",
+  "statement": "@[simp] lemma negLog_one : negLog (1 : Mᵐ⁰) = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 59,
+  "kind": "lemma",
+  "name": "negLog_eq_coe",
+  "statement": "lemma negLog_eq_coe {x : Mᵐ⁰} {m : M} : negLog x = (m : WithTop M) ↔ x = exp (-m)",
+  "doc": "/-- The characterisation of `negLog`: `negLog x = m` if and only if `x = exp (-m)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 61,
+  "kind": "lemma",
+  "name": "negLog_mul",
+  "statement": "lemma negLog_mul (x y : Mᵐ⁰) : negLog (x * y) = negLog x + negLog y",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 65,
+  "kind": "lemma",
+  "name": "negLog_le_negLog",
+  "statement": "lemma negLog_le_negLog {x y : Mᵐ⁰} : negLog x ≤ negLog y ↔ y ≤ x",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 67,
+  "kind": "lemma",
+  "name": "negLog_lt_negLog",
+  "statement": "lemma negLog_lt_negLog {x y : Mᵐ⁰} : negLog x < negLog y ↔ y < x",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 73,
+  "kind": "def",
+  "name": "orderAddIsoWithTop",
+  "statement": "def orderAddIsoWithTop : (Additive Mᵐ⁰)ᵒᵈ ≃+o WithTop M where",
+  "doc": "/-- The order-and-additive isomorphism `(Additive Mᵐ⁰)ᵒᵈ ≃+o WithTop M` underlying `negLog`.\n`(Additive Mᵐ⁰)ᵒᵈ` is the codomain of `Valuation.toAddValuation` for an `Mᵐ⁰`-valued valuation;\nthis isomorphism turns it into the familiar `WithTop M = M ∪ {∞}`. -/",
+  "sorries": 4
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 81,
+  "kind": "lemma",
+  "name": "orderAddIsoWithTop_apply",
+  "statement": "@[simp] lemma orderAddIsoWithTop_apply (x : (Additive Mᵐ⁰)ᵒᵈ) :\n    orderAddIsoWithTop M x = negLog x",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 95,
+  "kind": "lemma",
+  "name": "mapAddHom'_exp",
+  "statement": "@[simp] lemma mapAddHom'_exp (f : M →+ N) (m : M) : mapAddHom' f (exp m) = exp (f m)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 97,
+  "kind": "lemma",
+  "name": "mapAddHom'_strictMono",
+  "statement": "lemma mapAddHom'_strictMono [Preorder M] [Preorder N] {f : M →+ N} (hf : StrictMono f) :\n    StrictMono (mapAddHom' f)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 101,
+  "kind": "lemma",
+  "name": "negLog_mapAddHom'",
+  "statement": "lemma negLog_mapAddHom' (f : M →+ N) (x : Mᵐ⁰) :\n    negLog (mapAddHom' f x) = WithTop.map f (negLog x)",
+  "doc": "/-- `negLog` is natural in `M`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 114,
+  "kind": "def",
+  "name": "toRealMultZero",
+  "statement": "noncomputable def toRealMultZero : ℝ≥0 →*₀ ℝᵐ⁰ where",
+  "doc": "/-- The order-preserving monoid-with-zero hom `ℝ≥0 →*₀ ℝᵐ⁰` sending `0` to `0` and `x` to\n`exp (log x)`. It is an isomorphism; only strict monotonicity is used. -/",
+  "sorries": 3
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 120,
+  "kind": "lemma",
+  "name": "toRealMultZero_of_ne_zero",
+  "statement": "lemma toRealMultZero_of_ne_zero {x : ℝ≥0} (hx : x ≠ 0) :\n    toRealMultZero x = WithZero.exp (Real.log x)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 123,
+  "kind": "lemma",
+  "name": "toRealMultZero_strictMono",
+  "statement": "lemma toRealMultZero_strictMono : StrictMono toRealMultZero",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 133,
+  "kind": "def",
+  "name": "toNNReal",
+  "statement": "noncomputable def toNNReal {e : ℝ≥0} (he : e ≠ 0) : ℝᵐ⁰ →*₀ ℝ≥0 where",
+  "doc": "/-- The real analogue of `WithZeroMulInt.toNNReal`: the hom `ℝᵐ⁰ →*₀ ℝ≥0` sending `0` to `0` and\n`exp t` to `e ^ t` (an `NNReal.rpow`), for a base `e ≠ 0`. -/",
+  "sorries": 3
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 139,
+  "kind": "lemma",
+  "name": "toNNReal_exp",
+  "statement": "@[simp] lemma toNNReal_exp {e : ℝ≥0} (he : e ≠ 0) (t : ℝ) : toNNReal he (exp t) = e ^ t",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/NegLog.lean",
+  "line": 142,
+  "kind": "lemma",
+  "name": "toNNReal_strictMono",
+  "statement": "lemma toNNReal_strictMono {e : ℝ≥0} (he : 1 < e) :\n    StrictMono (toNNReal (ne_zero_of_lt he))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RatLog.lean",
+  "line": 55,
+  "kind": "lemma",
+  "name": "ratCoeff_eq",
+  "statement": "private lemma ratCoeff_eq (h : ∀ a : M, IsCommensurableWith a₀ a) (ha₀ : a₀ ≠ 0)\n    {m n : ℤ} (hn : 0 < n) (hmn : n • a = m • a₀) : ratCoeff h a = (m : ℚ) / (n : ℚ)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RatLog.lean",
+  "line": 61,
+  "kind": "def",
+  "name": "ratLog",
+  "statement": "noncomputable def ratLog (ha₀ : a₀ < 0) (h : ∀ a : M, IsCommensurableWith a₀ a) :\n    M →+ ℚ where",
+  "doc": "/-- **The `ℚ`-valued logarithm normalised at `a₀`.** If `a₀ < 0` and every element of `M` is\ncommensurable with `a₀`, this is the unique additive hom `M →+ ℚ` sending `a₀` to `-1`. -/",
+  "sorries": 2
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RatLog.lean",
+  "line": 67,
+  "kind": "lemma",
+  "name": "ratLog_eq",
+  "statement": "lemma ratLog_eq (ha₀ : a₀ < 0) (h : ∀ a : M, IsCommensurableWith a₀ a) {m n : ℤ}\n    (hn : 0 < n) (hmn : n • a = m • a₀) : ratLog ha₀ h a = -((m : ℚ) / (n : ℚ))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RatLog.lean",
+  "line": 71,
+  "kind": "lemma",
+  "name": "ratLog_self",
+  "statement": "@[simp] lemma ratLog_self (ha₀ : a₀ < 0) (h : ∀ a : M, IsCommensurableWith a₀ a) :\n    ratLog ha₀ h a₀ = -1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RatLog.lean",
+  "line": 74,
+  "kind": "lemma",
+  "name": "ratLog_strictMono",
+  "statement": "lemma ratLog_strictMono (ha₀ : a₀ < 0) (h : ∀ a : M, IsCommensurableWith a₀ a) :\n    StrictMono (ratLog ha₀ h)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RatLog.lean",
+  "line": 78,
+  "kind": "lemma",
+  "name": "ratLog_unique",
+  "statement": "lemma ratLog_unique (ha₀ : a₀ < 0) (h : ∀ a : M, IsCommensurableWith a₀ a) (g : M →+ ℚ)\n    (hg : g a₀ = -1) : g = ratLog ha₀ h",
+  "doc": "/-- The `ℚ`-valued logarithm is the only additive hom `M →+ ℚ` sending `a₀` to `-1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 57,
+  "kind": "lemma",
+  "name": "addVal_apply",
+  "statement": "@[simp] lemma addVal_apply (v : Valuation R Mᵐ⁰) (x : R) : v.addVal x = negLog (v x)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 59,
+  "kind": "lemma",
+  "name": "addVal_eq_top",
+  "statement": "@[simp] lemma addVal_eq_top {v : Valuation R Mᵐ⁰} {x : R} : v.addVal x = ⊤ ↔ v x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 63,
+  "kind": "lemma",
+  "name": "addVal_eq_coe",
+  "statement": "lemma addVal_eq_coe {v : Valuation R Mᵐ⁰} {x : R} {m : M} :\n    v.addVal x = (m : WithTop M) ↔ v x = exp (-m)",
+  "doc": "/-- The defining property: `v.addVal x = m` if and only if `v x = exp (-m)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 67,
+  "kind": "lemma",
+  "name": "addVal_le_addVal",
+  "statement": "lemma addVal_le_addVal {v : Valuation R Mᵐ⁰} {x y : R} :\n    v.addVal x ≤ v.addVal y ↔ v y ≤ v x",
+  "doc": "/-- The additive valuation reverses the order of the multiplicative one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 71,
+  "kind": "lemma",
+  "name": "addVal_map",
+  "statement": "lemma addVal_map (v : Valuation R Mᵐ⁰) {f : M →+ N} (hf : StrictMono f) (x : R) :\n    (v.map (mapAddHom' f) (mapAddHom'_strictMono hf).monotone).addVal x\n      = WithTop.map f (v.addVal x)",
+  "doc": "/-- Pushing a valuation along `mapAddHom' f` pushes its additive valuation along `f`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 89,
+  "kind": "lemma",
+  "name": "addValValueGroup_apply",
+  "statement": "@[simp] lemma addValValueGroup_apply (x : R) :\n    v.addValValueGroup x = negLog (M := Additive (valueGroup (.ofClass v))) (v.restrict x)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Basic.lean",
+  "line": 93,
+  "kind": "lemma",
+  "name": "addValValueGroup_eq_top",
+  "statement": "@[simp] lemma addValValueGroup_eq_top {x : R} : v.addValValueGroup x = ⊤ ↔ v x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RankOne.lean",
+  "line": 47,
+  "kind": "lemma",
+  "name": "addVal_apply",
+  "statement": "@[simp] lemma addVal_apply (x : R) :\n    addVal v x = negLog (NNReal.toRealMultZero (RankOne.hom v (v.restrict x)))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RankOne.lean",
+  "line": 50,
+  "kind": "lemma",
+  "name": "addVal_zero",
+  "statement": "@[simp] lemma addVal_zero : addVal v 0 = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RankOne.lean",
+  "line": 52,
+  "kind": "lemma",
+  "name": "addVal_eq_top",
+  "statement": "@[simp] lemma addVal_eq_top {x : R} : addVal v x = ⊤ ↔ v x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RankOne.lean",
+  "line": 55,
+  "kind": "lemma",
+  "name": "addVal_apply_of_val_ne_zero",
+  "statement": "lemma addVal_apply_of_val_ne_zero {x : R} (hx : v x ≠ 0) :\n    addVal v x = ((-Real.log (RankOne.hom v (v.restrict x)) : ℝ) : WithTop ℝ)",
+  "doc": "/-- On elements of nonzero valuation the real additive valuation is `-log ‖x‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/RankOne.lean",
+  "line": 61,
+  "kind": "lemma",
+  "name": "addVal_eq_of_hom_eq",
+  "statement": "lemma addVal_eq_of_hom_eq {w : Valuation R Γ₀} [RankOne w]\n    (h : ∀ x, RankOne.hom v (v.restrict x) = RankOne.hom w (w.restrict x)) :\n    addVal v = addVal w",
+  "doc": "/-- The real additive valuation only sees the real-valued absolute value: two rank-one valuations\nwith the same `hom ∘ restrict` (for instance, equivalent valuations with matching `hom`) have the\nsame real additive valuation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 67,
+  "kind": "lemma",
+  "name": "IsCommensurable.val_ne_zero",
+  "statement": "lemma IsCommensurable.val_ne_zero : v π ≠ 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 70,
+  "kind": "lemma",
+  "name": "IsCommensurable.of_forall_eq",
+  "statement": "lemma IsCommensurable.of_forall_eq {w : Valuation R Γ₀} (h : ∀ x, w x = v x) :\n    w.IsCommensurable π",
+  "doc": "/-- Commensurability only depends on the values of the valuation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 75,
+  "kind": "lemma",
+  "name": "IsCommensurable.isNontrivial",
+  "statement": "lemma IsCommensurable.isNontrivial : v.IsNontrivial",
+  "doc": "/-- A valuation with a normalising element is nontrivial. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 81,
+  "kind": "lemma",
+  "name": "coe_commGen",
+  "statement": "@[simp] lemma coe_commGen : ((commGen v π : Γ₀ˣ) : Γ₀) = v π",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 83,
+  "kind": "lemma",
+  "name": "ofMul_commGen_neg",
+  "statement": "lemma ofMul_commGen_neg : Additive.ofMul (commGen v π) < 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 86,
+  "kind": "lemma",
+  "name": "isCommensurableWith_commGen",
+  "statement": "lemma isCommensurableWith_commGen (g : valueGroup (.ofClass v)) :\n    AddCommGroup.IsCommensurableWith (Additive.ofMul (commGen v π)) (Additive.ofMul g)",
+  "doc": "/-- Every element of the value group is commensurable with the normalising element. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 96,
+  "kind": "lemma",
+  "name": "ratLog_strictMono",
+  "statement": "lemma ratLog_strictMono : StrictMono (ratLog v π)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 98,
+  "kind": "lemma",
+  "name": "ratLog_commGen",
+  "statement": "@[simp] lemma ratLog_commGen : ratLog v π (Additive.ofMul (commGen v π)) = -1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 100,
+  "kind": "lemma",
+  "name": "ratLog_eq_of_zsmul",
+  "statement": "lemma ratLog_eq_of_zsmul {g : valueGroup (.ofClass v)} {m n : ℤ} (hn : 0 < n)\n    (hmn : n • Additive.ofMul g = m • Additive.ofMul (commGen v π)) :\n    ratLog v π (Additive.ofMul g) = -((m : ℚ) / (n : ℚ))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 109,
+  "kind": "lemma",
+  "name": "addValQ_apply",
+  "statement": "@[simp] lemma addValQ_apply (x : R) :\n    v.addValQ π x = WithTop.map (ratLog v π) (v.addValValueGroup x)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 112,
+  "kind": "lemma",
+  "name": "addValQ_zero",
+  "statement": "@[simp] lemma addValQ_zero : v.addValQ π 0 = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 114,
+  "kind": "lemma",
+  "name": "addValQ_eq_top",
+  "statement": "@[simp] lemma addValQ_eq_top {x : R} : v.addValQ π x = ⊤ ↔ v x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 117,
+  "kind": "lemma",
+  "name": "addValQ_eq_of_zpow",
+  "statement": "lemma addValQ_eq_of_zpow {x : R} {m n : ℤ} (hx : v x ≠ 0) (hn : 0 < n)\n    (hmn : v x ^ n = v π ^ m) :\n    v.addValQ π x = (((m : ℚ) / (n : ℚ) : ℚ) : WithTop ℚ)",
+  "doc": "/-- **The workhorse.** A witness `v x ^ n = v π ^ m` computes the additive valuation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 122,
+  "kind": "lemma",
+  "name": "addValQ_eq_of_pow_eq_pow",
+  "statement": "lemma addValQ_eq_of_pow_eq_pow {x : R} {m n : ℕ} (hx : v x ≠ 0) (hn : 0 < n)\n    (hmn : v x ^ n = v π ^ m) :\n    v.addValQ π x = (((m : ℚ) / (n : ℚ) : ℚ) : WithTop ℚ)",
+  "doc": "/-- The workhorse with natural exponents. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 126,
+  "kind": "lemma",
+  "name": "addValQ_self",
+  "statement": "@[simp] lemma addValQ_self : v.addValQ π π = 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 128,
+  "kind": "lemma",
+  "name": "addValQ_ne_top",
+  "statement": "lemma addValQ_ne_top {x : R} (hx : v x ≠ 0) : v.addValQ π x ≠ ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 130,
+  "kind": "lemma",
+  "name": "exists_zpow_eq_and_addValQ",
+  "statement": "lemma exists_zpow_eq_and_addValQ {x : R} (hx : v x ≠ 0) :\n    ∃ m n : ℤ, 0 < n ∧ v x ^ n = v π ^ m ∧\n      v.addValQ π x = (((m : ℚ) / (n : ℚ) : ℚ) : WithTop ℚ)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 134,
+  "kind": "lemma",
+  "name": "addValQ_le_addValQ",
+  "statement": "lemma addValQ_le_addValQ {x y : R} : v.addValQ π x ≤ v.addValQ π y ↔ v y ≤ v x",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 138,
+  "kind": "theorem",
+  "name": "addValQ_unique",
+  "statement": "theorem addValQ_unique (w : AddValuation R (WithTop ℚ))\n    (hw : ∀ x y, w x ≤ w y ↔ v y ≤ v x)\n    (hwπ : w π = 1) : w = v.addValQ π",
+  "doc": "/-- **Uniqueness.** An additive valuation into `WithTop ℚ` inducing the same order on values as\n`v` and sending `π` to `1` is `addValQ v π`: the element pins the valuation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 145,
+  "kind": "def",
+  "name": "IsCommensurable.toRankLeOne",
+  "statement": "noncomputable def IsCommensurable.toRankLeOne {e : ℝ≥0} (he : 1 < e) : RankLeOne v where",
+  "doc": "/-- **Rational rank one implies rank ≤ one.** For any base `1 < e`; the resulting norm satisfies\n`‖π‖ = e⁻¹`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 158,
+  "kind": "lemma",
+  "name": "IsCommensurable.toRankOne_hom_restrict",
+  "statement": "lemma IsCommensurable.toRankOne_hom_restrict {e : ℝ≥0} (he : 1 < e) :\n    letI := IsCommensurable.toRankOne v π he\n    RankOne.hom v (v.restrict π) = e⁻¹",
+  "doc": "/-- The rank-one structure of `IsCommensurable.toRankOne` gives the normalising element the\nabsolute value `e⁻¹`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 172,
+  "kind": "theorem",
+  "name": "RankOne.addVal_eq_map_addValQ",
+  "statement": "theorem RankOne.addVal_eq_map_addValQ (x : R) :\n    RankOne.addVal v x =\n      WithTop.map (fun q : ℚ ↦ (q : ℝ) * (-Real.log (RankOne.hom v (v.restrict π))))\n        (v.addValQ π x)",
+  "doc": "/-- **The compatibility square `ℚ → ℝ`.** For a rank-one valuation commensurable at `π`, the real\nadditive valuation `x ↦ -log ‖x‖` is the `ℚ`-valued one rescaled by `-log ‖π‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Commensurable.lean",
+  "line": 179,
+  "kind": "theorem",
+  "name": "RankOne.hom_eq_rpow_addValQ",
+  "statement": "theorem RankOne.hom_eq_rpow_addValQ {x : R} {q : ℚ}\n    (hq : v.addValQ π x = (q : WithTop ℚ)) :\n    ((RankOne.hom v (v.restrict x) : ℝ)) = ((RankOne.hom v (v.restrict π) : ℝ)) ^ (q : ℝ)",
+  "doc": "/-- **`‖x‖ = ‖π‖ ^ q`.** The norm is the normalising element's norm raised to the `ℚ`-valued\nadditive valuation. No base, no factorisation hypothesis. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 48,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.exists_zpow_generator_eq",
+  "statement": "lemma IsRankOneDiscrete.exists_zpow_generator_eq {x : R} (hx : v x ≠ 0) :\n    ∃ k : ℤ, v x = ((generator v ^ k : Γ₀ˣ) : Γ₀)",
+  "doc": "/-- On a discrete valuation every nonzero value is an integer power of the generator. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 53,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.exists_zpow_eq_of_isUniformizer",
+  "statement": "lemma IsRankOneDiscrete.exists_zpow_eq_of_isUniformizer {π : R} (hπ : IsUniformizer v π)\n    {x : R} (hx : v x ≠ 0) : ∃ k : ℤ, v x = v π ^ k",
+  "doc": "/-- On a discrete valuation every nonzero value is an integer power of a uniformiser: the `n = 1`\ncase of commensurability. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 58,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.isCommensurable_of_lt_one",
+  "statement": "lemma IsRankOneDiscrete.isCommensurable_of_lt_one {π : R} (h0 : v π ≠ 0) (h1 : v π < 1) :\n    v.IsCommensurable π",
+  "doc": "/-- A discrete valuation is commensurable at every element of valuation strictly between `0`\nand `1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 63,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.isCommensurable",
+  "statement": "lemma IsRankOneDiscrete.isCommensurable {π : R} (hπ : IsUniformizer v π) :\n    v.IsCommensurable π",
+  "doc": "/-- **`IsRankOneDiscrete ⟹ IsCommensurable` at any uniformiser.** A discrete valuation has\nrational rank one, normalised at a uniformiser. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 72,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.addValZ_apply",
+  "statement": "@[simp] lemma IsRankOneDiscrete.addValZ_apply (x : R) :\n    addValZ v x = negLog (valueGroup₀_equiv_withZeroMulInt v (v.restrict x))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 75,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.addValZ_zero",
+  "statement": "@[simp] lemma IsRankOneDiscrete.addValZ_zero : addValZ v 0 = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 77,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.addValZ_eq_top",
+  "statement": "@[simp] lemma IsRankOneDiscrete.addValZ_eq_top {x : R} : addValZ v x = ⊤ ↔ v x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "IsRankOneDiscrete.addValZ_eq_iff",
+  "statement": "theorem IsRankOneDiscrete.addValZ_eq_iff (x : R) (k : ℤ) :\n    addValZ v x = (k : WithTop ℤ) ↔ v x = ((generator v ^ k : Γ₀ˣ) : Γ₀)",
+  "doc": "/-- The characterisation of the `ℤ`-valued additive valuation by the generator. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 84,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.addValZ_eq_of_zpow",
+  "statement": "lemma IsRankOneDiscrete.addValZ_eq_of_zpow {π : R} (hπ : IsUniformizer v π) {x : R} {k : ℤ}\n    (hk : v x = v π ^ k) : addValZ v x = (k : WithTop ℤ)",
+  "doc": "/-- A witness `v x = v π ^ k` at a uniformiser computes the `ℤ`-valued additive valuation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "IsRankOneDiscrete.addValZ_eq_iff_of_isUniformizer",
+  "statement": "theorem IsRankOneDiscrete.addValZ_eq_iff_of_isUniformizer {π : R} (hπ : IsUniformizer v π)\n    (x : R) (k : ℤ) : addValZ v x = (k : WithTop ℤ) ↔ v x = v π ^ k",
+  "doc": "/-- The characterisation of the `ℤ`-valued additive valuation by a uniformiser. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "IsRankOneDiscrete.addValZ_isUniformizer",
+  "statement": "theorem IsRankOneDiscrete.addValZ_isUniformizer {π : R} (hπ : IsUniformizer v π) :\n    addValZ v π = 1",
+  "doc": "/-- A uniformiser has `ℤ`-valued additive valuation `1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 95,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.addValZ_le_addValZ",
+  "statement": "lemma IsRankOneDiscrete.addValZ_le_addValZ {x y : R} :\n    addValZ v x ≤ addValZ v y ↔ v y ≤ v x",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "addValQ_eq_map_addValZ",
+  "statement": "theorem addValQ_eq_map_addValZ {π : R} (hπ : IsUniformizer v π) [v.IsCommensurable π] (x : R) :\n    v.addValQ π x = WithTop.map (fun n : ℤ ↦ (n : ℚ)) (addValZ v x)",
+  "doc": "/-- **Inclusion `WithTop ℤ → WithTop ℚ`.** For a discrete valuation normalised at a uniformiser,\nthe `ℚ`-valued additive valuation is the `ℤ`-valued one composed with `Int.cast`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 107,
+  "kind": "lemma",
+  "name": "IsRankOneDiscrete.hom_eq_toNNReal_comp",
+  "statement": "lemma IsRankOneDiscrete.hom_eq_toNNReal_comp [RankOne v] {e : ℝ≥0} (he : e ≠ 0)\n    (hgen : RankOne.hom v (generator' v : ValueGroup₀ (.ofClass v)) = e⁻¹) :\n    RankOne.hom v =\n      (WithZeroMulInt.toNNReal he).comp (.ofClass (valueGroup₀_equiv_withZeroMulInt v))",
+  "doc": "/-- **The absolute value is determined by one scalar.** On a discrete valuation the value group is\ninfinite cyclic, so a `→*₀` hom out of it is determined by its value on the generator: if the\ngenerator has absolute value `e⁻¹`, then `RankOne.hom v` is \"`e` to the power\" through\n`valueGroup₀_equiv_withZeroMulInt`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 115,
+  "kind": "theorem",
+  "name": "IsRankOneDiscrete.hom_eq_zpow_neg_addValZ",
+  "statement": "theorem IsRankOneDiscrete.hom_eq_zpow_neg_addValZ [RankOne v] {e : ℝ≥0} (he : e ≠ 0)\n    (hgen : RankOne.hom v (generator' v : ValueGroup₀ (.ofClass v)) = e⁻¹)\n    {x : R} {d : ℤ} (hd : addValZ v x = (d : WithTop ℤ)) :\n    RankOne.hom v (v.restrict x) = e ^ (-d)",
+  "doc": "/-- **The absolute value is the base to the power of minus the `ℤ`-valued additive valuation.**\nIf the generator has absolute value `e⁻¹` and `addValZ v x = d`, then `‖x‖ = e ^ (-d)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Discrete.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "IsRankOneDiscrete.hom_eq_zpow_neg_addValZ_of_isUniformizer",
+  "statement": "theorem IsRankOneDiscrete.hom_eq_zpow_neg_addValZ_of_isUniformizer [RankOne v] {π : R}\n    (hπ : IsUniformizer v π) {e : ℝ≥0} (he : e ≠ 0)\n    (hπe : RankOne.hom v (v.restrict π) = e⁻¹)\n    {x : R} {d : ℤ} (hd : addValZ v x = (d : WithTop ℤ)) :\n    RankOne.hom v (v.restrict x) = e ^ (-d)",
+  "doc": "/-- The same, with the scalar hypothesis read off a uniformiser. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 47,
+  "kind": "lemma",
+  "name": "addVal_apply_of_ne_zero",
+  "statement": "lemma addVal_apply_of_ne_zero {x : L} (hx : x ≠ 0) :\n    addVal v x = ((-Real.log (v.norm x) : ℝ) : WithTop ℝ)",
+  "doc": "/-- On a field, the real additive valuation is literally `x ↦ -log ‖x‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 59,
+  "kind": "lemma",
+  "name": "valuation_norm_eq",
+  "statement": "@[simp] lemma valuation_norm_eq (x : K) : (valuation (K := K)).norm x = ‖x‖",
+  "doc": "/-- The real-valued norm attached to `NormedField.valuation` is just `‖·‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 62,
+  "kind": "lemma",
+  "name": "norm_eq_coe_hom",
+  "statement": "lemma norm_eq_coe_hom (x : K) :\n    ‖x‖ = ((RankOne.hom (valuation (K := K)) ((valuation (K := K)).restrict x) : ℝ≥0) : ℝ)",
+  "doc": "/-- The norm is the rank-one `hom` of the valuation, restricted to its value group. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 70,
+  "kind": "lemma",
+  "name": "normAddVal_zero",
+  "statement": "@[simp] lemma normAddVal_zero : normAddVal K 0 = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 72,
+  "kind": "lemma",
+  "name": "normAddVal_eq_top",
+  "statement": "@[simp] lemma normAddVal_eq_top {x : K} : normAddVal K x = ⊤ ↔ x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 74,
+  "kind": "lemma",
+  "name": "normAddVal_apply_of_ne_zero",
+  "statement": "lemma normAddVal_apply_of_ne_zero {x : K} (hx : x ≠ 0) :\n    normAddVal K x = ((-Real.log ‖x‖ : ℝ) : WithTop ℝ)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 79,
+  "kind": "lemma",
+  "name": "exists_normAddVal_eq_and_norm_eq_exp_neg",
+  "statement": "lemma exists_normAddVal_eq_and_norm_eq_exp_neg {x : K} (hx : x ≠ 0) :\n    ∃ r : ℝ, normAddVal K x = (r : WithTop ℝ) ∧ ‖x‖ = Real.exp (-r)",
+  "doc": "/-- **The defining equivalence**: on a nonzero element the real additive valuation is a real `r`\nwith `‖x‖ = exp (-r)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 82,
+  "kind": "lemma",
+  "name": "normAddVal_le_normAddVal",
+  "statement": "lemma normAddVal_le_normAddVal {x y : K} :\n    normAddVal K x ≤ normAddVal K y ↔ ‖y‖ ≤ ‖x‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "normAddVal_unique",
+  "statement": "theorem normAddVal_unique (w : AddValuation K (WithTop ℝ))\n    (hw : ∀ x : K, x ≠ 0 → ∃ r : ℝ, w x = (r : WithTop ℝ) ∧ ‖x‖ = Real.exp (-r)) :\n    w = normAddVal K",
+  "doc": "/-- **Uniqueness**: `normAddVal K` is the only additive valuation into `WithTop ℝ` satisfying the\ndefining equivalence `‖x‖ = exp (-(w x))` on nonzero elements. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 101,
+  "kind": "lemma",
+  "name": "normAddValZ_zero",
+  "statement": "@[simp] lemma normAddValZ_zero : normAddValZ K 0 = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 103,
+  "kind": "lemma",
+  "name": "normAddValZ_eq_top",
+  "statement": "@[simp] lemma normAddValZ_eq_top {x : K} : normAddValZ K x = ⊤ ↔ x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "normAddValZ_eq_iff_of_isUniformizer",
+  "statement": "theorem normAddValZ_eq_iff_of_isUniformizer {π : K} (hπ : IsUniformizer (valuation (K := K)) π)\n    (x : K) (k : ℤ) : normAddValZ K x = (k : WithTop ℤ) ↔ ‖x‖ = ‖π‖ ^ k",
+  "doc": "/-- The characterisation by a uniformiser: `normAddValZ K x = k ↔ ‖x‖ = ‖π‖ ^ k`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 110,
+  "kind": "theorem",
+  "name": "normAddValZ_isUniformizer",
+  "statement": "theorem normAddValZ_isUniformizer {π : K} (hπ : IsUniformizer (valuation (K := K)) π) :\n    normAddValZ K π = 1",
+  "doc": "/-- A uniformiser has `ℤ`-valued additive valuation `1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 115,
+  "kind": "theorem",
+  "name": "norm_eq_zpow_neg_normAddValZ",
+  "statement": "theorem norm_eq_zpow_neg_normAddValZ {e : ℝ≥0} (he : e ≠ 0)\n    (hgen : RankOne.hom (valuation (K := K))\n      (IsRankOneDiscrete.generator' (valuation (K := K)) :\n        ValueGroup₀ (.ofClass (valuation (K := K)))) = e⁻¹)\n    {x : K} {d : ℤ} (hd : normAddValZ K x = (d : WithTop ℤ)) :\n    ‖x‖ = (e : ℝ) ^ (-d)",
+  "doc": "/-- **The norm is the base to the power of minus the additive valuation.** If the generator of\nthe value group is `e⁻¹` and `normAddValZ K x = d`, then `‖x‖ = e ^ (-d)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 124,
+  "kind": "theorem",
+  "name": "norm_eq_zpow_neg_normAddValZ_of_isUniformizer",
+  "statement": "theorem norm_eq_zpow_neg_normAddValZ_of_isUniformizer {π : K}\n    (hπ : IsUniformizer (valuation (K := K)) π) {e : ℝ} (hπe : ‖π‖ = e⁻¹)\n    {x : K} {d : ℤ} (hd : normAddValZ K x = (d : WithTop ℤ)) : ‖x‖ = e ^ (-d)",
+  "doc": "/-- **Norm recovery at a uniformiser**: if a uniformiser has norm `e⁻¹` and `normAddValZ K x = d`,\nthen `‖x‖ = e ^ (-d)`. For the standard `p`-adic norm `e = p`, so `‖x‖ = p ^ (-vₚ x)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 130,
+  "kind": "theorem",
+  "name": "normAddVal_eq_map_normAddValZ",
+  "statement": "theorem normAddVal_eq_map_normAddValZ {π : K} (hπ : IsUniformizer (valuation (K := K)) π)\n    (x : K) :\n    normAddVal K x\n      = WithTop.map (fun k : ℤ ↦ (k : ℝ) * (-Real.log ‖π‖)) (normAddValZ K x)",
+  "doc": "/-- **The compatibility square `ℤ → ℝ`**: the real additive valuation is `-log ‖π‖` times the\n`ℤ`-valued one, for a uniformiser `π`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 148,
+  "kind": "lemma",
+  "name": "normAddValQ_zero",
+  "statement": "@[simp] lemma normAddValQ_zero : normAddValQ K π 0 = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 150,
+  "kind": "lemma",
+  "name": "normAddValQ_eq_top",
+  "statement": "@[simp] lemma normAddValQ_eq_top {x : K} : normAddValQ K π x = ⊤ ↔ x = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 152,
+  "kind": "lemma",
+  "name": "normAddValQ_self",
+  "statement": "@[simp] lemma normAddValQ_self : normAddValQ K π π = 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 155,
+  "kind": "lemma",
+  "name": "normAddValQ_eq_of_pow_eq_pow",
+  "statement": "lemma normAddValQ_eq_of_pow_eq_pow {x : K} (hx : x ≠ 0) {m n : ℕ} (hn : 0 < n)\n    (h : ‖x‖ ^ n = ‖π‖ ^ m) :\n    normAddValQ K π x = (((m : ℚ) / (n : ℚ) : ℚ) : WithTop ℚ)",
+  "doc": "/-- The workhorse, read off the norm: `‖x‖ ^ n = ‖π‖ ^ m` computes `normAddValQ K π x = m / n`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 162,
+  "kind": "theorem",
+  "name": "norm_eq_norm_rpow_normAddValQ",
+  "statement": "theorem norm_eq_norm_rpow_normAddValQ {x : K} {q : ℚ}\n    (hq : normAddValQ K π x = (q : WithTop ℚ)) :\n    ‖x‖ = ‖π‖ ^ (q : ℝ)",
+  "doc": "/-- **`‖x‖ = ‖π‖ ^ q`.** On an ultrametric normed field of rational rank one, the norm is the norm\nof the normalising element raised to the `ℚ`-valued additive valuation. For `ℂ_p` with `π = p` this\nreads `‖x‖ = p ^ (-v x)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 168,
+  "kind": "theorem",
+  "name": "normAddVal_eq_map_normAddValQ",
+  "statement": "theorem normAddVal_eq_map_normAddValQ (x : K) :\n    normAddVal K x\n      = WithTop.map (fun q : ℚ ↦ (q : ℝ) * (-Real.log ‖π‖)) (normAddValQ K π x)",
+  "doc": "/-- **The compatibility square `ℚ → ℝ`**: the real additive valuation is `-log ‖π‖` times the\n`ℚ`-valued one normalised at `π`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Normed.lean",
+  "line": 175,
+  "kind": "theorem",
+  "name": "normAddValQ_eq_map_normAddValZ",
+  "statement": "theorem normAddValQ_eq_map_normAddValZ [(valuation (K := K)).IsRankOneDiscrete]\n    (hπ : IsUniformizer (valuation (K := K)) π) (x : K) :\n    normAddValQ K π x = WithTop.map (fun n : ℤ ↦ (n : ℚ)) (normAddValZ K x)",
+  "doc": "/-- **The compatibility square `ℤ → ℚ`**: on a discretely valued field normalised at a uniformiser,\nthe `ℚ`-valued additive valuation is the `ℤ`-valued one composed with `Int.cast`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 38,
+  "kind": "lemma",
+  "name": "nnnorm_p_eq_inv",
+  "statement": "lemma nnnorm_p_eq_inv : ‖(p : ℚ_[p])‖₊ = (p : ℝ≥0)⁻¹",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 40,
+  "kind": "lemma",
+  "name": "nnnorm_p_ne_zero",
+  "statement": "lemma nnnorm_p_ne_zero : ‖(p : ℚ_[p])‖₊ ≠ 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 46,
+  "kind": "lemma",
+  "name": "nnnorm_p_zpow_valuation",
+  "statement": "lemma nnnorm_p_zpow_valuation {x : ℚ_[p]} (hx : x ≠ 0) :\n    ‖(p : ℚ_[p])‖₊ ^ x.valuation = ‖x‖₊",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 49,
+  "kind": "lemma",
+  "name": "zpowers_valueGroupGen",
+  "statement": "lemma zpowers_valueGroupGen : Subgroup.zpowers (valueGroupGen (p := p)) = ⊤",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 51,
+  "kind": "instance",
+  "name": "isCyclic_valueGroup",
+  "statement": "instance isCyclic_valueGroup :\n    IsCyclic (valueGroup (.ofClass (NormedField.valuation (K := ℚ_[p]))))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "isRankOneDiscrete_valuation",
+  "statement": "theorem isRankOneDiscrete_valuation : (NormedField.valuation (K := ℚ_[p])).IsRankOneDiscrete",
+  "doc": "/-- The `p`-adic norm is a discrete rank-one valuation (through `IsRankOneDiscrete.mk'`: the value\ngroup is cyclic by `isCyclic_valueGroup` and nontrivial because the norm is nontrivial). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 60,
+  "kind": "theorem",
+  "name": "coe_generator_eq",
+  "statement": "theorem coe_generator_eq :\n    (generator (NormedField.valuation (K := ℚ_[p])) : ℝ≥0) = (p : ℝ≥0)⁻¹",
+  "doc": "/-- The generator of the value group of the `p`-adic norm is `p⁻¹`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "isUniformizer_p",
+  "statement": "theorem isUniformizer_p : IsUniformizer (NormedField.valuation (K := ℚ_[p])) (p : ℚ_[p])",
+  "doc": "/-- `p` is a uniformiser of `ℚ_p`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 69,
+  "kind": "instance",
+  "name": "isCommensurable_p",
+  "statement": "instance isCommensurable_p : (NormedField.valuation (K := ℚ_[p])).IsCommensurable (p : ℚ_[p])",
+  "doc": "/-- `p` is a normalising element of `ℚ_p`: the `ℚ`-valued additive valuation `normAddValQ ℚ_[p] p`\nexists (and is `normAddValZ` composed with `Int.cast`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "norm_eq_zpow_neg_normAddValZ_padic",
+  "statement": "theorem norm_eq_zpow_neg_normAddValZ_padic {x : ℚ_[p]} {d : ℤ}\n    (hd : normAddValZ ℚ_[p] x = (d : WithTop ℤ)) : ‖x‖ = (p : ℝ) ^ (-d)",
+  "doc": "/-- **The `p`-adic norm is `p` to the power of minus the `ℤ`-valued additive valuation.** -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 83,
+  "kind": "theorem",
+  "name": "normAddValZ_padic_apply",
+  "statement": "theorem normAddValZ_padic_apply (x : ℚ_[p]) : normAddValZ ℚ_[p] x = Padic.addValuation x",
+  "doc": "/-- **The verification, pointwise.** On `ℚ_p`, `normAddValZ` is Mathlib's `Padic.addValuation`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Padic.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "normAddValZ_padic",
+  "statement": "theorem normAddValZ_padic : normAddValZ ℚ_[p] = Padic.addValuation",
+  "doc": "/-- **The verification.** On `ℚ_p`, `normAddValZ` is Mathlib's `Padic.addValuation`, as additive\nvaluations. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 39,
+  "kind": "theorem",
+  "name": "valuation_eq_exp_neg_order",
+  "statement": "theorem valuation_eq_exp_neg_order {f : LaurentSeries K} (hf : f ≠ 0) :\n    Valued.v f = exp (-f.order)",
+  "doc": "/-- The valuation of a nonzero Laurent series is `exp (-order)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 43,
+  "kind": "instance",
+  "name": "isRankOneDiscrete_valued",
+  "statement": "instance isRankOneDiscrete_valued :\n    (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰).IsRankOneDiscrete",
+  "doc": "/-- The `X`-adic valuation of `K⸨X⸩` is a discrete rank-one valuation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "generator_valued_eq",
+  "statement": "theorem generator_valued_eq :\n    generator (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰)\n      = Units.mk0 (exp (-1 : ℤ)) exp_ne_zero",
+  "doc": "/-- The generator of the value group of `K⸨X⸩` is `exp (-1)`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "isUniformizer_X",
+  "statement": "theorem isUniformizer_X :\n    IsUniformizer (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰)\n      ((PowerSeries.X : PowerSeries K) : LaurentSeries K)",
+  "doc": "/-- `X` is a uniformiser of `K⸨X⸩`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "addValZ_X",
+  "statement": "theorem addValZ_X :\n    addValZ (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰)\n      ((PowerSeries.X : PowerSeries K) : LaurentSeries K) = 1",
+  "doc": "/-- `X` has `ℤ`-valued additive valuation `1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "addValZ_single",
+  "statement": "theorem addValZ_single (s : ℤ) :\n    addValZ (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰) (HahnSeries.single s (1 : K))\n      = (s : WithTop ℤ)",
+  "doc": "/-- The monomial `X ^ s` has `ℤ`-valued additive valuation `s`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/LaurentSeries.lean",
+  "line": 67,
+  "kind": "theorem",
+  "name": "addValZ_eq_order",
+  "statement": "theorem addValZ_eq_order {f : LaurentSeries K} (hf : f ≠ 0) :\n    addValZ (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰) f = (f.order : WithTop ℤ)",
+  "doc": "/-- **The `ℤ`-valued additive valuation of a Laurent series is its order of vanishing.** -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 44,
+  "kind": "theorem",
+  "name": "isCommensurable_completion",
+  "statement": "theorem isCommensurable_completion (π : K) [hv.v.IsCommensurable π] :\n    (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).IsCommensurable\n      (π : UniformSpace.Completion K)",
+  "doc": "/-- **Commensurability passes to the completion**: every value of the completion is a value of the\nfield, so a normalising element of `K` is a normalising element of its completion. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 60,
+  "kind": "theorem",
+  "name": "normAddVal_algebraMap",
+  "statement": "theorem normAddVal_algebraMap (x : K) : normAddVal L (algebraMap K L x) = normAddVal K x",
+  "doc": "/-- The real additive valuation of `L` restricts to that of `K`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 71,
+  "kind": "theorem",
+  "name": "exists_normAddValZ_algebraMap_eq",
+  "statement": "theorem exists_normAddValZ_algebraMap_eq {π : K} (hπ : IsUniformizer (valuation (K := K)) π) :\n    ∃ e : ℕ, 0 < e ∧ normAddValZ L (algebraMap K L π) = ((e : ℤ) : WithTop ℤ)",
+  "doc": "/-- The image of a uniformiser of `K` has a positive integral additive valuation in `L`: the\nramification index of `L/K`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 76,
+  "kind": "theorem",
+  "name": "normAddValZ_algebraMap",
+  "statement": "theorem normAddValZ_algebraMap {π : K} (hπ : IsUniformizer (valuation (K := K)) π) {e : ℤ}\n    (he : normAddValZ L (algebraMap K L π) = (e : WithTop ℤ)) (x : K) :\n    normAddValZ L (algebraMap K L x) = WithTop.map (fun k : ℤ ↦ e * k) (normAddValZ K x)",
+  "doc": "/-- **The ramification formula**: if a uniformiser of `K` has additive valuation `e` in `L`, then on\n`K` the `ℤ`-valued additive valuation of `L` is `e` times that of `K`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 82,
+  "kind": "theorem",
+  "name": "isCommensurable_algebraMap_of_isRankOneDiscrete",
+  "statement": "theorem isCommensurable_algebraMap_of_isRankOneDiscrete {π : K}\n    (hπ : IsUniformizer (valuation (K := K)) π) :\n    (valuation (K := L)).IsCommensurable (algebraMap K L π)",
+  "doc": "/-- The image of a uniformiser of `K` is a normalising element of `L`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "map_intCast_normAddValZ_eq_map_normAddValQ",
+  "statement": "theorem map_intCast_normAddValZ_eq_map_normAddValQ {π : K}\n    (hπ : IsUniformizer (valuation (K := K)) π) {e : ℤ}\n    (he : normAddValZ L (algebraMap K L π) = (e : WithTop ℤ))\n    [(valuation (K := L)).IsCommensurable (algebraMap K L π)] (y : L) :\n    WithTop.map (fun n : ℤ ↦ (n : ℚ)) (normAddValZ L y)\n      = WithTop.map (fun q : ℚ ↦ (e : ℚ) * q) (normAddValQ L (algebraMap K L π) y)",
+  "doc": "/-- **`normAddValZ L` is `e` times the `ℚ`-valued valuation of `L` normalised at a uniformiser of\n`K`**, where `e` is the ramification index. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "norm_pow_natDegree_minpoly",
+  "statement": "theorem norm_pow_natDegree_minpoly [CompleteSpace K] [Algebra.IsAlgebraic K L] (x : L) :\n    ‖x‖ ^ (minpoly K x).natDegree = ‖(minpoly K x).coeff 0‖",
+  "doc": "/-- **The norm of an algebraic element is read off its minimal polynomial**: for the minimal\npolynomial `Xⁿ + ⋯ + a₀` of `x`, `‖x‖ ^ n = ‖a₀‖` (BGR 3.2.4/3). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 111,
+  "kind": "instance",
+  "name": "isCommensurable_algebraMap",
+  "statement": "instance isCommensurable_algebraMap [CompleteSpace K] [Algebra.IsAlgebraic K L] (π : K)\n    [(valuation (K := K)).IsCommensurable π] :\n    (valuation (K := L)).IsCommensurable (algebraMap K L π)",
+  "doc": "/-- **Commensurability is inherited by algebraic extensions**: if `K` is commensurable at `π`, then\n`L` is commensurable at `algebraMap K L π`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Extension.lean",
+  "line": 117,
+  "kind": "theorem",
+  "name": "normAddValQ_algebraMap",
+  "statement": "theorem normAddValQ_algebraMap [CompleteSpace K] [Algebra.IsAlgebraic K L] (π : K)\n    [(valuation (K := K)).IsCommensurable π] (x : K) :\n    normAddValQ L (algebraMap K L π) (algebraMap K L x) = normAddValQ K π x",
+  "doc": "/-- The `ℚ`-valued additive valuation of `L` normalised at `algebraMap K L π` restricts to the\n`ℚ`-valued additive valuation of `K` normalised at `π`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 37,
+  "kind": "instance",
+  "name": "isCommensurable_natCast_prime",
+  "statement": "instance isCommensurable_natCast_prime {L : Type*} [NontriviallyNormedField L]\n    [IsUltrametricDist L] [NormedAlgebra ℚ_[p] L] [Algebra.IsAlgebraic ℚ_[p] L] :\n    (valuation (K := L)).IsCommensurable (p : L)",
+  "doc": "/-- Every algebraic ultrametric normed `ℚ_p`-algebra field is commensurable at `p`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 48,
+  "kind": "theorem",
+  "name": "isCommensurable_p",
+  "statement": "theorem isCommensurable_p : (valuation (K := PadicAlgCl p)).IsCommensurable (p : PadicAlgCl p)",
+  "doc": "/-- The valuation of the algebraic closure of `ℚ_p` is commensurable at `p`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 59,
+  "kind": "theorem",
+  "name": "valuation_eq_nnnorm",
+  "statement": "theorem valuation_eq_nnnorm (x : ℂ_[p]) : Valued.v x = ‖x‖₊",
+  "doc": "/-- The valuation of `ℂ_[p]` extended from the algebraic closure is the valuation read off the\nnorm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 61,
+  "kind": "theorem",
+  "name": "normedField_valuation_eq",
+  "statement": "theorem normedField_valuation_eq : (valuation (K := ℂ_[p])) = (PadicComplex.valued p).v",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 66,
+  "kind": "instance",
+  "name": "isCommensurable_p",
+  "statement": "instance isCommensurable_p : (valuation (K := ℂ_[p])).IsCommensurable (p : ℂ_[p])",
+  "doc": "/-- **The valuation of `ℂ_p` is commensurable at `p`**: the `ℚ`-valued additive valuation\n`normAddValQ ℂ_[p] p` exists. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "normAddValQ_p",
+  "statement": "theorem normAddValQ_p : normAddValQ ℂ_[p] p p = 1",
+  "doc": "/-- The normalisation `normAddValQ ℂ_[p] p p = 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 73,
+  "kind": "theorem",
+  "name": "normAddValQ_algebraMap_padic",
+  "statement": "theorem normAddValQ_algebraMap_padic (x : ℚ_[p]) :\n    normAddValQ ℂ_[p] p (algebraMap ℚ_[p] ℂ_[p] x)\n      = WithTop.map (fun n : ℤ ↦ (n : ℚ)) (Padic.addValuation x)",
+  "doc": "/-- On `ℚ_p`, the `ℚ`-valued additive valuation of `ℂ_p` normalised at `p` is `Padic.addValuation`\ncomposed with `Int.cast`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "norm_eq_rpow_neg_normAddValQ",
+  "statement": "theorem norm_eq_rpow_neg_normAddValQ {x : ℂ_[p]} {q : ℚ}\n    (hq : normAddValQ ℂ_[p] p x = (q : WithTop ℚ)) : ‖x‖ = (p : ℝ) ^ (-(q : ℝ))",
+  "doc": "/-- **Norm recovery on `ℂ_p`**: `‖x‖ = p ^ (-(normAddValQ ℂ_[p] p x))`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 83,
+  "kind": "theorem",
+  "name": "exists_normAddValQ_eq",
+  "statement": "theorem exists_normAddValQ_eq (q : ℚ) :\n    ∃ x : ℂ_[p], x ≠ 0 ∧ normAddValQ ℂ_[p] p x = (q : WithTop ℚ)",
+  "doc": "/-- Every rational number is the additive valuation of a nonzero element of `ℂ_p`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/PadicComplex.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "range_normAddValQ",
+  "statement": "theorem range_normAddValQ :\n    Set.range (normAddValQ ℂ_[p] p) = insert ⊤ (Set.range ((↑) : ℚ → WithTop ℚ))",
+  "doc": "/-- **The value group of `ℂ_p` is exactly `p^ℚ`**: the additive valuation takes every rational\nvalue and, apart from `⊤` at `0`, nothing else. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 35,
+  "kind": "theorem",
+  "name": "normAddValZ_padic_p",
+  "statement": "theorem normAddValZ_padic_p : normAddValZ ℚ_[p] (p : ℚ_[p]) = 1",
+  "doc": "/-- `normAddValZ p = 1` on `ℚ_p`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 38,
+  "kind": "theorem",
+  "name": "normAddValZ_padic_inv_p_sq",
+  "statement": "theorem normAddValZ_padic_inv_p_sq :\n    normAddValZ ℚ_[p] ((p : ℚ_[p]) ^ 2)⁻¹ = ((-2 : ℤ) : WithTop ℤ)",
+  "doc": "/-- `normAddValZ (1 / p²) = -2` on `ℚ_p`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 42,
+  "kind": "theorem",
+  "name": "normAddVal_padic",
+  "statement": "theorem normAddVal_padic (x : ℚ_[p]) :\n    normAddVal ℚ_[p] x\n      = WithTop.map (fun k : ℤ ↦ (k : ℝ) * Real.log p) (normAddValZ ℚ_[p] x)",
+  "doc": "/-- `normAddVal ℚ_[p]` is `log p` times `normAddValZ ℚ_[p]`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "normAddValQ_of_sq_eq_prime",
+  "statement": "theorem normAddValQ_of_sq_eq_prime {s : L} (hs : s ^ 2 = p) :\n    normAddValQ L p s = ((1 / 2 : ℚ) : WithTop ℚ)",
+  "doc": "/-- A square root of `p` has `ℚ`-valued additive valuation `1/2` (normalised at `p`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "normAddValZ_prime_of_sq_eq_prime",
+  "statement": "theorem normAddValZ_prime_of_sq_eq_prime [(valuation (K := L)).IsRankOneDiscrete] {s : L}\n    (hs : s ^ 2 = p) (h1 : normAddValZ L s = 1) : normAddValZ L (p : L) = 2",
+  "doc": "/-- In a discretely valued field in which a square root `s` of `p` has `ℤ`-valued additive\nvaluation `1`, `p` has `ℤ`-valued additive valuation `2`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 63,
+  "kind": "theorem",
+  "name": "normAddValQ_padicComplex_of_pow_three",
+  "statement": "theorem normAddValQ_padicComplex_of_pow_three {x : ℂ_[p]} (hx : x ^ 3 = p) :\n    normAddValQ ℂ_[p] p x = ((1 / 3 : ℚ) : WithTop ℚ)",
+  "doc": "/-- In `ℂ_p`, a cube root of `p` has additive valuation `1/3`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/AddVal/Examples.lean",
+  "line": 75,
+  "kind": "theorem",
+  "name": "addValZ_X_pow",
+  "statement": "theorem addValZ_X_pow (n : ℕ) :\n    addValZ (Valued.v : Valuation (LaurentSeries K) ℤᵐ⁰)\n      (((PowerSeries.X : PowerSeries K) : LaurentSeries K) ^ n) = ((n : ℤ) : WithTop ℤ)",
+  "doc": "/-- `X ^ n` has `ℤ`-valued additive valuation `n`: the order of vanishing at `X`. -/",
+  "sorries": 1
+ }
+]

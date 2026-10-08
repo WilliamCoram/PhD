@@ -27,9 +27,9 @@ namespace NewtonPolygon
 theorem newtonPolygon_single (y : ℝ) :
     newtonPolygon (fun k : ℕ ↦ if k = 0 then (y : WithTop ℝ) else ⊤)
       = fun k ↦ if k = 0 then (y : WithTop ℝ) else ⊤ := by
-  have hfs : finiteSet (fun k : ℕ ↦ if k = 0 then (y : WithTop ℝ) else ⊤) = {0} := by
+  have hfs : finiteSupport (fun k : ℕ ↦ if k = 0 then (y : WithTop ℝ) else ⊤) = {0} := by
     ext j
-    rw [mem_finiteSet, Set.mem_singleton_iff]
+    rw [mem_finiteSupport, Set.mem_singleton_iff]
     by_cases h : j = 0
     · rw [if_pos h]
       exact iff_of_true WithTop.coe_ne_top h
@@ -59,8 +59,8 @@ theorem unitSlope_sq (j : ℕ) :
 
 /-- The parabola is convex. -/
 theorem isConvexSeq_sq : IsConvexSeq (fun k : ℕ ↦ (((k : ℝ) ^ 2 : ℝ) : WithTop ℝ)) := by
-  have hfs : finiteSet (fun k : ℕ ↦ (((k : ℝ) ^ 2 : ℝ) : WithTop ℝ)) = Set.univ :=
-    Set.eq_univ_of_forall fun _ ↦ mem_finiteSet.2 WithTop.coe_ne_top
+  have hfs : finiteSupport (fun k : ℕ ↦ (((k : ℝ) ^ 2 : ℝ) : WithTop ℝ)) = Set.univ :=
+    Set.eq_univ_of_forall fun _ ↦ mem_finiteSupport.2 WithTop.coe_ne_top
   refine ⟨by rw [hfs]; exact Set.ordConnected_univ, fun a _ b _ hab ↦ ?_⟩
   rw [unitSlope_sq, unitSlope_sq, WithTop.coe_le_coe]
   have hab' : (a : ℝ) ≤ b := by exact_mod_cast hab
@@ -88,8 +88,8 @@ theorem unitSlope_zero_fun (j : ℕ) :
 
 /-- The zero sequence is convex. -/
 theorem isConvexSeq_zero_fun : IsConvexSeq (fun _ : ℕ ↦ (0 : WithTop ℝ)) := by
-  have hfs : finiteSet (fun _ : ℕ ↦ (0 : WithTop ℝ)) = Set.univ :=
-    Set.eq_univ_of_forall fun _ ↦ mem_finiteSet.2 WithTop.zero_ne_top
+  have hfs : finiteSupport (fun _ : ℕ ↦ (0 : WithTop ℝ)) = Set.univ :=
+    Set.eq_univ_of_forall fun _ ↦ mem_finiteSupport.2 WithTop.zero_ne_top
   exact ⟨by rw [hfs]; exact Set.ordConnected_univ,
     fun a _ b _ _ ↦ le_of_eq (by rw [unitSlope_zero_fun, unitSlope_zero_fun])⟩
 
@@ -130,9 +130,9 @@ noncomputable def collinearExample : ℕ → WithTop ℝ :=
   fun k ↦ if k = 0 then 0 else if k = 1 then 1 else if k = 2 then 2 else if k = 3 then 4 else ⊤
 
 /-- The collinear example carries points exactly at `0, 1, 2, 3`. -/
-theorem finiteSet_collinearExample : finiteSet collinearExample = Set.Iic 3 := by
+theorem finiteSupport_collinearExample : finiteSupport collinearExample = Set.Iic 3 := by
   ext j
-  rw [mem_finiteSet, Set.mem_Iic, collinearExample]
+  rw [mem_finiteSupport, Set.mem_Iic, collinearExample]
   split_ifs with h0 h1 h2 h3
   · exact iff_of_true WithTop.coe_ne_top (by omega)
   · exact iff_of_true WithTop.coe_ne_top (by omega)
@@ -142,7 +142,7 @@ theorem finiteSet_collinearExample : finiteSet collinearExample = Set.Iic 3 := b
 
 /-- The collinear example is anchored at `0`. -/
 theorem anchor_collinearExample : anchor collinearExample = 0 := by
-  rw [anchor, finiteSet_collinearExample]
+  rw [anchor, finiteSupport_collinearExample]
   exact Nat.sInf_eq_zero.2 (Or.inl (Set.mem_Iic.2 (by omega)))
 
 /-- The first unit slope of the collinear example is `1`. -/
@@ -172,8 +172,8 @@ theorem unitSlope_collinearExample_three : unitSlope collinearExample 3 = ⊤ :=
 
 /-- The collinear example is convex, so it is its own polygon. -/
 theorem isConvexSeq_collinearExample : IsConvexSeq collinearExample := by
-  refine ⟨by rw [finiteSet_collinearExample]; exact Set.ordConnected_Iic, fun a ha b hb hab ↦ ?_⟩
-  rw [finiteSet_collinearExample, Set.mem_Iic] at ha hb
+  refine ⟨by rw [finiteSupport_collinearExample]; exact Set.ordConnected_Iic, fun a ha b hb hab ↦ ?_⟩
+  rw [finiteSupport_collinearExample, Set.mem_Iic] at ha hb
   interval_cases a <;> interval_cases b <;>
     simp only [unitSlope_collinearExample_zero, unitSlope_collinearExample_one,
       unitSlope_collinearExample_two, unitSlope_collinearExample_three] <;>

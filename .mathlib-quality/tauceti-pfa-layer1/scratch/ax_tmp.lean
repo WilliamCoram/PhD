@@ -1,0 +1,20 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Operator.Examples
+#print axioms mulLeftL
+#print axioms mulLeftL_apply
+#print axioms opNorm_mulLeftL
+#print axioms addPseudoUniformizerSMul
+#print axioms addPseudoUniformizerSMul_apply
+#print axioms exists_preimage_norm_le_addPseudoUniformizerSMul
+#print axioms one_le_of_forall_exists_preimage_norm_le_addPseudoUniformizerSMul
+#print axioms bijective_padic_smul_id
+#print axioms norm_padic_inv_smul_id
+#print axioms PadicIntSq
+#print axioms PadicIntSq.toPadicIntSq
+#print axioms PadicIntSq.norm_def
+#print axioms PadicIntSq.continuous_symm_toPadicIntSq
+#print axioms PadicIntSq.not_exists_bound_symm_toPadicIntSq
+#print axioms lp.instIsUltrametricDist
+#print axioms padicGeomSeq
+#print axioms padicGeomSeq_apply
+#print axioms not_isClosed_span_padicGeomSeq
+#print axioms not_isNoetherianRing_lp_infty

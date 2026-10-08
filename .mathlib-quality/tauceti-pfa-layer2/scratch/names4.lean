@@ -1,0 +1,115 @@
+import Mathlib
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Operator.Examples
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Rescale
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Residue
+open Filter Topology NormedRing
+open scoped ZeroAtInfty ENNReal
+example : IsUltrametricDist C(ℤ_[2], ℚ_[2]) := inferInstance
+example : DiscreteTopology (ULift.{3} ℕ) := inferInstance
+example : DiscreteTopology (ℕ ⊕ ℕ) := inferInstance
+example : DiscreteTopology (ℕ × ℕ) := inferInstance
+example (S : Set ℕ) : DiscreteTopology S := inferInstance
+example : DiscreteTopology Unit := inferInstance
+example : DiscreteTopology (Fin 3) := inferInstance
+example : CompactSpace (Fin 3) := inferInstance
+#check @PseudoUniformizer.toUnitClosedBall
+#check @PseudoUniformizer.ResidueRing
+#check @PseudoUniformizer.ResidueModule
+#check @PseudoUniformizer.mem_ideal_smul_top_iff_norm_lt_one
+#check @PseudoUniformizer.mem_ideal_smul_top_iff
+#check @PseudoUniformizer.ideal_eq_openUnitBallIdeal
+#check @PseudoUniformizer.ideal
+#check @PseudoUniformizer.mem_ideal_iff
+#check @PseudoUniformizer.Rescaled
+#check @PseudoUniformizer.toRescaled
+#check @PseudoUniformizer.isBoundedSMul_rescaled
+#check @PseudoUniformizer.exists_norm_rescaled_eq_zpow
+#check @PseudoUniformizer.norm_toRescaled
+#check @PseudoUniformizer.norm_le_norm_toRescaled
+#check @PseudoUniformizer.norm_mul_norm_toRescaled_lt
+#check @PseudoUniformizer.norm_toRescaled_eq_of_forall_exists_zpow
+#check @PseudoUniformizer.norm_smul_rescaled
+#check @Submodule.unitClosedBall
+#check @Submodule.mem_unitClosedBall
+#check @NormedRing.not_isNoetherianRing_lp_infty
+#check @not_isNoetherianRing_lp_infty
+#check @padicGeomSeq
+#check @NormedRing.PseudoUniformizer.ofNormedAlgebra
+#check @PseudoUniformizer.coe_ofNormedAlgebra
+#check @PseudoUniformizer.normOneClass_of_nontrivial
+#check @PseudoUniformizer.norm_lt_one
+#check @PseudoUniformizer.isMultiplicative
+#check @PseudoUniformizer.unit
+#print PseudoUniformizer
+#print IsTate
+#check @ContinuousMap.norm_eq_iSup_norm
+#check @ContinuousMap.norm_le
+#check @IsCompact.exists_isMaxOn
+#check @isCompact_univ
+#check @ContinuousMap.norm_coe_le_norm
+#check @PadicInt.mahlerEquiv
+#check @ZeroAtInftyContinuousMap.instNormedSpace
+#check @ZeroAtInftyContinuousMap.toBCF
+#check @ZeroAtInftyContinuousMap.coe_toBCF
+#check @ZeroAtInftyContinuousMap.toBCF_apply
+#check @BoundedContinuousFunction.coe_smul
+#check @BoundedContinuousFunction.smul_apply
+#check @BoundedContinuousFunction.norm_eq_of_nonempty
+#check @BoundedContinuousFunction.norm_def
+#check @BoundedContinuousFunction.coe_sum
+#check @Finset.sum_apply
+#check @map_sum
+#check @ZeroAtInftyContinuousMap.coeFnAddMonoidHom
+#check @LinearIsometryEquiv.ofSurjective
+#check @ContinuousLinearMap.comp_apply
+#check @Submodule.span_le
+#check @Submodule.dense_iff_topologicalClosure_eq_top
+#check @Submodule.topologicalClosure_coe
+#check @Submodule.mem_span_range_iff_exists_fun
+#check @Finsupp.mem_span_range_iff_exists_finsupp
+#check @Submodule.mem_span_set'
+#check @Dense
+#check @dense_iff_closure_eq
+#check @mem_closure_iff_seq_limit
+#check @Metric.mem_closure_iff
+#check @Module.Free.ChooseBasisIndex
+#check @Module.Free.chooseBasis
+#check @Module.Basis.ofVectorSpace
+#check @Module.Basis.ofVectorSpaceIndex
+#check @Submodule.Quotient.mk_surjective
+#check @Quotient.out
+#check @LinearIndependent
+#check @linearIndependent_iff'
+#check @Submodule.span_eq_top_iff
+#check @Submodule.eq_top_iff'
+#check @Submodule.mem_span_iff_exists_finset_subset
+#check @Submodule.span_le
+#check @Submodule.span_mono
+#check @Submodule.span_image
+#check @Submodule.map_span
+#check @LinearEquiv.ofBijective
+#check @Equiv.cast
+#check @ContinuousLinearMap.Ultra.exists_preimage_norm_le
+#check @ContinuousLinearMap.Ultra.continuous_of_finite
+#check @ContinuousLinearMap.Ultra.opNorm_le_bound
+#check @ContinuousLinearMap.Ultra.le_opNorm_of_bound
+#check @ContinuousLinearMap.Ultra.norm_def
+#check @ContinuousLinearMap.Ultra.exists_bound
+#check @ContinuousLinearMap.Ultra.le_opNorm
+#check @ContinuousLinearMap.Ultra.instNormedAddCommGroup
+#check @ContinuousLinearMap.Ultra.instIsBoundedSMul
+#check @ContinuousLinearMap.Ultra.hasSum_apply
+#check @ContinuousLinearMap.Ultra.summable_of_tendsto_cofinite_zero
+#check @Submodule.isClosed_of_isNoetherianRing
+#check @Module.Finite.exists_surjective_isClosed_ker
+#check @NormedRing.exists_forall_exists_eq_sum_smul_norm_le
+#check @Filter.Tendsto.iSup_norm_cofinite_left
+#check @Filter.Tendsto.iSup_norm_cofinite_right
+#check @tendsto_cofinite_prod_of_tendsto_iSup_norm
+#check @tendsto_cofinite_prod_of_norm_le_mul
+#check @IsUltrametricDist.norm_tsum_eq_of_forall_lt
+#check @IsUltrametricDist.tendsto_tsum_cofinite_left
+#check @IsUltrametricDist.tsum_prod_eq_tsum_tsum
+#check @IsUltrametricDist.summable_prod_map₂
+#check @IsUltrametricDist.tsum_prod_map₂
+#check @Filter.Tendsto.bddAbove_range_norm

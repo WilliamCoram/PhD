@@ -1,0 +1,12 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.PowerBounded
+#print axioms TopologicalRing.IsBounded
+#print axioms PowerBounded.IsPowerBounded
+#print axioms TopologicalRing.isBounded_of_forall_norm_le
+#print axioms TopologicalRing.IsBounded.exists_norm_le
+#print axioms PowerBounded.isPowerBounded_of_norm_pow_le
+#print axioms PowerBounded.isPowerBounded_of_norm_le_one
+#print axioms PowerBounded.IsPowerBounded.norm_le_one
+#print axioms PowerBounded.isPowerBounded_iff_norm_le_one
+#print axioms IsTopologicallyNilpotent.of_norm_lt_one
+#print axioms IsTopologicallyNilpotent.norm_lt_one
+#print axioms isTopologicallyNilpotent_iff_norm_lt_one

@@ -1,0 +1,4 @@
+import PhD.TauCeti.Code.RigidAnalyticGeometry.Affinoid.SupExamples
+
+#print axioms Affinoid.supSeminorm_eq_supSpectralValue_minpoly
+#print axioms IsAffinoidAlgebra.isStrictMap_of_isometry

@@ -188,13 +188,18 @@ reasons are given because an implementor who does not know them will reintroduce
    canonical one; a structure carrying a basis as data would have to be transported along every
    isometry.
 
-5. **Orthonormal means norm one and the sup-norm identity, orthogonal allows scaling.** A family
-   `e : I → M` is *orthogonal* if `‖∑ aᵢ eᵢ‖ = max ‖aᵢ eᵢ‖` for every finitely supported `a`, and
-   *orthonormal* if moreover `‖eᵢ‖ = 1` for all `i`; for `0 < t ≤ 1` it is *`t`-orthogonal* if
-   `‖∑ aᵢ eᵢ‖ ≥ t · max ‖aᵢ eᵢ‖`. A family is a *basis* of the given kind if in addition the closed
-   span is `M`; equivalently, every `x` has a unique expansion `x = ∑ aᵢ eᵢ` with `aᵢ eᵢ → 0`
-   cofinitely. These are Schneider's and Colmez's definitions; Bellaïche's "orthonormal basis"
-   (unique expansion with `‖x‖ = sup ‖aᵢ‖`) is the orthonormal case and the equivalence is proved.
+5. **Orthonormal means norm one and the sup-norm identity in the coefficients, orthogonal allows
+   scaling.** A family `e : I → M` is *orthogonal* if `‖∑ aᵢ eᵢ‖ = max ‖aᵢ eᵢ‖` for every finitely
+   supported `a`, *orthonormal* if `‖eᵢ‖ = 1` for all `i` and `‖∑ aᵢ eᵢ‖ = max ‖aᵢ‖` for every
+   finitely supported `a`, and for `0 < t ≤ 1` *`t`-orthogonal* if `‖∑ aᵢ eᵢ‖ ≥ t · max ‖aᵢ eᵢ‖`. A
+   family is a *basis* of the given kind if in addition the closed span is `M`; equivalently, every
+   `x` has a unique expansion `x = ∑ aᵢ eᵢ` with `aᵢ eᵢ → 0` cofinitely. Orthogonal and
+   `t`-orthogonal are Schneider's definitions; orthonormal is Bellaïche's (Definition II.1.5),
+   Buzzard's and Colmez's, and Bellaïche's "orthonormal basis" (unique expansion with
+   `‖x‖ = sup ‖aᵢ‖`) is equivalent to it (§2.2.2). ⚠ Over a field "orthogonal with `‖eᵢ‖ = 1`" is
+   the same notion; over a ring it is weaker and §2.2.3 fails for it: `{1}` would be such a basis of
+   the torsion `ℚ_p⟨X⟩`-module `ℚ_p` (`X` acting as `0`), which is not isometric to any `C₀(I, R)`
+   (Layer 2 plan, erratum E19; the definition in `Orthonormal.lean` was corrected on 2026-10-06).
 
 6. **The operator norm is Mathlib's formula, stated at the generality that proves it.** The norm on
    `M →L[R] N` is `sInf {c | 0 ≤ c ∧ ∀ x, ‖u x‖ ≤ c * ‖x‖}`, literally the formula of
@@ -260,15 +265,20 @@ reasons are given because an implementor who does not know them will reintroduce
     the coefficients in every proof.
 
 12. **Names.** The Banach–Tate class is `NormedRing.IsTate`, the element `PseudoUniformizer R` with
-    `PseudoUniformizer.val` for `v_ϖ`. Orthonormalisability lives in the `IsONable`,
-    `IsPotentiallyONable`, `HasPr` predicates and the `IsOrthogonalFamily`, `IsOrthonormalFamily`,
-    `IsOrthonormalBasis` predicates on families; the matrix coefficient is `matrixCoeff` and the
-    coordinate truncation `truncation`. The `p`-adic objects live in the `PadicInt` namespace next
+    `PseudoUniformizer.val` for `v_ϖ`. Orthonormalisability lives in the `Module.IsONable`,
+    `Module.IsPotentiallyONable`, `Module.HasPr` predicates (and `Module.IsCountableType`), next to
+    Mathlib's `Module.Free` and `Module.Projective`, and in the `IsOrthogonalFamily`,
+    `IsTOrthogonalFamily`, `IsOrthonormalFamily`, `IsOrthonormalBasis` predicates on families, which
+    are root-level like Mathlib's `Orthonormal` (the shared `Orthonormal.lean` already placed the last
+    two there; Layer 2 plan, E20); the model-space material (`single`, `evalCLM`, `ofBounded`,
+    `reindex`, `matrixCoeff`, `truncation`, `ofMatrix`, `diagonal`, `IsUnitriangularPerturbation`)
+    lives in Mathlib's `ZeroAtInftyContinuousMap` namespace. The `p`-adic objects live in the `PadicInt` namespace next
     to Mathlib's Mahler basis (`PadicInt.mahler`): `PadicInt.amice h n` for the Amice basis,
     `PadicInt.LocallyAnalytic h E` for the disc model, `PadicInt.padicExp`, `PadicInt.padicLog`,
     `PadicInt.binomialSeries`; the characters in `PadicInt.WeightSpace`, the Iwasawa algebra in
     `IwasawaAlgebra`, the halo ring as `IwasawaAlgebra.Halo p` and its localisation
-    `IwasawaAlgebra.HaloTate p`. Nothing from this roadmap is placed in the root namespace.
+    `IwasawaAlgebra.HaloTate p`. Apart from the four family predicates, nothing from this roadmap is
+    placed in the root namespace.
 
 ## Existing Mathlib used by the roadmap
 
@@ -280,8 +290,10 @@ reasons are given because an implementor who does not know them will reintroduce
   `C(α, β)` for compact `α`, or on `BoundedContinuousFunction`; §2.1 and §3.1 add them.
 - `NonarchimedeanAddGroup.summable_iff_tendsto_cofinite_zero`,
   `NonarchimedeanAddGroup.cauchySeq_sum_of_tendsto_cofinite_zero`, `HasSum.mul_of_nonarchimedean`,
-  `Summable.mul_of_nonarchimedean` and `tsum_mul_tsum_of_nonarchimedean`. ⚠ Mathlib has no bound
-  `‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖` for ultrametric norms; §0.1 supplies it.
+  `Summable.mul_of_nonarchimedean` and `tsum_mul_tsum_of_nonarchimedean`. The bound
+  `‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖` is `IsUltrametricDist.norm_tsum_le`, with `nnnorm_tsum_le` and
+  `norm_tsum_le_of_forall_le`. ⚠ Mathlib has neither the strict bound nor the equality with a unique
+  dominant term; §0.1 supplies them.
 - `IsBoundedSMul`, `NormSMulClass`, `NormMulClass`, `NormOneClass`; `NormedAlgebra`; `NormedSpace`
   (defined over a `NormedField` only, which is why modules over rings are phrased with
   `IsBoundedSMul`).
@@ -353,10 +365,12 @@ page, stated once.
 1. Record Mathlib's criterion in the form the later layers use: a family `f : ι → E` is summable if
    and only if `f → 0` along the cofinite filter (`NonarchimedeanAddGroup.summable_iff_tendsto_cofinite_zero`),
    and such a family has bounded norms (`BddAbove (Set.range (‖f ·‖))`).
-2. **The ultrametric bound.** For `f → 0` cofinitely, `‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖`, and the supremum
-   is attained when some `f i ≠ 0`. State the `nnnorm` form as well.
-3. **The strict bound and the unique dominant term.** If `‖f i‖ < B` for every `i` and `f → 0`
-   cofinitely, then `‖∑' f‖ < B`; if `‖f i₀‖ > ‖f i‖` for every `i ≠ i₀`, then `‖∑' f‖ = ‖f i₀‖`.
+2. **The ultrametric bound.** `‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖` is Mathlib's
+   `IsUltrametricDist.norm_tsum_le`. Add that for `f → 0` cofinitely on a nonempty index type the
+   supremum is attained: some `i₀` has `‖f i‖ ≤ ‖f i₀‖` for every `i`.
+3. **The strict bound and the unique dominant term.** If `0 < B` and `‖f i‖ < B` for every `i`, then
+   `‖∑' f‖ < B` (no summability hypothesis is needed); if `f` is summable and `‖f i₀‖ > ‖f i‖` for
+   every `i ≠ i₀`, then `‖∑' f‖ = ‖f i₀‖`. State the `nnnorm` forms as well.
    The second is the engine of every "leading term" argument in the later layers (the Gauss norm of
    a product, the sharpness of an estimate at a halo point).
 4. **Double sums.** For `f : ι × κ → E` tending to `0` cofinitely, both iterated sums exist and
@@ -384,8 +398,10 @@ page, stated once.
 3. **The Neumann series.** If `R` is complete and `‖x‖ < 1`, then `1 − x` is a unit with inverse
    `∑' n, x ^ n`, `‖(1 − x)⁻¹‖ = 1` and `‖(1 − x)⁻¹ − 1‖ = ‖x‖`; Mathlib's `Units.oneSub` is the
    unit, and the ultrametric equalities are new. Deduce that the units of `R⁰` are exactly the
-   elements of `R⁰` whose image in `R⁰/R⁰⁰` is a unit, and that `R⁰⁰` is the unique maximal ideal of
-   `R⁰` when the norm is multiplicative.
+   elements of `R⁰` whose image in `R⁰/R⁰⁰` is a unit, so that `R⁰⁰` lies in the Jacobson radical
+   of `R⁰`; and that for a normed field `R⁰` is a local ring with maximal ideal `R⁰⁰`. ⚠ `R⁰⁰` is
+   not maximal for a general multiplicative norm: for `ℚ_p⟨X⟩` with the Gauss norm,
+   `R⁰/R⁰⁰ = 𝔽_p[X]`.
 4. A *multiplicative element* is an `a` with `‖a x‖ = ‖a‖ ‖x‖` for all `x`. Products and powers of
    multiplicative elements are multiplicative; a unit `u` is multiplicative if and only if
    `‖u⁻¹‖ = ‖u‖⁻¹`; and for a multiplicative unit `u` and any normed `R`-module `M`,
@@ -411,7 +427,11 @@ page, stated once.
    normed `R`-module `M`; prove it is a norm taking values in `‖π‖ ^ ℤ ∪ {0}`, ultrametric, with
    `‖π‖ ‖m‖' < ‖m‖ ≤ ‖m‖'`, hence bounded-equivalent to the original, complete when the original is,
    and with `‖π • m‖' = ‖π‖ ‖m‖'`. This is Serre's first step and Bellaïche's Theorem II.1.13's
-   only analytic input.
+   only analytic input. ⚠ The ultrametric inequality of `M` is used: `x ↦ inf {‖π‖ ^ n | x ≤ ‖π‖ ^ n}`
+   preserves `max` and is not subadditive. ⚠ With the rescaled norm, `M` is a normed module over `R`
+   (`‖r • m‖' ≤ ‖r‖ ‖m‖'`) only when the norm of `R` itself takes values in `‖π‖ ^ ℤ ∪ {0}`, which
+   is Bellaïche's Hypothesis II.1.11; state it as a theorem under that hypothesis. In `ℂ_p` with
+   `π = p`, an `r` with `‖r‖ = p^{-1/2}` has `‖r • 1‖' = 1 > ‖r‖ ‖1‖'`.
 4. **Residue modules.** For `π` as above, `M⁰ := {m | ‖m‖ ≤ 1}` is an `R⁰`-submodule and
    `M̃ := M⁰ / π M⁰` is a module over `R̃ := R⁰ / π R⁰`. Prove that if the norm of `M` takes values in
    `‖π‖ ^ ℤ ∪ {0}` then `π M⁰ = {m | ‖m‖ < 1}`, so that `M̃` is the reduction of the unit ball modulo
@@ -420,8 +440,11 @@ page, stated once.
 ### 0.4 Banach–Tate rings
 
 1. Define `PseudoUniformizer R`: a unit `ϖ` of `R` that is multiplicative with `‖ϖ‖ < 1`; and the
-   Prop class `NormedRing.IsTate R`, the existence of one (convention 2). A Tate normed ring is
-   nontrivial, and `‖ϖ⁻¹‖ = ‖ϖ‖⁻¹`.
+   Prop class `NormedRing.IsTate R`, the existence of one (convention 2). When `‖1‖ = 1`
+   (`[NormOneClass R]`, part of Johansson–Newton's definition of a normed ring) a Tate normed ring
+   is nontrivial, `0 < ‖ϖ‖`, and `‖ϖ⁻¹‖ = ‖ϖ‖⁻¹`; conversely a nontrivial normed ring with a
+   pseudo-uniformiser has `‖1‖ = 1`, because `‖ϖ‖ = ‖ϖ · 1‖ = ‖ϖ‖ ‖1‖`. ⚠ The zero ring satisfies
+   the definition and is excluded by either hypothesis.
 2. **The scaling trick.** For `ϖ : PseudoUniformizer R` and `m ≠ 0` in a normed `R`-module, there
    is a unique `n : ℤ` with `‖ϖ‖ < ‖ϖ ^ n • m‖ ≤ 1`. This replaces every use of a ground field: it
    is how `ρ`-scaling in Buzzard and `ϖ`-scaling in Johansson–Newton are performed, and Layer 1 is
@@ -459,7 +482,7 @@ page, stated once.
 `ℚ_p`, `ℂ_p`, and `ℤ_p` as normed rings, with `R⁰`, `R⁰⁰`, and the residue ring in each case; the
 Neumann inverse of `1 − p` in `ℤ_p`; the shells `‖ϖ‖ < ‖ϖⁿ x‖ ≤ 1` in `ℚ_p` with `ϖ = p`; the
 rescaled norm on `ℂ_p` with `π = p`, which takes values in `p^ℤ` and is not the original norm; the
-Tate normed ring `ℚ_p⟨X⟩` and its pair of definition `(ℤ_p⟨X⟩, (p))`.
+two counterexamples of §0.2.2.
 
 ### Dependencies
 
@@ -481,7 +504,9 @@ Mathlib; the adic-spaces roadmap for the Huber-side vocabulary of §0.4.5–6 (a
    `‖u x‖ ≤ ‖u‖ ‖x‖` for any `u` admitting some uniform bound.
 2. Over a Tate normed ring, a linear map is continuous if and only if it is bounded, if and only
    if it is bounded on the unit ball (by the scaling trick); hence `‖u x‖ ≤ ‖u‖ ‖x‖` for every
-   `u : M →L[R] N`, and `‖u‖ = sup_{‖x‖ ≤ 1} ‖u x‖`. ⚠ Over a general normed ring continuity does not
+   `u : M →L[R] N`, and `‖u‖ = sup_{x ≠ 0} ‖u x‖ / ‖x‖`. ⚠ The supremum of `‖u x‖` over the unit
+   ball lies between `‖ϖ‖ ‖u‖` and `‖u‖` and need not equal `‖u‖` when the norm of `M` is not
+   dense in `ℝ` (Schneider's warning after his Corollary 3.2). ⚠ Over a general normed ring continuity does not
    imply boundedness: the identity map from `ℤ_p` with the norm `‖x‖²` (a normed `ℤ_p`-module) to
    `ℤ_p` with its norm is continuous and unbounded. The Tate hypothesis is exactly what is needed.
 3. The operator norm is a complete ultrametric norm on `M →L[R] N` when `N` is complete; it is
@@ -555,7 +580,7 @@ valued and a `t`-orthogonal basis for every `t < 1` in general (the finite case 
 ### Examples
 
 The operator norm of coordinate evaluation `C₀(I, R) → R` is `1`; multiplication by `a` on `R` has
-norm `‖a‖` when `a` is multiplicative and can be smaller otherwise; the open mapping constant for
+norm exactly `‖a‖` for every `a` (because `‖1‖ = 1`); the open mapping constant for
 the quotient map `R ² → R`, `(x, y) ↦ x + ϖ y`; a continuous bijection of Banach `ℚ_p`-spaces whose
 inverse has norm `p`; the diagonal operator `diag(dₙ)` on `C₀(ℕ, R)` with `‖dₙ‖ ≤ 1` and its
 invertibility when the `dₙ` are multiplicative units of norm `1`.
@@ -600,7 +625,9 @@ Fix a Banach `R`-module `M` and a family `e : I → M`.
 
 1. Define `IsOrthogonalFamily e`, `IsOrthonormalFamily e`, and `IsTOrthogonalFamily t e` for
    `0 < t ≤ 1` (convention 5), and prove: orthonormal implies orthogonal implies `t`-orthogonal;
-   an orthogonal family with nonzero members is linearly independent; the scaled family `aᵢ • eᵢ`
+   an orthogonal family with nonzero members is linearly independent when the action is
+   multiplicative (`NormSMulClass`: over a ring `a • eᵢ = 0` does not force `a = 0`, Layer 2 plan
+   E21), and an orthonormal family is linearly independent over any ring; the scaled family `aᵢ • eᵢ`
    of an orthogonal family is orthogonal; and for an orthonormal family the map
    `C₀(I, R) → M`, `a ↦ ∑' aᵢ • eᵢ` is an isometric embedding.
 2. Define `IsOrthonormalBasis e`: an orthonormal family whose closed span is `M`. Prove the
@@ -644,7 +671,9 @@ so that `‖R ∖ {0}‖ = ‖π‖ ^ ℤ` (Bellaïche's Hypothesis II.1.11), an
    only if `I` and `J` have the same cardinality (Schneider, Lemma 10.3).
 5. ⚠ The discreteness hypothesis cannot be dropped for orthonormal bases on the nose: for odd `p`,
    `ℂ_p` itself with the norm `2‖·‖` has no orthonormal basis, since `‖ℂ_p‖ = p^ℚ` does not contain
-   `1/2`; the potential statement is §2.4.
+   `1/2`; the potential statement is §2.4. ⚠ The value group of `ℂ_p` is not in Mathlib: the Lean
+   example takes `1/2 ∉ ‖ℂ_p‖` as a hypothesis, and the discretely valued instance (`ℚ_p` with the
+   norm `2‖·‖`, odd `p`) is proved outright (Layer 2 plan, E23).
 
 ### 2.4 Banach spaces of countable type
 
@@ -655,9 +684,13 @@ so that `‖R ∖ {0}‖ = ‖π‖ ^ ℤ` (Bellaïche's Hypothesis II.1.11), an
    a `t`-orthogonal sequence spanning a dense subspace, by the inductive distance argument, and the
    scaled sequence is a potential orthonormal basis. Hence such a space is potentially
    orthonormalisable over any `K`.
-2. A `K`-Banach space of countable type has a `t`-orthogonal basis for every `0 < t < 1`, and an
-   orthogonal basis when `K` is discretely valued (van Rooij; Perez-Garcia–Schikhof). Record that
-   over a non-discretely-valued `K` a `1`-orthogonal basis need not exist.
+2. A `K`-Banach space of countable type has a `t`-orthogonal basis for every `0 < t < 1`. Record that
+   over a non-discretely-valued `K` a `1`-orthogonal basis need not exist. **Potential future work,
+   not in Layer 2's Lean development:** an orthogonal basis when `K` is discretely valued (van Rooij;
+   Perez-Garcia–Schikhof) — the reference text is not yet available to the board; the intended route
+   is Ingleton's norm-preserving Hahn–Banach theorem (Schneider, Proposition 9.2, for the spherically
+   complete `K` of Lemma 1.6), orthocomplemented finite-dimensional subspaces, and an
+   orthogonalisation induction (Layer 2 plan, E24).
 3. A closed subspace of a space of countable type is of countable type and is complemented by a
    closed subspace; a quotient of a space of countable type is of countable type.
 
@@ -683,11 +716,15 @@ so that `‖R ∖ {0}‖ = ‖π‖ ^ ℤ` (Bellaïche's Hypothesis II.1.11), an
    and `(u f) i = ∑' j, matrixCoeff u i j * f j`. Conversely a matrix `a : I → J → R` whose columns
    tend to `0` cofinitely and whose entries are bounded is the matrix of a unique bounded operator,
    of norm `sup ‖a i j‖` (Buzzard §2; Bellaïche §II.1.3). The matrix of a composite is the matrix
-   product, with the middle sum convergent by §0.1.4.
+   product, with the middle sum convergent by §0.1.4. The formulas with products of coefficients
+   are stated for a commutative `R` (over a noncommutative ring the coefficients multiply in the
+   order `f j * matrixCoeff u i j`; nothing downstream needs that case — Layer 2 plan, E27).
 2. **Diagonal and permutation operators.** The diagonal operator of a bounded family `d : I → R`
    has norm `sup ‖dᵢ‖`; it is an isometric automorphism when every `dᵢ` is a multiplicative unit of
-   norm `1`, and injective with dense range when every `dᵢ` is a non-zero-divisor, which is the case
-   of `diag(⌊n/pʰ⌋!)` in §4.4. The permutation operator of `σ : I ≃ I` is an isometric automorphism.
+   norm `1`, injective when every `dᵢ` is a non-zero-divisor, and with dense range when every `dᵢ`
+   is a unit (the inverses need not be bounded: `diag(⌊n/pʰ⌋!)` in §4.4 is over a field) — for
+   non-zero-divisors alone the range need not be dense, `diag(p, p, …)` on `C₀(ℕ, ℤ_p)` has range
+   `p C₀` (Layer 2 plan, E22). The permutation operator of `σ : I ≃ I` is an isometric automorphism.
 3. **Coordinate truncations.** For a finite `S ⊆ I`, the truncation `π_S : C₀(I, R) →L[R] C₀(I, R)`
    (restriction of coordinates to `S`) has norm at most `1`, has range the finite free module on
    `S`, and `π_S ∘ u → u` pointwise along the filter of finite subsets for every bounded `u` into
@@ -1056,7 +1093,8 @@ level `0`), and of `x ↦ (1 + p^{1/2}) ^ x` over `ℚ_p(√p)` (level `1`, by b
 `padicExp p`, `padicLog (1 + p)`, `padicLog ζ_p = 0`; `(1 + p) ^ (1/2)` as a binomial series;
 the Amice transform of `dirac a` and of the derivative functional `f ↦ (d/dx) f (0)` on locally
 analytic functions, which is `∑ (−1)ⁿ⁺¹ Tⁿ / n = log (1 + T)`, converging on the open disc but not
-bounded.
+bounded; and the Tate normed ring `ℚ_p⟨X⟩` of §4.1 with its pair of definition `(ℤ_p⟨X⟩, (p))`, by
+§0.4.5.
 
 ### Dependencies
 

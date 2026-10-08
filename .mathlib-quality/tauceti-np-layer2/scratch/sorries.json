@@ -1,0 +1,2050 @@
+[
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 85,
+  "kind": "lemma",
+  "name": "map_zero",
+  "statement": "lemma map_zero : v 0 = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 87,
+  "kind": "lemma",
+  "name": "map_one",
+  "statement": "lemma map_one : v 1 = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 89,
+  "kind": "lemma",
+  "name": "map_mul",
+  "statement": "lemma map_mul (x y : K) : v (x * y) = v x + v y",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 91,
+  "kind": "lemma",
+  "name": "map_pow",
+  "statement": "lemma map_pow (x : K) (n : ℕ) : v (x ^ n) = n • v x",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 93,
+  "kind": "lemma",
+  "name": "map_inv",
+  "statement": "lemma map_inv (x : K) : v x⁻¹ = -v x",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 95,
+  "kind": "lemma",
+  "name": "min_le_map_add",
+  "statement": "lemma min_le_map_add (x y : K) : min (v x) (v y) ≤ v (x + y)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 97,
+  "kind": "lemma",
+  "name": "eq_top_iff",
+  "statement": "@[simp] lemma eq_top_iff {x : K} : v x = ⊤ ↔ x = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 99,
+  "kind": "lemma",
+  "name": "ne_top_iff",
+  "statement": "lemma ne_top_iff {x : K} : v x ≠ ⊤ ↔ x ≠ 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 101,
+  "kind": "lemma",
+  "name": "exists_eq_coe",
+  "statement": "lemma exists_eq_coe {x : K} (hx : x ≠ 0) : ∃ γ : Γ, v x = (γ : WithTop Γ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 105,
+  "kind": "lemma",
+  "name": "base_pos",
+  "statement": "lemma base_pos : 0 < v.base",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 107,
+  "kind": "lemma",
+  "name": "log_base_pos",
+  "statement": "lemma log_base_pos : 0 < Real.log v.base",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 110,
+  "kind": "lemma",
+  "name": "norm_eq_rpow",
+  "statement": "lemma norm_eq_rpow {x : K} {γ : Γ} (h : v x = (γ : WithTop Γ)) :\n    ‖x‖ = v.base ^ (-v.embed γ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 114,
+  "kind": "lemma",
+  "name": "embed_eq_neg_logb",
+  "statement": "lemma embed_eq_neg_logb {x : K} {γ : Γ} (h : v x = (γ : WithTop Γ)) :\n    v.embed γ = -Real.logb v.base ‖x‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 118,
+  "kind": "lemma",
+  "name": "norm_add_le_max",
+  "statement": "lemma norm_add_le_max (x y : K) : ‖x + y‖ ≤ max ‖x‖ ‖y‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 121,
+  "kind": "lemma",
+  "name": "rpow_logb",
+  "statement": "lemma rpow_logb {c : ℝ} (hc : 0 < c) : v.base ^ Real.logb v.base c = c",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 131,
+  "kind": "lemma",
+  "name": "embedTop_top",
+  "statement": "@[simp] lemma embedTop_top : v.embedTop ⊤ = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 133,
+  "kind": "lemma",
+  "name": "embedTop_coe",
+  "statement": "@[simp] lemma embedTop_coe (γ : Γ) : v.embedTop (γ : WithTop Γ) = (v.embed γ : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 136,
+  "kind": "lemma",
+  "name": "embedTop_eq_top_iff",
+  "statement": "lemma embedTop_eq_top_iff {a : WithTop Γ} : v.embedTop a = ⊤ ↔ a = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 138,
+  "kind": "lemma",
+  "name": "embedTop_strictMono",
+  "statement": "lemma embedTop_strictMono : StrictMono v.embedTop",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 140,
+  "kind": "lemma",
+  "name": "embedTop_le_embedTop",
+  "statement": "lemma embedTop_le_embedTop {a b : WithTop Γ} : v.embedTop a ≤ v.embedTop b ↔ a ≤ b",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 142,
+  "kind": "lemma",
+  "name": "embedTop_add",
+  "statement": "lemma embedTop_add (a b : WithTop Γ) : v.embedTop (a + b) = v.embedTop a + v.embedTop b",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 145,
+  "kind": "lemma",
+  "name": "embedTop_apply_eq_top_iff",
+  "statement": "lemma embedTop_apply_eq_top_iff {x : K} : v.embedTop (v x) = ⊤ ↔ x = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 147,
+  "kind": "lemma",
+  "name": "embedTop_map_one",
+  "statement": "lemma embedTop_map_one : v.embedTop (v 1) = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 156,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_eq_rpow",
+  "statement": "theorem norm_mul_rpow_pow_eq_rpow {x : K} {γ : Γ} (h : v x = (γ : WithTop Γ)) (m : ℝ) (k : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k = v.base ^ (m * k - v.embed γ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 161,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_le_one_iff",
+  "statement": "theorem norm_mul_rpow_pow_le_one_iff (x : K) (m : ℝ) (k : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k ≤ 1 ↔ ((m * k : ℝ) : WithTop ℝ) ≤ v.embedTop (v x)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 165,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_lt_one_iff",
+  "statement": "theorem norm_mul_rpow_pow_lt_one_iff (x : K) (m : ℝ) (k : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k < 1 ↔ ((m * k : ℝ) : WithTop ℝ) < v.embedTop (v x)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 169,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_eq_one_iff",
+  "statement": "theorem norm_mul_rpow_pow_eq_one_iff (x : K) (m : ℝ) (k : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k = 1 ↔ v.embedTop (v x) = ((m * k : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 174,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_le_iff",
+  "statement": "theorem norm_mul_rpow_pow_le_iff (x y : K) (m : ℝ) (k j : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k ≤ ‖y‖ * (v.base ^ m) ^ j ↔\n      v.embedTop (v y) + ((m * ((k : ℝ) - j) : ℝ) : WithTop ℝ) ≤ v.embedTop (v x)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 179,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_lt_iff",
+  "statement": "theorem norm_mul_rpow_pow_lt_iff (x y : K) (m : ℝ) (k j : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k < ‖y‖ * (v.base ^ m) ^ j ↔\n      v.embedTop (v y) + ((m * ((k : ℝ) - j) : ℝ) : WithTop ℝ) < v.embedTop (v x)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 184,
+  "kind": "theorem",
+  "name": "norm_mul_rpow_pow_eq_iff",
+  "statement": "theorem norm_mul_rpow_pow_eq_iff (x y : K) (m : ℝ) (k j : ℕ) :\n    ‖x‖ * (v.base ^ m) ^ k = ‖y‖ * (v.base ^ m) ^ j ↔\n      v.embedTop (v x) = v.embedTop (v y) + ((m * ((k : ℝ) - j) : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 196,
+  "kind": "lemma",
+  "name": "scale_pos",
+  "statement": "lemma scale_pos (w : NormedAddValuation K Γ') : 0 < v.scale w",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 199,
+  "kind": "theorem",
+  "name": "embed_eq_scale_mul_embed",
+  "statement": "theorem embed_eq_scale_mul_embed (w : NormedAddValuation K Γ') {x : K} {γ : Γ} {γ' : Γ'}\n    (hv : v x = (γ : WithTop Γ)) (hw : w x = (γ' : WithTop Γ')) :\n    w.embed γ' = v.scale w * v.embed γ",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 204,
+  "kind": "theorem",
+  "name": "embedTop_apply_eq_map",
+  "statement": "theorem embedTop_apply_eq_map (w : NormedAddValuation K Γ') (x : K) :\n    w.embedTop (w x) = WithTop.map (fun t : ℝ ↦ v.scale w * t) (v.embedTop (v x))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 218,
+  "kind": "def",
+  "name": "ofNormAddVal",
+  "statement": "noncomputable def ofNormAddVal : NormedAddValuation K ℝ where",
+  "sorries": 2
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 232,
+  "kind": "lemma",
+  "name": "ofNormAddVal_apply_of_ne_zero",
+  "statement": "lemma ofNormAddVal_apply_of_ne_zero {x : K} (hx : x ≠ 0) :\n    ofNormAddVal K x = ((-Real.log ‖x‖ : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 240,
+  "kind": "def",
+  "name": "ofNormAddValZ",
+  "statement": "noncomputable def ofNormAddValZ {π : K} (hπ : IsUniformizer (valuation (K := K)) π) :\n    NormedAddValuation K ℤ where",
+  "sorries": 3
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 258,
+  "kind": "lemma",
+  "name": "ofNormAddValZ_apply_isUniformizer",
+  "statement": "lemma ofNormAddValZ_apply_isUniformizer {π : K} (hπ : IsUniformizer (valuation (K := K)) π) :\n    ofNormAddValZ K hπ π = 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 262,
+  "kind": "lemma",
+  "name": "scale_ofNormAddValZ_ofNormAddVal",
+  "statement": "lemma scale_ofNormAddValZ_ofNormAddVal {π : K} (hπ : IsUniformizer (valuation (K := K)) π) :\n    (ofNormAddValZ K hπ).scale (ofNormAddVal K) = -Real.log ‖π‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 272,
+  "kind": "def",
+  "name": "ofNormAddValQ",
+  "statement": "noncomputable def ofNormAddValQ : NormedAddValuation K ℚ where",
+  "sorries": 3
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/NormedAddValuation.lean",
+  "line": 287,
+  "kind": "lemma",
+  "name": "ofNormAddValQ_self",
+  "statement": "lemma ofNormAddValQ_self : ofNormAddValQ K π π = 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 46,
+  "kind": "theorem",
+  "name": "isAdmissible_of_finite",
+  "statement": "theorem isAdmissible_of_finite (hfin : (finiteSupport v).Finite) : IsAdmissible v",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 54,
+  "kind": "theorem",
+  "name": "shiftRight_add",
+  "statement": "@[simp] theorem shiftRight_add (n : ℕ) (v : ℕ → WithTop ℝ) (k : ℕ) :\n    shiftRight n v (k + n) = v k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "shiftRight_of_le",
+  "statement": "theorem shiftRight_of_le {n k : ℕ} (hk : n ≤ k) (v : ℕ → WithTop ℝ) :\n    shiftRight n v k = v (k - n)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 60,
+  "kind": "theorem",
+  "name": "shiftRight_of_lt",
+  "statement": "theorem shiftRight_of_lt {n k : ℕ} (hk : k < n) (v : ℕ → WithTop ℝ) : shiftRight n v k = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 63,
+  "kind": "theorem",
+  "name": "shiftRight_zero",
+  "statement": "@[simp] theorem shiftRight_zero (v : ℕ → WithTop ℝ) : shiftRight 0 v = v",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 65,
+  "kind": "theorem",
+  "name": "unitSlope_shiftRight",
+  "statement": "theorem unitSlope_shiftRight (n : ℕ) (h : ℕ → WithTop ℝ) (k : ℕ) :\n    unitSlope (shiftRight n h) (k + n) = unitSlope h k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "isConvexSeq_shiftRight_iff",
+  "statement": "theorem isConvexSeq_shiftRight_iff (n : ℕ) : IsConvexSeq (shiftRight n h) ↔ IsConvexSeq h",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 71,
+  "kind": "theorem",
+  "name": "isNewtonPolygonOf_shiftRight_iff",
+  "statement": "theorem isNewtonPolygonOf_shiftRight_iff (n : ℕ) :\n    IsNewtonPolygonOf (shiftRight n v) (shiftRight n h) ↔ IsNewtonPolygonOf v h",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "isAdmissible_shiftRight_iff",
+  "statement": "theorem isAdmissible_shiftRight_iff (n : ℕ) : IsAdmissible (shiftRight n v) ↔ IsAdmissible v",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "newtonPolygon_shiftRight",
+  "statement": "theorem newtonPolygon_shiftRight (hv : IsAdmissible v) (n : ℕ) :\n    newtonPolygon (shiftRight n v) = shiftRight n (newtonPolygon v)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "reflect_of_le",
+  "statement": "theorem reflect_of_le {d k : ℕ} (hk : k ≤ d) (v : ℕ → WithTop ℝ) : reflect d v k = v (d - k)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "reflect_of_lt",
+  "statement": "theorem reflect_of_lt {d k : ℕ} (hk : d < k) (v : ℕ → WithTop ℝ) : reflect d v k = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "reflect_reflect",
+  "statement": "theorem reflect_reflect {d : ℕ} (hv : ∀ k, d < k → v k = ⊤) : reflect d (reflect d v) = v",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 96,
+  "kind": "theorem",
+  "name": "unitSlope_reflect",
+  "statement": "theorem unitSlope_reflect {d k : ℕ} (hk : k < d) (h : ℕ → WithTop ℝ) :\n    unitSlope (reflect d h) k = -unitSlope h (d - (k + 1))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "IsConvexSeq.reflect",
+  "statement": "theorem IsConvexSeq.reflect (hh : IsConvexSeq h) {d : ℕ} (hd : ∀ k, d < k → h k = ⊤) :\n    IsConvexSeq (reflect d h)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 102,
+  "kind": "theorem",
+  "name": "IsNewtonPolygonOf.reflect",
+  "statement": "theorem IsNewtonPolygonOf.reflect (hh : IsNewtonPolygonOf v h) {d : ℕ}\n    (hv : ∀ k, d < k → v k = ⊤) : IsNewtonPolygonOf (reflect d v) (reflect d h)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 107,
+  "kind": "theorem",
+  "name": "newtonPolygon_reflect",
+  "statement": "theorem newtonPolygon_reflect {d : ℕ} (hv : ∀ k, d < k → v k = ⊤) :\n    newtonPolygon (reflect d v) = reflect d (newtonPolygon v)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 119,
+  "kind": "theorem",
+  "name": "scaleHeight_eq_top_iff",
+  "statement": "theorem scaleHeight_eq_top_iff (c : ℝ) {k : ℕ} : scaleHeight c v k = ⊤ ↔ v k = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "finiteSupport_scaleHeight",
+  "statement": "theorem finiteSupport_scaleHeight (c : ℝ) : finiteSupport (scaleHeight c v) = finiteSupport v",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 124,
+  "kind": "theorem",
+  "name": "unitSlope_scaleHeight",
+  "statement": "theorem unitSlope_scaleHeight (c : ℝ) (h : ℕ → WithTop ℝ) (k : ℕ) :\n    unitSlope (scaleHeight c h) k = WithTop.map (fun t : ℝ ↦ c * t) (unitSlope h k)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 127,
+  "kind": "theorem",
+  "name": "isConvexSeq_scaleHeight_iff",
+  "statement": "theorem isConvexSeq_scaleHeight_iff {c : ℝ} (hc : 0 < c) :\n    IsConvexSeq (scaleHeight c h) ↔ IsConvexSeq h",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 130,
+  "kind": "theorem",
+  "name": "isNewtonPolygonOf_scaleHeight_iff",
+  "statement": "theorem isNewtonPolygonOf_scaleHeight_iff {c : ℝ} (hc : 0 < c) :\n    IsNewtonPolygonOf (scaleHeight c v) (scaleHeight c h) ↔ IsNewtonPolygonOf v h",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 133,
+  "kind": "theorem",
+  "name": "isAdmissible_scaleHeight_iff",
+  "statement": "theorem isAdmissible_scaleHeight_iff {c : ℝ} (hc : 0 < c) :\n    IsAdmissible (scaleHeight c v) ↔ IsAdmissible v",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "newtonPolygon_scaleHeight",
+  "statement": "theorem newtonPolygon_scaleHeight {c : ℝ} (hc : 0 < c) (hv : IsAdmissible v) :\n    newtonPolygon (scaleHeight c v) = scaleHeight c (newtonPolygon v)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 140,
+  "kind": "theorem",
+  "name": "slopeMultiset_scaleHeight",
+  "statement": "theorem slopeMultiset_scaleHeight {c : ℝ} (hc : 0 < c) (hfin : (slopeIndices h).Finite) :\n    slopeMultiset (scaleHeight c h) = (slopeMultiset h).map (fun t : ℝ ↦ c * t)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "exists_isSegment_of_mem_slopeIndices",
+  "statement": "theorem exists_isSegment_of_mem_slopeIndices (hh : IsConvexSeq h) (hfin : (slopeIndices h).Finite)\n    {j : ℕ} (hj : j ∈ slopeIndices h) : ∃ a b, IsSegment h a b ∧ a ≤ j ∧ j < b",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Generic.lean",
+  "line": 151,
+  "kind": "theorem",
+  "name": "IsConvexSeq.unitSlope_eq_div_of_isSegment",
+  "statement": "theorem IsConvexSeq.unitSlope_eq_div_of_isSegment (hh : IsConvexSeq h) {a b : ℕ}\n    (hab : IsSegment h a b) {j : ℕ} (haj : a ≤ j) (hjb : j < b) :\n    unitSlope h j = ((((h b).untop₀ - (h a).untop₀) / ((b : ℝ) - a) : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 61,
+  "kind": "lemma",
+  "name": "coeffVal_eq_top_iff",
+  "statement": "@[simp] lemma coeffVal_eq_top_iff {i : ℕ} : coeffVal v f i = ⊤ ↔ coeff i f = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 63,
+  "kind": "lemma",
+  "name": "coeffVal_ne_top_iff",
+  "statement": "lemma coeffVal_ne_top_iff {i : ℕ} : coeffVal v f i ≠ ⊤ ↔ coeff i f ≠ 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 65,
+  "kind": "lemma",
+  "name": "coeffVal_eq_coe_iff",
+  "statement": "lemma coeffVal_eq_coe_iff {i : ℕ} {γ : Γ} :\n    coeffVal v f i = (v.embed γ : WithTop ℝ) ↔ v (coeff i f) = (γ : WithTop Γ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 68,
+  "kind": "lemma",
+  "name": "finiteSupport_coeffVal",
+  "statement": "lemma finiteSupport_coeffVal : finiteSupport (coeffVal v f) = {i | coeff i f ≠ 0}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 70,
+  "kind": "lemma",
+  "name": "coeffVal_zero",
+  "statement": "@[simp] lemma coeffVal_zero : coeffVal v (0 : PowerSeries K) = fun _ ↦ ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 72,
+  "kind": "lemma",
+  "name": "coeffVal_zero_of_coeff_zero_eq_one",
+  "statement": "lemma coeffVal_zero_of_coeff_zero_eq_one (h : coeff 0 f = 1) : coeffVal v f 0 = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 74,
+  "kind": "lemma",
+  "name": "exists_coeffVal_ne_top",
+  "statement": "lemma exists_coeffVal_ne_top (hf : f ≠ 0) : ∃ i, coeffVal v f i ≠ ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 78,
+  "kind": "lemma",
+  "name": "norm_coeff_mul_rpow_pow_le_one_iff",
+  "statement": "lemma norm_coeff_mul_rpow_pow_le_one_iff (m : ℝ) (k : ℕ) :\n    ‖coeff k f‖ * (v.base ^ m) ^ k ≤ 1 ↔ ((m * k : ℝ) : WithTop ℝ) ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 81,
+  "kind": "lemma",
+  "name": "norm_coeff_mul_rpow_pow_lt_one_iff",
+  "statement": "lemma norm_coeff_mul_rpow_pow_lt_one_iff (m : ℝ) (k : ℕ) :\n    ‖coeff k f‖ * (v.base ^ m) ^ k < 1 ↔ ((m * k : ℝ) : WithTop ℝ) < coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 84,
+  "kind": "lemma",
+  "name": "norm_coeff_mul_rpow_pow_eq_one_iff",
+  "statement": "lemma norm_coeff_mul_rpow_pow_eq_one_iff (m : ℝ) (k : ℕ) :\n    ‖coeff k f‖ * (v.base ^ m) ^ k = 1 ↔ coeffVal v f k = ((m * k : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "hasGaussNorm_rpow_iff_exists_line",
+  "statement": "theorem hasGaussNorm_rpow_iff_exists_line (m : ℝ) :\n    HasGaussNorm norm (v.base ^ m) f ↔\n      ∃ y : ℝ, ∀ k : ℕ, ((y + m * k : ℝ) : WithTop ℝ) ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "isAdmissible_coeffVal_iff_exists_hasGaussNorm",
+  "statement": "theorem isAdmissible_coeffVal_iff_exists_hasGaussNorm :\n    IsAdmissible (coeffVal v f) ↔ ∃ c : ℝ, 0 < c ∧ HasGaussNorm norm c f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 101,
+  "kind": "theorem",
+  "name": "isRestricted_of_hasGaussNorm",
+  "statement": "theorem isRestricted_of_hasGaussNorm {c c' : ℝ} (hc : 0 ≤ c) (hcc' : c < c')\n    (hf : HasGaussNorm norm c' f) : IsRestricted c f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 105,
+  "kind": "theorem",
+  "name": "isAdmissible_coeffVal_iff_exists_isRestricted",
+  "statement": "theorem isAdmissible_coeffVal_iff_exists_isRestricted :\n    IsAdmissible (coeffVal v f) ↔ ∃ c : ℝ, 0 < c ∧ IsRestricted c f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "IsRestricted.isAdmissible_coeffVal",
+  "statement": "theorem IsRestricted.isAdmissible_coeffVal {c : ℝ} (hc : 0 < c) (hf : IsRestricted c f) :\n    IsAdmissible (coeffVal v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 113,
+  "kind": "theorem",
+  "name": "isVertical_coeffVal_iff",
+  "statement": "theorem isVertical_coeffVal_iff :\n    IsVertical (coeffVal v f) ↔ f ≠ 0 ∧ ∀ c : ℝ, 0 < c → ¬ IsRestricted c f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 129,
+  "kind": "lemma",
+  "name": "coeffVal_eq_top_iff",
+  "statement": "@[simp] lemma coeffVal_eq_top_iff {i : ℕ} : coeffVal v f i = ⊤ ↔ f.coeff i = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 131,
+  "kind": "lemma",
+  "name": "coeffVal_ne_top_iff",
+  "statement": "lemma coeffVal_ne_top_iff {i : ℕ} : coeffVal v f i ≠ ⊤ ↔ f.coeff i ≠ 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 133,
+  "kind": "lemma",
+  "name": "coeffVal_eq_coe_iff",
+  "statement": "lemma coeffVal_eq_coe_iff {i : ℕ} {γ : Γ} :\n    coeffVal v f i = (v.embed γ : WithTop ℝ) ↔ v (f.coeff i) = (γ : WithTop Γ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 137,
+  "kind": "lemma",
+  "name": "finiteSupport_coeffVal",
+  "statement": "lemma finiteSupport_coeffVal : finiteSupport (coeffVal v f) = ↑f.support",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 140,
+  "kind": "lemma",
+  "name": "finiteSupport_coeffVal_finite",
+  "statement": "lemma finiteSupport_coeffVal_finite : (finiteSupport (coeffVal v f)).Finite",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 143,
+  "kind": "lemma",
+  "name": "coeffVal_coe",
+  "statement": "lemma coeffVal_coe : PowerSeries.coeffVal v (f : PowerSeries K) = coeffVal v f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 146,
+  "kind": "theorem",
+  "name": "isAdmissible_coeffVal",
+  "statement": "theorem isAdmissible_coeffVal : IsAdmissible (coeffVal v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/CoeffVal.lean",
+  "line": 149,
+  "kind": "theorem",
+  "name": "hasGaussNorm_coe",
+  "statement": "theorem hasGaussNorm_coe (c : ℝ) : PowerSeries.HasGaussNorm norm c (f : PowerSeries K)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "isNewtonPolygonOf_newtonPolygon",
+  "statement": "theorem isNewtonPolygonOf_newtonPolygon (hf : IsAdmissible (coeffVal v f)) :\n    IsNewtonPolygonOf (coeffVal v f) (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "isNewtonPolygonOf_newtonPolygon_of_isRestricted",
+  "statement": "theorem isNewtonPolygonOf_newtonPolygon_of_isRestricted {c : ℝ} (hc : 0 < c)\n    (hf : IsRestricted c f) : IsNewtonPolygonOf (coeffVal v f) (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 71,
+  "kind": "theorem",
+  "name": "newtonPolygon_le",
+  "statement": "theorem newtonPolygon_le (hf : IsAdmissible (coeffVal v f)) (k : ℕ) :\n    newtonPolygon v f k ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "isConvexSeq_newtonPolygon",
+  "statement": "theorem isConvexSeq_newtonPolygon (hf : IsAdmissible (coeffVal v f)) :\n    IsConvexSeq (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "newtonPolygon_zero",
+  "statement": "@[simp] theorem newtonPolygon_zero : newtonPolygon v (0 : PowerSeries K) = fun _ ↦ ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "newtonPolygon_zero_eq",
+  "statement": "theorem newtonPolygon_zero_eq (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0) :\n    newtonPolygon v f 0 = coeffVal v f 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "newtonPolygon_zero_of_coeff_zero_eq_one",
+  "statement": "theorem newtonPolygon_zero_of_coeff_zero_eq_one (hf : IsAdmissible (coeffVal v f))\n    (h0 : coeff 0 f = 1) : newtonPolygon v f 0 = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "exists_eq_embed_of_isVertex",
+  "statement": "theorem exists_eq_embed_of_isVertex (hf : IsAdmissible (coeffVal v f)) {k : ℕ}\n    (hk : IsVertex (newtonPolygon v f) k) :\n    ∃ γ : Γ, v (coeff k f) = (γ : WithTop Γ) ∧ newtonPolygon v f k = (v.embed γ : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "exists_unitSlope_eq_div_of_isSegment",
+  "statement": "theorem exists_unitSlope_eq_div_of_isSegment (hf : IsAdmissible (coeffVal v f)) {a b : ℕ}\n    (hab : IsSegment (newtonPolygon v f) a b) {j : ℕ} (haj : a ≤ j) (hjb : j < b) :\n    ∃ γ : Γ, unitSlope (newtonPolygon v f) j = ((v.embed γ / ((b : ℝ) - a) : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 104,
+  "kind": "theorem",
+  "name": "exists_int_unitSlope_eq_div_of_isSegment",
+  "statement": "theorem exists_int_unitSlope_eq_div_of_isSegment {w : NormedAddValuation K ℤ}\n    (he : ∀ n : ℤ, w.embed n = n) (hf : IsAdmissible (coeffVal w f)) {a b : ℕ}\n    (hab : IsSegment (newtonPolygon w f) a b) {j : ℕ} (haj : a ≤ j) (hjb : j < b) :\n    ∃ n : ℤ, unitSlope (newtonPolygon w f) j = (((n : ℚ) / ((b - a : ℕ) : ℚ) : ℚ) : ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "slopesUnbounded_newtonPolygon_of_forall_isRestricted",
+  "statement": "theorem slopesUnbounded_newtonPolygon_of_forall_isRestricted (hf : ∀ c : ℝ, 0 < c → IsRestricted c f) :\n    SlopesUnbounded (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 116,
+  "kind": "theorem",
+  "name": "tendsto_unitSlope_newtonPolygon",
+  "statement": "theorem tendsto_unitSlope_newtonPolygon (hf : ∀ c : ℝ, 0 < c → IsRestricted c f) :\n    Tendsto (unitSlope (newtonPolygon v f)) atTop (𝓝 ⊤)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "isRestricted_rpow_of_lt_unitSlope",
+  "statement": "theorem isRestricted_rpow_of_lt_unitSlope (hf : IsAdmissible (coeffVal v f)) {σ : ℝ} {j : ℕ}\n    (hjf : newtonPolygon v f j ≠ ⊤) (hj : (σ : WithTop ℝ) < unitSlope (newtonPolygon v f) j) :\n    IsRestricted (v.base ^ σ) f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 127,
+  "kind": "theorem",
+  "name": "unitSlope_le_of_not_isRestricted",
+  "statement": "theorem unitSlope_le_of_not_isRestricted (hf : IsAdmissible (coeffVal v f)) {σ : ℝ}\n    (hσ : ¬ IsRestricted (v.base ^ σ) f) {j : ℕ} (hjf : newtonPolygon v f j ≠ ⊤) :\n    unitSlope (newtonPolygon v f) j ≤ σ",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 133,
+  "kind": "theorem",
+  "name": "coeffVal_C_mul",
+  "statement": "theorem coeffVal_C_mul {c : K} {γ : Γ} (hc : v c = (γ : WithTop Γ)) :\n    coeffVal v (C c * f) = fun k ↦ coeffVal v f k + (v.embed γ : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "newtonPolygon_C_mul",
+  "statement": "theorem newtonPolygon_C_mul (hf : IsAdmissible (coeffVal v f)) {c : K} {γ : Γ}\n    (hc : v c = (γ : WithTop Γ)) :\n    newtonPolygon v (C c * f) = fun k ↦ newtonPolygon v f k + (v.embed γ : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 141,
+  "kind": "theorem",
+  "name": "coeff_zero_C_inv_mul",
+  "statement": "theorem coeff_zero_C_inv_mul (h0 : coeff 0 f ≠ 0) : coeff 0 (C ((coeff 0 f)⁻¹) * f) = 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 145,
+  "kind": "theorem",
+  "name": "newtonPolygon_C_inv_mul",
+  "statement": "theorem newtonPolygon_C_inv_mul (hf : IsAdmissible (coeffVal v f)) {γ : Γ}\n    (h0 : v (coeff 0 f) = (γ : WithTop Γ)) :\n    newtonPolygon v (C ((coeff 0 f)⁻¹) * f) =\n      fun k ↦ newtonPolygon v f k + ((-v.embed γ : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 152,
+  "kind": "theorem",
+  "name": "coeffVal_rescale",
+  "statement": "theorem coeffVal_rescale {c : K} {γ : Γ} (hc : v c = (γ : WithTop Γ)) :\n    coeffVal v (rescale c f) = fun k ↦ coeffVal v f k + ((v.embed γ * k : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 157,
+  "kind": "theorem",
+  "name": "newtonPolygon_rescale",
+  "statement": "theorem newtonPolygon_rescale (hf : IsAdmissible (coeffVal v f)) {c : K} {γ : Γ}\n    (hc : v c = (γ : WithTop Γ)) :\n    newtonPolygon v (rescale c f) =\n      fun k ↦ newtonPolygon v f k + ((v.embed γ * k : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 162,
+  "kind": "theorem",
+  "name": "coeffVal_X_pow_mul",
+  "statement": "theorem coeffVal_X_pow_mul (n : ℕ) : coeffVal v (X ^ n * f) = shiftRight n (coeffVal v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 166,
+  "kind": "theorem",
+  "name": "newtonPolygon_X_pow_mul",
+  "statement": "theorem newtonPolygon_X_pow_mul (hf : IsAdmissible (coeffVal v f)) (n : ℕ) :\n    newtonPolygon v (X ^ n * f) = shiftRight n (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 173,
+  "kind": "theorem",
+  "name": "coeffVal_map",
+  "statement": "theorem coeffVal_map (w : NormedAddValuation L Γ) (φ : K →+* L) (hφ : ∀ x, w (φ x) = v x)\n    (he : w.embed = v.embed) : coeffVal w (map φ f) = coeffVal v f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 177,
+  "kind": "theorem",
+  "name": "newtonPolygon_map",
+  "statement": "theorem newtonPolygon_map (w : NormedAddValuation L Γ) (φ : K →+* L) (hφ : ∀ x, w (φ x) = v x)\n    (he : w.embed = v.embed) : newtonPolygon w (map φ f) = newtonPolygon v f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 185,
+  "kind": "theorem",
+  "name": "coeffVal_eq_scaleHeight",
+  "statement": "theorem coeffVal_eq_scaleHeight : coeffVal w f = scaleHeight (v.scale w) (coeffVal v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 188,
+  "kind": "theorem",
+  "name": "isAdmissible_coeffVal_iff",
+  "statement": "theorem isAdmissible_coeffVal_iff : IsAdmissible (coeffVal w f) ↔ IsAdmissible (coeffVal v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/PowerSeries.lean",
+  "line": 193,
+  "kind": "theorem",
+  "name": "newtonPolygon_eq_scaleHeight",
+  "statement": "theorem newtonPolygon_eq_scaleHeight (hf : IsAdmissible (coeffVal v f)) :\n    newtonPolygon w f = scaleHeight (v.scale w) (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "newtonPolygon_coe",
+  "statement": "theorem newtonPolygon_coe : PowerSeries.newtonPolygon v (f : PowerSeries K) = newtonPolygon v f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 61,
+  "kind": "theorem",
+  "name": "isNewtonPolygonOf_newtonPolygon",
+  "statement": "theorem isNewtonPolygonOf_newtonPolygon : IsNewtonPolygonOf (coeffVal v f) (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "newtonPolygon_le",
+  "statement": "theorem newtonPolygon_le (k : ℕ) : newtonPolygon v f k ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 66,
+  "kind": "theorem",
+  "name": "isConvexSeq_newtonPolygon",
+  "statement": "theorem isConvexSeq_newtonPolygon : IsConvexSeq (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "newtonPolygon_zero",
+  "statement": "@[simp] theorem newtonPolygon_zero : newtonPolygon v (0 : Polynomial K) = fun _ ↦ ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "newtonPolygon_eq_top_of_lt_natTrailingDegree",
+  "statement": "theorem newtonPolygon_eq_top_of_lt_natTrailingDegree {k : ℕ} (hk : k < f.natTrailingDegree) :\n    newtonPolygon v f k = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 75,
+  "kind": "theorem",
+  "name": "newtonPolygon_eq_top_of_natDegree_lt",
+  "statement": "theorem newtonPolygon_eq_top_of_natDegree_lt {k : ℕ} (hk : f.natDegree < k) :\n    newtonPolygon v f k = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "newtonPolygon_ne_top",
+  "statement": "theorem newtonPolygon_ne_top (hf : f ≠ 0) {k : ℕ} (h₁ : f.natTrailingDegree ≤ k)\n    (h₂ : k ≤ f.natDegree) : newtonPolygon v f k ≠ ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 82,
+  "kind": "theorem",
+  "name": "newtonPolygon_eq_top_iff",
+  "statement": "theorem newtonPolygon_eq_top_iff (hf : f ≠ 0) {k : ℕ} :\n    newtonPolygon v f k = ⊤ ↔ k < f.natTrailingDegree ∨ f.natDegree < k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "newtonPolygon_natTrailingDegree",
+  "statement": "theorem newtonPolygon_natTrailingDegree (hf : f ≠ 0) :\n    newtonPolygon v f f.natTrailingDegree = coeffVal v f f.natTrailingDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "newtonPolygon_natDegree",
+  "statement": "theorem newtonPolygon_natDegree (hf : f ≠ 0) :\n    newtonPolygon v f f.natDegree = coeffVal v f f.natDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 93,
+  "kind": "theorem",
+  "name": "anchor_newtonPolygon",
+  "statement": "theorem anchor_newtonPolygon (hf : f ≠ 0) : anchor (newtonPolygon v f) = f.natTrailingDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 96,
+  "kind": "theorem",
+  "name": "isVertex_natTrailingDegree",
+  "statement": "theorem isVertex_natTrailingDegree (hf : f ≠ 0) :\n    IsVertex (newtonPolygon v f) f.natTrailingDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "isVertex_natDegree",
+  "statement": "theorem isVertex_natDegree (hf : f ≠ 0) : IsVertex (newtonPolygon v f) f.natDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "slopeIndices_newtonPolygon",
+  "statement": "theorem slopeIndices_newtonPolygon (hf : f ≠ 0) :\n    slopeIndices (newtonPolygon v f) = Set.Ico f.natTrailingDegree f.natDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "slopeIndices_newtonPolygon_finite",
+  "statement": "theorem slopeIndices_newtonPolygon_finite : (slopeIndices (newtonPolygon v f)).Finite",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "slopesUnbounded_newtonPolygon",
+  "statement": "theorem slopesUnbounded_newtonPolygon : SlopesUnbounded (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "newtonPolygon_zero_of_coeff_zero_eq_one",
+  "statement": "theorem newtonPolygon_zero_of_coeff_zero_eq_one (h0 : f.coeff 0 = 1) : newtonPolygon v f 0 = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 124,
+  "kind": "theorem",
+  "name": "card_newtonSlopes",
+  "statement": "theorem card_newtonSlopes : (newtonSlopes v f).card = f.natDegree - f.natTrailingDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 126,
+  "kind": "theorem",
+  "name": "count_newtonSlopes",
+  "statement": "theorem count_newtonSlopes (σ : ℝ) :\n    (newtonSlopes v f).count σ = Set.ncard {j | unitSlope (newtonPolygon v f) j = σ}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 132,
+  "kind": "theorem",
+  "name": "exists_isSegment_of_mem_slopeIndices",
+  "statement": "theorem exists_isSegment_of_mem_slopeIndices {j : ℕ} (hj : j ∈ slopeIndices (newtonPolygon v f)) :\n    ∃ a b, IsSegment (newtonPolygon v f) a b ∧ a ≤ j ∧ j < b",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "exists_unitSlope_eq_div",
+  "statement": "theorem exists_unitSlope_eq_div {j : ℕ} (hj : j ∈ slopeIndices (newtonPolygon v f)) :\n    ∃ (γ : Γ) (l : ℕ), 0 < l ∧\n      unitSlope (newtonPolygon v f) j = ((v.embed γ / l : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 143,
+  "kind": "theorem",
+  "name": "exists_int_unitSlope_eq_div",
+  "statement": "theorem exists_int_unitSlope_eq_div {w : NormedAddValuation K ℤ} (he : ∀ n : ℤ, w.embed n = n)\n    {j : ℕ} (hj : j ∈ slopeIndices (newtonPolygon w f)) :\n    ∃ (a b : ℕ) (n : ℤ), IsSegment (newtonPolygon w f) a b ∧ a ≤ j ∧ j < b ∧\n      unitSlope (newtonPolygon w f) j = (((n : ℚ) / ((b - a : ℕ) : ℚ) : ℚ) : ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 150,
+  "kind": "theorem",
+  "name": "coeffVal_reverse",
+  "statement": "theorem coeffVal_reverse : coeffVal v f.reverse = NewtonPolygon.reflect f.natDegree (coeffVal v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 153,
+  "kind": "theorem",
+  "name": "newtonPolygon_reverse",
+  "statement": "theorem newtonPolygon_reverse :\n    newtonPolygon v f.reverse = NewtonPolygon.reflect f.natDegree (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 159,
+  "kind": "theorem",
+  "name": "coe_comp_C_mul_X",
+  "statement": "theorem coe_comp_C_mul_X (c : K) :\n    ((f.comp (C c * X) : Polynomial K) : PowerSeries K) = PowerSeries.rescale c (f : PowerSeries K)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 164,
+  "kind": "theorem",
+  "name": "newtonPolygon_comp_C_mul_X",
+  "statement": "theorem newtonPolygon_comp_C_mul_X {c : K} {γ : Γ} (hc : v c = (γ : WithTop Γ)) :\n    newtonPolygon v (f.comp (C c * X)) =\n      fun k ↦ newtonPolygon v f k + ((v.embed γ * k : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 169,
+  "kind": "theorem",
+  "name": "newtonPolygon_X_pow_mul",
+  "statement": "theorem newtonPolygon_X_pow_mul (n : ℕ) :\n    newtonPolygon v (X ^ n * f) = shiftRight n (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 172,
+  "kind": "theorem",
+  "name": "newtonPolygon_C_mul",
+  "statement": "theorem newtonPolygon_C_mul {c : K} {γ : Γ} (hc : v c = (γ : WithTop Γ)) :\n    newtonPolygon v (C c * f) = fun k ↦ newtonPolygon v f k + (v.embed γ : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 176,
+  "kind": "theorem",
+  "name": "newtonPolygon_C_inv_mul",
+  "statement": "theorem newtonPolygon_C_inv_mul {γ : Γ} (h0 : v (f.coeff 0) = (γ : WithTop Γ)) :\n    newtonPolygon v (C ((f.coeff 0)⁻¹) * f) =\n      fun k ↦ newtonPolygon v f k + ((-v.embed γ : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 183,
+  "kind": "theorem",
+  "name": "newtonPolygon_map",
+  "statement": "theorem newtonPolygon_map (w : NormedAddValuation L Γ) (φ : K →+* L) (hφ : ∀ x, w (φ x) = v x)\n    (he : w.embed = v.embed) : newtonPolygon w (f.map φ) = newtonPolygon v f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 190,
+  "kind": "theorem",
+  "name": "newtonPolygon_eq_scaleHeight",
+  "statement": "theorem newtonPolygon_eq_scaleHeight :\n    newtonPolygon w f = scaleHeight (v.scale w) (newtonPolygon v f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Polynomial.lean",
+  "line": 194,
+  "kind": "theorem",
+  "name": "newtonSlopes_eq_map",
+  "statement": "theorem newtonSlopes_eq_map : newtonSlopes w f = (newtonSlopes v f).map (fun t : ℝ ↦ v.scale w * t)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 40,
+  "kind": "theorem",
+  "name": "ofNormAddVal_algebraMap",
+  "statement": "theorem ofNormAddVal_algebraMap (x : K) : ofNormAddVal L (algebraMap K L x) = ofNormAddVal K x",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 43,
+  "kind": "theorem",
+  "name": "ofNormAddVal_embed_eq",
+  "statement": "theorem ofNormAddVal_embed_eq : (ofNormAddVal L).embed = (ofNormAddVal K).embed",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 51,
+  "kind": "theorem",
+  "name": "ofNormAddValQ_algebraMap",
+  "statement": "theorem ofNormAddValQ_algebraMap (x : K) :\n    ofNormAddValQ L (algebraMap K L π) (algebraMap K L x) = ofNormAddValQ K π x",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 54,
+  "kind": "theorem",
+  "name": "ofNormAddValQ_embed_eq",
+  "statement": "theorem ofNormAddValQ_embed_eq :\n    (ofNormAddValQ L (algebraMap K L π)).embed = (ofNormAddValQ K π).embed",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "Polynomial.newtonPolygon_ofNormAddVal_map",
+  "statement": "theorem Polynomial.newtonPolygon_ofNormAddVal_map (f : Polynomial K) :\n    Polynomial.newtonPolygon (ofNormAddVal L) (f.map (algebraMap K L)) =\n      Polynomial.newtonPolygon (ofNormAddVal K) f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "PowerSeries.newtonPolygon_ofNormAddVal_map",
+  "statement": "theorem PowerSeries.newtonPolygon_ofNormAddVal_map (f : PowerSeries K) :\n    PowerSeries.newtonPolygon (ofNormAddVal L) (PowerSeries.map (algebraMap K L) f) =\n      PowerSeries.newtonPolygon (ofNormAddVal K) f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "Polynomial.newtonPolygon_ofNormAddValQ_map",
+  "statement": "theorem Polynomial.newtonPolygon_ofNormAddValQ_map (f : Polynomial K) :\n    Polynomial.newtonPolygon (ofNormAddValQ L (algebraMap K L π)) (f.map (algebraMap K L)) =\n      Polynomial.newtonPolygon (ofNormAddValQ K π) f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Extension.lean",
+  "line": 85,
+  "kind": "theorem",
+  "name": "PowerSeries.newtonPolygon_ofNormAddValQ_map",
+  "statement": "theorem PowerSeries.newtonPolygon_ofNormAddValQ_map (f : PowerSeries K) :\n    PowerSeries.newtonPolygon (ofNormAddValQ L (algebraMap K L π))\n        (PowerSeries.map (algebraMap K L) f) =\n      PowerSeries.newtonPolygon (ofNormAddValQ K π) f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 52,
+  "kind": "lemma",
+  "name": "toEReal_ne_bot",
+  "statement": "lemma toEReal_ne_bot (x : WithTop ℝ) : toEReal x ≠ ⊥",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 54,
+  "kind": "lemma",
+  "name": "toEReal_le_toEReal",
+  "statement": "lemma toEReal_le_toEReal {x y : WithTop ℝ} : toEReal x ≤ toEReal y ↔ x ≤ y",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 56,
+  "kind": "lemma",
+  "name": "toEReal_lt_toEReal",
+  "statement": "lemma toEReal_lt_toEReal {x y : WithTop ℝ} : toEReal x < toEReal y ↔ x < y",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 58,
+  "kind": "lemma",
+  "name": "toEReal_injective",
+  "statement": "lemma toEReal_injective : Function.Injective toEReal",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 60,
+  "kind": "lemma",
+  "name": "toEReal_eq_top_iff",
+  "statement": "lemma toEReal_eq_top_iff {x : WithTop ℝ} : toEReal x = ⊤ ↔ x = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 62,
+  "kind": "lemma",
+  "name": "toEReal_of_ne_top",
+  "statement": "lemma toEReal_of_ne_top {x : WithTop ℝ} (hx : x ≠ ⊤) : toEReal x = ((x.untop₀ : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "supportValue_le",
+  "statement": "theorem supportValue_le (h : ℕ → WithTop ℝ) (m : ℝ) (k : ℕ) :\n    supportValue h m ≤ toEReal (h k) - ((m * k : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 75,
+  "kind": "theorem",
+  "name": "le_supportValue_iff",
+  "statement": "theorem le_supportValue_iff {m : ℝ} {a : EReal} :\n    a ≤ supportValue h m ↔ ∀ k, a ≤ toEReal (h k) - ((m * k : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "coe_le_supportValue_iff",
+  "statement": "theorem coe_le_supportValue_iff {m y : ℝ} :\n    (y : EReal) ≤ supportValue h m ↔ ∀ k : ℕ, ((y + m * k : ℝ) : WithTop ℝ) ≤ h k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 85,
+  "kind": "theorem",
+  "name": "supportValue_ne_bot_iff",
+  "statement": "theorem supportValue_ne_bot_iff {m : ℝ} :\n    supportValue h m ≠ ⊥ ↔ ∃ y : ℝ, ∀ k : ℕ, ((y + m * k : ℝ) : WithTop ℝ) ≤ h k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 89,
+  "kind": "theorem",
+  "name": "supportValue_eq_top_iff",
+  "statement": "theorem supportValue_eq_top_iff {m : ℝ} : supportValue h m = ⊤ ↔ ∀ k, h k = ⊤",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "supportValue_mono",
+  "statement": "theorem supportValue_mono {g : ℕ → WithTop ℝ} (hgh : ∀ k, g k ≤ h k) (m : ℝ) :\n    supportValue g m ≤ supportValue h m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 95,
+  "kind": "theorem",
+  "name": "isAdmissible_iff_exists_supportValue_ne_bot",
+  "statement": "theorem isAdmissible_iff_exists_supportValue_ne_bot :\n    IsAdmissible v ↔ ∃ m : ℝ, supportValue v m ≠ ⊥",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "supportValue_newtonPolygon",
+  "statement": "theorem supportValue_newtonPolygon (hv : IsAdmissible v) (m : ℝ) :\n    supportValue (newtonPolygon v) m = supportValue v m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "supportValue_eq_of_line_le",
+  "statement": "theorem supportValue_eq_of_line_le {n : ℕ} (hn : h n ≠ ⊤) {m : ℝ}\n    (hline : ∀ k : ℕ, (((h n).untop₀ + m * ((k : ℝ) - n) : ℝ) : WithTop ℝ) ≤ h k) :\n    supportValue h m = toEReal (h n) - ((m * n : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 111,
+  "kind": "theorem",
+  "name": "IsConvexSeq.supportValue_eq_of_unitSlope",
+  "statement": "theorem IsConvexSeq.supportValue_eq_of_unitSlope (hh : IsConvexSeq h) {n : ℕ} (hn : h n ≠ ⊤) {m : ℝ}\n    (h₁ : ∀ j, j < n → h j ≠ ⊤ → unitSlope h j ≤ m) (h₂ : ∀ j, n ≤ j → (m : WithTop ℝ) ≤ unitSlope h j) :\n    supportValue h m = toEReal (h n) - ((m * n : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 117,
+  "kind": "theorem",
+  "name": "IsConvexSeq.supportValue_eq_of_unitSlope_le_le",
+  "statement": "theorem IsConvexSeq.supportValue_eq_of_unitSlope_le_le (hh : IsConvexSeq h) {j : ℕ}\n    (hj : h (j + 1) ≠ ⊤) {m : ℝ} (h₁ : unitSlope h j ≤ m) (h₂ : (m : WithTop ℝ) ≤ unitSlope h (j + 1)) :\n    supportValue h m = toEReal (h (j + 1)) - ((m * (j + 1 : ℕ) : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 122,
+  "kind": "theorem",
+  "name": "IsConvexSeq.supportValue_eq_faceRight",
+  "statement": "theorem IsConvexSeq.supportValue_eq_faceRight (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤)\n    (hu : SlopesUnbounded h) (m : ℝ) :\n    supportValue h m = toEReal (h (faceRight h m)) - ((m * faceRight h m : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 127,
+  "kind": "theorem",
+  "name": "IsConvexSeq.supportValue_eq_faceLeft",
+  "statement": "theorem IsConvexSeq.supportValue_eq_faceLeft (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤)\n    (hu : SlopesUnbounded h) (m : ℝ) :\n    supportValue h m = toEReal (h (faceLeft h m)) - ((m * faceLeft h m : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 131,
+  "kind": "theorem",
+  "name": "IsConvexSeq.supportValue_ne_bot",
+  "statement": "theorem IsConvexSeq.supportValue_ne_bot (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤) (hu : SlopesUnbounded h)\n    (m : ℝ) : supportValue h m ≠ ⊥",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 135,
+  "kind": "theorem",
+  "name": "IsNewtonPolygonOf.exists_eq_supportValue_iff",
+  "statement": "theorem IsNewtonPolygonOf.exists_eq_supportValue_iff (hh : IsNewtonPolygonOf v h)\n    (hv : ∃ k, v k ≠ ⊤) {m : ℝ} (hs : supportValue v m ≠ ⊥) :\n    (∃ k, toEReal (v k) - ((m * k : ℝ) : EReal) = supportValue v m) ↔\n      ∃ k, IsVertex h k ∧ toEReal (h k) - ((m * k : ℝ) : EReal) = supportValue v m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 143,
+  "kind": "theorem",
+  "name": "convex_setOf_supportValue_ne_bot",
+  "statement": "theorem convex_setOf_supportValue_ne_bot : Convex ℝ {m : ℝ | supportValue h m ≠ ⊥}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 146,
+  "kind": "theorem",
+  "name": "concaveOn_toReal_supportValue",
+  "statement": "theorem concaveOn_toReal_supportValue :\n    ConcaveOn ℝ {m : ℝ | supportValue h m ≠ ⊥} (fun m ↦ (supportValue h m).toReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/SupportValue.lean",
+  "line": 151,
+  "kind": "theorem",
+  "name": "iSup_supportValue_add",
+  "statement": "theorem iSup_supportValue_add (hv : IsAdmissible v) (k : ℕ) :\n    ⨆ m : ℝ, (supportValue v m + ((m * k : ℝ) : EReal)) = toEReal (newtonPolygon v k)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "gaussNorm_toAbsoluteValue",
+  "statement": "theorem gaussNorm_toAbsoluteValue {c : ℝ} (hc : 0 ≤ c) (f : Polynomial K) :\n    f.gaussNorm (toAbsoluteValue K) c = PowerSeries.gaussNorm norm c (f : PowerSeries K)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "exists_gaussNorm_coe_eq",
+  "statement": "theorem exists_gaussNorm_coe_eq {c : ℝ} (hc : 0 ≤ c) (f : Polynomial K) :\n    ∃ k, PowerSeries.gaussNorm norm c (f : PowerSeries K) = ‖f.coeff k‖ * c ^ k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 66,
+  "kind": "theorem",
+  "name": "norm_coeff_mul_rpow_pow_eq_rpow",
+  "statement": "theorem norm_coeff_mul_rpow_pow_eq_rpow {k : ℕ} {γ : Γ} (hγ : v (coeff k f) = (γ : WithTop Γ))\n    (m : ℝ) : ‖coeff k f‖ * (v.base ^ m) ^ k = v.base ^ (m * k - v.embed γ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "hasGaussNorm_rpow_iff",
+  "statement": "theorem hasGaussNorm_rpow_iff (m : ℝ) :\n    HasGaussNorm norm (v.base ^ m) f ↔ supportValue (coeffVal v f) m ≠ ⊥",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "hasGaussNorm_iff_supportValue_ne_bot",
+  "statement": "theorem hasGaussNorm_iff_supportValue_ne_bot {c : ℝ} (hc : 0 < c) :\n    HasGaussNorm norm c f ↔ supportValue (coeffVal v f) (Real.logb v.base c) ≠ ⊥",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "gaussNorm_rpow_eq_of_supportValue_eq",
+  "statement": "theorem gaussNorm_rpow_eq_of_supportValue_eq {m s : ℝ} (hs : supportValue (coeffVal v f) m = (s : EReal)) :\n    gaussNorm norm (v.base ^ m) f = v.base ^ (-s)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "gaussNorm_rpow_eq_rpow_neg_toReal",
+  "statement": "theorem gaussNorm_rpow_eq_rpow_neg_toReal {m : ℝ} (hs : supportValue (coeffVal v f) m ≠ ⊥) (hf : f ≠ 0) :\n    gaussNorm norm (v.base ^ m) f = v.base ^ (-(supportValue (coeffVal v f) m).toReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "supportValue_coeffVal_eq_neg_logb",
+  "statement": "theorem supportValue_coeffVal_eq_neg_logb {m : ℝ} (hs : supportValue (coeffVal v f) m ≠ ⊥) (hf : f ≠ 0) :\n    supportValue (coeffVal v f) m =\n      ((-Real.logb v.base (gaussNorm norm (v.base ^ m) f) : ℝ) : EReal)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "supportValue_newtonPolygon_eq",
+  "statement": "theorem supportValue_newtonPolygon_eq (hf : IsAdmissible (coeffVal v f)) (m : ℝ) :\n    supportValue (newtonPolygon v f) m = supportValue (coeffVal v f) m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 102,
+  "kind": "theorem",
+  "name": "gaussNorm_rpow_eq_norm_coeff_faceRight",
+  "statement": "theorem gaussNorm_rpow_eq_norm_coeff_faceRight (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    (hu : SlopesUnbounded (newtonPolygon v f)) (m : ℝ) :\n    gaussNorm norm (v.base ^ m) f =\n      ‖coeff (faceRight (newtonPolygon v f) m) f‖ * (v.base ^ m) ^ faceRight (newtonPolygon v f) m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "gaussNorm_rpow_eq_norm_coeff_faceLeft",
+  "statement": "theorem gaussNorm_rpow_eq_norm_coeff_faceLeft (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    (hu : SlopesUnbounded (newtonPolygon v f)) (m : ℝ) :\n    gaussNorm norm (v.base ^ m) f =\n      ‖coeff (faceLeft (newtonPolygon v f) m) f‖ * (v.base ^ m) ^ faceLeft (newtonPolygon v f) m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 119,
+  "kind": "theorem",
+  "name": "exists_gaussNorm_rpow_eq_iff",
+  "statement": "theorem exists_gaussNorm_rpow_eq_iff {m : ℝ} (hs : supportValue (coeffVal v f) m ≠ ⊥) (hf : f ≠ 0) :\n    (∃ k, gaussNorm norm (v.base ^ m) f = ‖coeff k f‖ * (v.base ^ m) ^ k) ↔\n      ∃ k, IsVertex (newtonPolygon v f) k ∧\n        toEReal (newtonPolygon v f k) - ((m * k : ℝ) : EReal) = supportValue (coeffVal v f) m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 128,
+  "kind": "theorem",
+  "name": "concaveOn_neg_logb_gaussNorm",
+  "statement": "theorem concaveOn_neg_logb_gaussNorm (hf : f ≠ 0) :\n    ConcaveOn ℝ {m : ℝ | HasGaussNorm norm (v.base ^ m) f}\n      (fun m ↦ -Real.logb v.base (gaussNorm norm (v.base ^ m) f))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 134,
+  "kind": "theorem",
+  "name": "neg_logb_gaussNorm_eq_of_unitSlope_le_le",
+  "statement": "theorem neg_logb_gaussNorm_eq_of_unitSlope_le_le (hf : IsAdmissible (coeffVal v f)) {j : ℕ} {m : ℝ}\n    (hj : newtonPolygon v f (j + 1) ≠ ⊤) (h₁ : unitSlope (newtonPolygon v f) j ≤ m)\n    (h₂ : (m : WithTop ℝ) ≤ unitSlope (newtonPolygon v f) (j + 1)) :\n    -Real.logb v.base (gaussNorm norm (v.base ^ m) f) =\n      (newtonPolygon v f (j + 1)).untop₀ - m * (j + 1 : ℕ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 142,
+  "kind": "theorem",
+  "name": "toEReal_newtonPolygon_eq_iSup",
+  "statement": "theorem toEReal_newtonPolygon_eq_iSup (hf : IsAdmissible (coeffVal v f)) (k : ℕ) :\n    toEReal (newtonPolygon v f k) = ⨆ m : ℝ, (supportValue (coeffVal v f) m + ((m * k : ℝ) : EReal))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 153,
+  "kind": "theorem",
+  "name": "supportValue_coeffVal_ne_bot",
+  "statement": "theorem supportValue_coeffVal_ne_bot (f : Polynomial K) (m : ℝ) : supportValue (coeffVal v f) m ≠ ⊥",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/GaussNorm.lean",
+  "line": 158,
+  "kind": "theorem",
+  "name": "gaussNorm_rpow_eq_norm_coeff_faceRight",
+  "statement": "theorem gaussNorm_rpow_eq_norm_coeff_faceRight (h0 : f.coeff 0 ≠ 0) (m : ℝ) :\n    PowerSeries.gaussNorm norm (v.base ^ m) (f : PowerSeries K) =\n      ‖f.coeff (faceRight (newtonPolygon v f) m)‖ * (v.base ^ m) ^ faceRight (newtonPolygon v f) m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 58,
+  "kind": "theorem",
+  "name": "IsPure.le_coeffVal",
+  "statement": "theorem IsPure.le_coeffVal (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    (hp : IsPure v f m) (k : ℕ) :\n    coeffVal v f 0 + ((m * k : ℝ) : WithTop ℝ) ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 63,
+  "kind": "theorem",
+  "name": "IsPure.norm_coeff_mul_rpow_pow_le",
+  "statement": "theorem IsPure.norm_coeff_mul_rpow_pow_le (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    (hp : IsPure v f m) (k : ℕ) : ‖coeff k f‖ * (v.base ^ m) ^ k ≤ ‖coeff 0 f‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 67,
+  "kind": "theorem",
+  "name": "IsPure.gaussNorm_rpow_eq",
+  "statement": "theorem IsPure.gaussNorm_rpow_eq (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    (hp : IsPure v f m) : gaussNorm norm (v.base ^ m) f = ‖coeff 0 f‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "isPure_iff_of_infinite",
+  "statement": "theorem isPure_iff_of_infinite (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    (hinf : {k | coeff k f ≠ 0}.Infinite) :\n    IsPure v f m ↔ (∀ k, ‖coeff k f‖ * (v.base ^ m) ^ k ≤ ‖coeff 0 f‖) ∧\n      ∀ c : ℝ, v.base ^ m < c → ¬ HasGaussNorm norm c f",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "HasFirstBreak.le_coeffVal",
+  "statement": "theorem HasFirstBreak.le_coeffVal (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0) {l : ℕ}\n    (hb : HasFirstBreak v f m l) (k : ℕ) :\n    coeffVal v f 0 + ((m * k : ℝ) : WithTop ℝ) ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 85,
+  "kind": "theorem",
+  "name": "HasFirstBreak.coeffVal_eq",
+  "statement": "theorem HasFirstBreak.coeffVal_eq (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0) {l : ℕ}\n    (hb : HasFirstBreak v f m l) : coeffVal v f l = coeffVal v f 0 + ((m * l : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "HasFirstBreak.lt_coeffVal",
+  "statement": "theorem HasFirstBreak.lt_coeffVal (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0) {l : ℕ}\n    (hb : HasFirstBreak v f m l) {k : ℕ} (hk : l < k) :\n    coeffVal v f 0 + ((m * k : ℝ) : WithTop ℝ) < coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 95,
+  "kind": "theorem",
+  "name": "HasFirstBreak.coeff_ne_zero",
+  "statement": "theorem HasFirstBreak.coeff_ne_zero (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0) {l : ℕ}\n    (hb : HasFirstBreak v f m l) : coeff l f ≠ 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "HasFirstBreak.norm_coeff_mul_rpow_pow_le",
+  "statement": "theorem HasFirstBreak.norm_coeff_mul_rpow_pow_le (hf : IsAdmissible (coeffVal v f))\n    (h0 : coeff 0 f ≠ 0) {l : ℕ} (hb : HasFirstBreak v f m l) (k : ℕ) :\n    ‖coeff k f‖ * (v.base ^ m) ^ k ≤ ‖coeff 0 f‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 104,
+  "kind": "theorem",
+  "name": "HasFirstBreak.norm_coeff_mul_rpow_pow_eq",
+  "statement": "theorem HasFirstBreak.norm_coeff_mul_rpow_pow_eq (hf : IsAdmissible (coeffVal v f))\n    (h0 : coeff 0 f ≠ 0) {l : ℕ} (hb : HasFirstBreak v f m l) :\n    ‖coeff l f‖ * (v.base ^ m) ^ l = ‖coeff 0 f‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "HasFirstBreak.norm_coeff_mul_rpow_pow_lt",
+  "statement": "theorem HasFirstBreak.norm_coeff_mul_rpow_pow_lt (hf : IsAdmissible (coeffVal v f))\n    (h0 : coeff 0 f ≠ 0) {l : ℕ} (hb : HasFirstBreak v f m l) {k : ℕ} (hk : l < k) :\n    ‖coeff k f‖ * (v.base ^ m) ^ k < ‖coeff 0 f‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 114,
+  "kind": "theorem",
+  "name": "HasFirstBreak.gaussNorm_rpow_eq",
+  "statement": "theorem HasFirstBreak.gaussNorm_rpow_eq (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    {l : ℕ} (hb : HasFirstBreak v f m l) : gaussNorm norm (v.base ^ m) f = ‖coeff 0 f‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 131,
+  "kind": "theorem",
+  "name": "isPure_coe_iff",
+  "statement": "theorem isPure_coe_iff : PowerSeries.IsPure v (f : PowerSeries K) m ↔ IsPure v f m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 133,
+  "kind": "theorem",
+  "name": "hasFirstBreak_coe_iff",
+  "statement": "theorem hasFirstBreak_coe_iff {l : ℕ} :\n    PowerSeries.HasFirstBreak v (f : PowerSeries K) m l ↔ HasFirstBreak v f m l",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "IsPure.le_coeffVal",
+  "statement": "theorem IsPure.le_coeffVal (h0 : f.coeff 0 ≠ 0) (hp : IsPure v f m) (k : ℕ) :\n    coeffVal v f 0 + ((m * k : ℝ) : WithTop ℝ) ≤ coeffVal v f k",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 140,
+  "kind": "theorem",
+  "name": "IsPure.norm_coeff_mul_rpow_pow_le",
+  "statement": "theorem IsPure.norm_coeff_mul_rpow_pow_le (h0 : f.coeff 0 ≠ 0) (hp : IsPure v f m) (k : ℕ) :\n    ‖f.coeff k‖ * (v.base ^ m) ^ k ≤ ‖f.coeff 0‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 144,
+  "kind": "theorem",
+  "name": "IsPure.norm_coeff_natDegree_mul_rpow_pow_eq",
+  "statement": "theorem IsPure.norm_coeff_natDegree_mul_rpow_pow_eq (h0 : f.coeff 0 ≠ 0) (hp : IsPure v f m) :\n    ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree = ‖f.coeff 0‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 149,
+  "kind": "theorem",
+  "name": "isPure_of_bounds",
+  "statement": "theorem isPure_of_bounds (h0 : f.coeff 0 ≠ 0) (hd : 0 < f.natDegree)\n    (hle : ∀ k, ‖f.coeff k‖ * (v.base ^ m) ^ k ≤ ‖f.coeff 0‖)\n    (heq : ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree = ‖f.coeff 0‖) : IsPure v f m",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 154,
+  "kind": "theorem",
+  "name": "isPure_iff",
+  "statement": "theorem isPure_iff (h0 : f.coeff 0 ≠ 0) (hd : 0 < f.natDegree) :\n    IsPure v f m ↔ (∀ k, ‖f.coeff k‖ * (v.base ^ m) ^ k ≤ ‖f.coeff 0‖) ∧\n      ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree = ‖f.coeff 0‖",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 159,
+  "kind": "theorem",
+  "name": "isPure_iff_gaussNorm",
+  "statement": "theorem isPure_iff_gaussNorm (h0 : f.coeff 0 = 1) (hd : 0 < f.natDegree) :\n    IsPure v f m ↔\n      PowerSeries.gaussNorm norm (v.base ^ m) (f : PowerSeries K) =\n          ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree ∧\n        PowerSeries.gaussNorm norm (v.base ^ m) (f : PowerSeries K) = 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Pure.lean",
+  "line": 167,
+  "kind": "theorem",
+  "name": "isPure_iff_hasFirstBreak",
+  "statement": "theorem isPure_iff_hasFirstBreak (h0 : f.coeff 0 ≠ 0) (hd : 0 < f.natDegree) :\n    IsPure v f m ↔ HasFirstBreak v f m f.natDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Distinguished.lean",
+  "line": 45,
+  "kind": "theorem",
+  "name": "isMulDistinguished_iff",
+  "statement": "theorem isMulDistinguished_iff {c : ℝ} {i : ℕ} :\n    IsMulDistinguished c f i ↔\n      gaussNorm norm c f = ‖coeff i f‖ * c ^ i ∧\n        ∀ t, i < t → ‖coeff t f‖ * c ^ t < ‖coeff i f‖ * c ^ i",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Distinguished.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "HasFirstBreak.isMulDistinguished",
+  "statement": "theorem HasFirstBreak.isMulDistinguished (hf : IsAdmissible (coeffVal v f)) (h0 : coeff 0 f ≠ 0)\n    {l : ℕ} (hb : HasFirstBreak v f m l) : IsMulDistinguished (v.base ^ m) f l",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Distinguished.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "isMulDistinguished_rpow_iff_faceRight_eq",
+  "statement": "theorem isMulDistinguished_rpow_iff_faceRight_eq (hf : IsAdmissible (coeffVal v f))\n    (h0 : coeff 0 f ≠ 0) (hu : SlopesUnbounded (newtonPolygon v f)) {i : ℕ} :\n    IsMulDistinguished (v.base ^ m) f i ↔ faceRight (newtonPolygon v f) m = i",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Distinguished.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "HasFirstBreak.isMulDistinguished",
+  "statement": "theorem HasFirstBreak.isMulDistinguished (h0 : f.coeff 0 ≠ 0) {l : ℕ} (hb : HasFirstBreak v f m l) :\n    PowerSeries.IsMulDistinguished (v.base ^ m) (f : PowerSeries K) l",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Distinguished.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "IsPure.isMulDistinguished",
+  "statement": "theorem IsPure.isMulDistinguished (h0 : f.coeff 0 ≠ 0) (hd : 0 < f.natDegree) (hp : IsPure v f m) :\n    PowerSeries.IsMulDistinguished (v.base ^ m) (f : PowerSeries K) f.natDegree",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Distinguished.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "isMulDistinguished_rpow_iff_faceRight_eq",
+  "statement": "theorem isMulDistinguished_rpow_iff_faceRight_eq (h0 : f.coeff 0 ≠ 0) {i : ℕ} :\n    PowerSeries.IsMulDistinguished (v.base ^ m) (f : PowerSeries K) i ↔\n      faceRight (newtonPolygon v f) m = i",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Padic.lean",
+  "line": 33,
+  "kind": "theorem",
+  "name": "normedAddValuation_apply",
+  "statement": "theorem normedAddValuation_apply (x : ℚ_[p]) : normedAddValuation p x = Padic.addValuation x",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Padic.lean",
+  "line": 36,
+  "kind": "theorem",
+  "name": "normedAddValuation_embed",
+  "statement": "@[simp] theorem normedAddValuation_embed : (normedAddValuation p).embed = Int.castAddHom ℝ",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Padic.lean",
+  "line": 39,
+  "kind": "theorem",
+  "name": "normedAddValuation_embed_apply",
+  "statement": "theorem normedAddValuation_embed_apply (n : ℤ) : (normedAddValuation p).embed n = n",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Padic.lean",
+  "line": 41,
+  "kind": "theorem",
+  "name": "normedAddValuation_base",
+  "statement": "@[simp] theorem normedAddValuation_base : (normedAddValuation p).base = p",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Padic.lean",
+  "line": 44,
+  "kind": "theorem",
+  "name": "normedAddValuation_natCast_prime",
+  "statement": "theorem normedAddValuation_natCast_prime : normedAddValuation p (p : ℚ_[p]) = 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Padic.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "scale_normedAddValuation_ofNormAddVal",
+  "statement": "theorem scale_normedAddValuation_ofNormAddVal :\n    (normedAddValuation p).scale (NormedAddValuation.ofNormAddVal ℚ_[p]) = Real.log p",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 41,
+  "kind": "theorem",
+  "name": "isPure_one_sub_X",
+  "statement": "theorem isPure_one_sub_X : IsPure 𝓥 (1 - X : Polynomial ℚ_[p]) 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 44,
+  "kind": "theorem",
+  "name": "newtonSlopes_one_sub_X",
+  "statement": "theorem newtonSlopes_one_sub_X : newtonSlopes 𝓥 (1 - X : Polynomial ℚ_[p]) = {0}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "isPure_one_sub_p_mul_X",
+  "statement": "theorem isPure_one_sub_p_mul_X : IsPure 𝓥 (1 - C (p : ℚ_[p]) * X) 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 50,
+  "kind": "theorem",
+  "name": "newtonSlopes_one_sub_p_mul_X",
+  "statement": "theorem newtonSlopes_one_sub_p_mul_X : newtonSlopes 𝓥 (1 - C (p : ℚ_[p]) * X) = {1}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 55,
+  "kind": "theorem",
+  "name": "newtonSlopes_one_add_p_mul_X_add_p_cube_mul_X_sq",
+  "statement": "theorem newtonSlopes_one_add_p_mul_X_add_p_cube_mul_X_sq :\n    newtonSlopes 𝓥 (1 + C (p : ℚ_[p]) * X + C ((p : ℚ_[p]) ^ 3) * X ^ 2) = {1, 2}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 59,
+  "kind": "theorem",
+  "name": "newtonPolygon_one_add_p_mul_X_add_p_sq_mul_X_sq_one",
+  "statement": "theorem newtonPolygon_one_add_p_mul_X_add_p_sq_mul_X_sq_one :\n    newtonPolygon 𝓥 (1 + C (p : ℚ_[p]) * X + C ((p : ℚ_[p]) ^ 2) * X ^ 2) 1 =\n      coeffVal 𝓥 (1 + C (p : ℚ_[p]) * X + C ((p : ℚ_[p]) ^ 2) * X ^ 2) 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "not_isVertex_one_add_p_mul_X_add_p_sq_mul_X_sq_one",
+  "statement": "theorem not_isVertex_one_add_p_mul_X_add_p_sq_mul_X_sq_one :\n    ¬ IsVertex (newtonPolygon 𝓥 (1 + C (p : ℚ_[p]) * X + C ((p : ℚ_[p]) ^ 2) * X ^ 2)) 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "newtonSlopes_one_add_p_mul_X_add_p_sq_mul_X_sq",
+  "statement": "theorem newtonSlopes_one_add_p_mul_X_add_p_sq_mul_X_sq :\n    newtonSlopes 𝓥 (1 + C (p : ℚ_[p]) * X + C ((p : ℚ_[p]) ^ 2) * X ^ 2) = {1, 1}",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "isPure_one_add_three_pow_mul_X_sq",
+  "statement": "theorem isPure_one_add_three_pow_mul_X_sq (j : ℕ) :\n    IsPure (Padic.normedAddValuation 3) (1 + C ((3 : ℚ_[3]) ^ (2 * j + 1)) * X ^ 2)\n      ((j : ℝ) + 1 / 2)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "newtonSlopes_one_add_three_pow_mul_X_sq",
+  "statement": "theorem newtonSlopes_one_add_three_pow_mul_X_sq (j : ℕ) :\n    newtonSlopes (Padic.normedAddValuation 3) (1 + C ((3 : ℚ_[3]) ^ (2 * j + 1)) * X ^ 2) =\n      Multiset.replicate 2 ((j : ℝ) + 1 / 2)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "newtonPolygon_cyclotomic",
+  "statement": "theorem newtonPolygon_cyclotomic {k : ℕ} (hk : k < p) : newtonPolygon 𝓥 (cyclotomic p ℚ_[p]) k = 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "isPure_cyclotomic",
+  "statement": "theorem isPure_cyclotomic : IsPure 𝓥 (cyclotomic p ℚ_[p]) 0",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 93,
+  "kind": "theorem",
+  "name": "coeff_cyclotomic_comp_X_add_one",
+  "statement": "theorem coeff_cyclotomic_comp_X_add_one (i : ℕ) :\n    ((cyclotomic p ℚ_[p]).comp (X + 1)).coeff i = (p.choose (i + 1) : ℚ_[p])",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "isPure_C_inv_mul_cyclotomic_comp_X_add_one",
+  "statement": "theorem isPure_C_inv_mul_cyclotomic_comp_X_add_one :\n    IsPure 𝓥 (C ((p : ℚ_[p])⁻¹) * (cyclotomic p ℚ_[p]).comp (X + 1)) (-1 / ((p : ℝ) - 1))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "newtonPolygon_ofNormAddVal_eq_scaleHeight",
+  "statement": "theorem newtonPolygon_ofNormAddVal_eq_scaleHeight (f : Polynomial ℚ_[p]) :\n    newtonPolygon (NormedAddValuation.ofNormAddVal ℚ_[p]) f =\n      scaleHeight (Real.log p) (newtonPolygon 𝓥 f)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 114,
+  "kind": "theorem",
+  "name": "isPure_mk_p_pow",
+  "statement": "theorem isPure_mk_p_pow : IsPure 𝓥 (mk fun i : ℕ ↦ (p : ℚ_[p]) ^ i) 1",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 119,
+  "kind": "theorem",
+  "name": "isRestricted_mk_p_pow_sq",
+  "statement": "theorem isRestricted_mk_p_pow_sq {c : ℝ} (hc : 0 < c) :\n    IsRestricted c (mk fun i : ℕ ↦ (p : ℚ_[p]) ^ (i ^ 2))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 123,
+  "kind": "theorem",
+  "name": "coeffVal_mk_p_pow_sq",
+  "statement": "theorem coeffVal_mk_p_pow_sq :\n    coeffVal 𝓥 (mk fun i : ℕ ↦ (p : ℚ_[p]) ^ (i ^ 2)) = fun k : ℕ ↦ (((k : ℝ) ^ 2 : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 128,
+  "kind": "theorem",
+  "name": "newtonPolygon_mk_p_pow_sq",
+  "statement": "theorem newtonPolygon_mk_p_pow_sq :\n    newtonPolygon 𝓥 (mk fun i : ℕ ↦ (p : ℚ_[p]) ^ (i ^ 2)) =\n      fun k : ℕ ↦ (((k : ℝ) ^ 2 : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 133,
+  "kind": "theorem",
+  "name": "unitSlope_newtonPolygon_mk_p_pow_sq",
+  "statement": "theorem unitSlope_newtonPolygon_mk_p_pow_sq (j : ℕ) :\n    unitSlope (newtonPolygon 𝓥 (mk fun i : ℕ ↦ (p : ℚ_[p]) ^ (i ^ 2))) j =\n      ((2 * j + 1 : ℝ) : WithTop ℝ)",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "slopesUnbounded_newtonPolygon_mk_p_pow_sq",
+  "statement": "theorem slopesUnbounded_newtonPolygon_mk_p_pow_sq :\n    SlopesUnbounded (newtonPolygon 𝓥 (mk fun i : ℕ ↦ (p : ℚ_[p]) ^ (i ^ 2)))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 143,
+  "kind": "theorem",
+  "name": "hasGaussNorm_one_mk_ite",
+  "statement": "theorem hasGaussNorm_one_mk_ite :\n    HasGaussNorm norm 1 (mk fun i : ℕ ↦ if i = 0 then (1 : ℚ_[p]) else (p : ℚ_[p]))",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/NewtonPolygons/Coeff/Examples.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "not_isRestricted_one_mk_ite",
+  "statement": "theorem not_isRestricted_one_mk_ite :\n    ¬ IsRestricted 1 (mk fun i : ℕ ↦ if i = 0 then (1 : ℚ_[p]) else (p : ℚ_[p]))",
+  "sorries": 1
+ }
+]

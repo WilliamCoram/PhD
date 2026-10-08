@@ -31,11 +31,12 @@ section Sums
 
 variable {ι E : Type*} [NormedAddCommGroup E] [IsUltrametricDist E] [CompleteSpace E]
 
-/-- **The ultrametric bound** (§0.1.2): a null family sums to something no larger than its largest
-term. Mathlib has the summability (`NonarchimedeanAddGroup.summable_iff_tendsto_cofinite_zero`)
-but not the bound. -/
-theorem norm_tsum_le_iSup {f : ι → E} (hf : Tendsto f cofinite (𝓝 0)) :
-    ‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖ :=
+/-- **The strict bound** (§0.1.3). Mathlib has the summability criterion
+(`NonarchimedeanAddGroup.summable_iff_tendsto_cofinite_zero`) and the bound
+`‖∑' i, f i‖ ≤ ⨆ i, ‖f i‖` (`IsUltrametricDist.norm_tsum_le`), but not the strict form. No
+summability hypothesis is needed: the sum of a non-summable family is `0`. -/
+theorem norm_tsum_lt_of_forall_lt {f : ι → E} {B : ℝ} (hB : 0 < B) (h : ∀ i, ‖f i‖ < B) :
+    ‖∑' i, f i‖ < B :=
   sorry
 
 /-- **The unique dominant term** (§0.1.3): the engine of every leading-term argument. -/

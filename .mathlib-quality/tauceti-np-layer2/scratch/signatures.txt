@@ -1,0 +1,1027 @@
+@NormedField.NormedAddValuation.map_zero : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), v.toAddValuation 0 = ⊤
+@NormedField.NormedAddValuation.map_one : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), v.toAddValuation 1 = 0
+@NormedField.NormedAddValuation.map_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x y : K), v.toAddValuation (x * y) = v.toAddValuation x + v.toAddValuation y
+@NormedField.NormedAddValuation.map_pow : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x : K) (n : ℕ), v.toAddValuation (x ^ n) = n • v.toAddValuation x
+@NormedField.NormedAddValuation.map_inv : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x : K), v.toAddValuation x⁻¹ = -v.toAddValuation x
+@NormedField.NormedAddValuation.min_le_map_add : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x y : K),
+  min (v.toAddValuation x) (v.toAddValuation y) ≤ v.toAddValuation (x + y)
+@NormedField.NormedAddValuation.eq_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K}, v.toAddValuation x = ⊤ ↔ x = 0
+@NormedField.NormedAddValuation.ne_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K}, v.toAddValuation x ≠ ⊤ ↔ x ≠ 0
+@NormedField.NormedAddValuation.exists_eq_coe : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K}, x ≠ 0 → ∃ γ, v.toAddValuation x = ↑γ
+@NormedField.NormedAddValuation.base_pos : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), 0 < v.base
+@NormedField.NormedAddValuation.log_base_pos : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), 0 < Real.log v.base
+@NormedField.NormedAddValuation.norm_eq_rpow : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K} {γ : Γ}, v.toAddValuation x = ↑γ → ‖x‖ = v.base ^ (-v.embed γ)
+@NormedField.NormedAddValuation.embed_eq_neg_logb : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K} {γ : Γ}, v.toAddValuation x = ↑γ → v.embed γ = -Real.logb v.base ‖x‖
+@NormedField.NormedAddValuation.norm_add_le_max : ∀ {K : Type u_1} [inst : NormedField K] (x y : K),
+  ‖x + y‖ ≤ max ‖x‖ ‖y‖
+@NormedField.NormedAddValuation.rpow_logb : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {c : ℝ}, 0 < c → v.base ^ Real.logb v.base c = c
+@NormedField.NormedAddValuation.embedTop_top : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), v.embedTop ⊤ = ⊤
+@NormedField.NormedAddValuation.embedTop_coe : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (γ : Γ), v.embedTop ↑γ = ↑(v.embed γ)
+@NormedField.NormedAddValuation.embedTop_eq_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {a : WithTop Γ}, v.embedTop a = ⊤ ↔ a = ⊤
+@NormedField.NormedAddValuation.embedTop_strictMono : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), StrictMono v.embedTop
+@NormedField.NormedAddValuation.embedTop_le_embedTop : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {a b : WithTop Γ}, v.embedTop a ≤ v.embedTop b ↔ a ≤ b
+@NormedField.NormedAddValuation.embedTop_add : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (a b : WithTop Γ), v.embedTop (a + b) = v.embedTop a + v.embedTop b
+@NormedField.NormedAddValuation.embedTop_apply_eq_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K}, v.embedTop (v.toAddValuation x) = ⊤ ↔ x = 0
+@NormedField.NormedAddValuation.embedTop_map_one : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ), v.embedTop (v.toAddValuation 1) = 0
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_eq_rpow : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {x : K} {γ : Γ},
+  v.toAddValuation x = ↑γ → ∀ (m : ℝ) (k : ℕ), ‖x‖ * (v.base ^ m) ^ k = v.base ^ (m * ↑k - v.embed γ)
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_le_one_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x : K) (m : ℝ) (k : ℕ),
+  ‖x‖ * (v.base ^ m) ^ k ≤ 1 ↔ ↑(m * ↑k) ≤ v.embedTop (v.toAddValuation x)
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_lt_one_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x : K) (m : ℝ) (k : ℕ),
+  ‖x‖ * (v.base ^ m) ^ k < 1 ↔ ↑(m * ↑k) < v.embedTop (v.toAddValuation x)
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_eq_one_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x : K) (m : ℝ) (k : ℕ),
+  ‖x‖ * (v.base ^ m) ^ k = 1 ↔ v.embedTop (v.toAddValuation x) = ↑(m * ↑k)
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_le_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x y : K) (m : ℝ) (k j : ℕ),
+  ‖x‖ * (v.base ^ m) ^ k ≤ ‖y‖ * (v.base ^ m) ^ j ↔
+    v.embedTop (v.toAddValuation y) + ↑(m * (↑k - ↑j)) ≤ v.embedTop (v.toAddValuation x)
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_lt_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x y : K) (m : ℝ) (k j : ℕ),
+  ‖x‖ * (v.base ^ m) ^ k < ‖y‖ * (v.base ^ m) ^ j ↔
+    v.embedTop (v.toAddValuation y) + ↑(m * (↑k - ↑j)) < v.embedTop (v.toAddValuation x)
+@NormedField.NormedAddValuation.norm_mul_rpow_pow_eq_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (x y : K) (m : ℝ) (k j : ℕ),
+  ‖x‖ * (v.base ^ m) ^ k = ‖y‖ * (v.base ^ m) ^ j ↔
+    v.embedTop (v.toAddValuation x) = v.embedTop (v.toAddValuation y) + ↑(m * (↑k - ↑j))
+@NormedField.NormedAddValuation.scale_pos : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {Γ' : Type u_3} [inst_4 : AddCommGroup Γ'] [inst_5 : LinearOrder Γ']
+  [inst_6 : IsOrderedAddMonoid Γ'] (w : NormedField.NormedAddValuation K Γ'), 0 < v.scale w
+@NormedField.NormedAddValuation.embed_eq_scale_mul_embed : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {Γ' : Type u_3} [inst_4 : AddCommGroup Γ'] [inst_5 : LinearOrder Γ']
+  [inst_6 : IsOrderedAddMonoid Γ'] (w : NormedField.NormedAddValuation K Γ') {x : K} {γ : Γ} {γ' : Γ'},
+  v.toAddValuation x = ↑γ → w.toAddValuation x = ↑γ' → w.embed γ' = v.scale w * v.embed γ
+@NormedField.NormedAddValuation.embedTop_apply_eq_map : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {Γ' : Type u_3} [inst_4 : AddCommGroup Γ'] [inst_5 : LinearOrder Γ']
+  [inst_6 : IsOrderedAddMonoid Γ'] (w : NormedField.NormedAddValuation K Γ') (x : K),
+  w.embedTop (w.toAddValuation x) = WithTop.map (fun t => v.scale w * t) (v.embedTop (v.toAddValuation x))
+NormedField.NormedAddValuation.ofNormAddVal : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] → [IsUltrametricDist K] → NormedField.NormedAddValuation K ℝ
+NormedField.NormedAddValuation.ofNormAddVal_apply_of_ne_zero : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {x : K},
+  x ≠ 0 → (NormedField.NormedAddValuation.ofNormAddVal K).toAddValuation x = ↑(-Real.log ‖x‖)
+NormedField.NormedAddValuation.ofNormAddValZ : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] →
+    [inst_1 : IsUltrametricDist K] →
+      [inst_2 : NormedField.valuation.IsRankOneDiscrete] →
+        {π : K} → NormedField.valuation.IsUniformizer π → NormedField.NormedAddValuation K ℤ
+NormedField.NormedAddValuation.ofNormAddValZ_apply_isUniformizer : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {π : K}
+  (hπ : NormedField.valuation.IsUniformizer π), (NormedField.NormedAddValuation.ofNormAddValZ K hπ).toAddValuation π = 1
+NormedField.NormedAddValuation.scale_ofNormAddValZ_ofNormAddVal : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {π : K}
+  (hπ : NormedField.valuation.IsUniformizer π),
+  (NormedField.NormedAddValuation.ofNormAddValZ K hπ).scale (NormedField.NormedAddValuation.ofNormAddVal K) =
+    -Real.log ‖π‖
+NormedField.NormedAddValuation.ofNormAddValQ : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] →
+    [inst_1 : IsUltrametricDist K] →
+      (π : K) → [NormedField.valuation.IsCommensurable π] → NormedField.NormedAddValuation K ℚ
+NormedField.NormedAddValuation.ofNormAddValQ_self : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] (π : K) [inst_2 : NormedField.valuation.IsCommensurable π],
+  (NormedField.NormedAddValuation.ofNormAddValQ K π).toAddValuation π = 1
+@NewtonPolygon.isAdmissible_of_finite : ∀ {v : ℕ → WithTop ℝ},
+  (NewtonPolygon.finiteSupport v).Finite → NewtonPolygon.IsAdmissible v
+NewtonPolygon.shiftRight_add : ∀ (n : ℕ) (v : ℕ → WithTop ℝ) (k : ℕ), NewtonPolygon.shiftRight n v (k + n) = v k
+@NewtonPolygon.shiftRight_of_le : ∀ {n k : ℕ}, n ≤ k → ∀ (v : ℕ → WithTop ℝ), NewtonPolygon.shiftRight n v k = v (k - n)
+@NewtonPolygon.shiftRight_of_lt : ∀ {n k : ℕ}, k < n → ∀ (v : ℕ → WithTop ℝ), NewtonPolygon.shiftRight n v k = ⊤
+NewtonPolygon.shiftRight_zero : ∀ (v : ℕ → WithTop ℝ), NewtonPolygon.shiftRight 0 v = v
+NewtonPolygon.unitSlope_shiftRight : ∀ (n : ℕ) (h : ℕ → WithTop ℝ) (k : ℕ),
+  NewtonPolygon.unitSlope (NewtonPolygon.shiftRight n h) (k + n) = NewtonPolygon.unitSlope h k
+@NewtonPolygon.isConvexSeq_shiftRight_iff : ∀ {h : ℕ → WithTop ℝ} (n : ℕ),
+  NewtonPolygon.IsConvexSeq (NewtonPolygon.shiftRight n h) ↔ NewtonPolygon.IsConvexSeq h
+@NewtonPolygon.isNewtonPolygonOf_shiftRight_iff : ∀ {v h : ℕ → WithTop ℝ} (n : ℕ),
+  NewtonPolygon.IsNewtonPolygonOf (NewtonPolygon.shiftRight n v) (NewtonPolygon.shiftRight n h) ↔
+    NewtonPolygon.IsNewtonPolygonOf v h
+@NewtonPolygon.isAdmissible_shiftRight_iff : ∀ {v : ℕ → WithTop ℝ} (n : ℕ),
+  NewtonPolygon.IsAdmissible (NewtonPolygon.shiftRight n v) ↔ NewtonPolygon.IsAdmissible v
+@NewtonPolygon.newtonPolygon_shiftRight : ∀ {v : ℕ → WithTop ℝ},
+  NewtonPolygon.IsAdmissible v →
+    ∀ (n : ℕ),
+      NewtonPolygon.newtonPolygon (NewtonPolygon.shiftRight n v) =
+        NewtonPolygon.shiftRight n (NewtonPolygon.newtonPolygon v)
+@NewtonPolygon.reflect_of_le : ∀ {d k : ℕ}, k ≤ d → ∀ (v : ℕ → WithTop ℝ), NewtonPolygon.reflect d v k = v (d - k)
+@NewtonPolygon.reflect_of_lt : ∀ {d k : ℕ}, d < k → ∀ (v : ℕ → WithTop ℝ), NewtonPolygon.reflect d v k = ⊤
+@NewtonPolygon.reflect_reflect : ∀ {v : ℕ → WithTop ℝ} {d : ℕ},
+  (∀ (k : ℕ), d < k → v k = ⊤) → NewtonPolygon.reflect d (NewtonPolygon.reflect d v) = v
+@NewtonPolygon.unitSlope_reflect : ∀ {d k : ℕ},
+  k < d →
+    ∀ (h : ℕ → WithTop ℝ),
+      NewtonPolygon.unitSlope (NewtonPolygon.reflect d h) k = -NewtonPolygon.unitSlope h (d - (k + 1))
+@NewtonPolygon.IsConvexSeq.reflect : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    ∀ {d : ℕ}, (∀ (k : ℕ), d < k → h k = ⊤) → NewtonPolygon.IsConvexSeq (NewtonPolygon.reflect d h)
+@NewtonPolygon.IsNewtonPolygonOf.reflect : ∀ {v h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsNewtonPolygonOf v h →
+    ∀ {d : ℕ},
+      (∀ (k : ℕ), d < k → v k = ⊤) →
+        NewtonPolygon.IsNewtonPolygonOf (NewtonPolygon.reflect d v) (NewtonPolygon.reflect d h)
+@NewtonPolygon.newtonPolygon_reflect : ∀ {v : ℕ → WithTop ℝ} {d : ℕ},
+  (∀ (k : ℕ), d < k → v k = ⊤) →
+    NewtonPolygon.newtonPolygon (NewtonPolygon.reflect d v) = NewtonPolygon.reflect d (NewtonPolygon.newtonPolygon v)
+@NewtonPolygon.scaleHeight_eq_top_iff : ∀ {v : ℕ → WithTop ℝ} (c : ℝ) {k : ℕ},
+  NewtonPolygon.scaleHeight c v k = ⊤ ↔ v k = ⊤
+@NewtonPolygon.finiteSupport_scaleHeight : ∀ {v : ℕ → WithTop ℝ} (c : ℝ),
+  NewtonPolygon.finiteSupport (NewtonPolygon.scaleHeight c v) = NewtonPolygon.finiteSupport v
+NewtonPolygon.unitSlope_scaleHeight : ∀ (c : ℝ) (h : ℕ → WithTop ℝ) (k : ℕ),
+  NewtonPolygon.unitSlope (NewtonPolygon.scaleHeight c h) k = WithTop.map (fun t => c * t) (NewtonPolygon.unitSlope h k)
+@NewtonPolygon.isConvexSeq_scaleHeight_iff : ∀ {h : ℕ → WithTop ℝ} {c : ℝ},
+  0 < c → (NewtonPolygon.IsConvexSeq (NewtonPolygon.scaleHeight c h) ↔ NewtonPolygon.IsConvexSeq h)
+@NewtonPolygon.isNewtonPolygonOf_scaleHeight_iff : ∀ {v h : ℕ → WithTop ℝ} {c : ℝ},
+  0 < c →
+    (NewtonPolygon.IsNewtonPolygonOf (NewtonPolygon.scaleHeight c v) (NewtonPolygon.scaleHeight c h) ↔
+      NewtonPolygon.IsNewtonPolygonOf v h)
+@NewtonPolygon.isAdmissible_scaleHeight_iff : ∀ {v : ℕ → WithTop ℝ} {c : ℝ},
+  0 < c → (NewtonPolygon.IsAdmissible (NewtonPolygon.scaleHeight c v) ↔ NewtonPolygon.IsAdmissible v)
+@NewtonPolygon.newtonPolygon_scaleHeight : ∀ {v : ℕ → WithTop ℝ} {c : ℝ},
+  0 < c →
+    NewtonPolygon.IsAdmissible v →
+      NewtonPolygon.newtonPolygon (NewtonPolygon.scaleHeight c v) =
+        NewtonPolygon.scaleHeight c (NewtonPolygon.newtonPolygon v)
+@NewtonPolygon.slopeMultiset_scaleHeight : ∀ {h : ℕ → WithTop ℝ} {c : ℝ},
+  0 < c →
+    (NewtonPolygon.slopeIndices h).Finite →
+      NewtonPolygon.slopeMultiset (NewtonPolygon.scaleHeight c h) =
+        Multiset.map (fun t => c * t) (NewtonPolygon.slopeMultiset h)
+@NewtonPolygon.exists_isSegment_of_mem_slopeIndices : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    (NewtonPolygon.slopeIndices h).Finite →
+      ∀ {j : ℕ}, j ∈ NewtonPolygon.slopeIndices h → ∃ a b, NewtonPolygon.IsSegment h a b ∧ a ≤ j ∧ j < b
+@NewtonPolygon.IsConvexSeq.unitSlope_eq_div_of_isSegment : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    ∀ {a b : ℕ},
+      NewtonPolygon.IsSegment h a b →
+        ∀ {j : ℕ}, a ≤ j → j < b → NewtonPolygon.unitSlope h j = ↑(((h b).untop₀ - (h a).untop₀) / (↑b - ↑a))
+@PowerSeries.coeffVal_eq_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {i : ℕ}, PowerSeries.coeffVal v f i = ⊤ ↔ (PowerSeries.coeff i) f = 0
+@PowerSeries.coeffVal_ne_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {i : ℕ}, PowerSeries.coeffVal v f i ≠ ⊤ ↔ (PowerSeries.coeff i) f ≠ 0
+@PowerSeries.coeffVal_eq_coe_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {i : ℕ} {γ : Γ}, PowerSeries.coeffVal v f i = ↑(v.embed γ) ↔ v.toAddValuation ((PowerSeries.coeff i) f) = ↑γ
+@PowerSeries.finiteSupport_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.finiteSupport (PowerSeries.coeffVal v f) = {i | (PowerSeries.coeff i) f ≠ 0}
+@PowerSeries.coeffVal_zero : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ),
+  PowerSeries.coeffVal v 0 = fun x => ⊤
+@PowerSeries.coeffVal_zero_of_coeff_zero_eq_one : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  (PowerSeries.coeff 0) f = 1 → PowerSeries.coeffVal v f 0 = 0
+@PowerSeries.exists_coeffVal_ne_top : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  f ≠ 0 → ∃ i, PowerSeries.coeffVal v f i ≠ ⊤
+@PowerSeries.norm_coeff_mul_rpow_pow_le_one_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} (m : ℝ) (k : ℕ),
+  ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k ≤ 1 ↔ ↑(m * ↑k) ≤ PowerSeries.coeffVal v f k
+@PowerSeries.norm_coeff_mul_rpow_pow_lt_one_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} (m : ℝ) (k : ℕ),
+  ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k < 1 ↔ ↑(m * ↑k) < PowerSeries.coeffVal v f k
+@PowerSeries.norm_coeff_mul_rpow_pow_eq_one_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} (m : ℝ) (k : ℕ),
+  ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k = 1 ↔ PowerSeries.coeffVal v f k = ↑(m * ↑k)
+@PowerSeries.hasGaussNorm_rpow_iff_exists_line : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} (m : ℝ),
+  PowerSeries.HasGaussNorm norm (v.base ^ m) f ↔ ∃ y, ∀ (k : ℕ), ↑(y + m * ↑k) ≤ PowerSeries.coeffVal v f k
+@PowerSeries.isAdmissible_coeffVal_iff_exists_hasGaussNorm : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) ↔ ∃ c, 0 < c ∧ PowerSeries.HasGaussNorm norm c f
+@PowerSeries.isRestricted_of_hasGaussNorm : ∀ {K : Type u_1} [inst : NormedField K] {f : PowerSeries K} {c c' : ℝ},
+  0 ≤ c → c < c' → PowerSeries.HasGaussNorm norm c' f → PowerSeries.IsRestricted c f
+@PowerSeries.isAdmissible_coeffVal_iff_exists_isRestricted : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) ↔ ∃ c, 0 < c ∧ PowerSeries.IsRestricted c f
+@PowerSeries.IsRestricted.isAdmissible_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {c : ℝ},
+  0 < c → PowerSeries.IsRestricted c f → NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f)
+@PowerSeries.isVertical_coeffVal_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsVertical (PowerSeries.coeffVal v f) ↔ f ≠ 0 ∧ ∀ (c : ℝ), 0 < c → ¬PowerSeries.IsRestricted c f
+@Polynomial.coeffVal_eq_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {i : ℕ}, Polynomial.coeffVal v f i = ⊤ ↔ f.coeff i = 0
+@Polynomial.coeffVal_ne_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {i : ℕ}, Polynomial.coeffVal v f i ≠ ⊤ ↔ f.coeff i ≠ 0
+@Polynomial.coeffVal_eq_coe_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {i : ℕ} {γ : Γ}, Polynomial.coeffVal v f i = ↑(v.embed γ) ↔ v.toAddValuation (f.coeff i) = ↑γ
+@Polynomial.finiteSupport_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  NewtonPolygon.finiteSupport (Polynomial.coeffVal v f) = ↑f.support
+@Polynomial.finiteSupport_coeffVal_finite : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  (NewtonPolygon.finiteSupport (Polynomial.coeffVal v f)).Finite
+@Polynomial.coeffVal_coe : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  PowerSeries.coeffVal v ↑f = Polynomial.coeffVal v f
+@Polynomial.isAdmissible_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  NewtonPolygon.IsAdmissible (Polynomial.coeffVal v f)
+@Polynomial.hasGaussNorm_coe : ∀ {K : Type u_1} [inst : NormedField K] {f : Polynomial K} (c : ℝ),
+  PowerSeries.HasGaussNorm norm c ↑f
+@PowerSeries.isNewtonPolygonOf_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    NewtonPolygon.IsNewtonPolygonOf (PowerSeries.coeffVal v f) (PowerSeries.newtonPolygon v f)
+@PowerSeries.isNewtonPolygonOf_newtonPolygon_of_isRestricted : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {c : ℝ},
+  0 < c →
+    PowerSeries.IsRestricted c f →
+      NewtonPolygon.IsNewtonPolygonOf (PowerSeries.coeffVal v f) (PowerSeries.newtonPolygon v f)
+@PowerSeries.newtonPolygon_le : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ (k : ℕ), PowerSeries.newtonPolygon v f k ≤ PowerSeries.coeffVal v f k
+@PowerSeries.isConvexSeq_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) → NewtonPolygon.IsConvexSeq (PowerSeries.newtonPolygon v f)
+@PowerSeries.newtonPolygon_zero : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ),
+  PowerSeries.newtonPolygon v 0 = fun x => ⊤
+@PowerSeries.newtonPolygon_zero_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 → PowerSeries.newtonPolygon v f 0 = PowerSeries.coeffVal v f 0
+@PowerSeries.newtonPolygon_zero_of_coeff_zero_eq_one : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f = 1 → PowerSeries.newtonPolygon v f 0 = 0
+@PowerSeries.exists_eq_embed_of_isVertex : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {k : ℕ},
+      NewtonPolygon.IsVertex (PowerSeries.newtonPolygon v f) k →
+        ∃ γ, v.toAddValuation ((PowerSeries.coeff k) f) = ↑γ ∧ PowerSeries.newtonPolygon v f k = ↑(v.embed γ)
+@PowerSeries.exists_unitSlope_eq_div_of_isSegment : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {a b : ℕ},
+      NewtonPolygon.IsSegment (PowerSeries.newtonPolygon v f) a b →
+        ∀ {j : ℕ},
+          a ≤ j → j < b → ∃ γ, NewtonPolygon.unitSlope (PowerSeries.newtonPolygon v f) j = ↑(v.embed γ / (↑b - ↑a))
+@PowerSeries.exists_int_unitSlope_eq_div_of_isSegment : ∀ {K : Type u_1} [inst : NormedField K] {f : PowerSeries K}
+  {w : NormedField.NormedAddValuation K ℤ},
+  (∀ (n : ℤ), w.embed n = ↑n) →
+    NewtonPolygon.IsAdmissible (PowerSeries.coeffVal w f) →
+      ∀ {a b : ℕ},
+        NewtonPolygon.IsSegment (PowerSeries.newtonPolygon w f) a b →
+          ∀ {j : ℕ}, a ≤ j → j < b → ∃ n, NewtonPolygon.unitSlope (PowerSeries.newtonPolygon w f) j = ↑↑(↑n / ↑(b - a))
+@PowerSeries.slopesUnbounded_newtonPolygon_of_forall_isRestricted : ∀ {K : Type u_1} [inst : NormedField K]
+  {Γ : Type u_2} [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  (∀ (c : ℝ), 0 < c → PowerSeries.IsRestricted c f) → NewtonPolygon.SlopesUnbounded (PowerSeries.newtonPolygon v f)
+@PowerSeries.tendsto_unitSlope_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  (∀ (c : ℝ), 0 < c → PowerSeries.IsRestricted c f) →
+    Filter.Tendsto (NewtonPolygon.unitSlope (PowerSeries.newtonPolygon v f)) Filter.atTop (nhds ⊤)
+@PowerSeries.isRestricted_rpow_of_lt_unitSlope : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {σ : ℝ} {j : ℕ},
+      PowerSeries.newtonPolygon v f j ≠ ⊤ →
+        ↑σ < NewtonPolygon.unitSlope (PowerSeries.newtonPolygon v f) j → PowerSeries.IsRestricted (v.base ^ σ) f
+@PowerSeries.unitSlope_le_of_not_isRestricted : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {σ : ℝ},
+      ¬PowerSeries.IsRestricted (v.base ^ σ) f →
+        ∀ {j : ℕ}, PowerSeries.newtonPolygon v f j ≠ ⊤ → NewtonPolygon.unitSlope (PowerSeries.newtonPolygon v f) j ≤ ↑σ
+@PowerSeries.coeffVal_C_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {c : K} {γ : Γ},
+  v.toAddValuation c = ↑γ →
+    PowerSeries.coeffVal v (PowerSeries.C c * f) = fun k => PowerSeries.coeffVal v f k + ↑(v.embed γ)
+@PowerSeries.newtonPolygon_C_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {c : K} {γ : Γ},
+      v.toAddValuation c = ↑γ →
+        PowerSeries.newtonPolygon v (PowerSeries.C c * f) = fun k => PowerSeries.newtonPolygon v f k + ↑(v.embed γ)
+@PowerSeries.coeff_zero_C_inv_mul : ∀ {K : Type u_1} [inst : NormedField K] {f : PowerSeries K},
+  (PowerSeries.coeff 0) f ≠ 0 → (PowerSeries.coeff 0) (PowerSeries.C ((PowerSeries.coeff 0) f)⁻¹ * f) = 1
+@PowerSeries.newtonPolygon_C_inv_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {γ : Γ},
+      v.toAddValuation ((PowerSeries.coeff 0) f) = ↑γ →
+        PowerSeries.newtonPolygon v (PowerSeries.C ((PowerSeries.coeff 0) f)⁻¹ * f) = fun k =>
+          PowerSeries.newtonPolygon v f k + ↑(-v.embed γ)
+@PowerSeries.coeffVal_rescale : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {c : K} {γ : Γ},
+  v.toAddValuation c = ↑γ →
+    PowerSeries.coeffVal v ((PowerSeries.rescale c) f) = fun k => PowerSeries.coeffVal v f k + ↑(v.embed γ * ↑k)
+@PowerSeries.newtonPolygon_rescale : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {c : K} {γ : Γ},
+      v.toAddValuation c = ↑γ →
+        PowerSeries.newtonPolygon v ((PowerSeries.rescale c) f) = fun k =>
+          PowerSeries.newtonPolygon v f k + ↑(v.embed γ * ↑k)
+@PowerSeries.coeffVal_X_pow_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  (n : ℕ), PowerSeries.coeffVal v (PowerSeries.X ^ n * f) = NewtonPolygon.shiftRight n (PowerSeries.coeffVal v f)
+@PowerSeries.newtonPolygon_X_pow_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ (n : ℕ),
+      PowerSeries.newtonPolygon v (PowerSeries.X ^ n * f) = NewtonPolygon.shiftRight n (PowerSeries.newtonPolygon v f)
+@PowerSeries.coeffVal_map : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {L : Type u_3} [inst_4 : NormedField L] (w : NormedField.NormedAddValuation L Γ) (φ : K →+* L),
+  (∀ (x : K), w.toAddValuation (φ x) = v.toAddValuation x) →
+    w.embed = v.embed → PowerSeries.coeffVal w ((PowerSeries.map φ) f) = PowerSeries.coeffVal v f
+@PowerSeries.newtonPolygon_map : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {L : Type u_3} [inst_4 : NormedField L] (w : NormedField.NormedAddValuation L Γ) (φ : K →+* L),
+  (∀ (x : K), w.toAddValuation (φ x) = v.toAddValuation x) →
+    w.embed = v.embed → PowerSeries.newtonPolygon w ((PowerSeries.map φ) f) = PowerSeries.newtonPolygon v f
+@PowerSeries.coeffVal_eq_scaleHeight : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {Γ' : Type u_3} [inst_4 : AddCommGroup Γ'] [inst_5 : LinearOrder Γ'] [inst_6 : IsOrderedAddMonoid Γ']
+  (w : NormedField.NormedAddValuation K Γ'),
+  PowerSeries.coeffVal w f = NewtonPolygon.scaleHeight (v.scale w) (PowerSeries.coeffVal v f)
+@PowerSeries.isAdmissible_coeffVal_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {Γ' : Type u_3} [inst_4 : AddCommGroup Γ']
+  [inst_5 : LinearOrder Γ'] [inst_6 : IsOrderedAddMonoid Γ'] (w : NormedField.NormedAddValuation K Γ'),
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal w f) ↔ NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f)
+@PowerSeries.newtonPolygon_eq_scaleHeight : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {Γ' : Type u_3} [inst_4 : AddCommGroup Γ']
+  [inst_5 : LinearOrder Γ'] [inst_6 : IsOrderedAddMonoid Γ'] (w : NormedField.NormedAddValuation K Γ'),
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    PowerSeries.newtonPolygon w f = NewtonPolygon.scaleHeight (v.scale w) (PowerSeries.newtonPolygon v f)
+@Polynomial.newtonPolygon_coe : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  PowerSeries.newtonPolygon v ↑f = Polynomial.newtonPolygon v f
+@Polynomial.isNewtonPolygonOf_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  NewtonPolygon.IsNewtonPolygonOf (Polynomial.coeffVal v f) (Polynomial.newtonPolygon v f)
+@Polynomial.newtonPolygon_le : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  (k : ℕ), Polynomial.newtonPolygon v f k ≤ Polynomial.coeffVal v f k
+@Polynomial.isConvexSeq_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  NewtonPolygon.IsConvexSeq (Polynomial.newtonPolygon v f)
+@Polynomial.newtonPolygon_zero : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ),
+  Polynomial.newtonPolygon v 0 = fun x => ⊤
+@Polynomial.newtonPolygon_eq_top_of_lt_natTrailingDegree : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {k : ℕ},
+  k < f.natTrailingDegree → Polynomial.newtonPolygon v f k = ⊤
+@Polynomial.newtonPolygon_eq_top_of_natDegree_lt : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {k : ℕ},
+  f.natDegree < k → Polynomial.newtonPolygon v f k = ⊤
+@Polynomial.newtonPolygon_ne_top : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → ∀ {k : ℕ}, f.natTrailingDegree ≤ k → k ≤ f.natDegree → Polynomial.newtonPolygon v f k ≠ ⊤
+@Polynomial.newtonPolygon_eq_top_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → ∀ {k : ℕ}, Polynomial.newtonPolygon v f k = ⊤ ↔ k < f.natTrailingDegree ∨ f.natDegree < k
+@Polynomial.newtonPolygon_natTrailingDegree : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → Polynomial.newtonPolygon v f f.natTrailingDegree = Polynomial.coeffVal v f f.natTrailingDegree
+@Polynomial.newtonPolygon_natDegree : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → Polynomial.newtonPolygon v f f.natDegree = Polynomial.coeffVal v f f.natDegree
+@Polynomial.anchor_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → NewtonPolygon.anchor (Polynomial.newtonPolygon v f) = f.natTrailingDegree
+@Polynomial.isVertex_natTrailingDegree : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → NewtonPolygon.IsVertex (Polynomial.newtonPolygon v f) f.natTrailingDegree
+@Polynomial.isVertex_natDegree : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → NewtonPolygon.IsVertex (Polynomial.newtonPolygon v f) f.natDegree
+@Polynomial.slopeIndices_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f ≠ 0 → NewtonPolygon.slopeIndices (Polynomial.newtonPolygon v f) = Set.Ico f.natTrailingDegree f.natDegree
+@Polynomial.slopeIndices_newtonPolygon_finite : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  (NewtonPolygon.slopeIndices (Polynomial.newtonPolygon v f)).Finite
+@Polynomial.slopesUnbounded_newtonPolygon : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  NewtonPolygon.SlopesUnbounded (Polynomial.newtonPolygon v f)
+@Polynomial.newtonPolygon_zero_of_coeff_zero_eq_one : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}, f.coeff 0 = 1 → Polynomial.newtonPolygon v f 0 = 0
+@Polynomial.card_newtonSlopes : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  (Polynomial.newtonSlopes v f).card = f.natDegree - f.natTrailingDegree
+@Polynomial.count_newtonSlopes : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  (σ : ℝ),
+  Multiset.count σ (Polynomial.newtonSlopes v f) =
+    {j | NewtonPolygon.unitSlope (Polynomial.newtonPolygon v f) j = ↑σ}.ncard
+@Polynomial.exists_isSegment_of_mem_slopeIndices : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {j : ℕ},
+  j ∈ NewtonPolygon.slopeIndices (Polynomial.newtonPolygon v f) →
+    ∃ a b, NewtonPolygon.IsSegment (Polynomial.newtonPolygon v f) a b ∧ a ≤ j ∧ j < b
+@Polynomial.exists_unitSlope_eq_div : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {j : ℕ},
+  j ∈ NewtonPolygon.slopeIndices (Polynomial.newtonPolygon v f) →
+    ∃ γ l, 0 < l ∧ NewtonPolygon.unitSlope (Polynomial.newtonPolygon v f) j = ↑(v.embed γ / ↑l)
+@Polynomial.exists_int_unitSlope_eq_div : ∀ {K : Type u_1} [inst : NormedField K] {f : Polynomial K}
+  {w : NormedField.NormedAddValuation K ℤ},
+  (∀ (n : ℤ), w.embed n = ↑n) →
+    ∀ {j : ℕ},
+      j ∈ NewtonPolygon.slopeIndices (Polynomial.newtonPolygon w f) →
+        ∃ a b n,
+          NewtonPolygon.IsSegment (Polynomial.newtonPolygon w f) a b ∧
+            a ≤ j ∧ j < b ∧ NewtonPolygon.unitSlope (Polynomial.newtonPolygon w f) j = ↑↑(↑n / ↑(b - a))
+@Polynomial.coeffVal_reverse : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  Polynomial.coeffVal v f.reverse = NewtonPolygon.reflect f.natDegree (Polynomial.coeffVal v f)
+@Polynomial.newtonPolygon_reverse : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  Polynomial.newtonPolygon v f.reverse = NewtonPolygon.reflect f.natDegree (Polynomial.newtonPolygon v f)
+@Polynomial.coe_comp_C_mul_X : ∀ {K : Type u_1} [inst : NormedField K] {f : Polynomial K} (c : K),
+  ↑(f.comp (Polynomial.C c * Polynomial.X)) = (PowerSeries.rescale c) ↑f
+@Polynomial.newtonPolygon_comp_C_mul_X : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {c : K} {γ : Γ},
+  v.toAddValuation c = ↑γ →
+    Polynomial.newtonPolygon v (f.comp (Polynomial.C c * Polynomial.X)) = fun k =>
+      Polynomial.newtonPolygon v f k + ↑(v.embed γ * ↑k)
+@Polynomial.newtonPolygon_X_pow_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  (n : ℕ), Polynomial.newtonPolygon v (Polynomial.X ^ n * f) = NewtonPolygon.shiftRight n (Polynomial.newtonPolygon v f)
+@Polynomial.newtonPolygon_C_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {c : K} {γ : Γ},
+  v.toAddValuation c = ↑γ →
+    Polynomial.newtonPolygon v (Polynomial.C c * f) = fun k => Polynomial.newtonPolygon v f k + ↑(v.embed γ)
+@Polynomial.newtonPolygon_C_inv_mul : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {γ : Γ},
+  v.toAddValuation (f.coeff 0) = ↑γ →
+    Polynomial.newtonPolygon v (Polynomial.C (f.coeff 0)⁻¹ * f) = fun k =>
+      Polynomial.newtonPolygon v f k + ↑(-v.embed γ)
+@Polynomial.newtonPolygon_map : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {L : Type u_3} [inst_4 : NormedField L] (w : NormedField.NormedAddValuation L Γ) (φ : K →+* L),
+  (∀ (x : K), w.toAddValuation (φ x) = v.toAddValuation x) →
+    w.embed = v.embed → Polynomial.newtonPolygon w (Polynomial.map φ f) = Polynomial.newtonPolygon v f
+@Polynomial.newtonPolygon_eq_scaleHeight : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {Γ' : Type u_3} [inst_4 : AddCommGroup Γ']
+  [inst_5 : LinearOrder Γ'] [inst_6 : IsOrderedAddMonoid Γ'] (w : NormedField.NormedAddValuation K Γ'),
+  Polynomial.newtonPolygon w f = NewtonPolygon.scaleHeight (v.scale w) (Polynomial.newtonPolygon v f)
+@Polynomial.newtonSlopes_eq_map : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {Γ' : Type u_3} [inst_4 : AddCommGroup Γ'] [inst_5 : LinearOrder Γ'] [inst_6 : IsOrderedAddMonoid Γ']
+  (w : NormedField.NormedAddValuation K Γ'),
+  Polynomial.newtonSlopes w f = Multiset.map (fun t => v.scale w * t) (Polynomial.newtonSlopes v f)
+@NormedField.NormedAddValuation.ofNormAddVal_algebraMap : ∀ {K : Type u_1} {L : Type u_2}
+  [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L]
+  [inst_3 : IsUltrametricDist L] [inst_4 : NormedAlgebra K L] (x : K),
+  (NormedField.NormedAddValuation.ofNormAddVal L).toAddValuation ((algebraMap K L) x) =
+    (NormedField.NormedAddValuation.ofNormAddVal K).toAddValuation x
+@NormedField.NormedAddValuation.ofNormAddVal_embed_eq : ∀ {K : Type u_1} {L : Type u_2}
+  [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L]
+  [inst_3 : IsUltrametricDist L] [NormedAlgebra K L],
+  (NormedField.NormedAddValuation.ofNormAddVal L).embed = (NormedField.NormedAddValuation.ofNormAddVal K).embed
+@NormedField.NormedAddValuation.ofNormAddValQ_algebraMap : ∀ {K : Type u_1} {L : Type u_2}
+  [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L]
+  [inst_3 : IsUltrametricDist L] [inst_4 : NormedAlgebra K L] [inst_5 : CompleteSpace K]
+  [inst_6 : Algebra.IsAlgebraic K L] (π : K) [inst_7 : NormedField.valuation.IsCommensurable π] (x : K),
+  (NormedField.NormedAddValuation.ofNormAddValQ L ((algebraMap K L) π)).toAddValuation ((algebraMap K L) x) =
+    (NormedField.NormedAddValuation.ofNormAddValQ K π).toAddValuation x
+@NormedField.NormedAddValuation.ofNormAddValQ_embed_eq : ∀ {K : Type u_1} {L : Type u_2}
+  [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L]
+  [inst_3 : IsUltrametricDist L] [inst_4 : NormedAlgebra K L] [inst_5 : CompleteSpace K]
+  [inst_6 : Algebra.IsAlgebraic K L] (π : K) [inst_7 : NormedField.valuation.IsCommensurable π],
+  (NormedField.NormedAddValuation.ofNormAddValQ L ((algebraMap K L) π)).embed =
+    (NormedField.NormedAddValuation.ofNormAddValQ K π).embed
+@Polynomial.newtonPolygon_ofNormAddVal_map : ∀ {K : Type u_1} {L : Type u_2} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] (f : Polynomial K),
+  Polynomial.newtonPolygon (NormedField.NormedAddValuation.ofNormAddVal L) (Polynomial.map (algebraMap K L) f) =
+    Polynomial.newtonPolygon (NormedField.NormedAddValuation.ofNormAddVal K) f
+@PowerSeries.newtonPolygon_ofNormAddVal_map : ∀ {K : Type u_1} {L : Type u_2} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] (f : PowerSeries K),
+  PowerSeries.newtonPolygon (NormedField.NormedAddValuation.ofNormAddVal L) ((PowerSeries.map (algebraMap K L)) f) =
+    PowerSeries.newtonPolygon (NormedField.NormedAddValuation.ofNormAddVal K) f
+@Polynomial.newtonPolygon_ofNormAddValQ_map : ∀ {K : Type u_1} {L : Type u_2} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [inst_5 : CompleteSpace K] [inst_6 : Algebra.IsAlgebraic K L] (π : K)
+  [inst_7 : NormedField.valuation.IsCommensurable π] (f : Polynomial K),
+  Polynomial.newtonPolygon (NormedField.NormedAddValuation.ofNormAddValQ L ((algebraMap K L) π))
+      (Polynomial.map (algebraMap K L) f) =
+    Polynomial.newtonPolygon (NormedField.NormedAddValuation.ofNormAddValQ K π) f
+@PowerSeries.newtonPolygon_ofNormAddValQ_map : ∀ {K : Type u_1} {L : Type u_2} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [inst_5 : CompleteSpace K] [inst_6 : Algebra.IsAlgebraic K L] (π : K)
+  [inst_7 : NormedField.valuation.IsCommensurable π] (f : PowerSeries K),
+  PowerSeries.newtonPolygon (NormedField.NormedAddValuation.ofNormAddValQ L ((algebraMap K L) π))
+      ((PowerSeries.map (algebraMap K L)) f) =
+    PowerSeries.newtonPolygon (NormedField.NormedAddValuation.ofNormAddValQ K π) f
+NewtonPolygon.toEReal_ne_bot : ∀ (x : WithTop ℝ), NewtonPolygon.toEReal x ≠ ⊥
+@NewtonPolygon.toEReal_le_toEReal : ∀ {x y : WithTop ℝ}, NewtonPolygon.toEReal x ≤ NewtonPolygon.toEReal y ↔ x ≤ y
+@NewtonPolygon.toEReal_lt_toEReal : ∀ {x y : WithTop ℝ}, NewtonPolygon.toEReal x < NewtonPolygon.toEReal y ↔ x < y
+NewtonPolygon.toEReal_injective : Function.Injective NewtonPolygon.toEReal
+@NewtonPolygon.toEReal_eq_top_iff : ∀ {x : WithTop ℝ}, NewtonPolygon.toEReal x = ⊤ ↔ x = ⊤
+@NewtonPolygon.toEReal_of_ne_top : ∀ {x : WithTop ℝ}, x ≠ ⊤ → NewtonPolygon.toEReal x = ↑x.untop₀
+NewtonPolygon.supportValue_le : ∀ (h : ℕ → WithTop ℝ) (m : ℝ) (k : ℕ),
+  NewtonPolygon.supportValue h m ≤ NewtonPolygon.toEReal (h k) - ↑(m * ↑k)
+@NewtonPolygon.le_supportValue_iff : ∀ {h : ℕ → WithTop ℝ} {m : ℝ} {a : EReal},
+  a ≤ NewtonPolygon.supportValue h m ↔ ∀ (k : ℕ), a ≤ NewtonPolygon.toEReal (h k) - ↑(m * ↑k)
+@NewtonPolygon.coe_le_supportValue_iff : ∀ {h : ℕ → WithTop ℝ} {m y : ℝ},
+  ↑y ≤ NewtonPolygon.supportValue h m ↔ ∀ (k : ℕ), ↑(y + m * ↑k) ≤ h k
+@NewtonPolygon.supportValue_ne_bot_iff : ∀ {h : ℕ → WithTop ℝ} {m : ℝ},
+  NewtonPolygon.supportValue h m ≠ ⊥ ↔ ∃ y, ∀ (k : ℕ), ↑(y + m * ↑k) ≤ h k
+@NewtonPolygon.supportValue_eq_top_iff : ∀ {h : ℕ → WithTop ℝ} {m : ℝ},
+  NewtonPolygon.supportValue h m = ⊤ ↔ ∀ (k : ℕ), h k = ⊤
+@NewtonPolygon.supportValue_mono : ∀ {h g : ℕ → WithTop ℝ},
+  (∀ (k : ℕ), g k ≤ h k) → ∀ (m : ℝ), NewtonPolygon.supportValue g m ≤ NewtonPolygon.supportValue h m
+@NewtonPolygon.isAdmissible_iff_exists_supportValue_ne_bot : ∀ {v : ℕ → WithTop ℝ},
+  NewtonPolygon.IsAdmissible v ↔ ∃ m, NewtonPolygon.supportValue v m ≠ ⊥
+@NewtonPolygon.supportValue_newtonPolygon : ∀ {v : ℕ → WithTop ℝ},
+  NewtonPolygon.IsAdmissible v →
+    ∀ (m : ℝ), NewtonPolygon.supportValue (NewtonPolygon.newtonPolygon v) m = NewtonPolygon.supportValue v m
+@NewtonPolygon.supportValue_eq_of_line_le : ∀ {h : ℕ → WithTop ℝ} {n : ℕ},
+  h n ≠ ⊤ →
+    ∀ {m : ℝ},
+      (∀ (k : ℕ), ↑((h n).untop₀ + m * (↑k - ↑n)) ≤ h k) →
+        NewtonPolygon.supportValue h m = NewtonPolygon.toEReal (h n) - ↑(m * ↑n)
+@NewtonPolygon.IsConvexSeq.supportValue_eq_of_unitSlope : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    ∀ {n : ℕ},
+      h n ≠ ⊤ →
+        ∀ {m : ℝ},
+          (∀ j < n, h j ≠ ⊤ → NewtonPolygon.unitSlope h j ≤ ↑m) →
+            (∀ (j : ℕ), n ≤ j → ↑m ≤ NewtonPolygon.unitSlope h j) →
+              NewtonPolygon.supportValue h m = NewtonPolygon.toEReal (h n) - ↑(m * ↑n)
+@NewtonPolygon.IsConvexSeq.supportValue_eq_of_unitSlope_le_le : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    ∀ {j : ℕ},
+      h (j + 1) ≠ ⊤ →
+        ∀ {m : ℝ},
+          NewtonPolygon.unitSlope h j ≤ ↑m →
+            ↑m ≤ NewtonPolygon.unitSlope h (j + 1) →
+              NewtonPolygon.supportValue h m = NewtonPolygon.toEReal (h (j + 1)) - ↑(m * ↑(j + 1))
+@NewtonPolygon.IsConvexSeq.supportValue_eq_faceRight : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    h 0 ≠ ⊤ →
+      NewtonPolygon.SlopesUnbounded h →
+        ∀ (m : ℝ),
+          NewtonPolygon.supportValue h m =
+            NewtonPolygon.toEReal (h (NewtonPolygon.faceRight h m)) - ↑(m * ↑(NewtonPolygon.faceRight h m))
+@NewtonPolygon.IsConvexSeq.supportValue_eq_faceLeft : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    h 0 ≠ ⊤ →
+      NewtonPolygon.SlopesUnbounded h →
+        ∀ (m : ℝ),
+          NewtonPolygon.supportValue h m =
+            NewtonPolygon.toEReal (h (NewtonPolygon.faceLeft h m)) - ↑(m * ↑(NewtonPolygon.faceLeft h m))
+@NewtonPolygon.IsConvexSeq.supportValue_ne_bot : ∀ {h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsConvexSeq h →
+    h 0 ≠ ⊤ → NewtonPolygon.SlopesUnbounded h → ∀ (m : ℝ), NewtonPolygon.supportValue h m ≠ ⊥
+@NewtonPolygon.IsNewtonPolygonOf.exists_eq_supportValue_iff : ∀ {v h : ℕ → WithTop ℝ},
+  NewtonPolygon.IsNewtonPolygonOf v h →
+    (∃ k, v k ≠ ⊤) →
+      ∀ {m : ℝ},
+        NewtonPolygon.supportValue v m ≠ ⊥ →
+          ((∃ k, NewtonPolygon.toEReal (v k) - ↑(m * ↑k) = NewtonPolygon.supportValue v m) ↔
+            ∃ k, NewtonPolygon.IsVertex h k ∧ NewtonPolygon.toEReal (h k) - ↑(m * ↑k) = NewtonPolygon.supportValue v m)
+@NewtonPolygon.convex_setOf_supportValue_ne_bot : ∀ {h : ℕ → WithTop ℝ},
+  Convex ℝ {m | NewtonPolygon.supportValue h m ≠ ⊥}
+@NewtonPolygon.concaveOn_toReal_supportValue : ∀ {h : ℕ → WithTop ℝ},
+  ConcaveOn ℝ {m | NewtonPolygon.supportValue h m ≠ ⊥} fun m => (NewtonPolygon.supportValue h m).toReal
+@NewtonPolygon.iSup_supportValue_add : ∀ {v : ℕ → WithTop ℝ},
+  NewtonPolygon.IsAdmissible v →
+    ∀ (k : ℕ), ⨆ m, NewtonPolygon.supportValue v m + ↑(m * ↑k) = NewtonPolygon.toEReal (NewtonPolygon.newtonPolygon v k)
+@Polynomial.gaussNorm_toAbsoluteValue : ∀ {K : Type u_1} [inst : NormedField K] {c : ℝ},
+  0 ≤ c →
+    ∀ (f : Polynomial K), Polynomial.gaussNorm (NormedField.toAbsoluteValue K) c f = PowerSeries.gaussNorm norm c ↑f
+@Polynomial.exists_gaussNorm_coe_eq : ∀ {K : Type u_1} [inst : NormedField K] {c : ℝ},
+  0 ≤ c → ∀ (f : Polynomial K), ∃ k, PowerSeries.gaussNorm norm c ↑f = ‖f.coeff k‖ * c ^ k
+@PowerSeries.norm_coeff_mul_rpow_pow_eq_rpow : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {k : ℕ} {γ : Γ},
+  v.toAddValuation ((PowerSeries.coeff k) f) = ↑γ →
+    ∀ (m : ℝ), ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k = v.base ^ (m * ↑k - v.embed γ)
+@PowerSeries.hasGaussNorm_rpow_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  (m : ℝ), PowerSeries.HasGaussNorm norm (v.base ^ m) f ↔ NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m ≠ ⊥
+@PowerSeries.hasGaussNorm_iff_supportValue_ne_bot : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {c : ℝ},
+  0 < c →
+    (PowerSeries.HasGaussNorm norm c f ↔ NewtonPolygon.supportValue (PowerSeries.coeffVal v f) (Real.logb v.base c) ≠ ⊥)
+@PowerSeries.gaussNorm_rpow_eq_of_supportValue_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m s : ℝ},
+  NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m = ↑s →
+    PowerSeries.gaussNorm norm (v.base ^ m) f = v.base ^ (-s)
+@PowerSeries.gaussNorm_rpow_eq_rpow_neg_toReal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m ≠ ⊥ →
+    f ≠ 0 →
+      PowerSeries.gaussNorm norm (v.base ^ m) f =
+        v.base ^ (-(NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m).toReal)
+@PowerSeries.supportValue_coeffVal_eq_neg_logb : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m ≠ ⊥ →
+    f ≠ 0 →
+      NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m =
+        ↑(-Real.logb v.base (PowerSeries.gaussNorm norm (v.base ^ m) f))
+@PowerSeries.supportValue_newtonPolygon_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ (m : ℝ),
+      NewtonPolygon.supportValue (PowerSeries.newtonPolygon v f) m =
+        NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m
+@PowerSeries.gaussNorm_rpow_eq_norm_coeff_faceRight : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      NewtonPolygon.SlopesUnbounded (PowerSeries.newtonPolygon v f) →
+        ∀ (m : ℝ),
+          PowerSeries.gaussNorm norm (v.base ^ m) f =
+            ‖(PowerSeries.coeff (NewtonPolygon.faceRight (PowerSeries.newtonPolygon v f) m)) f‖ *
+              (v.base ^ m) ^ NewtonPolygon.faceRight (PowerSeries.newtonPolygon v f) m
+@PowerSeries.gaussNorm_rpow_eq_norm_coeff_faceLeft : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      NewtonPolygon.SlopesUnbounded (PowerSeries.newtonPolygon v f) →
+        ∀ (m : ℝ),
+          PowerSeries.gaussNorm norm (v.base ^ m) f =
+            ‖(PowerSeries.coeff (NewtonPolygon.faceLeft (PowerSeries.newtonPolygon v f) m)) f‖ *
+              (v.base ^ m) ^ NewtonPolygon.faceLeft (PowerSeries.newtonPolygon v f) m
+@PowerSeries.exists_gaussNorm_rpow_eq_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m ≠ ⊥ →
+    f ≠ 0 →
+      ((∃ k, PowerSeries.gaussNorm norm (v.base ^ m) f = ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k) ↔
+        ∃ k,
+          NewtonPolygon.IsVertex (PowerSeries.newtonPolygon v f) k ∧
+            NewtonPolygon.toEReal (PowerSeries.newtonPolygon v f k) - ↑(m * ↑k) =
+              NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m)
+@PowerSeries.concaveOn_neg_logb_gaussNorm : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  f ≠ 0 →
+    ConcaveOn ℝ {m | PowerSeries.HasGaussNorm norm (v.base ^ m) f} fun m =>
+      -Real.logb v.base (PowerSeries.gaussNorm norm (v.base ^ m) f)
+@PowerSeries.neg_logb_gaussNorm_eq_of_unitSlope_le_le : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ {j : ℕ} {m : ℝ},
+      PowerSeries.newtonPolygon v f (j + 1) ≠ ⊤ →
+        NewtonPolygon.unitSlope (PowerSeries.newtonPolygon v f) j ≤ ↑m →
+          ↑m ≤ NewtonPolygon.unitSlope (PowerSeries.newtonPolygon v f) (j + 1) →
+            -Real.logb v.base (PowerSeries.gaussNorm norm (v.base ^ m) f) =
+              (PowerSeries.newtonPolygon v f (j + 1)).untop₀ - m * ↑(j + 1)
+@PowerSeries.toEReal_newtonPolygon_eq_iSup : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    ∀ (k : ℕ),
+      NewtonPolygon.toEReal (PowerSeries.newtonPolygon v f k) =
+        ⨆ m, NewtonPolygon.supportValue (PowerSeries.coeffVal v f) m + ↑(m * ↑k)
+@Polynomial.supportValue_coeffVal_ne_bot : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) (f : Polynomial K) (m : ℝ),
+  NewtonPolygon.supportValue (Polynomial.coeffVal v f) m ≠ ⊥
+@Polynomial.gaussNorm_rpow_eq_norm_coeff_faceRight : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K},
+  f.coeff 0 ≠ 0 →
+    ∀ (m : ℝ),
+      PowerSeries.gaussNorm norm (v.base ^ m) ↑f =
+        ‖f.coeff (NewtonPolygon.faceRight (Polynomial.newtonPolygon v f) m)‖ *
+          (v.base ^ m) ^ NewtonPolygon.faceRight (Polynomial.newtonPolygon v f) m
+@PowerSeries.IsPure.le_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      PowerSeries.IsPure v f m → ∀ (k : ℕ), PowerSeries.coeffVal v f 0 + ↑(m * ↑k) ≤ PowerSeries.coeffVal v f k
+@PowerSeries.IsPure.norm_coeff_mul_rpow_pow_le : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      PowerSeries.IsPure v f m → ∀ (k : ℕ), ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k ≤ ‖(PowerSeries.coeff 0) f‖
+@PowerSeries.IsPure.gaussNorm_rpow_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      PowerSeries.IsPure v f m → PowerSeries.gaussNorm norm (v.base ^ m) f = ‖(PowerSeries.coeff 0) f‖
+@PowerSeries.isPure_iff_of_infinite : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K}
+  {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      {k | (PowerSeries.coeff k) f ≠ 0}.Infinite →
+        (PowerSeries.IsPure v f m ↔
+          (∀ (k : ℕ), ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k ≤ ‖(PowerSeries.coeff 0) f‖) ∧
+            ∀ (c : ℝ), v.base ^ m < c → ¬PowerSeries.HasGaussNorm norm c f)
+@PowerSeries.HasFirstBreak.le_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ},
+        PowerSeries.HasFirstBreak v f m l →
+          ∀ (k : ℕ), PowerSeries.coeffVal v f 0 + ↑(m * ↑k) ≤ PowerSeries.coeffVal v f k
+@PowerSeries.HasFirstBreak.coeffVal_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ}, PowerSeries.HasFirstBreak v f m l → PowerSeries.coeffVal v f l = PowerSeries.coeffVal v f 0 + ↑(m * ↑l)
+@PowerSeries.HasFirstBreak.lt_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ},
+        PowerSeries.HasFirstBreak v f m l →
+          ∀ {k : ℕ}, l < k → PowerSeries.coeffVal v f 0 + ↑(m * ↑k) < PowerSeries.coeffVal v f k
+@PowerSeries.HasFirstBreak.coeff_ne_zero : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 → ∀ {l : ℕ}, PowerSeries.HasFirstBreak v f m l → (PowerSeries.coeff l) f ≠ 0
+@PowerSeries.HasFirstBreak.norm_coeff_mul_rpow_pow_le : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ},
+        PowerSeries.HasFirstBreak v f m l →
+          ∀ (k : ℕ), ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k ≤ ‖(PowerSeries.coeff 0) f‖
+@PowerSeries.HasFirstBreak.norm_coeff_mul_rpow_pow_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ},
+        PowerSeries.HasFirstBreak v f m l → ‖(PowerSeries.coeff l) f‖ * (v.base ^ m) ^ l = ‖(PowerSeries.coeff 0) f‖
+@PowerSeries.HasFirstBreak.norm_coeff_mul_rpow_pow_lt : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ},
+        PowerSeries.HasFirstBreak v f m l →
+          ∀ {k : ℕ}, l < k → ‖(PowerSeries.coeff k) f‖ * (v.base ^ m) ^ k < ‖(PowerSeries.coeff 0) f‖
+@PowerSeries.HasFirstBreak.gaussNorm_rpow_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ},
+        PowerSeries.HasFirstBreak v f m l → PowerSeries.gaussNorm norm (v.base ^ m) f = ‖(PowerSeries.coeff 0) f‖
+@Polynomial.isPure_coe_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ}, PowerSeries.IsPure v (↑f) m ↔ Polynomial.IsPure v f m
+@Polynomial.hasFirstBreak_coe_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ} {l : ℕ}, PowerSeries.HasFirstBreak v (↑f) m l ↔ Polynomial.HasFirstBreak v f m l
+@Polynomial.IsPure.le_coeffVal : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ},
+  f.coeff 0 ≠ 0 → Polynomial.IsPure v f m → ∀ (k : ℕ), Polynomial.coeffVal v f 0 + ↑(m * ↑k) ≤ Polynomial.coeffVal v f k
+@Polynomial.IsPure.norm_coeff_mul_rpow_pow_le : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {m : ℝ},
+  f.coeff 0 ≠ 0 → Polynomial.IsPure v f m → ∀ (k : ℕ), ‖f.coeff k‖ * (v.base ^ m) ^ k ≤ ‖f.coeff 0‖
+@Polynomial.IsPure.norm_coeff_natDegree_mul_rpow_pow_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {m : ℝ},
+  f.coeff 0 ≠ 0 → Polynomial.IsPure v f m → ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree = ‖f.coeff 0‖
+@Polynomial.isPure_of_bounds : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ},
+  f.coeff 0 ≠ 0 →
+    0 < f.natDegree →
+      (∀ (k : ℕ), ‖f.coeff k‖ * (v.base ^ m) ^ k ≤ ‖f.coeff 0‖) →
+        ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree = ‖f.coeff 0‖ → Polynomial.IsPure v f m
+@Polynomial.isPure_iff : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ},
+  f.coeff 0 ≠ 0 →
+    0 < f.natDegree →
+      (Polynomial.IsPure v f m ↔
+        (∀ (k : ℕ), ‖f.coeff k‖ * (v.base ^ m) ^ k ≤ ‖f.coeff 0‖) ∧
+          ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree = ‖f.coeff 0‖)
+@Polynomial.isPure_iff_gaussNorm : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ},
+  f.coeff 0 = 1 →
+    0 < f.natDegree →
+      (Polynomial.IsPure v f m ↔
+        PowerSeries.gaussNorm norm (v.base ^ m) ↑f = ‖f.coeff f.natDegree‖ * (v.base ^ m) ^ f.natDegree ∧
+          PowerSeries.gaussNorm norm (v.base ^ m) ↑f = 1)
+@Polynomial.isPure_iff_hasFirstBreak : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ}, f.coeff 0 ≠ 0 → 0 < f.natDegree → (Polynomial.IsPure v f m ↔ Polynomial.HasFirstBreak v f m f.natDegree)
+@PowerSeries.isMulDistinguished_iff : ∀ {K : Type u_1} [inst : NormedField K] {f : PowerSeries K} {c : ℝ} {i : ℕ},
+  PowerSeries.IsMulDistinguished c f i ↔
+    PowerSeries.gaussNorm norm c f = ‖(PowerSeries.coeff i) f‖ * c ^ i ∧
+      ∀ (t : ℕ), i < t → ‖(PowerSeries.coeff t) f‖ * c ^ t < ‖(PowerSeries.coeff i) f‖ * c ^ i
+@PowerSeries.HasFirstBreak.isMulDistinguished : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      ∀ {l : ℕ}, PowerSeries.HasFirstBreak v f m l → PowerSeries.IsMulDistinguished (v.base ^ m) f l
+@PowerSeries.isMulDistinguished_rpow_iff_faceRight_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : PowerSeries K} {m : ℝ},
+  NewtonPolygon.IsAdmissible (PowerSeries.coeffVal v f) →
+    (PowerSeries.coeff 0) f ≠ 0 →
+      NewtonPolygon.SlopesUnbounded (PowerSeries.newtonPolygon v f) →
+        ∀ {i : ℕ},
+          PowerSeries.IsMulDistinguished (v.base ^ m) f i ↔
+            NewtonPolygon.faceRight (PowerSeries.newtonPolygon v f) m = i
+@Polynomial.HasFirstBreak.isMulDistinguished : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {m : ℝ},
+  f.coeff 0 ≠ 0 → ∀ {l : ℕ}, Polynomial.HasFirstBreak v f m l → PowerSeries.IsMulDistinguished (v.base ^ m) (↑f) l
+@Polynomial.IsPure.isMulDistinguished : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2} [inst_1 : AddCommGroup Γ]
+  [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ] (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K}
+  {m : ℝ},
+  f.coeff 0 ≠ 0 →
+    0 < f.natDegree → Polynomial.IsPure v f m → PowerSeries.IsMulDistinguished (v.base ^ m) (↑f) f.natDegree
+@Polynomial.isMulDistinguished_rpow_iff_faceRight_eq : ∀ {K : Type u_1} [inst : NormedField K] {Γ : Type u_2}
+  [inst_1 : AddCommGroup Γ] [inst_2 : LinearOrder Γ] [inst_3 : IsOrderedAddMonoid Γ]
+  (v : NormedField.NormedAddValuation K Γ) {f : Polynomial K} {m : ℝ},
+  f.coeff 0 ≠ 0 →
+    ∀ {i : ℕ},
+      PowerSeries.IsMulDistinguished (v.base ^ m) (↑f) i ↔ NewtonPolygon.faceRight (Polynomial.newtonPolygon v f) m = i
+Padic.normedAddValuation_apply : ∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (x : ℚ_[p]),
+  (Padic.normedAddValuation p).toAddValuation x = Padic.addValuation x
+Padic.normedAddValuation_embed : ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+  (Padic.normedAddValuation p).embed = Int.castAddHom ℝ
+Padic.normedAddValuation_embed_apply : ∀ (p : ℕ) [inst : Fact (Nat.Prime p)] (n : ℤ),
+  (Padic.normedAddValuation p).embed n = ↑n
+Padic.normedAddValuation_base : ∀ (p : ℕ) [inst : Fact (Nat.Prime p)], (Padic.normedAddValuation p).base = ↑p
+Padic.normedAddValuation_natCast_prime : ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+  (Padic.normedAddValuation p).toAddValuation ↑p = 1
+Padic.scale_normedAddValuation_ofNormAddVal : ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+  (Padic.normedAddValuation p).scale (NormedField.NormedAddValuation.ofNormAddVal ℚ_[p]) = Real.log ↑p
+@Polynomial.isPure_one_sub_X : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.IsPure (Padic.normedAddValuation p) (1 - Polynomial.X) 0
+@Polynomial.newtonSlopes_one_sub_X : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.newtonSlopes (Padic.normedAddValuation p) (1 - Polynomial.X) = {0}
+@Polynomial.isPure_one_sub_p_mul_X : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.IsPure (Padic.normedAddValuation p) (1 - Polynomial.C ↑p * Polynomial.X) 1
+@Polynomial.newtonSlopes_one_sub_p_mul_X : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.newtonSlopes (Padic.normedAddValuation p) (1 - Polynomial.C ↑p * Polynomial.X) = {1}
+@Polynomial.newtonSlopes_one_add_p_mul_X_add_p_cube_mul_X_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.newtonSlopes (Padic.normedAddValuation p)
+      (1 + Polynomial.C ↑p * Polynomial.X + Polynomial.C (↑p ^ 3) * Polynomial.X ^ 2) =
+    {1, 2}
+@Polynomial.newtonPolygon_one_add_p_mul_X_add_p_sq_mul_X_sq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.newtonPolygon (Padic.normedAddValuation p)
+      (1 + Polynomial.C ↑p * Polynomial.X + Polynomial.C (↑p ^ 2) * Polynomial.X ^ 2) 1 =
+    Polynomial.coeffVal (Padic.normedAddValuation p)
+      (1 + Polynomial.C ↑p * Polynomial.X + Polynomial.C (↑p ^ 2) * Polynomial.X ^ 2) 1
+@Polynomial.not_isVertex_one_add_p_mul_X_add_p_sq_mul_X_sq_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  ¬NewtonPolygon.IsVertex
+      (Polynomial.newtonPolygon (Padic.normedAddValuation p)
+        (1 + Polynomial.C ↑p * Polynomial.X + Polynomial.C (↑p ^ 2) * Polynomial.X ^ 2))
+      1
+@Polynomial.newtonSlopes_one_add_p_mul_X_add_p_sq_mul_X_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.newtonSlopes (Padic.normedAddValuation p)
+      (1 + Polynomial.C ↑p * Polynomial.X + Polynomial.C (↑p ^ 2) * Polynomial.X ^ 2) =
+    {1, 1}
+Polynomial.isPure_one_add_three_pow_mul_X_sq : ∀ (j : ℕ),
+  Polynomial.IsPure (Padic.normedAddValuation 3) (1 + Polynomial.C (3 ^ (2 * j + 1)) * Polynomial.X ^ 2) (↑j + 1 / 2)
+Polynomial.newtonSlopes_one_add_three_pow_mul_X_sq : ∀ (j : ℕ),
+  Polynomial.newtonSlopes (Padic.normedAddValuation 3) (1 + Polynomial.C (3 ^ (2 * j + 1)) * Polynomial.X ^ 2) =
+    Multiset.replicate 2 (↑j + 1 / 2)
+@Polynomial.newtonPolygon_cyclotomic : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {k : ℕ},
+  k < p → Polynomial.newtonPolygon (Padic.normedAddValuation p) (Polynomial.cyclotomic p ℚ_[p]) k = 0
+@Polynomial.isPure_cyclotomic : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.IsPure (Padic.normedAddValuation p) (Polynomial.cyclotomic p ℚ_[p]) 0
+@Polynomial.coeff_cyclotomic_comp_X_add_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (i : ℕ),
+  ((Polynomial.cyclotomic p ℚ_[p]).comp (Polynomial.X + 1)).coeff i = ↑(p.choose (i + 1))
+@Polynomial.isPure_C_inv_mul_cyclotomic_comp_X_add_one : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Polynomial.IsPure (Padic.normedAddValuation p)
+    (Polynomial.C (↑p)⁻¹ * (Polynomial.cyclotomic p ℚ_[p]).comp (Polynomial.X + 1)) (-1 / (↑p - 1))
+@Polynomial.newtonPolygon_ofNormAddVal_eq_scaleHeight : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (f : Polynomial ℚ_[p]),
+  Polynomial.newtonPolygon (NormedField.NormedAddValuation.ofNormAddVal ℚ_[p]) f =
+    NewtonPolygon.scaleHeight (Real.log ↑p) (Polynomial.newtonPolygon (Padic.normedAddValuation p) f)
+@PowerSeries.isPure_mk_p_pow : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  PowerSeries.IsPure (Padic.normedAddValuation p) (PowerSeries.mk fun i => ↑p ^ i) 1
+@PowerSeries.isRestricted_mk_p_pow_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {c : ℝ},
+  0 < c → PowerSeries.IsRestricted c (PowerSeries.mk fun i => ↑p ^ i ^ 2)
+@PowerSeries.coeffVal_mk_p_pow_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  PowerSeries.coeffVal (Padic.normedAddValuation p) (PowerSeries.mk fun i => ↑p ^ i ^ 2) = fun k => ↑(↑k ^ 2)
+@PowerSeries.newtonPolygon_mk_p_pow_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  PowerSeries.newtonPolygon (Padic.normedAddValuation p) (PowerSeries.mk fun i => ↑p ^ i ^ 2) = fun k => ↑(↑k ^ 2)
+@PowerSeries.unitSlope_newtonPolygon_mk_p_pow_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (j : ℕ),
+  NewtonPolygon.unitSlope (PowerSeries.newtonPolygon (Padic.normedAddValuation p) (PowerSeries.mk fun i => ↑p ^ i ^ 2))
+      j =
+    ↑(2 * ↑j + 1)
+@PowerSeries.slopesUnbounded_newtonPolygon_mk_p_pow_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  NewtonPolygon.SlopesUnbounded
+    (PowerSeries.newtonPolygon (Padic.normedAddValuation p) (PowerSeries.mk fun i => ↑p ^ i ^ 2))
+@PowerSeries.hasGaussNorm_one_mk_ite : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  PowerSeries.HasGaussNorm norm 1 (PowerSeries.mk fun i => if i = 0 then 1 else ↑p)
+@PowerSeries.not_isRestricted_one_mk_ite : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  ¬PowerSeries.IsRestricted 1 (PowerSeries.mk fun i => if i = 0 then 1 else ↑p)

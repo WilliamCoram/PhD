@@ -186,6 +186,13 @@ reasons are given because an implementor who does not know them will reintroduce
    invariances, the resolvent and the Riesz decomposition: no Noetherian hypothesis appears in this
    roadmap.
 
+   ⚠ The name `IsCompactoid` for row decay is this roadmap's convention, not the literature's. Serre,
+   Buzzard, Bellaïche and Johansson–Newton do not name the condition; the word is borrowed from
+   Gruson, van Rooij and Perez-Garcia–Schikhof, for whom an operator over a field is compactoid when
+   the image of the unit ball is a compactoid set, which over a field is the same as completely
+   continuous and the same as row decay (§0.5.3, §0.2.9). Over a Banach–Tate ring the word here
+   means row decay and nothing else, and it is not interchangeable with `IsCompletelyContinuous`.
+
 2. **Mathlib's `IsCompactOperator` is not the notion.** A linear map has Mathlib's property when the
    image of a neighbourhood of `0` is relatively compact. Over a nonarchimedean field that is not
    locally compact this fails for the identity of a one-dimensional space — the unit ball of `ℂ_p`

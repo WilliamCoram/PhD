@@ -94,11 +94,9 @@ theorem minkowski_assoc (n : ℕ) :
 theorem isConvexSeq_minkowski (hh₁ : IsConvexSeq h₁) (hh₂ : IsConvexSeq h₂) (h0₁ : h₁ 0 ≠ ⊤)
     (h0₂ : h₂ 0 ≠ ⊤) : IsConvexSeq (minkowski h₁ h₂) := by
   have hdown₁ : ∀ p q : ℕ, p ≤ q → h₁ q ≠ ⊤ → h₁ p ≠ ⊤ := fun p q hpq hq ↦
-    mem_finiteSet.1 (hh₁.ordConnected.out (mem_finiteSet.2 h0₁) (mem_finiteSet.2 hq)
-      ⟨Nat.zero_le _, hpq⟩)
+    hh₁.ne_top_of_le_of_le h0₁ hq (Nat.zero_le _) hpq
   have hdown₂ : ∀ p q : ℕ, p ≤ q → h₂ q ≠ ⊤ → h₂ p ≠ ⊤ := fun p q hpq hq ↦
-    mem_finiteSet.1 (hh₂.ordConnected.out (mem_finiteSet.2 h0₂) (mem_finiteSet.2 hq)
-      ⟨Nat.zero_le _, hpq⟩)
+    hh₂.ne_top_of_le_of_le h0₂ hq (Nat.zero_le _) hpq
   have hMdown : ∀ b c : ℕ, b ≤ c → minkowski h₁ h₂ c ≠ ⊤ → minkowski h₁ h₂ b ≠ ⊤ := by
     intro b c hbc hc
     obtain ⟨q, hq, heq⟩ := exists_minkowski_eq (h₁ := h₁) (h₂ := h₂) c
@@ -107,8 +105,8 @@ theorem isConvexSeq_minkowski (hh₁ : IsConvexSeq h₁) (hh₂ : IsConvexSeq h�
       (by omega))
     rw [Ne, WithTop.add_eq_top, not_or]
     exact ⟨hdown₁ _ q (by omega) hc.1, hdown₂ _ (c - q) (by omega) hc.2⟩
-  refine (isConvexSeq_iff_midpoint ⟨fun a ha c hc b hb ↦ ?_⟩).2 fun n ↦ ?_
-  · exact mem_finiteSet.2 (hMdown b c hb.2 (mem_finiteSet.1 hc))
+  refine isConvexSeq_iff_midpoint.2 ⟨⟨fun a ha c hc b hb ↦ ?_⟩, fun n ↦ ?_⟩
+  · exact mem_finiteSupport.2 (hMdown b c hb.2 (mem_finiteSupport.1 hc))
   · simp only [Order.succ_eq_add_one]
     obtain ⟨a, ha, heqa⟩ := exists_minkowski_eq (h₁ := h₁) (h₂ := h₂) n
     obtain ⟨b, hb, heqb⟩ := exists_minkowski_eq (h₁ := h₁) (h₂ := h₂) (n + 2)
@@ -155,27 +153,25 @@ theorem exists_subgradient (hh₁ : IsConvexSeq h₁) (hh₂ : IsConvexSeq h₂)
   rw [heq, Ne, WithTop.add_eq_top, not_or] at hfin
   obtain ⟨hf₁, hf₂⟩ := hfin
   have hdown₁ : ∀ t, t ≤ i₀ → h₁ t ≠ ⊤ := fun t ht ↦
-    mem_finiteSet.1 (hh₁.ordConnected.out (mem_finiteSet.2 h0₁) (mem_finiteSet.2 hf₁)
-      ⟨Nat.zero_le _, ht⟩)
+    hh₁.ne_top_of_le_of_le h0₁ hf₁ (Nat.zero_le _) ht
   have hdown₂ : ∀ t, t ≤ n - i₀ → h₂ t ≠ ⊤ := fun t ht ↦
-    mem_finiteSet.1 (hh₂.ordConnected.out (mem_finiteSet.2 h0₂) (mem_finiteSet.2 hf₂)
-      ⟨Nat.zero_le _, ht⟩)
+    hh₂.ne_top_of_le_of_le h0₂ hf₂ (Nat.zero_le _) ht
   have hmono₁ : ∀ t, t ≤ i₀ → unitSlope h₁ t ≤ unitSlope h₁ i₀ := fun t ht ↦
-    hh₁.monotoneOn (mem_finiteSet.2 (hdown₁ t ht)) (mem_finiteSet.2 hf₁) ht
+    hh₁.monotoneOn (mem_finiteSupport.2 (hdown₁ t ht)) (mem_finiteSupport.2 hf₁) ht
   have hmono₂ : ∀ t, t ≤ n - i₀ → unitSlope h₂ t ≤ unitSlope h₂ (n - i₀) := fun t ht ↦
-    hh₂.monotoneOn (mem_finiteSet.2 (hdown₂ t ht)) (mem_finiteSet.2 hf₂) ht
+    hh₂.monotoneOn (mem_finiteSupport.2 (hdown₂ t ht)) (mem_finiteSupport.2 hf₂) ht
   have hright₁ : ∀ t, i₀ ≤ t → unitSlope h₁ i₀ ≤ unitSlope h₁ t := by
     intro t ht
     by_cases hT : h₁ t = ⊤
     · rw [unitSlope_eq_top_iff.2 (Or.inl hT)]
       exact le_top
-    · exact hh₁.monotoneOn (mem_finiteSet.2 hf₁) (mem_finiteSet.2 hT) ht
+    · exact hh₁.monotoneOn (mem_finiteSupport.2 hf₁) (mem_finiteSupport.2 hT) ht
   have hright₂ : ∀ t, n - i₀ ≤ t → unitSlope h₂ (n - i₀) ≤ unitSlope h₂ t := by
     intro t ht
     by_cases hT : h₂ t = ⊤
     · rw [unitSlope_eq_top_iff.2 (Or.inl hT)]
       exact le_top
-    · exact hh₂.monotoneOn (mem_finiteSet.2 hf₂) (mem_finiteSet.2 hT) ht
+    · exact hh₂.monotoneOn (mem_finiteSupport.2 hf₂) (mem_finiteSupport.2 hT) ht
   -- the two inequalities that minimality of the split provides
   have hminl : 1 ≤ i₀ → unitSlope h₁ (i₀ - 1) ≤ unitSlope h₂ (n - i₀) := by
     intro hi1
@@ -229,11 +225,11 @@ theorem exists_subgradient (hh₁ : IsConvexSeq h₁) (hh₂ : IsConvexSeq h₂)
       show n - i₀ - 1 + 1 = n - i₀ by omega, not_or]
     exact ⟨hdown₂ (n - i₀ - 1) (by omega), hf₂⟩
   have hleftmono₁ : ∀ t, t < i₀ → unitSlope h₁ t ≤ unitSlope h₁ (i₀ - 1) := fun t ht ↦
-    hh₁.monotoneOn (mem_finiteSet.2 (hdown₁ t (by omega)))
-      (mem_finiteSet.2 (hdown₁ (i₀ - 1) (by omega))) (by omega)
+    hh₁.monotoneOn (mem_finiteSupport.2 (hdown₁ t (by omega)))
+      (mem_finiteSupport.2 (hdown₁ (i₀ - 1) (by omega))) (by omega)
   have hleftmono₂ : ∀ t, t < n - i₀ → unitSlope h₂ t ≤ unitSlope h₂ (n - i₀ - 1) := fun t ht ↦
-    hh₂.monotoneOn (mem_finiteSet.2 (hdown₂ t (by omega)))
-      (mem_finiteSet.2 (hdown₂ (n - i₀ - 1) (by omega))) (by omega)
+    hh₂.monotoneOn (mem_finiteSupport.2 (hdown₂ t (by omega)))
+      (mem_finiteSupport.2 (hdown₂ (n - i₀ - 1) (by omega))) (by omega)
   by_cases hminfin : min (unitSlope h₁ i₀) (unitSlope h₂ (n - i₀)) = ⊤
   · -- both right slopes are `⊤`: the two polygons stop here, and the left slopes are finite
     rw [min_eq_top] at hminfin
@@ -694,8 +690,7 @@ theorem slopeMultiset_minkowski (hh₁ : IsConvexSeq h₁) (hh₂ : IsConvexSeq 
       ∀ j, sSup (slopeIndices g) + 1 < j → g j = ⊤ := by
     intro g hg hg0 hgfin j hj
     by_contra hx
-    have hprev : g (j - 1) ≠ ⊤ := mem_finiteSet.1 (hg.ordConnected.out (mem_finiteSet.2 hg0)
-      (mem_finiteSet.2 hx) ⟨Nat.zero_le _, by omega⟩)
+    have hprev : g (j - 1) ≠ ⊤ := hg.ne_top_of_le_of_le hg0 hx (Nat.zero_le _) (by omega)
     have hmemj : j - 1 ∈ slopeIndices g :=
       mem_slopeIndices_iff.2 ⟨hprev, by rwa [show j - 1 + 1 = j by omega]⟩
     have := le_csSup hgfin.bddAbove hmemj

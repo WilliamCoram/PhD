@@ -1,0 +1,2380 @@
+===== PDF PAGE 1 =====
+Astérisque
+PIERRE COLMEZ
+Fonctions d’une variablep-adique
+Astérisque, tome 330 (2010), p. 13-59
+<http://www.numdam.org/item?id=AST_2010__330__13_0>
+© Société mathématique de France, 2010, tous droits réservés.
+L’accès aux archives de la collection « Astérisque » ( http://smf4.emath.fr/
+Publications/Asterisque/) implique l’accord avec les conditions générales d’uti-
+lisation (http://www.numdam.org/conditions). Toute utilisation commerciale ou
+impression systématique est constitutive d’une infraction pénale. Toute copie
+ou impression de ce ﬁchier doit contenir la présente mention de copyright.
+Article numérisé dans le cadre du programme
+Numérisation de documents anciens mathématiques
+http://www.numdam.org/
+===== PDF PAGE 2 =====
+Astérisque 
+330, 2010, p. 13-59 
+FONCTIONS  D'UNE  VARIABLE  p-ADIQUE 
+par 
+Pierre  Colmez 
+Résumé. —  Ce  texte est un exposé des résultats de base d'analyse fonctionnelle 
+sur Qp. L'accent est mis principalement sur l'espace des fonctions de classe ^r et son 
+dual des distributions d'ordre r, le point étant que ces espaces se sont retrouvés jouer 
+un rôle important en théorie de Langlands p-adique. 
+Abstract (Functions of a p-adic variable). —  This text is a compilation of basic results in 
+functional analysis over Qp. The stress is mainly put on the space of ^-functions 
+and on its dual of distributions of order r, the point being that these spaces have 
+come to play an important rôle in p-adic Langlands theory. 
+Introduction 
+Le but de ce texte est de  présenter  et de démontrer les résultats d'analyse  fonc­
+tionnelle p-adique dont on a  besoin  [7, 8] en vue de la  correspondance  de Langlands 
+locale p-adique pour  les représentations  de la série principale de GL2(QP).  On  donne 
+en particulier plusieurs caractérisations des  fonctions  de  classe lr si r est un  réel 
+positif, chacune ayant son intérêt propre : 
+- l'étude de la dérivation ^ :  ^r(Zp,L)  —>  <^7r_1(Zp,L) repose  sur la  décomposi­
+tion en vaguelettes, 
+- la  décomposition  (de  Mahler) sur la base des  polynômes  binomiaux  fournit, par 
+dualité, une caractérisation agréable des distributions d'ordre r en termes de l'ordre 
+de leur transformée  d'Amice. 
+C'est cette dernière description qui permet de construire des distributions  tempé­
+rées à partir de la  théorie  des  (ip,  r)-modules,  ce qui nous fournit un pont entre le 
+monde des  représentations  p-adiques du  groupe  de  Galois  absolu  de Qp et certains 
+Classification mathématique par sujets (2000). —  11S80. 
+Mots clefs. —  Analyse fonctionnelle, transformée d'Amice, intégration p-adique. 
+© Astérisque 330, SMF 2010 
+
+===== PDF PAGE 3 =====
+14 P. COLMEZ 
+espaces fonctionnels p-adiques qui se trouvent  être  reliés à certaines représentations 
+unitaires de GL2(QP). 
+La plupart  des  résultats  de ce texte sont parfaitement classiques, et le lecteur est 
+invité à consulter les  travaux cités  dans la bibliographie pour  d'autres  points de vue. 
+Il trouvera un dictionnaire  entre  analyse fonctionnelle p-adique et  anneaux  de séries 
+de Laurent dans [9, § 1.1]. 
+I. Espaces  fonctionnels  p-adiques 
+1.1. Espaces  de  Banach  p-adiques.  — Ce § ne contient que des généralités sur 
+les espaces de Banach p-adiques. 
+1. L-banach.  — On normalise la valuation p-adique vp sur Cp par vp(p) = 1. Si L est 
+un sous-corps fermé de Cp, on note ÛL = {x G  L,vp(x) > 0}  l'anneau de ses entiers, 
+ÎTIL = {x  G  L,vp(x) > 0}  l'idéal maximal de ÛL, et kL = ÛL/XXÏL son corps résiduel. 
+Si B est un L-espace vectoriel, une  valuation VB sur B est une fonction à valeurs 
+dans R U {+oo},  qui vérifie les propriétés  suivantes : 
+(i) VB{X)  = +oo si et seulement si x = 0 ; 
+(ii) VB(x + y) > înS(vB(x),VB(y)) quels que soient x,y  G  B; 
+(iii) VB(XX)  =  vP(X)  +  VB(X)  quels que soient  À  G L et x G B. 
+Un L-banach  B est un L-espace vectoriel topologique, la topologie étant définie par 
+une valuation VB pour laquelle il est complet. Une application / : Bi  —>  B^ est un 
+morphisme de  L-banach si elle est L-linéaire et continue  ;  c'est une  isométrie  de B\ 
+dans B2 si  VB2(f(x))  — VB1{X),  pour  tout  x G B\. 
+Exemple LIA. — (i) Si 7 est un ensemble, soit £oo(I, L) l'ensemble des familles bor­
+nées (ai)iei d'éléments de L. On  munit  ¿00 (7,L) de la valuation vi^ définie par 
+v£oo ((ai)iei) —  mUei vp(ai), ce qui en fait un L-banach. 
+(ii) Soit  ¿^(7,  L) le sous-espace de ^(7, L) des  suites  (a^e/ d'éléments de L 
+tendant vers 0  suivant  le filtre des complémentaires des  parties  finies. C'est un 
+L-banach comme sous-L-espace vectoriel fermé d'un L-banach. C'est  aussi  l'adhé­
+rence dans  ^oo(7, L) de l'espace des  suites n'ayant  qu'un nombre fini de  termes  non 
+nuls. 
+(iii) Plus généralement, si 7 est un ensemble, et si B est un L-banach, l'espace 
+¿00(1,5) (resp.  ¿^(7,7?))  des  suites  (ai)iE/ d'éléments de 7?, qui sont bornées 
+(resp. qui tendent vers 0  suivant le filtre des complémentaires des  parties finies), muni 
+de la valuation vi^ définie par vl8  ((a^e/)  = inïiel  ^B(^),  est un L-banach. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 4 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 15 
+La plupart  des  résultats  classiques de la théorie des espaces de Banach réels res­
+tent valables pour les L-banach (le théorème de Hahn-Banach demande un peu de 
+précaution). En particulier, on a les  résultats  suivants. 
+Proposition 1.1.2. — (i) Si f : B\  —»  B2 est un morphisme de L-banach, alors f-1 est 
+continu et donc f est un isomorphisme de L-banach (théorème de l'image ouverte). 
+(ii) Une limite simple d'applications linéaires continues sur un L-banach est conti­
+nue (théorème de Banach-Steinaus). 
+2. Bases orthonormales et bases de Banach. — La théorie des espaces de Banach 
+p-adiques est  très  loin  d'être  aussi riche que son homologue archimédienne  ;  elle se 
+rapproche plutôt de celle des espaces de Hilbert réels. En particulier, la notion  suivante 
+remplace celle de base hilbertienne  dans  un espace de Hilbert. 
+Définition 1.1.3. — Soit B un L-banach. Une famille  (e^)^/  d'éléments de B est une 
+base orthonormale de B de B si l'application  (a^)^/  >—> Yliei  aiCi,  de £^(1, L)  dans B, 
+est une isométrie. On dit que c'est une base de Banach si cette application est seule­
+ment un isomorphisme de L-banach. Autrement dit, une famille (e^)iG/ est une base 
+orthonormale de B si et seulement si : 
+(i) tout  élément x de B peut s'écrire de manière unique sous la forme  d'une série 
+convergente x = EiEI  aiei->  où les ai sont des éléments de L  tendant vers 0  suivant le 
+filtre des complémentaires des  parties finies, 
+(ii) VB(X)  = infiG/ vp(a,i). 
+C'est une base de Banach si elle est bornée et vérifie la condition (i), ce qui implique, 
+d'après le théorème de l'image ouverte, la propriété suivante. 
+(ii')  il existe une constante C > 0 telle que, pour  tout x G  B, on ait l'encadrement 
+-C + infiG/  vp(ai) < vB(x) < C + inîieI  vp(ai). 
+Une famille (ef)iG/ d'éléments de B est orthogonale s'il existe une famille (A^e/ 
+d'éléments de L telle que, quelle que soit la famille  (xi)iei  d'éléments de L, on ait 
+vB{J2iei xiKei) =  miiei  vp(xi). Une base orthonormale est donc orthogonale. 
+Exemple 1.1.4. — Si / est un ensemble, et si i G /, on note Si la  suite dont tous les 
+termes sont nuls sauf celui d'indice i qui est égal à 1. Par définition, ou presque, les Si, 
+pour i  G  /, forment une base orthonormale de  ^j(7,  L). 
+Proposition 1.1.5. — Si L est de valuation discrète, et^L est une uniformisante de L, 
+alors : 
+(i) Tout L-banach possède des bases de Banacï\. 
+(ii) Un  L-banach possède des bases orthonormaïes si et seulement si  VB(B) = vp(L). 
+De plus, sous  cette  hypothèse, si on note B° — \x G B \ VB{X) > 0}, alors  (e^)^/ 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 5 =====
+16 P. COLMEZ 
+est une base orthonormale de B si et seulement si  (ei)iej  est une base algébrique du 
+kL-espace vectoriel  B =  B°/7TLB°. 
+Démonstration. — Si B est un L-banach muni de la valuation VB, alors v'B, définie 
+par v'B{x) =  VP(TTL)  -  [vpfo)]' est une vamation sur 7?, équivalente à VB, à valeurs 
+dans vp(L), ce qui permet de déduire le (i) du  (ii).  Supposons donc que VB(B) = vp(L), 
+et montrons que (e^)iG/ est une base orthonormale de B si et seulement si  (e~i)iei  est 
+une base algébrique du fc^-espace vectoriel B. 
+Soit (ei)iei  une famille d'éléments de B° telle que la famille (ë;)iGj soit une base 
+du k  L-espace vectoriel B. Soient S un système de représentants de kL  dans  ÛL, 
+contenant 0, et s : kL  —>  S l'inverse de la réduction modulo  -KL-  Si x G B°, on peut 
+écrire x comme une somme finie £^€j aî^u ou les ai sont des éléments de kL presque 
+tous nuls. Soit s(x) = ^2iej  s{ai)ei.  Par construction, on a x  —  s(x) G  TTLB0. 
+Si x G B°, définissons par récurrence une  suite  xn d'éléments de B° par  XQ  = x 
+et £n+i = -~{xn  —  s(xn)). On a alors x = Yln=o^ïs{xn) + 7r^+1Xfc+i quel que soit 
+A; G N. On peut écrire s{xn) = Yliei sn,i^i, où les sn^ sont des éléments de S presque 
+tous nuls, ce qui montre que si on pose ai =  *j>2n=o  7r£sn>j, alors la suite des ai tend 
+vers 0 suivant le filtre des complémentaires des  parties finies. Ceci montre que l'appli­
+cation {di)iç.i  i—>  J2ieiaieï est une surjection de £^(1) sur B. Si a = (a^ei  G  ¿^(-0 
+vérifie ^^(a) = 0, on a Y^ieiai>ei ^ ® modulo  7TL  car les ë^, pour i G 7, forment 
+une base de B. Ceci implique que 0 <  VB  ( Yliei a%ei)  <  ^(^L),  et comme on a sup­
+posé que VB{B) =  VP(TTL),  on en déduit que vs(Yliei aiei) = 0 et que l'application 
+(ai)iei i—> ^2iei  aie-i  est une isométrie de £^(I) sur B. Ceci prouve que si les ë^, 
+pour ¿6/, forment une base de 5, alors les e^, pour ¿6/, forment une base ortho­
+normale de 5. 
+Supposons maintenant que les e*, pour z  G 7, forment une base orthonormale de B. 
+Si x G 5, on peut choisir x G B°  ayant  pour image x modulo p. Comme  VB{X) > 0, 
+on peut écrire x, de manière unique, sous la forme x = Ylieiaieii ou a* ^ ^ tend 
+vers 0 à l'infini. Il en résulte que la réduction ai modulo  TTL de ai est nulle sauf pour 
+un nombre fini de i (on a  a~i ^ 0 si et seulement si vp(ai) = 0), et que x = Yliei^iëi 
+est une combinaison linéaire des ë* ; les ë* forment donc une famille génératrice de B. 
+Enfin, si Ylieia^i — 0  dans  7?, et si âi G ÛL a pour image a* modulo  7T£,  alors 
+x = ^2iej àiei  G  pB°, et donc ^(x) > 0. Comme  VB{X) —  mUei vp{âi), cela implique 
+vp(ài) > 0, et donc ai = 0, pour  tout  i G L II  s'ensuit que les ë^ forment une famille 
+libre, et donc une base, de B. 
+Ceci permet de conclure. 
+3. Le dual d'un L-banach. — Si B est un L-banach, on note  7?* le L-espace vectoriel 
+des formes L-linéaires continues / : B  —>  L. Muni de la  topologie  forte définie par la 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 6 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 17 
+valuation VB* donnée par la formule 
+xeB-{OïxeB-{Oï inf 
+xeB-{Oï 
+xeB-{OïxeB-{OïxeB-{Oï 
+cet espace est un L-banach. On peut  aussi  muhir  B* de la  topologie faible de la 
+convergence simple (topologie la plus faible telle qu'une  suite  /n, n G N, ait pour 
+limite /, si et seulement si, quel que soit x E B, fn(x)  tend  vers f(x) quand n  tend 
+vers +00).  D'après le théorème de Banach-Steinhaus, B* est  aussi  complet pour la 
+topologie  faible, mais l'espace ainsi obtenu n'est un L-banach que si B est de dimension 
+finie. 
+Proposition 1.1.6. — Soit I un ensemble. \ 
+(i) Si b = (bi)ieI G  £00(1,  L), et si a =  (a.i}ieI  G ^(J,L), la série £ieJ  b*a< 
+converge dans L. 
+(ii) Si fb{a) désigne la somme de la série  $^¿7  6* a*, Vapplication b 1—> /5 est une 
+isométrie de  £OQ (J, L) sur le dual de l08 (/, L).  j 
+i 
+Démonstration. — La seule chose non totalement évidente est la surjectivité de l'appli­
+cation b*-+  fb. Soit donc /  G  £^o(I,L)*. Comme ^ est continue, si on pose bi = f(Si), 
+on a vp(bi) >  t^oj/x,)*  (/),  ce qui prouve que b =  (&i)ie/  G  £oo(I, L). Mais alors f  —  fb 
+est nul sur le sous-espace de £^(1, L)* engendré par les Si ; comme celui-ci est dense 
+et f  —  h continue, cela implique / =  /5.  Ceci permet de conclure. 
+Remarque 1.1.7. — Soit ô* l'élément de  £^(1,L)*  défini par  S*(Sj)  = 1, si j = z, et 
+Sf(ôj) = 0, si j ^ i. On montre facilement que, si /  G  £^(1, L)*,  alors / est somme de 
+la série X/i6/  f(ai)ai* dans £^Q{I, L)*,  muni de la topologie faible (la série ne converge 
+pas pour la topologie forte, sauf si J est un ensemble  fini). 
+4- Produit tensoriel de L-banach. — Soient B\ et B2 deux L-banach. Si z G  -BI<8>L^2> 
+on définit VB1<8>B2  comme le maximum des  mîjej(vB1(xj) +  VB2{vj))  pour  toutes  les 
+écritures possibles de z sous la forme YljeJX3 ® Vj- ^ec* mun^ &i  ®L  ^2  d'une 
+semi-valuation, et on note  BI<S>LB2  le séparé complété de B\  <g>£ B2 pour cette semi-
+valuation. C'est le produit tensoriel complété de B\ et L?2-
+Proposition 1.1.8. — Si I est un ensemble et B  es\t  un L-banachf  alors £^(1,  L)<S>LB 
+est isométrique à  £L08(I,B). 
+Démonstration. — L'espace  £^(1,L)  ®L  B est le sous-espace de  ¿5» (7,B)  des  suites 
+(ai)iej telles que le sous-L-espace vectoriel de 1? engendré par les a^, i 6 I, soit de 
+dimension finie. Il contient en particulier l'espace des  suites (a^)^/  d'éléments de B, 
+avec ai = 0 en dehors d'un sous-ensemble fini de I. Comme cet dernier espace est dense 
+dans ¿£0(7, B), il suffit de vérifier que la valuation y définie ci-dessus sur l£o(7, L)®LB 
+est celle  induite par l'inclusion de  £08(1,L)®LB  dans  £^(1, B). 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 7 =====
+18 P. COLMEZ 
+Soit donc z  —  J2jeJ xj®Vj € ^(7,  L)<S>LB. On  peut écrire Xj, de  manière unique, 
+sous la forme Xj =  Y\iGl ai ~ôi, avec ai 7  G L, tendant vers 0  quand i tend vers l'infini. 
+On a alors 
+nf xeB- (v£oo(Xj) + VBiVj)) = inf  (Vpidij)  + vB(yj))  < inf 
+¿6/ vB 
+jEj 
+ai,jVj = vioo{IiB)(z). 
+Ceci étant  vrai pour  toute  écriture de z sous la forme z  —  YljeJ xo ® 2/j> on en déduit 
+l'inégalité v(z) <  vtoo(IiB)(z). 
+Pour montrer  l'inégalité  dans  l'autre  sens,  partons  d'une  écriture de z sous la 
+forme z =  Y^jeJ xj ®yj et choisissons une base er, r  G  i2, du sous-L-espace vectoriel 
+(de dimension finie) de B engendré par les yj, j G J. Écrivons  aussi,  comme ci-
+dessus, Xj sous la forme Xj =  ^2iei  Q>ijài,  avec a^j  G  L, tendant  vers 0  quand i  tend 
+vers l'infini. Soient 6^r, r G -R, les coordonnées de ^ = XljGJ ai,jUj  dans  la base 
+des er, r G -R. Il existe  7Q  C I fini, tel que ^(6^rer) > v(z) si i ^ IQ. Soit alors 
+ar = Yli£i-i0 bi,r£r  G ^2o(i", L).  On  peut  écrire z sous la forme 
+z = 
+reR 
+ar (g) er + 
+ar (g) 
+¿2 0 ^. 
+On peut  donc minorer v(z) par 
+min( ïnî  vioo(ar)  + vB(er),  inf  vB(*t)) > min ( in£^oo(ar) + ^(er),^  (/,#)(£)), 
+rGii ïEio  rGix 
+et comme on a  V£oo(ar)  + i7#(er) > v(^) par construction, on en  déduit  l'inégalité 
+v(z) >  ^OÛ(/,B)('2:)  ciue l'on cherchait à  établir.  Ceci  permet de conclure. 
+Corollaire 1.1.9. — (i) Si Bi et B2 sont des L-banach et si (e^e/ et  (fj)jeJ son^ des 
+bases orthonormales de Bi et B2, alors (a ®  fj)(ij)eIxJ est une base orthonormale 
+de Bx^LB2. 
+(ii) Si B est un L-banach, si  (ei)iei  est une base orthonormale de B, et si K est 
+un sous-corps complet de Cp contenant L, alors (e^GJ es^ une base orthonormale du 
+K-banach K®LB. 
+1.2. Fonctions  continues  sur Zp 
+1. Polynômes binomiaux. — Soit ^°(ZP, L) l'ensemble des fonctions continues de Zp 
+dans L. Comme Zp est compact,  toute  fonction continue sur Zp est bornée. Ceci 
+permet de munir ^°(ZP, L) de la  valuation v<go définie par  v<#o(</))  = infxGzp vp(0(ar)), 
+ce qui en  fait un L-banach. 
+Si n G  N, soit (x) le polynôme défini par 
+x 
+n = 
+1 
+x(x —  l)...(x—n+l) 
+n! 
+si n = 0 
+si n > 1. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 8 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 19 
+Proposition L2A. — Si n  G  N, alors  v<*fo((^)) = 0. 
+Démonstration. — On a (™) = 1 et donc  f^o(Q))  < 0.  D'autre  part,  si k G N, 
+(n+kN) est le nombre de  manière  de choisir n objets  parmi  n -f k et est donc  entier. 
+On en  déduit  le  fait que  vp((n*fc))  > 0 quel que soit À; G N, et comme n -f N est 
+dense dans  Zp, cela implique que vP((^)) > 0 quel que soit x  G  Zp, ce qui  permet  de 
+conclure. 
+2. Coefficients de Mahler des fonctions continues. — On définit la k-ième dérivée 
+discrète <f№  d'une fonction  (f>  par récurrence à  partir des formules 
+ar (g) ar (g) et ar (g) ar (g) = 0[FC](P + l) -<P[k](x), 
+et, si n G N, on définit le n-ième coefficient de Mahler an(6) de 6, par la formule 
+an((ß) = ^(0). On a  aussi 
+ar (g) ar (g) k 
+i=0 
+(-iy k 
+i </>(x + k  —  i) et  a^((f))  = 
+n 
+i=i) 
+ar (g) n 
+i (j){n —  i). 
+Lemme 1.2.2. — Si Pn désigne le polynôme binomial (*), alors 
+(i) PA = Pn-k sik <n, et PÌk] = 0 si k>n; 
+(ii) ak(Pn) = 0  sik^n, et ak{Pn) = 1 si k = ii 
+Démonstration. — Cela se démontre par une récurrence immédiate à  partir  de la 
+formulear (4J = (*).(4J = (*).(4J  = (*). 
+Théorème 1.2.3. — (Mahler) (i) Si ó e  ^°(Z„,L),;  alors 
+a) lim„^+00  an{4>) = 0, 
+b) +8 
+n=U ^™ ar (g) ar (g) ar (g) quel que soit x È Zp. 
+(ii) L'application  (j)  i-> a(</>) = (aN(0))neN est une isométrie de ^(Zp^L) sur 
+&(N,L). 
+Corollaire 1.2.4. — Les (xn) ocmr n G N, forment une base orthonormale de 
+(4J = (*). 
+Démonstration. — Le corollaire est immédiat.  Passons  à la démonstration du théo­
+rème. 
+- La formule définissant an((p)  montre que l'on a  vp(an((f)))  >  v^o(</>),  pour  tout 
+n G  N. L'application  <j>  »-> a{(j)) est donc continue de ^(Zp, L)  dans £oo(N, L), et on 
+a ^oo(a(0))  >  ^o(0). 
+- Le sous-espace B de ^°(ZP,L) des (j)  tels que  a{<j>)  G ^(N,L)  est fermé 
+dans ^0(ZP,L)  puisque  ^(N,L)  est fermé  dans ^oo(N,L). 
+- Si a =  (an)nEN  £  ^2O(N,L),  la série J2n=oan(^) converge normalement 
+dans ^°(ZP,L) en  vertu  de la proposition 1.2.1, et la somme  c/)a  de cette  série 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 9 =====
+20 P. COLMEZ 
+vérifie v<go((/)a)  > veoo(a).  D'autre  part,  le lemme 1.2.2 nous fournit la formule 
+<j>[a\x) =  EnSan+fcCD  et  donC  a(<i>a)  = a. 
+- L'application  <j>  i—• a(0) est injective car « a(0) = 0 » implique «  4>{k) = 0 quel 
+que soit À; G N », et N est dense dans Zp. 
+Maintenant, si  (f) G  B, on a  (j> —  </>a(4>) = 0 puisque  a{(j>  —  <t>a{4>)) = 0 et a est injective. 
+Donc cf)  G B implique que  <f)  satisfait le b) de la propriété (i) du théorème. De plus, 
+on a 
+(4J = (*).(4J = (*).(4J = (4J = (*).(4J = (*). (4J = (*).(4J = (*). 
+ce qui montre que  <j)  satisfait aussi  la propriété (ii) du théorème. Pour démontrer le 
+théorème, il suffit donc de prouver le a) du (i) ou,  autrement dit, B =  ^0(ZP,L). 
+Nous aurons besoin du lemme suivant. 
+Lemme /.2.5.  — Si  </>  G  ^°(ZP, L), il existe k G N tel que  v^o<j>(x))  > v<go(<j> 
+Démonstration. — Comme Zp est compact,  <j> est uniformément continue, et il existe 
+k S N tel que l'on ait  vp(<j)(x  + pk)  —  <j>(x)) >  v<go(<j>)  + 1 quel que soit x € Zp. 
+Maintenant, on a 
+<j№ ](x) =  4>(x+pk) - 4>{x)  + 
+Pk-1 
+i=l 
+i-iy 
+df 
+i é(x + pk - i) + (1 + (-ir )6(x). 
+Tous les termes de la somme $^£=11 ont une valuation > v<go(<f>)  + 1  car(pik ) est 
+k 
+divisible par p, et (1 + (—l)p  )(j>(x)  est nul si p ^ 2 et de valuation > v<go(</>)  + 1, 
+si p = 2. Comme on a choisi k de telle sorte que  vp(</>(x  + pk) —  <t>{x)) >  v<go(</>)  -h 1 
+quel que soit x G Zp, on a  v<go(<f)[p  >  v<^o{(j>)  -f 1, ce qui permet de conclure. 
+Revenons à la démonstration de l'égalité B =  ^°(ZP,L).  Une utilisation répétée 
+du lemme précédent, alliée à l'identité  (0[fcl])[fc2l = 0[fei+fc2J5 permet de montrer que, 
+si C > 0 et si  (j)  G #°(ZP,L), il existe AT G N tel que  v<#o(<l>W)  > C. Comme 
+^p(ûn(0)) > ^0(0^1), si n > iV, cela montre que an(</>) tend vers 0 quand n tend 
+vers +00. 
+1.3. Décomposition  en  ondelettes  des  fonctions  continues 
+1. Fonctions localement constantes et fonctions continues. — Si h G N, on note 
+LCh(Zp,  L) l'ensemble des fonctions de Zp dans L dont la restriction à a + phZp est 
+constante, quel que soit a  G Zp. On note  LC(ZP,L)  l'espace des fonctions localement 
+constantes sur Zp, à valeurs dans L. Comme Zp est compact, c'est la limite inductive 
+(i.e. la réunion croissante) des  LC^(ZP,L),  pour h  G  N. 
+Lemme 1.3.1. —  LC(ZP,L)  est dense dans ^°(ZP, L). 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 10 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 21 
+Démonstration. — Zp étant compact, toute fonction continue sur Zp est uniformément 
+continue. Autrement dit, si  <f>  G ^{Zp^L) et C > 0, il existe m G N tel que, si 
+vp(x —  y) > m, alors  vp((/)(x)  —  4>{y))  > C. Soit  </>m la fonction localement constante 
+Z)f=o-1 0Wli+p"*zp-  Si # G Zp, il existe i G  {0,...  ,pm - 1} tel que  xGi-f  pmZp  et 
+vp{(j){x) —  <t>m{x)) =  vp(<f)(x)  —  4>{i)) > C par construction de m; on en déduit que 
+Vc^o{cf) —  </>m) > C, ce qui permet de conclure. 
+Si i G N, on note £(i) le plus  petit  entier n vérifiant pn > i. On a donc 
+¿(0) = 0 et M) = logz 
+logp 
++ 1, si i > 1. 
+Proposition 1.3.2. — (i) Les  li+p*(oz  ; pow 0 < i < ph  —  1, forment une base 
+de LCh(Zv,L). 
+(ii) Les  li+pt(i)zp> Pour î € N, forment une base de  LC(ZP,L). 
+(iii) Les li+D€(t)z ; pour i G N, forment une base orthonormale de  ^°(ZP,L). 
+Démonstration. — Par définition, les li+p>*Zp> pour 0 < i < ph  —  1, forment une base 
+de LC/l(Zp,L).  Comme 
+(4J = (*).(4J = 
+(4J = (*). 
+7=0 
+li+jp^(i)p^Zp5 si z  < ph - 1, 
+la matrice  permettant  de passer des  li+p*(ozp  aux li+p>>zp> pour 0 < z < ph  —  1, est 
+triangulaire, à coefficients entiers, avec des 1 sur la diagonale. On en déduit le (i), 
+le (ii), ainsi que le fait que (a^eN • SieN  a*li+p*(Ozp induit une isométrie de 
+l'espace des suites nulles en dehors d'un ensemble fini sur  LC(ZP,L)  (muni de la 
+valuation v^o). Comme l'espace des suites nulles en dehors d'un ensemble fini est 
+dense dans ^(N,  L),  l'application ci-dessus se prolonge en une isométrie de ^(N, L) 
+sur l'adhérence de  LC(ZP,L)  dans  ^°(ZP,L),  et comme cette adhérence  n'est  autre 
+que ^°(ZP,L),  d'après  le lemme 1.3.1, cela permet de conclure. 
+Définition 1.3.3. — On appelle base d'ondelettes la base orthonormale de  ^°(Zp,L) 
+constituées  des li+pe(i)Zp,  pour i G N. Si  </> G  ^0(ZP,L),  et  4>  = X^ieN M</>)lz+P*(Ozp 
+est la décomposition de  <j>  en ondelettes, les  bi(4>), i G N, sont les coefficients d'ampli­
+tude de (j). 
+2. Coefficients de Mahler des fonctions localement constantes. — Si z G L vérifie 
+vp(z —  1) > 0, la série (f)z(x) = XmS)  (n)(z~1)n  converge normalement  d'après  la 
+proposition  1.2.1 et définit donc une fonction continue (j)z(x) de x  G  Zp. D'autre  part, 
+si A; G N, on a (j)z(k) = zk, ce qui nous permet de noter de manière plus  parlante 
+x «->  zx la fonction x  i—y (j)z{x).  On a  zx+y  = zxzy quels que soient x, y  G  Zp car cette 
+formule est vraie si x,y  G  N, et N2 est dense dans Z2. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 11 =====
+22 P. COLMEZ 
+Un cas  particulièrement  utile  est celui où z est une  racine  de  l'unité  d'ordre  une 
+puissance de p. Si zpn = 1, on a zx+pnk _ zx quej que go^  &  ^ n et donc zx = zy, 
+si y G x + pnZp, ce qui  fait que la fonction zx est localement  constante. 
+Proposition 1.3.4. — (i) Si L contient u„h, les Cx, pour  C G u„h, forment une base de 
+LCh(Zp,L). 
+(ii) Si L contient zx^oo, les Cx, pour  C G u„oo, forment une base de  LC(Z„<L). 
+Démonstration. — On a 
+çph=i 
+cx =  < ph si x  G  phZp, 
+0 sinon, 
+et la fonction caractéristique de a + phZp est donc ^ J2çph=i  Çx a- Ceci  montre que 
+les Çx, pour  C  £µ ph  engendrent  LC^(ZP,  L),  et comme il y en a le bon nombre, cela 
+permet de conclure. 
+Si i G N, et si j G N, posons 
+(4J = (. 1 
+(4J = 
+C€Mp*(.) 
+(*).(4J = (*). 
+Lemme 1.3.5. — On a 
+«2,7 = 0 
+I «ï,7 —  1 
+(4J = (*). (4J = (*). 
+lpt(i)-pt(i)-l 
+si j < i, 
+si i = j, 
+si j > i. 
+Démonstration. — Si j < z, on a C_Î(C ~~ 1)J —  YLK=-i  (fcKfc> et  comme * < Pl (i) 
+la condition  —  i < k < —(i  —  j) implique que k  n'est  pas un  multiple  de p^l\ En 
+sommant sur £ G  IIpi(%), on obtient 0 comme annoncé. 
+Si j = i, le même  raisonnement  montre  que  seul  k = 0 va contribuer, et donc 
+OLij = 1. 
+Passons au cas j > i. Comme aoj = 0, si j > 1, on  peut  se  contenter  de  traiter 
+le cas i > 1. Notons, comme  d'habitude,  Çpn  une  racine  primitive pn-ième de  l'unité, 
+et Fn le corps  Qp((p™).  Ceci  permet de réécrire ctij sous la forme 
+Otij — 
+1 
+p£(i) 
+e(i) 
+n=l 
+(4J = (*). —  i 
+sd V-l)'). 
+Comme vD (TrFri/Q») > n + ta (s) - 1 
+df , et comme vp((pn  —  1) = 1 
+pn_pn-l j on 
+obtient 
+(4J = (*). inf 
+l<n<£(i) 
+n - III) + 3 
+pfi p^ ^ 
+1 
+p-1 cv 
+(4J (*).= (*). 
+(4J (4J = (*).). 5 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 12 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 23 
+car la condition  j > i > p£^  1  fait que le minimum ci-dessus est atteint pour  n = £(ï). 
+Ceci permet  de conclure. 
+Remarque 13.6. — On  peut démontrer  l'égalité  B =  ^0(Zp,  L) du théorème de Mah­
+ler en utilisant ce qui précède. On  déduit de  l'identité 
+(4J = (*).(4J = (*). 
+1 
+pl(i) 
+(4J = (*). 
+(4J = (*). 
+1 
+pl(i) 
+Ce*V(i) 
++oo 
+7=0 
+Cl(C-i)J 
+X 
+J 5 
+la tormule an(l*+p*(OZp) = a^n-  CJomme vp(aijTl) tend vers 4oo  quand n tend vers -f-oo 
+(lemme 1.3.5), cela prouve  que B  contient  les  li+p*(i)zp> et  donc  aussi  LC(ZP,L). 
+Comme B est  fermé et LC(Zp,  L) est dense dans  ^°(Zp,  L), cela  permet de conclure. 
+S. Coefficients  d'amplitude  des fonctions localement constantes.  — Les  résultats de 
+ce n°  serviront dans  l'étude  des  coefficients de  Mahler des fonctions  de  classe cé;r. 
+Soit <fr  G  LCh(Zp,L),  et  soient 
+4>(x) = 
+Ph-i 
+(4J = 
+&i(0)li+p*(ozpW = 
++00 
+j=0 
+aA(j)) x 
+3 
+les décompositions  en ondelettes et de  Mahler de </>. 
+Proposition 1.3.7. — Sij<ph-1, alors vp(bj((j))) >  inU<j {VP{AI(4>)) +  T(J)-E(I)). 
+Démonstration. — En  utilisant la formule 
+ï-i+p'COZpfa) = 
+1 
+pl(i) 
+(4J = (*). 
+(4J = (*). 1 
+Mi) 
+(4J = (*). 
++oo 
+3=0 
+C (C  - ir 
+X 
+J 
+on obtient  aj{<t>)  =  Y2ï=o  1 ai,jbi(4>). En  utilisant le  lemme  1.3.5, on en  déduit  la 
+formule bj(4>)  =  %•((/>) —  Yli<j OLiijbi{<t>)'> e^ ^a minoration 
+vp(bj(</>)) > inf (4J = (*). inf 
+i<3 
+vJbi(ó)) 4 (4J = (*).(4J = 
+(4J = (*).(4J = . 
+Comme 
+J _^W-i 
+p£(i) -pt(ï)-l (4J = ( 
+(4J = (*).(4J = (*). 
+(4J = (*).(4J = ( > 
+(4J = (*).vv 
+p-1v >£(j)-£(i), 
+une récurrence  sur J  permet de conclure. 
+Proposition 1.3.8. — Si £(i) = h,  alors  vp(bi((j))) >  [mî£^>h vp(aj(</>)))  —  1. 
+Démonstration. —  Soient  Cj,  pour j G N, les  coefficients de  Mahler de la  fonc­
+tion continue  x i y  4>(x  4  p*1"1)  —  4>(x). Si on  note  Pk,h le  polynôme défini  par 
+Pk,h(x) =  (x*pk  ) - (l), on a  Cj  = Ylk>jak{<t>)aj(Pk,h)' Comme  les  coefficients 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 13 =====
+24 P. COLMEZ 
+de Mahler de Pk,h sont à valeurs dans Z puisque  Pfc,/i(Z)  c Z, on en déduit l'in­
+égalité inf£(j)=h vp(cj)  >  ^£(j)>h  vp{aj(<!>))i  ce Qui prouve que démontrer l'inégalité 
+vp(bi((j))) > inf^j;)=h vp(cj) —  1 suffit pour démontrer la proposition. 
+Comme  Ç>X+VH  1-2 -  (X~L  = 0 si  Ç G /V*-i,  on obtient  CJ  = J2ï=Ô1  A,.A(0)>  avec 
+A?j = 0 si ^(z) < h - 1, et 
+((vp(ai) 1 
+ph 
+çenPH-nPH-I 
+Cl(C h-1 i)(C - i)J = 
+1 
+ph ^Fh/Qp(C7(Cp-i)(CPH-i)J). 
+Pour démontrer l'inégalité voulue, notons / l'intervalle  \ph~1,ph  —  1] de N, notons B 
+la matrice {1}  x / des  6^(0)> pour i e I, C  celle des Cj, pour j  G  /, et M  celle  des Bij 
+avec (ij )  G  I x J. On a alors C = f?M. 
+Par ailleurs, si ile /, posons ?ii =  (ÇPH  —  1)\ Les  UI, pour i E I, forment une base 
+de (CP —1)  OFn sur Zp. On note (-u*)^/, la base de Fh sur Qp duale de la base (^)i€/. 
+Les ix*, pour z € J, forment  donc  une base de p~hûp sur Zp. De même, si j G /, 
+posons VJ  = (£p —  l)CpV- Les Vj, pour j G  /, forment une base de ((p  —  1)Ûph sur Zp. 
+On note  (v*)jei,  la base de Fh sur Qp duale de la base  (vj)jei.  Les v*, pour j G /, 
+forment donc  aussi une base de p~hûp sur Zp. 
+Maintenant, comme  M est la matrice des  p~hTrFh/Qp(uiVj), pour (i,j)  G  / x /, la 
+matrice inverse de M est  celle  des phTrFh/Qp(u*v*), pour (i,j) E I x I. Elle est  donc 
+à coefficients dans  phrTrFhiQp(p~2hÛFh) =  p~lrLv. Ceci permet de conclure. 
+1.4. Fonctions  localement  analytiques 
+1. Fonctions analytiques sur un disque fermé. — Si a G L, et r G R, soit B(a,r) le 
+disque fermé {x G  Cp, vp(x  —  a) > r}. Une  fonction 0  :  B(a,r) —>  Cp est L-analytique 
+s'il existe une  suite afc(0, a), A: G  N, d'éléments de L, telle que  Vp(afc(0, a)) + fer tend 
+vers +oo quand k tend vers +oo, et  4>(x)  =  X^iS  afc(0> a)(x ~~ a)fe Que^ Que so^ 
+x G  B(a,r).  On note  An(B(a,  r), L) l'ensemble des fonctions analytiques sur  I?(a,r), 
+et on munit  An(£(a,  r), L) de la valuation  VB{a,r)  définie par 
+*>£(a,r)(0) = inf 
+inf 
+Vp(ak((j), a)) + fcr, 
+qui en fait un L-banach. 
+Remarque 1.4.1. — Les  ljg(Q>r) vp[fcrj , pour L G N, forment une base de Banach de 
+An(#(a,r),L),  et même une base orthonormale si r  G  Z. On en déduit le fait que, si 
+K est un sous-corps complet de L contenant a, alors 
+An(J3(a,r),L) = L®Kkii{B(a,r),K). 
+Proposition 1.4.2. — Si q1 G  An(#(a,r),L);  et si 02 G  An(J5(a,  r),L),  a/ors 
+0102 G  An(B(a,r),L)  et 7JB(a,r)(0i02) = ^B(a,r)(0l)  + ^B(a,r)(02). 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 14 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 25 
+Démonstration. — Soient ak = afc(0i,a), bk = ûfc(02>a) et  CK = X)i=oa*&fc-i- On a 
+((vp(ai) + ir) + inf 
+0<i<k 
+((vp(ai) + ir) + (vp(&fc_i) + (fc - î)r)) 
+> inf (Vß(a,r) (01 ) + ml 
+j>fc/2 
+((vp(ai) + ir) +((vp(ai) + ir) + f inf 
+i>k/2 
+(vp(ai) + ir), 
+ce qui prouve que  vp(cjfc) -h kr —•  +00 quand  A; —>  +00, que ^1^2 €  An(Z?(a,  r), L),  et 
+que VB(a?r)(0i</>2) > Vfl(aïî.)(0i) + Vfî(a,r)(02). 
+Maintenant, soit  ¿0  (resp. jo) le plus  petit  entier i (resp. j) tel que 
+Vp(ai)+ir = Vß(a,r)(0l) (resp. vp(6j) + jr =  Vß(a,r)(02)). 
+Si fc0 = ¿0  + Jo, alors vp(aibko-i) + /c0r > ^B(a,r)(0i) +  VB(a,r)(<h)  si i  7E  *0J et donc 
+vp(ck0) + far =  vp(aiobjo) + k0r = V£(a>r)(0i) + VB(o,r)(02)- On en déduit l'inégalité 
+VB(o,r)(0i02) < ^B(a,r)(0i) + ^s(a,r)(02), ce qui permet de conclure. 
+Proposition 1.4.3. Si (ß G An(l?(a,  r),  L)? a/ors 
+VB(a,r)(0) = inf 
+x6ß(a,r) 
+Vp(0(x)). 
+Démonstration. — Commençons par supposer que l'on a a = 0 et r = 0. Alors 
+0(x) — Y^t=oakxki ou vp(ak) tend vers +00 quand tend vers +00. L'inégalité 
+infxeB(a,r) vp(0(x))  >  inffcGN Vp(afc) = ^B(O,O)(0)  est immédiate. 
+Pour démontrer l'inégalité inffc€N vp(ak) > infx€jB(0)r) i>p(0(x)), commençons par 
+remarquer que vp(ak)  atteint son minimum pour un certain ko G N. En divisant tout 
+par afc0, on se ramène au cas où  inffcGN^p(«fc) = 0. Soit alors  (j)  la réduction de <\> 
+modulo  mcp.  Ceci fait de  <f>  un élément non nul de Pp[rr], et, si x G  ûç*p ne se réduit 
+pas en un zéro  de </> modulo mcp, on a  </>(x) ^ 0, ou encore  vp(<j>(x)) = 0. On en déduit 
+l'égalité inffeeN vp(ak) = infxGB(a,r) vp(</>(x)). 
+Maintenant, s'il existe c  G Cp tel que vp(c) = r, on peut appliquer ce qui précède 
+à g G  An(D(0,0),  L) définie par g(x) =  (j)(cx  + a), et dans le cas général, on écrit 
+B(a,r) comme la réunion croissante de B(a,rn), avec rn G  vp(Cp) tendant vers r en 
+décroissant, pour conclure. 
+2. Fonctions localement analytiques sur Zp. — Si h G N, soit  LAfc(Zp,L)  l'espace 
+des fonctions  4>  : Zp —> L dont la restriction à a -f- phZp est la restriction d'une 
+fonction L-analytique  <f)a,h  sur B(a,h), quel que soit a G Zp. On munit  LA/l(Zp,L) 
+de la valuation VLA^ définie par 
+VLAh(<l>) = inf 
+A ez 
+VLAh(<l>) =XCC 
+qui en fait un L-banach. D'après la proposition  1.4.3,  si S contient un système de 
+représentants de Zp/phZp, on a  aussi vLAh{(t>) = iniaeS vB^h)((/)ajh). 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 15 =====
+26 P. COLMEZ 
+Soit LA(ZP,L) l'espace des fonctions localement  analytiques  sur Zp. Comme Zp 
+est compact, c'est la limite inductive des LA/l(Zp,L), h G N, et on le  munit  de la 
+topologie  de la limite inductive. 
+Remarque 1.4.4. — En  revenant  à la définition de VB(a,/i)> on Peu^  aussi  donner la 
+description suivante  de ^LA/I : si a  G  Zp, il existe une suite afc((/>, a),K  G  N, d'éléments 
+de L, telle que l'on ait </>(#) = ^t=o ak((t)ia){^r)k^ Quel Que  sort x e a + phZp. On 
+a alors  vB(aih)(<i>a,h)  = inffcGNvp(afc(0,a)), et donc 
+VLAh(<t>) = inf 
+aes 
+inf 
+fceN 
+Vp(afc(0,a)), 
+si S C Zp contient un système de  représentants  de Zp/phZp. 
+Étant donné h, on  peut écrire  tout  entier n de  manière unique sous la forme 
+n = (m(n) + l)pft - <(«) 
+avec 1 < i(n) < ph et m(n)  G  N. Soit alors eh, n(x) la fonction 
+e/i,n(a?) = l)pft - i(n) a: + z(n) 
+En 
+m(n) 
+Lemme 1.4.5. — Les eh,n pour n  G  N forment une base orthonormale de  LA^(ZP, L). 
+Plus précisément, si  <j>  G  LA^(Zp,L)  et si  <j>i(x)  =  4>{—i  + phx), alors : 
+• (j>i  est analytique sur Zp et donc  <f>i(x)  —  J^meN ai,mXm, où  aiiTn —>  0, 
+l)pft - i(n)v EmGN û!t,me/i,(m+l)p'l-i —  T^n^IST 0ii(n).m(n)eh,n> 
+• ^LA^(0)  = mfnGN'yp(a!i(n)5m(n)). 
+Démonstration. — Cela  suit de  l'identité  <f>(x)  = Zphi =11 _il-i+phz1 »</>i(^) et de la 
+description de la  valuation i?LA.h donnée dans la rem.  1.4.4, car {—z, 1 < i < ph} est 
+un système de  représentants  de Zp modulo phZp. 
+Corollaire 1.4.6. — On a  LA/l(Zp, L) =  L®QpLAfc(Zp,  Qp) quel que soit le sous-corps 
+fermé L de Cp. 
+3. Coefficients de Mahler des fonctions localement analytiques. — Le  résultat  sui­
+vant, dû à Amice,  permet de décrire les fonctions localement  analytiques  en  termes 
+de leurs coefficients de Mahler. 
+Théorème 1.4.7. — Les  [n/ph]! (n x) pour n G N forment une base orthonormale de 
+LAfc(Zp,L). 
+Corollaire 1.4.8. — Si  (f)  £ ^°(ZP,L),  les conditions suivantes sont équivalentes : 
+• </> G  LA(Zp,L) ; 
+• liminf ^i>p(an(</>)) > 0. 
+ASTERISQUE 330 
+
+===== PDF PAGE 16 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 27 
+Démonstration. — Il existe h tel que  (j)  G  LA^(ZP,  L),  et alors,  d'après le th. 1.4.7, on 
+a liminf  ^vp(an((f))) >  (p_\^ph  • Réciproquement, si liminf  ^vp(an((f))) > 0, il existe 
+h G N tel que liminf  ^vp(an(</>))  > {p_\)ph  • Alors  ([j^-]!)"1^^)  tend vers 0 et 
+0 G  LAh{Zp,L). 
+Passons à la démonstration du théorème. Posons gn(x) =  [n/ph]!(x,n). Notre but est 
+de prouver que les gn, pour n G N, forment une base orthonormale de  LA^(ZP,L). 
+Pour cela, nous allons prouver que : 
+• 9n  appartient à la boule unité Bh de  LA/l(Zp,L), 
+• la matrice exprimant les réductions #n, pour n < (m + l)ph  —  1, en fonction 
+des êh,n, pour n < {m + l)ph  —  1, est une matrice inversible, pour tout m G N (ces 
+deux derniers points sont une  conséquence  du lemme 1.4.9, comme  il est expliqué  juste 
+avant la démonstration dudit  lemme). 
+D'après le lemme 1.4.5, les eh,n, pour n G N forment une base orthonormale de 
+LA/l(Zp,  L),  ce qui implique,  d'après la prop. 1.1.5, que les  ehn% pour n G  N, forment 
+une base algébrique de Bh/pBh sur FP. Le second point implique alors qu'il en est 
+de même des gn, pour n  G  N, ce qui,  d'après la prop. 1.1.5, implique que les gn, pour 
+n G  N, forment une base orthonormale de  LA/l(Zp,L),  ce que l'on veut démontrer. 
+Si j G  {1,...  ,ph}, soit gnj le  polynôme  défini par  gnj{x)  =  gn(—j  + phx). On a 
+donc 
+l)pft - i(n) n 
+ptl 
+1 
+df 
+n-1 
+k=0 
+(-j-k+phx).l)pfi(n) 
+Lemme 1.4.9. — (i) gnj est à  coefficients dans Zp. 
+(ii) Sa réduction gn  « modulo p vérifie : 
+• 9n,j  =0sij>  i(n), 
+• deg(gnj) = m(n) si j = i{n), 
+• deg(gnjj) < m(n) si j < i(n). 
+Ce lemme permet de terminer la démonstration du th. 1.4.7. En effet, le (i) implique 
+que gn  appartient  à la boule unité de  LA/l(Zp,L).  Le (ii) se  traduit  par l'existence 
+d'éléments  aJ>m G Fp, pour m < ra(ra), nuls si j > i{n), tels que gnj =  Ylm=o  aj,mXm-
+D'après le lemme 1.4.5, on a alors gn =  J2m(k)<m(n)  ai(k),m(k)ëh,k- Maintenant, si 
+n < (m  + l)ph -1, alors m(k) < m{n) implique que k <  {m  + l)ph —  1. Il en résulte que 
+les <7n, pour n < (m  + l)ph —  1, s'expriment en termes des ëh,k, pour k < (m  + l)ph —  1. 
+On note Mm la matrice ainsi obtenue. Le (ii) du lemme implique alors que si on 
+découpe  la matrice Mm en  blocs  de taille ph xph1 on obtient une matrice  triangulaire 
+supérieure par  blocs  et chacun des  blocs  diagonaux est  triangulaire inférieur avec des 
+éléments  inversibles sur la diagonale (cette inversibilité résulte du second point du 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 17 =====
+28 P. COLMEZ 
+lemme).  La matrice Mm est donc inversible, ce qui montre que le lemme 1.4.9 fournit 
+les points  manquant  pour démontrer le th. 1.4.7. 
+4- Démonstration du lemme H.9. — Soit Kn¿ = {k < n  —  1, vp(j + k) > h}. 
+L'application k  \—•  j + k  induisant une bijection de Kn¿ sur l'ensemble des  entiers de 
+[j, j + n -  1]  = [0,  j + n - 1]  - [0,  j -  1]  divisibles par p\ on a \KnJ  \ = [i±$=±]  -$=±]  , 
+et donc \Knj\ = m(n) + 1 si j > i(n) et \Kn¿ \ = m(n) si j < i(n). 
+On a gnj = cnjfnj, où cn¿ € Q* et 
+fnj — 
+keKn>j 
+lz- j + k 
+ph 
+S 
+$=±] 
+1-
+$=±] 
+J + k ) e zp[x] 
+a pour réduction fnj = YlkeKn j (x ~ Pk) modulo p, où  (5k  G Fp est la réduction 
+modulo  p de  J+K : PH Comme le degré de fnj est le cardinal de Knj, le lemme est 
+équivalent aux  résultats  suivants : 
+• vp(cn,j) > 0> pour  tout  j, 
+• Vp(Cnj) = 0, si j = ¿(n), 
+• vp(cn,j) > 0, si j > i(n). 
+On obtient la relation Qnj .keKn,j 1 -3-k 
+pn df n 
+ph 
+df n-1 fc=0 M - k en identifiant 
+les termes constants. On a donc 
+£71,7 n 
+ph 
+,1 
+'n! $=±] 
+$=±] 
+$=±]$=±] 
+(-J - k). 
+MCnj) = Vp(\ n 
+sd \) - vJnl)  + 
+0<fc<n-l 
+inî(vp(j + k),h). 
+En utilisant, l'identité V«p(n!)-»p([3r]!)  = d 
+¿=1 " n 
+pl 
+, et 
+n-l 
+fc=0 
+inf(t;p(j + A:),/i) = 
+d 
+£=1 
+{k<n-l, Vp(j +  k)>£}\ = 
+h 
+£=1 
+n + j - 1 
+d 
+i - 1. 
+p£ 1 
+on en déduit la formule 
+vp(cnj) — 
+/1 
+¿=1 
+$=±]$=±]v$=±] 
+p£ 
+•i-i 
+cx 
+n 
+cx 
+Comme  [#+?/]  >  [x]H-[y],  chacun des termes de la somme est > 0, et donc  vp(cn¿) > 0, 
+ce qui démontre le premier point. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 18 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 29 
+Pour démontrer le second, on utilise la formule  —  [-^] = l9^] + 1, valable quels 
+que soient aGZet&GN  —  {0},  ce qui nous donne 
+$=±]$=±]v 
+h 
+1=1 
+rm(n)pn —  1 
+pt 
+-i(n) - 1 
+pi 
+m(n)ph —  i(n) 
+pi 
+cv 
+h 
+i=i 
+(m(n)ph-£ - 1) + (1 + -iln) 
+pi fm{n)ph~* + -i(n) 
+pi = 0. 
+Enfin, pour démontrer le troisième, constatons que •n+7-ll 
+x 
+$=±] 
+ph 
+n 
+ph = 1, si 
+j > i(n), et donc  Vp(cn 7) > 1. 
+Ceci permet de conclure. 
+1.5. Fonctions  de  classe  ^r 
+1. Fonctions dérivables et fonctions de classe  cé?r. — Une fonction  (j) : Zp  —>  L est 
+derivable en xo G Zp, si la quantité  ^foo+^-^foo)  admet Une limite quand h tend 
+vers 0. La limite est alors  notée  0'(xo)-  Une fonction est derivable à l7ordre  1 si elle 
+est derivable en tout  XQ  G Zp ; une fonction derivable à l'ordre 1 est en particulier 
+continue. Plus généralement, on définit par récurrence sur k la notion de fonction 
+derivable à l'ordre k : 0 est derivable à l'ordre k si elle est derivable à l'ordre k  —  1, 
+et si sa dérivée (k  —  l)-ième est derivable à l'ordre 1. 
+Si r > 0, on dit que  (j)  : Zp —> L est de classe Tr s'il existe des fonctions 
+0Ü) : Zp —• L, pour 0 < j < [r], telles que, si l'on définit £<^r : Zp x Zp  —>  L et 
+C^r : N R  U  {+oo},  par 
+£0>r(x,2/) = (j){x  + y) -
+[r] 
+j=0 
+<t>W(x) y3 
+x et C<t>Ah)  = ini 
+xeZp,y£phZp 
+vp(£<f,ir(x,y)) -rh, 
+alors C^^h) tend vers +oo quand h tend vers +oo. 
+Remarque 1.5.1. — En  prenant y = 0, on voit que, si r > 0, et si  <\> est de classe Tr 
+alors (/>(°) = <j>  et <j>  est continue. Dans le cas r = 0, on retombe donc sur la définition 
+de fonction uniformément continue et, Zp étant compact, une fonction est de classe ^° 
+si et seulement si elle est continue. 
+On note  ^r(Zp,  L) l'ensemble des fonctions  (j) : Zp —>  L qui sont de classe Tr On 
+munit ^r(Zp,L) de la valuation v^r définie par 
+v^r(0) = inf inf 
+vo<j<[r], xezp 
+x 
+(^\x) 
+xx inf x,yezp 
+$=±]$=±]$=±] v $=±]$=±] 
+ce qui en fait un L-banach. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 19 =====
+30 P. COLMEZ 
+Remarque 1.5.2. — Sur un intervalle compact de R, une fonction derivable à 
+l'ordre fc, dont la dérivée fc-ième est continue, est de classe ^ avec les défini­
+tions ci-dessus (en remplaçant la valuation p-adique par la norme usuelle). Sur Zp, 
+l'exemple suivant montre qu'il n'en est rien. Tout élément x de Zp peut s'écrire de 
+manière unique sous la forme Yln=oPn(ln{x)i  avec ûn(x)W € {0>---5P —  1}> ce qui 
+permet de définir une fonction 0  :  Zp —>  Zp grâce à la formule  (f){x) = E^2^=0P2nan{x)• 
+On a alors  vp((/)(x) —  <f>(y)) >  2vp(x  —  y) quels que soient x,y £ Zp, ce qui montre que 
+0 est derivable, de dérivée nulle, en  tout  point, (elle est donc derivable à n'importe 
+quel ordre) bien que  (p ne soit localement constante au voisinage d'aucun point. Or il 
+est facile de voir que  </> n'a de développement limité à l'ordre 2 en aucun point. 
+2. Propriétés  locales  des fonctions de classe  (é?r. — Le but de ce n° est de montrer 
+que, si <j)  est de classe Tr alors les  (f>^  sont les dérivées successives de 0 et donc que 
+l'on retombe sur le  développement  limité  naturel de (j). 
+Lemme 1.5.3. — Soit C(N) = N • n=l VV M), et soit ak, pour 0 < k < N, une famille 
+d'éléments de L. Alors, quel que soit h € Z, 
+inf 
+0<k<N 
+(vp(ak) + kh) > inf 
+xephzp vp 
+N 
+k=0 
+dk 
+Xk 
+k\ -C(N). 
+Démonstration. — La démonstration se fait par récurrence sur TV, le  résultat  étant 
+trivial si N = 0. Si N > 1, soient P, Q G L[x] définis par 
+P(x) = 
+N 
+k=0 
+dk 
+k 
+xK kl 
+et Q(x) = 
+N-l 
+k=0 
+ak X 
+kl . 
+Alors, quels que soient x G Qp et h  G  Z, on a 
+aN=P~Nh 
+N 
+$=±] 
+aN=P~Nh A 
+3 
+\P(x + jph). 
+En prenant  x G phZp, on obtient la minoration vp(cln) + Nh >  inîxEphZp vp(P(x)). 
+On en  tire la minoration vp(Q(x)) > infxGp/iZp vp(P(x)) ~ vp(Nl), et l'hypothèse de 
+récurrence  implique que 
+inf 
+0<fc<iV-l 
+(vp(ak) + kh) > inf 
+xephzp 
+vJQlx)) - C(N - 1 > inf 
+xePhzp 
+vp (P(x))-C(AT), 
+ce qui permet de conclure. 
+Proposition 1.5.4. — Sir > 1, et si  (p G  ^r(Zp,  L), alors  (p est derivable en tout point. 
+De plus, 
+(a) </>' G i^-^Zp,!,)  et il existe C0(r) G R tel que v'(cp') > v^r((p) -  C0(r), 
+quel que soit  (p  G  ^r(Zp,L). 
+(b) (0OW) = ^0+i) si j <r-l. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 20 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 31 
+Démonstration. — Il est clair sur la définition que  lim,,->o i>{x+y)-<j){x) 
+y 
+= 6 <<1Hx),siô 
+est de classe Tr et  donc  que (j) est derivable en tout point, de dérivée  4>'(x) =(I)(1)'(x). 
+Par ailleurs, en développant  £</>,r(#,y + z)  —  E<$>, r{x + y,z), qui est égal à 
+Mx + y + z) -
+[r] 
+3=0 
+0 ü)(a?) (y + z) j 
+J1 
+(j)(x + y + z)-
+[r] 
+3=0 
+(f>U)(x + y) f 
+ß 
+5 
+on obtient, si v p(z) > h et v p(y) > h, la minoration 
+vp 
+[r] 
+3=0 
+zi 
+ß 
+aN=P~Nh 
+[r]-3 
+k=0 
+aN=P~Nh 
+yk 
+kl > rh + C^rih). 
+D'après le lemme 1.5.3, cela implique que, si v v(y) > h, alors 
+Vp èK3)(x + y) -
+\r]-j 
+k=0 
+faj+k\x) 
+yk 
+k\ 
+> (r-j)h + C^ r(h) -C([r]). 
+On en déduit, si 0 < j < [r], l'appartenance de  cj>^  à ^ r i(Z p,L), la minoration 
+v'l^r-i(0 W) ) > vyr(^) -  C([r]),  et l'identité  (<^))( fc ) =  (I)(j+k)  si j +  A; < [r].  Ceci 
+permet de conclure. 
+Remarque 1.5.5. — (i) Une récurrence immédiate montre, ô surprise, que  <j>^  est la 
+dérivée j-ième  de  (j).  De plus la minoration  v'^ r-j{(t>^) >  v f<gr(<j)) — C([r]),  obtenue 
+au cours de la démonstration de la proposition 1.5.4 est meilleure que  celle  que l'on 
+obtiendrait par récurrence en  utilisant la prop. 1.5.4. 
+(ii) On a obtenu, au cours de la démonstration, la minoration suivante, si j < [r], 
+aN=P~Nhcx C0,r(/i) c(M). 
+(iii) Nous montrerons plus loin  (prop.  1.5.16) que d/dx induit une surjection de 
+<*? r(Z p,L) sur  ^^(Z^L),  si r > 1. 
+Proposition 1.5.6. — Si (I)1 : Z p —•  Zp est de  classe  T2,  et si (I)2 • Z p —>  L est de 
+classe ^, alors  (I)2 o fa : Zp L est de  classe fê r. 
+Démonstration. — Cela marche exactement de la même manière que pour la  compo­
+sition des développements  limités dans le cas archimédien. 
+3. Fonctions localement analytiques et fonctions de  classe  Tr — Il semble  naturel 
+de penser qu'une fonction localement analytique est de classe Tr pour tout r > 0. 
+La proposition suivante montre que c'est bien le cas. 
+Proposition 1.5.7. — Si h € N, et si r > 0, alors  LA/ l(Z p,L)  C  ^ r (Z p ,L).  De plus, 
+si è G LAftfZp.L),  alors 
+7j^r(0) >  v LAh(<t>) - rh. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 21 =====
+32 P. COLMEZ 
+Démonstration. — Soit 0 G  LA/l(Zp,L).  On a  vp( j^(j)^\x)) >  v\,xh(4>) —  hj quels que 
+soient x G Zp et j G N. Par ailleurs, on a 
+e<f>Ax,y) = 3>r 
+<t>U)(x) 
+3-
+y3 si vp(y) > /l, 
+è(x + y) - df 
+h 
+aN=P~Nh 
+xc y' si Vp(y) < h. 
+On en déduit la minoration vp(e(f)^(x, y)) >  vjJAh (0) + ([r]  + l)(vp(y) —  h) si vp(y) > h, 
+et comme  ([r] + l)vp(y) —  rvp(y) tend  vers +oo quand vp(y)  tend  vers -foo,  cela montre 
+que (j) G  ^r(Zp,  L).  De plus, la minoration v'^r  (</>) > ^LAh {<f>)—rh  se déduit facilement, 
+en revenant à la définition, de la formule ci-dessus pour e(f)jr(x,y) et de la minoration 
+vp(jî(j)^\x)) >  VhAh(0) ~~ ^7- Ceci permet de conclure. 
+4- Coefficients  d'amplitude  des fonctions localement polynomiales. — Soit I une  par­
+tie de N. Si h G N, on note LP£(ZP, L) l'ensemble des fonctions de Zp  dans L dont la 
+restriction à a + phZp est un polynôme de la forme J2iei aix%Quel  °xue soit a G Zp. 
+On note LPJ(ZP,L) l'espace des fonctions localement polynomiales sur Zp, à  valeurs 
+dans L et à degrés  dans J. C'est la limite inductive des  LP^(Zp,L),  pour h G N. 
+Si / est une  partie  de R, on note LP£(ZP,L) et LP7(ZP,L) respectivement, les 
+espaces LP£niV(Zp,L) et LP/nN(Zp,L). 
+Proposition 1.5.8. — Soit r > 0. 
+(i) Les  li+p*<i)Zp * x—i p£(i) 
+k , pour U  < %  < p'  —  1 et  U  < k < [r\, forment une base 
+de LP >[0,r] 
+h (Z„,i). 
+(ii) Les li+pm)Zp x—i 
+pt(i) 
+k , pour  ieNet  O<k<  [r], forment une base 
+de LP[0'r](Zp,L). 
+Démonstration. — Il suffit  d'adapter  les arguments de la démonstration des (i) et (ii) 
+de la prop. 1.3.2. 
+Si i G N et k G N, on note k r l'élément de LP^0'7^ défini par 
+e^kAx) =P ) =Pe^kAx) =P x —  1 
+e^kA 
+D 
+DF 
+Lemme 1.5.9. — (i) Les eikr, pour 0 < i < ph  —  1 et 0 < k < r. forment une base 
+de LF J0,rj 
+h (ZP,L). 
+(ii) Les ei,k,r, pour ieNdO<Kr, forment une base de LP1 ,rJ(Zp, L). 
+Démonstration. — Immédiat. 
+Lemme 1.5.10. — Si r > 0 et si k < r, alors 
+v^r(e0ik,r) = 0 et v'c£r{eih,r) > [£{i)r]  - r£(i) + r  —  k >  —1,  si i> 1. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 22 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 33 
+Démonstration. — Le cas i = 0 est immédiat. Supposons donc i > 1 (et donc £{i) > 1), 
+et notons  (f>  la fonction  &  r. 
+- Si j < r, et si x G Zp, alors 
+Vp 
+(j)tt\x) 
+DF 
+>[e(i)r}-j£(i)>[e(i)r] - k£(i) >  [£(i)r] —  r£(i) + r  —  k. 
+- On a e^y (x,y)=p^\ (li+p«(OZp fa + îf) - ï-t+p^OZp 0*0)1 x+y-i 
+pl{i) 
+k 
+. En particulier, 
+e<f,Ax,y) = 0, si Vp(y) > £(i), ou si ni x ni # + y n'appartiennent à i + p£^Zp. 
+—  Dans le cas vp(y) < £(i)  —  letx + y€i + p£^Zp, on a 
+Vehrte,!/)) - ™p(2/) > [£{i)r]  - r(£(i) - 1) > [£(i)r]  - r£(i) + r-k. 
+—  Dans le cas vp(y) < £(i)  —  1 et x G i -\-pe^Zp, on a 
+Vp(£^r{x,y)) - rvp(y)  = [£{i)r]  + k(vp(y) - £{i)) -  rvp(y)  > [£(i)r] —  r£(i) + r  —  k. 
+Ceci permet, en  revenant à la définition de  v'<¿>r, de conclure. 
+Lemme 1.5.11. — Si r > 0. si h G N. et si bi G L, pour i < ph —  1, alors 
+i<ph-l 
+i<ph-l 
+biein,r) —  r < inf 
+i<pn-i 
+vp(bi). 
+Démonstration. — La démonstration se fait par récurrence sur h, le cas h = 0  étant 
+trivial. Soit (j)  = ^2i<ph_1  &z^i,o,r- Comme les e¿,o,r sont localement  constantes  et donc 
+de dérivées nulles, on a e^^x, y) =  (j)(x + y) —  4>{x). En particulier,  en tenant compte 
+du fait que e¿5o,r est constante  modulo ph~1Zp, si i <  p*1-1, on obtient 
+0 < i < ph-x - 1, 
+0 < i < ph-x - 1, 
+P[Är](W-i-M 
+si 0 < i < ph-x - 1, 
+si ph~x < i,<ph - 1. 
+On en déduit que 
+inf ph-l<¿<ph_l 
+v0(6¿) = -f/irl + inf 
+0 < i < ph-x - 1, 
+Vp(£áAhPh *)) > v^r(0) + (h-l)r-[hr]. 
+En particulier, infph-i^i^.!  Vp 0 < i < ph-x - 1,XC De plus, v^r(eii0,r) > [hr] —  hr + r 
+et 0 < i < ph-x - 1, 0 < sdfl p^-i^i^p^-1-! 0 < i < ph-et donc 
+V^r( 
+i<pk-l-l 
+M¿,0,r) > inf (CM,(CM, inf 
+ph-1<i<ph —  1 
+0 < i < ph-x - 10 < i < 0 < i < ph-x - 1 
+ce qui permet de conclure, en  utilisant lhypothèse de récurrence pour h  —  1. 
+Si ó G LP[0'r](ZP,L), on note  bi,k(<j)),  pour ¿ G N et 0 < k < r, les coefficients 
+d'amplitude de 0, i.e. les coefficients de (j)  dans la base des e^,fc,r-
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 23 =====
+34 P. COLMEZ 
+Proposition L5.12. — Si r > 0, il existe C'0(r) tel que, pour tout  (f)  G  LP^0,^(ZP, L), 
+on ait 
+inf 
+0 < i < ph-x - 1 
+0 < i < ph-x - 1 v'Tr((I))-C'0(r). 
+Démonstration. — La démonstration se fait par récurrence sur  [r].  En dérivant, cela 
+permet d'utiliser  l'hypothèse de récurrence pour minorer inf^N, i<fc<r  ^p(&i,&(</>)) sous 
+la forme souhaitée (en  utilisant  le (i) de la prop. 1.5.4 pour minorer  vf(é>r_1((f)f)  en 
+fonction de ^r(0)). On minore les valuations des coefficients restants en considérant 
+01 = Ç - &i,fc(0) &i,fc(0)et,fc,r» et en  utilisant  le lemme  1.5.11 et la minoration 
+Vfcgr(ß>i,k,r) ^ 1 pour minorer  vLr((pi). 
+5. Décomposition en vaguelettes des fonctions de classe  <É?r. — Le but de ce n° est 
+d'exhiber une base de Banach agréable de  ^r(Zp,  L),  et ce,  dans le but de démontrer 
+(prop.  1.5.16) la surjectivité de d/dx :  ^r(Zp,L)  —•  ^r_1(Zp,L)  annoncée  dans  la 
+rem. 1.5.5. 
+Proposition 1.5.13. — Soit r > 0. Si 0 G  ^r(Zp,L);  et h G N, soit  </>h  l'élément de 
+Lp[0,r] défini par 
+<f>h(x) = 
+&i,fc(0) 
+i=0 
+&i,fc(0)&i,fc(0) 
+[r] 
+k=0 
+0W(t) 
+c (x-i)k] 
+Alors 
+(i) vLAh+1  (<t>h+i -  </>h) > rh + Cyrill) -C(M). 
+(ii) (j>h  tend vers  (j) dans ^r(Zp,L)  quand h tend vers -foo. 
+Démonstration. — Il résulte du (i) de la prop. 1.5.7, et de ce que C^^h) tend vers  H-oo, 
+que </>h  a une limite  dans  ^r(Zp,L).  Comme par ailleurs,  (f>h(i)  =  <l>(i)  si i G N et 
+ph —  1 > i, cette limite coïncide avec  <\> sur N, et donc  partout par continuité. Il suffit 
+donc de prouver le (i). Or  0^+i(x)  —  (j)h(x) est égal à 
+vh-\ 
+i=0 
+p-1 
+a=0 
+^i-\-aph-\-ph+1Zp 
+xc 
+k=0 
+(f){k){i + aph 
+(x —  i —  aph)h 
+kl 
+&i,fc(0) (x-if 
+k\ 
+et un  petit  calcul montre que 
+[r] 
+fc=0 
+<t>W(i + aph) (x —  i —  aph)k 
+kl ~^k\i) 
+(x - i)k 
+kl 
+x 
+[r] 
+3=0 
+PI (M) 
+fi 
+<j){j\i + aph)-
+>]-j 
+;llc 
+&i,fc(0)wx {aphY 
+A 
+x —  i —  aph > 
+ph+l 
+3 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 24 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 35 
+et la prop. 1.5.4 (ou plutôt le (ii) de la remarque 1.5.5) nous fournit la minoration 
+vp (pU)(i + aph) -
+M-j 
+f=0 
+&i,fc(0)v (aphY 
+cv > C^r(h) - C({r}) + (r - j)h. 
+On en déduit que  vi,Ah+1 (<ph+i -  <Ph)  est minoré par 
+inf 
+j<[r] 
+wx 
+&i,fc(0)fc(0) 
+wx + CéJh) - C([rl) + (r —  j)h) = rh + C,,P(fc) - C([r]), 
+ce qui permet de conclure. 
+Théorème 1.5.14. — La famille des e^k.r, pour i e N, 0 < k < r, est une base de 
+Banach de  ^r(Zp,I/). 
+Démonstration. — Le lemme 1.5.10 montre que  (&i,fc) SàeN,o<fc<r °i,k^i,k,r est une 
+application continue de  ^(Nx{0,...,  [r]})  dans ^  r(Zp,  L). La proposition 1.5.12 im­
+plique que cette application est un isomorphisme de L-banach de  ^(Nx{0,...,  [r]}) 
+sur l'adhérence de LP'0'r'  (Zp, L) dans ^r(Zp, L),  et comme  cette adhérence  n'est autre 
+que ^r(Zp,L),  d'après la prop. 1.5.13, cela permet de conclure. 
+Définition 1.5.15. — On appelle base de vaguelettes la base de Banach de  ^r(Zp,L) 
+constituée  des e^fc,r, pour i € N, 0 < k < r. Si X^eN  J2o<k<r h,k(</>)ei,k,r est la 
+décomposition  de 0  G  ^r(Zp,L),  en vaguelettes, les  &i,fc(0) sont les coefficients d'am­
+plitude de /. 
+Proposition 1.5.16. — (i) Si r > 1, /a dérivation ^ induit une surjection de  ^r(Zp,  L) 
+sitr ^r_1(Zp,L)  ; son noyau est l'adhérence de  LC(ZP,L)  dans  ^r(Zp,  L). 
+(ii) Plus généralement, si j est un entier > 1, et si r > j, l'opérateur (-^)J 
+induit une surjection de  ^r(Zp,L)  sur  cé"r~i{Zp,  L) ; son noyau est l'adhérence de 
+LP[0'J'-1](ZP,L)  dans  <*fr(Zp,L). 
+Démonstration. — Il suffit de remarquer que 
+d 
+dx ^iM.r —  k(k 1) (k —  j -\-  l)e^/c-j5r-j5 
+pour déduire, d'une  part  la surjectivité de (^) :  ^r(Zp,L)  —> ^r J\ZP,L) du 
+théorème précédent, et,  d'autre  part, le fait que le noyau de (-£^)J est l'adhérence de 
+l'espace engendré par les e^r, avec k < j  —  1 ; comme cet espace est précisément 
+Lp[°'J'-1'(Zp,L),  cela permet de conclure. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 25 =====
+36 P. COLMEZ 
+6. Coefficients de Mahler des fonctions de classe  <é"r. — Le but de ce n° est de ca­
+ractériser les fonctions de classe ^r en  termes de leur développement de Mahler. 
+Théorème 1.5.17. — Si r > 0, si  <j)  e  ^r(Zp,L),  et si  (j)  = T,t=o  an(<t>)(l)  est la 
+décomposition de Mahler de (f), alors fp(an(0))  —  r£(n) tend vers +oo quand n tend 
+vers +oo. De plus, la valuation vcgr, définie sur ^r(Zp,L) par la formule 
+(vp(an(0)) -r£ inf 
+Nek 
+(vp(an(0)) -r£(n)) 
+est équivalente à la valuation v'^T. 
+Corollaire 1.5.18. — Les p[r€(n)](*), pour n G N, forment une base de Banach de 
+(vp(an(0)) -r£ 
+Démonstration. — Le corollaire est une conséquence immédiate du théorème  ;  la dé­
+monstration du théorème va demander un peu de  préparation. 
+Proposition 1.5.19. — Si r > 0, il existe C\(r) tel que, quels que soient h e N et 
+4> G  LA/l(Zp,L); on ait 
+Vcgr{(j)) >  VLAh((f))  -rh-C1{r). 
+Démonstration. — En  utilisant le th. 1.4.7, et l'inégalité £(k) < log(fc+l) 
+ogp +1,  on obtient 
+la minoration 
+(vp(an(0)) -r£(vp(an(0)) -r£ inf 
+xcv 
+vp([ k 
+ph r log(l + k) 
+logp 
+—  r. 
+Comme vp(a\) = a  pS_^^, si Sp(a) est la somme des chiffres du développement de a 
+en base p, on en déduit la minoration vp(a\) > pJ^  —  *° ^g"^  ? et écrivant k sous la 
+forme k = pha + 6, avec 0 < b < ph  —  1, la minoration 
+vp{ k 
+lph \)-r log(l + k) 
+logp 
+=vv(a\) - r \og(pha + 6+1) 
+logp 
+> a 
+P-I xc 
+\og(a + 1) 
+logp —  rh —  r log(a  + 1) 
+logp 5 
+ce qui montre que l'on  peut prendre pour C\ (r) le minimum de Q 
+p-1 -(1+r log(o+l) 
+logp —  r 
+pour a > 0. 
+Corollaire 1.5.20. — II existe C2O*) G R telle que Von ait  v<^r{^)  >  v^r((j))  - C2(r) 
+quel que soit  (j) G  ^r(Zp,L). 
+Démonstration. — Il résulte de la prop. 1.5.19, et de ce que  VLA£(0  (ei,k,r) =  [^(*)]» 
+que l'on a  v<#r(ei  kr) >  —  1 —  Ci(r) quels que soient z  G N et 0 < k < r. Comme les 
+ei k r, pour ieNetO<fc<r forment une base de Banach de ^r(Zp,  L),  cela permet 
+de conclure. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 26 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 37 
+Ceci démontre une des deux inégalités dont on a besoin pour établir le th. 1.5.17. 
+Pour démontrer  l'autre,  il suffit, par densité, de la vérifier pour les éléments de 
+LP^0,RL(Zp, L), et pour cela, il  s'agit de minorer les coefficients d'amplitude d'un  élé­
+ments de LP'0,r'(Zp,L),  en  termes de la valuation v^r. 
+Soit (j) G  LC(ZP,L),  et soient 
+P -i 
+tlo 
+bi((f))li+pm)zp(x) =  (f>(x)  = 
+4-oo 
+3=0 
+a jit) 
+x 
+j 
+x 
+5 
+les décompositions en ondelettes et de Mahler de (j). 
+Proposition 1.5.21. — Soit r > 0. Si vv(aj((j))) > rinî(h,£(j)) pour tout j  G  alors 
+(i) VP(BI(4>))  > H{i) quel que soit i < ph —  1, si r <  1 ; 
+(ii) vp(bi((t>))  > r£(i) —  1 quel que soit i < ph  —  1, si r > 1. 
+Démonstration. — Si r < 1, on utilise la minoration de la prop. 1.3.7. Celle-ci not 
+permet de minorer  vp(bi((f)))  par 
+inf 
+3Sl 
+{Vp(a3(ct>)) + £(i)-£(j)) > inf 
+3<i 
+r£(j) + £(i)-£(j)) > r£{ï) + (1 - r) inf 
+j<i 
+M-TU(J))>RL(I). 
+Si r > 1, on fait une récurrence sur h en  utilisant la minoration de la prop. 1.3.8 
+qui montre que la minoration que l'on cherche à démontrer est vérifiée si £(i) = h, et 
+si vJaAè)) > rh quel que soit i > ph~x. Considérons alors 
+4>' =  4>-
+£(i)=h 
+(vp(an(0)) -r£vv 
+i<ph~1-l 
+BI(</>)li+pi(i)Zp, 
+et, si j  G  N, soit a', =  aj(<f>')'  Comme  vp(bi((/))) > rh —  1 si £{i) = /i, on a 
+vJa'A >  inf(vJaj(</>)), inf 
+i(i)=h 
+Vp{bi{(t>))) > RW£(H-I,EL(j))-
+L'hypothèse de récurrence pour  h —  1 permet donc de montrer que  vp(bi((j))) > r£(i)  —  l 
+si £{i) < h  —  1, ce qui permet de conclure. 
+Corollaire 1.5.22. — Soit r > 0, soit  (j) G  LC(ZP,L),  et soit  <\>  = J2tS) h(I)Wh+p'Wp> 
+la décomposition de ô en ondelettes. Alors 
+(i) sir<l,  vp,bi(ô)) > rl(i) +  v<gr(<l>) quel que soit i  G  N ; 
+(ii) si r > 1, vp(bi((/))) >r*(i)  + VTFR(0)-l quel que soit i  G  N. 
+Lemme 1.5.23. — // existe Cs(r) G R tel que, si  cf)  = Ei EN Eo<Kr  ^,fcei,fe,r> ou ^es 
+bi^k sont des éléments de Cp presque tous nuls, alors 
+v^-W - C3(r) < inf 
+iGN,0<Kr 
+Vp(biik). 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 27 =====
+38 P. COLMEZ 
+Démonstration. — Celle-ci se fait par récurrence sur [r]. 
+- Si [r] = 0 (i.e. si r < 1), la condition 0 < k < r implique k = 0. Comme les  fr^fc 
+sont presque tous nuls, il existe h tel que bijk = 0 si £(i) > h. On déduit alors du (i) 
+du cor. 1.5.22 que l'on a  vp(p^r'&i,o)  >  îVr(<£)  + ^(fc)r °luel ciue so^ i < ph  —  1. On 
+en déduit l'inégalité  infiGN,o<fc<r ^p(^,fc) > vlr  (</>)> ce qui permet de conclure. 
+- Si [r] > 1, soit <// la dérivée de  (f>. On peut écrire  <j>' sous la forme 
+</> = 
+ifN 0 <fc<r-l 
+(/c + l)&i,fc+ie< i, r_i. 
+Or v<gr-i(fi) >  v^r((/>)  (en effet, si 0n = (*), alors <^ = Efc<n-i an,k(l), où 
+Vp(an,fc) > -*(n) car EnS)0n(^)^n = (1 +  r)alog(l  + T)  ; il en résulte que 
+v<#r-i{(j)'n) >  v<gr(<j)n),  pour tout n G N, et on en déduit le résultat annoncé). On 
+déduit donc de l'hypothèse de récurrence (i.e. de l'équivalence des valuations  v<#r-i 
+et t^r_i),  l'existence d'une constante C'0(r)  G R telle que 
+ini ÎGN, l<k<r 
+Wp(6»,fc) + v«"-(Wp(6»-( C3(r-l)-^(r), 
+et donc que 
+inf i€N, l<k<r Vr>(bi,k) > VcgrU) -C3(r-1)- -C3(r SUD 
+-C3(r 
+vp(k). 
+Soit 0o = aGN °i,0ei,0,r = 0- -Cr /Kfc<r bi,k^i,k,r-On a alors 
+v^r(M > inf ^r(M ^r(M inf 
+ieN, i<fc<r 
+Wp(6»,fc) + v«"-(eijfc,r)) 
+> vlr  (Q)-  C3(r - 1)- SUD 
+l<k<r 
+^r(M^r(Mvv 
+d'après le lemme 1.5.10 et la minoration obtenue ci-dessus.  Ceci  permet, en  utilisant 
+le (ii) du cor. 1.5.22, d'en déduire la minoration 
+inf 
+lte 
+^r(M^r(M^r(M -C3(r-1)- sup 
+l<fc<r 
+vp(k)-d(r)-l. 
+Ceci permet de conclure. 
+Revenons à la démonstration du th. 1.5.17. D'après le cor. 1.5.20 et le lemme 1.5.23, 
+l'application  (an)neN  ^ EnGNan C) induit un isomorphisme de L-banach, de 
+l'espace des suites d'éléments de L vérifiant vp(an)  —  r£(n) —• +oo quand n tend 
+vers +oo, sur un sous-espace fermé de  ^r(Zp,L).  Comme l'image contient  LA(ZP,L) 
+qui, d'après  la prop. 1.5.13, est dense dans  ^r(Zp,L),  cela permet de conclure. 
+1.6. Propriétés  locales des caractères  de Q*. — Si J*f  G  L, on définit la branche 
+du logarithme log^ : C*  —•  Cp comme étant l'unique fonction localement analytique 
+dont la dérivée est x~x et qui vérifie les équations fonctionnelles 
+log^ (xy)  =  log^  x +  log^  y quels que soient x y  G x et log l p = l. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 28 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 39 
+Si j£? = oo, on pose log^ = vp. L'équation fonctionnelle log^x = log^ a + log^ ^, 
+alliée avec le fait que  \og^(x)  = -  Yln=i  ^~n^ (resP- l°g^# = 0) si vp(x - 1) > 0, 
+montre que, dans tous les cas, log^ est analytique sur a + p1+Vp^Zpi quel que soit 
+^r(M 
+Si S : Q* —• C* est un caractère continu, la quantité  log a (u)/log u ne dépend pas du 
+choix de u G Z*  —  fJ>(Qp) : en effet,  (f],v)  •—> (1 + 2p)v77 induit un isomorphisme de 
+groupes de  /x(Qp)  x Zp sur Z*, et si  m = (1 -f  2p)vrj, alors 
+5(u) = S(l + 2p)v6(ri), log = v  log(l  + 2p) et log S(u) = v  log ¿(1 + 2p) 
+car 5(77) est une racine de l'unité, ce qui nous donne  °iog™  ~ ?og(i+2p) >  si ^ 0. On 
+note cette quantité tt;(<5). La continuité de 5 implique l'existence de n(ô) > 1 tel que 
+vp(S(x) —  1) > vp(2p),  si vp(x  —  1) > n(<5), et on a alors 
+S(x) =  exp(w(5)  Ioga;) = 
++00 
+n=0 
+w(<5) 
+n 
+(x-l)n,  six  G  l+pn(<5)Zp, 
+En utilisant l'équation fonctionnelle 6(x) = S(a)S(^), on en déduit que 6 est analytique 
+sur a + pn^vp(a)Zp, quel que soit a G QJ. 
+Si 0 G  LA(ZP,  L),  si n  G  N, on note  <f)op~n  : Zp —•  L la fonction de support pnZp, 
+dont la restriction à pnZp est donnée par la formule (pop~n(x) = (p(p~nx). Le résultat 
+suivant est immédiat. 
+Lemme 1.6.1. — Si 6 £ LAh(Zv.L) et si n £ N, alors (pop n G LA/l+n(Zp,L),  et 
+vLAh+n Uop n)  =vhAh(</>). 
+Lemme 1.6.2. — Si  (p e LA(Z*  L), si a G L*, et si k EN, alors la  série 
++00 
+n=0 
+annkóoV-n 
+converge dans  ^r(Zp,L)  si 0 < r < vp(a). 
+Démonstration. — Il existe h > 1 tel que  (p G  LA/l(Zp,L).  Si n > 0, alors,  d'après  la 
+prop. 1.5.19 et le lemme 1.6.1, on a 
+Vtfr(annk(pop n) > nvp(a) +  vLAh+n ((pop n) -r(h + n) -Ci(r) 
+= n(v0p(a)  - r) +  VLAH((P) -rh-dir), 
+ce qui montre que  v^v{annK(Qp  o p n) tend vers +00 si vp(a)  —  r > 0, et permet de 
+conclure. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 29 =====
+40 P. COLMEZ 
+Proposition 1.6.3. — Soit 6 : Q*  —»  L* un  caractère  continu vérifiant vp(S(p)) > 0, 
+soit if G LU  {oo},  et soit k e N. Alors ô  • log^ tend vers 0 en 0, et la fonction 
+obtenue en prolongeant par continuité est de classe ^r sur Qp pour tout r vérifiant 
+0<r  <vp(S(p)). 
+Démonstration. — Soit c(if) =  inf(0,  vp(Sf)) si if G L, et c(if) = 0 si if = oo. On 
+a alors 
+vp{(\og<? x)Kô{x)) > vp(x)vp(ô(p)) f fec(L); 
+on en déduit le premier point. Par ailleurs, comme 5 et log^ sont localement analy­
+tiques sur Q*, il suffit de regarder ce qui se passe en 0, et on peut donc se contenter 
+d'étudier la restriction de S  • log^ à Zp. Si z G N, notons fi la restriction de S  • log^ 
+à Z* et posons if' = if si if  G  L, et if' = 1 si if =  oo.  Comme 
+6(pnx)]D&(pnx) = S(p)nS{x){n£" ±logj?x)k = ô(Pr 
+k 
+i=0 
+k 
+i 
+i 
+(nJSf')*-7i(a:), 
+la restriction de  <5 • log^ à pnZ* est égale à 
+S(p)n 
+k 
+i=0 
+V 
+i 
+(nJSf')*-7i(a:)vvv p 
+et donc la restriction de S  • log^ à Zp (prolongée par continuité en 0), est égale à 
++ oo 
+(p)n 
+S(p)n 
+k 
+i=0 
+k 
+i 
+i 
+(p)n(p)n(p)n(p)n 
+ce qui permet d utiliser le lemme 1.6.2 pour conclure. 
+II. Duaux 
+II. 1. L'anneau  ^+ et  certains  de ses  sous-espaces.  — On note  l'anneau 
+des séries entières / =  Yln=o  anTn,  à coefficients dans L, qui convergent si vp(T) > 0. 
+Une telle série définit donc une fonction analytique sur le disque ouvert  £?(0,0+). 
+Si h G N, soit Uh =  (p-i)ph =  vp(CPh+1  ~  !)•  On munit de la topologie de 
+Fréchet définie par la famille de valuations  VB(O,UH)I  h  G  N. 
+Un élément / =  Y^n=o  bnTn de ^+ est d'ordre r, si  vp(bn) + r£(n) est borné inté­
+rieurement quand n tend vers  +oo.  On note  âê+ le sous-ensemble de ^+ des éléments 
+d'ordre r, et on munit R+r a valuation vr définie par vr(f) = infnGN  vp y^+rifo), 
+ce qui en fait un L-banach. Notons que ce que nous appelons « ordre » est souvent 
+appelé ordre de croissance logarithmique dans la  littérature  (la série  log(l  -f T) est 
+d'ordre 1). 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 30 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 41 
+L'espace âê^ des séries à coefficients bornés est  aussi  noté S+ ; il s'identifie à 
+l'anneau des fonctions analytiques bornées sur  5(0,0+). 
+LemmeII.l.l. — / G âë+ si et seulement si inf^N (vB(o,uh)(f) + rh) ^ —oo. De 
+plus, la valuation vr est équivalente à la valuation v'r définie par 
+V'r(f) = inf 
+/iEN 
+(vB(0,tifc)(/)+rA). 
+Démonstration. — Si f(T) = nGN fln^ G R+ alors t;' (/) est égal à 
+inf 
+nGN 
+inf > nGN ^p(ûn) H" n 
+(p-iy 
+nGN inf 
+nGN 
+^p(ûn) H" inf 
+feeN 
+n 
+(P - l)ph 
++ rh 
+Si n = 0, le minimum ci-dessus vaut 0. Si n > 1, La fonction x  I—>  (p_^)px + atteint 
+son minimum en ^ log (n logp/ (p-1)r) et en prenant h = [g^] = £{n) - 1 > - 1, 
+on obtient l'encadrement 
+r«(n)  - 1) + r 
+log£ (1 + log logp 
+nGNnGN •)< inf FiGN 
+77 
+'(P-I)ph 
+nGN < 
+d 
+P-1 + r(£(n)-l). 
+On en déduit le résultat. 
+Corollaire IL 1.2. — Si f est d'ordre r et g est d'ordre s, alors fg est d'ordre r + s. 
+Démonstration. —On  a,  vB(0ìUh)(fg)+(r+s)h = (vB(o,uh)(f)+rh) +  (vB^iUh)(g)-\-sh)1 
+pour tout h  G  N. On en déduit le résultat et la minoration  v'r+s(fg)  > vfr(f) +  v's(g). 
+II.2.  Distributions  continues.  — On appelle distribution continue sur Zp une 
+forme linéaire continue sur  LA(ZP,L),  c'est-à-dire une forme linéaire sur  LA(ZP,L) 
+dont la restriction à chaque  LA/l(Zp,L)  est continue. En particulier, si \x est une 
+distribution continue, on peut considérer  ¡1 comme un élément du dual de LA^(ZP, L), 
+et donc définir sa valuation ^LA^aO-
+On note  ^(Zp,  L) l'ensemble des distributions continues sur Zp, à valeurs dans L, et 
+on munit  f^(Zp,  L) de la topologie  de Fréchet définie par la famille de valuations ^LA^ > 
+pour h  G  N. 
+Si /x G ^(Zp, L),  on écrira en général  //(/)  sous la forme plus  parlante fz f(x) fi(x) 
+ou simplement sous la forme Jz f  ¡1. 
+A une distribution continue //, on associe la série formelle 
+(1 + T)* 
+zp 
+(1 + T)*U(X) = 
++oo 
+n=0 
+jm 
+zp 
+X 
+n 
+(1 + * 
+appelée transformée d Amice de /i. 
+Si vp(z) > 0, alors x  »-> (1 + z)x = J2n=o  CD^™  est localement analytique, ce qui 
+permet de calculer l'intégrale Jz (1 +  Z)X/J,(X),  si fi G  ^(ZP,L). 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 31 =====
+42 P. COLMEZ 
+Lemme II.2.1. — Si  ¡1  G  3t(Zp,L), et si vp(z) > 0,  alors  fz (1  + z)x  fi{x) =  Aµ(z). 
+Démonstration. — Il existe h G N tel que vp(z) > Uh, ce qui implique que la série 
+Yln=o in)zn  converge  vers (1 + z)x dans  LA/l(Zp,Cp)  car prry tend vers 0. On en 
+i- PH J" 
+déduit le résultat. 
+ThéorèmeH.2.2. — L'application  ¡1 v-> ^ est un isomorphisme  d'espaces  de  Fréchet 
+de @(ZP, L) sur R+ De plus, si fi  G ^(Zp,  L), et si h  G N, on a 
+VB(0,UH)(^) > VB(0,UH)(^) >VB(0,UH VB(0,U) > 
+Démonstration. — Soit \x une distribution et  «g^(T)  = Yln=QbnTn sa transformée 
+d'Amice.  En  utilisant le th.  1.4.7,  on montre que, quel que soient h  G  N et n  G  N, 
+Vp(bn) >  VLAh(V<)  + VLAh X 
+n VB(0,UH)(^) > n 
+.ph. 
+! > ^LA^(m) - riufc. 
+Ceci permet de montrer que  g/^ converge sur B(0,u^) pour tout h, et  donc  appartient 
+à R+ et aussi que  t>fî(0,Uh)(^)  >  ^LA^  (aO-
+Réciproquement,  si / =  X]rë)  bnTn G R alors pour tout h  G  N et tout n  G  N, 
+vp r 
+Lph me > Vp{bn)  + n 
+-ph+1J > Vp(6n) H-nîZh+i - 1 > VB(0,UH)(^) >VB(0,UH) 
+et tend vers +oo quand n tend vers +oo.  Ceci montre que l'on peut définir une 
+distribution continue  ¡1 sur Zp, en posant Jz f  ¡1  —  Yln=o bnan{f)>  De plus, on a 
+Yln=o bnan{ inf 
+nGN 
+Vp n 
+.ph 
+bn Yln=o bnan{ Yln=o bnan{ 
+Ceci permet de  conclure. 
+II.3.  Distributions  tempérées  et  mesures 
+1. Transformées d'Amice des distributions  tempérées. — Soit r > 0. Une distribution 
+continue [i sur Zp est dite d'ordre r si elle s'étend par continuité à Tr On note 
+f^r(Zp,L)  l'ensemble des distributions d'ordre r que l'on munit de la valuation  v'@ 
+définie par 
+Yln=o inf 
+/e^(zp,L)-{o} 
+d 
+Zp 
+/M -Vtfr(f) 5 
+ce qui fait de  ^r(Zp,L)  le dual topologique  de ^r(Zp,L). 
+Une distribution est dite  tempérée,  s'il existe r G R+ telle qu'elle soit d'ordre r. 
+On note  i^temp l'espace des distributions  tempérées. 
+Proposition IL3.1. — L'application //  1—• «e^  induit une isométrie de $>r(Zp,L) muni 
+de la valuation  v1^ sur  2&+ muni de la valuation vr. 
+Démonstration. — C'est, via la  prop.  1.1.6, une simple traduction du th. 1.5.17. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 32 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 43 
+2. Mesures. — Une distribution d'ordre 0 est  aussi  appelée une mesure. Par défi­
+nition, l'espace  @o(Zp,L)  des mesures est donc le dual topologique de l'espace des 
+fonctions continues. La prop.  II.3.1  permet de construire une mesure à  partir  d'une 
+série entière dont les coefficients sont bornés. On peut  aussi utiliser le fait que les  fonc­
+tions localement constantes sont denses dans les fonctions continues, ce qui permet de 
+définir une mesure, comme expliqué ci-dessous, en ne connaissant que les intégrales 
+Sf la+D»z„/naO pour a G Zp et n  G  N. 
+Soit ¡1  une mesure sur Zp. Si a  G  Zp et n  G  N, soit  /j,(a + pnZp) = Jz  La+pnZp/i(x) 
+la mesure de a+pnZp. Comme a  + pnZp est la réunion disjointe des a  + jpn +pn+lZp 
+pour 0 < j < p  —  1, on a /I(A  + pnZp) —  Y^=o MA  + 3Vn + Pn+1Zp).  De plus, comme 
+vc^o(la+pnZp) = 0, les fi(a  + pnZp) sont bornés. Si / est une fonction continue sur Zp, 
+alors Yla^Q1  /(A)LA+pnzp  tend vers / dans ^(Zp.L) et donc 
+Zp 
+F(x)fi(x) = lim 
+n—+-|-oo 
+pn-l 
+A=0 
+f(a)p{a + pnZp), 
+formule qui ressemble beaucoup à une somme de Riemann. 
+Réciproquement,  si on se donne une famille /j,(a+pnZp)1 a  G Zp, nGN, d'éléments 
+de L vérifiant les conditions : 
+(i) fi(a + pnZp) = v(b + pnZp) si vp(a —  b) > n, 
+n) N{a  + pnZp) e e rr 
+er Yln=o bnan{ Yln=o bnan{ 
+(iii) il existe C  G  R tel que vp(fi(a -h pnZp)) > C pour tous a  G Zp et n  G  N, 
+les propriétés (i) et (ii)  permettent d'étendre ¡i en une forme linéaire sur  LC(ZP,L), 
+et la propriété (iii) permet de montrer que  vP(N(F))  >  v<#o(F)  + C, ce qui permet 
+d'étendre /i, par continuité, à  ^°(Zp,L). 
+S. Distributions tempérées et sommes de Riemann. — La prop.  II.3.1  caractérise 
+les distributions tempérées en termes de leurs transformées  d'Amice,  ce qui per­
+met de construire une distribution tempérée à  partir  d'une série entière de rayon 
+de convergence 1, vérifiant des conditions de croissance. La connaissance de la  trans­
+formée d'Amice d'une distribution est équivalente à la connaissance des fz xq,fj,(x), 
+pour i G N. Le théorème suivant permet de construire une distribution d'ordre fini 
+en ne connaissant que les intégrales du type /a+pnZ xlji{x) pour a G Zp, n G N et 
+0 < i < N. Cette construction généralise celle des mesures donnée au n° précédent et 
+est très importante pour les applications arithmétiques. 
+Si I est une  partie  de N, on note  â^lg(Zp,L)  l'ensemble des distributions 
+algébriques sur Zp (de degré G /), c'est-à-dire l'ensemble des formes linéaires 
+sur LP7(ZP,L).  Un élément \x de  ^lg(Zp,L)  est donc équivalent à la donnée des 
+valeurs Ja+pnZ xl¡i{x) pour i  G  /, a  G Zp et n  G  N avec les relations de compatibilité 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 33 =====
+44 P. COLMEZ 
+évidentes 
+a+pnZv 
+xlji(x) = 
+p-1 
+k=0 Yln=o bnan{ 
+X'lijl(X). 
+On a une application  naturelle  de @(ZP,L)  dans  ârlg(Zp,L) quel que soit / C N. 
+Si J est une  partie  de R, on pose  @lig(Zp,L)  =  @IQN(Zpi  L) 
+Théorème 113.2. — (i) Si /x G  ^r(Zp,L);  il existe C G R tel que, quels que soient 
+a G  Zp; k G  N et n  G  N, on az£ 
+af 
+a+pnZp 
+x —  as 
+pn 
+k 
+µ >C-rn. 
+(ii) Réciproquement, si N G N U {+00} es£ > [r], si fi G  f^f](Zp,L)  es*  te/te 
+gtt'zZ existe C £ H tel que, quels que soient a  G Zp, k < N et n  G  N, on ait 
+vp\ 'a+pnZp 
+x —  a 
+pn 
+>k µ >C-rn, 
+alors fi se prolonge de manière unique en une distribution d'ordre r sur Zp. 
+/ (x-a\pn k 
+Démonstration. — (i) La fonction 0a>n,fc> définie par </>a,n,fc(#) = la+pnzp(#)(~ïr) 
+appartient à  LAn(Zp,L)  et on a ^LAn(0a,n,fc) = 0. On en déduit, en  utilisant  la 
+prop.  1.5.19, la minoration 
+vp 
+>a+pnZp 
+x —  a 
+pn 
+k µ Yln=o bnan{ Yln=o bnan{ Yln=o bnan{ Yln=o bnan{ -nr-Ci(r), 
+ce qui démontre le (i) avec C =  v^r\\i) —  C\[r). 
+(ii) Pour démontrer le (ii), introduisons le sous-espace  S$'N\zp,L)  des éléments 
+Yln=o bnan{ (Zp,  L) tels que la  quantité 
+Yln=o bnan{ ini 
+oGZp, k<N, nGN 1 fp 
+a+p™Zp 
+x —  a 
+pn 
+k 
+u + rn 
+soit finie. D'après le (i), l'application  naturelle  t de  ^(ZP,L)  dans  Da [0,N]alg envoie 
+^r(Zp,L)  dans  @l°'N\zp,  L),  et on est ramené à démontrer que la  restriction  de 
+¿ à f^r(Zp,L)  induit  un isomorphisme de f^r(Zp,L) sur  @j?'N\zp,  L). 
+La restriction  de t à f^r(Zp,L) est injective puisque LP'0,^(ZP,L) est,  d'après  la 
+prop.  1.5.13, dense dans ^r(Zp, L). Il ne  reste donc que la surjectivité à prouver. Soit 
+¡1 G  ^0,iV](Zp,L).  Si i  G  N, et si k  G  {0,1,...,  [r]},  posons 
+bi,k = 
+Zp 
+Yln=o bnan{ 
+t+p'(OZp 
+Yln=o x —  a> 
+pn 
+k 
+¡1. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 34 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 45 
+On a  donc  vp(bi^) > ^r,iv(/>0  —  1 quels que soient i G N et k G  {0,1,...,  [r]}.  Il 
+existe donc,  d'après  le th. 1.5.14, un unique  élément  /2 de f^r(Zp,  L) tel que, quels que 
+soient i  G  N et k  G {0,1,..., [r]},  on ait Jz ei^,r  P>  = h,k-
+Soit À = ¿(/2) - \x. C'est, par construction, un  élément  de  @l°,N\Zp,L)  dont la 
+restriction à  LP'0'r'(Zp,  L) est identiquement nulle. Maintenant, si k <  TV, et si m G  N, 
+on peut écrire  Ja+pnZ %k A  sous la forme 
+pm-i 
+i=0 
+k 
+3=0 
+k 
+e (a + ipn)k-i 
+a-\-ipn+pn+rnZp 
+(x-(a + ipn))j  A 
+Comme les termes avec j < r sont nuls, et  ceux avec j > r ont une valuation supérieure 
+ou égale  à (infr<J</e(j  —  r)(n + m)) +  t^r,jv(A),  et  comme  cette dernière quantité 
+tend vers -foo quand m tend vers  -foo,  cela permet de montrer que  Ja+pnZ xk X = 0 
+quels que soient a G Zp, k < N et n G N. On en déduit l'égalité /x =  ¿(/2),  ce qui 
+prouve que i est surjective et permet de conclure. 
+4. Autres valuations naturelles sur  @r(Zp,L).  — La valuation v'^ dont nous avons 
+muni @r  n'est pas toujours  très commode.  La prop. II.3.3 ci-dessous permet, suivant 
+les cas, d'en choisir une plus adaptée, la valuation v$r étant, en général, la plus 
+naturelle, 
+Proposition IL3.3. — (i) Si on définit  v@r(/j,), pour fi  G  f^r(Zp,L)  par la formule 
+LA„ (/-i) inf 
+nGN 
+^LA„ (/-i) + rn = inf 
+a£Zp, fcGN, nGN 
+Vp 
+a+pnZp 
+x —  a 
+pn 
+k ' \ + m . 
+alors v@r(/j,) est une valuation sur  f^r(Zp,L)  équivalente à la valuation v'^ . 
+(ii) Si N  G  N est>  [r],  et si on définit  V0r,jv(/x), pour ¡1 G  ^r(Zp,  L) par  la formule 
+aeZp, k<N, nG inf 
+aeZp, k<N, nGN 
+Vp\ 
+'a+pnZp 
+x —  a 
+pn 
+k > I + m 
+alors vg)r^(n) est une valuation sur  3>r(Zp,L) équivalente à la valuation  v@r. 
+(iii) Si N G N est > [r], et si on définit v'^ N(fi), pour  ¡1  G  ^r(Zp,L)  par la 
+formule 
+aeZp, k<N, nG inf 
+aeZp^eN 
+vp[ 
+a+pnZp 
+x —  a 
+pn 
+N * + rn 1 
+alors v'^xdi) est une valuation sur 3}r(Zp,L) équivalente à la valuation  vg)r^. 
+Démonstration. — Les (i) et (ii) sont des  conséquences  du th. II.3.2 et du théorème 
+de l'image ouverte. Pour démontrer le  (iii),  constatons que  v'@  N(fi) >  v^r^(/j,). Par 
+ailleurs, si k <  AT, il existe  a0,fc,...,  ctN,k G  Q, tels que xk —  YA=O ak,i(x  —  i)N• On 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 35 =====
+46 P. COLMEZ 
+a alors, quels que soient a  G Zp et n G N, 
+x —  a 
+pn 
+, k 
+N 
+i=0 
+&kA (x —  {a  + zpn) 
+Dt 
+N 
+On en déduit la minoration v®r N(µ) > ^  /V(aO  + mfo<* k<N Vp(&i,k)- Ceci  permet 
+de conclure. 
+II.4.  Opérations  sur les  distributions 
+1. Masses de Dirac. — si a G Zp, soit Sa la masse de Dirac en a, c'est-à-dire la 
+mesure qui à  <j>  associe  <j>{a). Sa transformée d'Amice est (1 -f T)a. 
+Comme les polynômes sont denses dans R+ l'espace vectoriel engendré par les 
+masses de Dirac (et même celui engendré par les masses de Dirac aux  entiers > 0) est 
+dense dans ^(Zp,  L) (et dans f^r(Zp, L) muni de la topologie faible, si r > 0). 
+2. Multiplication par une fonction. — Si  ¡1  est une distribution sur Zp et / est une 
+fonction localement analytique sur Zp, on définit la distribution  f  \x par la formule 
+Iz $ (/¿0 = Jz (/^) On peut de même multiplier une mesure par une  fonc­
+tion continue ou, plus généralement, une distribution d'ordre r par une fonction de 
+classe cé?r. 
+- Multiplication par x. On ai-Q = ((x  —  n) + n)(£) = (n +  l)(n+i)  + nin)' ^n 
+en déduit la formule 
+^*M(T)  =  a<(T), où d = (1 + T] d 
+dT 
+- Multiplication par zx si vp(z  —  1) > 0. D'après le lemme II.2.1, si vp(y  —  1) > 0, 
+et si A est une distribution continue sur Zp, alors fz yxX(x) = #/\(y  —  1).  Appliquant 
+ceci à À  = zx\i, on obtient &/\(y  —  1) = £^u{yz  —  1) quel que soit y G  5(0,0+).  On en 
+déduit la formule 
+((l + Tiz- ^((l  +  Tiz-l). 
+- Division par x. Le résultat  n'est  bien défini qu'à addition près d'un multiple de la 
+masse de Dirac en 0. Comme la division par x est l'inverse de la multiplication par x, 
+la transformée d'Amice de x~x\x est une primitive de (1 +  T)_1^(T),  le  choix  de la 
+constante d'intégration correspondant à l'indétermination sus-mentionnée. 
+S. Restriction à un ouvert compact. — C'est la multiplication par la fonction ca­
+ractéristique de l'ouvert compact. Si n G N et b G Zp, la fonction caractéristique 
+de b + pnZp est x  i—• p~n Yl^e^ n  V~br1X' Cela se  traduit, au niveau des transformées 
+d'Amice,  par la formule 
+^Resb+pnZp(M)(T) = p-n 
+= p-n 
+n-Vjfl  + Tirç-l). 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 36 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 47 
+Si k > 1 et F G R+ notons d~kF une solution G de l'équation différentielle 
+dkG = F, ce qui fait que d~kF n'est bien déterminé qu'à addition près d'un  polynôme 
+de degré < k  —  1 en log(l  -h T). 
+Proposition II.4.1. — Soient n £ N, b £ Zp et k  G  Z. On a a/ors 
+^6^(r/-l) 
+Xk LL = V  n 
+^6^(r/-l) 
+^6^(r/-l)^6^(r/-l), 
+5z A: > 0 ou si k < -1 etb(£pnZp. 
+Démonstration. — C'est une  conséquence  immédiate des discussions  précédentes. 
+Si k <  —  1, l'indépendance du membre de droite par rapport au  choix  de dkAµ  suit 
+de ce que logrj = 0 si  77 G /ipn et de ce que $3neµ  n-b = 0 si 6 ^ pnZp. 
+4- Dérivée  d'une distribution. — Si /i  G  ^(ZP,L),  on définit sa  dérivée  du par : 
+zp 
+6(x) du = 
+d 
+6(x)cxc et donc ^dM(T) = log(l + T) 6(x)cv 
+On remarquera qu'en p-adique, il n'est en général pas possible de définir la primitive 
+d'une distribution, car au niveau des transformées  d'Amice,  cette opération corres­
+pondrait à la division par  log(l  + T) qui a une infinité de  zéro  sur B(0,0+). 
+5. Actions de Z*, tp  eti\). — Ces actions permettent de faire le lien  entre la théorie 
+des (iû,  r)-modules  et celles des distributions. 
+- Si a  G Z* et si  ¡1 G ^(ZP,L),  on définit aa(fi) G G  0(Zp,L)  par : 
+zp 
+(j)(x) (Ja{u) = 
+rzP 
+(j){ax) u, etona  ^aM(T)  = stfMl + TY-l). 
+- On fait agir ip sur une distribution u par : 
+x 
+<*(a?) (p(u) = 
+fzP 
+6(x)6(x) et on a <^(T) = ^((l +  T)P-l). 
+- Si u est une distribution sur Zp, on note Y(µ) la distribution sur Zp définie par 
+s 
+ó(x)ìb(u) = 
+pZp 
+0(p-1 M, et on a  ^Kb(a)  =  i>{^u), 
+où ^ R + R+ est défini par ib(F)((l + T)*-l) _ 1 
+v ryP = l F((l + 2>-l). 
+Les actions de Z*  y?  et Y vérifient les relations suivantes : 
+(a) ip  o (p = id ; 
+(b) tboaa = aa o ip et (p  o aa = o~a o <£, si a G Z*. 
+Par ailleurs, « Y(µ) = 0 » si et seulement si « u est à support dans Z*p », et 
+ResZ;(/x) = (1 - (f  o iß) - u. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 37 =====
+48 P. COLMEZ 
+6. Convolution des distributions. — Si  À et a sont deux distributions, on définit  leur 
+convolée  À  * /i par 
+e 
+(j) X  * a = 
+e Zp 
+<f>(x -h y) X(x) MU/)-
+En prenant  pour  <\> la fonction x  »—•  zx, avec vp(z  —  1) > 0, on démontre que l'on a 
+£?\*tj.(z) = <^A(^)^(^)  quel que soit z  G  £(0,0+),  et donc que  AYµ*  =  stf\srfp. 
+Pour donner un  sens  à l'intégrale double ci-dessus, nous  aurons  besoin du lemme 
+suivant. 
+Lemme IL4.2. — Si  (j)  G  LA^(ZP,L),  /es dérivées de  (f) appartiennent à  LA^(ZP,L). 
+De plus,  v^Ahi^—-]—)  >  VLAh((t>)  Quel que soit n G N et la suite de terme général 
+VLAh{^—) tend vers H-oo quand n tend vers -hoo. 
+Démonstration. — Soit 5 un système de représentants de Zp modulo phZp. Si  XQ G  5, 
+alors P-V^')  = ESH^^^f^l^. Comme  (n+fc)  est  entier,  on en 
+déduit l'inégalité 
+vB(x0,h)\ 
+vB(x0,h)\ 
+n! 
+> inf 
+k>n 
+vp(ak(<j),XQ)) > inf 
+fc>0 
+vp{ak(4),xo)) >  vB{XQth)(<l>). 
+On en déduit la minoration voulue, et le fait que la  suite  de  terme  général 
+vp(ak(<j),XQ tend vers -hoo est une conséquence du fait que la  suite  vp(ak(4>i  XQ)) 
+tend vers -hoo. 
+Pour prouver que l'intégrale double définissant À * u converge, il suffit d'écrire 
+<t>(x + y), pour x €  XQ  + phZp, sous la forme 
+<j)(x -h y) = 
++oo 
+71=0 
+Pnh(f)M(XQ+y) 
+d 
+X —  XQ 
+d ndf 
+Comme vp{$x0+phZh ' X—Xa 
+ph 
+n . 
+i A >vLAh (À), la série 
+x0es 
+-f-oc 
+n=0 x0+phZp 
+X —  XQ 
+ph 
+\nx pnh^n>(x0 + y) 
+ds 
+converge dans LA^(ZP,L)  d  après le lemme II.4.2, ce qui permet de conclure. 
+Proposition IL4.3. — (i) La  convolée  de deux mesures est une mesure. 
+(ii) Plus généralement, si X est d'ordre r et u d'ordre s, alors À*/i est d'ordre r + s. 
+Démonstration. — C'est, modulo le lemme  II.l.l  et la prop. 1.4.2, immédiat sur les 
+transformées d'Amice. 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 38 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 49 
+Remarque IL4.4. — La formule  £/A*/X  = AY Aµ montre que si  Sa * fi = /1  quel que soit 
+a G  Zp, alors /i = 0. Il n'y a donc pas de distribution continue sur Zp,  invariante par 
+translation ; autrement dit, il n'y a pas de mesure de  Haar p-adique. 
+7. Distributions à support ponctuel — Si X est un fermé de Zp, une distribution  ¡1 
+sur Zp est à support dans X, si on a fz  (j)  fi = 0 pour  tout  (j) G  LA(ZP,  L) qui est telle 
+qu'il existe un ouvert contenant X sur lequel  (j> est identiquement nulle. 
+Proposition IL4.5. — Si r > 0, et si a  G Zp, une distribution d'ordre r, à support dans 
+{a} est une combinaison linéaire des dérivées  dlSa, i < r, de la masse de Dirac en a. 
+Démonstration. — On peut se  ramener à a = 0 en convolant avec S-a. Soit alors 
+/x G ^r(Zp,L) à support  dans  {0}.  On peut écrire \x sous la forme 
+a = À + 
+[r] 
+i=0 d 
+d 
+f f vp(ak(< 
+où À G ^r(Zp,L) vérifie Jz  x1  À = 0 si 0 < i < r, et on est ramené à prouver que 
+À = 0. Comme \i est à support  {0},  il en est de même de À, et comme les lzp  • x1, 
+pour 0 < i < r, forment une base d'un supplémentaire,  dans LP^°'r^(Zp, L),  de l'espace 
+des fonctions identiquement nulles  dans un voisinage de 0, on a fz  (j>\  = 0, quel que 
+soit (j)  G  LP[0'r](Zp,L).  La densité (prop. 1.5.13) de LP[0'r](Zp,L)  dans  ^r(Zp,L) 
+permet de conclure. 
+Proposition IL4.6. — (i) Si (an)nGN est une suite d'éléments de L telle que la série 
+J2n=o anXn converge  sur tout Cp, la série ^2n=o andn<5o converge  dans @(Zpi L) vers 
+une distribution de support  {0}. 
+(ii) Réciproquement, si  ¡1  G ^(Zp,L)  est une distribution de support  {0},  il existe 
+une suite d'éléments de L telle que la série J2^0anXn  converge  sur tout Cp et telle 
+que a = tS>andnS0. 
+Démonstration. — Pour démontrer le (i), il suffit,  d'après  le théorème de Banach-
+Steinhaus, de vérifier que  Yln=o  an^n\(0) converge, pour  tout  (j)  G  LA(ZP,L),  ce qui 
+est immédiat puisque vp((j)^n\Q)) >  ^LAh(0)  + vp(n\) - n/i, quel que soit n G N, 
+si 0 G  LA/l(Zp,L). 
+Passons au (ii). Soit \i une distribution à support  {0}.  Si n  G  N, soit bn  —  Jz xn \x. 
+Comme ¡1  est supposée à support  {0},  on a  aussi bn = pnh Jz lphZp(x)(px^)n  /x, quel 
+que soit h G N. On en déduit la minoration vp(bn) > nh +  VhAh(l^) quels que soient 
+n G  N et h  G  N, ce qui montre que la série  Yln=o  ^t^n converge sur Cp  tout  entier. 
+D'après le (i), la série Yln=o ^\dnôo converge alors  dans  ^(ZP,L),  et la somme  À de 
+cette série vérifie Jz xn X = bn = fz xn  /x, quel que soit n G N. Les polynômes étant 
+denses dans LA(ZP,L),  cela implique /i = À, ce qui permet de conclure. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 39 =====
+50 P. COLMEZ 
+II.5.  Distributions  sur Qp 
+1. Distributions sur Qp et familles de distributions sur Zp. — Une distribution u 
+sur Qp est un élément du  dual  S>(QP) de l'espace  LAC(QP)  des fonctions localement 
+analytiques à support compact  dans Qp. Si a est une telle distribution, et si n G N, 
+on note µ(n) l'élément de ^(Zp) défini par 
+d 
+Mpnx)u, 
+Mpn 
+Mpnx)u, 
+si 0 G LA(Zp). Il  n'est  pas  difficile  de vérifier que l'on a  i/j(^n^)  = µ (n), pour 
+tout nGN. Réciproquement, si  (/in)neN est une famille de distributions sur Zv 
+vérifiant ^(/xn+i)  =  fjbn,  pour  tout  nGN, alors il existe une unique distribution fi 
+sur Qp telle que l'on ait µ(n) = un, quel que soit n  G  N : si </> G  LAc(Qp)  est à support 
+dans p~nZp, alors Jq  (j)(x)  u = fz c/)(p~nx)an, la relation ^(/^n+i) = fin  permettant 
+de montrer que Jz (f)(p~nx)nn ne dépend pas du  choix  de n tel que  (j)  soit à support 
+dans p nZp. 
+On définit la transformée d'Amice  sé^  de a par la formule  sé^  —  (Aµ (n))nçN) où 
+l'on a noté srf^ la transformée d'Amice de  a^n>). 
+Proposition 11.5.1. — L'application a \-> srf^, associant sa transformée d'Amice à 
+une distribution sur Qp,  induit  une bijection de @(QP) sur l'ensemble des suites 
+F = (F(n))nGN d'éléments de R+ vérifiant  V>(F<n+1)) = F^n\ pour tout nGN. 
+Démonstration. — C'est une simple traduction du  résultat  correspondant sur Zp. 
+2. Action du sous-groupe mirabolique de  GL2(QP).  — On  munit @(QP) d'une action 
+de P(QP) =  {(aQ  i), a  G  Q*, b G Qp} en posant 
+'Qp 
+</>(x) a 
+0 
+) 
+) •k a = 
+Qp 
+Max -h  b) a. 
+Si n G N est tel que pna  G  Zp et pnb G Zp, et si (j) est une fonction à support  dans  Zp, 
+on a 
+Vnzp 
+4>{pnx) 'a 
+^0 
+6^ 
+1> -k ¡1 = 
+rp-n-Vp(o)Z 
+(j)(pnax + pnb)n, 
+ce qui, appliqué à 6(x) = (1 + T)x, nous donne 
+del 
+fa 
+^0 
+p 
+p ds 
+(T) = (î+iy  6<< Mpncvv ((i+r) p-^p(a)a -1), si n > sup(—i?p(a),  — Vp(ò)). 
+On remarquera  que, si a G  ^(Qp),  et si n G Z, alors //n) est  aussi  donné par la 
+formule 
+Zp/x) vcv < o* 
+Zp 
+0> 
+1> * ^ReSp-nZp/x) = ResZp pn 
+o 
+0 
+1 * µ) 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 40 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 51 
+Proposition IL5.2. — Si fi est une  distribution sur Qp, si b  G Qp et si m e Z,  alors 
+quel que soit n e N tel  que bpn € Z» et n + m E N, on a 
+p 
+n '-b+p™Zp 
+(x + b)J fi = p-u+Vn 
+Tief* n + m 
+x + b)J fi = p-u+Vnx + b)J fi = p-u+Vn 
+Démonstration. — On a 
+pm 
+f-b+pmZp 
+(x -h b)j a =p -(j+l)ryi+m 
+'-bpn-\-prn+nZp 
+(x + pnb)j /i(n) 
+—p-U+^ripTi+m 
+pm + nZp 
+x + b)J fi = p-u+Vn 
+x + b)J fi = p-u+Vn 
+rjeiipn+m 
+dj((i +  T)bpr' ^(n)(r))lT-,-x-
+3. Distributions tempérées  sur  Qp. — Une  distribution jjl sur Qp est d'ordre r si /rn^ 
+est d'ordre  r  quel que soit n G N ; elle est globalement d'ordre  r si elle est d'ordre  r et 
+s'il existe Cr(fi) G  R telle que, quel  que soit n G N, on ait v^r(fi^) > nr +  Cr(/x).  On 
+note @r(Qp) l'espace  des  distributions globalement d'ordre  r sur Qp que l'on  munit 
+de la valuation v^r(Qp) définie  par 
+x + b)J fi = p-u+Vn inf eEn v®Aß{n)) -nr, 
+ce qui en fait un  espace de Banach. On a  aussi 
+%r(Q0)M  = inf 
+x + b)J fi = p-u+Vn 
+i 
+a+pnZp 
+(x —  a)7, fi —  (i —  r)n 
+On en déduit la  formule 
+%(Qp)( 
+p77 
+o o 
+i. *a0 x + b)J fi = p-u+Vncv :niel que soit m  G Z. 
+^. Vecteurs propres pour l'action  de  tp. — La  théorie d'Iwasawa fournit  des  distri­
+butions sur Zp, qui  sont vecteurs propres  de  l'opérateur tp.  La proposition  suivante 
+montre que ces  distributions s'étendent  naturellement  en des distributions sur Qp. 
+Proposition IL5.3. —  Soit  a e L*  avec  vp(a) > 0. Si  ¡1  G S>{ZP) vérifie l'équation 
+fonctionnelle V>(aO = a~1/JLt  M  existe une unique distribution Jl  sur Qp dont  la restric­
+tion à Zp est  ¡1 et qui  vérifie l'équation fonctionnelle  (p0 01) • Jl = ajl. De  plus, si  ¡1 
+est d'ordre vp(a), alors Jl  est globalement d'ordre vp(a). 
+Démonstration. —  Commençons  par constater  que, si Jl est une  distribution  sur Qp 
+dont la  restriction à Zp est nulle et qui  vérifie (p0 °1) • Jl = ajl, alors 
+ReSp-nZp// = x + b) 
+0 
+0 
+1 * ResZp eid 
+0 
+o 
+o • ¡1 x x + b)J p-n-l 
+0 
+0\ 
+1> 
+• ResZp/x = 0, 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 41 =====
+52 P. COLMEZ 
+ce qui implique que /i est identiquement nulle. Un en déduit  1 unicité d une distribution 
+Jl vérifiant les conditions de la proposition. Passons à son existence. 
+Si n G  N, soit un = anu. Comme ^(Mn+i) =  Mn> il existe une unique distribution  Jl 
+sur Qp telle que l'on ait Ji^ = an quel que soit n  G  N. Par construction, la restriction 
+de Jl à Zv est un = u, et on a, quel que soit n  G  N, 
+Resp-nZ ( 0 
+0 1)*µ -au) = (v n 
+0 
+0> 
+1> • ResZp 'V 
+< 0 
+0> 
+1> * p 
+0 
+0 
+1 • u  —  au)) 
+d sd 
+d 
+0< 
+1> d x + b)J fi = p-u+Vn d sd 
+0 3 d x + b)J fi = p-u+Vnx + b) 
+Ceci prouve que Q °) • /ï  —  ce/ï est identiquement nulle et donc que Jl vérifie les 
+conditions  demandées. 
+Enfin, si u est d'ordre r = vp(a), alors  v^r{Jl^n>))  —  nr =  v@r(anu) —  nr =  v$r{u), 
+ce qui prouve que Jl est globalement d'ordre r sur Qp. 
+II.6.  Distributions  sur P1(Qp) 
+1. Conditions de croissance à  l'infini. — Soit D(a, n) = a+pnZp, si a G Qp et n  G  Z, 
+et soit  D(oo,n)  = {x, vp(x) <  —  n},  si n  G  Z. 
+On note &(L) l'ensemble des caractères continus de Q* dans L*. Si S  G &(L), on 
+note LA(P1(QP)((5))  l'espace des fonctions  (j) localement analytiques sur Qp telles que 
+5(x)(j)(l/x) se prolonge en une fonction analytique sur Qp. Si 0  G  LA(P1(QP)((5)),  on 
+dit que 0 a un  pôle  d'ordre < r (resp. d'ordre < r) en l'infini, si  8(x)4>{l/x) a un  zéro 
+d'ordre > r  —  vp(S(p)) (resp. d'ordre > r  —  vp(S(p))) en 0. 
+On note ^(P^QpXiS)) le dual de  LA(P1(QP)(J)).  Si u G &(P1(Qp)(6))i on note 
+/xi la restriction de u à Zp et /¿2 la distribution sur Zp définie par 
+s 
+0(x)  /X2 = 
+'D(oo,0) 
+x + b)J fi = p-u+Vn 
+On note  aussi ¿5  l'involution de  ^(Z*)  définie par 
+xx 
+¿(0;) ^(/x) = 
+x 
+x + b)J fi = p-u+Vn 
+On a alors Resz*  (¿¿2) = ^(Resz*  (MI))>  et réciproquement, si on  part de deux distribu­
+tions £¿1 >M2 sur Zp dont les restrictions à Z* vérifient la condition ci-dessus, alors on 
+peut recoller u\ et /x2 en un élément de ^(P1(QP)(6)). Par contre, il  n'est en général 
+pas possible d'étendre une distribution sur Qp en un élément de  ^(P1(Qp)(^))  ; il y 
+a une condition de croissance à l'infini. 
+On dit que  ¡1  G ^(P1(QP)(S)) est d'ordre < r si les distributions U\ et  ¿¿2 ci-dessus 
+appartiennent à @r(Zp). On note  ^r(P1(Qp)(^))  l'ensemble des éléments d'ordre < r 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 42 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 53 
+de @(P1(Qp)(ô)),  et on  munit ^r(P1(Qp)(S)) de la valuation  v@rçpi(Qp^  définie par 
+^rfPHQp))^) = inf(ü«( µ1),  udr  (/x2)) 
+qui en fait un espace de Banach. On peut  aussi  voir @r(P1(Qp)(S)) comme le  dual 
+de l'espace  cé"r(P1(Qp)(S)) des fonctions  (j) de classe ^r sur Qp telles que  5(x)</)(l/x) 
+se prolonge par continuité en une fonction de classe ^r sur Qp. 
+2. Estimées préliminaires. — Les estimées de ce n° serviront au n°  suivant pour pro­
+longer à P1(QP) des distributions sur Qp. 
+Lemme 11.6.1. — Si S e &(L), si i G N, si a G Q*, si n > 1 -f vp(a) et si m > 
+sup(n,n(£) + vp(a)), alors  1 D(a,n)(x)S(x)(log#x)1 G  LAm(Qp) et 
+VijArn(lD{ain)(x)5(x) {log^x)1) > vp(a)vp{S(p)) + îinf(0,vp(.Sf)). 
+Démonstration. — On se ramené a a = 1 en  faisant le changement de variable x = ay, 
+auquel cas le  résultat s'obtient en  revenant à la définition de n(S) et en développant. 
+Lemme 11.6.2. — Si \i G @r(Qp), si ô G &{L), et si ££ G L, il existe une constante 
+C(r,i,S,Jf) G  R telle que, si n e Z et i e Z, alors 
+up 
+/p-nz; 
+S(x)(logjexy nt > (r - vp(5(p)))n + v®r(fi) + C(r1i,Si£?). 
+Démonstration. — On a 
+g^xYo 
+(x)(\g^xYo  ß = 
+z*p 
+5(p-nx)(\ogv(p-nx)y /pn * u 
+= à(prn 
+/z-
+(p-nx)(\ogv(p-nx) \ogv(p-nx) 
+On en déduit la minoration 
+vp 
+\ogv(x) 
+\ogv(p-nx)cc > -nvp(S(p)) + Dtr \ogv(p-nx) 
+\ogv(p-nx) 
++^LAn(5)(lz; •(5(x)(log^x- nJè?)*) - n(*)r, 
+et le résultat suit, avec C(r,i,ô,Jif) = -n(S)r-fiinf(('0,  vp(Jïf)),  du lemme  II.6.1 et de 
+ce que t^r((P0 °) •/i) =  vg>r{p)  + nr' en écrivant lz; sous la forme £^=i  -^(M)-
+Lemme 11.63. — Soient r > 0 et fi E @r(QP). 
+(i) Si i < r est un entier naturel, alors limn^+00 JD^0,-n)  x1  /x = 0. 
+(ii) Si  (f)  e LA(P1(QP)(5)) a ?m  pôle d'ordre < r en oo et si k G N, la suite de 
+terme général JD(Q _n)_D(0 0)(log^  x)k(j)fi admet une limite JQ^  (j)¡1  quand n —>  +00. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 43 =====
+54 P. COLMEZ 
+Démonstration. — Si i G N, on a VP(ID(O -n)xiµ)> v@rbjL) + ~~ r)(-n) Qui tend 
+vers l'infini quand n ten  d vers +00 si i < r, ce qui démontre le (i). 
+Pour prouver le (ii), il  s'agit  de vérifier que, si  J2i<r-vp(S{P))  a*x* converge 
+sur £)(oo,no) et donc, si vp(ai) — ino —• +00 quand i —» —00, alors la série double 
+7l>7lo + l i<r—vp(5(p)) 
+ai 
+\ogv) 
+x%6(x)(log#x)k p 
+converge. Or,  d'après  le lemme II.6.2 (appliqué au caractère xlô), on a 
+Vp(di 
+Vp(ccci 
+xlô(x)(\ogç? x)k a) > Vp(a>i)  + {r - vp(S(p)) -i)n + C 
+= vp(ai) - in0 + (r - vJ5(p)) -i)(n-n0) + C, 
+avec C, C G R. Ceci permet de conclure car vp(ai)  —  ino + (r  —  vp(S(p)) —  ï){n —  n$) 
+tend vers +00 si i < r  —  vp(S(p)) tend vers —00 ou si n tend vers +00. 
+3. Prolongement à P1(QP) de distributions sur Qp. — Soit r > 0, et soit 6 G 3"{V) 
+vérifiant vp(S(p)) = 2r. Notre but est de montrer qu'alors  tout  élément de @r(Qp) se 
+prolonge naturellement  en un élément de ^r(P1(Qp)(ô)). De manière précise, nous 
+allons prouver le  résultat suivant. 
+PropositionIL6A. — Si u G @r(Qp), et si u$ G @(P1(QP)(5)) est la distribution 
+définie par 
+Jpi(Q )  <f>FJ>s = limn_++00 D(0,-n) 6 u si 6 a un  pôle  d'ordre < r en 00, 
+29(00,0) ô(x)xl us = 0 si r —  vp(ô(p)) < i < 0, 
+alors ut est d'ordre r. 
+Démonstration. — Pour calculer l'ordre de u$, il  s'agit de calculer celui de la  distri­
+bution u' sur Z» définie par 
+rzP 
+è(x)u! = 
+D(oo,0) 
+Ô(x)</)(l/x)fJLs, 
+et pour ce faire, il  s'agit de minorer  vp(JD(^a  n)(^pr)V  )>  pour aGZp,nGNetzGN 
+Il y a deux cas. 
+• n> vp(a). Dans ce cas, on a  /D(a>n)(^)  V =  JQp  <t>a,n,i V, avec 
+$a,n,i{X) = 1L>(a-1,n-2vp(a))(^) • S(x)x~% 1 —  ax 
+Pn 
+i 
+; 
+Si m = swp(n  —  2vp(a),n(5) —  vp(à)), on a  <f>a,n,i G LAm(Qp), et écrivant  (^#^)*  sous 
+la forme p^rn~n^al(x~^l  1  )z, on obtient, en  utilisant le lemme  II.6.1 pour le caractère 
+2vp( la minoration 
+VLAm(0o,n,i) > (<-"p(*(p))) i^p(a) -f ivp(a) + z(m —  n) = —  2rvp(a) —  i(m —  n-{-2vp(a)). 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 44 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 55 
+On en déduit la minoration 
+vp 
+D(a,n) 
+x —  a 
+pn y >V®aqA(v) + ^LAm (0a,n,z) —  rm 
+(i - r){2vp + (i -  r){2vp(a] ) + m)  —  in. 
+Comme 2vp(a) + m > n avec égalité si n > vp(a) +  n(5),  on obtient finalement 
+Vp 
+D(a,n) 
+,x —  a 
+pn iV > ^r(Qp)(/X) —  rn si i > r (ou si n >  Vp(a) +  n(8)). 
+• n <  vp(a). On a alors D(a,n) =  D(0,n)  et  donc 
+' D(a,n) 
+rx —  a 
+pn u = 
+D(oo,n 
+5(x)x~i 1 —  ax 
+pn 
+i 
+¡¿6 = 
+i 
+3=0 
+i 
+i 
+—a 
+pn 
+3 
+D(oo,n) 
+8{x)x 3  us-
+On en déduit la minoration 
+vp\ 
+rL>(a,n) 
+( 
+,x —  a 
+pn 
+)µ' = inf 
+0<7<i Qp 
+D(oo,n) 
+£(x);c 3  us 
+Par ailleurs, on a  (avec  les conventions évidentes si n < 0) 
+D(oo,n) 
+x Jô(x)us = 
++88 
+(i - r) (i - r) x 3  8(x)u Si 7 > V«(<J(p)) —  r = r, 
+d ,¿=1 (i - r) x 3  8{x)u si j < Vp(5(p)) —  r —  r, 
+Ceci permet, en  utilisant le lemme II.6.2, de minorer ^(Ìd(oo,7i) x 38(x)ns) par 
+(j -r)n +  v^r(/x) + C(r,J) si j > r, 
+(j -r)(n- 1) + ^r(/i)  + C(r, J) si j < r. 
+Comme n > 0 puisque /i' est à support dans Zp, on obtient finalement la minoration 
+Vp 
+D(a,n) ( x —  a 
+pn )V (j -r)n + v^r(/x)(j -r)n + 
+Les deux minorations ci-dessus montrent que u' est d'ordre r et qu'il existe C"(r, 5) 
+tel que v^r(uf) > v^r(fi) -f C"(r,  £), ce que l'on cherchait à démontrer. 
+4- Restriction à Qp de distributions sur  P1(QP).  — On suppose encore que l'on a 
+vp(8(p)) = 2r. On note vf (resp. vf) l'élément de  ^(P1(Qp)(J))  défini par 
+px(Qp) 
+(6(x)< i 
+i 
+di 
+dxi (6(x)<Kl/x))i0 resp. 
+pMQp) 
+(I)v0 [i] 1 
+i! 
+sd 
+dx{ M*))|.=o 
+C'est une distribution dont le support est réduit à 00 (resp. 0). 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 45 =====
+56 P. COLMEZ 
+D'après la prop 1.6.3, on a x* G <é?r(P1(Qp)(5))  si i < vp(S(p)) - r = r. L'intégrale 
+p^Qp) X%fi sst donc bien définie si i < r et fi G @r(P1(Qp)(ô)). Soit 
+r>r :0Dr{P\Qp)(5)) ^(pHQpX*)) 
+µ /i -
+0<i<r 0<i<r 
+rz/x 0<i 
+0<i 
+Remarque IL6.5. — (i) r>r est la projection de %(P1(Qp)(ô)) sur le sous-espace des 
+fi vérifiant Jpi^Q )  xlfi = 0 si 0 < i < r, parallèlement à 0o<i<r£  • 
+(ii) Si fi G ^r(Qp) et si fis G ^r(P1(Qp)((5)) est la distribution définie au 
+lemme II.6.3, alors r>r(fis) = fis. 
+Proposition IL6.6. — Si r > 0, Vapplication 
+ResQp o r>r :^{QP){8)){Q 0(QP) 
+induit une suite  exacte 
+0 ( ©0<z<r L ' ^o^) (©0<t<r i'4t]) ^(P^QpX*)) ^r(Qp) - o 
+de L-banach. 
+Démonstration. — Comme d'habitude, si fi  G @r(P1(Qp)(5)), on note fii la restriction 
+de fi à Zp et  fi<i  la distribution sur Zp définie par Jz  (j){x)fi2  =FD(8)00)  ^(x)^(^/x)y 
+ce qui fait de fi\ et /¿2 des éléments de f^r(Zp). La condition  ResQp(/x) = 0 est alors 
+équivalente  à ce que /¿2 soit à support 0 et la formule 
+ker(ResQp o r>r] = (®o<;<r  L-vll}) (®Q<i<rL-vf[i]a) 
+est une traduction du (i) de la remarque II.6.5 et du fait qu'une distribution sur Zp, 
+d'ordre r, et à support 0, est une combinaison linéaire des v§\ pour i < r. 
+La surjectivité de ResQp o r>r est une  conséquence  de la prop II.6.4 et du (ii) 
+de la remarque II.6.5. Pour conclure, il  s'agit  donc de montrer, d'une  part,  que, si 
+fx G ^r(P1(Qp)(<J)) vérifie /pi(Q ) xip, = 0 si 0 < i < r, alors ResQp(/i) G ^r(Qp), et, 
+d'autre part,  que fi  1—> ResQp(/i) est continue. Pour ce faire, on est amené à étudier 
+les intégrales fD(  *  (^5r)% M, pour i G N, a  G Qp et n  G  Z. 
+- Si a  G Zp et n > 0 (i.e. si D(a,n) C Zp), on a 
+vp 
+D(a,n) 
+X —  Q 
+pn 
+)µ {uQ 
+'D(a,n) 
+v —  a> 
+pn I Ml ^r(P1(Qp)(<J))cc 
+- Si a ^ Zp et n > Vp(a) (i.e. si D(a,  n) fl Zp = 0), on a 
+D(a,n) 
+x —  a 
+pn 
+^r(P)) 
+zp 
+<Pa,n,i M2) 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 46 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 57 
+où (/>a,n,i  est la  fonction  qui a été introduite au cours de la démonstration de la 
+prop. II.6.4. On en déduit,  comme  dans cette démonstration, la minoration 
+Vp\ 
+D(a,n) 
+( 
+x —  a 
+p' 
+) 
+) 
+i 
+µ > vq}(¡jl2) —  m si i > n (ou si n > vp(a) + n(S)). 
+- Si a = 0, n < 0 et i < r, on a, grace a 1 hypothèse si n > xla —  0 si i < r, 
+D(a,n ( 
+x —  a 
+pn Y ß = -p-ni 
+Qp-p~nZp 
+x^Six) a2 = -p-ni 
++ 00 
+si n > p-n-kZ* 
+x M(x)/x2. 
+On en déduit la minoration vp(  JD(A n^ (~^r) p) > vgr(u2)-rn  +  C{r, £), en utilisant 
+le lemme II.6.2. 
+- Si a = 0, n < 0 et i > r, on a alors, 
+D(a,n) 
+,x —  a 
+pn 
+i 
+U = FPnZp 
+(p-nxYfi 
+si n > 
+p^Zp 
+(p-n-1x)ju+ 
+p-i 
+ò=i ' (p-^xVul 
+i 
+1=0 
+l 
+l 
+l 
+(p-Vul x —  pn6 
+(p-^x IV 
+Or, on a déjà constaté que  vp(pnb+pn+lzp x-pnb 
+(p-^x 
+o 
+o > v^„(¿¿o) —  (n + l)r. On en 
+déduit que 
+Vp{ 
+(p-nx 
+(p-nxyß > inf (p-nx 
+'p"+1Zp 
+(p-^xYu)iµ ,v®rU2) - (n + l)r 
+et une récurrence descendante immédiate  (utilisant i > r) montre que l'on a 
+Vp 
+(p-
+(p-nx > v®r{№)  - (n + l)r 
+quel que soit n < 0. 
+- Si a ^ Zp et n < Vp(a) (i.e. si D(a,n) fl Zp ^ 0 et  D(a,  n) ç£ Zp), alors on a 
+D(o,n)  =  Z>(0,n)  et 
+£>(a,n) 
+—  a> 
+xc 
+(p-nx 
+i 
+3=0 
+i 
+i 
+i 
+{p-naY~j 
+PnZp 
+{p~nxyay 
+ce qui permet d utiliser les deux minorations precedentes pour obtenir 
+Vp 
+D(a,nl 
+(x —  a 
+pn 
+i y > V&r(T*2)  - (n+ l)r. 
+Les minorations précédentes  montrent que  Reso  u  G  @r(Qp) et qu'il existe C  G  R 
+tel que 
+%r(QP)(ResQPM)  >  inf(^r(//i),^r(/i2))  + C =  ^r(pi(Qp))(/i)  + C, 
+ce qui permet de conclure. 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 
+
+===== PDF PAGE 47 =====
+58 P. COLMEZ 
+Références 
+[1] Y.  AMICE  - Interpolation p-adique, Bull Soc. Math.  France 92 (1964),  p. 117-180. 
+[2] , Mesures p-adiques, Séminaire Delange-Poitou-Pisot 1964/65. 
+[3] , Dual d'un espace H(D) et transformée de Fourier, Groupe d'études d'analyse 
+ultramétrique 1973/74. 
+[4] , Duals, in Proceedings of the  Conference on p-adic Analysis (Nijmegen, ig78), 
+Report, vol. 7806, Katholieke Univ. Nijmegen, 1978, p. 1-15. 
+[5] Y. AMICE & J. VÉLU - Distributions p-adiques associées aux séries de Hecke, Astérisque 
+24-25 (1975), p. 119-131. 
+[6] D.  BARSKY  - Fonctions k-lipschitziennes sur un anneau local et polynômes à valeurs 
+entières, Bull. Soc. Math. France 101 (1973), p. 397-411. 
+[7] L.  BERGER & C. BREUIL - Sur quelques représentations potentiellement cristallines de 
+GL2(Qp), ce volume. 
+[8] P.  COLMEZ  - La série principale unitaire de GL2(QP), ce volume. 
+[9] , Représentations de GL2(QP) et  (cp,  T)-modules, ce volume. 
+[10] K.  MAHLER - An interpolation series for continuous functions of a p-adic variable, J. 
+reine angew. Math. 199 (1958),  p. 23-34. 
+[11] J. I. MANIN - Periods of cusp forms, and p-adic Hecke series, Mat. Sb.  (N.S.) 92 (1973), 
+p. 378-401. 
+[12] B. MAZUR,  J.  TATE  & J. TEITELBAUM  - On p-adic analogues of the  conjectures of 
+Birch and Swinnerton-Dyer, Invent. Math. 84 (1986),  p. 1-48. 
+[13] M. VAN DER PUT - Algèbres de fonctions continues p-adiques, Proc.  Kon. Ned. Akad. 
+v. Wetensch.  A 71 (1968), p. 556-661. 
+[14] A. M. ROBERT - A course  in p-adic analysis, Graduate Texts in Math., vol. 198, 
+Springer, 2000. 
+[15] A. C. M. VAN ROOIJ - Non- Archimedean functional analysis, Monographs and Text­
+books in Pure and Applied Math., vol. 51, Marcel Dekker Inc., 1978. 
+[16] W. H. SCHIKHOF - Non-archimedian calculus, prépublication université de Nijmegen, 
+1978. 
+[17] ,  Ultrametric calculus, Cambridge Studies in Advanced Math., vol. 4, Cambridge 
+Univ. Press, 1984. 
+[18] J-P. SERRE - Endomorphismes complètement continus des espaces de Banach p-adi­
+ques, Publ. Math. I.H.É.S. 12 (1962), p. 69-85. 
+[19] M.  VISHIK - Non-archimedian measures connected with Dirichlet series, USSR  Sbornik 
+28 (1976),  p. 216-228. 
+Les résultats concernant les L-banach sont tirés de [18]. La base orthonormale d'on-
+delettes de  ^°(ZP,L)  a été introduite dans [13]; celle des polynômes binomiaux 
+dans [10]. La caractérisation des fonctions localement analytiques en termes de  déve­
+loppement de Mahler apparaît dans [1], celle des fonctions de classe ^r dans [6] (au 
+moins si r est entier). La surjectivité de ^ :  ^r(Zp,L)  —>  ci?r~1(Zp, L) est établie 
+dans [16]. La transformée d'Amice  apparaît dans [2] et est systématisée dans [4]. La 
+notion de distribution d'ordre r est issue de [5, 11, 19]  (voir  aussi [12]). Le diction­
+naire entre analyse fonctionnelle p-adique et anneaux de séries de  Laurent auquel il 
+ASTÉRISQUE 330 
+
+===== PDF PAGE 48 =====
+FONCTIONS D'UNE VARIABLE p-ADIQUE 59 
+est fait allusion  dans l'introduction est en germe  dans [3]. Je remercie D. Barsky pour 
+ces références. 
+P. COLMEZ, CNRS, Institut de mathématiques de Jussieu, 4 place Jussieu, 75005 Paris, France 
+E-m.ail : colmezQmath.iussieu.fr 
+SOCIÉTÉ MATHÉMATIQUE DE FRANCE 2010 

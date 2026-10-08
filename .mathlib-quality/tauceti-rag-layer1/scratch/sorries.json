@@ -1,0 +1,1379 @@
+[
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Algebra.lean",
+  "line": 27,
+  "kind": "lemma",
+  "name": "isRestricted.smul'",
+  "statement": "lemma isRestricted.smul' {K : Type*} [Semiring K] [Module K R] [IsScalarTower K R R] (c : σ → ℝ)\n    (k : K) {f : MvPowerSeries σ R} (hf : IsRestricted c f) : IsRestricted c (k • f)",
+  "doc": "/-- Scalars acting on the coefficients through the ring `R` preserve restrictedness. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Algebra.lean",
+  "line": 73,
+  "kind": "lemma",
+  "name": "algebraMap_eq_C_comp",
+  "statement": "lemma algebraMap_eq_C_comp {S K : Type*} [NormedCommRing S] [IsUltrametricDist S] [CommSemiring K]\n    [Algebra K S] : algebraMap K (Restricted S c) = (C c).comp (algebraMap K S)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "norm_prod_pow_le_of_norm_le",
+  "statement": "theorem norm_prod_pow_le_of_norm_le [NormOneClass B] (hx : ∀ i, ‖x i‖ ≤ c i) (t : σ →₀ ℕ) :\n    ‖t.prod fun i k ↦ x i ^ k‖ ≤ 1 * t.prod (c · ^ ·)",
+  "doc": "/-- The monomials of a tuple with `‖x i‖ ≤ c i` are bounded by the monomials of the polyradius,\nwhen `‖1‖ ≤ 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 70,
+  "kind": "theorem",
+  "name": "exists_forall_norm_prod_pow_le",
+  "statement": "theorem exists_forall_norm_prod_pow_le [Finite σ] (hx : ∀ i, ∃ Cx, ∀ k, ‖x i ^ k‖ ≤ Cx) :\n    ∃ Cx, ∀ t : σ →₀ ℕ, ‖t.prod fun i k ↦ x i ^ k‖ ≤ Cx * t.prod ((1 : σ → ℝ) · ^ ·)",
+  "doc": "/-- The monomials of finitely many power-bounded elements are bounded: `‖x^ν‖ ≤ M` for all `ν`.\nSource: BGR 1.2.5/2 (power-bounded elements form a ring), 6.1.1/4 (the series `Σ φ(a_ν) f^ν`\nconverges because the `fᵢ` are power-bounded). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "norm_map_mul_prod_pow_le",
+  "statement": "theorem norm_map_mul_prod_pow_le (hφ : ∀ r, ‖φ r‖ ≤ Cφ * ‖r‖)\n    (hx : ∀ t : σ →₀ ℕ, ‖t.prod fun i k ↦ x i ^ k‖ ≤ Cx * t.prod (c · ^ ·)) (a : R)\n    (t : σ →₀ ℕ) : ‖φ a * t.prod fun i k ↦ x i ^ k‖ ≤ Cφ * Cx * (‖a‖ * t.prod (c · ^ ·))",
+  "doc": "/-- Each term of the evaluated series is bounded by the corresponding Gauss term. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 85,
+  "kind": "theorem",
+  "name": "tendsto_map_coeff_mul_prod_pow",
+  "statement": "theorem tendsto_map_coeff_mul_prod_pow (hφ : ∀ r, ‖φ r‖ ≤ Cφ * ‖r‖)\n    (hx : ∀ t : σ →₀ ℕ, ‖t.prod fun i k ↦ x i ^ k‖ ≤ Cx * t.prod (c · ^ ·)) (f : Restricted R c) :\n    Tendsto (fun t : σ →₀ ℕ ↦ φ (coeff t f.1) * t.prod fun i k ↦ x i ^ k) cofinite (𝓝 0)",
+  "doc": "/-- The terms of the evaluated series tend to zero. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 202,
+  "kind": "theorem",
+  "name": "norm_eval₂_le_mul",
+  "statement": "theorem norm_eval₂_le_mul [Fact (∀ i, 0 < c i)] (f : Restricted R c) :\n    ‖eval₂ c φ x hφ hx f‖ ≤ Cφ * Cx * ‖f‖",
+  "doc": "/-- Evaluation is bounded by the product of the bounds. Source: BGR 5.1.4/2, 6.1.1/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/PowerBounded.lean",
+  "line": 161,
+  "kind": "theorem",
+  "name": "_root_.TopologicalRing.IsBounded.exists_norm_le_of_normedAlgebra",
+  "statement": "theorem _root_.TopologicalRing.IsBounded.exists_norm_le_of_normedAlgebra {S : Set R}\n    (hS : TopologicalRing.IsBounded S) : ∃ C, ∀ s ∈ S, ‖s‖ ≤ C",
+  "doc": "/-- In a normed algebra over a nontrivially normed field, a bounded set is bounded in norm: a\nscalar of small norm multiplies it into the unit ball. Source: BGR 1.2.5/1 (power-boundedness as\nboundedness of `{|aⁿ|}`), Wedhorn, Example 5.29(2). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/PowerBounded.lean",
+  "line": 167,
+  "kind": "theorem",
+  "name": "IsPowerBounded.exists_norm_pow_le",
+  "statement": "theorem IsPowerBounded.exists_norm_pow_le {a : R} (ha : IsPowerBounded a) :\n    ∃ C, ∀ n : ℕ, ‖a ^ n‖ ≤ C",
+  "doc": "/-- A power-bounded element of a normed algebra over a nontrivially normed field has bounded\npowers in norm. Source: BGR 1.2.5/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/PowerBounded.lean",
+  "line": 179,
+  "kind": "theorem",
+  "name": "IsPowerBounded.map",
+  "statement": "theorem IsPowerBounded.map {S : Type*} [NormedRing S] [NormedAlgebra K S] {φ : R →+* S}\n    {C : ℝ} (hφ : ∀ r, ‖φ r‖ ≤ C * ‖r‖) {a : R} (ha : IsPowerBounded a) :\n    IsPowerBounded (φ a)",
+  "doc": "/-- A bounded ring homomorphism maps power-bounded elements to power-bounded elements.\nSource: BGR 6.1.1 (\"Morphisms of `𝔄` map power-bounded elements into power-bounded elements\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/NormedQuotient.lean",
+  "line": 39,
+  "kind": "instance",
+  "name": "isUltrametricDist",
+  "statement": "instance isUltrametricDist : IsUltrametricDist (M ⧸ S)",
+  "doc": "/-- The quotient seminorm of an ultrametric seminormed group is ultrametric: the infimum over\ncosets of an ultrametric norm. Source: BGR 1.1.6 (the residue norm of a quotient group). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/NormedQuotient.lean",
+  "line": 63,
+  "kind": "theorem",
+  "name": "norm_mk_eq_norm_of_forall_le",
+  "statement": "theorem norm_mk_eq_norm_of_forall_le {f : R} (h : ∀ a ∈ I, ‖f‖ ≤ ‖f - a‖) :\n    ‖Ideal.Quotient.mk I f‖ = ‖f‖",
+  "doc": "/-- The quotient norm of a residue class is attained by a representative whenever some\nrepresentative has the smallest norm in its coset. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/NormedQuotient.lean",
+  "line": 76,
+  "kind": "theorem",
+  "name": "normOneClass_of_ne_top",
+  "statement": "theorem normOneClass_of_ne_top (I : Ideal R) [IsClosed (I : Set R)] (hI : I ≠ ⊤) :\n    NormOneClass (R ⧸ I)",
+  "doc": "/-- In a complete nonarchimedean normed ring with `‖1‖ = 1`, every element at distance less than\none from `1` is a unit, so the residue class of `1` modulo a proper closed ideal has norm one.\nSource: BGR 1.2.4/4 and 6.1.1 (the residue norm). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "norm_sumTuple_le",
+  "statement": "theorem norm_sumTuple_le (i : σ ⊕ τ) : ‖sumTuple R c i‖ ≤ c i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "iterToSum_comp_sumToIter",
+  "statement": "theorem iterToSum_comp_sumToIter :\n    (iterToSum (R := R) c).comp (sumToIter c) = RingHom.id (Restricted R c)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "sumToIter_comp_iterToSum",
+  "statement": "theorem sumToIter_comp_iterToSum :\n    (sumToIter (R := R) c).comp (iterToSum c) =\n      RingHom.id (Restricted (Restricted R (c ∘ Sum.inr)) (c ∘ Sum.inl))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "sumEquiv_C",
+  "statement": "theorem sumEquiv_C (r : R) : sumEquiv c (C c r) = C (c ∘ Sum.inl) (C (c ∘ Sum.inr) r)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 96,
+  "kind": "theorem",
+  "name": "sumEquiv_X_inl",
+  "statement": "theorem sumEquiv_X_inl (i : σ) :\n    sumEquiv c (X R c (Sum.inl i)) = X (Restricted R (c ∘ Sum.inr)) (c ∘ Sum.inl) i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 101,
+  "kind": "theorem",
+  "name": "sumEquiv_X_inr",
+  "statement": "theorem sumEquiv_X_inr (j : τ) :\n    sumEquiv c (X R c (Sum.inr j)) = C (c ∘ Sum.inl) (X R (c ∘ Sum.inr) j)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "norm_sumEquiv",
+  "statement": "theorem norm_sumEquiv (f : Restricted R c) : ‖sumEquiv (R := R) c f‖ = ‖f‖",
+  "doc": "/-- The isomorphism `R⟨X ⊕ Y⟩ ≅ R⟨Y⟩⟨X⟩` is isometric for the Gauss norms. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "continuous_sumEquiv",
+  "statement": "theorem continuous_sumEquiv : Continuous (sumEquiv (R := R) c)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "continuous_sumEquiv_symm",
+  "statement": "theorem continuous_sumEquiv_symm : Continuous (sumEquiv (R := R) c).symm",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 125,
+  "kind": "def",
+  "name": "renameEquiv",
+  "statement": "noncomputable def renameEquiv (e : σ ≃ τ) :\n    Restricted R (1 : σ → ℝ) ≃+* Restricted R (1 : τ → ℝ)",
+  "doc": "/-- Renaming the variables of a strictly convergent power series along a bijection `e : σ ≃ τ`,\nat the unit polyradius. Source: BGR 5.1.3 (a chart is a renaming of the variables). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 132,
+  "kind": "theorem",
+  "name": "renameEquiv_C",
+  "statement": "theorem renameEquiv_C (r : R) : renameEquiv R e (C (1 : σ → ℝ) r) = C (1 : τ → ℝ) r",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 136,
+  "kind": "theorem",
+  "name": "renameEquiv_X",
+  "statement": "theorem renameEquiv_X (i : σ) : renameEquiv R e (X R (1 : σ → ℝ) i) = X R (1 : τ → ℝ) (e i)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 140,
+  "kind": "theorem",
+  "name": "norm_renameEquiv",
+  "statement": "theorem norm_renameEquiv (f : Restricted R (1 : σ → ℝ)) : ‖renameEquiv R e f‖ = ‖f‖",
+  "doc": "/-- Renaming the variables is an isometry for the Gauss norms. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 155,
+  "kind": "def",
+  "name": "sumEquiv",
+  "statement": "noncomputable def sumEquiv :\n    Restricted (TateAlgebra K n) (1 : Fin m → ℝ) ≃ₐ[K] TateAlgebra K (m + n)",
+  "doc": "/-- `Tₙ⟨Y₁, …, Y_m⟩ ≅ T_{m+n}` as `K`-algebras, isometrically: the sum isomorphism followed by the\nrenaming `Fin m ⊕ Fin n ≃ Fin (m + n)`. Source: BGR 6.1.1/8 (`T_m ⊗̂_k Tₙ ≅ T_{m+n}`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 159,
+  "kind": "theorem",
+  "name": "norm_sumEquiv",
+  "statement": "theorem norm_sumEquiv (f : Restricted (TateAlgebra K n) (1 : Fin m → ℝ)) :\n    ‖sumEquiv K n m f‖ = ‖f‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 164,
+  "kind": "theorem",
+  "name": "sumEquiv_C",
+  "statement": "theorem sumEquiv_C (f : TateAlgebra K n) :\n    sumEquiv K n m (C (1 : Fin m → ℝ) f) =\n      eval₂ (Cφ := 1) (1 : Fin n → ℝ) (C (1 : Fin (m + n) → ℝ))\n        (fun i ↦ X K (1 : Fin (m + n) → ℝ) (Fin.natAdd m i))\n        (fun r ↦ by simp [norm_C])\n        (norm_prod_pow_le_of_norm_le _ _ fun i ↦ by simp [norm_X]) f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Restricted/Sum.lean",
+  "line": 173,
+  "kind": "theorem",
+  "name": "sumEquiv_X",
+  "statement": "theorem sumEquiv_X (i : Fin m) :\n    sumEquiv K n m (X (TateAlgebra K n) (1 : Fin m → ℝ) i) =\n      X K (1 : Fin (m + n) → ℝ) (Fin.castAdd n i)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "exists_norm_quotient_mk_eq",
+  "statement": "theorem exists_norm_quotient_mk_eq (f : TateAlgebra K n) :\n    ∃ a₀ ∈ I, ‖Ideal.Quotient.mk I f‖ = ‖f - a₀‖",
+  "doc": "/-- The residue norm is attained: `‖f̄‖ = ‖f - a₀‖` for a nearest point `a₀ ∈ I` (strict\nclosedness of ideals, Layer 0). Source: BGR 6.1.1/2 (\"The assertion follows directly from\nCorollary 5.2.7/8\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 98,
+  "kind": "theorem",
+  "name": "isClosed_ideal_quotient",
+  "statement": "theorem isClosed_ideal_quotient (J : Ideal (TateAlgebra K n ⧸ I)) :\n    IsClosed (J : Set (TateAlgebra K n ⧸ I))",
+  "doc": "/-- Every ideal of a quotient of the Tate algebra is closed for the residue norm: its preimage in\n`Tₙ` is an ideal, hence closed, and the residue map is a quotient map. Source: BGR 6.1.1/3 (\"The\nclosedness of any ideal `𝔞 ⊂ A` follows … simply from the closedness of ideals in `Tₙ`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "norm_quotient_mem_range_norm",
+  "statement": "theorem norm_quotient_mem_range_norm (x : TateAlgebra K n ⧸ I) :\n    ‖x‖ ∈ Set.range (norm : K → ℝ)",
+  "doc": "/-- The residue norm of `Tₙ ⧸ I` takes its values in `‖K‖`. Source: BGR 6.1.1/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 110,
+  "kind": "theorem",
+  "name": "exists_norm_smul_quotient_eq_one",
+  "statement": "theorem exists_norm_smul_quotient_eq_one {x : TateAlgebra K n ⧸ I} (hx : x ≠ 0) :\n    ∃ a : K, ‖a • x‖ = 1",
+  "doc": "/-- Every nonzero element of `Tₙ ⧸ I` can be normed to length one by a scalar.\nSource: BGR 6.1.1/2 (\"each vector `≠ 0` in `A` can be normed to length 1 by multiplication with a\nscalar\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 148,
+  "kind": "theorem",
+  "name": "of_surjective",
+  "statement": "theorem of_surjective (hA : IsAffinoidAlgebra K A) (φ : A →ₐ[K] B) (hφ : Function.Surjective φ) :\n    IsAffinoidAlgebra K B",
+  "doc": "/-- A surjective image of an affinoid algebra is affinoid. Source: BGR 6.1.1/3 (\"`A/𝔞` is\n`k`-affinoid, since `Tₙ → A → A/𝔞` is a continuous epimorphism\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 168,
+  "kind": "theorem",
+  "name": "exists_algEquiv_quotient",
+  "statement": "theorem exists_algEquiv_quotient (hA : IsAffinoidAlgebra K A) :\n    ∃ (n : ℕ) (I : Ideal (TateAlgebra K n)), Nonempty ((TateAlgebra K n ⧸ I) ≃ₐ[K] A)",
+  "doc": "/-- Every affinoid algebra is isomorphic to a quotient `Tₙ ⧸ I` of a Tate algebra; the ideal is\nthe kernel of the presentation. Source: BGR 6.1.1 (\"`A` is isomorphic … to the residue algebra\n`Tₙ/ker α`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 174,
+  "kind": "theorem",
+  "name": "isNoetherianRing",
+  "statement": "theorem isNoetherianRing (hA : IsAffinoidAlgebra K A) : IsNoetherianRing A",
+  "doc": "/-- **Affinoid algebras are noetherian.** Source: BGR 6.1.1/3 (\"`A ≅ Tₙ/ker α` is a Noetherian\nJacobson ring since `Tₙ` is such a ring\"); Bosch 1.4, Prop. 2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Basic.lean",
+  "line": 178,
+  "kind": "theorem",
+  "name": "isJacobsonRing",
+  "statement": "theorem isJacobsonRing (hA : IsAffinoidAlgebra K A) : IsJacobsonRing A",
+  "doc": "/-- **Affinoid algebras are Jacobson rings.** Source: BGR 6.1.1/3; Bosch 1.4, Prop. 2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 50,
+  "kind": "theorem",
+  "name": "norm_smul_le_of_normedAlgebra",
+  "statement": "theorem norm_smul_le_of_normedAlgebra (k : K) (f : Restricted A c) : ‖k • f‖ ≤ ‖k‖ * ‖f‖",
+  "doc": "/-- Scalars of `K` scale the Gauss norm of `Restricted A c` by at most their norm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 59,
+  "kind": "theorem",
+  "name": "isPowerBounded_X",
+  "statement": "theorem isPowerBounded_X (i : σ) : IsPowerBounded (X A (1 : σ → ℝ) i)",
+  "doc": "/-- The variables of `A⟨X⟩` are power-bounded: `‖X i ^ k‖ = ‖1‖` for every `k ≥ 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "exists_forall_norm_prod_pow_le_of_isPowerBounded",
+  "statement": "theorem exists_forall_norm_prod_pow_le_of_isPowerBounded {b : σ → B}\n    (hb : ∀ i, IsPowerBounded (b i)) :\n    ∃ Cx : ℝ, ∀ t : σ →₀ ℕ, ‖t.prod fun i k ↦ b i ^ k‖ ≤ Cx * t.prod ((1 : σ → ℝ) · ^ ·)",
+  "doc": "/-- The monomials in finitely many power-bounded elements are uniformly bounded.\nSource: BGR 6.1.1/4 (\"Since `fᵢ ∈ Å` and `lim a_ν = 0`, the series … represents a well-defined\nelement of `A`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 94,
+  "kind": "def",
+  "name": "extendAlgHom",
+  "statement": "noncomputable def extendAlgHom : Restricted A (1 : σ → ℝ) →ₐ[K] B",
+  "doc": "/-- **The universal property of `A⟨X⟩`**: the continuous `K`-algebra homomorphism `A⟨X⟩ → B`\nextending `φ` with `X i ↦ b i`, namely `Σ a_ν X^ν ↦ Σ φ(a_ν) b^ν`. Source: BGR 6.1.1/4;\nBosch 1.4, Lemma 18. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "extendAlgHom_C",
+  "statement": "theorem extendAlgHom_C (a : A) : extendAlgHom φ hφ b hb (C (1 : σ → ℝ) a) = φ a",
+  "doc": "/-- The extension restricts to `φ` on the constants: `Φ | B = φ`. Source: BGR 6.1.1/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "extendAlgHom_X",
+  "statement": "theorem extendAlgHom_X (i : σ) : extendAlgHom φ hφ b hb (X A (1 : σ → ℝ) i) = b i",
+  "doc": "/-- The extension sends the variables to the given elements: `Φ(Xᵢ) = fᵢ`.\nSource: BGR 6.1.1/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 116,
+  "kind": "theorem",
+  "name": "extendAlgHom_comp_toAlgHom",
+  "statement": "theorem extendAlgHom_comp_toAlgHom :\n    (extendAlgHom φ hφ b hb).comp (IsScalarTower.toAlgHom K A (Restricted A (1 : σ → ℝ))) = φ",
+  "doc": "/-- The extension restricts to `φ` on the constants, as `K`-algebra homomorphisms. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "continuous_extendAlgHom",
+  "statement": "theorem continuous_extendAlgHom : Continuous (extendAlgHom φ hφ b hb)",
+  "doc": "/-- The extension is continuous. Source: BGR 6.1.1/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 125,
+  "kind": "theorem",
+  "name": "exists_forall_norm_extendAlgHom_le",
+  "statement": "theorem exists_forall_norm_extendAlgHom_le :\n    ∃ C : ℝ, ∀ f, ‖extendAlgHom φ hφ b hb f‖ ≤ C * ‖f‖",
+  "doc": "/-- The extension is bounded by the bounds of `φ` and of the monomials in `b`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 132,
+  "kind": "theorem",
+  "name": "extendAlgHom_unique",
+  "statement": "theorem extendAlgHom_unique (ψ : Restricted A (1 : σ → ℝ) →ₐ[K] B) (hψ : Continuous ψ)\n    (hC : ∀ a, ψ (C (1 : σ → ℝ) a) = φ a) (hX : ∀ i, ψ (X A (1 : σ → ℝ) i) = b i) :\n    ψ = extendAlgHom φ hφ b hb",
+  "doc": "/-- **Uniqueness** in BGR 6.1.1/4: a continuous `K`-algebra homomorphism `A⟨X⟩ → B` that restricts\nto `φ` on the constants and sends `X i` to `b i` is the extension. Source: BGR 6.1.1/4 (\"`Φ` is the\nunique continuous extension of `φ`\"), via `algHom_ext_of_continuous`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 138,
+  "kind": "theorem",
+  "name": "existsUnique_extend",
+  "statement": "theorem existsUnique_extend :\n    ∃! ψ : Restricted A (1 : σ → ℝ) →ₐ[K] B,\n      Continuous ψ ∧ (∀ a, ψ (C (1 : σ → ℝ) a) = φ a) ∧ ∀ i, ψ (X A (1 : σ → ℝ) i) = b i",
+  "doc": "/-- BGR 6.1.1/4 as an existence-and-uniqueness statement. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 144,
+  "kind": "theorem",
+  "name": "extendAlgHom_ofId_eq_aeval",
+  "statement": "theorem extendAlgHom_ofId_eq_aeval [IsUltrametricDist K] (b : σ → B) (hb : ∀ i, ‖b i‖ ≤ 1)\n    [NormOneClass B] :\n    extendAlgHom (Algebra.ofId K B) (continuous_algebraMap K B) b\n      (fun i ↦ isPowerBounded_of_norm_le_one (hb i)) =\n      aeval (1 : σ → ℝ) b (fun i ↦ by simpa using hb i)",
+  "doc": "/-- When `A = K` and `‖b i‖ ≤ 1`, the extension is the evaluation homomorphism of Layer 0. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 173,
+  "kind": "theorem",
+  "name": "isAffinoidGeneratingSystem_of_forall_exists_sum",
+  "statement": "theorem isAffinoidGeneratingSystem_of_forall_exists_sum [Fintype σ] (φ : A →ₐ[K] B)\n    (hφ : Continuous φ) {b : σ → B} (hb : ∀ i, IsPowerBounded (b i))\n    (hgen : ∀ y : B, ∃ q : σ → A, y = ∑ i, φ (q i) * b i) :\n    IsAffinoidGeneratingSystem φ hφ b",
+  "doc": "/-- Elements `b` such that every element of `B` is `Σ φ(qᵢ) bᵢ` form an affinoid generating\nsystem once they are power-bounded. Source: BGR 6.1.1/5 (\"Then `Φ` is surjective\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 181,
+  "kind": "theorem",
+  "name": "exists_forall_norm_smul_le_one",
+  "statement": "theorem exists_forall_norm_smul_le_one [Fintype σ] (a : σ → B) :\n    ∃ c : K, c ≠ 0 ∧ ∀ i, ‖c • a i‖ ≤ 1",
+  "doc": "/-- In a normed algebra over a nontrivially normed field, finitely many elements can be rescaled\nby one scalar into the unit ball. Source: BGR 6.1.1/5 (\"We may assume `aᵢ ∈ Å`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 187,
+  "kind": "theorem",
+  "name": "exists_isAffinoidGeneratingSystem_of_finite",
+  "statement": "theorem exists_isAffinoidGeneratingSystem_of_finite (φ : A →ₐ[K] B) (hφ : Continuous φ)\n    (hfin : φ.toRingHom.Finite) :\n    ∃ (m : ℕ) (b : Fin m → B), IsAffinoidGeneratingSystem φ hφ b",
+  "doc": "/-- A continuous finite homomorphism `φ : A → B` admits an affinoid generating system over `A`:\nrescale the module generators into the unit ball. Source: BGR 6.1.1/5. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 210,
+  "kind": "theorem",
+  "name": "continuous_algebraMap_restricted",
+  "statement": "theorem continuous_algebraMap_restricted (c : σ → ℝ) [Fact (∀ i, 0 < c i)] :\n    Continuous (algebraMap A (Restricted A c))",
+  "doc": "/-- The structure map `A → A⟨X⟩` is continuous (it is the constants). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 226,
+  "kind": "theorem",
+  "name": "mapAlgHom_C",
+  "statement": "theorem mapAlgHom_C (a : A) : mapAlgHom α hα (C (1 : σ → ℝ) a) = C (1 : σ → ℝ) (α a)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 230,
+  "kind": "theorem",
+  "name": "mapAlgHom_X",
+  "statement": "theorem mapAlgHom_X (i : σ) : mapAlgHom α hα (X A (1 : σ → ℝ) i) = X B (1 : σ → ℝ) i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 234,
+  "kind": "theorem",
+  "name": "coeff_mapAlgHom",
+  "statement": "theorem coeff_mapAlgHom (f : Restricted A (1 : σ → ℝ)) (t : σ →₀ ℕ) :\n    coeff t (mapAlgHom α hα f).1 = α (coeff t f.1)",
+  "doc": "/-- `mapAlgHom` acts on the coefficients. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 245,
+  "kind": "theorem",
+  "name": "surjective_mapAlgHom_of_surjective",
+  "statement": "theorem surjective_mapAlgHom_of_surjective [CompleteSpace A] (hsurj : Function.Surjective α) :\n    Function.Surjective (mapAlgHom (σ := σ) α hα)",
+  "doc": "/-- A surjective continuous homomorphism of Banach algebras induces a surjection on strictly\nconvergent power series, by Banach's open mapping theorem: coefficients can be lifted with\ncontrolled norms. Source: BGR 6.1.1/9 (\"By BANACH's Theorem, `φ` is open and hence strict … we get\ncontinuous epimorphisms `id_A ⊗̂ φ`\"), through `ContinuousLinearMap.exists_preimage_norm_le`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 265,
+  "kind": "theorem",
+  "name": "of_isAffinoidGeneratingSystem",
+  "statement": "theorem of_isAffinoidGeneratingSystem {n : ℕ} {b : Fin n → B}\n    (hb : IsAffinoidGeneratingSystem (Algebra.ofId K B) (continuous_algebraMap K B) b) :\n    IsAffinoidAlgebra K B",
+  "doc": "/-- A Banach algebra with an affinoid generating system over `K` is affinoid.\nSource: BGR 6.1.1, p. 223 (\"If `Φ` is surjective, we call the elements `f₁, …, fₙ` a system of\naffinoid generators of `A`. In particular, `A` is a `k`-affinoid algebra\"). The converse for the\ngiven norm on `B` needs the continuity theorem and is `exists_isAffinoidGeneratingSystem` in\n`Affinoid/Continuity.lean`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 273,
+  "kind": "theorem",
+  "name": "of_isAffinoidGeneratingSystem_tateAlgebra",
+  "statement": "theorem of_isAffinoidGeneratingSystem_tateAlgebra {n m : ℕ} (φ : TateAlgebra K n →ₐ[K] B)\n    (hφ : Continuous φ) {b : Fin m → B} (hb : IsAffinoidGeneratingSystem φ hφ b) :\n    IsAffinoidAlgebra K B",
+  "doc": "/-- A Banach algebra with an affinoid generating system over a Tate algebra is affinoid: compose\nthe extension `Tₙ⟨Y⟩ → B` with `T_{m+n} ≅ Tₙ⟨Y⟩`. Source: BGR 6.1.1/5 (\"`Φ` is surjective, and\nhence `A ∈ 𝔄`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Extend.lean",
+  "line": 280,
+  "kind": "theorem",
+  "name": "of_finite_tateAlgebra",
+  "statement": "theorem of_finite_tateAlgebra {n : ℕ} (φ : TateAlgebra K n →ₐ[K] B) (hφ : Continuous φ)\n    (hfin : φ.toRingHom.Finite) : IsAffinoidAlgebra K B",
+  "doc": "/-- **BGR 6.1.1/5 for the source `Tₙ`**: the target of a continuous finite `K`-algebra\nhomomorphism out of a Tate algebra into a Banach algebra is affinoid. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Noetherian.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "Ideal.forall_mem_of_forall_exists_eq_add_sum_mul_of_norm_lt_one",
+  "statement": "theorem Ideal.forall_mem_of_forall_exists_eq_add_sum_mul_of_norm_lt_one (I : Ideal A) {n : ℕ}\n    (x : Fin n → A)\n    (h : ∀ i, ∃ y ∈ I, ∃ c : Fin n → A, (∀ μ, ‖c μ‖ < 1) ∧ x i = y + ∑ μ, c μ * x μ) :\n    ∀ i, x i ∈ I",
+  "doc": "/-- **The nonarchimedean Nakayama lemma** (BGR 1.2.4/6): if generators `x₁, …, xₙ` satisfy\n`xᵢ ∈ I + Σ_μ 𝔫 x_μ` with `𝔫 = {‖c‖ < 1}`, then every `xᵢ` lies in `I`. Source: BGR 1.2.4/6\n(\"Let `N` be a submodule of `M` such that there are elements `x₁, …, xₙ` in `M` with the property\n`M ⊂ N + Σ Ǎ x_μ`. Then `N = M`\"), proved through Mathlib's Nakayama lemma\n`Submodule.le_of_le_smul_of_le_jacobson_bot` over `A°` with\n`NormedRing.openUnitBallIdeal_le_jacobson_bot`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Noetherian.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "Ideal.exists_forall_exists_eq_sum_mul_norm_le",
+  "statement": "theorem Ideal.exists_forall_exists_eq_sum_mul_norm_le {n : ℕ} (x : Fin n → A) (J : Ideal A)\n    (hJ : IsClosed (J : Set A)) (hx : Ideal.span (Set.range x) = J) :\n    ∃ C : ℝ, 0 < C ∧ ∀ y ∈ J, ∃ a : Fin n → A, y = ∑ i, a i * x i ∧ ∀ i, ‖a i‖ ≤ C * ‖y‖",
+  "doc": "/-- A closed ideal `J` of a Banach algebra generated by `x₁, …, xₙ` admits bounded coefficients:\nthere is `C > 0` with every `y ∈ J` equal to `Σ aᵢ xᵢ` for some `aᵢ` with `‖aᵢ‖ ≤ C ‖y‖`, because\nthe continuous surjection `π : Aⁿ → J`, `(aᵢ) ↦ Σ aᵢ xᵢ`, of Banach spaces is open.\nSource: BGR 3.7.2/1 (\"By BANACH's Theorem, `π` is open\"), through\n`ContinuousLinearMap.exists_preimage_norm_le`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Noetherian.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "Ideal.isClosed_coe_closure_restrictScalars",
+  "statement": "theorem Ideal.isClosed_coe_closure_restrictScalars (I : Ideal A) :\n    IsClosed ((I.closure.restrictScalars K : Submodule K A) : Set A)",
+  "doc": "/-- The closure of an ideal in a normed `K`-algebra is a `K`-submodule: `Ideal.closure` restricted\nto `K`-scalars. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Noetherian.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "Ideal.isClosed_of_fg_closure",
+  "statement": "theorem Ideal.isClosed_of_fg_closure (I : Ideal A) (hfg : I.closure.FG) :\n    IsClosed (I : Set A)",
+  "doc": "/-- **BGR 3.7.2/1** in the form used for ideals: if the closure of an ideal `I` is finitely\ngenerated, then `I` is closed. Source: BGR 3.7.2/1 (\"Let `M` be a normed `A`-module such that the\ncompletion `M̂` of `M` is a finite `A`-module. Then `M` is complete\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Continuity.lean",
+  "line": 48,
+  "kind": "theorem",
+  "name": "LinearMap.continuous_of_isClosed_ker_of_finiteDimensional",
+  "statement": "theorem LinearMap.continuous_of_isClosed_ker_of_finiteDimensional [FiniteDimensional K F]\n    (f : E →ₗ[K] F) (hf : IsClosed (LinearMap.ker f : Set E)) : Continuous f",
+  "doc": "/-- A linear map into a finite-dimensional normed space whose kernel is closed is continuous: it\nfactors through the quotient by its kernel, a finite-dimensional normed space, on which every\nlinear map is continuous. Source: BGR 3.7.5/1 (\"the residue spaces `A/ker ψ` and `B/𝔟` provided\nwith the residue norms are finite-dimensional … Therefore `ψ̄` and hence `ψ` are continuous\"),\nvia `LinearMap.quotKerEquivRange` and `LinearMap.continuous_of_finiteDimensional`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Continuity.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "AlgHom.continuous_quotient_mk_comp_of_isClosed",
+  "statement": "theorem AlgHom.continuous_quotient_mk_comp_of_isClosed (Φ : A →ₐ[K] B) (𝔟 : Ideal B)\n    [IsClosed (𝔟 : Set B)] [FiniteDimensional K (B ⧸ 𝔟)]\n    (hA : IsClosed ((𝔟.comap Φ : Ideal A) : Set A)) :\n    Continuous ((Ideal.Quotient.mkₐ K 𝔟).comp Φ)",
+  "doc": "/-- The residue map `A → B ⧸ 𝔟` of `Φ` is continuous when `𝔟` is closed with finite-dimensional\nquotient and `Φ⁻¹ 𝔟` is closed. Source: BGR 3.7.5/1 (the map `ψ := β ∘ Φ`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Continuity.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "AlgHom.continuous_of_forall_isClosed_of_finiteDimensional",
+  "statement": "theorem AlgHom.continuous_of_forall_isClosed_of_finiteDimensional (Φ : A →ₐ[K] B)\n    (𝔅 : Set (Ideal B)) (hB : ∀ 𝔟 ∈ 𝔅, IsClosed (𝔟 : Set B))\n    (hA : ∀ 𝔟 ∈ 𝔅, IsClosed ((𝔟.comap Φ : Ideal A) : Set A))\n    (hfin : ∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) (hinf : sInf 𝔅 = ⊥) : Continuous Φ",
+  "doc": "/-- **BGR 3.7.5/1**: a `K`-algebra homomorphism `Φ : A → B` of `K`-Banach algebras is continuous\nif `B` has a family `𝔅` of ideals with (i) each `𝔟 ∈ 𝔅` and each `Φ⁻¹ 𝔟` closed, (ii) each\n`B ⧸ 𝔟` finite-dimensional over `K`, (iii) `⋂ 𝔅 = 0`. Source: BGR 3.7.5/1, by the closed graph\ntheorem `LinearMap.continuous_of_seq_closed_graph`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Continuity.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "AlgHom.continuous_of_isNoetherianRing",
+  "statement": "theorem AlgHom.continuous_of_isNoetherianRing [IsNoetherianRing A] [IsNoetherianRing B]\n    (𝔅 : Set (Ideal B)) (hfin : ∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) (hinf : sInf 𝔅 = ⊥)\n    (Φ : A →ₐ[K] B) : Continuous Φ",
+  "doc": "/-- **BGR 3.7.5/2**: every `K`-algebra homomorphism of a noetherian `K`-Banach algebra `A` into a\nnoetherian `K`-Banach algebra `B` having a family `𝔅` of ideals with finite-dimensional quotients\nand zero intersection is continuous. Source: BGR 3.7.5/2 (\"From Propositions 1 and 3.7.2/2, we\neasily derive\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Continuity.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "AlgEquiv.continuous_symm_of_isNoetherianRing",
+  "statement": "theorem AlgEquiv.continuous_symm_of_isNoetherianRing [IsNoetherianRing A] [IsNoetherianRing B]\n    (𝔅 : Set (Ideal B)) (hfin : ∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) (hinf : sInf 𝔅 = ⊥)\n    (e : A ≃ₐ[K] B) : Continuous e.symm",
+  "doc": "/-- **BGR 3.7.5/3**, second half: the inverse of such an isomorphism is continuous too, by the\nopen mapping theorem (`LinearEquiv.continuous_symm`). Hence \"all Banach algebra structures on `B`\nhave the same underlying topological space\". -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Continuity.lean",
+  "line": 105,
+  "kind": "theorem",
+  "name": "AlgEquiv.exists_forall_norm_le_mul_of_isNoetherianRing",
+  "statement": "theorem AlgEquiv.exists_forall_norm_le_mul_of_isNoetherianRing [IsNoetherianRing A]\n    [IsNoetherianRing B] (𝔅 : Set (Ideal B)) (hfin : ∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟))\n    (hinf : sInf 𝔅 = ⊥) (e : A ≃ₐ[K] B) :\n    ∃ C C' : ℝ, (∀ a, ‖e a‖ ≤ C * ‖a‖) ∧ ∀ b, ‖e.symm b‖ ≤ C' * ‖b‖",
+  "doc": "/-- **BGR 3.7.5/3** in terms of norms: the two complete algebra norms are equivalent. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "finite_comp_ofTail_of_isMulDistinguishedX0",
+  "statement": "theorem finite_comp_ofTail_of_isMulDistinguishedX0 (φ : TateAlgebra K (n + 1) →+* A)\n    (hφ : φ.Finite) {g : TateAlgebra K (n + 1)} {s : ℕ} (hg : IsMulDistinguishedX0 g s)\n    (h0 : φ g = 0) : (φ.comp (ofTail K n)).Finite",
+  "doc": "/-- The Weierstrass finiteness theorem for a distinguished element of the kernel: a finite ring\nhomomorphism out of `T_{n+1}` killing an `X 0`-distinguished series restricts to a finite\nhomomorphism on `Tₙ`. Source: BGR 6.1.2/1 (\"`α` induces a finite homomorphism `ᾱ : Tₙ/ωTₙ → A`.\nBy the Weierstrass Finiteness Theorem 5.2.3/4, the natural injection `T_{n−1} → Tₙ` induces a\nfinite monomorphism `β : T_{n−1} → Tₙ/ωTₙ`. Obviously, `ᾱ ∘ β` is finite\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "injective_mk_comp_ofTail_of_isMulDistinguishedX0",
+  "statement": "theorem injective_mk_comp_ofTail_of_isMulDistinguishedX0 {g : TateAlgebra K (n + 1)} {s : ℕ}\n    (hg : IsMulDistinguishedX0 g s) (hs : s ≠ 0) :\n    Function.Injective ((Ideal.Quotient.mk (Ideal.span {g})).comp (ofTail K n))",
+  "doc": "/-- The map `Tₙ → T_{n+1} ⧸ (g)` is injective for an `X 0`-distinguished `g`: a series without\n`X 0` that is a multiple of `g` has two Weierstrass divisions by `g`, with remainders itself and `0`.\nSource: BGR 6.1.2/1 (\"the natural injection `T_{n−1} → Tₙ` induces a finite monomorphism\n`β : T_{n−1} → Tₙ/ωTₙ`\"), via `weierstrassDivision_r_unique`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "exists_finite_comp_shear_symm_comp_ofTail",
+  "statement": "theorem exists_finite_comp_shear_symm_comp_ofTail (β : TateAlgebra K (n + 1) →ₐ[K] A)\n    (hβ : β.toRingHom.Finite) {f : TateAlgebra K (n + 1)} (hf : f ≠ 0) (h0 : β f = 0) :\n    ∃ e : Fin n → ℕ,\n      ((β.comp (shear K n e).symm.toAlgHom).comp (ofTailAlgHom K n)).toRingHom.Finite",
+  "doc": "/-- The induction step of BGR 6.1.2/1: a finite `β : T_{n+1} → A` with a nonzero element in its\nkernel becomes, after a shear, finite on `Tₙ`. Source: BGR 6.1.2/1 (\"Otherwise we can find a chart\n`{X₁, …, Xₙ}` of `Tₙ` and a Weierstrass polynomial `ω ∈ T_{n−1}[Xₙ]` such that `ω ∈ ker α`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 94,
+  "kind": "theorem",
+  "name": "injective_of_nontrivial",
+  "statement": "theorem injective_of_nontrivial [Nontrivial A] (β : TateAlgebra K 0 →ₐ[K] A) :\n    Function.Injective β",
+  "doc": "/-- A `K`-algebra homomorphism out of `T₀ = K` into a nonzero algebra is injective.\nSource: BGR 6.1.2/1 (\"The case `n = 0` is trivial\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "exists_finite_injective_comp",
+  "statement": "theorem exists_finite_injective_comp [Nontrivial A] (n : ℕ) (β : TateAlgebra K n →ₐ[K] A)\n    (hβ : β.toRingHom.Finite) :\n    ∃ d ≤ n, ∃ ψ : TateAlgebra K d →ₐ[K] TateAlgebra K n,\n      (β.comp ψ).toRingHom.Finite ∧ Function.Injective (β.comp ψ)",
+  "doc": "/-- **BGR 6.1.2/1 (i)**: for a finite `K`-algebra homomorphism `β : Tₙ → A` into a nonzero\nalgebra there are `d ≤ n` and a `K`-algebra homomorphism `ψ : T_d → Tₙ` (a chart followed by the\ninclusion of the last `d` variables) such that `β ∘ ψ` is finite and injective. Source: BGR 6.1.2/1\n(\"there exist a chart `{X₁, …, Xₙ}` of `Tₙ` and an integer `d ≥ 0` such that `α | k⟨X₁, …, X_d⟩`\nis finite and injective\"), by induction on `n`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 123,
+  "kind": "theorem",
+  "name": "exists_finite_injective_comp",
+  "statement": "theorem exists_finite_injective_comp (hB : IsAffinoidAlgebra K B) [Nontrivial A]\n    (φ : B →ₐ[K] A) (hφ : φ.toRingHom.Finite) :\n    ∃ (d : ℕ) (ψ : TateAlgebra K d →ₐ[K] B),\n      (φ.comp ψ).toRingHom.Finite ∧ Function.Injective (φ.comp ψ)",
+  "doc": "/-- **BGR 6.1.2/1 (ii)**: a finite homomorphism `φ : B → A` of affinoid algebras with `A ≠ 0`\nadmits `ψ : T_d → B` with `φ ∘ ψ` finite and injective. Source: BGR 6.1.2/1 (\"By choosing an\nepimorphism `α : Tₙ → B` and applying the first statement to the map `φ ∘ α : Tₙ → A`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 131,
+  "kind": "theorem",
+  "name": "exists_finite_injective",
+  "statement": "theorem exists_finite_injective (hA : IsAffinoidAlgebra K A) [Nontrivial A] :\n    ∃ (d : ℕ) (φ : TateAlgebra K d →ₐ[K] A), φ.toRingHom.Finite ∧ Function.Injective φ",
+  "doc": "/-- **Noether normalisation** (BGR 6.1.2/2; Bosch 1.2/10, 1.4/2): every nonzero affinoid algebra\nis a finite extension of some Tate algebra `T_d`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 142,
+  "kind": "theorem",
+  "name": "ringKrullDim_le_of_isIntegral_of_injective",
+  "statement": "theorem ringKrullDim_le_of_isIntegral_of_injective {R S : Type*} [CommRing R] [CommRing S]\n    (f : R →+* S) (hf : f.IsIntegral) (hinj : Function.Injective f) :\n    ringKrullDim R ≤ ringKrullDim S",
+  "doc": "/-- Going up: an injective integral ring homomorphism does not lower the Krull dimension, since\nevery chain of primes lifts (`Ideal.exists_ltSeries_of_hasGoingUp`). Source: BGR 6.1.2 (Remark),\nciting Nagata, Corollary 10.10, for `dim A = dim T_d`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 156,
+  "kind": "theorem",
+  "name": "ringKrullDim_eq_of_finite_injective",
+  "statement": "theorem ringKrullDim_eq_of_finite_injective {d : ℕ} (φ : TateAlgebra K d →ₐ[K] A)\n    (hφ : φ.toRingHom.Finite) (hinj : Function.Injective φ) : ringKrullDim A = d",
+  "doc": "/-- The integer `d` of a Noether normalisation is the Krull dimension: `dim A = dim T_d = d`.\nSource: BGR 6.1.2 (Remark). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 163,
+  "kind": "theorem",
+  "name": "exists_ringKrullDim_eq",
+  "statement": "theorem exists_ringKrullDim_eq (hA : IsAffinoidAlgebra K A) [Nontrivial A] :\n    ∃ d : ℕ, ringKrullDim A = d",
+  "doc": "/-- The Krull dimension of a nonzero affinoid algebra is a natural number, the `d` of any Noether\nnormalisation. Source: BGR 6.1.2 (Remark) (\"the integer `d` above is uniquely determined by the\nalgebra `A`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 170,
+  "kind": "theorem",
+  "name": "finiteDimensional_of_finite_zero",
+  "statement": "theorem finiteDimensional_of_finite_zero (φ : TateAlgebra K 0 →ₐ[K] A) (hφ : φ.toRingHom.Finite) :\n    FiniteDimensional K A",
+  "doc": "/-- Finite over `T₀` means finite-dimensional over `K`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 178,
+  "kind": "theorem",
+  "name": "injective_factor_comp_of_injective",
+  "statement": "theorem injective_factor_comp_of_injective {R : Type*} [CommRing R] [IsReduced R]\n    (𝔮 : Ideal A) (φ : R →+* A ⧸ 𝔮) (hφ : Function.Injective φ) :\n    Function.Injective ((Ideal.Quotient.factor 𝔮.le_radical).comp φ)",
+  "doc": "/-- An injective homomorphism out of a reduced ring stays injective after passing to the quotient\nby the radical of an ideal containing nothing of the image. Source: BGR 6.1.2/3 (\"The composition\nof `φ` with the canonical epimorphism `ϱ : A/𝔮 → A/rad 𝔮` is finite and injective (because `T_d`\nis reduced)\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 186,
+  "kind": "theorem",
+  "name": "_root_.Affinoid.TateAlgebra.eq_zero_of_isField",
+  "statement": "theorem _root_.Affinoid.TateAlgebra.eq_zero_of_isField {d : ℕ} (h : IsField (TateAlgebra K d)) :\n    d = 0",
+  "doc": "/-- A Tate algebra that is a field has no variables: `d = 0`. Source: BGR 6.1.2/3 (\"But then\n`T_d` must itself be a field so that `d = 0`\"), via `ringKrullDim_eq` and\n`ringKrullDim_eq_zero_of_isField`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 192,
+  "kind": "theorem",
+  "name": "finiteDimensional_quotient_of_radical_isMaximal",
+  "statement": "theorem finiteDimensional_quotient_of_radical_isMaximal (hA : IsAffinoidAlgebra K A)\n    (𝔮 : Ideal A) (h : 𝔮.radical.IsMaximal) : FiniteDimensional K (A ⧸ 𝔮)",
+  "doc": "/-- **BGR 6.1.2/3**: if the radical of an ideal `𝔮` of an affinoid algebra `A` is maximal, then\n`A ⧸ 𝔮` is a finite-dimensional `K`-vector space. Source: BGR 6.1.2/3; Bosch 1.4/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 214,
+  "kind": "theorem",
+  "name": "_root_.Ideal.isMaximal_comap_of_isAffinoidAlgebra",
+  "statement": "theorem _root_.Ideal.isMaximal_comap_of_isAffinoidAlgebra (hB : IsAffinoidAlgebra K B)\n    (φ : A →ₐ[K] B) (𝔪 : Ideal B) [𝔪.IsMaximal] : (𝔪.comap φ).IsMaximal",
+  "doc": "/-- The preimage of a maximal ideal of an affinoid algebra under a `K`-algebra homomorphism is\nmaximal: `A ⧸ φ⁻¹ 𝔪` is a domain finite-dimensional over `K`, hence a field.\nSource: roadmap §1.2.4 (\"the preimage of a maximal ideal under a `K`-algebra map of affinoid\nalgebras is maximal\"); BGR 6.1.2/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 224,
+  "kind": "theorem",
+  "name": "_root_.IsFractionRing.isLocalization_algebraMapSubmonoid_of_isIntegral",
+  "statement": "theorem _root_.IsFractionRing.isLocalization_algebraMapSubmonoid_of_isIntegral (R S : Type*)\n    [CommRing R] [CommRing S] [IsDomain S] [Algebra R S] [Algebra.IsIntegral R S]\n    (hinj : Function.Injective (algebraMap R S)) :\n    IsLocalization (Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) (FractionRing S)",
+  "doc": "/-- For an injective integral extension `R → S` of domains, the fraction field of `S` is the\nlocalisation of `S` at the nonzero elements of `R`: every nonzero `s ∈ S` divides a nonzero element\nof `R` (the constant term of a minimal integral equation). Source: BGR 6.1.2/4 (\"`Q(A′)` is finite\nover `Q(T_d)`\"), the identification needed to apply `Module.Finite.of_isLocalization`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 232,
+  "kind": "theorem",
+  "name": "_root_.FractionRing.finiteDimensional_of_finite",
+  "statement": "theorem _root_.FractionRing.finiteDimensional_of_finite (R S : Type*) [CommRing R] [IsDomain R]\n    [CommRing S] [IsDomain S] [Algebra R S] [Module.Finite R S]\n    (hinj : Function.Injective (algebraMap R S)) [Algebra (FractionRing R) (FractionRing S)]\n    [IsScalarTower R (FractionRing R) (FractionRing S)] :\n    FiniteDimensional (FractionRing R) (FractionRing S)",
+  "doc": "/-- The fraction field of a domain finite over a domain `R` is finite over the fraction field of\n`R`. Source: BGR 6.1.2/4 (\"`Q(A′)` is finite over `Q(T_d)`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Noether.lean",
+  "line": 243,
+  "kind": "theorem",
+  "name": "isJapaneseRing",
+  "statement": "theorem isJapaneseRing {K : Type u} [NormedField K] [IsUltrametricDist K] [CompleteSpace K]\n    [CharZero K] {A : Type u} [CommRing A] [Algebra K A] [IsDomain A]\n    (hA : IsAffinoidAlgebra K A) : IsJapaneseRing A",
+  "doc": "/-- **BGR 6.1.2/4**: an affinoid integral domain is Japanese, in characteristic zero (where\n`T_d` is Japanese by Layer 0). Source: BGR 6.1.2/4 (\"there is a normalization map `φ : T_d → A` …\nSince `T_d` is Japanese by Theorem 5.3.1/3, we see that `A'` is a finite `T_d`-module and a\nfortiori a finite `A`-module\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "Ideal.sInf_maximalPowers_eq_bot",
+  "statement": "theorem Ideal.sInf_maximalPowers_eq_bot (A : Type*) [CommRing A] [IsNoetherianRing A] :\n    sInf (Ideal.maximalPowers A) = ⊥",
+  "doc": "/-- In a noetherian ring the powers of the maximal ideals intersect in zero: by Krull's\nintersection theorem an element `f` of the intersection satisfies `(1 - m) f = 0` for some\n`m ∈ 𝔪`, for every maximal `𝔪`, so its annihilator lies in no maximal ideal. Source: BGR 6.1.3\n(\"KRULL's Intersection Theorem implies that for each `𝔪` there is an element `m ∈ 𝔪` such that\n`(1 − m) f = 0`. Hence the annihilator of `f` is contained in no maximal ideal in `B`. Therefore,\n`f = 0`\"), via `Ideal.mem_iInf_smul_pow_eq_bot_iff`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "finiteDimensional_of_mem_maximalPowers",
+  "statement": "theorem finiteDimensional_of_mem_maximalPowers (hA : IsAffinoidAlgebra K A) {I : Ideal A}\n    (hI : I ∈ Ideal.maximalPowers A) : FiniteDimensional K (A ⧸ I)",
+  "doc": "/-- Condition (i) of BGR 3.7.5/2 for an affinoid algebra: `dim_K A ⧸ 𝔪^ν < ∞`.\nSource: BGR 6.1.3 (\"We have `dim_k B/𝔟 < ∞` for all `𝔟 ∈ 𝔅` by Corollary 6.1.2/3\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "AlgHom.continuous_of_isAffinoidAlgebra",
+  "statement": "theorem AlgHom.continuous_of_isAffinoidAlgebra [IsNoetherianRing A] (hB : IsAffinoidAlgebra K B)\n    (Φ : A →ₐ[K] B) : Continuous Φ",
+  "doc": "/-- **BGR 6.1.3/1**: every `K`-algebra homomorphism of a noetherian `K`-Banach algebra into an\naffinoid algebra is continuous, for any complete algebra norms. Source: BGR 6.1.3/1 (\"Since each\n`B ∈ 𝔄` is Noetherian, we derive from Proposition 3.7.5/2\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 122,
+  "kind": "theorem",
+  "name": "AlgEquiv.exists_forall_norm_le_mul_of_isAffinoidAlgebra",
+  "statement": "theorem AlgEquiv.exists_forall_norm_le_mul_of_isAffinoidAlgebra (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (e : A ≃ₐ[K] B) :\n    ∃ C C' : ℝ, (∀ a, ‖e a‖ ≤ C * ‖a‖) ∧ ∀ b, ‖e.symm b‖ ≤ C' * ‖b‖",
+  "doc": "/-- **BGR 6.1.3/2** in terms of norms: any two complete algebra norms on an affinoid algebra are\nequivalent. Source: roadmap §1.3.3 (\"any two complete `K`-algebra norms on `A` are equivalent\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 129,
+  "kind": "theorem",
+  "name": "AlgEquiv.isPowerBounded_map_iff_of_isAffinoidAlgebra",
+  "statement": "theorem AlgEquiv.isPowerBounded_map_iff_of_isAffinoidAlgebra (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (e : A ≃ₐ[K] B) (a : A) :\n    IsPowerBounded (e a) ↔ IsPowerBounded a",
+  "doc": "/-- Power-boundedness is the same for all Banach norms on an affinoid algebra.\nSource: roadmap §1.3.3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 136,
+  "kind": "theorem",
+  "name": "AlgEquiv.isTopologicallyNilpotent_map_iff_of_isAffinoidAlgebra",
+  "statement": "theorem AlgEquiv.isTopologicallyNilpotent_map_iff_of_isAffinoidAlgebra\n    (hA : IsAffinoidAlgebra K A) (hB : IsAffinoidAlgebra K B) (e : A ≃ₐ[K] B) (a : A) :\n    IsTopologicallyNilpotent (e a) ↔ IsTopologicallyNilpotent a",
+  "doc": "/-- Topological nilpotence is the same for all Banach norms on an affinoid algebra.\nSource: roadmap §1.3.3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 143,
+  "kind": "theorem",
+  "name": "AlgHom.ext_of_isAffinoidGeneratingSystem",
+  "statement": "theorem AlgHom.ext_of_isAffinoidGeneratingSystem {σ : Type*} [_root_.Finite σ] (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) {a : σ → A}\n    (ha : IsAffinoidGeneratingSystem (Algebra.ofId K A) (continuous_algebraMap K A) a)\n    {ψ₁ ψ₂ : A →ₐ[K] B} (h : ∀ i, ψ₁ (a i) = ψ₂ (a i)) : ψ₁ = ψ₂",
+  "doc": "/-- A homomorphism of affinoid algebras is determined by its values on an affinoid generating\nsystem. Source: BGR 6.1.1/4 and 6.1.3/1; roadmap §1.1.4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 152,
+  "kind": "theorem",
+  "name": "IsAffinoidAlgebra.exists_isAffinoidGeneratingSystem",
+  "statement": "theorem IsAffinoidAlgebra.exists_isAffinoidGeneratingSystem (hA : IsAffinoidAlgebra K A) :\n    ∃ (n : ℕ) (a : Fin n → A),\n      IsAffinoidGeneratingSystem (Algebra.ofId K A) (continuous_algebraMap K A) a",
+  "doc": "/-- An affinoid Banach algebra has an affinoid generating system over `K`: the images of the\nvariables under a presentation, which is continuous. Source: BGR 6.1.1, p. 223 (affinoid\ngenerators); the converse of `IsAffinoidAlgebra.of_isAffinoidGeneratingSystem`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 160,
+  "kind": "theorem",
+  "name": "IsAffinoidAlgebra.of_finite_of_continuous",
+  "statement": "theorem IsAffinoidAlgebra.of_finite_of_continuous (hA : IsAffinoidAlgebra K A) (φ : A →ₐ[K] B)\n    (hφ : Continuous φ) (hfin : φ.toRingHom.Finite) : IsAffinoidAlgebra K B",
+  "doc": "/-- **BGR 6.1.1/5**: the target of a continuous finite `K`-algebra homomorphism out of an affinoid\nalgebra into a Banach algebra is affinoid. Source: BGR 6.1.1/5 (\"We may assume `B = Tₙ` for some\n`n`\"), using the continuity of presentations. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 168,
+  "kind": "theorem",
+  "name": "IsAffinoidAlgebra.restricted",
+  "statement": "theorem IsAffinoidAlgebra.restricted (hA : IsAffinoidAlgebra K A) {σ : Type*} [_root_.Finite σ] :\n    IsAffinoidAlgebra K (Restricted A (1 : σ → ℝ))",
+  "doc": "/-- `A⟨X₁, …, Xₘ⟩` is affinoid for an affinoid Banach algebra `A`: a presentation `Tₙ → A` lifts\nto a surjection `Tₙ⟨X⟩ → A⟨X⟩` and `Tₙ⟨X⟩ ≅ T_{m+n}`. Source: BGR 6.1.4 (\"If `A` is a\n`k`-affinoid algebra … then the ring `A⟨X⟩` of strictly convergent power series over `A` is\n`k`-affinoid\"); BGR 6.1.1/9. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Continuity.lean",
+  "line": 176,
+  "kind": "theorem",
+  "name": "IsAffinoidAlgebra.exists_algEquiv_quotient_norm_comp_le",
+  "statement": "theorem IsAffinoidAlgebra.exists_algEquiv_quotient_norm_comp_le (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) :\n    ∃ (n : ℕ) (I : Ideal (Restricted B (1 : Fin n → ℝ)))\n      (e : (Restricted B (1 : Fin n → ℝ) ⧸ I) ≃ₐ[K] A),\n      Continuous e ∧ Continuous e.symm ∧ ∀ b, ‖e.symm (φ b)‖ ≤ ‖b‖",
+  "doc": "/-- **BGR 6.1.3/3** (contractive renorming): for a homomorphism `φ : B → A` of affinoid algebras\nthere is a presentation `B⟨X⟩ ⧸ I ≅ A` of `A` over `B` whose residue norm is equivalent to the\ngiven norm on `A` and for which `φ` is contractive. Source: BGR 6.1.3/3 (\"the algebra norm on `A`\ncan be replaced by an equivalent one such that `φ` becomes contractive\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 63,
+  "kind": "theorem",
+  "name": "inlAlgHom_C",
+  "statement": "theorem inlAlgHom_C (a : A) : inlAlgHom K A σ τ (C (1 : σ → ℝ) a) = C (1 : σ ⊕ τ → ℝ) a",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 73,
+  "kind": "theorem",
+  "name": "inrAlgHom_C",
+  "statement": "theorem inrAlgHom_C (a : A) : inrAlgHom K A σ τ (C (1 : τ → ℝ) a) = C (1 : σ ⊕ τ → ℝ) a",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "inlAlgHom_comp_toAlgHom",
+  "statement": "theorem inlAlgHom_comp_toAlgHom :\n    (inlAlgHom K A σ τ).comp (IsScalarTower.toAlgHom K A _) = IsScalarTower.toAlgHom K A _",
+  "doc": "/-- The inclusions are `A`-algebra homomorphisms. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 95,
+  "kind": "theorem",
+  "name": "inrAlgHom_comp_toAlgHom",
+  "statement": "theorem inrAlgHom_comp_toAlgHom :\n    (inrAlgHom K A σ τ).comp (IsScalarTower.toAlgHom K A _) = IsScalarTower.toAlgHom K A _",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 136,
+  "kind": "theorem",
+  "name": "IsAffinoidTensorProduct.exists_algEquiv",
+  "statement": "theorem IsAffinoidTensorProduct.exists_algEquiv {T T' : Type v} [NormedCommRing T]\n    [NormedAlgebra K T] [IsUltrametricDist T] [CompleteSpace T] [NormedCommRing T']\n    [NormedAlgebra K T'] [IsUltrametricDist T'] [CompleteSpace T'] {ι₁ : B₁ →ₐ[K] T}\n    {ι₂ : B₂ →ₐ[K] T} {ι₁' : B₁ →ₐ[K] T'} {ι₂' : B₂ →ₐ[K] T'}\n    (h : IsAffinoidTensorProduct.{v} α₁ α₂ ι₁ ι₂) (h' : IsAffinoidTensorProduct.{v} α₁ α₂ ι₁' ι₂') :\n    ∃ e : T ≃ₐ[K] T', Continuous e ∧ Continuous e.symm ∧\n      e.toAlgHom.comp ι₁ = ι₁' ∧ e.toAlgHom.comp ι₂ = ι₂'",
+  "doc": "/-- **Uniqueness** of the affinoid tensor product: two pushouts are related by a unique continuous\nisomorphism compatible with the structure maps. Source: BGR 3.1.1/2 (\"characterizes the complete\ntensor product\"); roadmap §1.1.5 (\"independent of the presentations up to canonical\nisomorphism\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 146,
+  "kind": "theorem",
+  "name": "IsAffinoidTensorProduct.of_algEquiv_left",
+  "statement": "theorem IsAffinoidTensorProduct.of_algEquiv_left {B₁' : Type*} [NormedCommRing B₁']\n    [NormedAlgebra K B₁'] [IsUltrametricDist B₁'] [CompleteSpace B₁']\n    (h : IsAffinoidTensorProduct.{v} α₁ α₂ ι₁ ι₂) (e : B₁' ≃ₐ[K] B₁) (he : Continuous e)\n    (he' : Continuous e.symm) :\n    IsAffinoidTensorProduct.{v} (e.symm.toAlgHom.comp α₁) α₂ (ι₁.comp e.toAlgHom) ι₂",
+  "doc": "/-- The tensor-product property transports along a continuous isomorphism of the first factor. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 156,
+  "kind": "theorem",
+  "name": "isAffinoidTensorProduct_quotient_map",
+  "statement": "theorem isAffinoidTensorProduct_quotient_map [IsUltrametricDist K] [CompleteSpace K]\n    [NormOneClass B₂] (hB₂ : IsAffinoidAlgebra K B₂) (α₂ : A →ₐ[K] B₂) (hα₂ : Continuous α₂)\n    (𝔞 : Ideal A) [IsClosed (𝔞 : Set A)] :\n    haveI : IsClosed ((𝔞.map α₂ : Ideal B₂) : Set B₂) := hB₂.isClosed_ideal _\n    IsAffinoidTensorProduct.{v} (Ideal.Quotient.mkₐ K 𝔞) α₂\n      (Ideal.quotientMapₐ (𝔞.map α₂) α₂ Ideal.le_comap_map) (Ideal.Quotient.mkₐ K (𝔞.map α₂))",
+  "doc": "/-- The quotient `B₂ ⧸ 𝔞 B₂` is an affinoid tensor product of `A ⧸ 𝔞` and `B₂` over `A`, for a\nclosed ideal `𝔞` with `B₂` affinoid. Source: BGR 6.1.1/11 (the case `B₁ = A`, `𝔟₁ = 𝔞`,\n`𝔟₂ = 0`: `A/𝔞 ⊗̂_A B₂ = B₂/𝔞B₂`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 167,
+  "kind": "theorem",
+  "name": "IsAffinoidTensorProduct.surjective_ι₂_of_surjective",
+  "statement": "theorem IsAffinoidTensorProduct.surjective_ι₂_of_surjective [IsUltrametricDist K]\n    [CompleteSpace K] {B₂ T : Type v} [NormedCommRing B₂] [NormedAlgebra K B₂]\n    [IsUltrametricDist B₂] [CompleteSpace B₂] [NormOneClass B₂] [NormedCommRing T]\n    [NormedAlgebra K T] [IsUltrametricDist T] [CompleteSpace T] {α₂ : A →ₐ[K] B₂}\n    {ι₁ : B₁ →ₐ[K] T} {ι₂ : B₂ →ₐ[K] T} (hB₂ : IsAffinoidAlgebra K B₂)\n    (h : IsAffinoidTensorProduct.{v} α₁ α₂ ι₁ ι₂) (hα₁ : Continuous α₁)\n    (hα₁' : Function.Surjective α₁) (hα₂ : Continuous α₂) : Function.Surjective ι₂",
+  "doc": "/-- **BGR 6.1.1/11**: if `α₁ : A → B₁` is surjective then so is `ι₂ : B₂ → B₁ ⊗̂_A B₂`, for `B₂`\naffinoid: the tensor product is `B₂ ⧸ (ker α₁) B₂`. Source: BGR 6.1.1/11 (\"the canonical map\n`π : B₁ ⊗̂_A B₂ → B₁/𝔟₁ ⊗̂_A B₂/𝔟₂` is surjective\"); roadmap §1.1.5. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 200,
+  "kind": "def",
+  "name": "tensorInl",
+  "statement": "noncomputable def tensorInl : (Restricted A (1 : σ → ℝ) ⧸ 𝔟₁) →ₐ[K] TensorQuotient K A 𝔟₁ 𝔟₂",
+  "doc": "/-- The first structure map `B₁ = A⟨X⟩ ⧸ 𝔟₁ → B₁ ⊗̂_A B₂`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 205,
+  "kind": "def",
+  "name": "tensorInr",
+  "statement": "noncomputable def tensorInr : (Restricted A (1 : τ → ℝ) ⧸ 𝔟₂) →ₐ[K] TensorQuotient K A 𝔟₁ 𝔟₂",
+  "doc": "/-- The second structure map `B₂ = A⟨Y⟩ ⧸ 𝔟₂ → B₁ ⊗̂_A B₂`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 219,
+  "kind": "theorem",
+  "name": "continuous_tensorInl",
+  "statement": "theorem continuous_tensorInl : Continuous (tensorInl K A 𝔟₁ 𝔟₂)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 222,
+  "kind": "theorem",
+  "name": "continuous_tensorInr",
+  "statement": "theorem continuous_tensorInr : Continuous (tensorInr K A 𝔟₁ 𝔟₂)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 226,
+  "kind": "theorem",
+  "name": "tensorInl_comp_eq_tensorInr_comp",
+  "statement": "theorem tensorInl_comp_eq_tensorInr_comp :\n    (tensorInl K A 𝔟₁ 𝔟₂).comp (IsScalarTower.toAlgHom K A _) =\n      (tensorInr K A 𝔟₁ 𝔟₂).comp (IsScalarTower.toAlgHom K A _)",
+  "doc": "/-- The two structure maps agree on `A`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 249,
+  "kind": "theorem",
+  "name": "isAffinoidTensorProduct_tensorQuotient",
+  "statement": "theorem isAffinoidTensorProduct_tensorQuotient [IsUltrametricDist K] [CompleteSpace K]\n    [NormOneClass A] (hA : IsAffinoidAlgebra K A) :\n    haveI : IsClosed ((tensorIdeal K A 𝔟₁ 𝔟₂ : Ideal _) : Set (Restricted A (1 : σ ⊕ τ → ℝ)))",
+  "doc": "/-- **The universal property**: for continuous `f₁ : B₁ → C`, `f₂ : B₂ → C` into a Banach algebra\nagreeing on `A` there is a unique continuous `F : B₁ ⊗̂_A B₂ → C` with `F ∘ ι₁ = f₁` and\n`F ∘ ι₂ = f₂`, namely the extension of BGR 6.1.1/4 with `X i ↦ f₁ (X̄ i)`, `Y j ↦ f₂ (Ȳ j)`.\nSource: BGR 6.1.1/10–11 (\"it is not hard to see that these induced maps satisfy the universal\nproperty characterizing the complete tensor product\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 261,
+  "kind": "def",
+  "name": "tensorInlₐ",
+  "statement": "noncomputable def tensorInlₐ :\n    (Restricted A (1 : σ → ℝ) ⧸ 𝔟₁) →ₐ[A] TensorQuotient K A 𝔟₁ 𝔟₂",
+  "doc": "/-- The first structure map as an `A`-algebra homomorphism. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 268,
+  "kind": "def",
+  "name": "tensorInrₐ",
+  "statement": "noncomputable def tensorInrₐ :\n    (Restricted A (1 : τ → ℝ) ⧸ 𝔟₂) →ₐ[A] TensorQuotient K A 𝔟₁ 𝔟₂",
+  "doc": "/-- The second structure map as an `A`-algebra homomorphism. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Tensor.lean",
+  "line": 285,
+  "kind": "theorem",
+  "name": "denseRange_tensorLift",
+  "statement": "theorem denseRange_tensorLift : DenseRange (tensorLift K A 𝔟₁ 𝔟₂)",
+  "doc": "/-- The algebraic tensor product `B₁ ⊗_A B₂` is dense in `B₁ ⊗̂_A B₂`: its image contains the\nresidue classes of all polynomials in `X ⊕ Y`. Source: roadmap §1.1.5 (\"`B₁ ⊗̂_A B₂` receives the\nalgebraic tensor product `B₁ ⊗_A B₂` with dense image\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 89,
+  "kind": "theorem",
+  "name": "IsGeneralisedFractions.exists_algEquiv",
+  "statement": "theorem IsGeneralisedFractions.exists_algEquiv {A' A'' : Type v} [NormedCommRing A']\n    [NormedAlgebra K A'] [IsUltrametricDist A'] [CompleteSpace A'] [NormedCommRing A'']\n    [NormedAlgebra K A''] [IsUltrametricDist A''] [CompleteSpace A''] {φ₀ : A →ₐ[K] A'}\n    {φ₀' : A →ₐ[K] A''} (h : IsGeneralisedFractions.{v} φ₀ f g)\n    (h' : IsGeneralisedFractions.{v} φ₀' f g) :\n    ∃ e : A' ≃ₐ[K] A'', Continuous e ∧ Continuous e.symm ∧ e.toAlgHom.comp φ₀ = φ₀'",
+  "doc": "/-- **Uniqueness** of generalised rings of fractions: two of them are related by a unique continuous\nisomorphism over `A`. Source: BGR 6.1.4 (\"both algebras satisfy the same universal property\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 101,
+  "kind": "theorem",
+  "name": "IsGeneralisedFractions.trans",
+  "statement": "theorem IsGeneralisedFractions.trans {A'' : Type*} [NormedCommRing A''] [NormedAlgebra K A'']\n    [IsUltrametricDist A''] [CompleteSpace A''] {φ₁ : A' →ₐ[K] A''} {m' n' : ℕ} {f' : Fin m' → A}\n    {g' : Fin n' → A} (h : IsGeneralisedFractions.{v} φ₀ f g)\n    (h' : IsGeneralisedFractions.{v} φ₁ (φ₀ ∘ f') (φ₀ ∘ g')) :\n    IsGeneralisedFractions.{v} (φ₁.comp φ₀) (Fin.append f f') (Fin.append g g')",
+  "doc": "/-- **Associativity** (BGR 6.1.4/2): `A⟨f, g⁻¹⟩⟨f', g'⁻¹⟩ = A⟨f, f', g⁻¹, g'⁻¹⟩`, at the level of\nuniversal properties. Source: BGR 6.1.4 (\"it follows from Proposition 2 that we have associativity\nin the following sense: `A⟨f₁, …, f_{m−1}, g₁⁻¹, …, g_{n−1}⁻¹⟩⟨f_m, gₙ⁻¹⟩ = A⟨f₁, …, f_m, g₁⁻¹, …,\ngₙ⁻¹⟩`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 111,
+  "kind": "theorem",
+  "name": "IsGeneralisedFractions.of_isUnit",
+  "statement": "theorem IsGeneralisedFractions.of_isUnit (hg : ∀ j, IsUnit (g j)) (hf : ∀ i, IsPowerBounded (f i))\n    (hg' : ∀ j, IsPowerBounded (↑(hg j).unit⁻¹ : A)) :\n    IsGeneralisedFractions.{v} (AlgHom.id K A) f g",
+  "doc": "/-- When the `g j` are already units of `A` with power-bounded inverses and the `f i` are\npower-bounded, `A` itself is `A⟨f, g⁻¹⟩`. Source: BGR 6.1.4 (\"`A⟨h⁻¹⟩` is defined in two ways when\n`h ∈ A` is a unit. However … both definitions coincide in this special case\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 119,
+  "kind": "theorem",
+  "name": "IsRationalFractions.isGeneralisedFractions_of_one",
+  "statement": "theorem IsRationalFractions.isGeneralisedFractions_of_one (h : IsRationalFractions.{v} φ₀ f 1) :\n    IsGeneralisedFractions.{v} φ₀ f (Fin.elim0 : Fin 0 → A)",
+  "doc": "/-- A rational ring of fractions with denominator `1` is the generalised ring of fractions with no\ndenominators. Source: BGR 6.1.4 (\"our definition of `A⟨f/g⟩` is compatible with the one given\nbefore, if the `fᵢ` or `g` are units\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "continuous_toFractions",
+  "statement": "theorem continuous_toFractions : Continuous (toFractions K A f g)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 151,
+  "kind": "theorem",
+  "name": "toFractions_mul_mk_X_inr",
+  "statement": "theorem toFractions_mul_mk_X_inr (j : Fin n) :\n    toFractions K A f g (g j) * Ideal.Quotient.mk _ (X A (1 : Fin m ⊕ Fin n → ℝ) (Sum.inr j)) = 1",
+  "doc": "/-- The residue classes of the `Yⱼ` invert the `gⱼ`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 159,
+  "kind": "theorem",
+  "name": "toFractions_f",
+  "statement": "theorem toFractions_f (i : Fin m) :\n    toFractions K A f g (f i) = Ideal.Quotient.mk _ (X A (1 : Fin m ⊕ Fin n → ℝ) (Sum.inl i))",
+  "doc": "/-- The `fᵢ` are the residue classes of the `Xᵢ`, hence power-bounded. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 163,
+  "kind": "theorem",
+  "name": "isPowerBounded_toFractions_f",
+  "statement": "theorem isPowerBounded_toFractions_f (i : Fin m) : IsPowerBounded (toFractions K A f g (f i))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 166,
+  "kind": "theorem",
+  "name": "isPowerBounded_inv_toFractions",
+  "statement": "theorem isPowerBounded_inv_toFractions (j : Fin n) :\n    IsPowerBounded (↑(isUnit_toFractions K A f g j).unit⁻¹ : GeneralisedFractions A f g)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 176,
+  "kind": "theorem",
+  "name": "isGeneralisedFractions_toFractions",
+  "statement": "theorem isGeneralisedFractions_toFractions [IsUltrametricDist K] [CompleteSpace K] [NormOneClass A]\n    (hA : IsAffinoidAlgebra K A) :\n    haveI : IsClosed ((fractionIdeal A f g : Ideal _) : Set (Restricted A (1 : Fin m ⊕ Fin n → ℝ)))",
+  "doc": "/-- **BGR 6.1.4/1–2**: `A⟨X, Y⟩ ⧸ (X − f, gY − 1)` has the universal property of `A⟨f, g⁻¹⟩`.\nSource: BGR 6.1.4 (\"the canonical map `A → A⟨X, Y⟩/(X − f, gY − 1)` also satisfies the universal\nproperty stated in Proposition 1. Namely, let `φ : A → B` be a continuous homomorphism as in\nProposition 1. Then `φ` extends to a continuous homomorphism `φ″ : A⟨X, Y⟩ → B`, `X ↦ φ(f)`,\n`Y ↦ φ(g)⁻¹`, with `(X − f, gY − 1) ⊂ ker φ″`\"), for `A` affinoid (so that the ideal is closed and\nthe quotient is a Banach algebra). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 212,
+  "kind": "theorem",
+  "name": "continuous_toRational",
+  "statement": "theorem continuous_toRational : Continuous (toRational K A f g)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 218,
+  "kind": "theorem",
+  "name": "isUnit_toRational",
+  "statement": "theorem isUnit_toRational (hgen : ∃ (a : A) (a' : Fin m → A), a * g + ∑ i, a' i * f i = 1) :\n    IsUnit (toRational K A f g g)",
+  "doc": "/-- `g` becomes a unit in `A⟨f/g⟩` when `f₁, …, fₘ, g` generate the unit ideal:\n`(a + Σ aᵢ X̄ᵢ) g = a g + Σ aᵢ fᵢ = 1`. Source: BGR 6.1.4 (\"which shows that `g` is a unit in\n`A′`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 223,
+  "kind": "theorem",
+  "name": "toRational_mul_inv",
+  "statement": "theorem toRational_mul_inv (hgen : ∃ (a : A) (a' : Fin m → A), a * g + ∑ i, a' i * f i = 1)\n    (i : Fin m) :\n    toRational K A f g (f i) * (↑(isUnit_toRational K A f g hgen).unit⁻¹ : RationalFractions A f g) =\n      Ideal.Quotient.mk _ (X A (1 : Fin m → ℝ) i)",
+  "doc": "/-- `X̄ᵢ = fᵢ / g` in `A⟨f/g⟩`. Source: BGR 6.1.4 (\"Moreover, `X̄ᵢ = fᵢ/g` in `A′`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 229,
+  "kind": "theorem",
+  "name": "isPowerBounded_toRational_div",
+  "statement": "theorem isPowerBounded_toRational_div\n    (hgen : ∃ (a : A) (a' : Fin m → A), a * g + ∑ i, a' i * f i = 1) (i : Fin m) :\n    IsPowerBounded (toRational K A f g (f i) *\n      (↑(isUnit_toRational K A f g hgen).unit⁻¹ : RationalFractions A f g))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 238,
+  "kind": "theorem",
+  "name": "isRationalFractions_toRational",
+  "statement": "theorem isRationalFractions_toRational [IsUltrametricDist K] [CompleteSpace K] [NormOneClass A]\n    (hA : IsAffinoidAlgebra K A)\n    (hgen : ∃ (a : A) (a' : Fin m → A), a * g + ∑ i, a' i * f i = 1) :\n    haveI : IsClosed ((rationalIdeal A f g : Ideal _) : Set (Restricted A (1 : Fin m → ℝ)))",
+  "doc": "/-- **BGR 6.1.4/3–4**: `A⟨X⟩ ⧸ (gX − f)` has the universal property of `A⟨f/g⟩`. Source: BGR 6.1.4\n(\"It is now a straightforward verification to see that also `A′ = A⟨X⟩/(gX − f)` satisfies the\nuniversal property stated in Proposition 3\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Fractions.lean",
+  "line": 261,
+  "kind": "theorem",
+  "name": "denseRange_awayLift",
+  "statement": "theorem denseRange_awayLift (hgen : ∃ (a : A) (a' : Fin m → A), a * g + ∑ i, a' i * f i = 1) :\n    DenseRange (awayLift K A f g hgen)",
+  "doc": "/-- **`A[g⁻¹]` is dense in `A⟨f/g⟩`**: the residue classes of the polynomials in `X` are the images\nof the `Σ b_ν (f/g)^ν`. Source: BGR 6.1.4 (\"The completion of `A[g⁻¹]` is denoted by `A⟨f/g⟩`\"),\nthe density half; roadmap §1.4.2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/BaseChange.lean",
+  "line": 42,
+  "kind": "def",
+  "name": "mapBase",
+  "statement": "noncomputable def mapBase : TateAlgebra K n →ₐ[K] TateAlgebra K' n",
+  "doc": "/-- The coefficientwise inclusion `Tₙ(K) → Tₙ(K')`, as a `K`-algebra homomorphism; it is an\nisometry since `‖algebraMap K K' x‖ = ‖x‖`. Source: BGR 6.1.1/8. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/BaseChange.lean",
+  "line": 51,
+  "kind": "theorem",
+  "name": "norm_mapBase",
+  "statement": "theorem norm_mapBase (f : TateAlgebra K n) : ‖mapBase K K' n f‖ = ‖f‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/BaseChange.lean",
+  "line": 60,
+  "kind": "theorem",
+  "name": "baseChangeAlgHom_tmul",
+  "statement": "theorem baseChangeAlgHom_tmul (c : K') (f : TateAlgebra K n) :\n    baseChangeAlgHom K K' n (c ⊗ₜ f) = c • mapBase K K' n f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/BaseChange.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "exists_sum_smul_mapBase",
+  "statement": "theorem exists_sum_smul_mapBase [CompleteSpace K] {ι : Type*} [Fintype ι] (b : Module.Basis ι K K')\n    (g : TateAlgebra K' n) : ∃ h : ι → TateAlgebra K n, g = ∑ k, b k • mapBase K K' n (h k)",
+  "doc": "/-- Every series over `K'` is a finite sum `Σ eₖ • gₖ` with `gₖ ∈ Tₙ(K)`, for a `K`-basis `e` of\n`K'`: the coordinate functionals of a finite-dimensional normed space are continuous, so the\ncoordinates of the coefficients tend to zero. Source: BGR 6.1.1/8, with BGR 3.7.1 (\"these\nextensions carry always the product topology\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/BaseChange.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "bijective_baseChangeAlgHom",
+  "statement": "theorem bijective_baseChangeAlgHom [CompleteSpace K] [FiniteDimensional K K'] :\n    Function.Bijective (baseChangeAlgHom K K' n)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/BaseChange.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "baseChange",
+  "statement": "theorem baseChange (hA : IsAffinoidAlgebra K A) : IsAffinoidAlgebra K' (K' ⊗[K] A)",
+  "doc": "/-- **BGR 6.1.1/9**: `K' ⊗_K A` is `K'`-affinoid for `A` affinoid over `K` and `K'/K` finite: a\npresentation `Tₙ(K) → A` tensors to a surjection `K' ⊗ Tₙ(K) → K' ⊗ A`, and\n`K' ⊗ Tₙ(K) ≅ Tₙ(K')`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Polydisc.lean",
+  "line": 45,
+  "kind": "theorem",
+  "name": "norm_smul_X_pow",
+  "statement": "theorem norm_smul_X_pow (hc : ∀ i, ρ i ^ s i * ‖c i‖ = 1) (i : Fin n) :\n    ‖c i • X K ρ i ^ s i‖ = 1",
+  "doc": "/-- `‖cᵢ Xᵢ^{sᵢ}‖_ρ = 1` when `ρᵢ^{sᵢ} ‖cᵢ‖ = 1`. Source: BGR 6.1.5/4 (\"Then `|cᵢ Xᵢ^{sᵢ}|_ϱ = 1`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Polydisc.lean",
+  "line": 70,
+  "kind": "theorem",
+  "name": "injective_rescaleAlgHom",
+  "statement": "theorem injective_rescaleAlgHom (hs : ∀ i, s i ≠ 0) :\n    Function.Injective (rescaleAlgHom ρ s c hc)",
+  "doc": "/-- The rescaling acts on coefficients by `a_μ ↦ a_μ c^μ` placed at `μ s`; in particular it is\ninjective. Source: BGR 6.1.5/4 (\"a monomorphism\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Polydisc.lean",
+  "line": 76,
+  "kind": "theorem",
+  "name": "isRestricted_shiftCoeff",
+  "statement": "theorem isRestricted_shiftCoeff (hs : ∀ i, s i ≠ 0) (hc0 : ∀ i, c i ≠ 0) (f : Restricted K ρ)\n    (l : Fin n →₀ ℕ) :\n    IsRestricted (1 : Fin n → ℝ) (fun μ : Fin n →₀ ℕ ↦\n      coeff (Finsupp.ofSupportFinite (fun i ↦ μ i * s i) (Set.toFinite _) + l) f.1 *\n        ∏ i, (c i)⁻¹ ^ μ i : MvPowerSeries (Fin n) K)",
+  "doc": "/-- The series `g_λ = Σ_μ a_{μs+λ} c^{−μ} X^μ` of BGR 6.1.5/4 lies in `Tₙ`, since\n`|a_{μs+λ} c^{−μ}| = |a_{μs+λ}| ϱ^{μs+λ} ϱ^{−λ} → 0`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Polydisc.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "finite_rescaleAlgHom",
+  "statement": "theorem finite_rescaleAlgHom (hs : ∀ i, s i ≠ 0) (hc0 : ∀ i, c i ≠ 0) :\n    (rescaleAlgHom ρ s c hc).toRingHom.Finite",
+  "doc": "/-- **`T_{n,ρ}` is a finite `Tₙ`-module** via the rescaling, generated by the monomials `X^λ`,\n`0 ≤ λᵢ < sᵢ`: `f = Σ_λ φ(g_λ) X^λ`. Source: BGR 6.1.5/4 (\"We have `f = Σ_λ φ(g_λ) X^λ` so that\n`T_{n,ϱ}` is a finite `Tₙ`-module via `φ`; the monomials `X^λ`, `0 ≤ λᵢ < sᵢ`, are generators\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Polydisc.lean",
+  "line": 93,
+  "kind": "theorem",
+  "name": "isAffinoidAlgebra_of_forall_exists_pow_eq_norm",
+  "statement": "theorem isAffinoidAlgebra_of_forall_exists_pow_eq_norm\n    (h : ∀ i, ∃ (s : ℕ) (c : K), s ≠ 0 ∧ c ≠ 0 ∧ ρ i ^ s = ‖c‖) :\n    IsAffinoidAlgebra K (Restricted K ρ)",
+  "doc": "/-- **BGR 6.1.5/4, the \"if\" half**: `T_{n,ρ}` is affinoid when every `ρᵢ` is a root of an element\nof `|K^×|`. Source: BGR 6.1.5/4 (\"Thus, `T_{n,ϱ}` is `k`-affinoid by Proposition 6.1.1/5, and half\nof the theorem is proved\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Polydisc.lean",
+  "line": 108,
+  "kind": "theorem",
+  "name": "exists_summable_not_isRestricted",
+  "statement": "theorem exists_summable_not_isRestricted {ρ : ℝ} (hρ : 0 < ρ) :\n    ∃ f : PowerSeries K, (∀ x : K, ‖x‖ < ρ → Summable fun ν ↦ coeff ν f * x ^ ν) ∧\n      ¬ IsRestricted ρ f",
+  "doc": "/-- **The open-disc example** (BGR 6.1.5): for every `ρ > 0` there is a power series converging at\nevery `x` with `‖x‖ < ρ` which is not in `T_{1,ρ}`, namely `Σ aₙ Xⁿ` with `‖aₙ‖ ρⁿ ∈ [‖π‖⁻¹, 1]`.\nSource: BGR 6.1.5 (\"there are power series `f = Σ a_ν X^ν` converging on `B⁻(0, ϱ)`, which do not\nsatisfy the condition `lim |a_ν| ϱ^ν = 0`, so that `f ∉ T_{1,ϱ}` in this case\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 43,
+  "kind": "theorem",
+  "name": "finrank_quotient_X_sq_sub",
+  "statement": "theorem finrank_quotient_X_sq_sub {a : K} (ha : ‖a‖ < 1) :\n    Module.finrank K (TateAlgebra K 1 ⧸\n      Ideal.span {X K (1 : Fin 1 → ℝ) 0 ^ 2 - C (1 : Fin 1 → ℝ) a}) = 2",
+  "doc": "/-- `K⟨X⟩ ⧸ (X² − a)` for `‖a‖ < 1` is a two-dimensional `K`-vector space with basis `1, X̄`: the\npolynomial `X² − a` is a Weierstrass polynomial, so every series has a unique remainder of degree\nless than two. Source: Layer 0, `IsWeierstrassPolynomial.existsUnique_remainder`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 50,
+  "kind": "theorem",
+  "name": "ker_aeval_eq_span",
+  "statement": "theorem ker_aeval_eq_span {a : K} (ha : ‖a‖ ≤ 1) :\n    RingHom.ker (aeval (1 : Fin 1 → ℝ) (fun _ ↦ a) fun _ ↦ by simpa using ha) =\n      Ideal.span {X K (1 : Fin 1 → ℝ) 0 - C (1 : Fin 1 → ℝ) a}",
+  "doc": "/-- The kernel of evaluation at a point `a` of the closed unit disc is `(X − a)`: Weierstrass\ndivision by the Weierstrass polynomial `X − a`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "nonempty_algEquiv_quotient_X_sub",
+  "statement": "theorem nonempty_algEquiv_quotient_X_sub {a : K} (ha : ‖a‖ ≤ 1) :\n    Nonempty ((TateAlgebra K 1 ⧸ Ideal.span {X K (1 : Fin 1 → ℝ) 0 - C (1 : Fin 1 → ℝ) a}) ≃ₐ[K] K)",
+  "doc": "/-- `K⟨X⟩ ⧸ (X − a) ≅ K` for `‖a‖ ≤ 1`, by evaluation at `a`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 61,
+  "kind": "theorem",
+  "name": "isUnit_C_mul_X_sub_one",
+  "statement": "theorem isUnit_C_mul_X_sub_one {a : K} (ha : ‖a‖ < 1) :\n    IsUnit (C (1 : Fin 1 → ℝ) a * X K (1 : Fin 1 → ℝ) 0 - 1)",
+  "doc": "/-- `aX − 1` is a unit of `K⟨X⟩` for `‖a‖ < 1`, so `K⟨X⟩ ⧸ (aX − 1) = 0`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 65,
+  "kind": "theorem",
+  "name": "subsingleton_quotient_C_mul_X_sub_one",
+  "statement": "theorem subsingleton_quotient_C_mul_X_sub_one {a : K} (ha : ‖a‖ < 1) :\n    Subsingleton (TateAlgebra K 1 ⧸\n      Ideal.span {C (1 : Fin 1 → ℝ) a * X K (1 : Fin 1 → ℝ) 0 - 1})",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "nonempty_algEquiv_generalisedFractions_X",
+  "statement": "theorem nonempty_algEquiv_generalisedFractions_X :\n    Nonempty (GeneralisedFractions (TateAlgebra K 1) (Fin.elim0 : Fin 0 → TateAlgebra K 1)\n      (fun _ : Fin 1 ↦ X K (1 : Fin 1 → ℝ) 0) ≃ₐ[K]\n      TateAlgebra K 2 ⧸ Ideal.span {X K (1 : Fin 2 → ℝ) 0 * X K (1 : Fin 2 → ℝ) 1 - 1})",
+  "doc": "/-- `K⟨X⟩⟨X⁻¹⟩ = K⟨X, Y⟩ ⧸ (XY − 1)`: the generalised ring of fractions `T₁⟨X⁻¹⟩` is the quotient\nof `T₂`. Source: roadmap, Layer 1 examples; BGR 6.1.4 (\"the algebra `A⟨X⟩⟨X⁻¹⟩` is canonically\nisomorphic to the algebra `A⟨X, X⁻¹⟩`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "isMulDistinguishedX0_cusp",
+  "statement": "theorem isMulDistinguishedX0_cusp :\n    IsMulDistinguishedX0 (X K (1 : Fin 2 → ℝ) 0 ^ 2 - X K (1 : Fin 2 → ℝ) 1 ^ 3) 2",
+  "doc": "/-- The cusp `Y² − X³` (here `X 0 ^ 2 − X 1 ^ 3`, since `X 0` is the distinguished variable) is\n`X 0`-distinguished of order two. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Examples.lean",
+  "line": 105,
+  "kind": "theorem",
+  "name": "exists_algEquiv_quotient_X_norm_eq",
+  "statement": "theorem exists_algEquiv_quotient_X_norm_eq :\n    ∃ e : (TateAlgebra K 1 ⧸ Ideal.span {X K (1 : Fin 1 → ℝ) 0}) ≃ₐ[K] K, ∀ f, ‖e f‖ = ‖f‖",
+  "doc": "/-- The two presentations `K⟨X⟩ ⧸ (X)` and `K` of the affinoid algebra `K`: evaluation at `0`\ninduces an isometric isomorphism for the residue norm, since the nearest point of `(X)` to `f` is\n`f − f(0)`. Source: roadmap, Layer 1 examples. -/",
+  "sorries": 1
+ }
+]

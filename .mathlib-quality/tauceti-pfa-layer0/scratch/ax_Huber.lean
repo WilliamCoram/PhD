@@ -1,0 +1,10 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Huber
+#print axioms NormedRing.PseudoUniformizer.isTopologicallyNilpotent
+#print axioms NormedRing.PseudoUniformizer.mem_ideal_pow_iff
+#print axioms NormedRing.PseudoUniformizer.ideal_pow_eq_closedBallIdeal
+#print axioms NormedRing.PseudoUniformizer.ideal_fg
+#print axioms NormedRing.PseudoUniformizer.isAdic_ideal
+#print axioms NormedRing.PseudoUniformizer.exists_pow_mul_mem_unitClosedBall
+#print axioms NormedRing.PseudoUniformizer.hasBasis_nhds_zero_smul_unitClosedBall
+#print axioms NormedRing.PseudoUniformizer.gaugeNorm_unitClosedBall
+#print axioms NormedRing.isPowerBounded_of_mem_unitClosedBall

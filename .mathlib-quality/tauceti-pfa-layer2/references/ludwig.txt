@@ -1,0 +1,1868 @@
+===== PDF PAGE 1 =====
+arXiv:2407.18073v1  [math.NT]  25 Jul 2024
+Spectral theory and the Eigenvariety machine
+Notes for a mini-course at the Spring School on
+Non-archimedean geometry and Eigenvarieties
+Heidelberg, March 6th-17th, 2023
+Judith Ludwig
+Abstract
+These are extended lecture notes for a mini course at the Spri ng School on
+Non-Archimedean Geometry and Eigenvarieties held at Heidelberg University
+in March 2023. The goal of the course is to explain a modern tak e on the
+eigenvariety machine in the language of adic spaces. For thi s we build on the
+theory developed in the ﬁrst week of the school. We also expla in some basic
+selective non-archimedean functional analysis.
+===== PDF PAGE 2 =====
+2
+1 Introduction
+The goal of these notes is to explain the eigenvariety machine, an ab stract frame-
+work in which many eigenvariety constructions ﬁt.
+Eigenvarieties are adic spaces thatp-adically interpolate systems of Hecke eigen-
+values of (certain) automorphic forms. At the same time an eigenva riety serves as a
+parameter space for systems of Hecke eigenvalues attached to p-adic automorphic
+forms. The ﬁrst and probably still most important example of an e igenvariety is
+the so called Coleman–Mazur eigencurve. It interpolates modul ar formsp-adically
+and has been an important object for number theory and the p-adic Langlands pro-
+gram. It was ﬁrst constructed by Coleman and Mazur in [11] for mo dular forms
+of tame level one 1 as a rigid space over Qp. Buzzard then axiomatized the con-
+struction in [9] and built the eigenvariety machine. This machin e is constructed
+independently of any theory of p-adic automorphic forms. As we will see below it
+requires some functional analysis and some geometry . In practic e one then needs
+to feed the machine with spaces of p-adic forms. E.g. in [9], Buzzard applied his
+machine to construct the Coleman-Mazur eigencurve for modular forms of arbi-
+trary tame level and to construct eigenvarieties for Hilbert modu lar forms. Since
+then, the eigenvariety machine (or parts of it) have been used in the c onstruction
+of many more eigenvarieties. We refer to the course of Newton [24] f or details and
+in particular to Section 3 for an overview of eigenvarieties.
+The eigenvariety machine was originally developed in the langu age of rigid
+analytic geometry . Here we present the eigenvariety machine in th e language of
+adic spaces. One reason for this is the following: The Coleman–Ma zur eigencurve
+lives over a base called weight space which is a ﬁnite disjoint union of copies of the
+rigid analytic generic ﬁbre of Spf( Zp⟦T ⟧). In the adic language, this is
+Wrig := Spa(Zp⟦T ⟧, Zp⟦T ⟧)×Spa(Zp,Zp) Spa(Qp, Zp),
+which is an open unit disc. By adding one point xFp⟦T ⟧ (the T -adic valuation on
+F p⟦T ⟧) to this space, we get a quasi-compact space which turns out to be the a n-
+alytic locus W := Spa( Zp⟦T ⟧, Zp⟦T ⟧)an of Spa( Zp⟦T ⟧, Zp⟦T ⟧). Coleman conjec-
+tured that the eigencurve can be extended from its original constructi on overWrig
+into characteristic p and in [2], Andreatta, Iovita and Pilloni show that this is in-
+deed possible, i.e., that there is an adic Coleman-Mazur eigencurve overW that ex-
+tends the construction overWrig . The eigenvariety machine carries over to a more
+general adic setting and gives the freedom of working over Tate ring s that do not
+live over a ﬁeld. When presenting the eigenvariety machine in this generality , we
+closely follow [9] using the proofs in [2], [18] and [19] for ma ny of the statements
+in the adic world.
+1i.e. for modular forms of level dividing p
+===== PDF PAGE 3 =====
+3
+We view the construction of eigenvarieties as a 3-step process.
+Step 1. Construct input data for the machine, i.e., a
+baseW which is usually referred to as weight space
+(which interpolates weights of automorphic forms)
+and spectral data locally over the base. In particular
+this involves the construction of suitable spaces of p-
+adic automorphic forms. For the construction of con-
+crete input data we refer to the notes of James New-
+ton.
+Step 2. From the input data, construct the so
+called spectral variety Z over the base W which
+parametrizes non-zero eigenvalues of one special
+Hecke operator.
+Step 3. Construct the eigenvarietyE, a space which is
+ﬁnite overZ and which parametrizes certain systems
+of eigenvalues appearing in the input datum.
+Input Data
+Z−→W
+Eigenvariety
+Spectral variety
+E−→Z−→W
+This text is meant for non-experts as an introduction to the eigenvari ety ma-
+chine and exercises are included throughout to help you understand the material.
+There are some excellent references (such as [9], [2], [18], [1 9] and [4]) which we of-
+ten refer to for further details, or when we omit some proofs. None of the following
+is original work and all mistakes are mine.
+Structure of the notes : In order to construct eigenvarieties, we ﬁrst have to
+study some functional analysis. Section 2 takes care of this. Sectio n 2 is also
+"geometry-free", meaning you can understand it without knowledge of adic spaces.
+The same is true for Section 4, where we treat Riesz theory , another important piece
+of functional analysis. Section 3 requires some knowledge on adic s paces. There
+we construct the so called spectral variety , an important space that sits between the
+eigenvariety and weight space. In Section 5 we then explain how to b uild eigenva-
+rieties, ﬁrst over an a ﬃnoid base, which is easier. In a second part we show how
+the construction glues. Finally we describe some features, when the base space is
+reasonably well behaved, e.g. a pseudorigid space. We also disc uss some rigidity
+results.
+Notation: By a non-archimedean ﬁeld K we mean a topological ﬁeld K whose
+topology is induced by a valuation of rank 1 and which is complete wi th respect to
+this valuation. All rings in these notes are assumed to be non-zero . We freely use
+the language of adic spaces and concepts like Tate rings, Huber ri ngs, etc., from the
+ﬁrst week of the school. We follow the same conventions as [17, In troduction] and
+in particular use the terms strongly noetherian Tate rings and loca lly noetherian
+adic spaces as recalled in loc. cit. Unless stated otherwise we alwa ys assume the
+occurring Tate rings are complete.
+===== PDF PAGE 4 =====
+4
+Acknowledgments: I would like to thank the participants of the spring school
+for their feedback. In particular I want to thank Jakob Burgi and Al ireza Shavali
+for their helpful comments and suggestions on an earlier draft. I w ould also like to
+thank Christian Johansson for help with Proposition 3.19, him and James Newton
+for many helpful conversations and the referee for their carefu l reading and their
+comments.
+The author acknowledges support from the Deutsche Forschungsgem einschaft
+(DFG, German Research Foundation) through TRR 326 Geometry and Arithmetic of
+Uniformized Structures, project number 444845124.
+===== PDF PAGE 5 =====
+5
+2 Background from Functional Analysis
+This section o ﬀers the background from functional analysis that we need for the
+construction of eigenvarieties (in the language of adic spaces). T he central concepts
+are Banach–Tate rings, (orthonormalizable) modules over them a nd the theory of
+compact operators on these modules. These concepts provide the tec hnical frame-
+work to handle the input data for the eigenvariety machine. The main r eferences
+are [9, 18] and [4].
+2.1 Modules over Banach–Tate rings
+Deﬁnition 2.1. LetA be a ring. A seminorm onA is a map|·| :A→ R≥0 that satisﬁes:
+For alla,b∈A,
+1.|0| = 0,|1| = 1,
+2.|a +b|≤ max(|a|,|b|), (the ultrametric triangle inequality)
+3.|ab|≤| a||b|. (|·| is submultiplicative)
+A norm on A is a seminorm that satisﬁes |a| = 0 only if a = 0. A ring A together
+with a (semi)norm is called a (semi)normed ring. A Banach ring is a normed ring A
+which is complete with respect to this norm.
+Remark 2.2. • Note that in contrast to a valuation ([6, Def.2.2]), a (semi)norm is
+only required to be submultiplicative. A multiplicative (semi)norm is an example
+of a valuation.
+• By deﬁnition the norm is part of the data of a Banach ring (and it will be part of
+more deﬁnitions below). We remark however that ultimately many of the construc-
+tions (see e.g. Proposition 2.37), and in particular the eigenvariety construction
+will only depend on the topological rings involved, and not on the choice of norm
+that deﬁnes the topology.
+Deﬁnition 2.3. LetA be a normed ring. A non-zero element a∈A is called multi-
+plicative if|ab| =|a||b| for allb∈A.
+Deﬁnition 2.4. A Banach–T ate ringis a complete normed ring A which contains a
+unit̟ such that|̟|< 1 and which is multiplicative.
+Example 2.5. LetK be a non-archimedean ﬁeld andn∈ N. Then the classical Tate-
+algebraTn :=K⟨X1,...,X n⟩inn variables equipped with the Gauß norm (which is
+even multiplicative) is a Banach–Tate ring. (See [7, Chapter 5] fo r details and an
+extensive discussion of this algebra and its properties).
+===== PDF PAGE 6 =====
+2.1 Modules over Banach–Tate rings 6
+Let us relate Banach–Tate rings to the rings underlying (analytic) a dic spaces
+and thereby justify the naming. For that, let A be a complete Tate ring with ring of
+deﬁnitionA0 and pseudo-uniformizer̟∈A0. Let p be a prime number 2. Then we
+can deﬁne a norm on A by setting, for any a∈A,
+|a| := inf{p−n|a∈̟nA0,n∈ Z}. (1)
+Exercise 2.6. Check that this deﬁnes a norm on A, that̟ is multiplicative and that
+the topology induced by this norm agrees with the topology of A as a Tate ring.
+In the following we use the terminology normed Tate ring to mean a Tate ring,
+whose topology is also given by a norm (in general unspeciﬁed). Fo r a complete
+Tate ring, we refer to the norm of equation (1) attached to a chosen pseudo -uni-
+formizer as a standard norm.
+Remark 2.7. Let A be a normed ring with a unit ̟ such that |̟| < 1 and which is
+multiplicative. Then the underlying topological ring is a T ate ring. More precisely,
+the unit ball {a∈ A :|a|≤ 1} is a ring of deﬁnition and ̟ is a pseudo-uniformizer.
+Conversely, by the exercise above, we see that any complete T ate ring give s rise to a
+normed ring with a unit ̟ such that|̟|< 1 and which is multiplicative. So we may
+think of a Banach–T ate ring as a complete normed T ate ring with a chosen multiplicative
+pseudo-uniformizer.
+When treating functional analysis in the context of rigid analytic g eometry , one
+works with Banach rings that contain a non-archimedean ﬁeld, like th e ringsTn
+from above. Our setup here is more general. Here is an example of a Banach–Tate
+ring which does not live over a ﬁeld.
+Example 2.8. Consider the Huber ring Zp⟦T ⟧, with the (p,T )-adic topology . On
+X := Spa(Zp⟦T ⟧, Zp⟦T ⟧)
+consider the rational subset U =X
+( p,T
+T
+)
+={x∈X :|p(x)|≤| T (x)| /nequal 0}3. ThenOX (U )
+is given as follows. Take the ring R := Zp⟦T ⟧[1/T ]. It has the structure of a Huber
+ring with ring of deﬁnition Zp⟦T ⟧[p/T ] and the ( T )-adic topology on the latter.
+ThenOX(U ) is equal to the completion ˆR ofR. It is a Tate ring (T is a topologically
+nilpotent unit), which does not live over a ﬁeld ( p is neither invertible nor zero in
+OX (U )). Fixing T turnsOX (U ) into a Banach–Tate ring with norm as in equation
+(1).
+2Note that more generally (1) deﬁnes a norm for any positive re al number instead of p.
+3See [26, Section 4.2] for a detailed description of X.
+===== PDF PAGE 7 =====
+2.1 Modules over Banach–Tate rings 7
+Deﬁnition 2.9. Let A be a normed ring. A normed A-module is an A-module M
+equipped with a function||·|| : M→ R≥0 such that for all m,n∈M and alla∈A,
+1.||m|| = 0⇐⇒m = 0,
+2.||m +n||≤ max(||m||,||n||),
+3.||am||≤| a|·||m||.
+If A is a Banach ring and M is complete, we say that M is a Banach A-module.
+Finally a BanachA-algebraB is deﬁned to be a Banach ring B which is also a Banach
+A-module.
+Exercise 2.10. 1. Let A be a normed ring and let ̟∈A be a multiplicative unit.
+Show that if M is a normed A-module, then||̟m|| =|̟|·||m|| for allm∈M.
+2. If M andN are Banach A-modules thenM⊕N becomes a Banach A-module
+via|m +n| := max{|m|,|n|}. Iterating this gives a natural Banach A-module
+structure onAr for anyr∈ N.
+Deﬁnition 2.11. Let A be a normed Tate ring. An A-linear map φ : M→ N of
+normed A-modules is called bounded if there exists C∈ R>0 such that ||φ(m)||≤
+C||m|| for allm∈M.
+Lemma 2.12. Let A be a normed T ate ring with a multiplicative pseudo-uniformizer
+and let M andN be normed A-modules. An A-linear map φ : M→N is continuous if
+and only if it is bounded.
+Proof. Exercise. (Hint: Adapt the proof of [8, Appendix B, Lemma 1]). 4
+Deﬁnition 2.13. 1. If A is a normed Tate ring and M and N are normed A-
+modules then a homomorphism φ : M→ N is deﬁned to be a continuous
+A-linear map.
+2. The norm of a homomorphism φ : M→N of normed A-modules is deﬁned
+as
+||φ|| = sup
+m/nequal 0
+||φ(m)||
+||m|| .
+IfA is a Banach–Tate ring and M andN are BanachA-modules, then this norm
+turns the A-module HomA(M,N ) of continuous (equiv . bounded) A-linear homo-
+morphisms fromM toN into a BanachA-module. Completeness follows for ifφn is
+a Cauchy sequence in HomA(M,N ) then for all m∈M,φn(m) is a Cauchy sequence
+inN so has a limit which we call φ(m). Then φ is the limit of the φn.
+4For a discussion of the relationship of continuity and bounded ness in a more general context see
+[7, Section 2.1.8].
+===== PDF PAGE 8 =====
+2.1 Modules over Banach–Tate rings 8
+We will frequently make use of the open mapping theorem , which says that for
+a Banach–Tate ring A and Banach A-modulesM andN , any surjective continuous
+A-linear map φ : M→N is open (see [22, Theorem II.4.1.1.]). The following is a
+useful application. By a ﬁnite Banach A-module we mean a Banach A-module that
+is ﬁnitely generated as an abstract A-module.
+Lemma 2.14. IfM is a Banach A-module andP is a ﬁnite Banach A-module, then any
+abstractA-module homomorphismφ :P→M is continuous.
+Proof. Let π : Ar→P be a surjection of A-modules and equip Ar with its usual
+BanachA-module norm. Note that π is bounded hence continuous. By the open
+mapping theorem, π is open. Furthermore φ◦π is bounded and therefore also
+continuous. Hence φ is also continuous.
+Our goal now is to develop some basic non-archimedean functional analysis for
+Banach modules over Banach–Tate rings (eventually under a noethe rian assump-
+tion). In particular, we study compact operators on them and then (in S ection 4)
+study the spectral theory of these operators. When the Banach–Tate rin g is a Ba-
+nachK-algebra over a non-archimedean ﬁeld K, then the theory as we present it
+is explained in great detail in [9], building on work of Coleman an d Serre [27].
+Further helpful references are [4, Chapter 3] and [18, Section 2 ]. Most results go
+through almost word by word in the more general setting of Banach– Tate rings.
+One word of caution: When adapting proofs from the setting of Banach K-algebras
+to Banach–Tate rings, one has to be a bit careful when it comes to "ch anging the
+norm". More precisely , we want to show that certain results only de pend on the
+topology of the Banach–Tate ring and do not dependent on the chosen no rm. In
+this context let us recall that two norms |·| ,|·| ′ on a ring A are called equiva-
+lent if they induce the same topology and that they are called bounded-equivalent
+if there are constants C1,C 2 > 0 such that C1|a|≤| a|′≤ C2|a| for all a∈ A. Now
+for Banach-algebras over a non-archimedean ﬁeld, the notions “e quivalent norms”
+and “bounded-equivalent norms” coincide. For Banach–Tate rings however the sit-
+uation is di ﬀerent. If two norms on a Banach–Tate ring A are bounded equivalent
+then they induce the same topology , but the converse might not be tru e (cf. [18,
+Lemma 2.1.6 and 2.1.7] for what can be said in the converse directi on). In these
+notes this issue will only appear in Prop. 2.37. Let us also observe, that when the
+norm on A is ﬁxed and we only change the norm on the Banach-module M, life is
+easier as the following remark shows.
+Remark 2.15. Let (A,|·| ) be a Banach–T ate ring and let M be a Banach A-module,
+equipped with two equivalent norms ||·|| and||·||′, i.e., two norms that induce the same
+topology onM or equivalently such that the identity maps id : (M,||·|| )→ (M,||·||′) and
+id : (M,||·||′)→ (M,||·|| ) are continuous. By Lemma 2.12 above, we see that two norms
+onM are equivalent if and only if there are positive constants C andC′, such that
+C||m||′≤||m||≤ C′||m||′, for allm∈M.
+===== PDF PAGE 9 =====
+2.2 Orthonormalizable Banach modules 9
+Letφ :M→M be a continuous A-linear map, then for all m∈M we have
+C||φ(m)||′≤||φ(m)||≤|| φ||·||m||≤ C′||φ||·||m||′,
+which implies that ||φ||′≤ (C′/C )||φ||. Similarly we get that ||φ||≤ (C′/C )||φ||′, in par-
+ticular the operator norms||·|| and||·||′ on HomA(M,M ) are also equivalent.
+2.2 Orthonormalizable Banach modules
+Convention: If I is a set and we are given a map I→A,i↦→ai into a Banach–Tate
+ringA, then the statement lim i→∞ai = 0 means that for any ǫ >0 there are only
+ﬁnitely manyi∈I with|ai|>ǫ .
+Exercise 2.16. Show that limi→∞ai = 0 implies that only countably many ai can be
+non-zero.
+Exercise 2.17. LetA be a Banach–Tate ring and M a Banach A-module. Consider
+a subset{ei :i∈I} ofM such that||ei|| = 1 for all i∈I. Show that for any sequence
+(ai )i∈I of elements of A with limi→∞ai = 0, the sum ∑
+iaiei converges inM.
+Deﬁnition 2.18. Let A be a Banach–Tate ring. A Banach A-module M is called
+orthonormalizable, or ONable for short, if there exists a subset {ei :i∈I} ofM such
+that
+• Every element m∈M can be written uniquely as a sum ∑
+i∈Iaiei, with ai∈A
+and limi→∞ai = 0.
+• If m = ∑
+i∈Iaiei, then||m|| = maxi∈I|ai|.
+Such a subset{ei :i∈I} is called an orthonormal basis or ON basis ofM.5
+Note that the second condition in the above deﬁnition implies that ||ei|| = 1 for
+alli∈I. Let cA(I) be the A-module of functions f : I→A such that limi∈If (i) = 0,
+with addition and A-action deﬁned point-wise. Then ||f|| = maxi∈I|f (i)| deﬁnes a
+norm on cA(I) and turns it into a Banach A-module. It is ONable with canonical
+ON basis given by the functions ei :I→A, whereei(j) = 0 for i /nequal j andei(i) = 1.
+Exercise 2.19. Show that a BanachA-moduleM is ONable if and only if there exists
+a set I and an A-linear isometric (i.e., norm-preserving) isomorphism M /simequal cA(I).
+Show that the choice of an ON basis is equivalent to the choice of suc h an isometry .
+Example 2.20. The classical Tate algebra K⟨T⟩over a non-archimedean ﬁeld K
+is orthonormalizable. (Note K⟨T⟩is actually just another name for cK (N0)). An
+orthonormal basis is given by{Ti :i∈ N0}.
+5Inp-adic functional analysis, the concept of a Hilbert space does no t make sense, but ONable
+Banach modules are a good replacement for them.
+===== PDF PAGE 10 =====
+2.3 Compact operators on Banach modules 10
+We can use ON bases to associate a “matrix” to a homomorphism of Bana ch
+A-modules. For that let φ : M → N be a homomorphism of ONable Banach
+A-modulesM andN with ON bases{ei :i∈I} and{fj :j∈J}. We deﬁne the matrix
+coeﬃcients (ai,j )i∈I,j∈J by
+φ(ei) =
+∑
+j∈J
+ai,jfj.
+Exercise 2.21. 1. Check that for all i∈I, we have limj→∞ai,j = 0.
+2. Show that there exists a constant C∈ R such that|ai,j|≤ C for alli∈I,j ∈J.
+3. Show that in fact we have ||φ|| = supi,j|ai,j|.
+Conversely , given a collection of (ai,j )i∈I,j∈J of elements of A satisfying (1) and
+(2) of the exercise above, there is a unique continuous φ : M → N with norm
+||φ|| = supi,j|ai,j| and associated matrix (ai,j ).
+In particular, we can measure the distance of two homomorphisms us ing their ma-
+trix coeﬃcients as follows. Namely , let φ andψ be elements of Hom A(M,N ) with
+matrices (ai,j ) and (bi,j ). Then||φ−ψ||≤ ǫ if and only if|ai,j−bi,j|≤ ǫ for alli,j .
+2.3 Compact operators on Banach modules
+Deﬁnition 2.22. Let A be a Banach–Tate ring and let M and N be Banach
+A-modules. A homomorphism M→ N is said to be of ﬁnite rank if its image is
+contained in a ﬁnitely generated A-submodule ofN .
+A homomorphism φ : M→N is called compact if it is a limit of ﬁnite rank homo-
+morphisms in (the Banach A-module) HomA(M,N ).
+Remark 2.23. • In the literature compact operators also go by the name completely
+continuous maps.
+• WhenA =K is a ﬁeld, compact operators have been studied in greater generality,
+i.e., not just forK-Banach spaces, but for more general topologicalK-vector spaces.
+A reference for results in this direction is the book [25].
+Notation: Assume from now on that A is a noetherian Banach–Tate ring.
+The noetherian assumption guarantees the following.
+Lemma 2.24. Let A be a noetherian Banach–T ate ring. Every ﬁnitely generated
+A-moduleM has (up to equivalence) a unique norm making it into a Banach A-module.
+AnyA-linear map f : M→N of ﬁnite Banach A-modules is continuous, f (M)⊆N is
+closed and the induced map M→f (M) is open. [22, Proposition II.4.2.2.]
+Our aim now is to study compact operators on ONable Banach A-modules over
+a noetherian Banach–Tate ring A. In particular, we want to show that a compact
+endomorphism has a characteristic power series.
+===== PDF PAGE 11 =====
+2.3 Compact operators on Banach modules 11
+Remark 2.25. • A natural proof strategy for statements about compact operators is
+to ﬁrst prove the statement for ﬁnite rank operators and then pass to the limit. I n
+these situations one often has to choose a ﬁnitely generated submodule P⊂M of
+some Banach-moduleM and one would like to have that such a P is automatically
+complete. The noetherian assumption on the Banach–T ate ring guarantees this (cf.
+Lemma 2.26 below).
+• In [4, Section 3.1], Bellaïche relaxes the noetherian assumption. He con siders
+Banach K-algebrasA with the property that every ﬁnitely generated submodule
+of an ONable Banach A-module is closed ([4, Hypothesis 3.1.8]). This is enough
+to prove part (3) of Lemma 2.26 below (cf. [4, Lemma 3.1.12]), which is all that
+is needed to construct the characteristic power series. We can pass to thi s more
+general setting here as well, (i.e., assume that our Banach–T ate ring A satisﬁes
+Hypothesis 3.1.8.) and all results of this section still hold. We have decided to
+work with noetherian A here, as we will anyways do so from Section 3 onwards.
+LetM be an ONable Banach A-module with ON basis {ei :i∈I}. If S⊆I is a
+ﬁnite subset, then we deﬁne AS to be the submodule ⊕i∈SAei ofM. Consider the
+projection
+πS :M→AS,
+∑
+i∈I
+aiei↦→
+∑
+i∈S
+aiei.
+Note that this is norm-decreasing onto a closed subspace of M. We have the fol-
+lowing lemma.
+Lemma 2.26. [9, Lemma 2.3] Let M be an ONable Banach A-module with basis
+{ei :i∈I} and letP be a ﬁnite submodule of M.
+1. There is a ﬁnite subset S⊆I such thatπS :M→AS is injective when restricted to
+P.
+2. P is a closed subset of M and hence is complete.
+3. For all ǫ > 0 there is a ﬁnite set T ⊆ I such that for all p ∈ P we have
+||πT (p)−p||≤ ǫ||p||.
+Exercise 2.27. Prove Lemma 2.26 by checking that the proof in [9] goes through
+using Lemma 2.24 above in the relevant places and substituting ̟ forρ.
+Proposition 2.28. LetA be as above, i.e., a noetherian Banach–T ate ring. LetM andN
+be ONable Banach A-modules with ON bases{ei :i∈I} and{fj :j∈J}. Let φ :M→N
+be a continuous A-module homomorphism with matrix (ai,j ). Then φ is compact if and
+only if limj→∞ supi∈I|ai,j| = 0.
+===== PDF PAGE 12 =====
+2.3 Compact operators on Banach modules 12
+Proof. ([9, Prop.2.4] verbatim.) If the matrix of φ satisﬁes limj→∞ supi∈I|ai,j| = 0,
+then for any ǫ >0 there is a ﬁnite subset S⊆J such that||φ−πS◦φ||≤ ǫ. This
+implies thatφ is compact.
+For the converse, ﬁrst note that it su ﬃces to show the result for operators of ﬁnite
+rank. If φ = 0 then the result is trivial, so assume φ /nequal 0 andφ(M)⊆P whereP⊆N
+is ﬁnitely generated. Then by part (3) of the previous lemma, for an yǫ> 0 we may
+choose a ﬁnite subsetT⊆J such that for allp∈P,||πT (p)−p||≤ ǫ||p||/||φ|| and hence
+||πT◦φ−φ||≤ ǫ. Therefore|ai,j|≤ ǫ ifj /nelement T and as ǫ was arbitrary this implies the
+claim.
+The following exercise is very important in the context of eigenvar ieties. Here
+is why: When applying the eigenvariety machine to a given situation , one require-
+ment is that one has a compact operator at hand. In practice, this is a Hecke oper-
+ator (often called Up) acting on some space of p-adic automorphic forms. In order
+to apply the machine one ﬁrst has to check that Up indeed deﬁnes a compact oper-
+ator. In most instances this is done by relating Up to some version of the following
+restriction map.
+Exercise 2.29. Consider the Banach Qp-algebra (the global functions on the closed
+disk of radius p)
+Qp⟨pT⟩=
+
+∑
+n
+an(pT )n : limn→∞an = 0
+⊂ Qp⟦T ⟧,
+equipped with the norm||∑
+nan(pT )n|| = maxn|an|. Show that the “restriction map”6
+res : Qp⟨pT⟩֒→Qp⟨T⟩,
+∑
+n
+an(pT )n↦→
+∑
+n
+an(pT )n =
+∑
+n
+(anpn)Tn
+is a compact operator. (Here, as above, Qp⟨T⟩is equipped with the Gauß norm.)
+Now let M be a Banach A-module with ON basis {ei :i∈I}. Let φ : M→M
+be a compact endomorphism with matrix ( ai,j )i,j∈I . If S is a ﬁnite subset of I, let
+cS := ∑
+σ :S→S sgn(σ)∏
+i∈Sai,σ (i), where the sum ranges over all permutations of S.
+Forn≥ 0 deﬁne
+cn := (−1)n
+∑
+S
+cS,
+where the sum is over all subsets S ⊆ I of size n.7 This converges in A by
+Proposition 2.28.
+6The name comes from the geometric context: The unit disk Spa( Qp⟨T⟩, Zp⟨T⟩) is contained in the
+disk Spa(Qp⟨pT⟩, Zp⟨pT⟩) of radius p and this natural inclusion corresponds to the map res, which
+we can think of as taking a function on the larger disk and restri cting it to the smaller disk.
+7Note thatc0 =c∅ = 1.
+===== PDF PAGE 13 =====
+2.3 Compact operators on Banach modules 13
+Deﬁnition 2.30. Letφ :M→M be a compact endomorphism as above. We deﬁne
+the characteristic power series (also called Fredholm determinant) ofφ as
+det(1−Xφ ) :=
+∑
+n≥0
+cnXn ∈A⟦X⟧.
+Remark 2.31. Note that whenM is a ﬁnite-dimensional vector space over a ﬁeld A =K,
+then det(1−Xφ ) agrees with the algebraically deﬁned determinant.
+Proposition 2.32. Let φ : M → M be a compact operator on an ONable Banach
+A-moduleM with ON basis{ei :i∈I}. The characteristic power series
+det(1−Xφ ) :=
+∑
+n
+cnXn ∈A⟦X⟧
+ofφ deﬁned above converges for all a∈A.
+Proof. Letr1,r 2,... be the sequence of real numbers obtained from ordering the set
+{rj (φ) := sup i∈I|ai,j| : j ∈ I} decreasingly , so by Proposition 2.28, we have
+limk→∞rk = 0. If S⊆I is a subset of size n, then each product aS,σ := ∏
+i∈Sai,σ (i)
+satisﬁes|aS,σ|≤ r1··· rn and hence|cn|≤ r1···rn. If α∈ R>0 is any positive real num-
+ber, then
+|cn|αn≤ (r1α)··· (rnα).
+As theriα tend to zero, so does|cn|αn, which shows the claim.
+In particular we see that the characteristic power series belongs to the ring of
+entire power series which is deﬁned as follows.
+Deﬁnition 2.33. The ringA{{X}} of entire power series is deﬁned as
+A{{X}} :=
+
+∑
+n
+anXn∈A⟦X⟧ : ∀r∈ Z, lim
+n→∞
+an̟rn = 0
+.
+Exercise 2.34. Check that this deﬁnition does not depend on the choice of ̟.
+From the deﬁnition of the characteristic power series, it is a prior i not clear
+that it is independent of the choice of ON basis. V erifying this is s lightly tedious
+but important. In a similar spirit, we would like to know that the deﬁ nition of the
+characteristic power series does not depend on the choice of an equi valent norm
+onM (and even onA). The rest of this subsection is concerned with checking these
+technical properties. For this we need a lemma.
+Lemma 2.35. LetM be an ONable Banach A-module with ON basis{ei :i∈I}.
+1. If φn : M→M,n = 1, 2,... is a sequence of compact operators that converges to
+a compact operator φ, then limn det(1−Xφn) = det(1−Xφ ), uniformly in the
+coeﬃcients (in the norm of A).
+===== PDF PAGE 14 =====
+2.3 Compact operators on Banach modules 14
+2. If φ :M→M is compact, and if the image of φ is contained in P :=
+⨁
+i∈SAei for
+S a ﬁnite subset of I, then det(1−Xφ ) = det(1−Xφ|P), where the right side is the
+usual algebraically-deﬁned determinant.
+3. (Strengthening of (2).) If φ :M→M is compact and if the image ofφ is contained
+in an arbitrary submodule Q ofM which is free of ﬁnite rank, then det(1−Xφ ) =
+det(1−Xφ|Q), where again the right side is the usual algebraically-deﬁned deter -
+minant.
+Proof. Proof of (1) (cf. [27, Prop.8]): Let ( ai,j ) and (a(n)
+i,j ) be the matrices of φ and
+φn and put
+det(1−Xφ ) =
+∑
+m
+cmXm, det(1−Xφn) =
+∑
+m
+c(n)
+m Xm.
+Letε∈ R be such that 0 <ε< 1. As before let {rj (φ) := supi∈I|ai,j| :j∈I} forj∈I
+and let r1,...,r h be the subset of {rj (φ) : j∈I} of elements > 1. Fix a real number
+η∈ R>0 such that
+ηr1··· rh≤ε.
+Letn be such that||φ−φn||≤ η. Then|ai,j−a(n)
+i,j|≤ η for alli,j (see Exercise 2.21 and
+the paragraph after). Hence rj(φn) =rj(φ) ifrj (φ)>η andrj(φn)≤η otherwise. For
+a ﬁnite set S⊆I, let us now consider
+aS,σ−a(n)
+S,σ =
+∏
+i∈S
+ai,σ (i)−
+∏
+i∈S
+a(n)
+i,σ (i).
+Rewriting this expression, one can deduce that
+|aS,σ−a(n)
+S,σ|≤ η sup
+i∈S
+∏
+j∈S,j /nequal i
+sup(rj(φ),rj(φn)).
+With the inequalities above and the fact that η < 1 one sees that |aS,σ−a(n)
+S,σ|≤
+ηr1··· rh≤ε. Taking the sum over all S we conclude that
+|cm−c(n)
+m|≤ ε,
+for all m.
+For the proof of (2) and (3), the reader can copy the proof of [9, Lemma 2.5 (b),(c)]
+verbatim, replacing Lemma 2.3 in loc.cit by Lemma 2.26 above.
+Proposition 2.36. Let (M,||·|| ) and (M,||·||′) be Banach (A,|·| )-modules. Suppose that
+the norms||·|| and||·||′ are equivalent onM, i.e., they induce the same topology and that
+they both turn M into an ONable Banach A-module. Let φ : M→M be an A-linear
+endomorphism. Then φ is compact with respect to ||·|| if and only if it is compact with
+respect to||·|| ′ and furthermore if {ei :i∈I} and{fj :j∈J} are ON bases for (M,||·|| )
+and (M,||·||′) respectively, then the characteristic power series det(1−Xφ ) with respect
+to these bases coincide.
+===== PDF PAGE 15 =====
+2.3 Compact operators on Banach modules 15
+Proof. Note that by Remark 2.15, the induced operator norms on Hom A(M,M )
+are equivalent. The ﬁrst claim then follows as the set of compact op erators only
+depends on the topology of Hom A(M,M ). We further claim that φ can be written
+as the limit of operators φn, which have image contained in free modules of ﬁnite
+rank. Let ε> 0 and consider the matrix ( ai,j ) of φ in the ON basis {ei :i∈I}. Then
+just as in the proof of Proposition 2.28 we may ﬁnd a ﬁnite set T⊆ I such that
+||πT◦φ−φ||≤ ε. Hence, for a suitable choice of sequence ( Tn)n of ﬁnite subsets Tn
+ofI we see that φn :=πTn◦φ converges toφ in either norm, i.e., ||φn−φ||→ 0 and
+‖|φn−φ||′→ 0 asn→∞ . By deﬁnition, the image of any φn is contained in a ﬁnite
+free submodule of M. Hence we can apply the previous lemma (Parts (1) and (3))
+toφ = limφn to deduce equality of the characteristic power series.
+We want as much ﬂexibility as possible in changing norms, so let us show some-
+thing even more general:
+Proposition 2.37. Let (M,||·|| ) be a Banach (A,|·| )-module and let (M,||·||′) be a Banach
+(A,|·|′)-module. Suppose the norms |·| and|·|′ are equivalent on A, that the norms||·||
+and||·||′ induce the same topology on M andM is ONable with respect to both norms.
+Letφ :M→M be anA-linear endomorphism. Then φ is compact with respect to||·|| if
+and only if it is compact with respect to ||·||′ and furthermore if{ei :i∈I} and{fj :j∈J}
+are ON bases for (M,||·|| ) and (M,||·||′) respectively, then the characteristic power series
+det(1−Xφ ) with respect to these bases coincide.
+Proof. This follows just like the last proposition, once we remark that g iven equiv-
+alent norms on A andM as in this proposition, the two resulting operator norms
+on HomA(M,M ) deﬁne the same topology . This topology can be described inde-
+pendent of any norm, as the so called strong topology or the topology of bounded
+convergence. We refer to [25, Chapter 1.6], in particular to Remark 6.7, where i t is
+shown that the strong topology agrees with the topology of any operator n orm.
+We record the following lemma, which is useful in practice when cha nging
+modules.
+Lemma 2.38. IfM andN are ONable BanachA-modules and ifφ :M→N is compact
+andv :N→M is continuous, then φ◦v andv◦φ are compact and det(1−X(φ◦v)) =
+det(1−X(v◦φ)).
+Proof. We leave it as an exercise to check that the proof of Lemma 2.7. in [9 ] goes
+through.
+===== PDF PAGE 16 =====
+2.4 More ﬂexibility in the setup 16
+2.4 More ﬂexibility in the setup
+In practice, the above setup is too rigid. In this section we discuss two degrees of
+ﬂexibility . Firstly , we need to work with a more general class of A-modules. We
+can generalize the construction of characteristic power series f rom ONable Banach
+A-modules to Banach A-modules with property (Pr) (see Deﬁnition 2.39 below).
+This generalization turns out to be a straightforward application of Proposition
+2.37. Secondly , we want to apply the result of this section in a geometric situation
+involving the a ﬃnoid adic space Spa(A,A +). In such geometric situations it is im-
+portant that one can control base change, or at the very least under stands how to
+pass from the situation over Spa(A,A +) to a rational subdomain. Hence we discuss
+some results on changing the underlying Banach–Tate ring.
+Compact operators on Banach modules with property (Pr)
+For the next deﬁnition recall the Banach A-modulecA(I) attached to a set I from
+Section 2.2.
+Deﬁnition 2.39. 1. A Banach A-moduleM is called potentially ONable if there
+exists a set I such that M isA-linearly homeomorphic to cA(I). A set in M
+corresponding to{ei = (δi,j )j :i∈I} under such a map is called a potential ON
+basis.
+2. We say a Banach A-module has property (Pr) if it is a direct summand of a
+potentially ONable Banach A-module.
+Remark 2.40. Note that the notions of being potentially ONable and of having prop-
+erty (Pr) are independent of the chosen norms. They only depend on the underl ying
+topologicalA-module structure.
+Example 2.41. 1. Let A = Qp and M = Qp(√p) equipped with its usual norm,
+then||M|| /nequal |A| and soM is not ONable, but it is potentially ONable.
+2. Let K be a discretely valued non-archimedean ﬁeld. Then in fact any Banach
+space overK is potentially ONable (cf. Proposition 1 of [27] and the remarks
+before it, as well as [4, Section 3.1.4]).
+A Banach A-module P has property (Pr) if and only if for every surjection
+f : M→N of Banach A-modules and for every continuous map α : P→N ,α lifts
+to a mapβ :P→M such thatf◦β =α. One can show this using the Open Mapping
+Theorem. Note that if P =cA(I) for some set I, then to give α : P→N is to give a
+bounded map I→N and such a map lifts to a bounded map I→M by the open
+mapping theorem.
+===== PDF PAGE 17 =====
+2.4 More ﬂexibility in the setup 17
+Exercise 2.42. 1. Work out the details of the proof of the universal property .
+2. Use the universal property to show that if P is a ﬁnite Banach A-module with
+property (Pr), then P is projective as an A-module.
+3. Show that the converse is also true: If P is a ﬁnite A-module which is projec-
+tive as an A-module, thenP has property (Pr).
+IfM is potentially ONable then one still has the notion of characteristic power
+series of a compact operator on M. This can be deﬁned by choosing a homeomor-
+phismM /simequal cA(I) and then transferring the norm of cA(I) to M via this homeomor-
+phism, which results in the choice of an equivalent ONable norm on M. Using this
+norm one then gets a characteristic power series as before and by P roposition 2.37
+this is independent of all choices.
+Even more generally: Say that P satisﬁes property (Pr) and that φ :P→P is a com-
+pact endomorphism. We can deﬁne det(1 −Xφ ) as follows: Choose Q such that
+P⊕Q is potentially ONable and deﬁne det(1 −Xφ ) = det(1−X(φ⊕ 0)). Note that
+φ⊕ 0 :P⊕Q→P⊕Q is compact, as can be checked easily . This deﬁnition might a
+priori depend on the choice of Q, but let us check that it does not. If R is another
+BanachA-module such that P⊕R is potentially ONable, then so is P⊕Q⊕P⊕R
+and then the maps φ⊕ 0⊕ 0⊕ 0 and 0⊕ 0⊕φ⊕ 0 are conjugate via an isometric
+A-module isomorphism, and therefore have the same characteristi c power series.
+We can conclude that det(1−Xφ ) is well-deﬁned, i.e., independent of the choice of
+Q by doing and applying the following exercise.
+Exercise 2.43. Let M and N be ONable A-modules and φ : M→ M a compact
+endomorphism, then the characteristic power series of φ and of φ⊕ 0 :M⊕N→
+M⊕N coincide.
+Controlling base change
+We brieﬂy give some recollection on tensor products. As before, letA be a noethe-
+rian Banach–Tate ring. Let M andB be two normed A-modules. Deﬁne a function
+|·| : M⊗AB→ R≥0,|g| := inf
+(
+max
+1≤i≤r
+|mi||bi|
+)
+,
+where the inﬁmum ranges over all possible representations g = ∑ r
+1=imi⊗bi , with
+mi∈M andbi∈B ofg. This turns M⊗AB into a semi-normed A-module, and as
+such it has a completion (see [7, 1.1.7]), which is a normed A-module and which
+is denoted by Mˆ⊗AB. If h : A→ B is a contractive (i.e., |h(a)|≤| a| for all a∈ A)
+morphism of Banach–Tate rings, then B is a normed A-module and then Mˆ⊗AB is
+a normedB-module.
+Given two complete Tate ringsA andB and a continuous maph :A→B, the im-
+age of a pseudo-uniformizer is a pseudo-uniformizer. Choose a pseudo-uniformizer
+===== PDF PAGE 18 =====
+2.4 More ﬂexibility in the setup 18
+̟∈A and compatible rings of deﬁnitions. Equip A andB with the standard norms
+as in (1). Then h is contractive.8
+Exercise 2.44. LetA,B andC be complete Tate rings, with continuous mapsA→B
+andA→C. Compare the above completed tensor product to the construction fro m
+Bergdall’s lectures ([6, Section 3.1.2]).
+Let us verify that the concepts introduced above behave well with re spect to
+completed tensor products.
+Lemma 2.45. Leth : A→B be a continuous morphism of noetherian Banach–T ate alge-
+bras and equipA andB with the standard norms (so that by the above, h is contractive).
+Then the following holds.
+1. If M is a potentially ONable Banach A-module, then Mˆ⊗AB is a potentially ON-
+able Banach B-module. Furthermore, if {ei :i∈I} is a potential ON basis for M
+then{ei⊗ 1 :i∈I} is a potential ON basis for Mˆ⊗AB.
+2. If M has property (Pr ) then so does Mˆ⊗AB.
+Proof. We prove part (1). Set N =cB(I) and let{fi :i∈I} be its canonical ON basis.
+Then there is a natural A-bilinear bounded map M×B→N that sends (∑
+iaiei,b )
+to ∑
+ibh(ai )fi which induces a continuous map ϕ :Mˆ⊗AB→N .9 On the other hand
+ifn∈N , one can write n as a limit of elements of the form ∑
+i∈Sbifi, where S is a
+ﬁnite subset of I. The element ∑
+i∈Sei⊗bi ofM⊗AB satisﬁes
+|
+∑
+i∈S
+ei⊗bi|≤ C max
+i∈S
+|bi|
+and hence as S gets bigger the resulting sequence is Cauchy and so its image in
+Mˆ⊗AB tends to a limit. This gives a well-deﬁned continuous A-module homomor-
+phismN→Mˆ⊗AB which is inverse to φ.
+Part (2) is left as an exercise.
+Corollary 2.46. Leth : A→B be a continuous morphism of noetherian Banach–T ate
+algebras.
+1. If M andN are potentially ONable Banach A-modules with potentially ON bases
+{ei :i∈I} and{fj : j∈J} and φ : M→ N is compact, with matrix (ai,j ), then
+φ⊗ 1 :Mˆ⊗AB→Nˆ⊗AB is also compact and if (bi,j ) is the matrix of φ⊗ 1 with
+respect to the bases (ei⊗ 1) and (fj⊗ 1) thenbi,j =h(ai,j ) for alli∈I andj∈J.
+8In particular, with these choices h is bounded. Note that for a general map between Banach–T ate
+rings continuity is a weaker condition than boundedness, as we have already mentioned in the context
+of changing the norm on A and the identity map.
+9This follows from the universal property of the completed ten sor product, see [7, 2.1.7 Proposi-
+tion 1] for details.
+===== PDF PAGE 19 =====
+19
+2. If M andN have property (Pr) then again, φ⊗ 1 is compact.
+Proof. Compactness of φ⊗ 1 in both cases follows from Proposition 2.28 and the
+rest is left as an exercise.
+One immediately checks:
+Corollary 2.47. Forh : A→B a continuous morphism of noetherian Banach–T ate al-
+gebras,M a Banach A-module satisfying propery (Pr ) andφ a compact endomorphism
+ofM the following holds. If det(1−Xφ ) = ∑
+ncnXn, then the characteristic power series
+ofφ⊗ 1 onMˆ⊗AB is given by det(1−X(φ⊗ 1)) = ∑
+nh(cn)Xn.
+3 Spectral V arieties
+In this section we construct and study so called spectral varieties o ver an a ﬃnoid
+base. As mentioned in the introduction, in our eigenvariety constr uction, the spec-
+tral variety sits between the eigenvariety and the weight space. There is a structural
+map from the spectral variety to weight space whose geometric prope rties we also
+study in this section. These properties will be used in the constructio n of the eigen-
+variety in Section 5 below . The main references for this section a re [2, Appendix B]
+and [18, Section 2.3].
+3.1 Construction of spectral varieties
+Let (A,A +) be a Tate–Huber pair with pseudo-uniformizer̟∈A. Assume through-
+out this section that A is strongly noetherian, so in particular ( A,A +) is sheafy .
+LetW := Spa(A,A +) be the associated a ﬃnoid adic space and consider the relative
+aﬃne line A1
+W overW . Recall this is the increasing union of a ﬃnoid disks
+A1
+W =
+⋃
+n≥1
+Dn,
+whereDn = Spa(A⟨̟nX⟩,A +⟨̟nX⟩) is the a ﬃnoid disk of “radius” ̟−n.
+Exercise 3.1. Show that the global functions OA1
+W
+(A1
+W ) are given by the ring of
+entire power series A{{X}}.
+For later purposes we deﬁne the a ﬃnoid open subsets Dλ ⊆ A1
+W for any
+λ =l/m∈ Q, withl∈ Z andm∈ N by
+Dλ ={x∈ A1
+W :|̟lXm(x)|≤ 1}⊆ A1
+W.
+Note that A1
+W = ⋃
+λ∈QDλ.
+Deﬁnition 3.2. An entire power series F = ∑∞
+n=0anXn∈A{{X}} is called Fredholm
+series ifa0 = 1.
+===== PDF PAGE 20 =====
+3.1 Construction of spectral varieties 20
+For example, the characteristic power series of a compact operato r as in the last
+section is Fredholm series. An entire power seriesF∈A{{X}} gives rise to a coherent
+OA1
+W
+-idealIF as follows. As F is naturally an element of A⟨̟nX⟩for all n≥ 1, we
+can putIF|Dn := ~(F), where (F)⊂A⟨̟nX⟩is the ideal generated by F and ~(F) is the
+associated coherent sheaf on Dn as in [17, Section 1.2]. This glues to a coherent
+ideal sheafIF on A1
+W .
+Deﬁnition 3.3. LetF∈A{{X}} be a Fredholm series. The spectral variety (also called
+Fredholm hypersurface) ofF is deﬁned as the closed adic subspace
+V (F) :=V (IF )⊂ A1
+W.
+Let us describe this more explicitly . On the a ﬃnoid diskDn we have by con-
+struction that
+V (F)∩Dn = Spa(Bn,B +
+n),
+whereBn :=A⟨̟nX⟩/(F) andB+n := (A⟨̟nX⟩/(F))+ is the integral closure of the ring
+A+⟨̟nX⟩inBn.
+The formation of the spectral variety behaves well with respect to ba se change
+in the following sense. Let
+h : (A,A +)→ (B,B +)
+be a continuous morphism of complete Tate–Huber pairs, with A andB strongly
+noetherian. We have corresponding natural maps
+Y := Spa(B,B +)→W := Spa(A,A +)
+and A1
+Y → A1
+W . The map h : A→ B of the Tate rings induces a natural map
+A{{X}}→ B{{X}}. For a Fredholm series F = ∑
+nanXn∈A{{X}} let
+h(F) :=
+∑
+n
+h(an)Xn∈B{{X}}
+be its image. Then the construction of the spectral variety satisﬁes th e following
+property .
+Lemma 3.4. Let h : (A,A +)→ (B,B +) be as above. Let F = ∑
+nanXn∈ A{{X}} be a
+Fredholm series and let V (F) be its spectral variety. Then
+V (F)×WY /simequal V (h(F))⊂ A1
+Y.
+Proof. Exercise.
+We have a natural structure map w : V (F)→ Spa(A,A +) whose properties we
+now study . We will show thatw is ﬂat, locally quasi-ﬁnite and partially proper. (We
+refer to [17, Lecture 2] for deﬁnitions and background regarding th ese concepts.)
+===== PDF PAGE 21 =====
+3.2 Interlude on Newton polygons 21
+These properties are very useful for the eigenvariety machine. We start by verifying
+ﬂatness of w. Recall that a morphism f : X→Y of adic spaces is called ﬂat, if all
+maps on stalks are ﬂat, i.e., if for all x∈X, the natural morphism OY,f (x)→O X,x
+is ﬂat. If X andY are aﬃnoid and the map between the underlying Huber rings is
+ﬂat, thenf is ﬂat.
+Lemma 3.5. For anyn≥ 1, the morphismw|Dn :V (F)∩Dn→ Spa(A,A +) is ﬂat. Hence,
+the structure morphism w is ﬂat.
+Proof. Assume ﬁrst that n = 1, so that we want to show that A⟨X⟩/(F) is ﬂat. Note
+that as A is a complete noetherian Tate ring, A⟨X⟩is ﬂat over A by [28, 8.30]. As
+is explained in the same reference, it now su ﬃces to show that for any ﬁnitely
+generatedA-moduleM, the multiplication map
+wF :M⟨X⟩→M⟨X⟩, P↦→F·P
+is injective. As the constant term of F is equal to 1, one can just check this directly .
+HenceA⟨X⟩/(F) is ﬂat over A. The general case follows by rescaling.
+Our next goal is to show that w is locally quasi-ﬁnite. We follow the proof in [2,
+Appendix B.1]. For that, we ﬁrst observe that we can reduce to the ca se of A =K
+being a non-archimedean ﬁeld by applying the following lemma.
+Lemma 3.6. Let f : X→ Y be a morphism of analytic adic spaces which is of ﬁnite
+type. Then f is quasi-ﬁnite if and only if for every rank 1 pointy ofY , the morphism
+X×Y Spa(k(y))→ Spa(k(y)) is ﬁnite.
+Proof. This is the equivalence of (a) and (f) in [16, Lemma 1.5.2].
+In a nutshell, the ﬁeld case will follow from the fact that an entire p ower series
+F∈K{{X}}, where K is a non-archimedean ﬁeld, has only ﬁnitely many zeroes on
+any diskDn⊂ A1
+K , which follows from Weierstrass theory . For the actual proof in
+the ﬁeld case (Lemma 3.8 below) we will make use of Newton polygons. For the
+convenience of the reader we have included a summary of the relevant background.
+3.2 Interlude on Newton polygons
+LetK be a non-archimedean ﬁeld. We ﬁx a pseudo-uniformizer ̟ and the norm on
+K to be|a| = inf{p−n :a∈̟nK◦,n∈ Z}. The corresponding (additive) valuation will
+be denoted by v. It satisﬁes v(̟) = 1.
+LetF = ∑ anXn∈K⟦X⟧ be a Fredholm series, so that a0 = 1 /nequal 0. The Newton
+polygon of F is constructed as follows. (For details on Newton polygons of power
+series we refer the reader to [13, Chapter 7.4].) In R≥0× (R∪{ +∞}) plot the points
+(n,v (an)) for all n. If an = 0 then v(an) = +∞ and we think of ( n, +∞) as a point
+===== PDF PAGE 22 =====
+3.3 Properties of the structure map 22
+inﬁnitely high up the y-axis. LetC(F) be the set of these points. Deﬁne the Newton
+polygonN (F) ofF to be the lower convex hull of C(F).10
+IfF is a polynomial, i.e. if there is an m≥ 0, such that an = 0 for all n≥m, then
+putN (F)(x) = +∞ for allx>m 0 wherem0 is the degree of F.
+The Newton polygon N (F) : R≥0→ R∪{ +∞} is a piece-wise linear function.
+The linear pieces are called the segments ofN (F), the slopes of the segments are
+called the slopes ofN (F). Note that by construction the slopes of N (F)(x) increase
+asx∈ R≥0 increases. Let h∈ R. We say that a Fredholm series F∈K{{X}} has slope
+≤h (or>h ) if the slopes of its Newton polygon N (F) are all≤h (or>h ).
+Recall that for a polynomial P∈K[X], the slopes of its Newton polygon corre-
+spond to the valuations of its roots in K (see [23, Prop.II.6.3]). For an entire power
+series F one combines Weierstrass theory with the theory of Newton polygons to
+get control over the zeros of F. Again, the Newton polygon encodes a lot of in-
+formation, as is summarized in the following lemma. A reference for this lemma
+is [3, Theorem 4.4.2] (applied to the case where A is a ﬁeld). (A more elementary
+reference for the case when K is ap-adic local ﬁeld, see [13, 7.4.10 and 7.4.11].)
+Lemma 3.7. LetF = ∑
+nanXn∈K{{X}} be a Fredholm series. Let s1,...,s k be the ﬁrst
+k slopes of the Newton polygon N (F). Let n0 be the x-coordinate of the right endpoint
+of the k-th segment of the Newton polygon. Then there exists a polynomial P∈K[X] of
+degreen0 and a power series S∈K⟦X⟧ such that
+1. F =PS .
+2. S is entire.
+3. The Newton polygon of P is equal to the portion of the Newton polygon of F con-
+tained in the region 0≤x≤n0.
+4. S has slope>sk.
+3.3 Properties of the structure map
+We can now show that w is locally quasi-ﬁnite.
+Lemma 3.8. Suppose that A = K is a non-archimedean ﬁeld. Then there exists a
+strictly increasing sequence of rational numbers (λn)∈ QN
+>0 with limλn = +∞ such that
+V (F)∩Dλn is ﬁnite over Spa(K,K +).
+Proof. Note that if F is a polynomial, the lemma is easy . So we may assume that F
+is not a polynomial and so the Newton polygonN (F) has inﬁnitely many segments
+and hence inﬁnitely many slopes. Let {sn}n∈N be the slopes of N (F) of F, ordered
+10That is, put a pin at (0,v (a0)) = (0, 0), attach a long thread to the pin and then rotate this counter-
+clockwise until you hit the next element of C(F). Then repeat this.
+===== PDF PAGE 23 =====
+3.3 Properties of the structure map 23
+strictly increasingly . For anyn∈ N pickλn =l/m∈ Q such thatsn<λn<sn+1. Con-
+sider the a ﬃnoid subspaceDλn ={x :|̟lXm(x)|≤ 1}⊂ A1
+Spa(K,K +) that we deﬁned at
+the beginning of this section. We claim that V (F)∩Dλn→ Spa(K,K +) is ﬁnite. After
+possibly passing to a ﬁnite ﬁeld extension K′ we may assume that K′ contains an
+elementβ withv(β) =λn. By [16, Proposition 1.4.9] it su ﬃces to show that the base
+change morphism
+(V (F)∩Dλn)×Spa(K,K +) Spa(K′,K′+)→ Spa(K′,K′+)
+is ﬁnite. So without loss of generality we may assume that K contains an elementβ
+withv(β) = λn. Then Dλn = Spa(K⟨βX⟩,K +⟨βX⟩). Let P be the polynomial whose
+Newton polygon is given by the section of N (F) of the ﬁrst slopes s1,...,s n and
+let F(X) = P(X)·S(X) be the corresponding factorization. Then S is a Fredholm
+series with slopes strictly bigger than λn. In the algebraic closure K ofK we have a
+decompositionP(X) = ∏ (1−αiX) withv(αi)<λn for alli and we may rewrite
+P(X) =
+∏
+β−1αi
+∏
+(α−1
+i β−βX )∈K[X].
+Moreover the polyomial in βX , Q(X) := ∏ (α−1
+i β−βX ) is an element of K◦◦⟨βX⟩.
+Note also that (as S(X) is a unit in K⟨βX⟩)
+K⟨βX⟩/(F(X)) =K⟨βX⟩/(Q(X)) =K⟨T⟩/(Q′(T )),
+whereT is the variable βX andQ′(T ) = ∏ (α−1
+i β−T ) and this is a ﬁnite K-algebra.
+Finally (K⟨βX⟩/(F(X)))+ = K +⟨T⟩/(Q′(T )) and this is ﬁnite over K +, which com-
+pletes the proof.
+The following theorem is the main structural result on the spectral v ariety .
+Theorem 3.9. The morphism w : V (F)→W = Spa(A,A +) is ﬂat, locally quasi-ﬁnite
+and partially proper. For allx∈V (F) there is an open neighborhood U ofx inV (F) such
+that{x}⊂ U and an open neighborhoodV ofw(x) inW such that{w(x)}⊆ V ,w(U )⊂V
+and the induced morphism w|U :U→V is ﬁnite and ﬂat.
+Proof. The morphism w is locally of ﬁnite type and quasi-separated by construc-
+tion. It is locally quasi-ﬁnite by Lemma 3.6 and Lemma 3.8. It is partially proper
+again by Lemma 3.8 and the valuative criterion of partial properness ([16, Corol-
+lary 1.3.9]). Now by Proposition 3.10 below ,w being locally quasi-ﬁnite and par-
+tially proper implies that for every x∈V (F) and w(x)∈ Spa(A,A +) there exists an
+open neighbourhoodU ofx inV (F) such that{x}⊆ U , and an open neighbourhood
+V ofw(x) in W = Spa(A,A +) such that{w(x)}⊆ V ,w(U )⊆V and the induced mor-
+phismw|U : U→V is ﬁnite. By Lemma 3.5 above, the morphism V (F)∩Dn→W
+is ﬂat for anyn. Let V (F)n := (V (F)∩Dn)×WV . After possibly shrinking V , we may
+assume that U⊆V (F)n forn suﬃciently large. Clearly U⊆V (F)n is open. Hence
+the morphismU→V is ﬂat.
+===== PDF PAGE 24 =====
+3.3 Properties of the structure map 24
+In the proof we have used the following important characterization of locally
+quasi-ﬁnite and partially proper maps, whose proof requires sign iﬁcant eﬀort.
+Proposition 3.10. Letf : X→Y be a morphism of analytic adic spaces. Assume f is
+locally of ﬁnite type, X is quasi-separated and Y is quasi-compact and quasi-separated.
+Then the following are equivalent:
+1. f is locally quasi-ﬁnite and partially proper.
+2. For every x∈X, there exist open subspaces U and V of X and Y such that the
+closure{x} of{x} in X is contained in U , the closure of {f (x)} of{f (x)} in Y is
+contained inV ,f (U )⊆V andf :U→V is ﬁnite.
+Proof. See [17, Proposition 2.16] 11 in this volume, or [16, Proposition 1.5.6].
+Remark 3.11. Consider again the structure map w :V (F)→W = Spa(A,A +) and con-
+siderU andV as in Theorem 3.9 above. Then, as noted in the proof of that theorem,
+forn suﬃciently large U⊆V (F)n = (V (F)∩Dn)×WV is open. Now U→V is ﬁnite,
+hence also proper and so U is also closed in V (F)n. Therefore U is a union of connected
+components ofV (F)n.
+For the next corollary , we remark the following. LetY andZ be locally strongly
+noetherian analytic adic spaces (i.e., both Y andZ have an open cover by a ﬃnoids
+Spa(R,R +) with R strongly noetherian and Tate). If f : Y→Z is a ﬁnite ﬂat map,
+then the sheaf f∗OY is a ﬁnite locally free OZ -module. We say that f has constant
+degree iff∗OY is of rank d overOZ . If Z is connected, then any ﬁnite ﬂat map is of
+constant degree.
+Let Cov(V (F)) denote the set of all open a ﬃnoidU⊆V (F) such that w(U )⊆W
+is open aﬃnoid and the mapw|U :U→w(U ) is ﬁnite of constant degree. The above
+theorem immediately implies:
+Corollary 3.12. The set Cov(V (F)) is an open cover of V (F).
+Remark 3.13. The analogue of this corollary in the rigid analytic world is [9, Theorem
+4.6] and its proof is hard and uses Raynaud’s theory of admissible formal models of rig id
+spaces. The hard part here is also to understand the structure of quasi-ﬁni te maps. Note
+that the above proof uses Proposition 3.10, and as mentioned above, the proof of this
+proposition is also rather di ﬃcult.
+Let us make the geometry of w even more explicit. In the following, we say that
+two entire power series S,Q∈A{{X}} are relatively prime if the ideal (S,Q ) satisﬁes
+(S,Q ) =A{{X}}.
+11By [16, Lemma 5.1.3] Y is taut as it is quasi-compact and quasi-separated.
+===== PDF PAGE 25 =====
+3.3 Properties of the structure map 25
+Proposition 3.14. Letx∈V (F) and let U = Spa(C,C +)⊂V (F) andV = Spa(B,B +)⊆
+W be aﬃnoid opens as in Theorem 3.9 above. Assume furthermore that U is of constant
+degreed overV . Then the Fredholm series F has a factorization in B{{X}} of the form
+F =QS , whereQ = 1 +b1X +··· +bdXd∈B[X],bd∈B× andS is a Fredholm series with
+coeﬃcients inB which is relatively prime to Q andC =B[X]/(Q).
+Conversely, for any such factorization F =QS inB{{X}}, the a ﬃnoid
+U = Spa(B[X]/(Q), (B[X]/(Q))+),
+is naturally an element of Cov (V (F)). (Here (B[X]/(Q))+ is the integral closure of B+ in
+B[X]/(Q).)
+Proof. For the ﬁrst part, note that U is a union of connected components of V (F)n
+forn suﬃciently large, by Remark 3.11. Hence we have a surjection
+B⟨̟nX⟩→C.
+LetL∈B[X] be the characteristic polynomial of the image of X inC. The composi-
+tion
+f :B[X]/(L)→B⟨̟nX⟩/(L)→C
+is a morphism of ﬁnitely generated B-modules and the topology on B induces a
+natural topology on them. The topology on C agrees with the topology induced
+from the surjection B⟨̟nX⟩→C. The morphism f : B[X]/(L)→C therefore has
+dense image. But by [15, Lemma 2.3 and 2.4], every morphism of ﬁ nitely generated
+B-modules is strict, hence f is surjective. Comparing ranks shows that f is an
+isomorphism. Hence for n large enough, we have a factorization F =LH inB⟨̟nX⟩
+with H a unit in B⟨̟nX⟩/(L) /simequal C. From this factorization we see that L(0)∈B×.
+DeﬁneQ(X) :=L(0)−1L(X). Then we can rewrite F =Q·S withS =L(0)H. As H is a
+unit inC, so is S and henceQ andS are relatively prime.
+For the “conversely” part, we argue as follows: U→V is ﬁnite and surjective
+of constant degree deg Q, so it remains to see that U is naturally an open subset
+of V (F). For this we may work locally over V . For each n we have compatible
+morphisms
+B[X]/(Q)→B⟨̟nX⟩/(Q)←B⟨̟nX⟩/(F).
+The second map is the projection onto the ﬁrst factor in the decomposi tion
+B⟨̟nX⟩/(F) /simequal B⟨̟nX⟩/(Q)×B⟨̟nX⟩/(S)
+which results from the fact that Q andS are relatively prime.
+ThusV (Q) ={Q = 0}⊆ V (F) is open and closed in V (F). Moreover, when n is suﬃ-
+ciently large, we claim that the ﬁrst map is an isomorphism. To se e this, consider
+the quotient map p : B[X]→B[X]/(Q) and equip the target with a submultiplica-
+tive norm that induces the canonical topology . For large enough n we will have
+===== PDF PAGE 26 =====
+3.4 Slope data 26
+|p(̟nX)|≤ 1 and hence p(B0[̟nX])⊆ (B[X]/(Q))0 (here we are using −0 to denote
+unit balls), so p is continuous for the topology on B[T ] coming from the inclusion
+B[X]⊆B⟨̟nX⟩, and we may complete to obtain a morphism B⟨̟nX⟩→B[X]/(Q)
+with kernel QB⟨̟nX⟩. This gives an inverse to the map B[X]/(Q)→B⟨̟nX⟩/(Q),
+proving the claim. Thus we may identify U with{Q = 0}⊆ V (F), which shows that
+U is naturally an open subset of V (F).
+3.4 Slope data
+We end this section with a brief discussion of the concept of a slope da tum follow-
+ing [18, Section 2], which is a helpful terminology in practice an d is standard in
+the context of overconvergent cohomology .
+We keep the general notation of this section. Then for U = Spa(B,B +)⊆W an
+open aﬃnoid subspace and h = l
+m∈ Q, we let
+DU,h :={x∈ A1
+U :|̟lXm(x)|≤ 1}⊂ A1
+U
+similar to above, but keeping track of the base U in the notation.
+Deﬁnition 3.15. Let h∈ Q≥0 and let U⊂ W = Spa(A,A +) be an open a ﬃnoid.
+Consider the open a ﬃnoid subset VU,h :=V (F)∩DU,h⊆ A1
+W ofV (F). We say that
+(U,h ) is a slope datum (for (W,F )) ifVU,h→U is ﬁnite of constant degree.
+Leth∈ R. Recall from above that for A =K, we say that an entire power se-
+ries F∈K{{X}} has slope≤h (or > h) if all slopes of its Newton polygon are ≤h
+(or > h). Let us extend this notion Banach–Tate rings as follows. Fix a Bana ch–
+Tate ring A and ﬁx a multiplicative pseudo-uniformizer ̟. For any rank 1 point
+x∈ Spa(A,A +) normalize the additive valuation on the complete residue ﬁeld k(x)
+so that the image of ̟ under the natural mapA→k(x) has valuation 1. We say that
+F∈A{{X}} has slope≤h (or>h ) if, for any rank 1 point x∈ Spa(A,A +) with residue
+ﬁeldk(x), the specialization Fx∈k(x){{X}} has slope≤h (or>h ).
+Deﬁnition 3.16. LetA be a Banach–Tate ring with a ﬁxed multiplicative pseudo-
+uniformizer ̟. Let F∈A{{X}} be a Fredholm series and let h∈ R. A slope≤ h-
+factorization of F is a factorization F = QS in A{{X}} where Q is a multiplicative
+polynomial of slope≤h andS is a Fredholm series of slope >h .
+Remark 3.17. IfA is a complete T ate ring with a ﬁxed pseudo-uniformizer ̟, then the
+notions of slope factorizations and slope ≤h or >h are independent of the choice of a
+norm onA with̟ multiplicative.
+Lemma 3.18. LetA be a Banach–T ate ring with a ﬁxed multiplicative pseudo-unifor-
+mizer̟ and leth∈ Q≥0. Let S be a Fredholm series of slope >h andQ a multiplicative
+polynomial of slope≤h. Then Q andS are relatively prime.
+===== PDF PAGE 27 =====
+3.4 Slope data 27
+Proof. See [18], Lemma 2.2.7.
+The following proposition is an adaption Lemma 4.4 of [9] and Theo rem 4.5.1
+of [3] to our setting and will be applied in the course of James Newton in the context
+of spaces of overconvergent p-adic forms of bounded slope.
+Proposition 3.19. Keep the setup from above, so W = Spa(A,A +) is as before and
+F∈ A{{X}} is a Fredholm series. Let x in W = Spa(A,A +) be a closed rank 1 point.
+Then for any ﬁxed h∈ Q, there is a slope datum (U,h ) for (W,F ) withU an open a ﬃ-
+noid neighbourhood of x.
+Proof. As above considerDW,h⊂ A1
+W . As w is locally quasi-ﬁnite, the set
+S :=w−1(x)∩V (F)∩DW,h ={x1,...,x n}
+is ﬁnite. For any xi∈S let us choose an open neighbourhood Ui as in Theorem 3.9,
+soUi contains{xi} ={xi} and we may assume that w|Ui :Ui→Vi =w(Ui ) is ﬁnite of
+constant degree,Ui does not contain any of the xj forj /nequal i and thatVi is open inW
+and contains{x} ={x}. Now (as x is a closed rank 1 point), for any i∈{ 1,...,n }
+{x} =
+⋂
+Vi⊇V′⊇{x}
+V′qc open
+V′
+and so also
+{xi} =
+⋂
+Vi⊇V′⊇{x}
+V′qc open
+w|−1
+Ui
+(V′).
+Hence by shrinking the a ﬃnoidsUi, we may assume their imagesw(Ui) =:V agree,
+Ui→V is ﬁnite and that Ui⊂D V,h for all i∈{ 1,...,n }. We claim that by possibly
+further shrinkingV , we can arrange that
+w−1(V )∩DV,h =U1∪···∪ Un.
+To see this let wh :=w|w−1(V )∩DV,h . We have w−1
+h ({x})⊆U1∪···∪ Un. Hence there
+exists{x}⊆ V′⊂ V , such that w−1
+h (V′)⊆ U1∪···∪ Un. Redeﬁning U := V′ and
+lettingU′
+i :=w−1
+h (U )∩Ui we see that (U,h ) is a slope datum for (W,F ).
+Corollary 3.20. Let W = Spa(A,A +) be as above and let F∈ A{{X}} be a Fredholm
+series. Let U = Spa(B,B +)⊆W be an a ﬃnoid open, and h∈ Q≥0. Then the following
+holds.
+1. If (U,h ) is a slope datum then F has a slope≤h-factorization inB{{X}}.
+2. The collection of all VU,h for all slope data (U,h ) form an open cover of V (F).
+Proof. We leave it as an exercise for the reader to deduce this from the results
+above (cf. [18, Theorem 2.3.2] in case you are stuck).
+===== PDF PAGE 28 =====
+28
+4 Riesz Theory
+LetA be a noetherian Banach–Tate ring. Let M be a Banach A-module satisfying
+property (Pr) and let φ : M→M be a compact endomorphism with characteristic
+power series F(X) = det(1 −Xφ ). In this section we explain how a factorization
+of F =Q·S, where Q is a polynomial and S is an entire power series (e.g. as in
+Corollary 3.14, or arising from a slope ≤h factorization) corresponds to a (slope)
+decomposition of M. This decomposition is into two direct summands, and cru-
+cially (for the eigenvariety construction) one of them is ﬁnitely ge nerated. The
+main references for this section are [18, Section 2.2], [9, Secti on 3], [2, Appendix
+B.2] and [4, Section 3.2].
+LetQ∈A[X] be a polynomial. We deﬁne
+Q∗(X) :=XdegQQ(1/X )∈A[X].
+We need the following lemma. It is proved using the concept of the resultant
+R(S,Q ) of an entire power series S and a polynomial Q as developed by Coleman
+[12] which extends the classical resultant of two polynomials. The r esultantR(S,Q )
+is an element of A, which is a unit if and only if S andQ are relatively prime in
+A{{X}} (see [12, Lemma 3.7]).
+Lemma 4.1. [12, Lemma A4.1]. Let A be a noetherian Banach–T ate ring. Let M be
+a Banach A-module satisfying property (Pr) and let φ : M→ M be a compact endo-
+morphism with characteristic power series S(X) = det(1 −Xφ ). If Q(X)∈ A[X] is a
+monic polynomial, thenQ andS are relatively prime inA{{X}} if and only ifQ∗(φ) is an
+invertible operator on M.
+LetM and φ be as above. The above mentioned decomposition of M is con-
+structed in two steps. First we use zeroes of the characteristic powe r series F(X) =
+det(1−Xφ ) to split o ﬀ a ﬁnite submodule of M (see Proposition 4.3). In a second
+step we prove the sought after decomposition, in what is sometimes re ferred to as
+the Main Theorem of Riesz theory , Theorem 4.6.
+For the ﬁrst step, let us deﬁne the Fredholm resolvant ofφ to be
+RF(X) :=F(X)/(1−Xφ )∈A[φ]⟦X⟧.
+One shows as in [27, Proposition 10] that if one writes RF(X) = ∑
+m≥0vmXm, with
+coeﬃcientsvm∈ EndA(M), then for all r∈ R>0 the sequence||vm||rm tends to zero.
+Let us also make the following remark regarding zeroes of power s eries. Let R
+be a ring. If f = ∑
+n≥0anXn∈R⟦X⟧ ands∈ N0, then we deﬁne
+∆sf =
+∑
+n≥0
+( n +s
+s
+)
+an+sXn∈R⟦X⟧.
+If f,g ∈ R⟦X⟧, then one can check that ∆s(fg ) = ∑ s
+i=0 ∆i(f )∆s−i(g). Let A be as
+before. It is clear from the deﬁnition, that ∆s mapsA{{X}} to itself.
+===== PDF PAGE 29 =====
+29
+Deﬁnition 4.2. Letk∈ N0. We say that a∈A is a zero of order k ofH∈A{{X}} if
+(∆sH)(a) = 0 for s<k and (∆kH)(a) is a unit.
+Ifk≥ 1 andH = 1+a1X +... then this implies that−1 =a(a1 +a2a+... ) and hence
+thata∈A is a unit. By induction onk one checks thatH(X) = (1−a−1X)kG(X), where
+G∈A{{X}} withG(a) a unit.
+Proposition 4.3. LetM be a Banach A-module with property (Pr ), let φ : M→M be
+a compact endomorphism with characteristic power series F(X) = ∑
+n≥0cnXn. Let a∈A
+be a zero of F(X) of order k. There is a unique decomposition M =N⊕M′ into closed
+φ-stable submodules such that 1−aφ is invertible on M′ and (1−aφ)k = 0 onN . The
+submodulesN andM′ are deﬁned as the kernel and the image of a projector which is in
+the closure in EndA(M) ofA[φ]. MoreoverN is projective of rankk, and assumingk≥ 1
+thena is a unit and the characteristic power series of φ onN is (1−a−1X)k.
+Proof. The proof of Serre ([27]) and Buzzard ([9]) goes through: In A[φ]⟦X⟧, we
+consider the identity
+(1−Xφ )·RF(X) =F(X).
+Applying the operator ∆s we ﬁnd
+(1−Xφ )∆sRF(X)−φ∆s−1RF(X) = ∆sF(X).
+Deﬁnefs := ∆sRF(a). Putting X =a in the identities above, we arrive at the follow-
+ing relations:
+(1−aφ)f0 = 0
+(1−aφ)f1−φf 0 = 0
+···
+(1−aφ)fk−1−φfk−2 = 0
+(1−aφ)fk−φfk−1 =c, withc∈A×.
+These relations imply that fors<k , we have (1−aφ)s+1fs = 0. The last equation and
+the fact that (1−aφ)kfk−1 = 0 imply that with e =c−1(1−aφ)fk andf =−c−1φfk−1
+we get
+e +f = 1 and fe k = 0.
+By expanding (e +f )k = 1, we ﬁnd that ek + (kek−1f +··· +kef k−1 +f k) = 1. We deﬁne
+p :=ek,q :=kek−1f +··· +kef k−1 +f k.
+Thenp +q = 1, pq = 0 and furthermore p2 =p andq2 =q. The endomorphisms p
+andq in EndA(M) are therefore projections. Note that they are both in the closure
+ofA[φ].
+===== PDF PAGE 30 =====
+30
+Consider the decompositionM =N⊕M′ corresponding to these projections, i.e.
+N = Ker(p), and M′ = Ker(q). Then (1−aφ)k = 0 on N and (1−aφ) is invertible on
+M′. Furthermore if we set ψ := (1−aφ)k, thenN = Ker(ψ) andF = Im(ψ).
+It is clear that N satisﬁes property (Pr ), but furthermore we have (1 −aφ)k = 0 on
+N , which implies that the identity is a compact operator on N . Exactly as in the
+proof of [9, Proposition 3.2] one shows from this that N is projective.
+Ifk = 0, then N = 0 and M′ =M as can be seen from Lemma 4.1 and we are
+done. If k≥ 1 then F(a) = 0 and we already observed that then a is a unit. Let FN
+andFM′ denote the characteristic power series of φ onN andM′ respectively , then
+F =FNFM′ . By Lemma 4.1 we see that (X−a)k andFM′ generate the unit ideal in
+A{{X}}. Hence (1−a−1X)k dividesFN inA{{X}}. We leave it as an exercise to show
+that in fact we have equality FN = (1−a−1X)k (cf.[9, Prop. 3.2]).
+Finally , as (1−aφ)k = 0 on N , we see that φ is invertible on N . This means that
+the rank of N at any maximal ideal must be equal to the degree of FN modulo this
+maximal ideal and hence the rank is k everywhere.
+Remark 4.4. Note that (in the notation of the proposition) in particular the zeroes of
+F are the inverses of the eigenvalues of φ and all eigenvectors for the eigenvalue a−1 are
+contained inN .
+Deﬁnition 4.5. We call a polynomial Q∈A[X] multiplicative, if its leading coe ﬃ-
+cient is a unit, i.e., if Q∗(0)∈A×.
+Theorem 4.6. LetA be a noetherian Banach–T ate ring. Let M be a Banach A-module
+with property (Pr) and let φ :M→M be a compact operator with characteristic power
+seriesF(X) = det(1−Xφ ). Assume that we have a factorization F =QS , where S is a
+Fredholm series, Q = 1 +··· +anXn∈A[X] is a polynomial of degree n which is multi-
+plicative, andQ andS are relatively prime in A{{X}}.
+1. The submodule KerQ∗(φ)⊆ M is ﬁnitely generated and projective and has a
+uniqueφ-stable closed complement M(Q) such thatQ∗(φ) is invertible on M(Q).
+2. The idempotent projectors M→ KerQ∗(φ) andM→M(Q) lie in the closure of
+A[φ]⊆ EndA(M).
+3. The rank of KerQ∗(φ) is degQ, and det(1−Xφ| KerQ∗(φ)) =Q.
+4. Moreover, φ is invertible on KerQ∗(φ) and det(1−Xφ|M(Q)) =S.
+Proof. Consider the operatorv := 1−Q∗(φ)/Q∗(0). This is compact and has a char-
+acteristic power series which has a zero at X = 1 of order n (see [12, A4.3]). Apply-
+ing the previous proposition tov, we see thatM =N⊕M(Q), whereN andM(Q) are
+deﬁned as the kernel and the image of a projector in the closure of A[v] and hence
+in the closure of A[φ]. Both submodules N andM(Q) are φ-stable. Furthermore
+N is projective of rank n. Moreover by Lemma 4.1 the characteristic power series
+===== PDF PAGE 31 =====
+31
+ofφ onM(Q) is coprime to Q. Hence if G(X) is the characteristic power series of
+φ onN , we see that Q dividesG. But Q andG both have degree n, and the same
+constant term. Furthermore the leading coe ﬃcient ofQ is a unit. This is enough to
+deduce thatG =Q. We conclude that N = Ker(Q∗(φ)) and we have thus shown the
+ﬁrst three parts.
+We prove the last part as follows. Note that det( φ| KerQ∗(φ)) =Q∗(0)∈A× and so
+φ is invertible on Ker Q∗(φ). For the last claim write S′ = det(1−Xφ|M(Q)) and
+note thatF = det(1−Xφ| KerQ∗(φ)) det(1−Xφ|M(Q)) =QS′. Hence Q(S−S′) = 0.
+ButQ is not a zero divisor since Q(0) = 1 and so S =S′.
+In the rest of this section we include without proofs a discussion of slope≤h-
+decompositions from [18] (cf.[3]). Again this is helpful terminology in the conte xt of
+overconvergent cohomology .
+Deﬁnition 4.7. Let M be an (abstract) A-module, let φ : M→M be an A-linear
+map and let h∈ Q. An element m∈M is said to have slope≤h with respect to φ if
+there is a multiplicative polynomial Q∈A[X] such that
+1. Q∗(φ)(m) = 0,
+2. The slope of Q is≤h.
+We letM≤h⊆M denote the subset of elements of slope ≤h.
+Lemma 4.8. M≤h is anA-submodule ofM, which is stable under φ.
+Proof. See [18, Lemma 2.2.9].
+Deﬁnition 4.9. Let M be an A-module with an A-linear map φ : M→ M and
+let h∈ Q. A slope ≤ h-decomposition of M is an A[φ]-module decomposition
+M =Mh⊕Mh such that
+1. Mh is a ﬁnitely generated A-submodule ofM≤h,
+2. For every multiplicative polynomial Q∈A[X] of slope≤h, the map
+Q∗(φ) :Mh→Mh
+is an isomorphism of A-modules.
+Proposition 4.10. [18, Proposition 2.2.11]. Let M andφ be as above. If M has a slope
+≤h-decompositionMh⊕Mh, then it is unique, and Mh =M≤h (in particular the latter
+is ﬁnitely generated over A). We write M>h for the unique complement. Moreover, slope
+decompositions satisfy the following functorial properties:
+1. Let f : M→N be a morphism of A[φ]-modules with slope ≤h-decompositions.
+Thenf (M≤h)⊆N≤h andf (M>h)⊆N>h. Moreover, both Ker(f ) and Im(f ) have
+slope≤h-decompositions.
+===== PDF PAGE 32 =====
+32
+2. Let C• be a complex of A[φ]-modules and suppose that each Ci has a slope ≤h-
+decomposition. Then every Hi(C•) has a slope≤h-decomposition, explicitly given
+byHi (C•) =Hi(C•
+≤h)⊕Hi(C•
+>h).
+Deﬁnition 4.11. LetA be a Banach–Tate ring with a ﬁxed multiplicative pseudo-
+uniformizer̟ and let M be a Banach A-module. Assume that M has a slope-≤h
+decompositionM =M≤h⊕M>h. If f : A→B is a bounded morphism of Banach–
+Tate rings such that f (̟) is a multiplicative pseudo-uniformizer in B, we say that
+the slope-≤h decomposition is functorial forf if the decomposition
+Mˆ⊗AB = (M≤h⊗AB)⊕ (M>hˆ⊗AB)
+is a slope-≤h decomposition of Mˆ⊗AB (usingf (̟) to deﬁne slopes for B). We say
+that the slope-≤h decomposition is functorial if it is functorial for all such bounded
+homomorphisms of Banach–Tate rings out of A.
+Theorem 4.12. [18, Theorem 4.12]. Let (A,A +) be a noetherian T ate-Huber pair with
+a ﬁxed multiplicative pseudo-uniformizer ̟, and let M be a Banach A-module with
+property (Pr). Let φ be a compact A-linear operator on M, with Fredholm determinant
+F = det(1−Xφ ). If M has a slope ≤h-decomposition which is functorial with respect
+toA→k(x) for all rank 1 pointsx∈ Spa(A,A +), then F has a slope ≤h-factorization.
+Conversely, ifF has a slope-≤h factorization, thenM has a functorial slope-≤h decom-
+position.
+Remark 4.13. From the theorem and the fact that slopes of Newton polygons of polyno-
+mials correspond to valuations of the roots, we see the following: If M has a slope ≤h
+decomposition andmx∈M≤h⊗Ak(x) is an eigenvector for φ with eigenvalueλx∈k(x),
+thenλx has slope≤h, i.e., v̟(λx)≤h. Here v̟ is the ̟-adic valuation induced by ̟
+(i.e.,v(̟) = 1).
+Corollary 4.14. With notation and assumptions as in the theorem, a slope- ≤h decom-
+position ofM is functorial if and only if it is functorial for the natural map A→k(x) for
+all rank 1 pointsx∈ Spa(A,A +).
+===== PDF PAGE 33 =====
+33
+5 The Eigenvariety Machine
+We are ready to study the eigenvariety machine. In a ﬁrst step we will learn how to
+construct an eigenvariety over an a ﬃnoid base. In a second step we will study the
+general machine that allows for more general bases and a ﬂexible general setup.
+For this section we also ﬁx a non-archimedean ﬁeld K and assume it is discretely
+valued. We letOK be its ring of integers andπK a uniformizer. The main references
+are [9] and [19].
+5.1 Eigenvarieties over an a ﬃnoid base
+Let (A,A +) be a noetherian Tate–Huber pair, withA a Banach–Tate ring with pseudo-
+uniformizer ̟, equipped with the standard norm. We also assume that A is an
+OK -algebra. Let W = Spa(A,A +) and let M be a Banach A-module satisfying prop-
+erty (Pr). Let T be a commutative OK -algebra equipped with an OK -algebra ho-
+momorphism to End A(M), the continuous A-module endomorphisms of M. In
+practice T will be a polynomial OK -algebra generated by typically inﬁnitely many
+Hecke operators. In the notation we often do not distinguish an elemen tt∈ T from
+the endomorphism of M associated to it.
+Fix once and for all an element φ∈ T and assume the induced endomorphism
+φ :M→M is compact. Let F(X) = 1 +∑
+n≥1cnXn = det(1−Xφ ) be the characteristic
+power series of φ. LetZ :=V (F)⊂ A1
+W be the spectral variety of F.
+Let us call a tuple (( A,A +),M, T,φ ) of such objects a spectral datum. Our main
+goal now is to construct from such a spectral datum the so called eigenvariety, which
+is a certain ﬁnite cover of Z.
+Before we give the construction and as in [9] let us discuss an instr uctive ﬁnite-
+dimensional example, whereφ is invertible. For that assume (A,A +) is as above and
+letM be a ﬁnitely generated projectiveA-module of rankd. Let T be a commutative
+A-algebra equipped with anA-algebra homomorphism to EndA(M) and letφ be an
+element of T. Assume that the image of φ in EndA(M) lies in AutA(M).
+Deﬁne P(X) = det(1−Xφ ) = 1 +···∈ A[X]. Then the leading term of P, i.e., the
+coeﬃcient ofTd is a unit and A[X]/(P(X)) is a ﬁnite A-algebra. Let
+Z := Spa(A[X]/(P(X)),A [X]/(P(X))+),
+whereA[X]/(P(X))+ is the integral closure of A+ inA[X]/(P(X)).
+Let T(Z) be the image of T in EndA(M), then T(Z) is a ﬁnite A-algebra. The
+Cayley–Hamilton theorem implies that φ−1∈ T(Z) and that there is a natural map
+A[X]/(P(X))→ T(Z), sending X toφ−1. DeﬁneE := Spa(T(Z), T(Z)+), where T(Z)+
+is the integral closure of A+ in T(Z). The maps A→A[X]/(P(X))→ T(Z) respect
+the rings of integral elements and give rise to maps
+E→Z→ Spa(A,A +).
+===== PDF PAGE 34 =====
+5.1 Eigenvarieties over an a ﬃnoid base 34
+The spaceE is called the eigenvariety associated to the datum (( A,A +),M, T,φ ).
+Example 5.1. Consider the case, where A =K⟨T1,T 2⟩, for some non-archimedean
+ﬁeldK, where M =A2 and T =A[φ,t ], where φ acts on M as the matrix
+( 1
+0
+T1
+1
+)
+and
+t acts as
+( 0
+0
+T2
+0
+)
+. Then det(1−Xφ ) = (1−X)2, so in particularZ is non-reduced, and
+T(Z) is the ring A⊕Iε withI = (T1,T 2) and ε2 = 0. Note that in this case the maps
+E→Z andE→ Spa(A,A +) are not ﬂat andE is not reduced.
+Remark 5.2. So in general one cannot hope for too many good geometric properties of
+an eigenvariety. However, those occurring in nature are sometimes better be haved.
+Let us now go back to the more general setup of a spectral datum
+((A,A +),M, T,φ ) (as ﬁxed at the beginning of this section). Functional analysis an d
+our study of the spectral variety allow us to construct the eigenvarie ty in this more
+general setup as follows.
+Construction: Let U∈ Cov(Z), so U⊂Z is open a ﬃnoid with image V =w(U ) =
+Spa(B,B +)⊆W aﬃnoid open, andU→V is ﬁnite and ﬂat. DeﬁneMB :=Mˆ⊗AB and
+fort∈ T lettU denote the B-linear endomorphism of MB induced by t : M→M.
+Note that by Corollary 2.46, φU : MB→ MB is still compact. Let FU (X) be the
+characteristic power series of φU onMB. By Corollary 2.47,FU is just the image of
+F inB{{X}}.
+By Corollary 3.14, we know that OZ (U ) = B[X]/(Q) where Q = 1 +b1X +··· +
+bdXd∈B[X] is a polynomial with bd∈B× and we have a factorization FU =QS ,
+whereS is a Fredholm series in B{{X}} which is relatively prime to Q. We can now
+invoke Theorem 4.6 to get a decomposition
+MB =N⊕M(Q),
+whereN = KerQ∗(φU ) is projective of rank d overB. As the projector M→N is in
+the closure of B[φU ] it commutes with all the endomorphisms of MB induced by
+the elements of T, henceN ist-invariant for allt∈ T.
+Deﬁne TU to be the B-subalgebra of EndB(N ) generated by the elements of T.
+Now EndB(N ) is a ﬁnite B-module, and hence TU is a ﬁnite B-algebra and hence a
+Tate-Huber ring. Let T+
+U be the integral closure of B+ in TU . Deﬁne
+EU := Spa(TU, T+
+U ).
+We know thatQ∗(φU ) is zero on N and hence TU is naturally a ﬁnite B[Y ]/(Q∗(Y ))-
+algebra. Moreover, as the constant term of Q∗ is a unit, there is a natural iso-
+morphism B[Y ]/(Q∗(Y )) /simequal B[X]/(Q(X)) sending Y to X−1. Hence TU is a ﬁnite
+B[X]/(Q(X))-algebra and the map B[X]/(Q(X))→ TU sends X to φ−1. As T+
+U is
+the integral closure of B+ in TU , and similarly for B[X]/(Q(X))+, we see that T+
+U
+also agrees with the integral closure of B[X]/(Q(X))+ in TU . Hence we have a ﬁnite
+===== PDF PAGE 35 =====
+5.1 Eigenvarieties over an a ﬃnoid base 35
+mapEU→U . The space EU is the local piece above U of the eigenvariety that we
+seek to construct.
+We now proceed by showing that these local pieces glue together whenU ranges
+through the elements of Cov(Z). We do this by ﬁrst checking that the projective
+modulesN that we get from Riesz theory , glue together to form a coherent shea f
+onZ. In the following let us write FU =QUSU for the factorization associated to
+an elementU∈ Cov(Z).
+Proposition 5.3. The assignment U↦→Ker(Q∗
+U (φU )) deﬁnes a coherent sheaf N of
+OZ -modules onZ.
+Proof. We include the proof from [18, 4.1.8]. As Cov(Z) is an open cover of Z it
+suﬃces to prove that wheneverU1⊆U2 are elements of Cov(Z), we have a canonical
+isomorphism
+Ker(Q∗
+U2
+(φU2))⊗OU2
+OU1 /simequal Ker(Q∗
+U1
+(φU1)).
+DeﬁneU3 =w|−1
+U2
+(w(U1)). Then U1⊆U3⊆U2, so it su ﬃces to treat the inclusions
+U1⊆U3 andU3⊆U2. In the ﬁrst case we havew(U1) =w(U3) and the result follows
+from Proposition 5.4 below , sinceU1⊆U3 forcesQU1|QU3. For the second we have
+U3 =U2×w(U2)w(U1) and we leave it as an exercise to check that everything behaves
+nicely . (Note that we already know from Lemma 3.4 that the spectral varieties
+behave naturally with respect to base change.)
+Proposition 5.4. Assume that F has two factorizations F =Q1S1 =Q2S2 where the
+Qi are multiplicative polynomials, the Si are Fredholm series, and for each i theQi and
+Si are relatively prime. Assume furthermore that Q1|Q2. Then we have a canonical
+isomorphism
+Ker(Q∗
+2(φ))⊗A[X]/(Q2)A[X]/(Q1) /simequal Ker(Q∗
+1(φ)).
+Proof. Let P∈A[X] be such that Q2 =PQ 1. Then P is a multiplicative polyno-
+mial which is relatively prime to Q1. Hence we may ﬁnd polynomials f,g ∈A[X]
+such that Pf +Q1g = 1. We then have A[X]/(Q2) /simequal A[X]/(Q1)×A[X]/(P) and
+Pf ∈A[X]/(Q2) corresponds to (1 , 0)∈A[X]/(Q1)×A[X]/(P). The proposition fol-
+lows from the equality
+Pf · Ker(Q∗
+2(φ)) = Ker(Q∗
+1(φ)),
+which we leave as an exercise (cf. [18, Proposition 4.1.7]).
+We can now deﬁne the eigenvariety . Let (( A,A +),M, T,φ ) be a spectral da-
+tum. Let N be the coherent sheaf on the spectral variety Z from above. Consider
+the endomorphism sheaf End OZ (N ). For every open U∈ Cov(Z) we have a map
+T→ EndOZ (N )(U ) and these maps are compatible. Deﬁne T(Z) to be the sub-
+presheaf of EndOZ (N ) generated overOZ by the image of T. By ﬂatness of rational
+localization this is a sheaf 12 and hence a coherent sheaf of OZ-algebras onZ.
+12See the proof of Lemma 5.7 below for the reason why ﬂatness is crucial.
+===== PDF PAGE 36 =====
+5.2 Eigenvariety data 36
+Deﬁnition 5.5. The eigenvarietyE associated to the spectral datum ((A,A +),M, T,φ )
+is deﬁned as the relative adic spectrum Spa (T(Z)).
+By construction the eigenvariety E is ﬁnite over Z. It is quasi-separated and
+locally quasi-ﬁnite and partially proper over W = Spa(A,A +), as the structure mor-
+phismw :Z→ W is.
+Let us check what happens when we change the base to a di ﬀerent a ﬃnoid
+algebra. First a lemma from commutative algebra.
+Lemma 5.6. [19, Lemma 3.1.2] Let A, A′ and T be rings with A andA′ Noetherian
+and letN be a ﬁnitely generated A-module. Assume that we have ring homomorphisms
+f :A→A′ andψA :T→ EndA(N ) and letψA′ be the composition ofψA with the natural
+map EndA(N )→ EndA′ (N⊗AA′) coming fromf . LetTA (resp.TA′ ) be theA-subalgebra
+(resp. A′-subalgebra) generated by the image of ψA (resp. ψA′). Then the natural
+A′-linear map TA⊗AA′→TA′ is a surjection with nilpotent kernel in general, and if
+f is ﬂat then it is an isomorphism.
+Now let us consider a ﬂat map ( A,A +)→ (A′,A′ +) of noetherian Tate-Huber
+pairs (note this is adic). Let M′ andφ′ be the obvious base extensions, so e.g. M′ :=
+Mˆ⊗AA′. Consider the spectral datum (( A′,A′ +),M′, T,φ′). To it we can associate a
+spectral varietyZ′ and an eigenvarietyE′. We already know from Lemma 3.4 that
+Z′ =Z× Spa(A,A+) Spa(A′,A′ +).
+Lemma 5.7. If (A,A +)→ (A′,A′ +) is a morphism of noetherian T ate–Huber pairs, then
+there is a natural map E′→E overZ and the induced map E′→E× ZZ′ induces an
+isomorphism (E′)red→ (E×ZZ′)red . If the map A→A′ is ﬂat, thenE′→E× ZZ′ is an
+isomorphism.
+Proof. Let Cov(Z) and Cov(Z′) denote the usual sets of covers of Z andZ′. Let
+W = Spa(A,A +) and W′ = Spa(A′,A′ +). If U is in Cov(Z), then the pullback U′ =
+U×W W′ is an element of Cov(Z′) and the U′ whereU runs through Cov(Z) still
+form a cover of Z′. Hence E′ may be constructed by glueing the EU′ for all such
+U′. So let U∈ Cov(Z) with image V = Spa(B,B +) in W . Applying Lemma 5.6 the
+statements follow in this case. In particular if A→A′ is ﬂat, so is B→B′ :=Bˆ⊗AA′
+and we have TU′ = TU⊗BB′. As the assertion is local on both Z andZ′ the lemma
+follows.
+5.2 Eigenvariety data
+In practice the base of the eigenvariety is not a ﬃnoid. To ﬁx notation let us take
+an abstract locally noetherian analytic adic space W overOK as a base space. The
+letterW is used as in practice this space is a space of weights ofp-adic automorphic
+forms. The base W is then called the weight space, we adapt this terminology
+===== PDF PAGE 37 =====
+5.2 Eigenvariety data 37
+here (even though it is content-free). For example, in the case of th e Coleman–
+Mazur eigencurve, the base W is a ﬁnite disjoint union of open discs. Then over
+an open a ﬃnoid Spa(A,A +) ofW one typically has a situation as described above,
+i.e., a spectral datum (( A,A +),M, T,φ ), and one would like to glue the respective
+eigenvarieties to an eigenvariety over W . The algebra T is usually some abstract
+algebra that is independent ofA, but unfortunately in practice, the Banach module
+M does depend onA and cannot necessarily be extended to a bigger a ﬃnoid. In the
+Coleman–Mazur eigencurve setting, these Banach-modules are s paces of functions
+with a certain “convergence radius” which depends on A and which shrinks when
+we increase Spa(A,A +).
+There are at least two ways of dealing with this issue. One way is expl ained
+in [9]. There, it is observed that the Banach-modules over the di ﬀerent a ﬃnoids
+are “linked” in a certain way . These links are put in an axiomatic f ramework and
+one can then prove that the glueing works.
+A second way is to make the observation that in practice even though the Banach-
+modules depend on an extra parameter like a radius r, the resulting Fredholm
+series and hence the spectral variety are independent of this choic e. As a conse-
+quence one can then glue the spectral varieties to a “global” spectra l varietyZ over
+W . The resulting “global” structure map w :Z→W still has all properties of The-
+orem 3.9. Next, one veriﬁes that the coherent sheaf N from Proposition 5.3 above
+is independent of the additional parameter r and glues to a coherent sheaf on the
+glued spectral varietyZ. Once this independence is shown, everything ﬁts into the
+following elegant general setup.
+Deﬁnition 5.8. An eigenvariety datum is a tupleD = (Z,N, T,ψ ) whereZ is a locally
+noetherian analytic adic space overOK ,N is a coherentOZ -module, T a commuta-
+tiveOK -algebra, andψ : T→ EndOZ (N ) anOK -algebra homomorphism.
+We see that from a spectral datum as above, we can build an eigenvariety datum
+by takingZ to be the spectral variety and N the coherent sheaf from Proposition
+5.3. In practice,Z will arise as a “glued” spectral variety over a non-aﬃnoid weight
+spaceW as described above, and N as the corresponding glued coherent sheaf.
+Note however that in the deﬁnition of an eigenvariety datum Z can be even more
+general.
+Proposition 5.9. Given an eigenvariety datum D = (Z,N, T,ψ ), there is a locally
+noetherian analytic adic space E =E(D) overOK , together with a ﬁnite morphism
+π :E →Z, an OK -algebra homomorphism φE : T→O (E), and a faithful coherent
+OE -moduleH. There is a canonical isomorphism π∗H /simequal N , which is compatible with
+the actions of T on both sides (via φE andψ, respectively).
+The spaceE is characterized by the following local description: for U⊂Z an aﬃnoid
+open we haveEU = Spa(TU, T+
+U ) where TU is theOZ(U )-subalgebra of EndOZ (U )(N (U ))
+generated by the image of T and T+
+U is the integral closure ofO+
+Z(U ) in TU . AsN (U ) is
+canonically a TU -module this givesH overEU .
+===== PDF PAGE 38 =====
+5.3 Points of eigenvarieties with pseudorigid base 38
+Proof. For U⊂Z aﬃnoid open, TU is commutative and ﬁnite over OZ (U ), and
+hence (TU, T+
+U ) is a noetherian Tate-Huber pair. The space EU comes with a canon-
+ical ﬁnite map EU→U andN (U ) is a ﬁnitely generated TU -module. By Lemma
+5.6 and ﬂatness of rational localization for a ﬃnoid noetherian analytic adic spaces,
+these constructions glue together and satisfy the statements in the theor em.
+Remark 5.10. One shouldn’t worry too much about the rings of integral elements here.
+In practice, it is often the case that the weight space W is locally of the form Spa(A,A◦),
+i.e., the rings of integral elements are the subrings of A of power-bounded elements.
+Then every element of Cov (Z) is also of the form Spa(C,C◦) (as the relevant morphism
+is ﬁnite) and asE is ﬁnite overZ, the same is true for the eigenvariety.
+5.3 Points of eigenvarieties with pseudorigid base
+Finally we come to the most important property of eigenvarieties, which justiﬁes
+their name, which is that their points correspond to systems of eigen values. We
+refer to [4, Chapter 2 and Section 3.7] for more details regarding so me of the argu-
+ments below .
+To understand the meaning of points on an eigenvariety we need to pas s to a
+more restricted set of base spaces. We choose to work with so called pseudorigid
+spaces. The property of these spaces, that is important for us, is that there is a
+well behaved set of maximal points corresponding to maximal ideals of the rings
+underlying the a ﬃnoids. (For pseudorigid spaces, these maximal points are also
+dense.) We could work in a more general setting, namely with so call ed Jacobson
+adic spaces (see [20]), but pseudorigid spaces are the naturally o ccurring spaces in
+the context of eigenvarieties and a good setup for studying the geometr y of eigen-
+varieties further (e.g., in order to make sense of irreducible com ponents). We refer
+to the appendix for the deﬁnitions and basic facts on pseudorigid spac es.
+So let W be a pseudorigid space over OK and assume we have a (if need be
+glued) spectral varietyZ and an eigenvariety datum as above with associated eigen-
+varietyE→Z→W . In particular let us assume that there is a cover of W by open
+pseudorigid aﬃnoidsW = Spa(A) = Spa(A,A◦) that come with a ﬁxed spectral da-
+tum ((A,A◦),MA, T,φ ) such thatZW =Z×WW is the corresponding spectral variety .
+In the following we denote the ﬁbre of MA above a maximal pointw∈ Max(A) with
+residue ﬁeld L by Mw :=MAˆ⊗AL. We let κ :E→W denote the structure map to
+weight space. Let Max(E) be the set of maximal points ofE, i.e., the set of all points
+x∈E such that there is an open a ﬃnoid pseudorigid neighborhood U = Spa(A) of
+x inE such that x corresponds to a maximal ideal of A. We want to show that the
+maximal points Max(E) ofE correspond to certain systems of eigenvalues of T.
+For this let us ﬁrst recall some notions from linear algebra. As sume that A =L
+is a ﬁeld. Recall that an element m∈ML is called a common eigenvector for T if
+for every t∈ T there is a scalar λ(t)∈L such that t·m =λ(t)m. The map λ : T→L
+===== PDF PAGE 39 =====
+5.4 Rigidity results 39
+is then a ring homomorphism (character). We let ML[λ]⊆M denote the set of all
+common eigenvectors forλ.
+Deﬁnition 5.11. We say that a character λ : T→L is a system of eigenvalues ap-
+pearing inML ifML[λ] /nequal 0. We say that λ isφ-ﬁnite ifλ(φ) /nequal 0.
+Letw∈ Max(W ) be a maximal point with residue ﬁeld L =k(w). Consider the
+ﬁberNL :=N⊗ AL which is a ﬁnite-dimensional L vector space. Let TL⊂ EndL(NL)
+be the L-algebra generated by the image of T⊗OKL. This is a ﬁnite algebra over L
+and hence an artinian semi-local ring. Note that then for any of the ﬁnitely many
+maximal ideals m ofTL we haveNL[m] /nequal 0 (cf. [4, Section 2.5.1]).
+Assumeλ : T→L is a character. Then λ is a system of eigenvalues appearing
+inNL if and only if λ factors through a character TL→L. (See [4, Theorem 2.5.9]).
+Moreover (see [4, Corollary 2.5.10]), for any ﬁeld L′ containingL, there is a natural
+bijection between Spec(TL)(L′) and the systems of eigenvalues of T that appear in
+NL⊗LL′.
+Proposition 5.12. Letw∈ Max(W ) be a maximal point with residue ﬁeld L =k(w). Let
+L′ be a ﬁnite extension of L. Then the set of L′-pointsx of Max(E) such thatκ(x) =w is
+in natural bijection with the φ-ﬁnite systems of eigenvalues of T appearing inMw⊗LL′.
+The bijection attaches to x the system of eigenvalues λx : T→L′,t↦→φE (t)(x).
+Proof. Without loss of generality W is a ﬃnoid. Also E is covered by the EU , for
+U∈ Cov(Z) and we can work locally on E. So we ﬁx U∈ Cov(Z) and let V =
+Spa(A)⊆W be its image in W and we may assume w∈V . This point corresponds
+to a surjection A→L. Note that an L′-pointx∈ Max(EU ) gives a map x : TU→L′.
+Furthermore, by construction, a system of eigenvalues of T appearing in Mw⊗LL′
+isφ-ﬁnite if and only if it appears in ( N (U′)⊗AL)⊗L′ for some U′∈ Cov(Z). Let
+Nw =N (U )⊗AL.
+To prove the proposition it now su ﬃces to construct a bijection between the
+maximalL′-points inEU abovew and the systems of eigenvalues appearing inNw⊗L
+L′. But by Lemma 5.6 above, the kernel of the map TU⊗AL→TL is nilpotent and
+so a maximal ideal in EU corresponds to a maximal ideal in TL. The result now
+follows from the linear algebra discussion prior to this propositi on.
+5.4 Rigidity results
+We end our exposition of the eigenvariety machine by discussing so me rigidity
+results, following [19, Section 3] closely . For simplicity we ke ep the assumption
+that the baseW (orZ) is pseudorigid overOK . Below we use the following notation:
+If X is a pseudorigid space over OK , x∈ Max(X) is a maximal point and N is a
+coherentOX-module, then we writeN (x) for the ﬁber of N atx, which is a vector
+space over the residue ﬁeld k(x).
+Let us ﬁrst describe the behavior of the eigenvariety construction under arbi-
+trary base change.
+===== PDF PAGE 40 =====
+5.4 Rigidity results 40
+Proposition 5.13. LetD = (Z,N, T,ψ ) be an eigenvariety datum with eigenvariety E.
+Letf :Z′→Z be a map of pseudorigid spaces over OK . Form the eigenvariety datum
+D′ := (Z′,N′ :=f∗N, T,ψ′),
+whereψ′ is the composition of ψ with the natural map EndOZ (N )→ EndOZ′ (N′). Let
+E′ be the eigenvariety attached to D′. Then there is a natural map E′→E overZ, and
+the induced mapE′→E× ZZ′ induces an isomorphism (E′)red→ (E×ZZ′)red . If f is
+ﬂat, thenE′→E× ZZ′ is an isomorphism.
+Proof. By the local nature of the construction of eigenvarieties in Propos ition 5.9,
+the assertion is local both onZ′ andZ, so we may assume that they are both aﬃnoid
+pseudorigid spaces over OK . Then the proposition follows directly from Lemma
+5.6.
+Applying this to the case, wheref is the closed immersionZ′ =֒Z of a max-
+imal point z∈ Max(Z), we can also slightly rephrase the results from the previous
+section as follows.
+Corollary 5.14. LetD = (Z,N, T,ψ ) be an eigenvariety datum with eigenvariety
+π :E→Z . Fix z∈ Max(Z). Then the set π−1(z)⊆ Max(E) is in natural bijection with
+the systems of Hecke eigenvalues appearing in the ﬁbre N (z), i.e., the maximal ideals
+lying above the kernel of the natural map T⊗OKk(z)→ Endk(z)(N (z)).
+Let us also mention the following reconstruction result for eigen variety data.
+Proposition 5.15. Letπ :E→Z be a ﬁnite morphism of pseudorigid spaces and let T
+be anOK -algebra. Assume that there is a ring homomorphism φ : T→O (E) such that
+OE is generated by the image of φ overOZ , and assume that H is a faithful coherent
+OE -module. We may form an eigenvariety datum
+D = (Z,N, T,ψ ),
+whereN =π∗H andψ is the composition T
+φ
+→O (E)→ EndOZ (N ). Then π :E→Z is
+the eigenvariety attached toD, andφ =φE .
+Proof. See [19, 3.1.6].
+Exercise 5.16. Show that any Zariski closed subset of an eigenvariety is natura lly
+the eigenvariety of an eigenvariety datum.
+We end with a very general result that makes it possible to construct morphisms
+between eigenvarieties by interpolating maps that are merely deﬁn ed on a dense
+set of points.
+===== PDF PAGE 41 =====
+5.4 Rigidity results 41
+Theorem 5.17. LetDi = (Zi,Ni, Ti,ψi), for i = 1, 2, be eigenvariety data with corre-
+sponding eigenvarieties πi :Ei→Z i . Assume that we have the following additional
+data:
+• A morphismj :Z1→Z 2 of adic spaces;
+• AnOK -algebra homomorphismσ : T2→ T1;
+• A subsetEcl⊆ Max(E1) such that the T2-eigensystem ofx (i.e., the T1-eigensystem
+ofx composed withσ) appears inN2(j(π1(x))) for allx∈E cl .
+LetE denote the Zariski closure of Ecl inE1, with its induced reduced structure. Then
+there is a canonical morphism
+i :E→E 2
+lying overj :Z1→Z 2 such thatφE◦σ =i∗◦φE2. The morphism i inherits the following
+properties fromj:
+• Ifj is (partially) proper (resp. ﬁnite), then i is (partially) proper (resp. ﬁnite);
+• Ifj is a closed immersion and σ is a surjection, then i is a closed immersion.
+Proof. See [19, Theorem 3.2.1].
+In practice this interpolation result (or similar versions of it, cf. [10, Prop.3.5],
+[5, Prop. 7.2.8], [14, Thm. 5.1.6]) is a very helpful tool to com pare eigenvarieites for
+diﬀerent eigenvariety data. For example one can use it to show “indepen dence of
+the choice of compact operator”. Slightly more precisely , let u s assume a situation
+whereZ1 is the spectral variety of a compact operator acting on spaces of p-adic
+automorphic forms. In such situations there often is a ﬂexibility in the choice of the
+compact operator (leading to a second spectral varietyZ2 and a second eigenvariety
+datum.). The interpolation result above can be used to show that the r esulting
+reduced eigenvarieties are isomorphic, as long as the compact operators share the
+same ﬁnite-slope parts (cf. e.g. [19, Lemma 3.4.2]).
+The setEcl in the theorem above typically arises from a set of classical automor-
+phic forms (hence the notation). Now there might be di ﬀerent eigenvariety data
+that capture the same set of systems of Hecke eigenvalues, e.g. the re might be more
+than one way of constructing p-adic automorphic forms that “see” these classical
+forms. The interpolation result then produces maps between the re sulting eigenva-
+rieties. A further particularly interesting application is in the c ontext of Langlands
+functoriality . There the interpolation theorem can be applied to co nstruct maps
+between eigenvarieties that interpolate classical Langlands fun ctorialityp-adically
+thereby comparing p-adic automorphic forms for di ﬀerent reductive groups (see
+e.g., [10, 14, 19, 21]).
+===== PDF PAGE 42 =====
+42
+A Pseudorigid spaces
+LetK be a complete discretely valued ﬁeld with ring of integers OK , uniformizerπ
+and residue ﬁeld k. In this appendix we discuss pseudorigid spaces overOK . They
+are a generalization of rigid analytic spaces that include the ana lytic loci of for-
+mal schemes, formally of ﬁnite type over OK . In the corresponding class of Huber
+rings one allows an additional formal power series variables. Ba se spaces of eigen-
+varieties occurring in practice are pseudorigid spaces, which i s our motivation for
+discussing them. Besides a brief introduction to the concept we expla in that pseu-
+dorigid spaces have a well-behaved set of maximal points. The main references for
+the theory of pseudorigid spaces are [18], [19], [20] and [1]. Fu rther topics that
+are important in the context of eigenvarieties are for example the the ory of nor-
+malization of pseudorigid spaces and their dimension theory . We wi ll not discuss
+these topics here but instead refer the interested reader to the references mentioned
+above.
+In the following we will frequently deal with aﬃnoid adic spaces where the ring
+of integral elements A+ is given by the subring of power-bounded elements A◦. In
+this case we shorten the notation and write Spa( A) for Spa(A,A◦).
+Deﬁnition A.1. LetA be a complete TateOK -algebra. We say thatA is a pseudoaﬃ-
+noidOK -algebra, ifA has a ring of deﬁnitionA0 which is formally of ﬁnite type over
+OK , i.e.,A0 has a radical ideal of deﬁnition I, such that A0/I is a ﬁnitely generated
+k-algebra. A homomorphism A→B of pseudoaﬃnoidOK -algebras is a continuous
+homomorphismA→B.
+Remark A.2. • Note that the deﬁnition makes sense, as OK→A0 is continuous, so
+thenπn⊂I for somen, and as I is radical,π itself is contained in I.
+• The topology on a ring of deﬁnition A0 for a T ateOK -algebraA is the (̟)-adic
+topology for some pseudo-uniformizer ̟∈A. We can deﬁne a map OK ⟦X⟧→A0
+by sendingX to̟ and thenA0 is formally of ﬁnite type overOK if and only if it is
+of strictly topologically ﬁnite type overOK ⟦X⟧, i.e., if and only if it is topologically
+isomorphic to a quotient ofOK ⟦X⟧⟨Y1,...,Y n⟩for somen. In particular we see that
+A0 is noetherian.
+• PseudoaﬃnoidOK -algebras are Jacobson ([18, A.1]) and excellent ([19, 2.2.3])
+which is the reason for some of their good properties.
+Proposition A.3. LetA be a pseudoaﬃnoidOK -algebra.
+1. Let B be a complete Huber ring with a morphism A→B which is topologically of
+ﬁnite type. Then B is also pseudoa ﬃnoid.
+2. Every homomorphism of pseudoa ﬃnoidOK -algebras A→ B is topologically of
+ﬁnite type.
+===== PDF PAGE 43 =====
+43
+3. If U⊂X = Spa(A,A◦) is a rational subset, thenOX (U )+ =OX (U )◦.
+4. More generally if U⊂X is aﬃnoid open, thenOX (U )+ =OX(U )◦.
+5. Suppose f : A→ B is a morphism of pseudoa ﬃnoidOK -algebras such that the
+induced morphism Spa(B)→ Spa(A) is an open immersion. Let m be a maximal
+ideal ofB, thenf−1(m) is a maximal ideal of A and the natural mapAf−1(m)→Bm
+induces an isomorphism on completions.
+Proof. The ﬁrst part is left as an exercise. For the second part see [18, Corollary
+A.14]. The third part follows from Lemma A.4 below upon noting tha t by construc-
+tionOX(U )+ contains a ring of deﬁnition of OX (U ). For part (4) note that U has a
+ﬁnite cover by Tate rational subdomains (Ui )i∈I ofX. Since the mapsO(U )→O (Ui)
+are bounded (the Ui are also rational subdomains of U ), the strict embedding
+O(U )֒→
+∏
+i∈I
+O(Ui)
+induces an embedding
+O(U )◦֒O (U )∩
+∏
+i∈I
+O(Ui)◦
+but the right hand side equals
+O(U )∩
+∏
+i∈I
+O+(Ui) =O+(U )
+by part (3), so we are done because by deﬁnitionO+(U )⊆O (U )◦ which implies that
+we have equality . Finally for part (5) we refer to [19, Proposition 2.2.3]
+Lemma A.4. LetA be a complete T ate ring with a Noetherian ring of deﬁnition A0. Let
+B⊆A be a ring of deﬁnition containing A0. Then B is a ﬁnitely generated A0-module,
+hence Noetherian and integral over A0. Moreover A◦ is the integral closure of A0 inA.
+Proof. Pick a pseudo-uniformizer ̟∈A contained in A0. Since B is bounded, we
+have that B⊆̟−NA0 for some N . Hence B is an A0-submodule of the cyclic A0-
+module̟−NA0. The ﬁrst claim now follows. For the last assertion, ﬁrst note that
+the integral closure of A0 is contained in A◦. Since A◦ is the union of all open and
+bounded subrings, and any two open bounded subrings are containe d in a third,
+the assertion follows from the ﬁrst part.
+In particular, we see that every rational subset of Spa( A,A◦), where A is a
+pseudo-aﬃnoid OK -algebra, is of the form Spa( B,B◦) for a pseudoa ﬃnoid
+OK -algebraB.
+===== PDF PAGE 44 =====
+44
+Deﬁnition A.5. Let X be an adic space over Spa( OK ). Then X is called a pseu-
+dorigid space over OK if X is locally of the form Spa( A,A◦) for a pseudoa ﬃnoid
+OK -algebraA.
+Example A.6. Let X be a formal scheme, formally of ﬁnite type overOK , which we
+regard here as an adic space in the sense of [15, 16]. Then the set o f analytic points
+X = Xa is a pseudorigid space overOK . For example, if X = Spf(Zp⟦T ⟧), thenX is a
+quasicompact analytic adic space, covered by two a ﬃnoids, namely Spa( Qp⟨T/p⟩)
+and Spa(Zp⟦T ⟧, Zp⟦T ⟧)
+( p,T
+T
+)
+(compare Example 2.8).
+Recall that Spa(OK,OK ) consists of two points, the closed point s = Spa(k,k ) and
+the generic point η = Spa(K,OK ). For a pseudorigid space X, the ﬁbre products
+Xs =X×Spa(OK ) Spa(k) andXη =X×Spa(OK ) Spa(K) exist and we call these the special,
+resp. generic ﬁbre ofX. One can show that Xs is the Zariski closed adic subspace of
+X deﬁned by the ideal sheaf πOX andXη is its open complement.
+Proposition A.7. The generic ﬁbre Xη of a pseudorigid space X overOK is a K-rigid
+space. IfX = Spa(A) withA pseudoaﬃnoid, thenXs admits the structure of a rigid space
+over the ﬁeld k((T )).
+Proof. For the ﬁrst part we can work locally on Xη and assume that Xη = Spa(B)
+whereB is a pseudoaﬃnoidOK -algebra andπ∈B×. Then the canonical map K→B
+is topologically of ﬁnite type by Proposition A.3. For the claim ab out the special
+ﬁber observe that ifB is pseudoaﬃnoid withπB = 0, we may choose a topologically
+nilpotent unit̟∈B and look at the continuousOK -homomorphismk((T ))→B that
+sendsT to̟. Once again, this must be topologically of ﬁnite type, which yields the
+claim.
+So now that we have a bit of an idea of how pseudorigid spaces look l ike, let
+us discuss the fact that they have a well-behaved set of points deﬁne d by maximal
+ideals in pseudoa ﬃnoidOK -algebras.
+Lemma A.8. LetA be a pseudoa ﬃnoidOK -algebra, and let m⊂A be a maximal ideal.
+Then there exists a unique x∈ Spa(A) with supp(x) = m. This gives a canonical em-
+bedding of the spectrum Max(A) of maximal ideals into Spa(A), compatible with the
+morphism supp : Spa(A)→ Spec(A).
+Proof. The locus of x∈ Spa(A) with supp( x) = m is equal to Spa( A/m) and one
+shows that this is a singleton, see [19, Lemma 2.2.5] for the argume nt.
+Proposition A.9. LetA andB be pseudoa ﬃnoidOK -algebras, and let f : A→B be a
+continuousOK -homomorphism. Then the preimages of maximal ideals are maximal ide-
+als. Hence the induced map f : Spa(B)→ Spa(A) maps Max(B) into Max(A). Moreover,
+Max(A) is dense in Spa(A).
+===== PDF PAGE 45 =====
+45
+Proof. The ﬁrst part follows from the fact that f is of topologically ﬁnite type
+(cf. [18, A.13,A.14]). For density claim, note that if U⊆X = Spa(A) is a rational
+subset, then the ﬁrst part implies that Max( OX (U )) = U∩ Max(A). It follows that
+U∩ Max(A) is non-empty if U is, and hence that Max(A) is dense.
+Deﬁnition A.10. LetX be a pseudorigid space. We say that a pointx∈X is maximal
+if there exists an open a ﬃnoid pseudorigid neighbourhood U = Spa(A) of x such
+thatx∈ Max(A)⊆U . We denote the set of all maximal points of X by Max(X).
+Note that this is a local property , for if x∈ Max(X) and V = Spa(B)⊆X is an
+open a ﬃnoid pseudorigid neighbourhood, then by Proposition A.9, x∈ Max(B).
+Moreover, it also follows that Max( X) is dense in X, that Max( X) = Max( A) if
+X = Spa(A) is a ﬃnoid pseudorigid, and that any morphism f : X→ Y of pseu-
+dorigid spaces maps Max(X) into Max(Y ).
+===== PDF PAGE 46 =====
+REFERENCES 46
+References
+[1] Ahmed Abbes. Éléments de géométrie rigide. V ol. I. Construction et étude
+géométrique des espaces rigides. , volume 286. Basel: Birkhäuser, 2011.
+[2] Fabrizio Andreatta, Adrian Iovita, and Vincent Pilloni. Le ha lo spectral. Ann.
+Sci. Éc. Norm. Supér. (4) , 51(3):603–655, 2018.
+[3] Avner Ash and Glenn Stevens. p-adic defor-
+mations of arithmetic cohomology . Preprint,
+http://math.bu.edu/people/ghs/preprints/Ash-Stevens-02-08.pdf .
+[4] Joël Bellaïche. The eigenbook. Eigenvarieties, families of Galois representations,
+p-adicL-functions. Pathw . Math. Cham: Birkhäuser, 2021.
+[5] Joël Bellaïche and Gaëtan Chenevier. Families of Galois representations and
+Selmer groups , volume 324 of Astérisque. Paris: Société Mathématique de
+France, 2009.
+[6] John Bergdall. An introduction to Huber rings and valuation sp ectra. In this
+volume. 2023.
+[7] S. Bosch, U. Güntzer, and R. Remmert. Non-Archimedean analysis, volume 261
+of Grundlehren der Mathematischen Wissenschaften [Fundamental Principl es of
+Mathematical Sciences]. Springer-V erlag, Berlin, 1984. A systematic approach
+to rigid analytic geometry .
+[8] Siegfried Bosch. Lectures on formal and rigid geometry , volume 2105 of Lect.
+Notes Math. Cham: Springer, 2014.
+[9] Kevin Buzzard. Eigenvarieties. In L-functions and Galois representations , vol-
+ume 320 of London Math. Soc. Lecture Note Ser. , pages 59–120. Cambridge
+Univ . Press, Cambridge, 2007.
+[10] Gaëtan Chenevier. A p-adic Jacquet-Langlands correspondence. Duke Math.
+J., 126(1):161–194, 2005.
+[11] R. Coleman and B. Mazur. The eigencurve. In Galois representations in arith-
+metic algebraic geometry. Proceedings of the symposium, Durham, UK, July 9–18,
+1996, pages 1–113. Cambridge: Cambridge University Press, 1998.
+[12] Robert F . Coleman. p-adic Banach spaces and families of modular forms. In-
+vent. Math.
+[13] Fernando Q. Gouvêa. p-adic numbers . Universitext. Springer-V erlag, Berlin,
+1993. An introduction.
+===== PDF PAGE 47 =====
+REFERENCES 47
+[14] David Hansen and James Newton. Universal eigenvarieties, trianguline Galois
+representations, and p-adic Langlands functoriality . J. Reine Angew. Math. ,
+730:1–64, 2017.
+[15] R. Huber. A generalization of formal schemes and rigid an alytic varieties.
+Math. Z., 217(4):513–551, 1994.
+[16] Roland Huber. Étale cohomology of rigid analytic varieties and adic spaces . As-
+pects of Mathematics, E30. Friedr. Vieweg & Sohn, Braunschweig, 1996.
+[17] Christian Johansson. Coherent sheaves and examples. In this volume. 2023.
+[18] Christian Johansson and James Newton. Extended eigenvarietie s for overcon-
+vergent cohomology .Algebra Number Theory, 13(1):93–158, 2019.
+[19] Christian Johansson and James Newton. Irreducible compon ents of extended
+eigenvarieties and interpolating Langlands functoriality . Math. Res. Lett. ,
+26(1):159–201, 2019.
+[20] João N. P . Lourenço. The Riemannian Hebbarkeitssätze for pseudorigid
+spaces. https://arxiv.org/abs/1711.06903.
+[21] Judith Ludwig. A p-adic Labesse-Langlands transfer. Manuscr. Math., 154(1-
+2):23–57, 2017.
+[22] Sophie Morel. Lecture notes on Adic Spaces. 2018.
+https://web.math.princeton.edu/~smorel/adic_notes.pdf.
+[23] Jürgen Neukirch. Algebraic number theory. Transl. from the German by Norbert
+Schappacher, volume 322 of Grundlehren Math. Wiss. Berlin: Springer, 1999.
+[24] James Newton. Construction of eigenvarieties. In this volume. 2023.
+[25] Peter Schneider. Non-archimedean functional analysis . Springer Monographs
+in Mathematics. 2002.
+[26] Peter Scholze and Jared Weinstein. Berkeley lectures on p-adic geometry., vol-
+ume 207. Princeton, NJ: Princeton University Press, 2020.
+[27] Jean-Pierre Serre. Endomorphismes complètement continu s des espaces de
+Banachp-adiques. Publ. Math., Inst. Hautes Étud. Sci.
+[28] Torsten Wedhorn. Lecture notes on Adic Spaces. 2011.
+https://arxiv.org/abs/1910.05934.

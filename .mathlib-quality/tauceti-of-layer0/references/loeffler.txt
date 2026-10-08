@@ -1,0 +1,2153 @@
+Extracted via pypdf from Loeffler - Overconvergent algebraic automorphic forms.pdf
+
+===== PDF PAGE 1 =====
+arXiv:0901.2279v3  [math.NT]  16 Dec 2016
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS
+DA VID LOEFFLER
+Abstract. I present a general theory of overconvergent p-adic automorphic
+forms and eigenvarieties for connected reductive algebrai c groups G whose real
+points are compact modulo centre, extending earlier constr uctions due to Buz-
+zard, Chenevier and Yamagami for forms of GL n. This leads to some new phe-
+nomena, including the appearance of intermediate spaces of “semi-classical”
+automorphic forms; this gives a hierarchy of interpolation spaces (eigenvari-
+eties) interpolating classical automorphic forms satisfy ing diﬀerent ﬁnite slope
+conditions (corresponding to a choice of parabolic subgrou p of G at p). The
+construction of these spaces relies on methods of locally an alytic representation
+theory, combined with the theory of compact operators on Ban ach modules.
+Note added December 2016 : The published version of this paper (Proc. London
+Math. Soc. 102 (2011), no. 2, p. 193–228) contained an error in section 2.6, which
+was subsequently spotted by Olivier Ta ¨ ıbi. I have added a brief acco unt of the
+error, and how to correct it, has been added to the end of this doc ument. This will
+shortly be appearing as a corrigendum article in Proc. London Math. Soc.
+1. Introduction
+1.1. Main results. The aim of this paper is to obtain analogues of the results of
+[13] and [14] concerning the existence of p-adic analytic families of modular forms,
+where modular forms are replaced by automorphic forms on certain higher rank
+reductive groups. Given a reductive group G deﬁned over a number ﬁeld F , with
+G(Fv) compact modulo centre for all inﬁnite places v; a ﬁnite prime p of F ; and
+a parabolic subgroup P ⊆ G(Fp), we construct a family of p-adic Banach spaces
+of overconvergent automorphic forms, varying analytically over a certain weight
+space (parametrising characters of the Levi factor of P ). This space has a Hecke
+action, and certain Hecke operators at p give compact operators. Applying the
+“eigenvariety machine” of [8], one obtains a p-adic rigid space (an eigenvariety),
+which interpolates the Hecke eigenvalues of classical eigenforms wh ich satisfy a ﬁnite
+slope condition. This ﬁnite slope condition depends on P , and is equivalent to the
+local factor at p of the associated automorphic representation being a subquotien t
+of a representation parabolically induced from P ; so taking P to be larger gives an
+eigenvariety which may have smaller dimension, but sees more classica l forms.
+We do not need any local assumptions on G(Fp); in particular, it need not be
+split or unramiﬁed. The special case P = G recovers the space of classical forms, up
+to twisting by p-adic characters. On the other hand, when G is a deﬁnite unitary
+2000 Mathematics Subject Classiﬁcation. 11F55 (primary), 11F33 (secondary).
+The author is grateful for the support of EPSRC postdoctoral fellowship EP/F04304X/1.
+1
+===== PDF PAGE 2 =====
+2 DA VID LOEFFLER
+group split at p, the space of overconvergent forms deﬁned in [10] corresponds to
+the other extreme case where P is a Borel subgroup. Thus the spaces corresponding
+to intermediate parabolic subgroups could perhaps be described as “semi-classical”
+overconvergent forms.
+If G satisﬁes the conditions of [21], so the arithmetic subgroups of G are ﬁnite,
+then the eigenvariety we construct has dimension equal to that of the natural weight
+space, which is the space of characters of a compact open subgro up of the Levi factor
+of P ; in particular, its dimension is the rank of the centre of the Levi fac tor. If G
+possesses inﬁnite arithmetic subgroups, then the eigenvariety ha s smaller dimension,
+and its image in weight space is contained in a closed subvariety of codim ension
+≥ 1 whose geometry is closely related to Leopoldt’s conjecture.
+The methods we shall use are an extension of ideas due to Buzzard [ 7] and
+Chenevier [10] for forms of GL n. The ﬁrst key observation is that automorphic
+forms for the groups we consider can be deﬁned as the space of fu nctions
+f : G(F )\G(A)→ V,
+where V is an algebraic representation of G over some coeﬃcient ﬁeld E containing
+Fp, which are locally constant on G(F⊗ R) and satisfy f (gk) = k−1
+p ◦ f (g) for all
+k in some compact open subgroup of G(Af ). This space still makes sense if V is
+an arbitrary representation of a compact open subgroup of G(Fp), rather than the
+whole group. Secondly, if we restrict to representations V which are “arithmetical”
+(that is, their kernel contains an arithmetic subgroup), then the functor mapping
+V to the space of automorphic forms with values in V is exact and commutes with
+base change. So it is suﬃcient to construct a family of representat ions over an
+appropriate weight space, which is carried out in §2 (via a form of locally analytic
+parabolic induction). In §3 we recall the necessary global theory to deﬁne spaces
+of automorphic forms with values in these modules, and apply the eige nvariety
+machine to these spaces.
+We also prove a control theorem, analogous to the main result of [1 2], showing
+that overconvergent automorphic eigenforms whose weight is clas sical and whose
+Hecke eigenvalues at p have small valuation are in fact classical forms. This implies
+that points arising from classical automorphic forms are dense in th e eigenvariety
+whenever locally algebraic weights have a certain accumulation prope rty in weight
+space. We give an example to show that this is not always the case.
+1.2. Relation to other constructions. As mentioned above, the methods of this
+paper are a generalisation of those used in several earlier works de aling with speciﬁc
+examples of compact-modulo-centre reductive groups; the main e xamples are [7],
+[8], [10] and [30]. This is considered in detail in section 4, where we show h ow to
+recover some of the results of these papers from our approach.
+A very diﬀerent approach to the problem of p-adic interpolation can be found in
+the works of Emerton ([18] and the papers referenced therein). This theory, which
+does not require G(F⊗ R) to be compact modulo centre but at present requires
+G(Fp) to be quasi-split, is in a sense opposite to the approach followed her e: for each
+i≥ 0, Emerton builds a locally analytic representation ˜H i
+Fp−la of the whole of G(Fp)
+which “sees” all automorphic representations of G which are cohomological in degree
+i. The eigenvariety is then constructed by applying the Jacquet mod ule functor of
+[17] to this representation. We study the relation between the two constructions
+in§3.10. For compact-modulo-centre groups the interesting cohomo logy is all in
+===== PDF PAGE 3 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 3
+degree 0, and we show that there is a bijection between the ﬁnite slo pe eigenspaces
+of the space of overconvergent automorphic forms constructe d in this paper and
+the ﬁbres of Emerton’s Jacquet module JP ( ˜H 0
+Fp−la). In future work I hope to
+show how the methods of [18] can be extended to the case of a gene ral parabolic
+subgroup, which would allow the results of this paper to be extended to the case
+where G(F⊗ R) is not compact modulo centre.
+A third approach can be found in recent preprints of Ash and Steve ns [1]. Again
+this does not impose any restrictions on G at inﬁnity, but assumes F = Q and G(Fp)
+split. The relation between their approach and the methods of the p resent paper
+is not entirely clear at present, but the “universal highest weight m odules” that
+they deﬁne (using spaces of locally analytic distributions on Iwahori subgroups)
+are formally similar to the duals of the locally analytic induced represen tations we
+consider.
+2. F amilies of induced representations
+Let L be a ﬁnite extension of Qp, with ring of integers OL and uniformiser πL.
+We recall some basic concepts from p-adic function theory, following [16, §2.1].
+We ﬁx a ﬁeld E⊇ L, complete with respect to a discrete valuation extending that
+of L; this will be the coeﬃcient ﬁeld for all the representations we shall c onsider.
+LetX be an aﬃnoid rigid space over L; then we deﬁne Can(X , E) =O(X ) ˆ⊗L E,
+the space of E-valued analytic functions on X . For any E-Banach space V , we
+deﬁne Can(X , V ) = Can(X , E) ˆ⊗E V , the space of V -valued analytic functions on
+X [16, def. 2.1.9].
+We now let X be a topological space, which we suppose to be strictly paracom-
+pact and Hausdorﬀ. Following [16, §2.1], we deﬁne an L-analytic partition of X (of
+dimension d) to be the data of an indexing set I and family of triples ( Ui,Ui, φi)i∈I ,
+where:{Ui}i∈I is a cover of X by disjoint open sets; for each i,Ui is a rigid-analytic
+aﬃnoid ball of dimension d over L; and φi is a homeomorphism Ui(L)
+∼
+→ Ui. If
+U
+= (Ui,Ui, φi)i∈I and V = (Vj ,Vj, φj )j∈J are both L-analytic partitions of X, we
+say U is a reﬁnement of V if there is a function σ : I→ J such that Ui⊆ Vσ (i)
+for all i∈ I, and the inclusion Ui֒→Vσ (i) extends to an open embedding of rigid
+spacesUi֒V σ (i) (which is necessarily unique if it exists, since Ui is Zariski-dense
+inUi). We deﬁne two L-analytic partitions to be equivalent if they posess a common
+reﬁnement. Then we can deﬁne a locally L-analytic manifold as a topological space
+X endowed with an equivalence class of L-analytic partitions; we refer to the given
+equivalence class as the atlas of X, and its elements as charts. The L-points of any
+smooth algebraic variety or rigid space over L are naturally a locally L-analytic
+manifold [5, 5.8.10].
+If X is a locally L-analytic manifold and V is a ﬁnite-dimensional E-vector space,
+then for any chart ( Ui,Ui, φi)i∈I of X, we can deﬁne the space ∏
+i∈I Can(Ui, V ),
+whose elements are naturally continuous functions on X. Reﬁnements of charts
+naturally give rise to morphisms between these spaces; and since th e atlas of X is
+by deﬁnition a directed set under reﬁnement, we can deﬁne the spa ce Cla(X, V ) to
+be the direct limit. This is the space of locally L-analytic V -valued functions on X.
+Let G be a connected reductive algebraic group over L. We refer to [4, §5] for
+the structure theory of reductive algebraic groups over a non-a lgebraically-closed
+ﬁeld. Let S be a maximal split torus in G; the adjoint action of S on g = Lie G
+gives a relative root system whose Weyl group can be identiﬁed with t he quotient
+===== PDF PAGE 4 =====
+4 DA VID LOEFFLER
+NG(S)/ZG(S). Let us choose a system of simple roots ∆; this deﬁnes a minimal
+parabolic subgroup Pmin of G, containing S.
+Fix a parabolic subgroup P⊇ Pmin, and let N be its unipotent radical, M = P/N
+the Levi quotient, M ss the semisimple part of M , H = M/M ss the maximal torus
+quotient of M . We shall call a positive (relative) root free if−α is not a root of
+P ; write ∆ f for the set of free simple positive roots. 1
+The choice of P and S determines an opposite parabolic P , the conjugate of P
+by the longest element in the Weyl group of S, such that P∩ P is a lifting of M
+to a subgroup of G (containing the centraliser of S). We write N for the unipotent
+radical of P . We set T = Z(M )∩ S, a maximal split torus in the centre of M .
+For Γ a locally L-analytic group, let Rep la, c(Γ) denote the category of locally
+L-analytic representations of Γ on E-vector spaces of compact type, as deﬁned in
+[28]. We let Rep la, fd(Γ) denote the full subcategory of such representations which
+are ﬁnite-dimensional over E.
+2.1. Parahoric induction. We shall consider representations of compact open
+subgroups of G(L) satisfying the following condition:
+Deﬁnition 2.1.1 ([9,§1.4]). We say that a compact open subgroup U⊆ G(L) has
+an Iwahori factorisation (with respect to the parabolics P and P ) if:
+(1) The natural multiplication map N U× MU× NU→ U is an isomorphism
+of locally L-analytic manifolds, where N U = N∩ U , MU = M∩ U , NU =
+N∩ U ;
+(2) If z∈ T (L) is such that |α(z)|≤ 1 for all α∈ ∆ f , then zNU z−1⊆ NU and
+z−1N U z⊆ N U .
+We shall see in the next subsection that such subgroups U do indeed exist, for
+any connected reductive group G over L.
+Deﬁnition 2.1.2. Let U be a subgroup of G with an Iwahori factorisation U =
+N U× MU× NU , and let V ∈ Repla, fd(MU ). We deﬁne Ind U
+P V to be the space
+{
+f∈ Cla(U, V )
+⏐
+⏐ f (
+nmg) = m◦ f (g)
+}
+where the functional equation is to be satisﬁed for all g∈ U , m∈ MU , and n∈ N U .
+By results of [20, §4], this is in Rep la, c(U ), and its underlying vector space can
+be identiﬁed with Cla(NU , V ). This identiﬁcation can be viewed as arising from
+a right action of U on NU , obtained by composing right multiplication with the
+projection onto the NU factor in the Iwahori factorisation.
+Concretely, if Ψ M and Ψ N denote the projection maps from U onto MU and NU
+respectively, the action of γ∈ U on f∈ Cla(NU , V ) is given by
+(γ◦ f )(n) = Ψ M (nγ)◦ f (Ψ N (nγ)).
+Let H be the torus M/M ss over L. The image of MU in H(L) is a compact
+open subgroup HU , and any locally L-analytic character HU→ E× deﬁnes a locally
+L-analytic character of MU by inﬂation. From the above formula for the U -action
+the following is immediate:
+1Note that our normalisations give a correspondence P ↔ ∆ f between parabolics and subsets
+of ∆ which is bijective and inclusion-reversing; in particu lar every root is free for P = Pmin, and
+no root is free for P = G.
+===== PDF PAGE 5 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 5
+Proposition 2.1.3. If τ is a locally L-analytic character of HU , then IndU
+P (V⊗ τ )
+is isomorphic to Cla(NU , V ) with the twisted U -action◦τ given by
+(γ◦τ f )(n) = τ (Ψ M (nγ))· (γ◦ f )(n).
+2.2. Analytic vectors. We now choose a sequence of compact open subgroups of
+G(L), following [17, §4.1].
+Deﬁnition 2.2.1. Let U be a compact open subgroup of G(L). We will say U is
+decomposable if:
+(1) U is a good L-analytic open subgroup of G, in the sense of [16, §5.2], so
+there exists a Lie OL-lattice gU in g = Lie G such that the exponential map
+converges on the aﬃnoid ball associated to gU and identiﬁes gU with U ;
+(2) The lattice gU decomposes as a direct sum
+gU = mU⊕
+⨁
+α ∈±Φ f
+nU,α
+where Φ f is the set of positive free restricted roots, and mU and nU,α denote
+LieOL-lattices in the Lie algebras of M and the root subgroups Nα .
+Proposition 2.2.2. There exists a decomposable subgroup of G(L).
+Proof. We follow the construction given in [17, 4.1.6]. Let u be an arbitrary OL-
+lattice in g, and let a∈ L×. Then we can deﬁne u′ = (au∩ m)⊕ ⨁
+α ∈±Φ f
+(au∩ nα ).
+If the valuation of a is large enough, then this is a Lie sublattice and corresponds
+to a good L-analytic compact open subgroup of G(L). By construction, this is
+decomposable. □
+If U is decomposable, then it certainly has an Iwahori factorisation: pa rt (i)
+of deﬁnition 2.1.1 follows as the sublattices mU , nU = ⨁
+α ∈Φ f
+nU,α , and nU =⨁
+α ∈Φ f nU, −α exponentiate to good L-analytic open subgroups MU , NU , N U of M ,
+N , N respectively, which clearly satisfy N U× MU× NU = U ; and part (ii) follows
+since for z∈ S(L), Ad z acts on the root space nα as multiplication by α(z), so if
+|α(z)|≤ 1 for all free α then Ad z preserves the lattices nU,α for each positive root
+and hence preserves NU (and similarly for Ad z−1 on N U ).
+Deﬁnition 2.2.3. An admissible subgroup of G is a compact open subgroup G0⊆
+G(L) which admits an Iwahori factorisation, and such that there exist s a normal
+subgroup G1 ⊴ G0 which is decomposable.
+Any decomposable subgroup is certainly itself admissible, so admissible sub-
+groups exist. We now ﬁx a choice of an admissible subgroup G0, and a decom-
+posable normal subgroup G1. If g1 is the Lie sublattice corresponding to G1, we
+let Gi for i∈ Z>1 denote the good L-analytic open subgroup corresponding to the
+sublattice πi−1
+L gi; this is clearly also a decomposable subgroup of G(L) normal in
+G0. Let N i, Mi, Ni denote the factors in the Iwahori factorisation of Gi, and for
+i≥ 1 letNi denote the rigid analytic subgroup underlying Ni.
+Recall the deﬁnition of analytic vectors for a good L-analytic subgroup U in a
+locally L-analytic representation V of a locally L-analytic group G [16,§3.4]; these
+are the vectors v∈ V for which the orbit map ρv : G→ V restricts to a function in
+Can(U, V ′), where U is the rigid analytic group underlying U and V ′ is a Banach
+space with a continuous embedding V ′֒→V .
+===== PDF PAGE 6 =====
+6 DA VID LOEFFLER
+For all k≥ 1, let
+Dk =
+⋃
+[x]∈N0/N k
+xNk.
+This is an open aﬃnoid subspace of N , with Dk(L) = N0, and G0 acts on Dk on
+the right via rigid-analytic automorphisms.
+Proposition 2.2.4. If V ∈ Repla, fd(M0), then for all k ≥ 1, the space of Gk-
+analytic vectors
+(
+IndG0
+P V
+)
+Gk−an
+is exactly the image of Can(Dk, VMk−an) in Cla(N0, V )∼
+= IndG0
+P V .
+Proof. As Gk is normal in G0 for each k, IndG0
+P V decomposes as a Gk-representation
+into a direct sum of representations of the form Ind Gk
+P V , indexed by the cosets
+N0/Nk.
+As in the proof of prop. 2.1.2 of [19], (Ind Gk
+P V )Gk−an is the preimage of Ind Gk
+P V
+under the natural inclusion Can(Gk, V )֒→Cla(Gk, V ). It is clear that any element
+of Can(Gk, V ) which maps into Ind Gk
+P V must have image contained in VMk −an. The
+converse follows from the Iwahori factorisation of Gk. □
+Let use the abbreviation Ind( V )k for
+(
+IndG0
+P V
+)
+Gk−an
+. Since Dk is evidently
+reduced, the preceding proposition allows us to regard this as a Ban ach space in
+the supremum norm, once we ﬁx a choice of norm on V . Let us ﬁx a norm that is
+M0-equivariant, and such that V is orthonormalisable as an E-Banach space; such
+norms always exist, since M0 is compact. The resulting norm on Ind( V )k is then
+clearly G0-invariant.
+We conclude this subsection by writing down a speciﬁc basis for Ind( V )k. Sup-
+pose that k is suﬃciently large that VMk−an = V ; such a k certainly exists, since
+V is ﬁnite-dimensional. Let x ∈ N0/Nk. Then Ux = Can(xNk, V ) is a closed
+Gk-stable subspace of Ind( V )k, and Ind( V )k is isometrically isomorphic to the or-
+thogonal direct sum ⨁
+x∈N0/N k
+Ux. The spaces Ux are clearly all isomorphic as
+Banach spaces, so we concentrate on the identity coset.
+Let Φ f denote the set of free positive roots. For each α∈ Φ f , let d(α) be the
+multiplicity of α (the dimension of the α-root space nα of g) and let us choose a
+basis xα, 1, . . . , xα,d (α ) for nk,α = nk∩ nα . Then Can(Nk, E) is equal to the Tate
+algebra E
+⟨
+{xα,i}α ∈Φ f , 1≤i≤d(α )
+⟩
+.
+Let J be the set of functions from the set of pairs {(α, i)}α ∈Φ f , 1≤i≤d(α ) to Z≥0,
+and for j∈ J, write X j for the product ∏
+α,i (xα,i )j(α,i ). Let v1, . . . , vr∈ V be
+vectors which form an orthonormal basis for V as an E-Banach space (with the
+M0-invariant norm ﬁxed above).
+Proposition 2.2.5. The vectors
+{
+X j⊗ vj′
+⏐
+⏐ j
+∈ J, 1≤ j′≤ r
+}
+are an orthonormal basis for Can(Nk, V ) as an E-Banach space.
+===== PDF PAGE 7 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 7
+2.3. F amilies of twists. We now come to the main construction of this section.
+Let H0 be the image of M0 in the torus H, and let ˆH0 be the rigid space parametris-
+ing locally L-analytic characters of H0, as constructed in [16,§6.4]. By construction,
+the space ˆH0 is a rigid space over L, isomorphic over Cp to a ﬁnite ´ etale cover of the
+open unit disc B◦(1). Its moduli space interpretation furnishes it with a “universal
+character” ∆ : H0→ Can( ˆH0, E)×, whose composition with the evaluation map at
+any point z∈ ˆH0(Cp) is the character H0→ C×
+p corresponding to z.
+The images of the subgroups Mk in H give a basis {Hk}k≥0 of neighbourhoods
+of the identity in H; and for k≥ 1, Hk is a good L-analytic open subgroup of H.
+Since aﬃnoids are quasi-compact, it is clear that for any aﬃnoid X⊆ ˆH0, there is
+some k≥ 1 such that the composite ∆ X : H0→ Can(X, E)× is analytic on cosets
+of Hk; let k(X) be the least such integer.
+Deﬁnition 2.3.1. If X⊆ ˆH0 is an aﬃnoid deﬁned over E, and k≥ k(X), let
+C(X, V, k) = Can(Dk× X, VMk−an).
+We endow this with a G0-action by deﬁning, for γ∈ G0,
+(γ◦ f )(n, x) = ∆ X (Ψ M (nγ))(x)· [Ψ M (nγ)◦ f (Ψ N (nγ), x)] .
+Proposition 2.3.2. For every τ∈ X(E) (giving a map Can(X, E)→ E) we have
+C(X, V, k) ˆ⊗C an(X,E ),τ E = Ind(V⊗ τ )k.
+as E-Banach spaces and as representations of G0.
+Proof. We note that
+Can(Dk× X, VMk−an) = Can(Dk, VMk−an) ˆ⊗E Can(X, E).
+By proposition 2.2.4, we therefore have
+C(X, V, k) = Ind( V⊗ τ )k ˆ⊗E E
+with the Gk-action on the second factor given by τ◦ Ψ M . The result now follows
+from proposition 2.1.3. □
+We now establish some simple properties of the spaces C(X, V, k).
+Proposition 2.3.3. With the notation above, suppose τ is an E-point of ˆH0 and
+k≥ k(τ ). Then the spaces C(X, V ⊗ τ, k) andC(X + τ , V, k) are isomorphic as
+Banach Can(X, E)-modules and as representations of G0.
+Proof. This is immediate from the construction. □
+Proposition 2.3.4. If X is a reduced aﬃnoid over E, the spaceC(X, V, k) admits a
+G0-invariant norm in which it is orthonormalisable as a Can(X, E)-Banach module.
+Proof. If X is reduced, then so is X×Dk, and hence Can(Dk×X, E) has a canonical
+supremum norm, in which it is orthonormalisable; and since V is orthonormalisable,
+so is their completed tensor product Can(Dk× X, V ). By compactness of H0,
+the character ∆ X : H0→ Can(X, E)× must have image contained in the norm 1
+elements of Can(X, E); so the norm is G0-invariant. □
+===== PDF PAGE 8 =====
+8 DA VID LOEFFLER
+2.4. Action of the torus. We shall now show that the Banach modules C(X, V, k)
+constructed above admit an action of a certain semigroup of non-in tegral elements
+of the split torus T = Z(M )∩ S, and that these act via compact operators. (This
+will allow us to give our overconvergent p-adic automorphic forms a Hecke action
+at p.)
+Proposition 2.4.1. Let k≥ 1 and z∈ T (L).
+(1) If|α(z)|≤ 1 for all α∈ ∆ f , then the embedding zNkz−1⊆ Nk extends to
+a map of rigid spaces Nk→N k.
+(2) If |α(z)| < 1 for all α ∈ ∆ f , then the map of (ii) factors through the
+embeddingNk+1֒N k.
+Proof. Recall that Nk is the aﬃnoid ball associated to an OL-lattice nk⊆ Lie N ,
+and this lattice is equal to the direct sum of the lattices nk,α which are its inter-
+sections with the positive root spaces Nα . On each such root space Ad z acts as
+multiplication by α(z)∈O L, so it certainly preserves the aﬃnoid ball attached to
+anyOL-lattice. Moreover if |α(z)| < 1, we must have α(z)∈ πOL, so the map has
+image contained in the aﬃnoid ball corresponding to πnk,α = nk+1,α . □
+Let T0 = T (L)∩ M0. Since T is a torus, T (L) is topologically ﬁnitely generated
+and hence T (L)/T0 is a ﬁnitely generated abelian group; thus we can choose a ﬁnite
+set of elements of T (L) whose images in T (L)/T0 are a basis for ( T (L)/T0)⊗ Q.
+Let Σ be the subgroup of T (L) generated by these elements, which is a free abelian
+group of rank equal to the split rank of Z(M ). We can regard any M0-representation
+as a representation of Σ M0, on which Σ acts trivially.
+Remark 2.4.2. If (as will often be the case) V is the restriction to M0 of a
+representation of M (L), then this is clearly not the “natural” action of Σ; but
+removing this requirement would make the arguments of the next ch apter much
+messier.
+Deﬁnition 2.4.3. We deﬁne
+Σ + ={z∈ Σ : |α(z)|≥ 1∀α∈ ∆ f}, Σ ++ ={z∈ Σ : |α(z)| > 1∀α∈ ∆ f}.
+Proposition 2.4.4. The semigroup Σ ++ is not empty, and contains a basis for
+Σ⊗ Q.
+Proof. It follows from the discussion of [16, §1.4] that the maps ord ◦α for α∈ ∆ f
+are linearly independent functionals on X⊗ Q, where X = T (L)/T0. Hence the
+set of points satisfying the inequalities ord p α < 0 for all α∈ ∆ f is a nonempty
+open cone in X⊗ R. Since Σ has ﬁnite index in X, its image in X⊗ R certainly
+has nonempty intersection with this cone, and the intersection con tains a basis for
+Σ⊗ Q. □
+If z∈ Σ +, then by part (ii) of deﬁnition 2.1.1 applied to z−1, we have z−1Nkz⊆
+Nk and z
+N kz−1 ⊆ N k for all k ≥ 0. By proposition 2.4.1, for k ≥ 1 we also
+have z−1Nkz⊆N k, and hence z−1Dkz⊆D k; and if z∈ Σ ++ then the last two
+inclusions factor through Nk+1 andDk+1 respectively.
+Remark 2.4.5. If G = GL n(Qp), S is the diagonal torus and Pmin the usual Borel
+subgroup of upper triangular matrices, then P will be a group of matrices that
+are block upper triangular (with blocks corresponding to the free r oots). Then
+T = Z(M ) is the group of diagonal matrices constant on the blocks of P . We may
+===== PDF PAGE 9 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 9
+take Σ to be the matrices in T whose diagonal entries are powers of p, in which
+case Σ + is the monoid where the powers of p increase at each break, and Σ ++ the
+semigroup where they increase strictly.
+Deﬁnition 2.4.6. Let I⊂ G(L) be the monoid generated by G0 and Σ +.
+Theorem 2.4.7. (1) The action of G0 onC(X, V, k) can be extended to an
+action of I by continuous Can(X, E)-linear operators.
+(2) If X is reduced, then this action satisﬁes ∥γ◦ f∥≤∥ f∥ for all γ∈ I and
+f∈C (X, V, k), where∥•∥ is the G0-invariant norm deﬁned in proposition
+2.3.4.
+Proof. The projection maps Ψ
+N , Ψ M and Ψ N onto the factors in the Iwahori fac-
+torisation are well-deﬁned as elements of the rational function ﬁeld L(G), and the
+relation x = Ψ N (x)Ψ M (x)Ψ N (x) holds in L(G). Evidently the three maps are
+all regular at any z∈ Σ +, so any element of I has a (necessarily unique) Iwahori
+factorisation. Furthermore, if x∈ I, then Ψ M (x)∈ M0Σ, since Σ ⊂ Z(M ) and
+Z(M ) normalises N and N ; and since conjugation by Σ + preserves N0, we have
+Ψ N (x)∈ N0.
+Thus we may deﬁne the action of I onC(X, V, k) by the same formula as in
+deﬁnition 2.3.1,
+(γ◦ f )(n, x) = ∆ X (Ψ M (nγ))(x)· [Ψ M (nγ)◦ f (Ψ N (nγ), x)] ,
+where ∆ X is extended to a character of M0Σ trivial on Σ.
+For z∈ Σ +, the action of z onC(X, V, k) is obtained by base extension from an
+action on Can(Dk, E). This latter space has a canonical supremum norm; and the
+action of z is the pullback map arising from the inclusion z−1Dkz⊆D k, and hence is
+norm-decreasing. Thus the resulting operator on Can(Dk, E) ˆ⊗E Can(X, E) ˆ⊗E VMk−an
+is clearly continuous and norm-decreasing for any choice of norm on the latter
+two factors (since z acts trivially on them), and (ii) now follows from proposition
+2.3.4. □
+Note that since V is ﬁnite-dimensional, there is some k such that VMk−an = V .
+Let k(V ) be the least such k.
+Theorem 2.4.8. Suppose z∈ Σ ++ and k≥ 1 +k(V ). Then the action of z deﬁnes
+a continuous and norm-decreasing map zk :C(X, V, k + 1)→C (X, V, k); and if ik
+denotes the the obvious inclusion C(X, V, k)֒C (X, V, k + 1), the diagram
+C(X, V, k)↙↖
+ik
+↓↓
+zk−1 →→
+z
+→→
+C(X, V, k− 1)↙↖
+ik−1
+↓↓
+C(X, V, k + 1)
+zk →→C(X, V, k)
+commutes.
+Proof. Since the action of z is “constant” with regard to X, it is suﬃcient to show
+the corresponding property of the spaces Can(Dk, V ); and since z acts trivially on
+V (and k− 1≥ k(V )), we may assume V = E.
+By hypothesis, for all k≥ 1 we have an inclusion map zk : z−1Dk֒D k+1,
+and hence a pullback map zk = z∗
+k : Can(Dk+1, E)→ Can(Dk, E). Thus the top
+and bottom arrows in the diagram are well-deﬁned. Clearly both comp ositions are
+===== PDF PAGE 10 =====
+10 DA VID LOEFFLER
+equal to the map f (n)↦→f (z−1nz); so the diagram commutes, and the diagonal
+arrow is the action of z on Can(Dk, E), as required. □
+When V admits a central character, the action of the split torus T on the space
+Can(Nk, V ) can be given explicitly in terms of the basis of proposition 2.2.5:
+Proposition 2.4.9. Let j∈ J and 1≤ j′≤ r in the notation of proposition 2.2.5,
+and suppose that T0 acts on V via the character χ : T0→ E×. Deﬁne
+s(j) =
+∑
+α ∈Φ f
+
+ ∑
+1≤i≤d(α )
+j
+(α, i)
+
+ α,
+an element of X •(T ). Then the vector X
+j⊗ vj′∈ Can(Nk, V ) is an eigenvector for
+T0Σ +, with
+t◦ (X j⊗ vj′ ) = χ(t)t−s(j)(X j⊗ vj′ )
+for t∈ T0Σ , where we extend χ to a character T0Σ +→ E× trivial on Σ +.
+2.5. Locally algebraic vectors. In this section, we shall continue to assume that
+V is ﬁnite-dimensional and endowed with a norm such that M0 acts by isometries;
+we shall also assume that it is absolutely irreducible and locally algebraic , in the
+sense of Prasad’s appendix to [27]. Thus we may write V = Valg⊗ Vsm, where Valg
+is an absolutely irreducible algebraic representation of M , and Vsm is an irreducible
+smooth representation of M0. Note that for such a V , we have k≥ k(V ) if and only
+if Vsm is trivial on Mk; let us choose such a k, which will be ﬁxed for the remainder
+of this section.
+The results in this section are generalisations of results previously o btained (un-
+der more restrictive hypotheses) by Owen Jones [23]; we give full pr oofs, as the
+work of Jones has not yet been published.
+Deﬁnition 2.5.1.
+• We deﬁne Ualg to be the space of polynomial functions G→ Valg satisfying
+f (
+nmg) = m◦ f (g) for all n∈ N , m∈ M , g∈ G.
+• We deﬁne Usm to be the induced representation Ind G0/G k
+P 0/ P k
+Vsm.
+• We deﬁne the classical subrepresentation Ind(V )cl
+k to be Ualg⊗E Usm.
+We assume that Valg is dominant and integral for G, so Ualg is nonzero. Then
+Ind(V )cl
+k is clearly a nonzero ﬁnite-dimensional (and hence closed) I-stable subspace
+of Ind( V )k.
+As G0 is an open subgroup of G, we may diﬀerentiate the G0-action on Ind( V )k
+to obtain an action of the Lie algebra g = Lie G, and thus of its universal enveloping
+algebra U (g). We recall the following deﬁnition:
+Deﬁnition 2.5.2 ([16, 4.1.10]) . Let M be an E-vector space with an action of g.
+A vector v∈ M is said to be U (g)-ﬁnite if it spans a ﬁnite-dimensional subspace of
+M under the action of U (g).
+Proposition 2.5.3. The space Ind(V )cl
+k is exactly the subspace of U (g)-ﬁnite vec-
+tors in Ind(V )k.
+Proof. It is clear that Ind( V )cl
+k is U (g)-ﬁnite, since it is ﬁnite-dimensional. Con-
+versely, let f∈ Ind(V )k be a U (g)-ﬁnite vector. We may assume without loss of
+generality that f is a highest weight vector, since the U (g)-submodule of Ind( V )cl
+k
+===== PDF PAGE 11 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 11
+generated by f decomposes as a direct sum of irreducible U (gss)-representations,
+each generated by highest weight vectors. In this case, applying t he isomorphism
+Ind(V )k∼
+= Can(Dk, V ), f is an analytic function on Dk annihilated by n, so it must
+be locally constant as a function on Dk. But the set of locally constant analytic
+functions onDk is just Usm, so it follows that f∈ Ind(V )cl
+k . □
+Recall that we deﬁned T = Z(M )∩ S, a maximal L-split torus in Z(M ). Since
+V is irreducible as an M0-representation, T0 = T∩ M0 must act on V via some
+character χ. Since V is locally algebraic as an M0-representation and k≥ k(V ), the
+restriction of χ to Tk = T∩ Mk is algebraic, and thus we can write χ = χsm· χalg
+where χalg∈ X •(T ) and χsm is a character of T0/Tk.
+Let t = Lie T . We now consider the subspace of vectors that are U (t)-ﬁnite,
+rather than U (g)-ﬁnite. This space is U (g)-stable. Let us write Ux for the closed
+subspace of Ind( V )k consisting of functions f∈ Can(Dk, V ) supported on the coset
+xNk⊆D k.
+Lemma 2.5.4. For each x∈ N0/Nk, the U (t)-ﬁnite vectors in Ux are exactly those
+that are the restrictions to xNk of polynomial functions f : N→ V .
+Proof. It is suﬃcient to consider the case x = 1, since the space of U (t)-ﬁnite
+vectors is preserved by N0. Recall that we constructed an orthonormal basis for
+Can(Nk, V ) in proposition 2.2.5. The polynomial functions E[N ]⊗ V are exactly
+the functions in Can(Nk, V ) which can be written as a ﬁnite linear combination of
+these basis vectors; since each basis vector is a t-weight vector by proposition 2.4.9,
+any such function is U (t)-ﬁnite.
+Conversely, since the above functions are an orthonormal basis, every f ∈
+Can(Nk, V ) can be uniquely written f = ∑
+j
+∈J, 1≤j′≤r aj,j ′ X j⊗ vj′ for some se-
+quence aj,j ′∈ E tending to zero. For any t∈ T0Σ +, we have
+t◦ f =
+∑
+j∈J, 1≤j′≤r
+χ(t)t−s(j)· aj,j ′· X j⊗ vj.
+Diﬀerentiating the above relation, for any τ∈ t we have
+τ◦ f =
+∑
+j∈J, 1≤j′≤r
+[χalg− s(j)](τ )· aj,j ′· X j⊗ vj .
+So if f is a t-weight vector of weight γ, we deduce that for every ( j, j′) we have
+aj,j ′ .(γ− χalg + s(j)) = 0 as elements of X •(T ). But the set of indices j for which
+the bracketed term is zero is ﬁnite, and it follows that f is a ﬁnite linear combination
+of the basis vectors, and thus lies in E[N ]⊗ V . □
+We now recall some standard deﬁnitions (ﬁrst introduced in [3]):
+Deﬁnition 2.5.5. Let R be an E-representation of a reductive Lie algebra g, t a
+split toral subalgebra of g, and p a parabolic subalgebra of g containing t.
+(1) We say R is a t-weight g-representation if t acts locally ﬁnitely on R, so R
+is the direct sum of its t-weight spaces, and each t-weight space is ﬁnite-
+dimensional.
+(2) We say R is in the category Op if it is ﬁnitely generated as a U (g)-module,
+and p acts locally ﬁnitely; this implies that R is a direct sum of ﬁnitely
+many subrepresentations each of which has a highest weight with re spect
+to t.
+===== PDF PAGE 12 =====
+12 DA VID LOEFFLER
+Any object in the category Op is automatically a t-weight g-representation. If
+R is a t-weight g-representation, the abstract vector space dual R∗ of R is not
+generally a t-weight g-representation, but the space of U (t)-ﬁnite vectors in R∗ is
+so; we call this the t∗-graded dual of R and denote it by R∨, and it is easy to check
+that ( R∨)∨ = R. If R is in Op, then R∨ is in the category Op, where p is the
+opposite parabolic.
+Deﬁnition 2.5.6. Let V be a ﬁnite-dimensional representation of m. We deﬁne
+the generalised Verma module of V (with respect to the parabolic
+p) to be the left
+U (g)-module
+Verp(V ) = U (g)⊗U(p) V.
+This is clearly ﬁnitely generated as a U (g)-module (as V is ﬁnite-dimensional);
+and it follows from the discussion preceding [Lep77, prop. 3.1] that p acts locally
+ﬁnitely, so Ver p(V )∈O p for any ﬁnite-dimensional V .
+Theorem 2.5.7. The subspace of U (t)-ﬁnite vectors in Ind(V )k is in the category
+Op, and it is isomorphic as a g-representation to a direct sum of ﬁnitely many
+copies of the dual Verma module Verp(V ∨)∨.
+Proof. This is a mild generalisation of the main result of [23], and the proof we giv e
+is adapted from that reference. Clearly it is suﬃcient to consider th e case V = Valg,
+since as a representation of Gk, Ind( V )k is isomorphic to a direct sum of copies of
+Ind(Valg)k.
+By lemma 2.5.4, it suﬃces to show that E[N ]⊗ V , the space of polynomial
+functions N → V , endowed with the U (g)-action obtained by diﬀerentiating the
+action of Gk on any of the cosets xNk, is isomorphic as a U (g)-representation to
+Verp(V ∨)∨. We identify E[N ]⊗ V with the following subspace of E[C]⊗ V , where
+C is the big Bruhat cell N× M× N⊂ G:
+Deﬁnition 2.5.8. Let AP (V ) be the subspace of E[C]⊗E V consisting of poly-
+nomial functions f : C→ V such that f (pc) = pf (c) for all p∈ P and all c∈ C,
+where we consider V as a P -representation by inﬂation.
+The map g→ g given by multiplication by −1 extends to an anti-automorphism
+of U (g), the principal anti-automorphism, which we denote by S (see [15,§2.2.17]).
+Lemma 2.5.9. There is a bilinear, g-invariant pairing U (g)× E[C]→ E deﬁned
+by the formula
+⟨u, f⟩ = S(u)(f )(1),
+where S is the principal anti-automorphism of U (g) (the unique anti-automorphism
+of U (g) which acts as multiplication by −1 on g).
+Proof. Since S(gu) =−S(u)g for any g∈ g and u∈ U (g), we have
+⟨gu, f⟩+⟨u, gf⟩ = (S(gu)(f ) + S(u)(gf ))(1) = 0 .
+as required. □
+Hence if V is any ﬁnite-dimensional E-vector space, we obtain an analogous
+pairing ( U (g)⊗E V ∨)× (E[C]⊗E V )→ E by deﬁning
+⟨(u⊗ v∨), (f⊗ v)⟩ =⟨v∨, v⟩· S(u)(f )(1),
+which is evidently also g-invariant.
+===== PDF PAGE 13 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 13
+Proposition 2.5.10. The orthogonal complement AP (V )⊥ ⊆ U (g)⊗E V ∨ of
+AP (V )⊆ E[C]⊗E V for the above pairing is the submodule JP (V ) generated by
+elements of the form u⊗ v∨− 1⊗ u(v∨) for u∈ U (p) and v∨∈ V ∨.
+Proof. It is clear that
+⟨x⊗ v∨, f⟩ =⟨v∨, (S(x)◦ f )(1)⟩ =⟨xv∨, f(1)⟩
+for all x∈ U (p) and f∈ AP (V ), and hence JP (V )⊆ AP (V )⊥.
+Conversely, suppose x∈ AP (V )⊥. As a consequence of the Poincar´ e-Birkhoﬀ-
+Witt theorem, we may write x as a ﬁnite sum of terms of the form a1a2⊗ v where
+a1∈ U (n) and a2∈ U (p). Since a1a2⊗ v− a1⊗ a2v∈ JP (V ), we may assume that
+a2 = 1; so it suﬃces to prove that AP (V )⊥∩ (U (n)⊗ V ) = 0.
+However, the action of n on AP (V ) is just the natural action on the ﬁrst factor
+under the isomorphism AP (V ) = E[N ]⊗E V , since n acts trivially on V . Since for
+any nonzero u∈ U (n) we can ﬁnd some f∈ E[N ] such that ( uf )(1)̸= 0, it follows
+that the annihilator of AP (V ) in U (n)⊗E V ∨ is zero. Hence JP (V ) = AP (V )⊥ as
+required. □
+Corollary 2.5.11. The space AP (V ) is isomorphic as a U (g)-module to (U (g)⊗U(p)
+V ∨)∨.
+Proof. The submodule JP (V ) is clearly just the kernel of the natural map U (g)⊗E
+V ∨→ U (g)⊗U(p) V ∨. Also, the pairing between ( U (g)⊗ V ∨)/JP (V ) and AP (V ) is
+nondegenerate, since the annihilator of AP (V ) in the left-hand side is empty by the
+previous lemma, and it is clear that no nonzero element of AP (V ) is annihilated
+by every element of U (n)⊗ V ∨. Since both sides are t-weight modules, i.e. every
+t-weight space is ﬁnite-dimensional, the result now follows. □
+This completes the proof of theorem 2.5.7. □
+Remark 2.5.12. In fact ( U (g)⊗U(p) W ∨)∨ is isomorphic to ( U (g)⊗U(p) W )σ ∨,
+where σ denotes the Chevalley involution which swaps positive and negative ro ot
+spaces. Both this isomorphism and the deﬁnition of the Chevalley invo lution are
+non-canonical, depending on a choice of Chevalley basis for g.
+2.6. Small slopes. We now use the results of the previous section to establish
+criteria for elements of Ind( V )k to lie in Ind( V )cl
+k in terms of the Σ ++-action.
+Let us ﬁx an element η∈ Σ +. This deﬁnes a linear functional fη on X •(T )⊗Z Q,
+by fη (µ) = − ordp(µ(η)). The minus sign ensures that fη (α)≥ 0 for every free
+positive root.
+Deﬁnition 2.6.1. We say that a weight µ∈ X •(T ) is strongly classical if the
+canonical surjection Ver p(Valg)→ Ualg is an isomorphism on µ-weight spaces. We
+say that σ∈ R≥0 is a small slope for η if for every character y∈ X •(T ) such that
+fη (y)≤ σ, χalg− y is strongly classical, where χalg is the central character of Valg
+as above.
+(The choice of signs is such that there are only ﬁnitely many y∈ X •(T ) with
+fη (y)≤ σ such that the y-weight space of Ver p(Valg) is nonzero.)
+Proposition 2.6.2. If σ is a small slope for η, then the endomorphism of the
+quotient space Ind(V )k/ Ind(V )cl
+k deﬁned by η has norm less than p−σ .
+===== PDF PAGE 14 =====
+14 DA VID LOEFFLER
+Proof. Let φ∈ Can(Dk, V ), and let x0∈ N0 be given. Since φ is analytic on x0Nk,
+we can uniquely write the function φx0 : ξ↦→φ(x0ξ) on Nk as a convergent series
+∑
+j∈J, 1≤j′≤r
+aj,j ′ (φx0 )X j⊗ vj
+in terms of the coordinates introduced above.
+Let us apply this with η−1x0η in place of x0; then we can write
+(η◦ φ)(x0ξ) = η◦ φ(η−1x0η· η−1ξη)
+=
+∑
+j∈J
+aj,j ′ (φη −1x0η )X(η−1ξη)j⊗ vj′
+=
+∑
+j∈J
+aj,j ′ (φη −1x0η )· X(ξ)j⊗ vj′· η−s(j).
+We can break this sum into two parts according to whether ord p η−s(j)≤ σ. The
+ﬁnite sum of terms for which this holds is a linear combination of t-weight vectors of
+weights χalg−y, where χalg is the central character of Valg as above, with y∈ X •(T )
+such that fη (y)≤ σ; this is in Ind( V )cl
+k , by hypothesis. The norm of the remaining
+part is clearly strictly less than p−σ∥φ∥, and the result follows. □
+Proposition 2.6.3. If we have
+σ < inf
+α ∈∆ f
+fη (sα (λ + ρ)− (λ + ρ)),
+where ρ is half the sum of the positive roots, and sα is the reﬂection in the Weyl
+group corresponding to α, then σ is a small slope for η.
+Proof. This follows from the ﬁrst two terms of the generalised Bernstein-G elfand-
+Gelfand resolution [Lep77]: there is an exact sequence of g-representations
+⨁
+α ∈∆ f
+Verp(sα (λ + ρ)− ρ)→ Verp(Valg)→ Ualg→ 0.
+Hence the weights of Ver p(Valg) which are not strongly classical are the weights
+which also occur in one of the Verma modules Ver p(sα (λ + ρ)− ρ). □
+Proposition 2.6.4. If λ = ∑
+α ∈∆ nα λα , where λα is the fundamental weight cor-
+responding to α, then ǫ is a small slope for η if
+ǫ < inf{(nα + 1)fη (α)| α∈ ∆ f}.
+(Compare [10, prop 4.7.4] .)
+Proof. An easy calculation shows that sα (λ + ρ)− (λ + ρ) = (1 + nα )α for each
+α∈ ∆ f , and the result follows. □
+3. Classical and overconvergent automorphic forms
+In this section, we shall deﬁne overconvergent automorphic form s as functions
+taking values in the representations constructed in the preceding section. Hence-
+forth G shall be a connected reductive algebraic group over a number ﬁeld F . Let
+us ﬁx a prime p of F above p, and let Fp be the completion of F at p andOF, p its
+ring of integers. We ﬁx a choice of parabolic subgroup P⊆ G deﬁned over Fp, as
+in section 2.
+===== PDF PAGE 15 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 15
+Remark 3.0.5. Any algebraic group over F may be regarded as an algebraic group
+over Q by restriction of scalars. However, the spaces we construct for G and for
+G′ = Res F/ Q G will not be the same, unless [ Fp : Qp] = 1, since considering G as
+an algebraic group over F allows us to consider Fp-analytic spaces and functions
+rather than Qp-analytic spaces and functions.
+3.1. Finiteness of double quotients. In this section we recall some classical
+results on the topology of the ad` elic points of G. Let A denote the ad` eles of F ,
+Af the ﬁnite ad` eles, and F∞ = F⊗ R, so A = Af× F∞. Let us write G∞ for
+G(F∞) = ∏
+v|∞ G(Fv). We recall two standard results:
+Proposition 3.1.1 ([25, theorem 5.1]) . For any compact open subgroup K ⊆
+G(Af ), the double quotient
+G(F )\G(Af )/K
+is ﬁnite.
+Proposition 3.1.2. If G∞ is compact, then G(F ) is discrete in G(Af ).
+Proof. See [21, prop. 1.4] – this is a special case of the assertion (6) ⇒ (3) of that
+proposition. □
+We will assume throughout the remainder of this work that G satisﬁes the fol-
+lowing assumption:
+Assumption 3.1.3. The quotient G∞/Z(G)(F∞) is compact.
+This is equivalent to assuming that for all inﬁnite places v of F , G(Fv) is compact
+modulo centre. Unless G is abelian, we see that F must be totally real.
+Proposition 3.1.4. For any compact open subgroup K⊆ G(Af ), the group Γ ′
+K =
+K∩ Z(G)(F ) has ﬁnite index in Γ K = K∩ G(F ).
+Proof. Let R be the maximal quotient of G which is a torus. The kernel of the
+quotient map σ : G→ R is a semisimple subgroup G0⊆ G deﬁned over F , and the
+natural multiplication map G0× Z(G)→ G is an isogeny.
+Assumption 3.1.3 implies that G0(F∞) is compact, so by proposition 3.1.2, G0(F )
+is discrete in G0(Af ), and hence in G(Af ). Hence for any compact open K⊆ G(Af ),
+Γ K∩ Ker(σ) = G0(F )∩ K is ﬁnite.
+Since the natural map G0× Z(G)→ G is an isogeny, and (Γ K∩ G0(F ))× (Γ K∩
+Z(G)(F )) is clearly an arithmetic subgroup of G0× Z(G), [25, thm. 4.1] shows that
+its image in G is an arithmetic subgroup of G. Hence it has ﬁnite index in Γ K.
+Since Γ K∩ G0(F ) is ﬁnite, it follows that Γ ′
+K has ﬁnite index in Γ K. □
+Proposition 3.1.5 ([4,§14.5]). Let G◦
+∞ be the connected component of the identity
+in G∞. Then π0 = G∞/G◦
+∞ is a ﬁnite abelian group.
+Remark 3.1.6. Gross [21] has studied classical automorphic forms for groups
+where all arithmetic subgroups are ﬁnite; this is equivalent to the as sumption that
+the maximal split torus in Res F/ Q Z(G) over Q is a maximal split torus in G∞,
+so G is compact at inﬁnity modulo its Q-split centre. This is a strictly stronger
+condition than compactness modulo centre; for example, the toru s Res K/ Q Gm for
+K a real quadratic ﬁeld has inﬁnite arithmetic subgroups. The method s we use to
+circumvent the diﬃculties presented by inﬁnite arithmetic subgroup s are based on
+the arguments used for tori in [7], but with modiﬁcations since we co nsider locally
+Fp-analytic characters rather than locally Qp-analytic ones.
+===== PDF PAGE 16 =====
+16 DA VID LOEFFLER
+3.2. Generalities on Hecke algebras. In this section, we’ll recall some standard
+theory of Hecke algebras. Let Γ be a locally compact, totally disconn ected topolog-
+ical group. In this subsection, and in §§3.3 and 3.4, we can allow the coeﬃcient ﬁeld
+E to be any ﬁeld of characteristic 0 (not necessarily a p-adic ﬁeld). We suppose
+that Γ is unimodular (left and right Haar measure coincide), and we ﬁx a choice of
+Haar measure µ.
+Deﬁnition 3.2.1. The Hecke algebraH(Γ) is the space of compactly supported,
+locally constant E-valued functions on Γ, endowed with the convolution product
+(φ1 ⋆ φ2)(g) =
+∫
+h∈Γ
+φ1(h)φ2(h−1g) d µ.
+This is an E-algebra without identity (unless Γ is discrete), but it contains many
+idempotent elements. In particular, if K is any compact open subgroup, the element
+eK = µ(K)−11K is an idempotent. It is convenient to introduce an ordering on
+idempotents: we say that e≥ f if ef = f e = f . Then we see that eK≥ eK ′ if
+and only if K⊆ K ′. It is easy to see that for any φ∈H (Γ), there is some K such
+that eKφ = φeK = φ, so the directed set {eK} is an approximate identity for the
+algebraH(Γ).
+Proposition 3.2.2. If S is any open monoid contained in Γ , then the compactly
+supported, locally constant functions on Γ with support contained in S form an
+approximately-unital subalgebraH(S) ofH(Γ) .
+Proof. It is suﬃcient to check that H(S) is closed under convolution; but if φ1, φ2∈
+H(S), then supp( φ1 ⋆ φ2)⊆ supp(φ1)× supp(φ2)⊆ S. □
+Now let R be any commutative E-algebra, and V an R-module with a smooth
+R-linear left action of S.
+Proposition 3.2.3. (1) There is an action of H(S) on V by R-linear opera-
+tors, given by the formula
+φ◦ v =
+∫
+G
+φ(g) (g◦ v) dg.
+(2) For any idempotent e, eV is an R-submodule of V preserved by the unital
+subalgebra eH(S)e.
+(3) If e = eK for some compact open subgroup K⊂ Γ , then eV is the subspace
+of K-ﬁxed vectors in V .
+(4) If e = e1 + e2 for orthogonal idempotents e1, e2 (that is, e1e2 = e2e1 = 0 ),
+then eV = e1V⊕ e2V .
+(5) If e≥ f are idempotents, then eV⊇ f V .
+Proof. The ﬁrst three parts are standard (the extension to monoids is imm ediate).
+For part (4), if e1 and e2 are orthogonal, then e1V∩ e2V = 0. Also, ( e1 + e2)(e1v1 +
+e2v2) = e1v1 + e2v2, so eV ⊇ e1V + e2V . But clearly eV ⊆ e1V + e2V , so the result
+follows. It is easy to check that if e1≥ e2, then e1− e2 is also idempotent and is
+orthogonal to e2, so (5) is a special case of (4). □
+Remark 3.2.4. There are many other interesting idempotents; for example, if
+K⊆ S is a compact open subgroup and ρ is a smooth irreducible representation of
+K, then there is an idempotent e = e(K, ρ)∈H (S) such that eV is the subspace
+of V which is ρ-isotypical as a K-representation. This can be used to construct
+===== PDF PAGE 17 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 17
+eigenvarieties interpolating automorphic representations whose lo cal factors at a
+ﬁnite set of primes ℓ̸= p lie in given Bernstein components; see [2, §7.3] for further
+discussion.
+3.3. Module-valued automorphic forms. Let G be an algebraic group satisfy-
+ing the conditions of §3.1. Let us ﬁx a Haar measure on G(Fq), for each ﬁnite place
+q̸= p, such that G(OF, q) has measure 1.
+Deﬁnition 3.3.1. We consider the following Hecke algebras:
+• H(p)
+f (G) = ⨂ ′
+q̸=pH(G(Fq)), where the prime denotes restricted tensor
+product with respect to the idempotents corresponding to the co mpact
+open subgroups G(OF, q)⊂ G(Fq).
+• H+
+p (G) is the algebra H(I)⊂ H(G(Fp)) deﬁned as in proposition 3.2.2,
+where I is the monoid of deﬁnition 2.4.6.
+• H∞(G) is the algebra of G◦
+∞-invariant functions on G∞ (which is isomor-
+phic to the group algebra E[π0] of the ﬁnite abelian group π0 of components
+of G∞).
+We putH(p)(G) =H(p)
+f (G)⊗EH∞(G) andH+(G) =H(p)(G)⊗EH+
+p (G).
+We can now deﬁne automorphic forms with values in a very general cla ss of
+modules.
+Deﬁnition 3.3.2. Let R be any E-algebra, and W any R-module with an R-linear
+left action of I.
+DeﬁneL(W ) to be the space of functions φ : G(F )\G(A)→ W which satisfy
+φ(gu) = u−1
+p ◦ φ(g) for all u in U G◦
+∞, for some compact open subgroup U ⊂
+G
+(
+A(p)
+f
+)
+× G0 (depending on φ).
+It is clear that L(W ) is an R-module; it has a smooth left action of the monoid
+G(A)+ = G
+(
+A(p)
+f
+)
+× I× G∞ via the formula ( γ◦ φ)(g) = γp◦ φ(gγ ), so we may
+regard it as a left module over R⊗EH+(G). In particular, if e∈H +(G) is an
+idempotent, eL(W ) is a module over R⊗E eH+(G)e.
+Proposition 3.3.3.
+(1) If eU is the idempotent corresponding to U G◦
+∞ for some compact open sub-
+group U⊂ G
+(
+A(p)
+f
+)
+× G0,{µ1, . . . , µt} is any set of coset representatives
+for the ﬁnite double quotient
+G(F )\G(A)/U G◦
+∞,
+and
+Γ i = U G◦
+∞∩ µ−1
+i G(F )µi,
+then the map
+eUL(W )→
+t⨁
+i=1
+W Γ i : f↦→(f (µ1), . . . , f(µt))
+is an isomorphism of R-modules.
+===== PDF PAGE 18 =====
+18 DA VID LOEFFLER
+(2) If α ∈ eUH+(G)eU where eU is as above, then under the isomorphism
+eUL(W )→ ⨁ t
+i=1 W Γ i , α corresponds to the element of EndR
+( ⨁ t
+i=1 W Γ i
+)
+given by
+(α◦ f )(µj) =
+t∑
+k=1
+∑
+γ ∈Ajk
+α(γ) ( γp◦ f (µk))
+where Ajk =
+[
+supp(α)∩ µ−1
+j G(F )µk
+]
+/Γ k.
+Proof. If f∈ eUL(W ), then f is uniquely determined by the values f (µi). We must
+have f (µi)∈ W Γ i , by considering by considering f (µig) for g∈ Γ i. Thus the map
+above is well-deﬁned and injective. Conversely, if g∈ G(A), we may write g in the
+form γ· µi· u for some γ∈ G(F ), i∈{ 1, . . . , t}, and u∈ U G◦
+∞; and u is uniquely
+determined up to left multiplication by Γ i. Hence the map is bijective.
+For part (ii), it is suﬃcient to consider the action of a double coset U gU G◦
+∞ for
+some g∈ G(A)+, since these span eUH+(G)eU as an E-vector space. We see that
+if U gU = ⨆ r
+i=1 grU for some g1, . . . , gr∈ G(A)+, then
+([U gU]◦ f )(µj) =
+r∑
+i=1
+(gi)p◦ f (µjgi).
+Fix k∈{ 1, . . . , t} and consider the sub-sum consisting of terms for which µjgi∈
+G(F )µkU G◦
+∞. We may choose gi to lie in µ−1
+j G(F )µkG◦
+∞, and there will be one
+such gi for each coset [
+U gU∩ µ−1
+j G(F )µkG◦
+∞
+]
+/Γ k.
+Since G◦
+∞ acts trivially, this is equivalent to the formula given above. □
+Deﬁnition 3.3.4. We say that W is arithmetical if there is an arithmetic subgroup
+of ZG (or equivalently of G, by proposition 3.1.4) which acts trivially on W .
+Corollary 3.3.5. For a ﬁxed idempotent e∈H +(G), the functor W ↦→eL(W )
+commutes with base change for arithmetical modules, in the s ense that if R→ S is
+a morphism of commutative E-algebras and W is an R-module with an arithmetical
+left action of I, then L(W )⊗R S =L(W⊗R S).
+Proof. For an idempotent of the form eU as above, the groups Γ i act on W through
+ﬁnite quotients, so it suﬃcient to show that if M is an R-module with an action of
+a ﬁnite group ∆, ( M⊗R S)∆ = M ∆ ⊗R S. If m = ∑
+i mi⊗ si∈ (M⊗R S)∆ , then
+we have
+m = 1
+|∆|
+∑
+g∈∆
+g· m =
+∑
+i
+
+ 1
+|∆|
+∑
+g∈∆
+g· mi
+
+⊗ si,
+which is clearly in M ∆ ⊗R S.
+For a general idempotent e, let U be a compact open subgroup of G(A(p)
+f )× G0
+which is suﬃciently small that eU≥ e, and U∩ G(F ) is contained in Z(G) and acts
+trivially on W . Then part (ii) of prop. 3.3.3 shows that there is some integer t and
+an idempotent e′ in the algebra of t× t matrices over the abstract monoid algebra
+E[I] such that eL(W ) is equal to e′ ⨁ t
+i=1 W , and arguing as above we see that this
+commutes with base change. □
+===== PDF PAGE 19 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 19
+3.4. The Atkin-Lehner algebra. We will be particularly interested in idempo-
+tents inH+(G) of the form eG0⊗ e(p), where e(p) is an idempotent in H(p)(G). The
+algebra eH+(G)e then factors as a tensor product eG0H+
+p (G)eG0⊗ e(p)H(p)(G)e(p).
+The ﬁrst factor has a very simple structure:
+Lemma 3.4.1. LetA+(G) be the monoid algebra E[Σ +]. Then the map
+A+(G)→ eG0H+
+p (G)eG0 : z∈ Σ +↦→γ(z)−1
+µ(G0) 1G0zG0
+(extended E-linearly to all of A+(G)) is an isomorphism of E-algebras, where
+γ(z) =|G0/(G0∩ zG0z−1)|∈ Z.
+Proof. First, we show that if z1, z2∈ Σ +, then [ G0z1G0]· [G0z2G0] = [ G0z1z2G0].
+It is suﬃcient to check that z1G0z2 ⊆ G0z1z2G0. This follows since z1G0z2 =
+(z1N 0z−1
+1 )· z1M0z2· (z−1
+2 N0z2); z1 and z2 are in Z(M ), and z1N 0z−1
+1 and z−1
+2 N0z2
+are contained in G0 by the deﬁnition of Σ +.
+The normalisation factor γ(z) is chosen so that the image of z is a linear combi-
+nation of cosets of G0 of total mass 1; hence the map is indeed a homomorphism of
+rings. Finally, it is clearly bijective, since I is generated by G0 and Σ +, and hence
+the cosets G0zG0 for z∈ Σ + span eG0H+
+p (G)eG0 as an E-vector space. □
+Lemma 3.4.2. If R is a commutative E-algebra and λ is a ring homomorphism
+A+(G)→ R, and there exists η∈ Σ ++ such that λ(η)∈ R×, then λ(δ)∈ R× for
+all δ∈ Σ ++.
+Proof. Any two elements x, y∈ Σ ++ are commensurable, in the sense that there
+exist α, β∈ Σ ++ and m, n≥ 1 such that αx = ym and βy = xn. Thus if λ(x) is a
+non-unit, λ(ym) must be a non-unit and hence λ(y) cannot be a unit either. □
+If W is an R-module with an action of I, and V ⊆ eG0L(W ) is a A+(G)-stable
+ﬁnite rank projective R-submodule, it follows that if [ G0zG0] is invertible on V for
+one z∈ Σ ++, then this holds for all z∈ Σ ++. If this holds, we say V is ﬁnite slope .
+3.5. Property (Pr). We now resume our running assumption that E is a dis-
+cretely valued extension of Qp, and we take R to be a Banach algebra over E
+and W a Banach R-module. We suppose that I acts on W via continuous norm-
+decreasing operators, with the subgroup G0⊂ I acting by isometries. It is clear
+from proposition 3.3.3 that every element of L(W ) has a well-deﬁned supremum
+norm, and that H+(G) acts on L(W ) by continuous operators.
+Let us recall the following deﬁnition from [8]. If M is a Banach module over the
+nonarchimedean Banach algebra A, and there is some other A-Banach module N
+such that M⊕ N is isomorphic (but not necessarily isometrically isomorphic) to an
+orthonormalisable A-Banach module, we say M has property (Pr) .
+Remark 3.5.1. The notation (Pr) is intended to suggest projective modules, but
+such modules are not necessarily projective as abstract A-modules, and the category
+of Banach A-modules is not abelian (since there exist non-surjective morphisms of
+Banach A-modules with dense image). However, the universal property give n in [8]
+shows that the Banach modules with property (Pr) are relative pro jective modules
+in the sense of [29, def. 1.6].
+Proposition 3.5.2. For any idempotent e ∈ H+(G), eL(W ) is a Banach R-
+module. If W is arithmetical and has property (Pr), then so does eL(W ).
+===== PDF PAGE 20 =====
+20 DA VID LOEFFLER
+Proof. Let U be a compact open subgroup suﬃciently small that eU≥ e. Applying
+prop. 3.3.3(ii), we see that eL(W ) is the kernel of an element of Mt×t(E[I]) acting
+on W ⊕t for some t∈ Z≥1; in particular, it is a closed R-submodule of W ⊕t, so it
+is a Banach R-module.
+If W is arithmetical, we can choose U suﬃciently small that all of the subgroups
+Γ i of proposition 3.3.3 act trivially on W ; so eUL(W ) is a direct sum of copies
+of W , which has property (Pr) if W does. Now, since eU ≥ e, e and eU− e are
+orthogonal idempotents, so we have eUL(W ) = eL(W )⊕ (eU− e)L(W ). Both
+of these subspaces are closed; so if W has property (Pr) then eL(W ) is a direct
+summand of a module which has property (Pr), and hence it also has p roperty
+(Pr). □
+3.6. Arithmetical weights. In order to apply the above machinery in the case
+where W is one of the representations constructed in the previous chapte r, we must
+establish under what conditions such representations are arithme tical. Let V be a
+ﬁnite-dimensional locally L-analytic representation of M0, X an aﬃnoid subset of
+ˆH0 deﬁned over E, and k∈ Z≥1 such that k≥ max(k(X), k(V )). The following is
+immediate from the deﬁnitions:
+Proposition 3.6.1. If both V and the universal character ∆ X : H0→ Can(X, E)×
+are arithmetical, then C(X, V, k) is arithmetical.
+We now study the subspace of the local weight space ˆH0 consisting of arithmetical
+weights. We need the following purely local construction:
+Proposition 3.6.2. Let L/Qp be a ﬁnite extension; T a torus over L; and Γ a
+ﬁnitely generated subgroup of T (L). Then for any compact open subgroup U⊆ T (L),
+the functor mapping an aﬃnoid algebra A over L to the abelian group of locally L-
+analytic characters U→ A× which are trivial on a ﬁnite index subgroup of Γ∩ U
+is represented by a closed rigid analytic subgroup ˆU Γ ⊆ ˆU over L; and there is an
+integer d satisfying dim T≥ d≥ dim T− rank(T∩ Γ) such that each component of
+ˆU Γ is isomorphic over Cp to a ﬁnite ´ etale cover of B◦(1)d.
+Proof. Firstly, let us assume that U is a good L-analytic open subgroup. Without
+loss of generality we assume Γ ⊆ U . Let g1, . . . , gr be a set of generators for Γ.
+Then for any L-aﬃnoid algebra A, the locally L-analytic characters U→ A× which
+satisfy the above condition are precisely those characters κ for which κ(1), . . . , κ(r)
+are all roots of unity in A – necessarily p-power roots of unity, since κ is continuous
+and U is pro- p. Thus they are exactly the characters for which the r analytic
+functions κ→ log κ(gi) vanish. These functions cut out a Zariski-closed subvariety
+of ˆU , which we denote by ˆU Γ .
+To determine the dimension of ˆU Γ , we give an alternative description. Since U
+is a good subgroup, we may equate it with an OL-lattice u⊂ Lie T in the usual
+way. Then if ˜Γ denotes the OL-span of the gi, ˜Γ is an OL-submodule of U , and
+hence is closed. Let d = rank OL u− rankOL
+˜Γ. Since 0 ≤ rankOL
+˜Γ≤ r, we have
+dim T− r≤ d≤ dim T .
+Let Um = u/πm
+L ˜Γ. For all m this is a compact locally L-analytic group of
+dimension d, and the natural map ˆUm→ ˆU is a closed immersion, as ˆUm is exactly
+the locus where the evaluation maps ˆU → Gm corresponding to a ﬁnite set of
+topological generators of πm
+L ˜Γ are equal to 1. Each component of ˆUm is isomorphic
+===== PDF PAGE 21 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 21
+over Cp to a ﬁnite ´ etale cover ofB◦(1)d; and the obvious map ˆUm→ ˆUm+1 identiﬁes
+ˆUm with a union of components of ˆUm+1.
+I claim that the union of all of the ˆUm is ˆU Γ ; this is equivalent to the statement
+that any L-analytic character U→ A× trivial on a ﬁnite index subgroup of Γ is in
+fact trivial on πm
+L ˜Γ for some suﬃciently large m. This follows from the fact that
+for any such character χ, we can ﬁnd an m such that m extends to a rigid analytic
+function on the aﬃnoid ball associated to πm
+L u, and is also trivial on Γ m = Γ∩ πm
+L u;
+and the Zariski closure of Γ m in this ball is πm
+L ˜Γ. Hence ˆU Γ is equidimensional,
+with every component isomorphic over Cp to a ﬁnite ´ etale cover of B0(1)d.
+If U is not a good L-analytic open subgroup, then we can ﬁnd some U ′⊆ U of
+ﬁnite index which is so; then deﬁning ˆU Γ to be the inverse image of ˆU ′Γ in ˆU , the
+result follows, since U ′∩ Γ has ﬁnite index in U∩ Γ. □
+Taking T to be H and Γ to be the image of Z(G)(OF ) in H(OF, p), this gives a
+rigid space over Fp parametrising the arithmetical locally Fp-analytic characters of
+H0. We write ˆH arith
+0 for this space.
+Remark 3.6.3. The codimension of ˆH arith
+0 in ˆH0 is a subtle quantity. It is in-
+dependent of the choice of P , and depends only on the torus Z(G); it is clearly
+0 if Z(G)(OF ) is ﬁnite, and ≥ 1 if it is inﬁnite. If F = Q, then the sublattice
+˜Γ above is just the topological closure of Γ in U , and we see that the assertion
+codim ˆH arith
+0 = rank Z(G)(Z) is equivalent to the Leopoldt conjecture for tori of
+[22,§4.3.3] (where it is shown that this is equivalent to the conventional Le opoldt
+conjecture).
+3.7. Overconvergent automorphic forms.
+Deﬁnition 3.7.1. Let e∈H +(G) be an idempotent, X an aﬃnoid subset of ˆH arith
+0 ,
+and k≥ max(k(V ), k(X)). We deﬁne the space of k-overconvergent automorphic
+forms of type e and weight ( X, V ) as the space
+M (e, X, V, k) = eL
+(
+C(X, V, k)
+)
+.
+We now collect together some properties of these spaces, all of wh ich are imme-
+diate from properties we have established for the spaces C(X, V, k).
+Theorem 3.7.2. The spaces M (e, X, V, k) have the following properties:
+(1) M (e, X, V, k) is a Banach module over Can(X, E) with property (P r), en-
+dowed with an action of eH+(G)e by continuous Can(X, E)-linear opera-
+tors.
+(2) The maps C(X, V, k)→C (X, V, k + 1) induce maps ik : M (e, X, V, k)→
+M (e, X, V, k + 1) which are Can(X, E)-linear, eH+(G)e-equivariant, injec-
+tive, and have dense image.
+(3) The construction commutes with base change of reduced aﬃnoi ds, in the
+sense that if Y ⊆ X and k≥ max(k(X), k(V )), then
+M (e, X, V, k) ˆ⊗C an(X,E )Can(Y, E) = M (e, Y, V, k)
+as a Banach Can(Y, E)-module, and this isomorphism is compatible with
+the eH+(G)e-action.
+===== PDF PAGE 22 =====
+22 DA VID LOEFFLER
+(4) If T ∈ eH+(G)e is supported in G0Σ ++G0, and k ∈ Z≥1 is such that
+k≥ max(k(X), k(V )), then the action of T on M (e, X, V, k + 1) in fact
+deﬁnes a continuous map Tk : M (e, X, V, k + 1) → M (e, X, V, k); and if
+k≥ max(k(X), k(V )) + 1, we have a commutative diagram
+M (e, X, V, k)↙↖
+ik
+↓↓
+Tk−1 →→
+T
+→→
+M (e, X, V, k− 1)↙↖
+ik−1
+↓↓
+M (e, X, V, k + 1)
+Tk →→M (e, X, V, k)
+where ik ias as above. In particular, the endomorphism of M (e, X, V, k)
+deﬁned by T is compact.
+From part 4 of the above theorem, we can deduce the following coro llary, which
+is analogous (both in statement and proof) to [6, thm. 5.2].
+Corollary 3.7.3. Let T be as above, and let λ ∈ E× with λ ̸= 0 . Then the
+natural map M (e, X, V, k)→ M (e, X, V, k + 1) restricts to an isomorphism on the
+generalised λ-eigenspaces for T .
+Proof. Let us write M (e, X, V, k)λ for the generalised λ-eigenspace. Since T is
+compact, any generalised eigenspace for T is ﬁnite-dimensional, so we may suppose
+that M (e, X, V, k + 1)λ = Ker(T− λ)m for some m.
+Clearly ik restricts to an injection M (e, X, V, k)λ → M (e, X, V, k + 1) λ . Let
+T ′ be the composition of the endomorphism − ∑ m
+i=1
+( m
+i
+) T i−1
+(−λ )i of M (e, X, V, k + 1)
+and the map Tk : M (e, X, V, k + 1)→ M (e, X, V, k) above. Then T ′ gives a map
+M (e, X, V, k + 1)λ→ M (e, X, V, k)λ which is a section of ik. □
+3.8. Relation to classical automorphic forms. We now study the relation be-
+tween the spacesL(W ) and classical automorphic forms when W is locally algebraic,
+using methods based on [21, §8].
+Fix an embedding ι :֒→C. This determines an embedding֒→C, since
+F⊂ Fp⊆ E. If Walg is an algebraic representation of G over E, then the choice of ι
+determines an extension of W to an algebraic representation of G∞ = ∏
+v|∞ G(Fv),
+with all factors acting trivially except that corresponding to ι. We denote this
+representation by ι(W ).
+Proposition 3.8.1. Suppose W is a ﬁnite-dimensional irreducible locally algebraic
+representation of I, of the form Wsm⊗Walg where the factors are respectively smooth
+and algebraic representations. Fix an embedding ι :֒→C. Then L(W )⊗E,ι C is
+isomorphic as a G(Af )× π0-representation to
+⨁
+π
+m(π)
+
+
+
+ ⨂ ′
+q̸=p ﬁnite
+πq
+
+⊗ (Wsm⊗ πp)⊗ (ι(Walg )⊗ π∞)G◦
+∞
+
+ ,
+where the direct sum is over all automorphic representation s π of G for which
+(ι(Walg)⊗ π∞)G◦
+∞ is nonzero, and m(π) is the multiplicity of π in the space of
+automorphic forms for G.
+Proof. Let ρ1 denote the action of G0 on Wsm⊗ Walg obtained from the ﬁrst factor
+alone, and ρ2 the action from the second factor. These two actions commute, a nd
+the standard action ρ1, 2 on the tensor product is the composition of both.
+===== PDF PAGE 23 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 23
+Given f∈L (W ), let us write f∞ for the function G(A)→ W⊗E C given by
+f∞(g) = ρ2(g−1
+∞·ι(gp))f (g). This is well-deﬁned, since ρ2 is algebraic. Furthermore,
+if γ∈ G(F ), then γ−1
+∞ · ι(γp) acts trivially on ι(Walg); hence f∞ gives a function
+on G(F )\G(A).
+Since f ∈ L(W ), there is some compact open subgroup U ⊆ G0× G(A(p)
+f )
+such that f (gu) = ρ1, 2(u−1
+p )f (g) for all u∈ U G◦
+∞. A calculation shows that this
+corresponds to the relation f∞(gu) = ρ1(up)−1ρ2(u∞)−1f∞(g) for all u in this
+subgroup.
+We deduce that for any linear functional φ on W⊗E C, φ◦ f is an automorphic
+form in the sense of [11, def. 2.2]: a function G(F )\G(A) which is locally constant
+on G(Af ) (as Wsm is smooth), is G◦
+∞-ﬁnite and U (gC)-ﬁnite (as Walg is ﬁnite
+dimensional), and has polynomial growth (since Walg is algebraic).
+Hence f∞ lies in the space
+(A(G)⊗ ι(Walg)⊗ Wsm)G◦
+∞ ,
+whereA(G) denotes the space of automorphic forms for G in the sense of [11,
+def. 2.2], and G(A) acts by translation on the ﬁrst factor, via the chosen factor of
+G∞ on the second, and via G(Fp) on the third. Conversely, any function f∞ in this
+space clearly gives an element of L(W ) by reversing the construction.
+Since G has no cusps, all automorphic forms for G are cuspidal. Thus for any
+smooth character ω : Z(G)(A)/Z(G)(F )→ C×, the space of automorphic forms of
+central character ω decomposes as a direct sum of automorphic representations [11,
+§3.4]. For any compact open U⊆ G(Af ), there are only ﬁnitely many characters
+ω : Z(G)(A)/Z(G)(F )→ C× that are trivial on Z(G)(Af )∩ U and coincide with
+the central character of ι(Walg)∨ on G◦
+∞, and hence eUL(W ) can be written as a
+direct sum of terms arising from automorphic representations. Pa ssing to a direct
+limit over U , we obtain the result. □
+Deﬁnition 3.8.2. Let π∞ be an irreducible continuous representation of G∞ on
+a ﬁnite-dimensional C-vector space. We say π∞ is allowable if there is an an alge-
+braic representation W of G over E such that ( ι(W )⊗C π∞)G◦
+∞̸= 0. We say an
+automorphic representation π =
+⨂ ′
+v
+πv is allowable if its factor π∞ = ⨂
+v|∞ πv is
+so.
+Remark 3.8.3. The choice of embedding ι determines a map F∞→ C, and hence
+a map G∞ → G(C), and the algebraic representations of G∞ which are of the
+form ι(W ), for W an algebraic representation of G over E, are exactly those which
+arise by inﬂation from an algebraic representation of G(C). Hence our deﬁnition of
+“allowable” coincides with that of [18, def. 3.1.3].
+3.9. The classical subspace. We will now investigate the classical subspaces of
+the ﬁbres of M (e, X, V, k) at points of X corresponding to locally algebraic char-
+acters. By proposition 2.3.3, it is suﬃcient to take X = 1, the point of ˆH arith
+0
+corresponding to the trivial character, and study M (e, 1, V, k) = eL(Ind(V )k). As
+before, we suppose that V = Valg⊗ Vsm is a locally algebraic representation of M0,
+and that k≥ k(V ); let Usm,k and Ualg be the corresponding smooth and algebraic
+parabolically induced representations of G0, so Ind( V )cl
+k = Usm,k⊗ Ualg⊆ Ind(V )k.
+Deﬁnition 3.9.1. Let M (e, 1, V, k)cl = eL(Ind(V )cl
+k )
+===== PDF PAGE 24 =====
+24 DA VID LOEFFLER
+This is a ﬁnite-dimensional (and hence closed) subspace of the E-Banach space
+M (e, 0, V, k) = eL(Ind(V )k).
+Theorem 3.9.2. The space M (e, 0, V, k)cl is isomorphic as an eH+(G)e-module
+to
+⨁
+π
+m(π)· e
+
+
+
+ ⨂ ′
+q̸=p ﬁnite
+πq
+
+⊗ (Usm⊗ πp)⊗ (ι(Ualg)⊗ π∞)G◦
+∞
+
+ .
+where the direct sum is over all automorphic representation s π for which (ι(Ualg)⊗
+π∞)G◦
+∞̸= 0.
+Proof. Immediate from proposition 3.8.1. □
+We now show that the presence of Usm in the above formula allows us to restrict
+to idempotents of the form e(p)⊗ eG0, where e(p) is an idempotent away from p:
+Lemma 3.9.3. If πp is an irreducible smooth representation of G(Fp) which is a
+subquotient of a representation obtained by parabolic indu ction from
+P , then there is
+some k≥ 0 and some ﬁnite-dimensional smooth representation Vsm of M0 (trivial
+on Mk) such that
+(Usm,k ⊗ πp)G0
+̸= 0,
+where Usm,k = IndG0/G k
+P 0/ P k
+Vsm as above.
+Proof. The assumption on W is equivalent to assuming that the Jacquet module
+WN ̸= 0, by a theorem of Jacquet – see [9, 6.3.7]. By [ op.cit., 3.3.1], WN is an
+admissible smooth M -representation. Hence ( WN )Mk is ﬁnite-dimensional, and
+nonzero for suﬃciently large k.
+The space W Gk naturally has an action of eGkH+
+p (G)eGk , and we may identify
+the monoid algebra E[Σ +] with a subalgebra of this algebra (as was done for G0
+in§3.4 above). Casselman’s theory of the canonical lifting [9, §4.1] shows that if
+W Gk
+f s denotes the maximal ﬁnite slope subspace of W Gk , then the quotient map
+W→ WN gives an isomorphism W Gk
+f s
+∼
+→ (WN )Mk . Thus this ﬁnite slope subspace
+is also nonzero for large enough k.
+The space W Gk naturally has an action of G0, since Gk is normal in G0; and
+any element of W Gk
+f s is in fact N 0-invariant, since it is clearly N k-invariant and we
+may conjugate N 0 into N k via an element of Σ ++. Thus the N 0-invariants of the
+G0-representation W Gk are not zero.
+Let V = (W Gk )N 0 , which is a representation of M0/Mk. Then we have
+HomM0/M k
+(
+V, (W Gk )N 0
+)
+̸= 0
+⇒ HomP 0/ P k
+(
+V, W Gk
+)
+̸= 0
+⇒ HomG0/G k
+(
+IndG0/G k
+P 0/ P k
+V, W Gk
+)
+̸= 0
+⇒ HomG0
+(
+IndG0/G k
+P 0/ P k
+V, W
+)
+̸= 0
+⇒
+[(
+IndG0/G k
+P 0/ P k
+V ∗
+)
+⊗ W
+] G0
+̸= 0.
+So we may take Vsm = V ∗. □
+===== PDF PAGE 25 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 25
+Corollary 3.9.4. Let π =
+⨂ ′
+v
+πv be an allowable automorphic representation
+of G for which πp is isomorphic to a subquotient of a representation paraboli cally
+induced from P . Let e(p)
+f be an idempotent in H(p)
+f (G) such that e(p)
+f π(p)
+f ̸= 0.
+Then there exists a locally algebraic M0-representation V and, for all k≥ k(V ),
+a nonzeroH+(G)-invariant ﬁnite-slope subspace of M (e(p)
+f ⊗ eG0, 1, V, k)cl which is
+isomorphic as an e(p)
+f H(p)
+f (G)e(p)
+f -module to a direct sum of copies of e(p)
+f π(p)
+f .
+Proof. By assumption, there is an algebraic representation Walg of G such that
+(ι(Walg)⊗ π∞)G◦
+∞̸= 0; this is necessarily equal to the induced representation Ualg
+arising from some algebraic representation Valg of M , by highest weight theory. The
+previous lemma shows that we can ﬁnd a smooth representation Vsm of M0 such
+that eG0 (Usm,k ⊗ πp)̸= 0 for large enough k. Letting V = Vsm⊗ Valg and applying
+theorem 3.9.2, M (e(p)⊗ eG0, 0, V, k)cl contains a direct summand isomorphic as a
+H+(G)-representation to e(p)
+f π(p)
+f ⊗ eG0 (Usm,k ⊗ W )⊗ (ι(W )⊗ π∞)G◦
+∞ . □
+Remark 3.9.5. These are not the only automorphic representations that can con -
+tribute to M (e(p)
+f ⊗ eG0, 1, V, k)cl; since G0 could be arbitrarily small, some super-
+cuspidal G(Fp)-representations can have G0-invariant vectors, or more generally
+G0-stable subspaces isomorphic to a parabolically induced representa tion of G0.
+Thus automorphic representations with supercuspidal local fact ors at p can still
+contribute to M (e(p)
+f ⊗ eG0, 1, V, k)cl for suitable V . However, these will not be
+ﬁnite slope.
+Let us choose an idempotent e of the form e(p)⊗ eG0, as above. The next
+theorem shows that any eigenform in M (e, 1, V, k) of suﬃciently small slope lies in
+M (e, 1, V, k)cl, giving an analogue in our situation of the control theorem of [12]
+for overconvergent modular forms. Let us ﬁx an η∈ Σ ++, and λ∈
+E
+×
+.
+Theorem 3.9.6. If σ = ord p(λ) is a small slope relative to η and V (in the
+sense of deﬁnition 2.6.1), then the generalised λ-eigenspace of [G0ηG0] acting on
+M (e, 1, V, k) is contained in M (e, 1, V, k)cl.
+Proof. From proposition 2.6.2 we know that the operator norm of [ G0ηG0] acting
+on the quotient space Q = M (e, 1, V, k)/M(e, 1, V, k)cl is strictly less than p−σ .
+Hence the image in Q of the generalised λ-eigenspace of M (e, 1, V, k) must be zero,
+as otherwise the operator [ G0ηG0] acting on Q would have an eigenvalue larger
+than its norm. □
+3.10. Relation to Emerton’s completed cohomology. In this subsection we
+will investigate the relation between the spaces M (e, X, V, k) and the constructions
+of [18]. As in the discussion following Emerton’s deﬁnition 3.2.3, when G satisﬁes
+assumption 3.1.3, the space ˜H 0
+Fp−la is the space of continuous E-valued functions on
+G(A) which are left G(F )-invariant, locally constant on cosets of G(A(p)
+f )×G◦
+∞, and
+locally Fp-analytic on cosets of G(Fp). (In the reference cited, there is a stronger
+running assumption that Res F/ Q G is compact at inﬁnity modulo Q-split centre;
+but this is not used until the end of the section.)
+Assume e is an idempotent in H+(G) of the form e(p)⊗ eG0, as in the previous
+section. By proposition 2.3.3 it is suﬃcient to study the spaces M (e, 1, V, k) where
+===== PDF PAGE 26 =====
+26 DA VID LOEFFLER
+(V, ρ) is an irreducible locally Fp-analytic representation of M0. We regard V as a
+representation of P 0 = N 0M0, trivial on N 0.
+Proposition 3.10.1. There is an isomorphism
+lim
+−→k
+M (e, 1, V, k)
+∼
+→ e(p)
+(
+˜H 0
+Fp−la⊗E V
+)
+P 0
+,
+commuting with the action of e(p)H(p)(G)e(p) on both sides.
+Proof. Since any f∈ lim
+−→k M (e, 1, V, k) is determined by ﬁnitely many values f (µ1), . . . , f(µt),
+it follows that the functor W↦→eL(W ) commutes with direct limits; hence
+lim
+−→k
+M (e, 1, V, k) = e·L (IndG0
+P V ),
+where Ind G0
+P V = Cla(N0, V ), the space of locally Fp-analytic V -valued functions
+on N0.
+Given f∈ lim
+−→k M (e, 1, V, k), we can thus regard f as a map G(A)→ Cla(N0, V ).
+Let us take ˜f to be the function G(A)→ V given by ˜f (g) = f (g)(1). Then ˜f is
+evidently in ˜H 0
+Fp−la⊗E V , and satisﬁes e(p) ˜f = ˜f . Since
+f (gk)(1) = ( k−1◦ f )(g)(1) = ρ(Ψ M (k−1))f (g)(Ψ N (k−1))
+for all k∈ G0, we have in particular ˜f (g
+p) = ρ(Ψ M (p)−1)◦ ˜f (g) if p∈ P 0 = N 0M0.
+Thus P 0 acts trivially on ˜f when we endow ˜H 0
+Fp−la⊗E V with the diagonal action
+of P 0.
+Conversely, let h be an element of
+(
+˜H 0
+Fp−la⊗E V
+) P 0
+. We regard h as a function
+G(A)→ V such that h(gp) = ρ(p)−1h(g) for all p∈ P 0, and deﬁne f to be the
+function G(A)× N0→ V given by f (g)(n) = h(gn−1). Then clearly f (g)(−)∈
+Cla(N0, E) for each g ∈ G(A). Thus we can regard f as a function G(A) →
+Cla(N0, E). We calculate that
+f (gu)(n) = h(gun−1)
+= h(g(nu−1)−1)
+= h
+(
+g
+[
+Ψ N (nu−1)Ψ M (nu−1)Ψ N (nu−1)
+] −1)
+= h
+(
+gΨ N (nu−1)−1Ψ M (nu−1)−1Ψ N (nu−1)−1)
+= h
+(
+gΨ N (nu−1)−1Ψ M (nu−1)−1)
+(by N 0-invariance)
+= ρ(Ψ M (nu−1))h(gΨ N (nu−1)−1)(since M0 acts via ρ−1)
+= (u◦ f (g))(n).
+Hence f is an element of L(IndG0
+P V ), and evidently we have ˜f = h.
+Finally we note that the map f↦→˜f is clearly G(A(p))-equivariant, and hence
+e(p)H(p)(G)e(p)-equivariant. □
+We now consider the action of Hecke operators at p. On the left-hand side, we
+have an action of Σ +, via the isomorphism E[Σ +] = eG0H+
+p (G)eG0 . On the right,
+let M + be the monoid {z∈ M (L)| zN 0z−1⊆ N 0}; then for any W∈ Repla, c(P ),
+there is an action of M + (and hence of Σ +) on W N 0 constructed in [17, §3.4]. We
+===== PDF PAGE 27 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 27
+extend this to an action of M0Σ + on the tensor product by letting Σ + act trivially
+on the second factor.
+Proposition 3.10.2. The homomorphism of the previous proposition is Σ +-equivariant.
+Proof. The action of z∈ Σ + on the right-hand side is given by
+(z◦ f )(g) = 1
+[N 0 : zN 0z−1]
+∑
+n∈N 0/z N 0z−1
+f (gzn).
+On the other hand, the action on the right-hand side obtained by tr ansporting the
+action on the left via the isomorphism of the previous proposition is giv en by the
+similar but apparently more complicated formula
+(z◦ f )(g) = 1
+[G0 : G0∩ zG0z−1]
+∑
+γ ∈G0/G 0∩zG0z−1
+ρ(Ψ M (zγ ))f
+(
+gzγ Ψ N (zγ )−1)
+.
+However, from the Iwahori factorisation of G0 we have zG0z−1 = (zN 0z−1)(zM0z−1)(zN0z−1).
+As z ∈ Z(M ) the middle term is M0; and as z ∈ Σ +, zN0z−1 ⊇ N0. Thus
+G0∩ zG0z−1 = ( zN 0z−1)M0N0, and hence any set of coset representatives for
+N 0/zN 0z−1 is also a set of coset representatives for G0/G0∩ zG0z−1. Since for
+all γ∈ N 0 we have Ψ N (zγ ) = 1 and ρ(Ψ M (zγ )) = ρ(z) = id V , the two actions
+coincide. □
+Now let λ be a character Σ → E×. By proposition 3.4.1, this is equivalent to a
+ﬁnite slope E-valued system of eigenvalues for A+(G).
+Proposition 3.10.3. As representations of H(p)(G), we have
+M (e, 1, V, k0)A+(G)=λ = e(p)
+[
+JP
+(
+˜H 0
+Fp−la
+)
+⊗E V
+] M0, Σ= λ
+for all k0≥ k(V ).
+Proof. First we note that for all k0≥ k(V ), the map M (e, 1, V, k0)→ lim
+←−k M (e, 1, V, k)
+induces an isomorphism on the λ-eigenspaces, by corollary 3.7.3. So, by the pre-
+vious proposition, the left-hand side is just e(p)
+(
+˜H 0
+Fp−la⊗E V
+)
+P 0, Σ +=λ
+, which we
+can also write as e(p)
+[(
+˜H 0
+Fp−la
+) N 0
+⊗E V
+] M0, Σ +=λ
+.
+We deduce from proposition 3.2.12 of [17] that this coincides with e(p)
+[(
+˜H 0
+Fp−la
+) N 0
+⊗E V
+] M0, Σ +=λ
+fs
+,
+where (−)fs denotes Emerton’s ﬁnite slope part functor. By op.cit., 3.2.9 this is
+simply e(p)
+[(
+˜H 0
+Fp−la
+) N 0
+fs
+⊗E V
+] M0, Σ +=λ
+; since the Jacquet functor JP is deﬁned as
+(−)N 0
+fs , and all of these isomorphisms clearly commute with the action of G(A(p)),
+the result follows. □
+3.11. The eigenvariety machine. We shall now use the above results to con-
+struct a geometric object parametrising overconvergent eigenf orms. This object is
+analogous to the Coleman-Mazur eigencurve for overconvergent modular forms, and
+the methods we use to construct it are based on the Hecke algebra construction of
+the eigencurve given in [14], as subsequently extended in [8] and [2]. In this section,
+===== PDF PAGE 28 =====
+28 DA VID LOEFFLER
+we will regard all rigid spaces as being deﬁned over E via base extension, and for a
+rigid space X we will writeO(X) for the algebra of analytic functions on X, rather
+than Can(X, E).
+Deﬁnition 3.11.1. Let X be an aﬃnoid rigid space over E, M a Banach module
+overO(X) satisfying (Pr), and T a commutative E-algebra endowed with a map
+T→ EndO(X)(M ); and suppose that φ∈ T is a ﬁxed element which acts as a
+compact endomorphism of M .
+For E′ a discretely valued extension of E, we say an E-algebra homomorphism
+λ : T→ E′ is an E′-valued system of eigenvalues (for M ) if there is a point P∈
+X(E′) (giving a homomorphismO(X)→ E′) and a nonzero vector m∈ M⊗O(X)E′
+such that αx = λ(α)x.
+We say a system of eigenvalues is φ-ﬁnite if λ(φ)̸= 0.
+Theorem 3.11.2. To the data (X, M, T, φ) as above, we can associate a reduced
+E-rigid space Dφ , endowed with a E-algebra homomorphism Ψ : T→O (Dφ ) and
+a map of E-rigid spaces f : Dφ→ X, satisfying the following conditions:
+(1) The map ν : (f, Ψ( φ)−1) is a ﬁnite map Dφ→ X× Gm.
+(2) The map T⊗O f (x)→O x induced by Ψ is surjective for every point x of
+Dφ , whereOx andOf (x) denote the local rings of Dφ and X at the points
+x and f (x).
+(3) For each discretely valued extension E′/E, the map associating to a point
+x∈ Dφ (E′) the homomorphism T→ E′ given by composing Ψ with evalua-
+tion at x gives a bijection between Dφ (E′) and the set of φ-ﬁnite E′-valued
+systems of eigenvalues for M .
+Furthermore, Dφ is uniquely determined by these conditions.
+Proof. For the existence statement, see [8,§5]. Condition (2) above does not appear
+there in quite the same form, but Buzzard’s construction of Dφ shows that each
+point has an aﬃnoid neighbourhood of the form Max A where A is deﬁned as
+the image of T in a certain endomorphism algebra, from which the statement (2)
+follows.
+The uniqueness is [2, §7.2.3], where it is shown more generally that an eigenva-
+riety is determined up to isomorphism by conditions (i), (ii), and the sy stems of
+eigenvalues corresponding to a suﬃciently dense subset of points o f Dφ (Qp). □
+Remark 3.11.3. There is a functor from the slice category of aﬃnoid spaces
+with a map to X to the category of sets, which maps a space Y
+π
+− →X to set
+of φ-ﬁnite systems of eigenvalues for the pullback π∗(M ) = M ˆ⊗O(X)O(Y ). It
+is clear that Dφ represents this functor. However, in general the pullback of Dφ
+does not satisfy condition (2) above, and hence π∗Dφ is is not the eigenvariety for
+(Y, π∗M, T, φ) – the formation of Dφ is not functorial with respect to arbitrary
+base change (although this is true for ﬂat base change). Neverth eless the pullback
+of Dφ and the eigenvariety of the pullback have the same nilreduction.
+Corollary 3.11.4. If φ1 and φ2 are two elements of T which both act as com-
+pact endomorphisms of M , and every φ1-ﬁnite system of eigenvalues for M is also
+φ2-ﬁnite and vice versa, then the eigenvarieties associated t o (X, M, T, φ1) and
+(X, M, T, φ2) are isomorphic.
+Proof. For i = 1 , 2 let Di, fi, and Ψ i denote the eigenvarieties and their structure
+maps corresponding to φ1 and φ2. The function Ψ 1(φ2) on D1 is analytic and has
+===== PDF PAGE 29 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 29
+no zeros by hypothesis, so ν = (f1, Ψ 1(φ2)−1) : D1→ X× Gm is well-deﬁned. The
+image of ν is evidently contained in the spectral variety Z2⊆ X× Gm, which is
+the zero locus of the characteristic power series of φ2.
+I claim that ν is a ﬁnite map D1→ Z2. It will follow from this that D1 satisﬁes
+the properties that uniquely determine the eigenvariety associate d to ( X, M, T, φ2),
+so D1 = D2.
+We know from [8, thm. 4.6] that Z2 is admissibly covered by aﬃnoid subdomains
+Y such that the projection π : Z2→ X restricts to a ﬁnite ﬂat map Y → W =
+π(Y ), and Y is disconnected from its complement in π−1(W ). Let Y be any such
+aﬃnoid, and let MY be the ﬁnite-rank T-stableO(W )-module direct summand
+of M ˆ⊗O(X)O(W ) attached to Y by [8, thm. 3.3]. Then it is immediate from
+the uniqueness result above that ν−1(Y ) is the eigenvariety attached to the data
+(ZY , MY , T, φ1). As MY has ﬁnite rank over O(ZY ), this is evidently ﬁnite over
+ZY , and in particular it is ﬁnite over Y . □
+In applications of this result the base space will typically not be aﬃnoid , and
+the modules involved will be overconvergent forms whose radius of c onvergence will
+be forced to tend to zero as we approach the boundary, so we nee d the following
+extension:
+Deﬁnition 3.11.5 ([8,§5]). Let M ′, M be BanachO(X)-modules with a continu-
+ous action of T and compact φ-action as above. A map α : M ′→ M is a primitive
+link if it is a continuous, T-equivariant,O(X)-linear map, and there exists another
+such map c : M→ M ′ which is also compact, such that α◦ c = φM and c◦ α = φM ′ .
+A link is a map which is the composite of a ﬁnite sequence of primitive links.
+Lemma 5.6 of [8] shows that if M and M ′ are related by a link α, then α induces
+an isomorphism between the eigenvarieties of ( X, M, T, φ) and ( X, M ′, T, φ).
+Finally, let us suppose that we are given the following data: a rigid spac eW;
+for each open aﬃnoid subdomain X⊂W anO(X)-module M (X) with a T-action
+such that φ is compact; and for each inclusion of aﬃnoids Y ⊂ X ⊂W a link
+αXY : M (Y )→ M (X) ˆ⊗O(X)O(Y ), satisfying the obvious compatibility condition
+αXZ = αY Z αXY whenever ( X, Y, Z) are aﬃnoids with Z⊂ Y⊂ X⊂W .
+Theorem 3.11.6. To the above data we may associate a rigid space Dφ overW
+such that for any open aﬃnoid X ⊂W , the pullback of Dφ to X is canonically
+isomorphic to the eigenvariety attached to (X, M (X), T, φ). Furthermore, if W is
+equidimensional of dimension n, Dφ is also equidimensional of dimension n; and
+the image of any component of Dφ inW is a Zariski-open subset of W.
+Proof. The existence is [8, Construction 5.7]. The equidimensionality stateme nt is
+[10, prop. 6.4.2]. □
+3.12. Eigenvarieties for automorphic forms. We now apply the machinery of
+the preceding subsection to our spaces of overconvergent form s. Corollary 3.9.4
+above shows that all of the Hecke eigenvalues which we are interest ed in can be
+seen in the spaces M (e(p)⊗ eG0, X, V, k) for idempotents e(p) ∈H (p)(G), so we
+shall apply the “eigenvariety machine” to these spaces. Let us ﬁx V and e(p) and
+deﬁne M (X, k) = M (e(p)⊗ eG0, X, V, k); we also write M (X) for M (X, k) when
+k = max(k(V ), k(X)).
+===== PDF PAGE 30 =====
+30 DA VID LOEFFLER
+Let S be a ﬁnite set of places including p and all primes at which our tame
+idempotent e(p) is ramiﬁed, and deﬁne
+T =A+(G)⊗E
+⨂ ′
+q /∈S
+e(p)H(G(Fq))e(p).
+This is a commutative, unital E-algebra.
+Remark 3.12.1. One could also choose commutative subalgebras of the algebras
+e(p)H(G(Fq))e(p) at primes q∈ S\{ p}, and include these in the tensor product;
+the only requirement is that T be commutative.
+Now let us ﬁx an element η∈ Σ ++, and let φ be the corresponding element of
+A+(G). We know from lemma 3.4.2 and corollary 3.11.4 that the resulting spac e
+will not depend on this choice. The ﬁnal check we must make is the exis tence of
+the appropriate link maps:
+Lemma 3.12.2. If Y⊆ X are aﬃnoid subdomains of ˆH arith
+0 deﬁned over E, then
+there is a T-equivariantO(Y )-module homomorphism
+αXY : M (Y )→ M (X) ˆ⊗O(X)O(Y )
+which is a link; and these links satisfy the compatibility co ndition αY Z αXY = αXZ
+if X⊇ Y ⊇ Z.
+Proof. Since Y ⊆ X we have k(Y ) ≤ k(X). Note that M (X) ˆ⊗O(X)O(Y ) =
+M (Y, k(X)). If k(Y ) = k(X) there is nothing to prove (the identity map is
+a link). Suppose k(X) = k(Y ) + 1; then we take α to be the inclusion map
+M (Y, k(Y ))֒→M (Y, k(X)), and part (4) of theorem 3.7.2 shows that there is a
+map c satisfying the appropriate requirements.
+If k(X) > k (Y ) + 1 then one clearly obtains a chain of such maps whose com-
+position is the required (non-primitive) link. The compatibility condition is also
+clear, since the composition of the inclusion maps M (Z, k(Z))֒→M (Z, k(Y ))֒→
+M (Z, k(X)) clearly coincides with the inclusion M (Z, k(Z))֒→M (Z, k(X)). □
+Applying theorem 3.11.6, we deduce the following result:
+Theorem 3.12.3. There exists an eigenvariety of tame type e(p), namely a re-
+duced E-rigid space D(e(p), V ) endowed with a E-algebra homomorphism Ψ : T→
+O(D(e(p), V )) and a map of E-rigid spaces f : D(e(p), V )→ ˆH arith
+0 , whose points
+over any discretely valued extension E′/E parametrise ﬁnite slope E′-valued systems
+of eigenvalues arising in the spaces M (e(p)⊗ eG0, X, V, k) for aﬃnoids X⊆ ˆH arith
+0 .
+The space D(e(p), V ) is equidimensional of the same dimension as ˆH arith
+0 , and
+its image in ˆH arith
+0 is contained in a ﬁnite union of components of the latter, in
+each of which it is Zariski-open.
+3.13. Density of classical points. In this section, we’ll see that in certain cases
+theorem 3.9.6 can be used to show that there are “many” points in D(e(p), V ) arising
+from classical automorphic forms. We begin by recalling the useful d eﬁnition of
+accumulation of a subset of a rigid space:
+Deﬁnition 3.13.1 ([2,§3.3.1]). Let X be a rigid space over a complete nonar-
+chimedean valued ﬁeld K, and |X| its underlying set of points. If x ∈ X and
+S⊂| X|, we say S accumulates at x if there is a basis of aﬃnoid neighbourhoods
+Y of x such that S∩| Y| is Zariski dense in Y .
+===== PDF PAGE 31 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 31
+Our next deﬁnition is slightly complicated to state. An open aﬃne cone in Rd
+is a subset of the form C ={x∈ Rd : φ1(x) > c 1, . . . , φn(x) > c n} for linear
+functionals φ1, . . . , φn and non-negative ci∈ R. Recall that T = Z(M )∩ S, a torus
+over Fp. Let κ∈ ˆH arith
+0 , and let C be an open aﬃne cone in X •(T )⊗ R; we say
+that κ belongs to C if it is locally algebraic and the restriction of its algebraic part
+to T lies in C.
+Deﬁnition 3.13.2. Let X be a component of ˆH arith
+0 . We say X is good if for any
+nonempty open aﬃne cone C in X •(T )⊗ R, the points of X belonging to C are
+Zariski-dense in X, and accumulate at every locally algebraic point in X.
+Corollary 3.13.3. Suppose V is locally algebraic, and X is a good component of
+ˆH arith
+0 . Then points corresponding to classical automorphic forms are Zariski-dense
+in the preimage of X in D(e(p), V ).
+Proof. We follow the argument of [10, §6.4.5]. Let η∈ Σ ++, and let Zη (e(p), V )
+be the spectral curve associated to η. We let D(e(p), V )X and Zη (e(p), V )X be the
+preimages of X in D(e(p), V ) and Zη (e(p), V ); we then have a commutative diagram
+D(e(p), V )X
+µ →→
+fD
+→→PPPPPPPPPPPPPP Zη (e(p), V )X
+fZ
+↓↓
+X
+where µ is a ﬁnite map and fD and fZ are the projections to weight space.
+If Zη (e(p), V )X is empty, there is nothing to prove. Otherwise, let Z be a compo-
+nent of Zη (e(p), V )X . We know that the image of Z in X is Zariski-open. Since X is
+good, locally algebraic points are Zariski dense in X; so there is a locally algebraic
+point κ0 in the image of Z. Let z0 be a point of Z above κ0. By construction,
+Z is admissibly covered by aﬃnoids U such that U ′ = fZ(U ) is an aﬃnoid in X,
+fZ : U→ U ′ is ﬁnite and ﬂat, and U is a connected component of f −1
+Z (U ′); let U
+be an aﬃnoid neighbourhood of z0 of this type.
+Since U is quasicompact and Ψ( η) does not vanish on U , the function ord p Ψ( η)
+is bounded above on U . Let M be its supremum. Then there is a nonempty open
+aﬃne cone C⊆ X •(T ) such that if λ∈ C, M is a small slope for η relative to
+λ. Since X is a good component, locally algebraic characters whose algebraic pa rt
+lies in C accumulate at κ0, and hence are Zariski dense in some neighbourhood
+U ′′ of κ0 contained in U ′. We deﬁne Y = f −1
+D (U ′′)∩ µ−1(U ), which is an aﬃnoid
+neighbourhood of µ−1(z0) in D(e(p), V ). By [10, lemma 6.2.8], we deduce that the
+set of points of Y whose image in U ′′ is locally algebraic is Zariski dense in Y . But
+any such point must be classical, by theorem 3.9.6; so classical points are Zariski
+dense in Y , and hence in µ−1(Z). Since Z was arbitrary, the result follows. □
+Remark 3.13.4. If Fp = Qp and Z(G)(OF ) is trivial, then it is easy to see that
+every geometric connected component of ˆH0 = ˆH arith
+0 is good, since the algebraic
+weights evidently accumulate at the origin in ˆH0. This can be extended to general
+Fp using the explicit description of ˆOF, p given in [26]. However, for G = Res K/ Q Gm
+where K = Q(
+3√
+2), and any prime p, locally algebraic weights are not Zariski dense
+in ˆGarith
+0 (where G0 = G(Zp)), and hence the Zariski closure of the classical weights
+has dimension strictly smaller than the whole eigenvariety.
+===== PDF PAGE 32 =====
+32 DA VID LOEFFLER
+4. Examples
+We shall now make the above machinery rather more explicit, and sho w that for
+certain speciﬁc examples of groups G satisfying the hypotheses, one recovers results
+already in the literature (or generalisations thereof).
+4.1. T ori. If G is a torus over F , then the only possible parabolic subgroup of G is
+G itself. We may take G0 to be any compact open subgroup of G(Fp), and G1 an
+arbitrary good Fp-analytic subgroup of G0. The unipotent radical N is the trivial
+group, so Nk ={1} for all k. Thus for any aﬃnoid X⊂ ˆGarith
+0 and any locally
+algebraic V , we have C(X, V, k) = Can(X, E) ˆ⊗E V , with the action of G0 on V
+being the natural one and the action on Can(X, E) via ∆ X .
+Let e(p) be an idempotent of the form eU , for a compact open subgroup U ⊆
+G(Af ). Then for any k ≥ k(X), M (e(p)⊗ eG0, X, 1, k) is precisely the set of
+functions f : G(F )\G(A) → Can(X, E)× satisfying f (gu) = ∆ X (up)−1f (g) for
+u∈ G0U G◦
+∞. This diﬀers from the space deﬁned on [7, p7] (for the special case of
+the torus over Q given by Res K/ Q Gm for K a number ﬁeld) only in that we have
+∆ X (up)−1 where Buzzard has ∆ X (up).
+4.2. Unitary groups. Let us suppose we are in the situation of [10]: G is a unitary
+group over Q which is split at p, so G is isomorphic to GL n as an algebraic group
+over Qp. In this case, we take S to be the diagonal torus and Pmin to be the usual
+Borel subgroup of upper-triangular matrices. The parabolic subg roups containing
+Pmin are groups of block upper-triangular matrices, each determined b y the set J
+of its jumps, which is contained in {1, . . . , n− 1}; the free simple roots are Li− Li+1
+for i in J, where Li sends a diagonal torus element to its ( i, i) entry. It is easy to
+check directly in this case that the big Bruhat cell C is an open Zp-subscheme of
+G, deﬁned by the non-vanishing of the functions ( Zi1)i∈J , where Zi1 is the function
+mapping a matrix to the determinant of its top left-hand i× i submatrix.
+Let us deﬁne G0 to be the parahoric subgroup of GL n(Zp) corresponding to P ,
+containing those matrices whose reduction modulo p lies in P ; and let G1 be the
+subgroup of G0 whose reduction mod p lies in N . It is easy to check that G1 is
+normal in G0 and that G1 is decomposable in the sense of deﬁnition 2.2.1, so G0 is
+an admissible subgroup; and both N0 and N1 are equal to N (Zp).
+In the case where J = {1, . . . , n− 1}, so P = Pmin and S = M = H, we
+see that the aﬃnoid subvariety F of [10, §3.2] is exactly the image of N0 in the
+ﬂag variety
+P\G. Hence the space A(F ) of [10, §3.2] is our Can(N0, Qp); and the
+representations Sr of [10,§3.6], deﬁned over certain aﬃnoids Wr⊆ ˆH0 of characters
+analytic on the principal congruence subgroup M1, are easily seen to coincide with
+our spacesC(Wr, 1, 1).
+The more general construction given in [2, §7.3] uses slightly diﬀerent conven-
+tions, with actions deﬁned by left multiplication rather than right mult iplication; in
+our optic this corresponds to choosing the parabolic subgroup P to be the lower tri-
+angular Borel, while still choosing G0 to be the upper triangular Iwahori subgroup.
+Then one can check that the space C(X, k) constructed in [2], for X either an open
+aﬃnoid or a closed point in ˆH0 and k≥ k(X), is isomorphic as a G0-representation
+to what we would denote byC(X −1, 1, k), where X −1 denotes the image of X under
+the involution of ˆH0 that sends a character to its inverse, and the map giving the
+isomorphism is given by f (x)↦→f (x−1).
+===== PDF PAGE 33 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 33
+4.3. GL 2 and restriction of scalars. In this section we’ll carry out a purely local
+calculation relating various representations of the group G = Res K/ Qp GL2, for K
+a ﬁnite extension of Qp.
+The Qp-split part of the diagonal torus in G is a maximal split torus, of rank
+2; with respect to this torus, there is only one positive and one nega tive root (of
+multiplicity d = [K : Qp]). We choose the signs so that Pmin is the standard upper-
+triangular Borel subgroup; then M is the rank 2 d diagonal torus. The natural
+choice for G0 is the upper triangular Iwahori subgroup of elements congruent t o(
+∗ ∗
+0 ∗
+)
+mod πK. If we take G1 to be the kernel of reduction modulo πa
+K, for
+a∈ Z≥1, then G1 is normal in G0, and for suﬃciently large a it is a good Qp-
+analytic open subgroup. Thus G0 is admissible in the sense of deﬁnition 2.2.3.
+In this case, N0 =OK. Hence N0 is naturally the Qp-points of the aﬃnoid rigid
+spaceN0 = Res K/ Qp (B(1)/K), where B(1)/K is the standard unit ball over K; see
+[16,§2.3] for a discussion of restriction of scalars in the rigid analytic cont ext. Con-
+cretely, this is isomorphic to B(1)d/Qp with coordinates Z1, . . . , Zd corresponding
+to a basis z1, . . . , zd ofOK as a Zp-module. For τ∈O K the evaluation map is given
+by f (τ ) = f (ζ1(τ ), . . . , ζd(τ )) where ζi is the coordinate functional corresponding
+to zi. Similarly, the aﬃnoid subdomain Nk is just the aﬃnoid ball attached to the
+sublattice pkπa
+KOK, which is Res K/ Qp
+(
+B(|pkπa
+K|)/K
+)
+.
+More generally, for each r∈ pQ with r≤ 1 we may deﬁne the open aﬃnoid
+N (r) = Res K/ Qp (B(r)/K), which is an open aﬃnoid subdomain. Let us set
+OK(r) = {x ∈ OK : |x| ≤r}. Then we can deﬁne D(r) to be the union of
+the translates of N (r) by the elements of OK/OK(r), extending the deﬁnition of
+Dk.
+We wish to compare this with the slightly diﬀerent theory developed in [8 ,§8]
+(and [30,§1.2], which is very similar). Let I be the set of embeddings֒→E; we
+assume that E is large enough assume that |I| = d. Then z↦→(σ(z))z∈I gives an
+embedding of OK into B(1)d. Let X0 = B(1)d, and let X (r), for r≤ 1∈ pQ, be
+the union of the polydiscs B(r)d centred at the points of OK /OK(r) in X0. Then
+X (r) is an open aﬃnoid subdomain of X0 over Qp. (This is the space denoted by
+Br in [8,§8]).
+Deﬁnition 4.3.1. We shall callD(r) andX (r) respectively the type 1 and type 2
+thickenings ofOK (of radius r).
+The Qp-points ofX (r) andD(r) are canonically N0 =OK, for every r, and the
+right action of G0 on N0, which is given by
+( a b
+c d
+)
+◦ z = b+dz
+a+cz , extends to an
+action of G0 onD(r) and on X (r) via rigid-analytic automorphisms. (This is clear
+forD(r), and for X (r) it is [8, lemma 8.1(b)]).
+Proposition 4.3.2. Let µ =
+√
+|∆|, where ∆ is the discriminant of the ﬁeld exten-
+sion K/Qp. Then there exist maps of rigid spaces D(r)→X (r) andX (rµ)→D (r),
+commuting with the action of G0, which are the identity on OK.
+Proof. We ﬁrst consider the case r = 1. If we identify D(1) and X (1) with B(1)d,
+via the coordinates Zi onD(1) introduced above and the natural coordinates Xσ
+onX , then the linear map sending ( Z1, . . . , Zd) to ( ∑ d
+j=1 σ(zj)Zj)σ ∈I commutes
+with the embeddings of OK into the two factors. Since OK is Zariski dense in both
+X (1) andD(1), this map must commute with the G0-action.
+===== PDF PAGE 34 =====
+34 DA VID LOEFFLER
+Similarly, for any r we have an embedding of the identity component of D(r)
+into the identity component of X (r), which commutes with the embedding of
+{x∈O K|| x|≤ pr} into both, and we can extend this to the other components
+by translating by elements of OK.
+To deﬁne the second map, we note that the matrix A whose i, j term is σi(zj), for
+any ordering σ1, . . . , σd of I, satisﬁes (det A)2 = ∆ K/ Qp . Consequently, A−1 gives a
+map from the disc B(rµ) to B(r). Identifying these with the identity components
+ofX (rµ) andD(r), the resulting map is clearly the identity on OK(rµ). Extending
+to the remaining components by translation by OK, we obtain the required map;
+and as before, it is G0-equivariant by the Zariski-density of OK. □
+We thus obtain the following result relating the representations obt ained from
+functions onD(r) andX (r):
+Corollary 4.3.3. Let χ1, χ2 be locally Qp-analytic charactersOK→ E×, and r∈
+pQ suﬃciently small that χ1 is analytic on 1 +OK(r). Let us endow Can(D(r), E)
+and Can(X (r), E) with the action of G0 given by
+(
+a b
+c d
+)
+◦ f = χ1(a + cz)χ2(ad−
+bc)f
+(
+b+dz
+a+cz
+)
+.
+(1) There are continuous injective G0-equivariant maps Can(X (r), E)→ Can(D(r), E)
+and Can(D(r), E)→ Can(X (rµ), E), with dense image.
+(2) The compositions Can(X (r), E) → Can(X (rµ), E) and Can(D(r), E) →
+Can(D(rµ), E) are the natural embeddings.
+(3) The map α : Can(X (r), E)֒→Can(D(r), E) is a primitive link, in the
+sense of deﬁnition 3.11.5, for the endomorphisms of the two s paces given
+by f (z)↦→f (λz) for any λ∈ Zp with|λ| < µ.
+Proof. The ﬁrst two statements are clear from the previous proposition. For part
+(iii), in the coordinates introduced above, the map α is given by the matrix A with
+| det A| = µ; so the map c : Can(D(r), E)֒→Can(X (r), E) given by the matrix
+λA−1 is well-deﬁned and compact, and it is clear that the two compositions a re the
+maps on Can(D(r), E) and Can(X (r), E) given by multiplication by λ. □
+4.4. Quaternion algebras over a totally real ﬁeld. As a ﬁnal example, we
+consider the case of quaternionic Hilbert modular forms studied in [30 ] and [8, part
+III]. Let F be a totally real ﬁeld and B a totally deﬁnite quaternion algebra over
+F (i.e. B is ramiﬁed at all inﬁnite places of F ). B× is naturally the F -points of an
+algebraic group over F , and we let G = Res F/ Q B×. If p1, . . . ,pr are the primes of
+F above p, then G is isomorphic over Qp to ∏ r
+i=1 G(i) where G(i) = Res Fpi / Qp B×.
+Let us suppose without loss of generality that B is split over Fpi for i = 1, . . . , t
+and non-split for i = t + 1, . . . , r. For i = 1, . . . , t, the factor G(i) will be isomorphic
+to Res Fpi / Qp GL2; let us ﬁx such an isomorphism, and deﬁne S(i) to be the rank
+2 diagonal split torus, and P (i)
+min the Borel subgroup of upper triangular matrices.
+For the remaining primes, we take S(i) to be the rank 1 torus corresponding to the
+inclusion Q×
+p֒→B×, and P (i)
+min the whole of G(i). Then S = ∏ S(i) is a maximal
+split torus in G and Pmin = ∏ P (i)
+min a minimal parabolic containing S; and the
+parabolic subgroups containing Pmin biject with the subsets of {1, . . . , t}.
+Let us ﬁx such a parabolic, corresponding (without loss of generalit y) to{1, . . . , s}
+for some s≤ t. We can deﬁne a compact open subgroup G0 to be the product of
+===== PDF PAGE 35 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 35
+the Iwahori subgroups of G(i) for i = 1 , . . . , s with the unit groups of maximal
+orders in the remaining factors. This is admissible, since in each facto r the kernel
+of reduction modulo a suﬃciently high power of pi will be a good Qp-analytic open
+subgroup, which is trivally decomposable (since each factor has sem isimple rank 1
+or 0). So for any ﬁnite dimensional arithmetical locally Qp-analytic representation
+V of M0, we have a family of spaces Ind( V )k = Can(Dk, V ), where Dk is a direct
+product of terms D(i)
+k which are type 1 thickenings of OF, pi; and hence there is an
+eigenvariety (for any choice of tame level) interpolating automorph ic forms for D×
+which are ﬁnite slope for the primes p1, . . . ,ps.
+The constructions in [30, §1.2] and [8, part III], on the other hand, use the cor-
+responding products of type 2 thickenings of OF, pi. Applying corollary 4.3.3, we
+obtain natural maps between these representations, and hence between the result-
+ing spaces of overconvergent automorphic forms; part (iii) of the corollary shows
+that these are links for the action of the compact Hecke operator corresponding to(
+1 0
+0 pm
+)
+for suﬃciently large m, and consequently the resulting eigenvarieties are
+isomorphic.
+5. Acknowledgements
+This paper is a more polished version of the ﬁrst three chapters of m y 2008
+University of London PhD thesis, and I am much indebted to my super visor, Kevin
+Buzzard, for all the advice and support I received during its prepa ration. The
+genesis of this project was in conversations I had with several mat hematicians
+during the Eigenvarieties semester at Harvard University in spring 2 006, and it
+took its ﬁnal form during a visit to the p-adic semester at the Tata Institute of
+Fundamental Research in autumn 2008; I am grateful to the orga nisers of these two
+programmes for the invitations.
+Finally, I would also like to thank the numerous mathematicians with who m
+I have had useful and interesting conversations, particularly Ga¨ etan Chenevier,
+Matthew Emerton, Richard Hill, Payman Kassaei, Jan Kohlhaase, Alex Paulin and
+Matthias Strauch; the anonymous referee, whose careful read ing of the original
+draft of this paper was immensely helpful; and, last but not least, Sa rah Zerbes.
+References
+[1] Avner Ash and Glenn Stevens. p-adic deformations of arithmetic cohomology. Preprint ava il-
+able from http://www2.bc.edu/~ashav/, October 2007.
+[2] Jo¨ el Bella ¨ ıche and Ga¨ etan Chenevier.p-adic families of Galois representations and higher
+rank Selmer groups. Ast´ erisque, 324, 2009.
+[3] I. N. Bernˇ ste ˘ ın, I. M. Gel ′fand, and S. I. Gel ′fand. A certain category of g-modules.
+Funkcional. Anal. i Priloˇ zen., 10(2):1–8, 1976.
+[4] Armand Borel and Jacques Tits. Groupes r´ eductifs. Pub. Math. IH ´ES, 27:55–151, 1965.
+[5] Nicolas Bourbaki. ´El´ ements de math´ ematique. Fasc. XXXIII. Vari´ et´ es diﬀ´erentielles et ana-
+lytiques. Fascicule de r´ esultats (Paragraphes 1 ` a 7) . Actualit´ es Scientiﬁques et Industrielles,
+No. 1333. Hermann, Paris, 1967.
+[6] Kevin Buzzard. Analytic continuation of overconvergen t eigenforms. J. Am. Math. Soc. ,
+16(1):29–55 (electronic), 2003.
+[7] Kevin Buzzard. On p-adic families of automorphic forms. In Modular curves and abelian
+varieties (Bellaterra, 2002) , volume 224 of Progr. Math., pages 23–44. Birkh¨ auser, 2004.
+[8] Kevin Buzzard. Eigenvarieties. In L-functions and Galois representations (Durham, 2004) ,
+volume 320 of London Math. Soc. Lecture Notes , pages 59–120. Cambridge Univ. Press, 2007.
+===== PDF PAGE 36 =====
+36 DA VID LOEFFLER
+[9] Bill Casselman. Introduction to the theory of admissibl e representations of p-adic groups.
+Available from http://www.math.ubc.ca/~cass/research/p-adic-book.dvi , 1995.
+[10] Ga¨ etan Chenevier. Familles p-adiques de formes automorphes pour GL n. J. Reine Angew.
+Math., 570:143–217, 2004.
+[11] James W. Cogdell, Henry H. Kim, and M. Ram Murty. Lectures on automorphic L-functions,
+volume 20 of Fields Institute Monographs . American Mathematical Society, Providence, RI,
+2004.
+[12] Robert F. Coleman. Classical and overconvergent modul ar forms. Invent. Math. , 124(1-
+3):215–241, 1996.
+[13] Robert F. Coleman. p-adic Banach spaces and families of modular forms. Invent. Math. ,
+127(3):417–479, 1997.
+[14] Robert F. Coleman and Barry Mazur. The eigencurve. In Galois representations in arithmetic
+algebraic geometry (Durham, 1996) , volume 254 of London Math. Soc. Lecture Notes , pages
+1–113. Cambridge Univ. Press, 1998.
+[15] Jacques Dixmier. Enveloping algebras, volume 11 of Graduate Studies in Mathematics . Amer-
+ican Mathematical Society, Providence, RI, 1996. Revised r eprint of the 1977 translation.
+[16] Matthew Emerton. Locally analytic vectors in represen tations of locally p-adic analytic
+groups. Mem. Am. Math. Soc. (to appear), 2004.
+[17] Matthew Emerton. Jacquet modules of locally analytic r epresentations of p-adic reductive
+groups. I. Construction and ﬁrst properties. Ann. Sci. ´Ecole Norm. Sup. (4) , 39(5):775–839,
+2006.
+[18] Matthew Emerton. On the interpolation of systems of eig envalues attached to automorphic
+Hecke eigenforms. Invent. Math. , 164(1):1–84, 2006.
+[19] Matthew Emerton. Jacquet modules of locally analytic r epresentations of p-adic reductive
+groups II. The relation to parabolic induction. J. Inst. Mat h. Jussieu (to appear), 2007.
+[20] Christian Tobias F´ eaux de Lacroix. Einige Resultate ¨ uber die topologischen Darstellungen
+p-adischer Liegruppen auf unendlich dimensionalen Vektorr ¨ aumen ¨ uber einemp-adischen
+K¨ orper.Schr. Math. Inst. Univ. M¨ unster (3rd ser.) , 23:x+111, 1999.
+[21] Benedict H. Gross. Algebraic modular forms. Israel J. Math. , 113:61–93, 1999.
+[22] Richard Hill. On Emerton’s p-adic Banach spaces. Int. Math. Res. Not. , art. ID rnq042, 2010.
+[23] Owen Jones. A structure theorem for Chenevier’s repres entations Vλ . preprint, Imperial Col-
+lege, February 2008. http://www.ma.ic.ac.uk/~ojones/.
+[24] James Lepowsky. A generalization of the Bernstein-Gel fand-Gelfand resolution. J. Algebra ,
+49(2):496–511, 1977.
+[25] Vladimir Platonov and Andrei Rapinchuk. Algebraic groups and number theory , volume 139
+of Pure and Applied Mathematics . Academic Press, 1994.
+[26] Peter Schneider and Jeremy Teitelbaum. p-adic Fourier theory. Doc. Math. , 6:447–481 (elec-
+tronic), 2001.
+[27] Peter Schneider and Jeremy Teitelbaum. U (g)-ﬁnite locally analytic representations. Repre-
+sent. Theory , 5:111–128, 2001. With an appendix by Dipendra Prasad.
+[28] Peter Schneider and Jeremy Teitelbaum. Locally analyt ic distributions and p-adic represen-
+tation theory, with applications to GL 2. J. Am. Math. Soc. , 15(2):443–468, 2002.
+[29] Joseph L. Taylor. Homology and cohomology for topologi cal algebras. Advances in Math. ,
+9:137–182, 1972.
+[30] Atsushi Yamagami. On p-adic families of Hilbert cusp forms of ﬁnite slope. J. Number Theory,
+123(2):363–387, 2007.
+===== PDF PAGE 37 =====
+OVERCONVERGENT ALGEBRAIC AUTOMORPHIC FORMS 37
+Corrigendum
+The purpose of this note is to describe and to correct an unfortun ate error in the
+author’s earlier paper [Loe11]. These errors were apparently ﬁrst noted by Olivier
+Ta ¨ ıbi in his forthcoming paper [Tai16]; Ta ¨ ıbi’s paper explains a corrected version
+of the argument under a minor extra hypothesis (that the reduct ive group G be
+quasi-split). We explain here how to correct the argument in genera l.
+In§2.6 of [Loe11], the following alterations need to be made. We use here t he
+notations and assumptions in force in the original paper.
+A. In deﬁnition 2.6.1, the last sentence should be replaced by “where χalg is the
+character by which T acts on Valg”, since Valg is a representation of the algebraic
+group M , but T may be strictly smaller than Z(M ) in general.
+B. The parenthetical remark following Deﬁnition 2.6.1 is only correct und er the
+slightly stronger assumption that η∈ Σ ++ (rather than the running assumption in
+force at that point that η∈ Σ +).
+C. Proposition 2.6.3 should read as follows:
+Proposition 2.6.3’. Suppose G is split over the ﬁeld E. Let ˜B⊆ Pmin be a Borel
+subgroup deﬁned over E, and ˜S a maximal torus of ˜B containing S.
+Let ˜∆ f⊆ X •( ˜S) be the set of free simple positive roots of P with respect to ˜S,
+and for each β∈ ˜∆ f , let sβ be the corresponding reﬂection in the Weyl group. Let
+ρ be half the sum of the positive roots with respect to B.
+Let λ be the highest weight of Valg with respect to ˜B. If
+(†) σ < inf
+β ∈ ˜∆ f
+fη (− [sβ (λ + ρ)− (λ + ρ)]|T ) ,
+then σ is a small slope for η.
+Proof. We begin by noting the following chain of implications, where we abbrevia te
+χalg by χ.
+“σ is a small slope”
+⇔ “∀ y∈ X •(T ) such that fη (y)≤ σ, χ alg− y is strongly classical”
+⇔ “∀x∈ X •(T ) not strongly classical , fη (χ− x) > σ .”
+To identify which weights fail to be strongly classical, we apply the gen eralised
+Bernstein–Gelfand–Gelfand resolution of [Lep77] to the base-ext ension of G to E.
+This gives an exact sequence of g-modules
+⨁
+β ∈ ˜∆ f
+Verp(sβ (λ + ρ)− ρ)−→ Verp(λ)−→ Ualg−→ 0,
+where we have used Ver p(µ), for µ ∈ X •( ˜S), to denote the generalised Verma
+module of highest weight µ.
+Any character of t = Lie T appearing in a generalised Verma module Ver p(µ) is
+of the form µ|T− y, where y lies in the cone spanned by the restrictions to T of
+the free positive roots. Since fη takes non-negative values on this cone, we see that
+the inﬁmum of fη (χ− x) over all x appearing in the decomposition of Ver p(µ) as
+===== PDF PAGE 38 =====
+38 DA VID LOEFFLER
+a t-representation is attained for x = µ|T . Hence the inﬁmum of fη (χ− x) over all
+non-strongly-classical x is attained for some x in the ﬁnite set
+{[sβ (λ + ρ)− ρ]|T : β∈ ˜∆ f}.
+Since we also have χ = λ|T , this gives the claim. □
+In place of Proposition 2.6.4 we will use the following somewhat less explic it
+statement. Recall that H = M/M ss, the quotient of M by its derived subgroup,
+which is a torus over L. There is a natural map from X •(H) to X •( ˜S), given by
+restriction of characters.
+Proposition 2.6.4’. Let us ﬁx σ∈ R>0, and some dominant λ0∈ X •( ˜S); and
+assume η∈ Σ ++. Then the set of characters τ∈ X •(H)⊗ R such that λ = λ0 + τ
+is dominant and satisﬁes ( †) is a non-empty open cone.
+Proof. To each simple root β∈ ˜∆ f there is associated a coroot β∨∈ X•( ˜S), and
+it is a standard fact that the images of these coroots form a basis o f X•(H)⊗ R.
+So any set of inequalities of the form {⟨x, β∨
+i⟩ > r i : 1 ≤ i≤ # ˜∆ f} deﬁnes a
+non-empty open cone in X •(H)⊗ R, and if the ri are non-negative, any τ in this
+cone clearly has the property that λ0⊗ τ is dominant.
+Since we have
+(λ + ρ)− sβ (λ + ρ) =⟨λ + ρ, β∨⟩· β,
+and fη (β|T ) > 0 for all β∈ ˜∆ f by assumption, the set of τ such that λ0 + τ is
+dominant and satisﬁes (†) has precisely this form. □
+With these corrections, the results of §3.13 of the paper now hold as stated, save
+for the minor modiﬁcation that we must replace X •(T ) with X •(H) throughout.
+References
+[Lep77] J. Lepowsky, A generalisation of the Bernstein–Bernstein–Gelfand reso lution, J. Algebra
+49 (1977), 496–511. DOI: 10.1016/0021-8693(77)90254-X.
+[Loe11] D. Loeﬄer, Overconvergent algebraic automorphic forms , Proc. London Math. Soc. 102
+(2011), no. 2, 193–228. DOI: 10.1112/plms/pdq019
+[Tai16] O. Ta ¨ ıbi, Eigenvarieties for classical groups and complex conjugati ons in Ga-
+lois representations , Math. Res. Lett. 23 (2016), no. 4, 1167–1220. DOI:
+10.4310/MRL.2016.v23.n4.a10.
+DPMMS, Centre for Mathematical Sciences, University of Camb ridge, Cambridge
+CB3 0WB, UK
+E-mail address : d.loeffler.01@cantab.net
+Current address : W arwick Mathematics Institute, Zeeman Building, Univers ity of W arwick,
+Coventry CV4 7AL, UK

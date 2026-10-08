@@ -1,0 +1,1339 @@
+
+===== PhD.TauCeti.Code.PadicFunctionalAnalysis.Orthonormal
+IsOrthonormalBasis :
+    (R : Type u_1) →
+      [inst : NormedRing R] →
+        {M : Type u_2} → [inst_1 : NormedAddCommGroup M] → [_root_.Module R M] → {I : Type u_3} → (I → M) → Prop
+IsOrthonormalBasis.exists_hasSum :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      [IsUltrametricDist V] [CompleteSpace V] {I : Type u_3} {e : I → V} [CompleteSpace K],
+      IsOrthonormalBasis K e → ∀ (x : V), ∃ a, HasSum (fun i => a i • e i) x
+IsOrthonormalFamily :
+    (R : Type u_1) →
+      [inst : NormedRing R] →
+        {M : Type u_2} → [inst_1 : NormedAddCommGroup M] → [_root_.Module R M] → {I : Type u_3} → (I → M) → Prop
+IsOrthonormalFamily.eq_of_hasSum :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V},
+      IsOrthonormalFamily K e →
+        ∀ {a b : I → K} {x : V}, HasSum (fun i => a i • e i) x → HasSum (fun i => b i • e i) x → a = b
+IsOrthonormalFamily.linearIndependent :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V}, IsOrthonormalFamily K e → LinearIndependent K e
+IsOrthonormalFamily.norm_coeff_le_norm_sum :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V},
+      IsOrthonormalFamily K e → ∀ (s : Finset I) (a : I → K) {i : I}, i ∈ s → ‖a i‖ ≤ ‖∑ j ∈ s, a j • e j‖
+IsOrthonormalFamily.norm_coeff_le_of_hasSum :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V},
+      IsOrthonormalFamily K e → ∀ {a : I → K} {x : V}, HasSum (fun i => a i • e i) x → ∀ (i : I), ‖a i‖ ≤ ‖x‖
+IsOrthonormalFamily.norm_eq_one :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V}, IsOrthonormalFamily K e → ∀ (i : I), ‖e i‖ = 1
+IsOrthonormalFamily.norm_le_of_hasSum :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V},
+      IsOrthonormalFamily K e →
+        ∀ {a : I → K} {x : V}, HasSum (fun i => a i • e i) x → ∀ {C : ℝ}, 0 ≤ C → (∀ (i : I), ‖a i‖ ≤ C) → ‖x‖ ≤ C
+IsOrthonormalFamily.norm_sum_le :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V},
+      IsOrthonormalFamily K e →
+        ∀ (s : Finset I) (a : I → K) {C : ℝ}, 0 ≤ C → (∀ i ∈ s, ‖a i‖ ≤ C) → ‖∑ i ∈ s, a i • e i‖ ≤ C
+IsOrthonormalFamily.summable_smul :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V} [IsUltrametricDist V] [CompleteSpace V],
+      IsOrthonormalFamily K e → ∀ {a : I → K}, Filter.Tendsto a Filter.cofinite (nhds 0) → Summable fun i => a i • e i
+IsOrthonormalFamily.tendsto_cofinite_of_hasSum :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : NormedAddCommGroup V] [inst_2 : NormedSpace K V]
+      {I : Type u_3} {e : I → V},
+      IsOrthonormalFamily K e →
+        ∀ {a : I → K} {x : V}, HasSum (fun i => a i • e i) x → Filter.Tendsto a Filter.cofinite (nhds 0)
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.Bald
+Subring.IsBRing :
+    {K : Type u_1} → [inst : NormedField K] → Subring K → Prop
+Subring.IsBRing.exists_monic_norm_aeval_lt_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {S : Subring K},
+      S.IsBRing →
+        ∀ {a : K},
+          ‖a‖ = 1 →
+            ∀ {p : Polynomial ↥S},
+              ‖(Polynomial.aeval a) p‖ < 1 →
+                (∃ i, ‖↑(p.coeff i)‖ = 1) → ∃ g, g.Monic ∧ g.natDegree ≤ p.natDegree ∧ ‖(Polynomial.aeval a) g‖ < 1
+Subring.IsBRing.inv_mem :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K}, S.IsBRing → ∀ a ∈ S, ‖a‖ = 1 → a⁻¹ ∈ S
+Subring.IsBRing.isBald_closure_insert :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {S : Subring K},
+      S.IsBRing → S.IsBald → ∀ {a : K}, ‖a‖ = 1 → (Subring.closure (insert a ↑S)).IsBald
+Subring.IsBRing.norm_le_one :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K}, S.IsBRing → ∀ a ∈ S, ‖a‖ ≤ 1
+Subring.IsBald :
+    {K : Type u_1} → [inst : NormedField K] → Subring K → Prop
+Subring.IsBald.closure_insert :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {S : Subring K},
+      S.IsBald → ∀ {a : K}, ‖a‖ ≤ 1 → (Subring.closure (insert a ↑S)).IsBald
+Subring.IsBald.closure_union_of_norm_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {S : Subring K},
+      S.IsBald → ∀ {T : Set K} {ε : ℝ}, ε < 1 → (∀ x ∈ T, ‖x‖ ≤ ε) → (Subring.closure (↑S ∪ T)).IsBald
+Subring.IsBald.exists_norm_le :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K}, S.IsBald → ∃ ε < 1, ∀ a ∈ S, ‖a‖ < 1 → ‖a‖ ≤ ε
+Subring.IsBald.mono :
+    ∀ {K : Type u_1} [inst : NormedField K] {S S' : Subring K}, S ≤ S' → S'.IsBald → S.IsBald
+Subring.IsBald.norm_le_one :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K}, S.IsBald → ∀ a ∈ S, ‖a‖ ≤ 1
+Subring.IsBald.unitLocalization :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K}, S.IsBald → S.unitLocalization.IsBald
+Subring.isBRing_unitLocalization :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K}, (∀ a ∈ S, ‖a‖ ≤ 1) → S.unitLocalization.IsBRing
+Subring.isBald_bot :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K], ⊥.IsBald
+Subring.isBald_closure_range :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {ι : Type u_2} {a : ι → K},
+      (∀ (i : ι), ‖a i‖ ≤ 1) → Filter.Tendsto a Filter.cofinite (nhds 0) → (Subring.closure (Set.range a)).IsBald
+Subring.le_unitLocalization :
+    ∀ {K : Type u_1} [inst : NormedField K] (S : Subring K), S ≤ S.unitLocalization
+Subring.mem_unitLocalization_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] {S : Subring K} {x : K},
+      x ∈ S.unitLocalization ↔ ∃ s ∈ S, ∃ u ∈ S, ‖u‖ = 1 ∧ x = s / u
+Subring.unitLocalization :
+    {K : Type u_1} → [inst : NormedField K] → Subring K → Subring K
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.Japanese
+IsJapaneseRing :
+    (A : Type u) → [inst : CommRing A] → [IsDomain A] → Prop
+isJapaneseRing_of_perfectField :
+    ∀ (A : Type u) [inst : CommRing A] [inst_1 : IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A]
+      [PerfectField (FractionRing A)], IsJapaneseRing A
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.OrthonormalLift
+Finsupp.mem_span_range_of_mapRange_mem_span :
+    ∀ {F : Type u_1} {E : Type u_2} [inst : Field F] [inst_1 : Field E] [inst_2 : Algebra F E] {N : Type u_3} {M : Type u_4}
+      (v : M → N →₀ F) (w : N →₀ F),
+      Finsupp.mapRange ⇑(algebraMap F E) ⋯ w ∈
+          Submodule.span E (Set.range fun μ => Finsupp.mapRange ⇑(algebraMap F E) ⋯ (v μ)) →
+        w ∈ Submodule.span F (Set.range v)
+IsOrthonormalBasis.of_residue_basis :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {V : Type u_2} [inst_2 : NormedAddCommGroup V]
+      [inst_3 : NormedSpace K V] [IsUltrametricDist V] {N : Type u_3} {M : Type u_4} {x : N → V} {y : M → V}
+      {c : M → N → K},
+      IsOrthonormalBasis K x →
+        (∀ (μ : M), HasSum (fun ν => c μ ν • x ν) (y μ)) →
+          ∀ {S : Subring K} (hS : S.IsBald) (hcS : ∀ (μ : M) (ν : N), c μ ν ∈ S)
+            (r : M → N →₀ IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)),
+            (∀ (μ : M) (ν : N), (r μ) ν = (IsLocalRing.residue ↥(Subring.unitClosedBall K)) ⟨c μ ν, ⋯⟩) →
+              LinearIndependent (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) r →
+                Submodule.span (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) (Set.range r) = ⊤ →
+                  IsOrthonormalBasis K y
+IsOrthonormalFamily.of_linearIndependent_residue :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {V : Type u_2} [inst_2 : NormedAddCommGroup V]
+      [inst_3 : NormedSpace K V] [IsUltrametricDist V] {N : Type u_3} {M : Type u_4} {x : N → V} {y : M → V}
+      {c : M → N → K},
+      IsOrthonormalFamily K x →
+        (∀ (μ : M), HasSum (fun ν => c μ ν • x ν) (y μ)) →
+          ∀ (hc : ∀ (μ : M) (ν : N), ‖c μ ν‖ ≤ 1) (r : M → N →₀ IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)),
+            (∀ (μ : M) (ν : N), (r μ) ν = (IsLocalRing.residue ↥(Subring.unitClosedBall K)) ⟨c μ ν, ⋯⟩) →
+              LinearIndependent (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) r → IsOrthonormalFamily K y
+Subring.IsBRing.mem_residueSubfield :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {S : Subring K} (hS : S.IsBRing)
+      {z : IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)},
+      z ∈ hS.residueSubfield ↔ ∃ s, ∃ (hs : s ∈ S), z = (IsLocalRing.residue ↥(Subring.unitClosedBall K)) ⟨s, ⋯⟩
+Subring.IsBRing.residueSubfield :
+    [sorry] {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {S : Subring K} → S.IsBRing → Subfield (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+dense_span_of_forall_exists_norm_sub_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {V : Type u_2} [inst_2 : NormedAddCommGroup V]
+      [inst_3 : NormedSpace K V] [IsUltrametricDist V] {N : Type u_3} {M : Type u_4} {x : N → V} {y : M → V},
+      IsOrthonormalBasis K x →
+        ∀ {ε : ℝ},
+          ε < 1 → (∀ (ν : N), ∃ z ∈ Submodule.span K (Set.range y), ‖x ν - z‖ ≤ ε) → Dense ↑(Submodule.span K (Set.range y))
+exists_norm_sub_le_of_span_residue :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {V : Type u_2} [inst_2 : NormedAddCommGroup V]
+      [inst_3 : NormedSpace K V] [IsUltrametricDist V] {N : Type u_3} {M : Type u_4} {x : N → V} {y : M → V}
+      {c : M → N → K},
+      IsOrthonormalFamily K x →
+        (∀ (μ : M), HasSum (fun ν => c μ ν • x ν) (y μ)) →
+          ∀ {S : Subring K} (hS : S.IsBald) (hcS : ∀ (μ : M) (ν : N), c μ ν ∈ S)
+            (r : M → N →₀ IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)),
+            (∀ (μ : M) (ν : N), (r μ) ν = (IsLocalRing.residue ↥(Subring.unitClosedBall K)) ⟨c μ ν, ⋯⟩) →
+              Submodule.span (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) (Set.range r) = ⊤ →
+                ∃ ε < 1, ∀ (ν : N), ∃ z ∈ Submodule.span K (Set.range y), ‖x ν - z‖ ≤ ε
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.Rueckert
+IsRueckert :
+    {I : Type u_1} →
+      {I' : Type u_2} → [inst : CommRing I] → [inst_1 : CommRing I'] → (Polynomial I →+* I') → Set (Polynomial I) → Prop
+IsRueckert.bijective_quotientMap :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)},
+      IsRueckert φ W → ∀ ω ∈ W, Function.Bijective ⇑(Ideal.quotientMap (Ideal.map φ (Ideal.span {ω})) φ ⋯)
+IsRueckert.exists_mul_mem :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ (f : I'), f ≠ 0 → ∃ σ e, ∃ ω ∈ W, ↑e * σ f = φ ω
+IsRueckert.exists_ringEquiv_mem_map :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ {a : Ideal I'}, a ≠ ⊥ → ∃ σ, ∃ ω ∈ W, φ ω ∈ Ideal.map (↑σ) a
+IsRueckert.finite_mk_comp_C :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)},
+      IsRueckert φ W →
+        ∀ {ω : Polynomial I}, ω ∈ W → ((Ideal.Quotient.mk (Ideal.map φ (Ideal.span {ω}))).comp (φ.comp Polynomial.C)).Finite
+IsRueckert.injective :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → Function.Injective ⇑φ
+IsRueckert.isJacobsonRing :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ [IsJacobsonRing I], ⊥.jacobson = ⊥ → IsJacobsonRing I'
+IsRueckert.isNoetherianRing :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ [IsNoetherianRing I], IsNoetherianRing I'
+IsRueckert.jacobson_eq_radical :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ [IsJacobsonRing I] {a : Ideal I'}, a ≠ ⊥ → a.jacobson = a.radical
+IsRueckert.monic :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ ω ∈ W, ω.Monic
+IsRueckert.of_mul :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ (p q : Polynomial I), p.Monic → q.Monic → p * q ∈ W → p ∈ W ∧ q ∈ W
+IsRueckert.ringKrullDim_add_one_le :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ [IsDomain I'], Polynomial.X ∈ W → ringKrullDim I + 1 ≤ ringKrullDim I'
+IsRueckert.ringKrullDim_eq :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ∀ [IsDomain I'], Polynomial.X ∈ W → ringKrullDim I' = ringKrullDim I + 1
+IsRueckert.ringKrullDim_le :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)}, IsRueckert φ W → ringKrullDim I' ≤ ringKrullDim I + 1
+IsRueckert.ringKrullDim_quotient_le :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)},
+      IsRueckert φ W → ∀ {ω : Polynomial I}, ω ∈ W → ringKrullDim (I' ⧸ Ideal.map φ (Ideal.span {ω})) ≤ ringKrullDim I
+IsRueckert.uniqueFactorizationMonoid :
+    ∀ {I : Type u_1} {I' : Type u_2} [inst : CommRing I] [inst_1 : CommRing I'] {φ : Polynomial I →+* I'}
+      {W : Set (Polynomial I)},
+      IsRueckert φ W → ∀ [IsDomain I] [UniqueFactorizationMonoid I] [IsDomain I'], UniqueFactorizationMonoid I'
+ringKrullDim_le_add_one_of_forall_quotient_le :
+    ∀ {R : Type u_1} [inst : CommRing R] {d : WithBot ℕ∞},
+      0 ≤ d → (∀ (p q : Ideal R), p.IsPrime → q.IsPrime → q < p → ringKrullDim (R ⧸ p) ≤ d) → ringKrullDim R ≤ d + 1
+ringKrullDim_le_of_isIntegral :
+    ∀ {R : Type u_1} {S : Type u_2} [inst : CommRing R] [inst_1 : CommRing S] (f : R →+* S),
+      f.IsIntegral → ringKrullDim S ≤ ringKrullDim R
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.SupSeminorm
+Affinoid.bddAbove_range_evalNorm :
+    ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K] {A : Type u_2}
+      [inst_3 : NormedCommRing A] [inst_4 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] (f : A),
+      BddAbove (Set.range fun x => Affinoid.evalNorm K x f)
+Affinoid.evalNorm :
+    (K : Type u_1) →
+      [inst : NormedField K] → {A : Type u_2} → [inst_1 : CommRing A] → [Algebra K A] → MaximalSpectrum A → A → ℝ
+Affinoid.evalNorm_eq_norm_algHom :
+    ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K] {A : Type u_2}
+      [inst_3 : CommRing A] [inst_4 : Algebra K A] {L : Type u_3} [inst_5 : NormedField L] [inst_6 : NormedAlgebra K L]
+      [Algebra.IsAlgebraic K L] (φ : A →ₐ[K] L) (x : MaximalSpectrum A),
+      x.asIdeal = RingHom.ker φ → ∀ (f : A), Affinoid.evalNorm K x f = ‖φ f‖
+Affinoid.evalNorm_eq_zero_of_mem :
+    ∀ (K : Type u_1) [inst : NormedField K] {A : Type u_2} [inst_1 : CommRing A] [inst_2 : Algebra K A]
+      {x : MaximalSpectrum A} {f : A}, f ∈ x.asIdeal → Affinoid.evalNorm K x f = 0
+Affinoid.evalNorm_le_norm :
+    ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K] {A : Type u_2}
+      [inst_3 : NormedCommRing A] [inst_4 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A]
+      (x : MaximalSpectrum A) (f : A), Affinoid.evalNorm K x f ≤ ‖f‖
+Affinoid.evalNorm_nonneg :
+    ∀ (K : Type u_1) [inst : NormedField K] {A : Type u_2} [inst_1 : CommRing A] [inst_2 : Algebra K A]
+      (x : MaximalSpectrum A) (f : A), 0 ≤ Affinoid.evalNorm K x f
+Affinoid.finite_quotient_ker :
+    ∀ {K : Type u_1} [inst : Field K] {A : Type u_2} [inst_1 : CommRing A] [inst_2 : Algebra K A] {L : Type u_3}
+      [inst_3 : Field L] [inst_4 : Algebra K L] [Algebra.IsAlgebraic K L] [FiniteDimensional K L] (φ : A →ₐ[K] L),
+      Module.Finite K (A ⧸ RingHom.ker φ)
+Affinoid.isMaximal_ker_of_isAlgebraic :
+    ∀ {K : Type u_1} [inst : Field K] {A : Type u_2} [inst_1 : CommRing A] [inst_2 : Algebra K A] {L : Type u_3}
+      [inst_3 : Field L] [inst_4 : Algebra K L] [Algebra.IsAlgebraic K L] (φ : A →ₐ[K] L), (RingHom.ker φ).IsMaximal
+Affinoid.supSeminorm :
+    (K : Type u_1) → [inst : NormedField K] → {A : Type u_2} → [inst_1 : CommRing A] → [Algebra K A] → A → ℝ
+Affinoid.supSeminorm_le_norm :
+    ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K] {A : Type u_2}
+      [inst_3 : NormedCommRing A] [inst_4 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] (f : A),
+      Affinoid.supSeminorm K f ≤ ‖f‖
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Basic
+Affinoid.TateAlgebra :
+    (K : Type u_1) → [inst : NormedField K] → [IsUltrametricDist K] → ℕ → Type u_1
+MvPowerSeries.Restricted.denseRange_toRestricted :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ)
+      [hc : Fact (∀ (i : σ), 0 < c i)], DenseRange ⇑(MvPolynomial.toRestricted c)
+MvPowerSeries.Restricted.exists_finset_norm_sub_sum_monomial_lt :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ)
+      [hc : Fact (∀ (i : σ), 0 < c i)] (f : MvPowerSeries.Restricted R c) {ε : ℝ},
+      0 < ε → ∃ s, ‖f - ∑ t ∈ s, MvPowerSeries.Restricted.monomial c t ((MvPowerSeries.coeff t) ↑f)‖ < ε
+MvPowerSeries.Restricted.exists_norm_coeff_eq :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (f : MvPowerSeries.Restricted R 1),
+      ∃ t, ‖(MvPowerSeries.coeff t) ↑f‖ = ‖f‖
+MvPowerSeries.Restricted.exists_norm_eq_norm_coeff_mul_prod :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ)
+      [hc : Fact (∀ (i : σ), 0 < c i)] (f : MvPowerSeries.Restricted R c),
+      ∃ t, ‖f‖ = ‖(MvPowerSeries.coeff t) ↑f‖ * t.prod fun x1 x2 => c x1 ^ x2
+MvPowerSeries.Restricted.exists_norm_smul_eq_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      {f : MvPowerSeries.Restricted K 1}, f ≠ 0 → ∃ a, a ≠ 0 ∧ ‖a • f‖ = 1
+MvPowerSeries.Restricted.finite_setOf_le_norm_coeff :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (f : MvPowerSeries.Restricted R 1)
+      {ε : ℝ}, 0 < ε → {t | ε ≤ ‖(MvPowerSeries.coeff t) ↑f‖}.Finite
+MvPowerSeries.Restricted.instCharZero :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ) [CharZero R],
+      CharZero (MvPowerSeries.Restricted R c)
+MvPowerSeries.Restricted.instFactForallLtRealOfNatForall :
+    ∀ {σ : Type u_1}, Fact (∀ (i : σ), 0 < 1 i)
+MvPowerSeries.Restricted.instIsDomain :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ) [NormMulClass R]
+      [Nontrivial R], IsDomain (MvPowerSeries.Restricted R c)
+MvPowerSeries.Restricted.instNontrivial :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ) [Nontrivial R],
+      Nontrivial (MvPowerSeries.Restricted R c)
+MvPowerSeries.Restricted.instNormedAlgebra :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} → (c : σ → ℝ) → [hc : Fact (∀ (i : σ), 0 < c i)] → NormedAlgebra K (MvPowerSeries.Restricted K c)
+MvPowerSeries.Restricted.norm_coeff_le :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (f : MvPowerSeries.Restricted R 1)
+      (t : σ →₀ ℕ), ‖(MvPowerSeries.coeff t) ↑f‖ ≤ ‖f‖
+MvPowerSeries.Restricted.norm_coeff_mul_prod_le :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (c : σ → ℝ)
+      [hc : Fact (∀ (i : σ), 0 < c i)] (f : MvPowerSeries.Restricted R c) (t : σ →₀ ℕ),
+      (‖(MvPowerSeries.coeff t) ↑f‖ * t.prod fun x1 x2 => c x1 ^ x2) ≤ ‖f‖
+MvPowerSeries.Restricted.norm_le_iff_forall_norm_coeff_le :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} {ε : ℝ}
+      (f : MvPowerSeries.Restricted R 1), ‖f‖ ≤ ε ↔ ∀ (t : σ →₀ ℕ), ‖(MvPowerSeries.coeff t) ↑f‖ ≤ ε
+MvPowerSeries.Restricted.norm_lt_iff_forall_norm_coeff_lt :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} {ε : ℝ}
+      (f : MvPowerSeries.Restricted R 1), ‖f‖ < ε ↔ ∀ (t : σ →₀ ℕ), ‖(MvPowerSeries.coeff t) ↑f‖ < ε
+MvPowerSeries.Restricted.norm_mem_range_norm :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (f : MvPowerSeries.Restricted R 1),
+      ‖f‖ ∈ Set.range norm
+MvPowerSeries.Restricted.norm_smul_eq :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} (c : σ → ℝ)
+      [hc : Fact (∀ (i : σ), 0 < c i)] (a : K) (f : MvPowerSeries.Restricted K c), ‖a • f‖ = ‖a‖ * ‖f‖
+MvPowerSeries.Restricted.tendsto_norm_coeff_cofinite :
+    ∀ {R : Type u_1} [inst : NormedRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} (f : MvPowerSeries.Restricted R 1),
+      Filter.Tendsto (fun t => ‖(MvPowerSeries.coeff t) ↑f‖) Filter.cofinite (nhds 0)
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Chart
+Affinoid.TateAlgebra.exists_isMulDistinguishedX0_shear :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      {f : Affinoid.TateAlgebra K (n + 1)},
+      f ≠ 0 →
+        ∀ {t : ℕ},
+          (∀ (ν : Fin (n + 1) →₀ ℕ), ‖(MvPowerSeries.coeff ν) ↑f‖ = ‖f‖ → ∀ (i : Fin (n + 1)), ν i < t) →
+            ∃ s, MvPowerSeries.Restricted.IsMulDistinguishedX0 ((Affinoid.TateAlgebra.shear K n fun i => t ^ (↑i + 1)) f) s
+Affinoid.TateAlgebra.exists_shear_forall_isMulDistinguishedX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      (F : Finset (Affinoid.TateAlgebra K (n + 1))),
+      (∀ f ∈ F, f ≠ 0) →
+        ∃ e, ∀ f ∈ F, ∃ s, MvPowerSeries.Restricted.IsMulDistinguishedX0 ((Affinoid.TateAlgebra.shear K n e) f) s
+Affinoid.TateAlgebra.exists_shear_isMulDistinguishedX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      {f : Affinoid.TateAlgebra K (n + 1)},
+      f ≠ 0 → ∃ e s, MvPowerSeries.Restricted.IsMulDistinguishedX0 ((Affinoid.TateAlgebra.shear K n e) f) s
+Affinoid.TateAlgebra.norm_shear :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      (e : Fin n → ℕ) (f : Affinoid.TateAlgebra K (n + 1)), ‖(Affinoid.TateAlgebra.shear K n e) f‖ = ‖f‖
+Affinoid.TateAlgebra.norm_shearTuple_le_one :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] (n : ℕ) (e : Fin n → ℕ) {a : K},
+      ‖a‖ ≤ 1 → ∀ (i : Fin (n + 1)), ‖Affinoid.TateAlgebra.shearTuple K n e a i‖ ≤ 1
+Affinoid.TateAlgebra.reduction_shear :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      (e : Fin n → ℕ) (f : ↥(Subring.unitClosedBall (Affinoid.TateAlgebra K (n + 1)))),
+      MvPowerSeries.Restricted.reduction ⟨(Affinoid.TateAlgebra.shear K n e) ↑f, ⋯⟩ =
+        (MvPolynomial.shear (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) e) (MvPowerSeries.Restricted.reduction f)
+Affinoid.TateAlgebra.shear :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          [CompleteSpace K] → (n : ℕ) → (Fin n → ℕ) → Affinoid.TateAlgebra K (n + 1) ≃ₐ[K] Affinoid.TateAlgebra K (n + 1)
+Affinoid.TateAlgebra.shearAlgHom :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          [CompleteSpace K] →
+            (n : ℕ) → (Fin n → ℕ) → (a : K) → ‖a‖ ≤ 1 → Affinoid.TateAlgebra K (n + 1) →ₐ[K] Affinoid.TateAlgebra K (n + 1)
+Affinoid.TateAlgebra.shearAlgHom_comp_shearAlgHom :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] (n : ℕ)
+      (e : Fin n → ℕ) {a b : K} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1),
+      a + b = 0 →
+        (Affinoid.TateAlgebra.shearAlgHom K n e a ha).comp (Affinoid.TateAlgebra.shearAlgHom K n e b hb) =
+          AlgHom.id K (Affinoid.TateAlgebra K (n + 1))
+Affinoid.TateAlgebra.shearTuple :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] → (n : ℕ) → (Fin n → ℕ) → K → Fin (n + 1) → Affinoid.TateAlgebra K (n + 1)
+Affinoid.TateAlgebra.shear_X_succ :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      (e : Fin n → ℕ) (i : Fin n),
+      (Affinoid.TateAlgebra.shear K n e) (MvPowerSeries.Restricted.X K 1 i.succ) =
+        MvPowerSeries.Restricted.X K 1 i.succ + MvPowerSeries.Restricted.X K 1 0 ^ e i
+Affinoid.TateAlgebra.shear_X_zero :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      (e : Fin n → ℕ),
+      (Affinoid.TateAlgebra.shear K n e) (MvPowerSeries.Restricted.X K 1 0) = MvPowerSeries.Restricted.X K 1 0
+MvPolynomial.degreeOf_zero_shear_monomial :
+    ∀ {k : Type u_1} [inst : Field k] {n : ℕ} (e : Fin n → ℕ) (v : Fin (n + 1) →₀ ℕ) {a : k},
+      a ≠ 0 → MvPolynomial.degreeOf 0 ((MvPolynomial.shear k e) ((MvPolynomial.monomial v) a)) = v 0 + ∑ i, e i * v i.succ
+MvPolynomial.isUnit_leadingCoeff_finSuccEquiv_shear :
+    ∀ {k : Type u_1} [inst : Field k] {n : ℕ} {f : MvPolynomial (Fin (n + 1)) k},
+      f ≠ 0 →
+        ∀ {t : ℕ},
+          (∀ v ∈ f.support, ∀ (i : Fin (n + 1)), v i < t) →
+            IsUnit ((MvPolynomial.finSuccEquiv k n) ((MvPolynomial.shear k fun i => t ^ (↑i + 1)) f)).leadingCoeff
+MvPolynomial.leadingCoeff_finSuccEquiv_shear_monomial :
+    ∀ {k : Type u_1} [inst : Field k] {n : ℕ} {e : Fin n → ℕ},
+      (∀ (i : Fin n), 0 < e i) →
+        ∀ (v : Fin (n + 1) →₀ ℕ) (a : k),
+          ((MvPolynomial.finSuccEquiv k n) ((MvPolynomial.shear k e) ((MvPolynomial.monomial v) a))).leadingCoeff =
+            MvPolynomial.C a
+MvPolynomial.shear :
+    (R : Type u_1) →
+      [inst : CommRing R] → {n : ℕ} → (Fin n → ℕ) → MvPolynomial (Fin (n + 1)) R ≃ₐ[R] MvPolynomial (Fin (n + 1)) R
+MvPolynomial.shearAlgHom :
+    (R : Type u_1) →
+      [inst : CommRing R] → {n : ℕ} → (Fin n → ℕ) → R → MvPolynomial (Fin (n + 1)) R →ₐ[R] MvPolynomial (Fin (n + 1)) R
+MvPolynomial.shearAlgHom_comp_shearAlgHom :
+    ∀ (R : Type u_1) [inst : CommRing R] {n : ℕ} (e : Fin n → ℕ) {a b : R},
+      a + b = 0 →
+        (MvPolynomial.shearAlgHom R e a).comp (MvPolynomial.shearAlgHom R e b) = AlgHom.id R (MvPolynomial (Fin (n + 1)) R)
+MvPolynomial.shear_X_succ :
+    ∀ {R : Type u_1} [inst : CommRing R] {n : ℕ} (e : Fin n → ℕ) (i : Fin n),
+      (MvPolynomial.shear R e) (MvPolynomial.X i.succ) = MvPolynomial.X i.succ + MvPolynomial.X 0 ^ e i
+MvPolynomial.shear_X_zero :
+    ∀ {R : Type u_1} [inst : CommRing R] {n : ℕ} (e : Fin n → ℕ),
+      (MvPolynomial.shear R e) (MvPolynomial.X 0) = MvPolynomial.X 0
+MvPolynomial.sum_pow_mul_ne_of_lt :
+    ∀ {n t : ℕ} {v w : Fin (n + 1) →₀ ℕ},
+      (∀ (i : Fin (n + 1)), v i < t) → (∀ (i : Fin (n + 1)), w i < t) → v ≠ w → ∑ i, t ^ ↑i * v i ≠ ∑ i, t ^ ↑i * w i
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Distinguished
+Affinoid.TateAlgebra.IsWeierstrassPolynomial :
+    (K : Type u_1) →
+      [inst : NormedField K] → [inst_1 : IsUltrametricDist K] → (n : ℕ) → Polynomial (Affinoid.TateAlgebra K n) → Prop
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.eq_of_mul_eq_mul :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} [CompleteSpace K]
+      {ω₁ ω₂ : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω₁ →
+        Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω₂ →
+          ∀ {e₁ e₂ : (Affinoid.TateAlgebra K (n + 1))ˣ},
+            ↑e₁ * (Affinoid.TateAlgebra.ofPolynomial K n) ω₁ = ↑e₂ * (Affinoid.TateAlgebra.ofPolynomial K n) ω₂ → ω₁ = ω₂
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.isMulDistinguishedX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        MvPowerSeries.Restricted.IsMulDistinguishedX0 ((Affinoid.TateAlgebra.ofPolynomial K n) ω) ω.natDegree
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.monic :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)}, Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω → ω.Monic
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.norm_eq_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω → ‖(Affinoid.TateAlgebra.ofPolynomial K n) ω‖ = 1
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.of_mul :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω₁ ω₂ : Polynomial (Affinoid.TateAlgebra K n)},
+      ω₁.Monic →
+        ω₂.Monic →
+          Affinoid.TateAlgebra.IsWeierstrassPolynomial K n (ω₁ * ω₂) →
+            Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω₁ ∧ Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω₂
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.of_mul_left :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω₁ ω₂ : Polynomial (Affinoid.TateAlgebra K n)},
+      ω₁.Monic →
+        ω₂.Monic →
+          Affinoid.TateAlgebra.IsWeierstrassPolynomial K n (ω₁ * ω₂) → Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω₁
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.of_mul_right :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω₁ ω₂ : Polynomial (Affinoid.TateAlgebra K n)},
+      ω₁.Monic →
+        ω₂.Monic →
+          Affinoid.TateAlgebra.IsWeierstrassPolynomial K n (ω₁ * ω₂) → Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω₂
+Affinoid.TateAlgebra.coeffX0_add :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (g h : Affinoid.TateAlgebra K (n + 1))
+      (ν : ℕ), (g + h).coeffX0 ν = g.coeffX0 ν + h.coeffX0 ν
+Affinoid.TateAlgebra.coeffX0_smul :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (a : K)
+      (g : Affinoid.TateAlgebra K (n + 1)) (ν : ℕ), (a • g).coeffX0 ν = a • g.coeffX0 ν
+Affinoid.TateAlgebra.coeff_finSuccEquiv_reduction :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      (g : ↥(Subring.unitClosedBall (Affinoid.TateAlgebra K (n + 1)))) (ν : ℕ),
+      ((MvPolynomial.finSuccEquiv (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) n)
+              (MvPowerSeries.Restricted.reduction g)).coeff
+          ν =
+        MvPowerSeries.Restricted.reduction ⟨(↑g).coeffX0 ν, ⋯⟩
+Affinoid.TateAlgebra.exists_isWeierstrassPolynomial_of_isMulDistinguishedX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} [CompleteSpace K]
+      {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∃ ω e,
+          Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω ∧
+            ω.natDegree = s ∧ g = ↑e * (Affinoid.TateAlgebra.ofPolynomial K n) ω
+Affinoid.TateAlgebra.isMulDistinguishedX0_iff_reduction :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} [CompleteSpace K]
+      {g : ↥(Subring.unitClosedBall (Affinoid.TateAlgebra K (n + 1)))},
+      ‖↑g‖ = 1 →
+        ∀ {s : ℕ},
+          MvPowerSeries.Restricted.IsMulDistinguishedX0 (↑g) s ↔
+            ((MvPolynomial.finSuccEquiv (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) n)
+                    (MvPowerSeries.Restricted.reduction g)).natDegree =
+                s ∧
+              IsUnit
+                ((MvPolynomial.finSuccEquiv (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)) n)
+                    (MvPowerSeries.Restricted.reduction g)).leadingCoeff
+Affinoid.TateAlgebra.isMulDistinguishedX0_smul_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {a : K},
+      a ≠ 0 →
+        ∀ {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+          MvPowerSeries.Restricted.IsMulDistinguishedX0 (a • g) s ↔ MvPowerSeries.Restricted.IsMulDistinguishedX0 g s
+Affinoid.TateAlgebra.isMulDistinguishedX0_zero_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} [CompleteSpace K]
+      {g : Affinoid.TateAlgebra K (n + 1)}, MvPowerSeries.Restricted.IsMulDistinguishedX0 g 0 ↔ IsUnit g
+Affinoid.TateAlgebra.isWeierstrassPolynomial_X_pow :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (s : ℕ),
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n (Polynomial.X ^ s)
+Affinoid.TateAlgebra.isWeierstrassPolynomial_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω ↔ ω.Monic ∧ ∀ (i : ℕ), ‖ω.coeff i‖ ≤ 1
+Affinoid.TateAlgebra.ne_zero_of_isMulDistinguishedX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)}
+      {s : ℕ}, MvPowerSeries.Restricted.IsMulDistinguishedX0 g s → g ≠ 0
+Affinoid.TateAlgebra.norm_coeffX0_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (g : Affinoid.TateAlgebra K (n + 1))
+      (ν : ℕ), ‖g.coeffX0 ν‖ ≤ ‖g‖
+Affinoid.TateAlgebra.norm_le_iff_forall_norm_coeffX0_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {ε : ℝ}
+      (g : Affinoid.TateAlgebra K (n + 1)), ‖g‖ ≤ ε ↔ ∀ (ν : ℕ), ‖g.coeffX0 ν‖ ≤ ε
+Affinoid.TateAlgebra.norm_ofPolynomial_le_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {ε : ℝ}
+      (p : Polynomial (Affinoid.TateAlgebra K n)),
+      ‖(Affinoid.TateAlgebra.ofPolynomial K n) p‖ ≤ ε ↔ ∀ (i : ℕ), ‖p.coeff i‖ ≤ ε
+Affinoid.TateAlgebra.norm_ofTail :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (f : Affinoid.TateAlgebra K n),
+      ‖(Affinoid.TateAlgebra.ofTail K n) f‖ = ‖f‖
+Affinoid.TateAlgebra.ofPolynomial_X :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ},
+      (Affinoid.TateAlgebra.ofPolynomial K n) Polynomial.X = MvPowerSeries.Restricted.X K 1 0
+Affinoid.TateAlgebra.ofTail_C :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (a : K),
+      (Affinoid.TateAlgebra.ofTail K n) ((MvPowerSeries.Restricted.C 1) a) = (MvPowerSeries.Restricted.C 1) a
+Affinoid.TateAlgebra.ofTail_X :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (i : Fin n),
+      (Affinoid.TateAlgebra.ofTail K n) (MvPowerSeries.Restricted.X K 1 i) = MvPowerSeries.Restricted.X K 1 i.succ
+Affinoid.TateAlgebra.ofTail_injective :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ},
+      Function.Injective ⇑(Affinoid.TateAlgebra.ofTail K n)
+Affinoid.TateAlgebra.tendsto_norm_coeffX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (g : Affinoid.TateAlgebra K (n + 1)),
+      Filter.Tendsto (fun ν => ‖g.coeffX0 ν‖) Filter.atTop (nhds 0)
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Eval
+MvPowerSeries.Restricted.aeval :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {B : Type u_2} →
+            [inst_2 : NormedCommRing B] →
+              [inst_3 : NormedAlgebra K B] →
+                [NormOneClass B] →
+                  [IsUltrametricDist B] →
+                    [CompleteSpace B] →
+                      {σ : Type u_3} →
+                        (c : σ → ℝ) →
+                          [hc : Fact (∀ (i : σ), 0 < c i)] →
+                            (x : σ → B) → (∀ (i : σ), ‖x i‖ ≤ c i) → MvPowerSeries.Restricted K c →ₐ[K] B
+MvPowerSeries.Restricted.aeval_X :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : NormedAlgebra K B] [inst_4 : NormOneClass B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B]
+      {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {x : σ → B} (hx : ∀ (i : σ), ‖x i‖ ≤ c i) (i : σ),
+      (MvPowerSeries.Restricted.aeval c x hx) (MvPowerSeries.Restricted.X K c i) = x i
+MvPowerSeries.Restricted.aeval_apply :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : NormedAlgebra K B] [inst_4 : NormOneClass B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B]
+      {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {x : σ → B} (hx : ∀ (i : σ), ‖x i‖ ≤ c i)
+      (f : MvPowerSeries.Restricted K c),
+      (MvPowerSeries.Restricted.aeval c x hx) f =
+        ∑' (t : σ →₀ ℕ), (algebraMap K B) ((MvPowerSeries.coeff t) ↑f) * t.prod fun i k => x i ^ k
+MvPowerSeries.Restricted.aeval_toRestricted :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : NormedAlgebra K B] [inst_4 : NormOneClass B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B]
+      {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {x : σ → B} (hx : ∀ (i : σ), ‖x i‖ ≤ c i)
+      (p : MvPolynomial σ K),
+      (MvPowerSeries.Restricted.aeval c x hx) ((MvPolynomial.toRestricted c) p) = (MvPolynomial.aeval x) p
+MvPowerSeries.Restricted.algHom_ext_of_continuous :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {c : σ → ℝ}
+      [hc : Fact (∀ (i : σ), 0 < c i)] {B : Type u_3} [inst_2 : Semiring B] [inst_3 : Algebra K B]
+      [inst_4 : TopologicalSpace B] [T2Space B] {ψ₁ ψ₂ : MvPowerSeries.Restricted K c →ₐ[K] B},
+      Continuous ⇑ψ₁ →
+        Continuous ⇑ψ₂ →
+          (∀ (i : σ), ψ₁ (MvPowerSeries.Restricted.X K c i) = ψ₂ (MvPowerSeries.Restricted.X K c i)) → ψ₁ = ψ₂
+MvPowerSeries.Restricted.continuous_aeval :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : NormedAlgebra K B] [inst_4 : NormOneClass B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B]
+      {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {x : σ → B} (hx : ∀ (i : σ), ‖x i‖ ≤ c i),
+      Continuous ⇑(MvPowerSeries.Restricted.aeval c x hx)
+MvPowerSeries.Restricted.continuous_eval₂ :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i),
+      Continuous ⇑(MvPowerSeries.Restricted.eval₂ c φ x hφ hx)
+MvPowerSeries.Restricted.eval₂ :
+    {R : Type u_1} →
+      [inst : NormedCommRing R] →
+        [inst_1 : IsUltrametricDist R] →
+          {B : Type u_2} →
+            [inst_2 : NormedCommRing B] →
+              [IsUltrametricDist B] →
+                {σ : Type u_3} →
+                  (c : σ → ℝ) →
+                    [hc : Fact (∀ (i : σ), 0 < c i)] →
+                      (φ : R →+* B) →
+                        (x : σ → B) →
+                          [CompleteSpace B] →
+                            (∀ (r : R), ‖φ r‖ ≤ ‖r‖) → (∀ (i : σ), ‖x i‖ ≤ c i) → MvPowerSeries.Restricted R c →+* B
+MvPowerSeries.Restricted.eval₂Fun :
+    {R : Type u_1} →
+      [inst : NormedCommRing R] →
+        [inst_1 : IsUltrametricDist R] →
+          {B : Type u_2} →
+            [inst_2 : NormedCommRing B] →
+              {σ : Type u_3} → (c : σ → ℝ) → (R →+* B) → (σ → B) → MvPowerSeries.Restricted R c → B
+MvPowerSeries.Restricted.eval₂Fun_add :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [IsUltrametricDist B] {σ : Type u_3} (c : σ → ℝ) [hc : Fact (∀ (i : σ), 0 < c i)] (φ : R →+* B) (x : σ → B)
+      [CompleteSpace B],
+      (∀ (r : R), ‖φ r‖ ≤ ‖r‖) →
+        (∀ (i : σ), ‖x i‖ ≤ c i) →
+          ∀ (f g : MvPowerSeries.Restricted R c),
+            MvPowerSeries.Restricted.eval₂Fun c φ x (f + g) =
+              MvPowerSeries.Restricted.eval₂Fun c φ x f + MvPowerSeries.Restricted.eval₂Fun c φ x g
+MvPowerSeries.Restricted.eval₂Fun_mul :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [IsUltrametricDist B] {σ : Type u_3} (c : σ → ℝ) [hc : Fact (∀ (i : σ), 0 < c i)] (φ : R →+* B) (x : σ → B)
+      [CompleteSpace B],
+      (∀ (r : R), ‖φ r‖ ≤ ‖r‖) →
+        (∀ (i : σ), ‖x i‖ ≤ c i) →
+          ∀ (f g : MvPowerSeries.Restricted R c),
+            MvPowerSeries.Restricted.eval₂Fun c φ x (f * g) =
+              MvPowerSeries.Restricted.eval₂Fun c φ x f * MvPowerSeries.Restricted.eval₂Fun c φ x g
+MvPowerSeries.Restricted.eval₂Fun_one :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      {σ : Type u_3} (c : σ → ℝ) (φ : R →+* B) (x : σ → B), MvPowerSeries.Restricted.eval₂Fun c φ x 1 = 1
+MvPowerSeries.Restricted.eval₂Fun_zero :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      {σ : Type u_3} (c : σ → ℝ) (φ : R →+* B) (x : σ → B), MvPowerSeries.Restricted.eval₂Fun c φ x 0 = 0
+MvPowerSeries.Restricted.eval₂_C :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i) (a : R),
+      (MvPowerSeries.Restricted.eval₂ c φ x hφ hx) ((MvPowerSeries.Restricted.C c) a) = φ a
+MvPowerSeries.Restricted.eval₂_X :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i) (i : σ),
+      (MvPowerSeries.Restricted.eval₂ c φ x hφ hx) (MvPowerSeries.Restricted.X R c i) = x i
+MvPowerSeries.Restricted.eval₂_apply :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i)
+      (f : MvPowerSeries.Restricted R c),
+      (MvPowerSeries.Restricted.eval₂ c φ x hφ hx) f =
+        ∑' (t : σ →₀ ℕ), φ ((MvPowerSeries.coeff t) ↑f) * t.prod fun i k => x i ^ k
+MvPowerSeries.Restricted.eval₂_monomial :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i) (t : σ →₀ ℕ) (a : R),
+      (MvPowerSeries.Restricted.eval₂ c φ x hφ hx) (MvPowerSeries.Restricted.monomial c t a) =
+        φ a * t.prod fun i k => x i ^ k
+MvPowerSeries.Restricted.eval₂_toRestricted :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i) (p : MvPolynomial σ R),
+      (MvPowerSeries.Restricted.eval₂ c φ x hφ hx) ((MvPolynomial.toRestricted c) p) = MvPolynomial.eval₂ φ x p
+MvPowerSeries.Restricted.hasSum_eval₂ :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i)
+      (f : MvPowerSeries.Restricted R c),
+      HasSum (fun t => φ ((MvPowerSeries.coeff t) ↑f) * t.prod fun i k => x i ^ k)
+        ((MvPowerSeries.Restricted.eval₂ c φ x hφ hx) f)
+MvPowerSeries.Restricted.norm_aeval_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : NormedAlgebra K B] [inst_4 : NormOneClass B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B]
+      {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {x : σ → B} (hx : ∀ (i : σ), ‖x i‖ ≤ c i)
+      (f : MvPowerSeries.Restricted K c), ‖(MvPowerSeries.Restricted.aeval c x hx) f‖ ≤ ‖f‖
+MvPowerSeries.Restricted.norm_eval₂_le :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} [hc : Fact (∀ (i : σ), 0 < c i)] {φ : R →+* B} {x : σ → B}
+      [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ ‖r‖) (hx : ∀ (i : σ), ‖x i‖ ≤ c i)
+      (f : MvPowerSeries.Restricted R c), ‖(MvPowerSeries.Restricted.eval₂ c φ x hφ hx) f‖ ≤ ‖f‖
+MvPowerSeries.Restricted.norm_map_mul_prod_pow_le :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] {B : Type u_2} [inst_1 : NormedCommRing B] {σ : Type u_3} (c : σ → ℝ)
+      [hc : Fact (∀ (i : σ), 0 < c i)] (φ : R →+* B) (x : σ → B),
+      (∀ (r : R), ‖φ r‖ ≤ ‖r‖) →
+        (∀ (i : σ), ‖x i‖ ≤ c i) →
+          ∀ (a : R) (t : σ →₀ ℕ), ‖φ a * t.prod fun i k => x i ^ k‖ ≤ ‖a‖ * t.prod fun x1 x2 => c x1 ^ x2
+MvPowerSeries.Restricted.ringHom_ext_of_continuous :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {σ : Type u_2} {c : σ → ℝ}
+      [hc : Fact (∀ (i : σ), 0 < c i)] {B : Type u_3} [inst_2 : Semiring B] [inst_3 : TopologicalSpace B] [T2Space B]
+      {ψ₁ ψ₂ : MvPowerSeries.Restricted R c →+* B},
+      Continuous ⇑ψ₁ →
+        Continuous ⇑ψ₂ →
+          (∀ (a : R), ψ₁ ((MvPowerSeries.Restricted.C c) a) = ψ₂ ((MvPowerSeries.Restricted.C c) a)) →
+            (∀ (i : σ), ψ₁ (MvPowerSeries.Restricted.X R c i) = ψ₂ (MvPowerSeries.Restricted.X R c i)) → ψ₁ = ψ₂
+MvPowerSeries.Restricted.summable_map_coeff_mul_prod_pow :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      [IsUltrametricDist B] {σ : Type u_3} (c : σ → ℝ) [hc : Fact (∀ (i : σ), 0 < c i)] (φ : R →+* B) (x : σ → B)
+      [CompleteSpace B],
+      (∀ (r : R), ‖φ r‖ ≤ ‖r‖) →
+        (∀ (i : σ), ‖x i‖ ≤ c i) →
+          ∀ (f : MvPowerSeries.Restricted R c), Summable fun t => φ ((MvPowerSeries.coeff t) ↑f) * t.prod fun i k => x i ^ k
+MvPowerSeries.Restricted.tendsto_map_coeff_mul_prod_pow :
+    ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B]
+      {σ : Type u_3} (c : σ → ℝ) [hc : Fact (∀ (i : σ), 0 < c i)] (φ : R →+* B) (x : σ → B),
+      (∀ (r : R), ‖φ r‖ ≤ ‖r‖) →
+        (∀ (i : σ), ‖x i‖ ≤ c i) →
+          ∀ (f : MvPowerSeries.Restricted R c),
+            Filter.Tendsto (fun t => φ ((MvPowerSeries.coeff t) ↑f) * t.prod fun i k => x i ^ k) Filter.cofinite (nhds 0)
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.EvalReduction
+MvPowerSeries.Restricted.norm_aeval_le_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {B : Type u_3}
+      [inst_2 : NormedCommRing B] [inst_3 : NormedAlgebra K B] [inst_4 : NormOneClass B] [inst_5 : IsUltrametricDist B]
+      [inst_6 : CompleteSpace B] {x : σ → B} (hx : ∀ (i : σ), ‖x i‖ ≤ 1)
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))), ‖(MvPowerSeries.Restricted.aeval 1 x hx) ↑f‖ ≤ 1
+MvPowerSeries.Restricted.reduction_aeval :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [inst_2 : CompleteSpace K]
+      {τ : Type u_3} {x : σ → MvPowerSeries.Restricted K 1} (hx : ∀ (i : σ), ‖x i‖ ≤ 1)
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      MvPowerSeries.Restricted.reduction ⟨(MvPowerSeries.Restricted.aeval 1 x hx) ↑f, ⋯⟩ =
+        (MvPolynomial.aeval fun i => MvPowerSeries.Restricted.reduction ⟨x i, ⋯⟩) (MvPowerSeries.Restricted.reduction f)
+MvPowerSeries.Restricted.residue_aeval :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {L : Type u_3}
+      [inst_2 : NormedField L] [inst_3 : NormedAlgebra K L] [inst_4 : IsUltrametricDist L] [inst_5 : CompleteSpace L]
+      {x : σ → L} (hx : ∀ (i : σ), ‖x i‖ ≤ 1) (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      (IsLocalRing.residue ↥(Subring.unitClosedBall L)) ⟨(MvPowerSeries.Restricted.aeval 1 x hx) ↑f, ⋯⟩ =
+        MvPolynomial.eval₂ (NormedField.residueFieldMap K L)
+          (fun i => (IsLocalRing.residue ↥(Subring.unitClosedBall L)) ⟨x i, ⋯⟩) (MvPowerSeries.Restricted.reduction f)
+NormedField.coe_unitClosedBallMap :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] (L : Type u_2) [inst_2 : NormedField L]
+      [inst_3 : NormedAlgebra K L] [inst_4 : IsUltrametricDist L] (a : ↥(Subring.unitClosedBall K)),
+      ↑((NormedField.unitClosedBallMap K L) a) = (algebraMap K L) ↑a
+NormedField.instIsLocalHomSubtypeMemSubringUnitClosedBallRingHomUnitClosedBallMap :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] (L : Type u_2) [inst_2 : NormedField L]
+      [inst_3 : NormedAlgebra K L] [inst_4 : IsUltrametricDist L], IsLocalHom (NormedField.unitClosedBallMap K L)
+NormedField.residueFieldMap :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          (L : Type u_2) →
+            [inst_2 : NormedField L] →
+              [NormedAlgebra K L] →
+                [inst_4 : IsUltrametricDist L] →
+                  IsLocalRing.ResidueField ↥(Subring.unitClosedBall K) →+*
+                    IsLocalRing.ResidueField ↥(Subring.unitClosedBall L)
+NormedField.unitClosedBallMap :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          (L : Type u_2) →
+            [inst_2 : NormedField L] →
+              [NormedAlgebra K L] →
+                [inst_4 : IsUltrametricDist L] → ↥(Subring.unitClosedBall K) →+* ↥(Subring.unitClosedBall L)
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Examples
+Affinoid.TateAlgebra.Examples.isMaximal_ker_aeval :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ}
+      (x : Fin n → K) (hx : ∀ (i : Fin n), ‖x i‖ ≤ 1), (RingHom.ker (MvPowerSeries.Restricted.aeval 1 x hx)).IsMaximal
+Affinoid.TateAlgebra.Examples.isMaximal_span_X_sq_sub_p :
+    ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+      (Ideal.span
+          {(Affinoid.TateAlgebra.ofPolynomial ℚ_[p] 0)
+              (Polynomial.X ^ 2 - Polynomial.C ((MvPowerSeries.Restricted.C 1) ↑p))}).IsMaximal
+Affinoid.TateAlgebra.Examples.isMulDistinguishedX0_shear_X_one :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K],
+      MvPowerSeries.Restricted.IsMulDistinguishedX0
+        ((Affinoid.TateAlgebra.shear K 1 fun x => 1) (MvPowerSeries.Restricted.X K 1 1)) 1
+Affinoid.TateAlgebra.Examples.isUnit_one_add_p_mul_X :
+    ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+      IsUnit (1 + (MvPowerSeries.Restricted.C 1) ↑p * MvPowerSeries.Restricted.X ℚ_[p] 1 0)
+Affinoid.TateAlgebra.Examples.isWeierstrassPolynomial_example :
+    ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial ℚ_[p] 1
+        (Polynomial.X ^ 2 -
+            Polynomial.C ((MvPowerSeries.Restricted.C 1) ↑p * MvPowerSeries.Restricted.X ℚ_[p] 1 0) * Polynomial.X -
+          Polynomial.C ((MvPowerSeries.Restricted.C 1) ↑p))
+Affinoid.TateAlgebra.Examples.norm_X :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] (n : ℕ) (i : Fin n),
+      ‖MvPowerSeries.Restricted.X K 1 i‖ = 1
+Affinoid.TateAlgebra.Examples.norm_one_add_p_mul_X :
+    ∀ (p : ℕ) [inst : Fact (Nat.Prime p)],
+      ‖1 + (MvPowerSeries.Restricted.C 1) ↑p * MvPowerSeries.Restricted.X ℚ_[p] 1 0‖ = 1
+Affinoid.TateAlgebra.Examples.not_isMulDistinguishedX0_X_one :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] (s : ℕ),
+      ¬(MvPowerSeries.Restricted.X K 1 1).IsMulDistinguishedX0 s
+Affinoid.TateAlgebra.Examples.reduction_p_add_X_add_p_mul_X_sq :
+    ∀ (p : ℕ) [inst : Fact (Nat.Prime p)]
+      (h :
+        ‖(MvPowerSeries.Restricted.C 1) ↑p + MvPowerSeries.Restricted.X ℚ_[p] 1 0 +
+              (MvPowerSeries.Restricted.C 1) ↑p * MvPowerSeries.Restricted.X ℚ_[p] 1 0 ^ 2‖ ≤
+          1),
+      MvPowerSeries.Restricted.reduction
+          ⟨(MvPowerSeries.Restricted.C 1) ↑p + MvPowerSeries.Restricted.X ℚ_[p] 1 0 +
+              (MvPowerSeries.Restricted.C 1) ↑p * MvPowerSeries.Restricted.X ℚ_[p] 1 0 ^ 2,
+            ⋯⟩ =
+        MvPolynomial.X 0
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Finiteness
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.bijective_quotientMap :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        Function.Bijective
+          ⇑(Ideal.quotientMap (Ideal.map (Affinoid.TateAlgebra.ofPolynomial K n) (Ideal.span {ω}))
+              (Affinoid.TateAlgebra.ofPolynomial K n) ⋯)
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.existsUnique_remainder :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        ∀ (f : Affinoid.TateAlgebra K (n + 1)),
+          ∃! r,
+            r.degree < ω.degree ∧
+              f - (Affinoid.TateAlgebra.ofPolynomial K n) r ∈ Ideal.span {(Affinoid.TateAlgebra.ofPolynomial K n) ω}
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.finite_compHom :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        ∀ (M : Type u_2) [inst_3 : AddCommGroup M] [inst_4 : _root_.Module (Affinoid.TateAlgebra K (n + 1)) M]
+          [Module.Finite (Affinoid.TateAlgebra K (n + 1)) M],
+          (∀ (m : M), (Affinoid.TateAlgebra.ofPolynomial K n) ω • m = 0) → Module.Finite (Affinoid.TateAlgebra K n) M
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.finite_comp_ofTail :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        ∀ {A : Type u_2} [inst_3 : CommRing A] (φ : Affinoid.TateAlgebra K (n + 1) →+* A),
+          φ.Finite → φ ((Affinoid.TateAlgebra.ofPolynomial K n) ω) = 0 → (φ.comp (Affinoid.TateAlgebra.ofTail K n)).Finite
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.finite_mk_comp_ofTail :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        ((Ideal.Quotient.mk (Ideal.span {(Affinoid.TateAlgebra.ofPolynomial K n) ω})).comp
+            (Affinoid.TateAlgebra.ofTail K n)).Finite
+Affinoid.TateAlgebra.IsWeierstrassPolynomial.injective_mk_comp_ofTail :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {ω : Polynomial (Affinoid.TateAlgebra K n)},
+      Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω →
+        0 < ω.natDegree →
+          Function.Injective
+            ⇑((Ideal.Quotient.mk (Ideal.span {(Affinoid.TateAlgebra.ofPolynomial K n) ω})).comp
+                (Affinoid.TateAlgebra.ofTail K n))
+Affinoid.TateAlgebra.finite_mk_comp_ofTail_of_isMulDistinguishedX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ}
+      {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ((Ideal.Quotient.mk (Ideal.span {g})).comp (Affinoid.TateAlgebra.ofTail K n)).Finite
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.MaxModulus
+MvPowerSeries.Restricted.eq_zero_of_forall_mem :
+    ∀ {K : Type u} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {σ : Type u_1}
+      [Finite σ] {f : MvPowerSeries.Restricted K 1},
+      (∀ (x : MaximalSpectrum (MvPowerSeries.Restricted K 1)), f ∈ x.asIdeal) → f = 0
+MvPowerSeries.Restricted.exists_evalNorm_eq_norm :
+    ∀ {K : Type u} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {σ : Type u_1}
+      [Finite σ] (f : MvPowerSeries.Restricted K 1),
+      ∃ x, Module.Finite K (MvPowerSeries.Restricted K 1 ⧸ x.asIdeal) ∧ Affinoid.evalNorm K x f = ‖f‖
+MvPowerSeries.Restricted.exists_evalNorm_eq_norm_and_notMem :
+    ∀ {K : Type u} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {σ : Type u_1}
+      [Finite σ] (f : MvPowerSeries.Restricted K 1) {g : MvPowerSeries.Restricted K 1},
+      g ≠ 0 → ∃ x, Affinoid.evalNorm K x f = ‖f‖ ∧ g ∉ x.asIdeal
+MvPowerSeries.Restricted.exists_norm_aeval_eq_norm :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [Finite σ] {L : Type u_3}
+      [inst_3 : NormedField L] [inst_4 : NormedAlgebra K L] [inst_5 : IsUltrametricDist L] [inst_6 : CompleteSpace L]
+      (S : Finset L),
+      (∀ s ∈ S, ‖s‖ ≤ 1) →
+        (∀ s ∈ S, ∀ t ∈ S, s ≠ t → ‖s - t‖ = 1) →
+          ∀ (f : MvPowerSeries.Restricted K 1),
+            (∀ (t : σ →₀ ℕ), ‖(MvPowerSeries.coeff t) ↑f‖ = ‖f‖ → ∀ (i : σ), t i < S.card) →
+              ∃ x, ∃ (hx : ∀ (i : σ), ‖x i‖ ≤ 1), (∀ (i : σ), x i ∈ S) ∧ ‖(MvPowerSeries.Restricted.aeval 1 x hx) f‖ = ‖f‖
+MvPowerSeries.Restricted.supSeminorm_eq_norm :
+    ∀ {K : Type u} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {σ : Type u_1}
+      [Finite σ] (f : MvPowerSeries.Restricted K 1), Affinoid.supSeminorm K f = ‖f‖
+NormedField.exists_lt_natCast_norm_eq_one :
+    ∀ (K : Type u_1) [inst : NormedField K] [IsUltrametricDist K] (d : ℕ), ∃ m, d < m ∧ ‖↑m‖ = 1
+exists_finset_splittingField_X_pow_sub_one :
+    ∀ (K : Type u) [inst : NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K] {m : ℕ},
+      0 < m →
+        ‖↑m‖ = 1 →
+          ∃ S,
+            S.card = m ∧
+              (∀ s ∈ S, spectralNorm K (Polynomial.X ^ m - 1).SplittingField s = 1) ∧
+                ∀ s ∈ S, ∀ t ∈ S, s ≠ t → spectralNorm K (Polynomial.X ^ m - 1).SplittingField (s - t) = 1
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Reduction
+MvPowerSeries.Restricted.coe_ofUnitBallPolynomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (p : MvPolynomial σ ↥(Subring.unitClosedBall K)),
+      ↑(MvPowerSeries.Restricted.ofUnitBallPolynomial p) =
+        (MvPolynomial.toRestricted 1) ((MvPolynomial.map (Subring.unitClosedBall K).subtype) p)
+MvPowerSeries.Restricted.coe_unitBallCoeff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))) (t : σ →₀ ℕ),
+      ↑(MvPowerSeries.Restricted.unitBallCoeff f t) = (MvPowerSeries.coeff t) ↑↑f
+MvPowerSeries.Restricted.coeff_reduction :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))) (t : σ →₀ ℕ),
+      MvPolynomial.coeff t (MvPowerSeries.Restricted.reduction f) =
+        (IsLocalRing.residue ↥(Subring.unitClosedBall K)) (MvPowerSeries.Restricted.unitBallCoeff f t)
+MvPowerSeries.Restricted.coeff_reductionFun :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))) (t : σ →₀ ℕ),
+      MvPolynomial.coeff t (MvPowerSeries.Restricted.reductionFun f) =
+        (IsLocalRing.residue ↥(Subring.unitClosedBall K)) (MvPowerSeries.Restricted.unitBallCoeff f t)
+MvPowerSeries.Restricted.exists_norm_eq_one_not_isUnit_C_add :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [CompleteSpace K]
+      {f : MvPowerSeries.Restricted K 1}, ‖f‖ = 1 → ∃ a, ‖a‖ = 1 ∧ ¬IsUnit ((MvPowerSeries.Restricted.C 1) a + f)
+MvPowerSeries.Restricted.exists_sub_ofUnitBallPolynomial_mem_openUnitBallIdeal :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      ∃ p, f - MvPowerSeries.Restricted.ofUnitBallPolynomial p ∈ NormedRing.openUnitBallIdeal (MvPowerSeries.Restricted K 1)
+MvPowerSeries.Restricted.finite_support_residue_unitBallCoeff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      (Function.support fun t =>
+          (IsLocalRing.residue ↥(Subring.unitClosedBall K)) (MvPowerSeries.Restricted.unitBallCoeff f t)).Finite
+MvPowerSeries.Restricted.isPowerBounded_iff_forall_norm_coeff_le_one :
+    ∀ {σ : Type u_2} {𝕜 : Type u_3} [inst : NontriviallyNormedField 𝕜] [inst_1 : IsUltrametricDist 𝕜]
+      {f : MvPowerSeries.Restricted 𝕜 1}, PowerBounded.IsPowerBounded f ↔ ∀ (t : σ →₀ ℕ), ‖(MvPowerSeries.coeff t) ↑f‖ ≤ 1
+MvPowerSeries.Restricted.isTopologicallyNilpotent_iff_forall_norm_coeff_lt_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      {f : MvPowerSeries.Restricted K 1}, IsTopologicallyNilpotent f ↔ ∀ (t : σ →₀ ℕ), ‖(MvPowerSeries.coeff t) ↑f‖ < 1
+MvPowerSeries.Restricted.isUnit_coe_iff_isUnit_reduction :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [CompleteSpace K]
+      {f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))},
+      ‖↑f‖ = 1 → (IsUnit ↑f ↔ IsUnit (MvPowerSeries.Restricted.reduction f))
+MvPowerSeries.Restricted.isUnit_iff_isUnit_reduction :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [CompleteSpace K]
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      IsUnit f ↔ IsUnit (MvPowerSeries.Restricted.reduction f)
+MvPowerSeries.Restricted.isUnit_iff_norm_coeff_lt :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [CompleteSpace K]
+      {f : MvPowerSeries.Restricted K 1},
+      IsUnit f ↔
+        (MvPowerSeries.coeff 0) ↑f ≠ 0 ∧ ∀ (t : σ →₀ ℕ), t ≠ 0 → ‖(MvPowerSeries.coeff t) ↑f‖ < ‖(MvPowerSeries.coeff 0) ↑f‖
+MvPowerSeries.Restricted.jacobson_bot :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [CompleteSpace K], ⊥.jacobson = ⊥
+MvPowerSeries.Restricted.ker_reduction :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2},
+      RingHom.ker MvPowerSeries.Restricted.reduction = NormedRing.openUnitBallIdeal (MvPowerSeries.Restricted K 1)
+MvPowerSeries.Restricted.norm_eq_one_of_reduction_ne_zero :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      {f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))}, MvPowerSeries.Restricted.reduction f ≠ 0 → ‖↑f‖ = 1
+MvPowerSeries.Restricted.norm_toRestricted_map_subtype_le_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (p : MvPolynomial σ ↥(Subring.unitClosedBall K)),
+      ‖(MvPolynomial.toRestricted 1) ((MvPolynomial.map (Subring.unitClosedBall K).subtype) p)‖ ≤ 1
+MvPowerSeries.Restricted.ofUnitBallPolynomial :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            MvPolynomial σ ↥(Subring.unitClosedBall K) →+* ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))
+MvPowerSeries.Restricted.reduction :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1)) →+*
+              MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+MvPowerSeries.Restricted.reductionEquiv :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1)) ⧸
+                NormedRing.openUnitBallIdeal (MvPowerSeries.Restricted K 1) ≃+*
+              MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+MvPowerSeries.Restricted.reductionEquiv_mk :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      MvPowerSeries.Restricted.reductionEquiv
+          ((Ideal.Quotient.mk (NormedRing.openUnitBallIdeal (MvPowerSeries.Restricted K 1))) f) =
+        MvPowerSeries.Restricted.reduction f
+MvPowerSeries.Restricted.reductionFun :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1)) →
+              MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+MvPowerSeries.Restricted.reductionFun_add :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f g : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      MvPowerSeries.Restricted.reductionFun (f + g) =
+        MvPowerSeries.Restricted.reductionFun f + MvPowerSeries.Restricted.reductionFun g
+MvPowerSeries.Restricted.reductionFun_mul :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f g : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))),
+      MvPowerSeries.Restricted.reductionFun (f * g) =
+        MvPowerSeries.Restricted.reductionFun f * MvPowerSeries.Restricted.reductionFun g
+MvPowerSeries.Restricted.reductionFun_one :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2},
+      MvPowerSeries.Restricted.reductionFun 1 = 1
+MvPowerSeries.Restricted.reductionFun_zero :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2},
+      MvPowerSeries.Restricted.reductionFun 0 = 0
+MvPowerSeries.Restricted.reduction_eq_zero_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (f : ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1))), MvPowerSeries.Restricted.reduction f = 0 ↔ ‖↑f‖ < 1
+MvPowerSeries.Restricted.reduction_ofUnitBallPolynomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2}
+      (p : MvPolynomial σ ↥(Subring.unitClosedBall K)),
+      MvPowerSeries.Restricted.reduction (MvPowerSeries.Restricted.ofUnitBallPolynomial p) =
+        (MvPolynomial.map (IsLocalRing.residue ↥(Subring.unitClosedBall K))) p
+MvPowerSeries.Restricted.reduction_surjective :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2},
+      Function.Surjective ⇑MvPowerSeries.Restricted.reduction
+MvPowerSeries.Restricted.unitBallCoeff :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} → ↥(Subring.unitClosedBall (MvPowerSeries.Restricted K 1)) → (σ →₀ ℕ) → ↥(Subring.unitClosedBall K)
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Rueckert
+Affinoid.TateAlgebra.instIsJacobsonRing :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] (n : ℕ),
+      IsJacobsonRing (Affinoid.TateAlgebra K n)
+Affinoid.TateAlgebra.instIsNoetherianRing :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] (n : ℕ),
+      IsNoetherianRing (Affinoid.TateAlgebra K n)
+Affinoid.TateAlgebra.instUniqueFactorizationMonoid :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] (n : ℕ),
+      UniqueFactorizationMonoid (Affinoid.TateAlgebra K n)
+Affinoid.TateAlgebra.isRueckert_ofPolynomial :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] (n : ℕ),
+      IsRueckert (Affinoid.TateAlgebra.ofPolynomial K n) {ω | Affinoid.TateAlgebra.IsWeierstrassPolynomial K n ω}
+Affinoid.TateAlgebra.ringKrullDim_eq :
+    ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] (n : ℕ),
+      ringKrullDim (Affinoid.TateAlgebra K n) = ↑n
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Stable
+Affinoid.TateAlgebra.isJapaneseRing :
+    ∀ (K : Type u) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] [CharZero K] (n : ℕ),
+      IsJapaneseRing (Affinoid.TateAlgebra K n)
+Affinoid.TateAlgebra.isWeaklyStable_fractionRing :
+    ∀ (K : Type u) [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CharZero K] (n : ℕ),
+      IsWeaklyStable (FractionRing (Affinoid.TateAlgebra K n))
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.StrictlyClosed
+MvPolynomial.adaptedFamily :
+    {k : Type u_1} →
+      [inst : Field k] →
+        {σ : Type u_2} →
+          {ι : Type u_3} →
+            [DecidableEq ι] →
+              {r : ℕ} →
+                (Fin r → ι → MvPolynomial σ k) →
+                  (A : Set ((σ →₀ ℕ) × Fin r)) → (B : Set ((_ : ι) × (σ →₀ ℕ))) → ↑A ⊕ ↑B → ι → MvPolynomial σ k
+MvPolynomial.exists_basis_adaptedFamily :
+    ∀ {k : Type u_1} [inst : Field k] {σ : Type u_2} {ι : Type u_3} [inst_1 : DecidableEq ι] [Fintype ι] {r : ℕ}
+      (h : Fin r → ι → MvPolynomial σ k),
+      ∃ A B,
+        LinearIndependent k (MvPolynomial.adaptedFamily h A B) ∧
+          Submodule.span k (Set.range (MvPolynomial.adaptedFamily h A B)) = ⊤ ∧
+            Submodule.span k (Set.range fun a => (MvPolynomial.monomial (↑a).1) 1 • h (↑a).2) =
+              Submodule.restrictScalars k (Submodule.span (MvPolynomial σ k) (Set.range h))
+MvPowerSeries.Restricted.adaptedFamily :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            {ι : Type u_3} →
+              [DecidableEq ι] →
+                {r : ℕ} →
+                  (Fin r → ι → MvPowerSeries.Restricted K 1) →
+                    (A : Set ((σ →₀ ℕ) × Fin r)) →
+                      (B : Set ((_ : ι) × (σ →₀ ℕ))) → ↑A ⊕ ↑B → ι → MvPowerSeries.Restricted K 1
+MvPowerSeries.Restricted.coeff_inr_eq_zero_of_mem :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [inst_3 : DecidableEq ι] [CompleteSpace K]
+      {N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)} {r : ℕ}
+      {g : Fin r → ι → MvPowerSeries.Restricted K 1} (hg : ∀ (j : Fin r), ‖g j‖ = 1),
+      (∀ (j : Fin r), g j ∈ N) →
+        ∀ {A : Set ((σ →₀ ℕ) × Fin r)} {B : Set ((_ : ι) × (σ →₀ ℕ))},
+          IsOrthonormalBasis K (MvPowerSeries.Restricted.adaptedFamily g A B) →
+            LinearIndependent (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+                (MvPolynomial.adaptedFamily (fun j => MvPowerSeries.Restricted.reductionPi (g j) ⋯) A B) →
+              Submodule.span (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+                    (Set.range fun a =>
+                      (MvPolynomial.monomial (↑a).1) 1 • MvPowerSeries.Restricted.reductionPi (g (↑a).2) ⋯) =
+                  Submodule.restrictScalars (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+                    (MvPowerSeries.Restricted.reductionSubmodule N) →
+                ∀ {x : ι → MvPowerSeries.Restricted K 1},
+                  x ∈ N →
+                    ∀ {c : ↑A ⊕ ↑B → K},
+                      HasSum (fun μ => c μ • MvPowerSeries.Restricted.adaptedFamily g A B μ) x →
+                        ∀ (b : ↑B), c (Sum.inr b) = 0
+MvPowerSeries.Restricted.exists_eq_sum_smul_of_hasSum :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3} [Fintype ι]
+      [DecidableEq ι] [CompleteSpace K] {r : ℕ} (g : Fin r → ι → MvPowerSeries.Restricted K 1) {A : Set ((σ →₀ ℕ) × Fin r)}
+      {c : ↑A → K} {a : ι → MvPowerSeries.Restricted K 1},
+      HasSum (fun μ => c μ • MvPowerSeries.Restricted.monomial 1 (↑μ).1 1 • g (↑μ).2) a →
+        Filter.Tendsto c Filter.cofinite (nhds 0) →
+          ∀ {C : ℝ}, 0 ≤ C → (∀ (μ : ↑A), ‖c μ‖ ≤ C) → ∃ q, (∀ (j : Fin r), ‖q j‖ ≤ C) ∧ a = ∑ j, q j • g j
+MvPowerSeries.Restricted.exists_forall_norm_sub_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [Finite σ] [CompleteSpace K]
+      (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1))
+      (f : ι → MvPowerSeries.Restricted K 1), ∃ a₀ ∈ N, ∀ a ∈ N, ‖f - a₀‖ ≤ ‖f - a‖
+MvPowerSeries.Restricted.exists_forall_norm_sub_le_ideal :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [Finite σ] [CompleteSpace K]
+      (I : Ideal (MvPowerSeries.Restricted K 1)) (f : MvPowerSeries.Restricted K 1), ∃ a₀ ∈ I, ∀ a ∈ I, ‖f - a₀‖ ≤ ‖f - a‖
+MvPowerSeries.Restricted.exists_generators_forall_exists_isNearest :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [Finite σ] [CompleteSpace K]
+      (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)),
+      ∃ r g,
+        (∀ (j : Fin r), g j ∈ N) ∧
+          (∀ (j : Fin r), ‖g j‖ = 1) ∧
+            ∀ (f : ι → MvPowerSeries.Restricted K 1),
+              ∃ q, (∀ (j : Fin r), ‖q j‖ ≤ ‖f‖) ∧ ∀ a ∈ N, ‖f - ∑ j, q j • g j‖ ≤ ‖f - ∑ j, q j • g j - a‖
+MvPowerSeries.Restricted.exists_generators_norm_le :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [Finite σ] [CompleteSpace K]
+      (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)),
+      ∃ r g,
+        (∀ (j : Fin r), g j ∈ N) ∧
+          (∀ (j : Fin r), ‖g j‖ = 1) ∧ ∀ x ∈ N, ∃ q, x = ∑ j, q j • g j ∧ ∀ (j : Fin r), ‖q j‖ ≤ ‖x‖
+MvPowerSeries.Restricted.exists_generators_norm_le_ideal :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [Finite σ] [CompleteSpace K]
+      (I : Ideal (MvPowerSeries.Restricted K 1)),
+      ∃ r g,
+        (∀ (j : Fin r), g j ∈ I) ∧
+          (∀ (j : Fin r), ‖g j‖ = 1) ∧ ∀ x ∈ I, ∃ q, x = ∑ j, q j * g j ∧ ∀ (j : Fin r), ‖q j‖ ≤ ‖x‖
+MvPowerSeries.Restricted.exists_generators_reductionSubmodule :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [Finite σ] (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)),
+      ∃ r g,
+        ∃ (hg : ∀ (j : Fin r), ‖g j‖ = 1),
+          (∀ (j : Fin r), g j ∈ N) ∧
+            Submodule.span (MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)))
+                (Set.range fun j => MvPowerSeries.Restricted.reductionPi (g j) ⋯) =
+              MvPowerSeries.Restricted.reductionSubmodule N
+MvPowerSeries.Restricted.exists_isBald_forall_coeff_mem :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [DecidableEq ι] {r : ℕ} (g : Fin r → ι → MvPowerSeries.Restricted K 1),
+      (∀ (j : Fin r), ‖g j‖ ≤ 1) → ∃ S, S.IsBald ∧ ∀ (j : Fin r) (i : ι) (t : σ →₀ ℕ), (MvPowerSeries.coeff t) ↑(g j i) ∈ S
+MvPowerSeries.Restricted.exists_isOrthonormalBasis_adaptedFamily :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [inst_3 : DecidableEq ι] [Finite σ] [CompleteSpace K]
+      (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)),
+      ∃ r g A B,
+        (∀ (j : Fin r), g j ∈ N) ∧
+          (∀ (j : Fin r), ‖g j‖ = 1) ∧
+            IsOrthonormalBasis K (MvPowerSeries.Restricted.adaptedFamily g A B) ∧
+              ∀ x ∈ N,
+                ∀ (c : ↑A ⊕ ↑B → K),
+                  HasSum (fun μ => c μ • MvPowerSeries.Restricted.adaptedFamily g A B μ) x → ∀ (b : ↑B), c (Sum.inr b) = 0
+MvPowerSeries.Restricted.hasSum_coeff_smul_single_monomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3} [Fintype ι]
+      [inst_3 : DecidableEq ι] (f : ι → MvPowerSeries.Restricted K 1),
+      HasSum
+        (fun p => (MvPowerSeries.coeff p.snd) ↑(f p.fst) • Pi.single p.fst (MvPowerSeries.Restricted.monomial 1 p.snd 1)) f
+MvPowerSeries.Restricted.infDist_mem_range_norm :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [Finite σ] [CompleteSpace K]
+      (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1))
+      (f : ι → MvPowerSeries.Restricted K 1), Metric.infDist f ↑N ∈ Set.range norm
+MvPowerSeries.Restricted.isClosed_ideal :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [Finite σ] [CompleteSpace K]
+      (I : Ideal (MvPowerSeries.Restricted K 1)), IsClosed ↑I
+MvPowerSeries.Restricted.isClosed_submodule :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3} [Fintype ι]
+      [Finite σ] [CompleteSpace K] (N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)),
+      IsClosed ↑N
+MvPowerSeries.Restricted.isOrthonormalBasis_adaptedFamily :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [inst_3 : DecidableEq ι] {r : ℕ} {g : Fin r → ι → MvPowerSeries.Restricted K 1}
+      (hg : ∀ (j : Fin r), ‖g j‖ = 1) {A : Set ((σ →₀ ℕ) × Fin r)} {B : Set ((_ : ι) × (σ →₀ ℕ))},
+      LinearIndependent (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+          (MvPolynomial.adaptedFamily (fun j => MvPowerSeries.Restricted.reductionPi (g j) ⋯) A B) →
+        Submodule.span (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+              (Set.range (MvPolynomial.adaptedFamily (fun j => MvPowerSeries.Restricted.reductionPi (g j) ⋯) A B)) =
+            ⊤ →
+          IsOrthonormalBasis K (MvPowerSeries.Restricted.adaptedFamily g A B)
+MvPowerSeries.Restricted.isOrthonormalBasis_monomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2},
+      IsOrthonormalBasis K fun t => MvPowerSeries.Restricted.monomial 1 t 1
+MvPowerSeries.Restricted.isOrthonormalBasis_single_monomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] [inst_3 : DecidableEq ι],
+      IsOrthonormalBasis K fun p => Pi.single p.fst (MvPowerSeries.Restricted.monomial 1 p.snd 1)
+MvPowerSeries.Restricted.mem_reductionSubmodule :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] {N : Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1)}
+      {u : ι → MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))},
+      u ∈ MvPowerSeries.Restricted.reductionSubmodule N ↔
+        ∃ x, ∃ (hx : ‖x‖ ≤ 1), x ∈ N ∧ MvPowerSeries.Restricted.reductionPi x hx = u
+MvPowerSeries.Restricted.norm_quotient_mk_mem_range_norm :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} [Finite σ] [CompleteSpace K]
+      (I : Ideal (MvPowerSeries.Restricted K 1)) (f : MvPowerSeries.Restricted K 1),
+      ‖(Ideal.Quotient.mk I) f‖ ∈ Set.range norm
+MvPowerSeries.Restricted.reductionPi :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            {ι : Type u_3} →
+              [inst_2 : Fintype ι] →
+                (x : ι → MvPowerSeries.Restricted K 1) →
+                  ‖x‖ ≤ 1 → ι → MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K))
+MvPowerSeries.Restricted.reductionPi_eq_zero_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {σ : Type u_2} {ι : Type u_3}
+      [inst_2 : Fintype ι] {x : ι → MvPowerSeries.Restricted K 1} (hx : ‖x‖ ≤ 1),
+      MvPowerSeries.Restricted.reductionPi x hx = 0 ↔ ‖x‖ < 1
+MvPowerSeries.Restricted.reductionSubmodule :
+    [sorry] {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] →
+          {σ : Type u_2} →
+            {ι : Type u_3} →
+              [Fintype ι] →
+                Submodule (MvPowerSeries.Restricted K 1) (ι → MvPowerSeries.Restricted K 1) →
+                  Submodule (MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)))
+                    (ι → MvPolynomial σ (IsLocalRing.ResidueField ↥(Subring.unitClosedBall K)))
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.TateAlgebra.Tower
+Affinoid.TateAlgebra.coeffX0 :
+    {K : Type u_1} →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] → {n : ℕ} → Affinoid.TateAlgebra K (n + 1) → ℕ → Affinoid.TateAlgebra K n
+Affinoid.TateAlgebra.coeffX0_ofPolynomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      (p : Polynomial (Affinoid.TateAlgebra K n)) (ν : ℕ), ((Affinoid.TateAlgebra.ofPolynomial K n) p).coeffX0 ν = p.coeff ν
+Affinoid.TateAlgebra.coeff_coeffX0 :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} (g : Affinoid.TateAlgebra K (n + 1))
+      (ν : ℕ) (t : Fin n →₀ ℕ), (MvPowerSeries.coeff t) ↑(g.coeffX0 ν) = (MvPowerSeries.coeff (Finsupp.cons ν t)) ↑g
+Affinoid.TateAlgebra.coeff_ofPolynomial :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ}
+      (p : Polynomial (Affinoid.TateAlgebra K n)) (t : Fin (n + 1) →₀ ℕ),
+      (MvPowerSeries.coeff t) ↑((Affinoid.TateAlgebra.ofPolynomial K n) p) = (MvPowerSeries.coeff t.tail) ↑(p.coeff (t 0))
+Affinoid.TateAlgebra.isMulDistinguishedX0_iff :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)}
+      {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s ↔
+        IsUnit (g.coeffX0 s) ∧ ‖g.coeffX0 s‖ = ‖g‖ ∧ ∀ (ν : ℕ), s < ν → ‖g.coeffX0 ν‖ < ‖g.coeffX0 s‖
+Affinoid.TateAlgebra.ofPolynomial :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] → (n : ℕ) → Polynomial (Affinoid.TateAlgebra K n) →+* Affinoid.TateAlgebra K (n + 1)
+Affinoid.TateAlgebra.ofPolynomial_injective :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ},
+      Function.Injective ⇑(Affinoid.TateAlgebra.ofPolynomial K n)
+Affinoid.TateAlgebra.ofTail :
+    (K : Type u_1) →
+      [inst : NormedField K] →
+        [inst_1 : IsUltrametricDist K] → (n : ℕ) → Affinoid.TateAlgebra K n →+* Affinoid.TateAlgebra K (n + 1)
+Affinoid.TateAlgebra.weierstrassDivision_exists :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} [CompleteSpace K]
+      {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∀ (f : Affinoid.TateAlgebra K (n + 1)), ∃ q r, r.degree < ↑s ∧ f = g * q + (Affinoid.TateAlgebra.ofPolynomial K n) r
+Affinoid.TateAlgebra.weierstrassDivision_q_unique :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)}
+      {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∀ {f q₁ q₂ : Affinoid.TateAlgebra K (n + 1)} {r₁ r₂ : Polynomial (Affinoid.TateAlgebra K n)},
+          r₁.degree < ↑s →
+            f = g * q₁ + (Affinoid.TateAlgebra.ofPolynomial K n) r₁ →
+              r₂.degree < ↑s → f = g * q₂ + (Affinoid.TateAlgebra.ofPolynomial K n) r₂ → q₁ = q₂
+Affinoid.TateAlgebra.weierstrassDivision_r_unique :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)}
+      {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∀ {f q₁ q₂ : Affinoid.TateAlgebra K (n + 1)} {r₁ r₂ : Polynomial (Affinoid.TateAlgebra K n)},
+          r₁.degree < ↑s →
+            f = g * q₁ + (Affinoid.TateAlgebra.ofPolynomial K n) r₁ →
+              r₂.degree < ↑s → f = g * q₂ + (Affinoid.TateAlgebra.ofPolynomial K n) r₂ → r₁ = r₂
+Affinoid.TateAlgebra.weierstrassPreparation_e_unique :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)}
+      {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∀ {ω₁ ω₂ : Polynomial (Affinoid.TateAlgebra K n)} {e₁ e₂ : Affinoid.TateAlgebra K (n + 1)},
+          ω₁.Monic →
+            ω₁.degree = ↑s →
+              IsUnit e₁ →
+                g = e₁ * (Affinoid.TateAlgebra.ofPolynomial K n) ω₁ →
+                  ω₂.Monic → ω₂.degree = ↑s → IsUnit e₂ → g = e₂ * (Affinoid.TateAlgebra.ofPolynomial K n) ω₂ → e₁ = e₂
+Affinoid.TateAlgebra.weierstrassPreparation_exists :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} [CompleteSpace K]
+      {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∃ ω e,
+          ω.Monic ∧
+            ω.degree = ↑s ∧
+              ‖(Affinoid.TateAlgebra.ofPolynomial K n) ω‖ = 1 ∧ IsUnit e ∧ g = e * (Affinoid.TateAlgebra.ofPolynomial K n) ω
+Affinoid.TateAlgebra.weierstrassPreparation_omega_unique :
+    ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)}
+      {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+        ∀ {ω₁ ω₂ : Polynomial (Affinoid.TateAlgebra K n)} {e₁ e₂ : Affinoid.TateAlgebra K (n + 1)},
+          ω₁.Monic →
+            ω₁.degree = ↑s →
+              IsUnit e₁ →
+                g = e₁ * (Affinoid.TateAlgebra.ofPolynomial K n) ω₁ →
+                  ω₂.Monic → ω₂.degree = ↑s → IsUnit e₂ → g = e₂ * (Affinoid.TateAlgebra.ofPolynomial K n) ω₂ → ω₁ = ω₂
+
+===== PhD.TauCeti.Code.RigidAnalyticGeometry.WeaklyStable
+IsFractionRing.isNonarchimedean_normAbsoluteValue :
+    ∀ (A : Type u_1) [inst : NormedCommRing A] [inst_1 : NormMulClass A] [inst_2 : Nontrivial A] (Q : Type u_2)
+      [inst_3 : Field Q] [inst_4 : Algebra A Q] [inst_5 : IsFractionRing A Q] [IsUltrametricDist A],
+      IsNonarchimedean ⇑(IsFractionRing.normAbsoluteValue A Q)
+IsFractionRing.isUltrametricDist :
+    ∀ (A : Type u_1) [inst : NormedCommRing A] [inst_1 : NormMulClass A] [inst_2 : Nontrivial A] (Q : Type u_2)
+      [inst_3 : Field Q] [inst_4 : Algebra A Q] [inst_5 : IsFractionRing A Q] [IsUltrametricDist A], IsUltrametricDist Q
+IsFractionRing.normAbsoluteValue :
+    [sorry] (A : Type u_1) →
+      [inst : NormedCommRing A] →
+        [NormMulClass A] →
+          [Nontrivial A] →
+            (Q : Type u_2) → [inst_3 : Field Q] → [inst_4 : Algebra A Q] → [IsFractionRing A Q] → AbsoluteValue Q ℝ
+IsFractionRing.normAbsoluteValue_algebraMap :
+    ∀ (A : Type u_1) [inst : NormedCommRing A] [inst_1 : NormMulClass A] [inst_2 : Nontrivial A] (Q : Type u_2)
+      [inst_3 : Field Q] [inst_4 : Algebra A Q] [inst_5 : IsFractionRing A Q] (a : A),
+      (IsFractionRing.normAbsoluteValue A Q) ((algebraMap A Q) a) = ‖a‖
+IsFractionRing.normAbsoluteValue_div :
+    ∀ (A : Type u_1) [inst : NormedCommRing A] [inst_1 : NormMulClass A] [inst_2 : Nontrivial A] (Q : Type u_2)
+      [inst_3 : Field Q] [inst_4 : Algebra A Q] [inst_5 : IsFractionRing A Q] (a : A) {b : A},
+      b ≠ 0 → (IsFractionRing.normAbsoluteValue A Q) ((algebraMap A Q) a / (algebraMap A Q) b) = ‖a‖ / ‖b‖
+IsFractionRing.normedField :
+    (A : Type u_1) →
+      [inst : NormedCommRing A] →
+        [NormMulClass A] →
+          [Nontrivial A] →
+            (Q : Type u_2) → [inst_3 : Field Q] → [inst_4 : Algebra A Q] → [IsFractionRing A Q] → NormedField Q
+IsWeaklyStable :
+    (K : Type u) → [NormedField K] → Prop
+Module.Dual.exists_bound_of_forall_exists_ne_zero :
+    ∀ {K : Type u_1} [inst : NormedField K] {V : Type u_2} [inst_1 : AddCommGroup V] [inst_2 : _root_.Module K V]
+      [FiniteDimensional K V] (N : V → ℝ),
+      (∀ (x : V), x ≠ 0 → ∃ φ, (∃ C, ∀ (y : V), ‖φ y‖ ≤ C * N y) ∧ φ x ≠ 0) →
+        ∀ (ψ : V →ₗ[K] K), ∃ C, ∀ (y : V), ‖ψ y‖ ≤ C * N y
+exists_bound_of_isSeparable :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {L : Type u_2} [inst_2 : Field L] [inst_3 : Algebra K L]
+      [FiniteDimensional K L] [Algebra.IsSeparable K L] (φ : L →ₗ[K] K), ∃ C, ∀ (y : L), ‖φ y‖ ≤ C * spectralNorm K L y
+isWeaklyStable_of_completeSpace :
+    ∀ (K : Type u) [inst : NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K], IsWeaklyStable K
+isWeaklyStable_of_perfectField :
+    ∀ (K : Type u) [inst : NormedField K] [IsUltrametricDist K] [PerfectField K], IsWeaklyStable K
+norm_trace_le_spectralNorm :
+    ∀ {K : Type u_1} [inst : NormedField K] [IsUltrametricDist K] {L : Type u_2} [inst_2 : Field L] [inst_3 : Algebra K L]
+      [FiniteDimensional K L] (x : L), ‖(Algebra.trace K L) x‖ ≤ spectralNorm K L x

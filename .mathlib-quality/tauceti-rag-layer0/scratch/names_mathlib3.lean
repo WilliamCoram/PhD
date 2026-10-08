@@ -1,0 +1,61 @@
+import Mathlib
+
+/-! Mathlib names cited by the tickets of the board, checked by elaboration (batch 3). -/
+
+-- corrections from batch 2
+#check @Order.krullDim_le_of_strictMono
+#check @Order.LTSeries.length_le_krullDim
+#check @Order.krullDim
+#check @isJacobsonRing_quotient
+#check @ringKrullDim_nonneg_of_nontrivial
+#check @ringKrullDim
+#check @RelSeries.tail
+#check @LTSeries.map
+#check @PrimeSpectrum.comap
+#check @Ideal.comap_lt_comap_of_integral_mem_sdiff
+#check @RingHom.IsIntegral
+-- StrictlyClosed.lean
+#check @MvPolynomial.isNoetherianRing
+#check @isNoetherian_pi
+#check @IsNoetherian.noetherian
+#check @Submodule.fg_def
+#check @Pi.basis
+#check @MvPolynomial.basisMonomials
+#check @LinearIndepOn.extend
+#check @LinearIndepOn.linearIndepOn_extend
+#check @LinearIndepOn.subset_extend
+#check @LinearIndepOn.subset_span_extend
+#check @exists_linearIndependent
+#check @pi_norm_lt_iff
+#check @norm_le_pi_norm
+#check @pi_norm_le_iff_of_nonneg
+#check @Metric.infDist_le_dist_of_mem
+#check @QuotientAddGroup.norm_mk
+#check @Metric.infDist_eq_iInf
+#check @MvPolynomial.monomial_mul
+#check @MvPolynomial.sum_monomial_eq
+#check @Submodule.span_smul_eq_of_isUnit
+#check @Submodule.restrictScalars
+#check @HasSum.sigma
+#check @Ideal.Quotient.mk
+#check @Metric.mem_closure_iff_infDist_zero
+-- WeaklyStable.lean / Japanese.lean
+#check @Subspace.dualAnnihilator_dualCoannihilator_eq
+#check @Submodule.dualCoannihilator
+#check @traceForm_nondegenerate
+#check @spectralAlgNorm
+#check @map_mul_le_mul
+#check @Algebra.IsAlgebraic.isSeparable_of_perfectField
+#check @LinearMap.continuous_of_finiteDimensional
+#check @IsLocalization.sec
+#check @IsLocalization.sec_spec
+#check @AbsoluteValue.toNormedField
+#check @IsIntegralClosure.finite
+#check @PerfectField.ofCharZero
+#check @IsFractionRing.charZero
+#check @IsFractionRing.div_surjective
+#check @Polynomial.nextCoeff
+#check @IntermediateField.adjoin.finrank
+#check @LinearMap.BilinForm.Nondegenerate
+#check @integralClosure.isIntegralClosure
+#check @IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm

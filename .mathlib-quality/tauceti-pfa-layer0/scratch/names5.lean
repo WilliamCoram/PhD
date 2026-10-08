@@ -1,0 +1,36 @@
+import Mathlib
+-- Planning-time name check (2026-09-18). Three lines below fail by design and are NOT cited by any ticket:
+-- `Subring.coe_norm`, `le_of_forall_lt'` (not in Mathlib) and `Subring.mem_unitClosedBall` (this board's own lemma).
+#check @PadicInt.norm_lt_one_iff_dvd
+#check @PadicInt.maximalIdeal_eq_span_p
+#check @Filter.not_neBot
+#check @Set.singleton_zero
+#check @mem_ball_zero_iff
+#check @inv_mul_cancel_left₀
+#check @Units.inv_mul_cancel_left
+#check @Units.mul_inv_cancel_left
+#check @Int.toNat_of_nonneg
+#check @pow_mem
+#check @abs_eq_zero
+#check @mul_nonpos_of_nonneg_of_nonpos
+#check @NNReal.coe_pow
+#check @coe_nnnorm
+#check @zpow_lt_one_iff_right₀
+#check @Subring.coe_norm
+#check @mul_inv_le_iff₀
+#check @inv_mul_le_one₀
+#check @le_of_forall_lt'
+#check @Subring.mem_unitClosedBall
+#check @AddGroupNorm.toNormedAddCommGroup
+#check @SetLike.ext_iff
+#check @smul_neg
+#check @mul_mul_mul_comm
+#check @Units.val_one
+#check @Submodule.mem_top
+#check @PadicInt.norm_p
+#check @Ideal.Quotient.mk
+#check @mul_right_comm
+#check @AddSubgroupClass.coe_norm
+#check @zpow_lt_one_iff_right_of_lt_one₀
+#check @zpow_pos
+#check @inv_mul_le_iff₀

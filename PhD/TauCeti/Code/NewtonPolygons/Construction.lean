@@ -35,7 +35,7 @@ Roadmap: §0.3. Tau Ceti home: `TauCeti/NumberTheory/NewtonPolygon/Construction.
   of the unit slopes.
 * `NewtonPolygon.endsInRay_newtonPolygon_of_nextVertex_eq_top`,
   `NewtonPolygon.exists_vertexSeq_eq_of_endsInRay` — the walk detects the terminal ray.
-* `NewtonPolygon.exists_vertexSeq_eq_top`, `NewtonPolygon.vertexSeq_eq_sSup_finiteSet` — for
+* `NewtonPolygon.exists_vertexSeq_eq_top`, `NewtonPolygon.vertexSeq_eq_sSup_finiteSupport` — for
   finitely many points the walk ends, at the last point.
 -/
 
@@ -119,15 +119,15 @@ theorem achievingSet_eq_empty_or_infinite_of_nextVertex_eq_top {i : ℕ}
 
 /-- Every later point lies on or above the line of the minimal slope out of `i` (admissibility
 makes the infimum honest). -/
-theorem sInf_slopeSet_le_slopeTo (hv : IsAdmissible v) {i k : ℕ} (hi : v i ≠ ⊤) (hk : i < k)
-    (hk' : v k ≠ ⊤) : sInf (slopeSet v i) ≤ slopeTo v i k :=
-  csInf_le (isAdmissible_iff_bddBelow.1 hv i hi) ⟨k, hk, hk', rfl⟩
+theorem sInf_slopeSet_le_slopeTo (hv : IsAdmissible v) {i k : ℕ} (hk : i < k) (hk' : v k ≠ ⊤) :
+    sInf (slopeSet v i) ≤ slopeTo v i k :=
+  csInf_le (hv.bddBelow_slopeSet i) ⟨k, hk, hk', rfl⟩
 
 /-- No point beyond the next vertex achieves the minimal slope: they lie strictly above the line. -/
-theorem sInf_slopeSet_lt_slopeTo_of_nextVertex_lt (hv : IsAdmissible v) {i j k : ℕ} (hi : v i ≠ ⊤)
+theorem sInf_slopeSet_lt_slopeTo_of_nextVertex_lt (hv : IsAdmissible v) {i j k : ℕ}
     (hj : nextVertex v i = j) (hk : j < k) (hk' : v k ≠ ⊤) :
     sInf (slopeSet v i) < slopeTo v i k := by
-  refine lt_of_le_of_ne (sInf_slopeSet_le_slopeTo hv hi ((lt_of_nextVertex_eq hj).trans hk) hk')
+  refine lt_of_le_of_ne (sInf_slopeSet_le_slopeTo hv ((lt_of_nextVertex_eq hj).trans hk) hk')
     fun heq ↦ ?_
   have hmem : k ∈ achievingSet v i := ⟨(lt_of_nextVertex_eq hj).trans hk, hk', heq.symm⟩
   exact absurd (le_of_mem_achievingSet hj hmem) (by omega)
@@ -136,7 +136,7 @@ theorem sInf_slopeSet_lt_slopeTo_of_nextVertex_lt (hv : IsAdmissible v) {i j k :
 minimal slope out of the current one. Strictness can fail: after `v 0 = 0, v 1 = 1, v k = k + 1/k`
 the walk steps to `1` and then continues along a ray of the *same* slope `1`, approached but never
 attained. See `sInf_slopeSet_lt_sInf_slopeSet_nextVertex` for the strict form. -/
-theorem sInf_slopeSet_le_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : ℕ} (hi : v i ≠ ⊤)
+theorem sInf_slopeSet_le_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : ℕ}
     (hj : nextVertex v i = j) (hne : (slopeSet v j).Nonempty) :
     sInf (slopeSet v i) ≤ sInf (slopeSet v j) := by
   refine le_csInf hne ?_
@@ -144,7 +144,7 @@ theorem sInf_slopeSet_le_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : �
   have hij : i < j := lt_of_nextVertex_eq hj
   have hsplit := slopeTo_split v hij hjk
   have h1 : sInf (slopeSet v i) ≤ slopeTo v i k :=
-    sInf_slopeSet_le_slopeTo hv hi (hij.trans hjk) hk
+    sInf_slopeSet_le_slopeTo hv (hij.trans hjk) hk
   have h2 : slopeTo v i j = sInf (slopeSet v i) := slopeTo_nextVertex hj
   have hji : (0 : ℝ) < (j : ℝ) - i := by
     have hx : (i : ℝ) < (j : ℝ) := by exact_mod_cast hij
@@ -158,13 +158,13 @@ theorem sInf_slopeSet_le_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : �
 attained,
 the minimal slope out of `j` is strictly larger — a later point achieving the old slope would lie on
 the old line and contradict `j` being the furthest point on it. -/
-theorem sInf_slopeSet_lt_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : ℕ} (hi : v i ≠ ⊤)
+theorem sInf_slopeSet_lt_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : ℕ}
     (hj : nextVertex v i = j) (hj' : nextVertex v j ≠ ⊤) :
     sInf (slopeSet v i) < sInf (slopeSet v j) := by
   obtain ⟨j', hj'eq⟩ := WithTop.ne_top_iff_exists.1 hj'
   have hmem' := mem_achievingSet_of_nextVertex_eq hj'eq.symm
   have hne : (slopeSet v j).Nonempty := ⟨slopeTo v j j', j', hmem'.1, hmem'.2.1, rfl⟩
-  refine lt_of_le_of_ne (sInf_slopeSet_le_sInf_slopeSet_nextVertex hv hi hj hne) fun heq ↦ ?_
+  refine lt_of_le_of_ne (sInf_slopeSet_le_sInf_slopeSet_nextVertex hv hj hne) fun heq ↦ ?_
   -- if the two minimal slopes agreed, `j'` would lie on the line through `i` as well
   have hij : i < j := lt_of_nextVertex_eq hj
   have hjj' : j < j' := hmem'.1
@@ -195,12 +195,12 @@ theorem sInf_slopeSet_lt_sInf_slopeSet_nextVertex (hv : IsAdmissible v) {i j : �
 /-- **The vertices of the walk**: the first point, then successive next vertices; `⊤` once the
 walk has ended. -/
 noncomputable def vertexSeq (v : ℕ → WithTop ℝ) : ℕ → WithTop ℕ
-  | 0 => if ∃ i, v i ≠ ⊤ then ((sInf (finiteSet v) : ℕ) : WithTop ℕ) else ⊤
+  | 0 => if ∃ i, v i ≠ ⊤ then ((sInf (finiteSupport v) : ℕ) : WithTop ℕ) else ⊤
   | n + 1 => WithTop.recTopCoe ⊤ (nextVertex v) (vertexSeq v n)
 
 /-- The walk starts at the first point. -/
 theorem vertexSeq_zero (hv' : ∃ i, v i ≠ ⊤) :
-    vertexSeq v 0 = ((sInf (finiteSet v) : ℕ) : WithTop ℕ) := by
+    vertexSeq v 0 = ((sInf (finiteSupport v) : ℕ) : WithTop ℕ) := by
   rw [vertexSeq, if_pos hv']
 
 /-- Each vertex of the walk is the next vertex out of its predecessor. -/
@@ -246,9 +246,9 @@ theorem ne_top_of_vertexSeq_eq {n i : ℕ} (hi : vertexSeq v n = i) : v i ≠ �
   | zero =>
       rw [vertexSeq] at hi
       split_ifs at hi with hex
-      · have heq : sInf (finiteSet v) = i := WithTop.coe_injective hi
+      · have heq : sInf (finiteSupport v) = i := WithTop.coe_injective hi
         rw [← heq]
-        exact mem_finiteSet.1 (Nat.sInf_mem (hex.imp fun _ hx ↦ mem_finiteSet.2 hx))
+        exact mem_finiteSupport.1 (Nat.sInf_mem (hex.imp fun _ hx ↦ mem_finiteSupport.2 hx))
       · exact absurd hi WithTop.top_ne_coe
   | succ p =>
       rcases eq_or_ne (vertexSeq v p) ⊤ with hp | hp
@@ -339,7 +339,7 @@ theorem lastVertex_eq_of_next_eq_top {n i k : ℕ} (hi : vertexSeq v n = i)
 slope out of the last vertex at or before `k` — a segment when that slope is attained, a ray when it
 is not — and `⊤` once no later point exists. -/
 noncomputable def vertexWalk (v : ℕ → WithTop ℝ) (k : ℕ) : WithTop ℝ :=
-  if (∀ i, v i = ⊤) ∨ k < sInf (finiteSet v) then ⊤
+  if (∀ i, v i = ⊤) ∨ k < sInf (finiteSupport v) then ⊤
   else if (slopeSet v (lastVertex v k)).Nonempty ∨ k = lastVertex v k then
     v (lastVertex v k) +
       (k - lastVertex v k : ℕ) • ((sInf (slopeSet v (lastVertex v k)) : ℝ) : WithTop ℝ)
@@ -359,7 +359,7 @@ theorem eq_add_nsmul_of_slopeTo_eq {i j : ℕ} (hi : v i ≠ ⊤) (hj : v j ≠ 
   linarith
 
 /-- Below the first point the walk is `⊤`. -/
-theorem vertexWalk_eq_top_of_lt_sInf {k : ℕ} (hk : k < sInf (finiteSet v)) :
+theorem vertexWalk_eq_top_of_lt_sInf {k : ℕ} (hk : k < sInf (finiteSupport v)) :
     vertexWalk v k = ⊤ := by
   rw [vertexWalk, if_pos (Or.inr hk)]
 
@@ -368,9 +368,9 @@ theorem vertexWalk_eq_of_vertexSeq_eq {n i : ℕ} (hi : vertexSeq v n = i) :
     vertexWalk v i = v i := by
   have hine : v i ≠ ⊤ := ne_top_of_vertexSeq_eq hi
   have hlast : lastVertex v i = i := lastVertex_eq_of_vertexSeq_eq hi
-  have hcond : ¬((∀ j, v j = ⊤) ∨ i < sInf (finiteSet v)) := by
+  have hcond : ¬((∀ j, v j = ⊤) ∨ i < sInf (finiteSupport v)) := by
     push Not
-    exact ⟨⟨i, hine⟩, Nat.sInf_le (mem_finiteSet.2 hine)⟩
+    exact ⟨⟨i, hine⟩, Nat.sInf_le (mem_finiteSupport.2 hine)⟩
   rw [vertexWalk, if_neg hcond, if_pos (Or.inr hlast.symm), hlast, Nat.sub_self, zero_nsmul,
     add_zero]
 
@@ -389,15 +389,15 @@ theorem vertexWalk_eq_of_le_of_le {n i j k : ℕ} (hi : vertexSeq v n = i)
     rw [vertexWalk_eq_of_vertexSeq_eq hj]
     exact eq_add_nsmul_of_slopeTo_eq hine hjne hij hslope
   · have hlast : lastVertex v k = i := lastVertex_eq_of_lt_next hi hj hik hlt
-    have hcond : ¬((∀ m, v m = ⊤) ∨ k < sInf (finiteSet v)) := by
+    have hcond : ¬((∀ m, v m = ⊤) ∨ k < sInf (finiteSupport v)) := by
       push Not
-      refine ⟨⟨i, hine⟩, le_trans (Nat.sInf_le (mem_finiteSet.2 hine)) hik⟩
+      refine ⟨⟨i, hine⟩, le_trans (Nat.sInf_le (mem_finiteSupport.2 hine)) hik⟩
     rw [vertexWalk, if_neg hcond, if_pos (Or.inl (by rw [hlast]; exact hsne)), hlast]
 
 /-- **The walk lies on or below the points**: the line bound at each step. -/
 theorem vertexWalk_le (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤) (k : ℕ) :
     vertexWalk v k ≤ v k := by
-  by_cases hcond : (∀ m, v m = ⊤) ∨ k < sInf (finiteSet v)
+  by_cases hcond : (∀ m, v m = ⊤) ∨ k < sInf (finiteSupport v)
   · rw [vertexWalk, if_pos hcond]
     rcases hcond with hall | hlt
     · rw [hall k]
@@ -405,7 +405,7 @@ theorem vertexWalk_le (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤) (k : ℕ)
   rw [vertexWalk, if_neg hcond]
   push Not at hcond
   obtain ⟨⟨m, hm⟩, hge⟩ := hcond
-  have hfirst : vertexSeq v 0 = ((sInf (finiteSet v) : ℕ) : WithTop ℕ) := vertexSeq_zero hv'
+  have hfirst : vertexSeq v 0 = ((sInf (finiteSupport v) : ℕ) : WithTop ℕ) := vertexSeq_zero hv'
   obtain ⟨p, hp, hpk⟩ := exists_vertexSeq_lastVertex hfirst hge
   have hLne : v (lastVertex v k) ≠ ⊤ := ne_top_of_vertexSeq_eq hp
   by_cases hsplit : (slopeSet v (lastVertex v k)).Nonempty ∨ k = lastVertex v k
@@ -415,7 +415,7 @@ theorem vertexWalk_le (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤) (k : ℕ)
     by_cases hkt : v k = ⊤
     · rw [hkt]
       exact le_top
-    have hle := sInf_slopeSet_le_slopeTo hv hLne hlt hkt
+    have hle := sInf_slopeSet_le_slopeTo hv hlt hkt
     have hval := eq_add_nsmul_of_slopeTo_eq hLne hkt hlt (σ := slopeTo v (lastVertex v k) k) rfl
     rw [hval]
     refine add_le_add le_rfl ?_
@@ -462,7 +462,7 @@ theorem sInf_slopeSet_le_of_vertexSeq_le (hv : IsAdmissible v) {m n i : ℕ}
       have hqne : (slopeSet v q).Nonempty :=
         ⟨slopeTo v q j, j, lt_of_nextVertex_eq hqj, ne_top_of_nextVertex_eq hqj, rfl⟩
       exact le_trans (ih q hq.symm hqne)
-        (sInf_slopeSet_le_sInf_slopeSet_nextVertex hv (ne_top_of_vertexSeq_eq hq.symm) hqj hne)
+        (sInf_slopeSet_le_sInf_slopeSet_nextVertex hv hqj hne)
 
 /-- The walk's value, as soon as it is finite. -/
 theorem vertexWalk_eq_of_ne_top {k : ℕ} (hk : vertexWalk v k ≠ ⊤) :
@@ -487,13 +487,13 @@ theorem lt_of_vertexSeq_lt {m n i j : ℕ} (hm : vertexSeq v m = i) (hn : vertex
     omega
 
 /-- The last vertex either stays put or jumps to the new index, which is then the next vertex. -/
-theorem lastVertex_succ (hv' : ∃ i, v i ≠ ⊤) {k : ℕ} (hk : sInf (finiteSet v) ≤ k) :
+theorem lastVertex_succ (hv' : ∃ i, v i ≠ ⊤) {k : ℕ} (hk : sInf (finiteSupport v) ≤ k) :
     lastVertex v (k + 1) = lastVertex v k ∨
       (lastVertex v (k + 1) = k + 1 ∧
         nextVertex v (lastVertex v k) = ((k + 1 : ℕ) : WithTop ℕ)) := by
   obtain ⟨m, hm, hmk⟩ := exists_vertexSeq_lastVertex (vertexSeq_zero hv') hk
   obtain ⟨m', hm', hmk'⟩ :=
-    exists_vertexSeq_lastVertex (vertexSeq_zero hv') (by omega : sInf (finiteSet v) ≤ k + 1)
+    exists_vertexSeq_lastVertex (vertexSeq_zero hv') (by omega : sInf (finiteSupport v) ≤ k + 1)
   rcases eq_or_lt_of_le (lastVertex_mono v (by omega : k ≤ k + 1)) with heq | hlt
   · exact Or.inl heq.symm
   have hk1 : lastVertex v (k + 1) = k + 1 := by
@@ -535,7 +535,7 @@ theorem vertexWalk_succ_eq (hv' : ∃ i, v i ≠ ⊤) {k : ℕ}
     (hk : vertexWalk v k ≠ ⊤) (hk1 : vertexWalk v (k + 1) ≠ ⊤) :
     vertexWalk v (k + 1)
       = vertexWalk v k + ((sInf (slopeSet v (lastVertex v k)) : ℝ) : WithTop ℝ) := by
-  have hkS : sInf (finiteSet v) ≤ k := by
+  have hkS : sInf (finiteSupport v) ≤ k := by
     by_contra hx
     exact hk (vertexWalk_eq_top_of_lt_sInf (not_le.1 hx))
   obtain ⟨m, hm, hmk⟩ := exists_vertexSeq_lastVertex (vertexSeq_zero hv') hkS
@@ -552,11 +552,11 @@ theorem vertexWalk_succ_eq (hv' : ∃ i, v i ≠ ⊤) {k : ℕ}
       add_assoc]
 
 /-- The walk is finite at `k` exactly when the last vertex has later points (or is `k` itself). -/
-theorem vertexWalk_ne_top_iff (hv' : ∃ i, v i ≠ ⊤) {k : ℕ} (hk : sInf (finiteSet v) ≤ k) :
+theorem vertexWalk_ne_top_iff (hv' : ∃ i, v i ≠ ⊤) {k : ℕ} (hk : sInf (finiteSupport v) ≤ k) :
     vertexWalk v k ≠ ⊤ ↔ ((slopeSet v (lastVertex v k)).Nonempty ∨ k = lastVertex v k) := by
   obtain ⟨m, hm, hmk⟩ := exists_vertexSeq_lastVertex (vertexSeq_zero hv') hk
   have hLne : v (lastVertex v k) ≠ ⊤ := ne_top_of_vertexSeq_eq hm
-  have hcond : ¬((∀ t, v t = ⊤) ∨ k < sInf (finiteSet v)) := by
+  have hcond : ¬((∀ t, v t = ⊤) ∨ k < sInf (finiteSupport v)) := by
     push Not
     exact ⟨⟨lastVertex v k, hLne⟩, hk⟩
   rw [vertexWalk, if_neg hcond]
@@ -568,7 +568,7 @@ theorem vertexWalk_ne_top_iff (hv' : ∃ i, v i ≠ ⊤) {k : ℕ} (hk : sInf (f
 
 /-- Where the walk is finite it is at or beyond the first point. -/
 theorem sInf_le_of_vertexWalk_ne_top {k : ℕ} (hk : vertexWalk v k ≠ ⊤) :
-    sInf (finiteSet v) ≤ k := by
+    sInf (finiteSupport v) ≤ k := by
   by_contra hx
   exact hk (vertexWalk_eq_top_of_lt_sInf (not_le.1 hx))
 
@@ -576,31 +576,31 @@ theorem sInf_le_of_vertexWalk_ne_top {k : ℕ} (hk : vertexWalk v k ≠ ⊤) :
 further. -/
 theorem slopeSet_lastVertex_nonempty (hv' : ∃ i, v i ≠ ⊤) {k : ℕ} (hk : vertexWalk v k ≠ ⊤)
     (hk1 : vertexWalk v (k + 1) ≠ ⊤) : (slopeSet v (lastVertex v k)).Nonempty := by
-  have hkS : sInf (finiteSet v) ≤ k := sInf_le_of_vertexWalk_ne_top hk
+  have hkS : sInf (finiteSupport v) ≤ k := sInf_le_of_vertexWalk_ne_top hk
   obtain ⟨m, hm, hmk⟩ := exists_vertexSeq_lastVertex (vertexSeq_zero hv') hkS
-  rcases (vertexWalk_ne_top_iff hv' (by omega : sInf (finiteSet v) ≤ k + 1)).1 hk1 with hs | hs
+  rcases (vertexWalk_ne_top_iff hv' (by omega : sInf (finiteSupport v) ≤ k + 1)).1 hk1 with hs | hs
   · obtain ⟨m', hm', hmk'⟩ :=
-      exists_vertexSeq_lastVertex (vertexSeq_zero hv') (by omega : sInf (finiteSet v) ≤ k + 1)
+      exists_vertexSeq_lastVertex (vertexSeq_zero hv') (by omega : sInf (finiteSupport v) ≤ k + 1)
     obtain ⟨σ, t, hlt, htne, -⟩ := hs
     exact ⟨slopeTo v (lastVertex v k) t, t,
       lt_of_le_of_lt (lastVertex_mono v (by omega : k ≤ k + 1)) hlt, htne, rfl⟩
   · obtain ⟨m', hm', hmk'⟩ :=
-      exists_vertexSeq_lastVertex (vertexSeq_zero hv') (by omega : sInf (finiteSet v) ≤ k + 1)
+      exists_vertexSeq_lastVertex (vertexSeq_zero hv') (by omega : sInf (finiteSupport v) ≤ k + 1)
     refine ⟨slopeTo v (lastVertex v k) (k + 1), k + 1, by omega, ?_, rfl⟩
     rw [← hs] at hm'
     exact ne_top_of_vertexSeq_eq hm'
 
 /-- The walk's finiteness set is an interval. -/
-theorem ordConnected_finiteSet_vertexWalk (hv' : ∃ i, v i ≠ ⊤) :
-    (finiteSet (vertexWalk v)).OrdConnected := by
+theorem ordConnected_finiteSupport_vertexWalk (hv' : ∃ i, v i ≠ ⊤) :
+    (finiteSupport (vertexWalk v)).OrdConnected := by
   have hfirst := vertexSeq_zero hv'
   refine ⟨fun a ha c hc b hb ↦ ?_⟩
-  refine mem_finiteSet.2 ?_
+  refine mem_finiteSupport.2 ?_
   have hab : a ≤ b := hb.1
   have hbc : b ≤ c := hb.2
-  have hSa := sInf_le_of_vertexWalk_ne_top (mem_finiteSet.1 ha)
-  have hSb : sInf (finiteSet v) ≤ b := le_trans hSa hab
-  have hSc : sInf (finiteSet v) ≤ c := le_trans hSb hbc
+  have hSa := sInf_le_of_vertexWalk_ne_top (mem_finiteSupport.1 ha)
+  have hSb : sInf (finiteSupport v) ≤ b := le_trans hSa hab
+  have hSc : sInf (finiteSupport v) ≤ c := le_trans hSb hbc
   rw [vertexWalk_ne_top_iff hv' hSb]
   by_cases hbL : b = lastVertex v b
   · exact Or.inr hbL
@@ -608,7 +608,7 @@ theorem ordConnected_finiteSet_vertexWalk (hv' : ∃ i, v i ≠ ⊤) :
   obtain ⟨mb, hmb, hmbk⟩ := exists_vertexSeq_lastVertex hfirst hSb
   obtain ⟨mc, hmc, hmck⟩ := exists_vertexSeq_lastVertex hfirst hSc
   rcases eq_or_lt_of_le (lastVertex_mono v hbc) with heq | hlt
-  · rcases (vertexWalk_ne_top_iff hv' hSc).1 (mem_finiteSet.1 hc) with hs | hs
+  · rcases (vertexWalk_ne_top_iff hv' hSc).1 (mem_finiteSupport.1 hc) with hs | hs
     · rwa [← heq] at hs
     · exfalso
       omega
@@ -619,16 +619,16 @@ theorem ordConnected_finiteSet_vertexWalk (hv' : ∃ i, v i ≠ ⊤) :
 theorem isConvexSeq_vertexWalk (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤) :
     IsConvexSeq (vertexWalk v) := by
   have hfirst := vertexSeq_zero hv'
-  refine ⟨ordConnected_finiteSet_vertexWalk hv', fun a ha b hb hab ↦ ?_⟩
+  refine ⟨ordConnected_finiteSupport_vertexWalk hv', fun a ha b hb hab ↦ ?_⟩
   by_cases hb1 : vertexWalk v (b + 1) = ⊤
   · have hx : unitSlope (vertexWalk v) b = ⊤ :=
       unitSlope_eq_top_iff.2 (Or.inr (by rwa [Order.succ_eq_add_one]))
     rw [hx]
     exact le_top
-  have hane : vertexWalk v a ≠ ⊤ := mem_finiteSet.1 ha
-  have hbne : vertexWalk v b ≠ ⊤ := mem_finiteSet.1 hb
+  have hane : vertexWalk v a ≠ ⊤ := mem_finiteSupport.1 ha
+  have hbne : vertexWalk v b ≠ ⊤ := mem_finiteSupport.1 hb
   have ha1 : vertexWalk v (a + 1) ≠ ⊤ :=
-    mem_finiteSet.1 ((ordConnected_finiteSet_vertexWalk hv').out ha (mem_finiteSet.2 hb1)
+    mem_finiteSupport.1 ((ordConnected_finiteSupport_vertexWalk hv').out ha (mem_finiteSupport.2 hb1)
       ⟨by omega, by omega⟩)
   have hua : unitSlope (vertexWalk v) a
       = ((sInf (slopeSet v (lastVertex v a)) : ℝ) : WithTop ℝ) :=
@@ -671,8 +671,7 @@ theorem le_add_nsmul_slopeTo_of_isConvexMinorant {g : ℕ → WithTop ℝ} (hg :
   have hgLf : g L ≠ ⊤ := ne_top_of_le_ne_top WithTop.coe_ne_top hgL
   have hgtf : g t ≠ ⊤ := ne_top_of_le_ne_top WithTop.coe_ne_top hgt
   have hgkf : g k ≠ ⊤ :=
-    mem_finiteSet.1 (hgc.ordConnected.out (mem_finiteSet.2 hgLf) (mem_finiteSet.2 hgtf)
-      ⟨hLk, hkt⟩)
+    hgc.ne_top_of_le_of_le hgLf hgtf hLk hkt
   obtain ⟨p, hP⟩ := WithTop.ne_top_iff_exists.1 hgLf
   obtain ⟨q, hQ⟩ := WithTop.ne_top_iff_exists.1 hgtf
   obtain ⟨r, hR⟩ := WithTop.ne_top_iff_exists.1 hgkf
@@ -727,7 +726,7 @@ theorem exists_le_and_slopeTo_lt (hv : IsAdmissible v) {m L k : ℕ} (hm : verte
         obtain ⟨ht₀I, ht₀ne⟩ := Finset.mem_filter.1 ht₀
         have hLt₀ : L < t₀ := (Finset.mem_Ioo.1 ht₀I).1
         have hσlt : sInf (slopeSet v L) < slopeTo v L t₀ := by
-          refine lt_of_le_of_ne (sInf_slopeSet_le_slopeTo hv hLne hLt₀ ht₀ne) fun heq ↦ ?_
+          refine lt_of_le_of_ne (sInf_slopeSet_le_slopeTo hv hLt₀ ht₀ne) fun heq ↦ ?_
           have hmem : t₀ ∈ achievingSet v L := ⟨hLt₀, ht₀ne, heq.symm⟩
           exact absurd (hA ▸ hmem) (Set.notMem_empty t₀)
         refine ⟨min ε (slopeTo v L t₀ - sInf (slopeSet v L)), lt_min hε (by linarith),
@@ -835,7 +834,7 @@ theorem exists_vertexSeq_of_isVertex (hv : IsAdmissible v) (hv' : ∃ i, v i ≠
     (hi : IsVertex (newtonPolygon v) i) : ∃ n, vertexSeq v n = (i : WithTop ℕ) := by
   rw [← vertexWalk_eq_newtonPolygon hv hv'] at hi
   obtain ⟨hine, hcase⟩ := hi
-  have hS : sInf (finiteSet v) ≤ i := sInf_le_of_vertexWalk_ne_top hine
+  have hS : sInf (finiteSupport v) ≤ i := sInf_le_of_vertexWalk_ne_top hine
   obtain ⟨q, hq, hqi⟩ := exists_vertexSeq_lastVertex (vertexSeq_zero hv') hS
   suffices hL : lastVertex v i = i from ⟨q, by rwa [hL] at hq⟩
   rcases hcase with heq | hlt
@@ -857,7 +856,7 @@ theorem exists_vertexSeq_of_isVertex (hv : IsAdmissible v) (hv' : ∃ i, v i ≠
   have hLprev : lastVertex v p = lastVertex v (p + 1) :=
     le_antisymm (lastVertex_mono v (by omega)) (le_lastVertex hq (by omega))
   have hi1ne : vertexWalk v (p + 1 + 1) ≠ ⊤ := by
-    rw [vertexWalk_ne_top_iff hv' (by omega : sInf (finiteSet v) ≤ p + 1 + 1)]
+    rw [vertexWalk_ne_top_iff hv' (by omega : sInf (finiteSupport v) ≤ p + 1 + 1)]
     rcases lastVertex_succ hv' hS with hstay | ⟨hjump, -⟩
     · exact Or.inl (by rw [hstay]; exact hsne)
     · exact Or.inr hjump.symm
@@ -920,7 +919,7 @@ theorem isVertex_of_vertexSeq_eq (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤
         vertexWalk_eq_of_le_of_le hi'.symm hi (by omega) le_rfl,
         show i - i' = (i - 1 - i') + 1 by omega, succ_nsmul, add_assoc]
   rw [hslopeL, hslopeR, WithTop.coe_lt_coe]
-  exact sInf_slopeSet_lt_sInf_slopeSet_nextVertex hv (ne_top_of_vertexSeq_eq hi'.symm) hnexti'
+  exact sInf_slopeSet_lt_sInf_slopeSet_nextVertex hv hnexti'
     hnext
 
 /-! ### The two ways the walk ends -/
@@ -943,7 +942,7 @@ theorem newtonPolygon_eq_top_of_slopeSet_eq_empty (hv : IsAdmissible v) (hv' : �
   have hlast : lastVertex v k = i :=
     lastVertex_eq_of_next_eq_top hi (by rw [vertexSeq_succ_of_eq hi]; exact htop) (le_of_lt hk)
   by_contra hx
-  have hS : sInf (finiteSet v) ≤ k := le_trans (Nat.sInf_le (mem_finiteSet.2 hine)) (le_of_lt hk)
+  have hS : sInf (finiteSupport v) ≤ k := le_trans (Nat.sInf_le (mem_finiteSupport.2 hine)) (le_of_lt hk)
   rcases (vertexWalk_ne_top_iff hv' hS).1 hx with h | h
   · rw [hlast, he] at h
     exact absurd h Set.not_nonempty_empty
@@ -960,9 +959,9 @@ theorem newtonPolygon_eq_ray (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤) {n
   have hine : v i ≠ ⊤ := ne_top_of_vertexSeq_eq hi
   have hlast : lastVertex v k = i :=
     lastVertex_eq_of_next_eq_top hi (by rw [vertexSeq_succ_of_eq hi]; exact htop) hik
-  have hcond : ¬((∀ t, v t = ⊤) ∨ k < sInf (finiteSet v)) := by
+  have hcond : ¬((∀ t, v t = ⊤) ∨ k < sInf (finiteSupport v)) := by
     push Not
-    exact ⟨⟨i, hine⟩, le_trans (Nat.sInf_le (mem_finiteSet.2 hine)) hik⟩
+    exact ⟨⟨i, hine⟩, le_trans (Nat.sInf_le (mem_finiteSupport.2 hine)) hik⟩
   rw [vertexWalk, if_neg hcond, if_pos (Or.inl (by rw [hlast]; exact hne)), hlast]
 
 /-- On a final ray the polygon is finite from the ray's vertex on. -/
@@ -986,30 +985,30 @@ theorem unitSlope_newtonPolygon_of_ray (hv : IsAdmissible v) (hv' : ∃ i, v i �
 /-- On a final ray the limiting slope is the supremum of the unit slopes (roadmap §0.3.2). -/
 theorem iSup_unitSlope_eq_of_ray (hv : IsAdmissible v) (hv' : ∃ i, v i ≠ ⊤) {n i : ℕ}
     (hi : vertexSeq v n = i) (hne : (slopeSet v i).Nonempty) (htop : nextVertex v i = ⊤) :
-    (⨆ j : ℕ, unitSlope (newtonPolygon v) (sInf (finiteSet v) + j))
+    (⨆ j : ℕ, unitSlope (newtonPolygon v) (sInf (finiteSupport v) + j))
       = ((sInf (slopeSet v i) : ℝ) : WithTop ℝ) := by
   have hP : IsNewtonPolygonOf v (newtonPolygon v) :=
     isNewtonPolygonOf_newtonPolygon (exists_isConvexMinorant_iff_isAdmissible.2 hv)
   have hine : v i ≠ ⊤ := ne_top_of_vertexSeq_eq hi
-  have hane : v (sInf (finiteSet v)) ≠ ⊤ :=
-    mem_finiteSet.1 (Nat.sInf_mem ⟨i, mem_finiteSet.2 hine⟩)
-  have hai : sInf (finiteSet v) ≤ i := Nat.sInf_le (mem_finiteSet.2 hine)
+  have hane : v (sInf (finiteSupport v)) ≠ ⊤ :=
+    mem_finiteSupport.1 (Nat.sInf_mem ⟨i, mem_finiteSupport.2 hine⟩)
+  have hai : sInf (finiteSupport v) ≤ i := Nat.sInf_le (mem_finiteSupport.2 hine)
   have hrayne : ∀ k, i ≤ k → newtonPolygon v k ≠ ⊤ :=
     fun k hk ↦ ne_top_newtonPolygon_of_ray hv hv' hi hne htop hk
   have hslope : ∀ k, i ≤ k →
       unitSlope (newtonPolygon v) k = ((sInf (slopeSet v i) : ℝ) : WithTop ℝ) :=
     fun k hk ↦ unitSlope_newtonPolygon_of_ray hv hv' hi hne htop hk
   refine le_antisymm (ciSup_le fun j ↦ ?_) ?_
-  · rcases le_or_gt i (sInf (finiteSet v) + j) with hk | hk
+  · rcases le_or_gt i (sInf (finiteSupport v) + j) with hk | hk
     · exact le_of_eq (hslope _ hk)
     · rw [← hslope i le_rfl]
       exact hP.convex.monotoneOn
-        (mem_finiteSet.2 (hP.ne_top_of_le_of_le hane hine (by omega) (by omega)))
-        (mem_finiteSet.2 (hrayne i le_rfl)) (by omega)
-  · have h0 : sInf (finiteSet v) + (i - sInf (finiteSet v)) = i := by omega
+        (mem_finiteSupport.2 (hP.ne_top_of_le_of_le hane hine (by omega) (by omega)))
+        (mem_finiteSupport.2 (hrayne i le_rfl)) (by omega)
+  · have h0 : sInf (finiteSupport v) + (i - sInf (finiteSupport v)) = i := by omega
     refine le_trans (le_of_eq ?_) (le_ciSup
-      (f := fun j : ℕ ↦ unitSlope (newtonPolygon v) (sInf (finiteSet v) + j))
-      (OrderTop.bddAbove _) (i - sInf (finiteSet v)))
+      (f := fun j : ℕ ↦ unitSlope (newtonPolygon v) (sInf (finiteSupport v) + j))
+      (OrderTop.bddAbove _) (i - sInf (finiteSupport v)))
     rw [h0]
     exact (hslope i le_rfl).symm
 
@@ -1072,29 +1071,29 @@ theorem exists_vertexSeq_eq_of_endsInRay (hv : IsAdmissible v) (hv' : ∃ i, v i
 /-! ### Finitely supported sequences -/
 
 /-- For finitely many points the walk ends (roadmap §0.3.3). -/
-theorem exists_vertexSeq_eq_top (hfin : (finiteSet v).Finite) : ∃ n, vertexSeq v n = ⊤ := by
+theorem exists_vertexSeq_eq_top (hfin : (finiteSupport v).Finite) : ∃ n, vertexSeq v n = ⊤ := by
   by_contra hx
   push Not at hx
-  obtain ⟨i, hi, hMi⟩ := exists_vertexSeq_eq_of_forall_ne_top hx (sSup (finiteSet v) + 1)
-  have hle := le_csSup hfin.bddAbove (mem_finiteSet.2 (ne_top_of_vertexSeq_eq hi))
+  obtain ⟨i, hi, hMi⟩ := exists_vertexSeq_eq_of_forall_ne_top hx (sSup (finiteSupport v) + 1)
+  have hle := le_csSup hfin.bddAbove (mem_finiteSupport.2 (ne_top_of_vertexSeq_eq hi))
   omega
 
 /-- For finitely many points the last vertex of the walk is the last point. -/
-theorem vertexSeq_eq_sSup_finiteSet (hfin : (finiteSet v).Finite) {n : ℕ}
+theorem vertexSeq_eq_sSup_finiteSupport (hfin : (finiteSupport v).Finite) {n : ℕ}
     (hn : vertexSeq v n ≠ ⊤) (hn1 : vertexSeq v (n + 1) = ⊤) :
-    vertexSeq v n = ((sSup (finiteSet v) : ℕ) : WithTop ℕ) := by
+    vertexSeq v n = ((sSup (finiteSupport v) : ℕ) : WithTop ℕ) := by
   obtain ⟨i, hi⟩ := WithTop.ne_top_iff_exists.1 hn
   have hine : v i ≠ ⊤ := ne_top_of_vertexSeq_eq hi.symm
   have htop : nextVertex v i = ⊤ := by rw [← vertexSeq_succ_of_eq hi.symm]; exact hn1
   -- with finitely many points the infimum is attained, so the walk can only end at the last point
-  have hsub : achievingSet v i ⊆ finiteSet v := fun t ht ↦ mem_finiteSet.2 ht.2.1
+  have hsub : achievingSet v i ⊆ finiteSupport v := fun t ht ↦ mem_finiteSupport.2 ht.2.1
   have he : slopeSet v i = ∅ := by
     by_contra hne
     rw [← Set.not_nonempty_iff_eq_empty, not_not] at hne
     have hsfin : (slopeSet v i).Finite := by
       refine Set.Finite.subset (hfin.image (slopeTo v i)) ?_
       rintro s ⟨t, hit, htne, rfl⟩
-      exact ⟨t, mem_finiteSet.2 htne, rfl⟩
+      exact ⟨t, mem_finiteSupport.2 htne, rfl⟩
     obtain ⟨t, hit, htne, heq⟩ := hne.csInf_mem hsfin
     refine absurd htop ?_
     rw [nextVertex, dif_pos ⟨hfin.subset hsub, ⟨t, hit, htne, heq.symm⟩⟩]
@@ -1105,7 +1104,7 @@ theorem vertexSeq_eq_sSup_finiteSet (hfin : (finiteSet v).Finite) {n : ℕ}
     exact absurd (show slopeTo v i t ∈ slopeSet v i from ⟨t, by omega, htne, rfl⟩)
       (by rw [he]; exact Set.notMem_empty _)
   rw [← hi]
-  refine congrArg _ (le_antisymm (le_csSup hfin.bddAbove (mem_finiteSet.2 hine)) ?_)
-  exact csSup_le ⟨i, mem_finiteSet.2 hine⟩ fun t ht ↦ hmax t (mem_finiteSet.1 ht)
+  refine congrArg _ (le_antisymm (le_csSup hfin.bddAbove (mem_finiteSupport.2 hine)) ?_)
+  exact csSup_le ⟨i, mem_finiteSupport.2 hine⟩ fun t ht ↦ hmax t (mem_finiteSupport.1 ht)
 
 end NewtonPolygon

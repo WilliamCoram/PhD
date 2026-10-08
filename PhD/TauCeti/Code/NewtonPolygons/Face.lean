@@ -74,8 +74,8 @@ theorem isConvexSeq_twoSlope (y : ℝ) {σ τ : ℝ} (hστ : σ ≤ τ) (N : �
         min_eq_right (by exact_mod_cast (by omega : N ≤ j + 1) : (N : ℝ) ≤ (((j + 1 : ℕ) : ℝ)))]
       push_cast
       ring
-  have hfs : finiteSet (twoSlope y σ τ N) = Set.univ :=
-    Set.eq_univ_of_forall fun _ ↦ mem_finiteSet.2 WithTop.coe_ne_top
+  have hfs : finiteSupport (twoSlope y σ τ N) = Set.univ :=
+    Set.eq_univ_of_forall fun _ ↦ mem_finiteSupport.2 WithTop.coe_ne_top
   refine ⟨by rw [hfs]; exact Set.ordConnected_univ, fun a _ b _ hab ↦ ?_⟩
   rw [hu a, hu b, WithTop.coe_le_coe]
   split_ifs with ha hb hb
@@ -145,8 +145,7 @@ theorem IsConvexSeq.line_le_iff (hh : IsConvexSeq h) {n : ℕ} (hn : h n ≠ ⊤
       · rw [hkt]
         exact le_top
       obtain ⟨b, hb⟩ := WithTop.ne_top_iff_exists.1 hkt
-      have hprev : h (n - 1) ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 hkt)
-        (mem_finiteSet.2 hn) ⟨by omega, by omega⟩)
+      have hprev : h (n - 1) ≠ ⊤ := hh.ne_top_of_le_of_le hkt hn (by omega) (by omega)
       have hsle := h₁ (n - 1) (by omega) hprev
       have hsne : unitSlope h (n - 1) ≠ ⊤ := ne_top_of_le_ne_top WithTop.coe_ne_top hsle
       obtain ⟨s, hs⟩ := WithTop.ne_top_iff_exists.1 hsne
@@ -183,8 +182,7 @@ theorem IsConvexSeq.line_lt_of_unitSlope_lt (hh : IsConvexSeq h) {n : ℕ} (hn :
   obtain ⟨a, ha⟩ := WithTop.ne_top_iff_exists.1 hn
   have hna : (h n).untop₀ = a := by rw [← ha, WithTop.untop₀_coe]
   obtain ⟨b, hb⟩ := WithTop.ne_top_iff_exists.1 hkfin
-  have hprev : h (n - 1) ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 hkfin)
-    (mem_finiteSet.2 hn) ⟨by omega, by omega⟩)
+  have hprev : h (n - 1) ≠ ⊤ := hh.ne_top_of_le_of_le hkfin hn (by omega) (by omega)
   have hslt := h₁ (n - 1) (by omega) hprev
   have hsne : unitSlope h (n - 1) ≠ ⊤ := ne_top_of_lt hslt
   obtain ⟨s, hs⟩ := WithTop.ne_top_iff_exists.1 hsne
@@ -247,7 +245,7 @@ theorem slopesUnbounded_of_finite (hfin : (slopeIndices h).Finite) : SlopesUnbou
 
 /-- The polygon of a finitely supported sequence has unbounded slopes. -/
 theorem IsNewtonPolygonOf.slopesUnbounded_of_finite (hh : IsNewtonPolygonOf v h)
-    (hfin : (finiteSet v).Finite) : SlopesUnbounded h :=
+    (hfin : (finiteSupport v).Finite) : SlopesUnbounded h :=
   NewtonPolygon.slopesUnbounded_of_finite (hh.slopeIndices_finite hfin)
 
 /-- If the points lie on or above some line of every slope, the slopes are unbounded. -/
@@ -404,10 +402,9 @@ theorem IsConvexSeq.le_unitSlope_of_faceLeft_le (hh : IsConvexSeq h) (h0 : h 0 �
   by_cases hjt : h j = ⊤
   · rw [unitSlope_eq_top_iff.2 (Or.inl hjt)]
     exact le_top
-  have hfl : h (faceLeft h σ) ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 h0)
-    (mem_finiteSet.2 hjt) ⟨Nat.zero_le _, hj⟩)
+  have hfl : h (faceLeft h σ) ≠ ⊤ := hh.ne_top_of_le_of_le h0 hjt (Nat.zero_le _) hj
   exact le_trans (le_unitSlope_faceLeft hu σ)
-    (hh.monotoneOn (mem_finiteSet.2 hfl) (mem_finiteSet.2 hjt) hj)
+    (hh.monotoneOn (mem_finiteSupport.2 hfl) (mem_finiteSupport.2 hjt) hj)
 
 /-- From the right end of a face on, the unit slopes are strictly larger than its slope. -/
 theorem IsConvexSeq.lt_unitSlope_of_faceRight_le (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤)
@@ -416,10 +413,9 @@ theorem IsConvexSeq.lt_unitSlope_of_faceRight_le (hh : IsConvexSeq h) (h0 : h 0 
   by_cases hjt : h j = ⊤
   · rw [unitSlope_eq_top_iff.2 (Or.inl hjt)]
     exact WithTop.coe_lt_top σ
-  have hfr : h (faceRight h σ) ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 h0)
-    (mem_finiteSet.2 hjt) ⟨Nat.zero_le _, hj⟩)
+  have hfr : h (faceRight h σ) ≠ ⊤ := hh.ne_top_of_le_of_le h0 hjt (Nat.zero_le _) hj
   exact lt_of_lt_of_le (lt_unitSlope_faceRight hu σ)
-    (hh.monotoneOn (mem_finiteSet.2 hfr) (mem_finiteSet.2 hjt) hj)
+    (hh.monotoneOn (mem_finiteSupport.2 hfr) (mem_finiteSupport.2 hjt) hj)
 
 /-- `faceLeft σ` counts the unit slopes `< σ`. -/
 theorem IsConvexSeq.faceLeft_eq_ncard (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤) (hu : SlopesUnbounded h)
@@ -520,8 +516,7 @@ theorem IsConvexSeq.faceLeft_line_le (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤) (hu
 theorem IsConvexSeq.faceLeft_line_lt (hh : IsConvexSeq h) (h0 : h 0 ≠ ⊤)
     {σ : ℝ} {k : ℕ} (hk : k < faceLeft h σ) :
     (((h (faceLeft h σ)).untop₀ + σ * ((k : ℝ) - faceLeft h σ) : ℝ) : WithTop ℝ) < h k := by
-  have hkfin : h k ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 h0)
-    (mem_finiteSet.2 (ne_top_faceLeft h0 σ)) ⟨Nat.zero_le _, hk.le⟩)
+  have hkfin : h k ≠ ⊤ := hh.ne_top_of_le_of_le h0 (ne_top_faceLeft h0 σ) (Nat.zero_le _) hk.le
   exact hh.line_lt_of_unitSlope_lt (ne_top_faceLeft h0 σ)
     (fun _ hj _ ↦ unitSlope_lt_of_lt_faceLeft hj) hk hkfin
 

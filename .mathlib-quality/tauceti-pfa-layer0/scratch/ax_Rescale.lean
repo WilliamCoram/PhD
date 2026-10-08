@@ -1,0 +1,26 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Rescale
+#print axioms Real.zpowCeil
+#print axioms Real.zpowCeil_nonneg
+#print axioms Real.zpowCeil_of_nonpos
+#print axioms Real.zpowCeil_of_pos
+#print axioms Real.le_zpowCeil
+#print axioms Real.mul_zpowCeil_lt
+#print axioms Real.zpowCeil_le_of_le_zpow
+#print axioms Real.exists_zpowCeil_eq_zpow
+#print axioms Real.zpowCeil_zpow
+#print axioms Real.zpowCeil_pos
+#print axioms Real.zpowCeil_eq_zero_iff
+#print axioms Real.zpowCeil_mono
+#print axioms Real.zpowCeil_max
+#print axioms Real.zpowCeil_zpow_mul
+#print axioms Real.zpowCeil_mul_le
+#print axioms NormedRing.PseudoUniformizer.Rescaled
+#print axioms NormedRing.PseudoUniformizer.toRescaled
+#print axioms NormedRing.PseudoUniformizer.rescaledNorm
+#print axioms NormedRing.PseudoUniformizer.norm_toRescaled
+#print axioms NormedRing.PseudoUniformizer.norm_le_norm_toRescaled
+#print axioms NormedRing.PseudoUniformizer.norm_mul_norm_toRescaled_lt
+#print axioms NormedRing.PseudoUniformizer.exists_norm_rescaled_eq_zpow
+#print axioms NormedRing.PseudoUniformizer.norm_toRescaled_eq_of_forall_exists_zpow
+#print axioms NormedRing.PseudoUniformizer.norm_smul_rescaled
+#print axioms NormedRing.PseudoUniformizer.isBoundedSMul_rescaled

@@ -1,0 +1,1622 @@
+[
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 61,
+  "kind": "theorem",
+  "name": "supSeminorm_nonneg",
+  "statement": "theorem supSeminorm_nonneg (f : A) : 0 ≤ supSeminorm K f",
+  "doc": "/-- `|·|_sup` is nonnegative with no hypothesis: a real `iSup` of nonnegative terms. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 71,
+  "kind": "theorem",
+  "name": "evalNorm_mul_le",
+  "statement": "theorem evalNorm_mul_le (f g : A) : evalNorm K x (f * g) ≤ evalNorm K x f * evalNorm K x g",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "evalNorm_add_le_max",
+  "statement": "theorem evalNorm_add_le_max (f g : A) :\n    evalNorm K x (f + g) ≤ max (evalNorm K x f) (evalNorm K x g)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "evalNorm_pow",
+  "statement": "theorem evalNorm_pow (f : A) (n : ℕ) : evalNorm K x (f ^ n) = evalNorm K x f ^ n",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 81,
+  "kind": "theorem",
+  "name": "evalNorm_smul",
+  "statement": "theorem evalNorm_smul (c : K) (f : A) : evalNorm K x (c • f) = ‖c‖ * evalNorm K x f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "evalNorm_one",
+  "statement": "theorem evalNorm_one : evalNorm K x (1 : A) = 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "evalNorm_neg",
+  "statement": "theorem evalNorm_neg (f : A) : evalNorm K x (-f) = evalNorm K x f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "evalNorm_algebraMap",
+  "statement": "theorem evalNorm_algebraMap (c : K) : evalNorm K x (algebraMap K A c) = ‖c‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 93,
+  "kind": "theorem",
+  "name": "evalNorm_eq_zero_iff",
+  "statement": "theorem evalNorm_eq_zero_iff (f : A) : evalNorm K x f = 0 ↔ f ∈ x.asIdeal",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "evalNorm_le_supSeminorm",
+  "statement": "theorem evalNorm_le_supSeminorm (x : MaximalSpectrum A) (f : A) :\n    evalNorm K x f ≤ supSeminorm K f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 107,
+  "kind": "theorem",
+  "name": "supSeminorm_le_of_forall",
+  "statement": "theorem supSeminorm_le_of_forall {f : A} {C : ℝ} (hC : 0 ≤ C)\n    (h : ∀ x : MaximalSpectrum A, evalNorm K x f ≤ C) : supSeminorm K f ≤ C",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 111,
+  "kind": "theorem",
+  "name": "supSeminorm_zero",
+  "statement": "theorem supSeminorm_zero : supSeminorm K (0 : A) = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 115,
+  "kind": "theorem",
+  "name": "supSeminorm_one_le",
+  "statement": "theorem supSeminorm_one_le : supSeminorm K (1 : A) ≤ 1",
+  "doc": "/-- BGR 3.8.1/3 (e). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "supSeminorm_one",
+  "statement": "theorem supSeminorm_one [Nontrivial A] : supSeminorm K (1 : A) = 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 122,
+  "kind": "theorem",
+  "name": "supSeminorm_add_le_max",
+  "statement": "theorem supSeminorm_add_le_max (f g : A) :\n    supSeminorm K (f + g) ≤ max (supSeminorm K f) (supSeminorm K g)",
+  "doc": "/-- BGR 3.8.1/3 (b). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 127,
+  "kind": "theorem",
+  "name": "supSeminorm_mul_le",
+  "statement": "theorem supSeminorm_mul_le (f g : A) :\n    supSeminorm K (f * g) ≤ supSeminorm K f * supSeminorm K g",
+  "doc": "/-- BGR 3.8.1/3 (d). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 132,
+  "kind": "theorem",
+  "name": "supSeminorm_pow",
+  "statement": "theorem supSeminorm_pow (f : A) {n : ℕ} (hn : n ≠ 0) :\n    supSeminorm K (f ^ n) = supSeminorm K f ^ n",
+  "doc": "/-- BGR 3.8.1/3 (f): power-multiplicativity (for `n ≥ 1`: in the trivial ring `|f⁰|_sup = 0`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "supSeminorm_smul",
+  "statement": "theorem supSeminorm_smul (c : K) (f : A) : supSeminorm K (c • f) = ‖c‖ * supSeminorm K f",
+  "doc": "/-- BGR 3.8.1/3 (c). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 140,
+  "kind": "theorem",
+  "name": "supSeminorm_neg",
+  "statement": "theorem supSeminorm_neg (f : A) : supSeminorm K (-f) = supSeminorm K f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 143,
+  "kind": "theorem",
+  "name": "supSeminorm_algebraMap",
+  "statement": "theorem supSeminorm_algebraMap [Nontrivial A] (c : K) :\n    supSeminorm K (algebraMap K A c) = ‖c‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "isNonarchimedean_supSeminorm",
+  "statement": "theorem isNonarchimedean_supSeminorm : IsNonarchimedean (supSeminorm K : A → ℝ)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 150,
+  "kind": "theorem",
+  "name": "isPowMul_supSeminorm",
+  "statement": "theorem isPowMul_supSeminorm : IsPowMul (supSeminorm K : A → ℝ)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 155,
+  "kind": "def",
+  "name": "supRingSeminorm",
+  "statement": "noncomputable def supRingSeminorm : RingSeminorm A where",
+  "doc": "/-- The supremum seminorm packaged as a `RingSeminorm` (BGR 3.8.1/3, 6.2.1/1). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 167,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_zero_iff_forall_mem",
+  "statement": "theorem supSeminorm_eq_zero_iff_forall_mem (f : A) :\n    supSeminorm K f = 0 ↔ ∀ x : MaximalSpectrum A, f ∈ x.asIdeal",
+  "doc": "/-- BGR 3.8.1/9: `|f|_sup = 0` exactly when `f` lies in every maximal ideal. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 171,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_zero_iff_mem_jacobson_bot",
+  "statement": "theorem supSeminorm_eq_zero_iff_mem_jacobson_bot (f : A) :\n    supSeminorm K f = 0 ↔ f ∈ Ideal.jacobson (⊥ : Ideal A)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 185,
+  "kind": "theorem",
+  "name": "isMaximal_comap_of_isAlgebraic",
+  "statement": "theorem isMaximal_comap_of_isAlgebraic (φ : B →ₐ[K] A) (x : MaximalSpectrum A)\n    [Algebra.IsAlgebraic K (A ⧸ x.asIdeal)] : (x.asIdeal.comap φ).IsMaximal",
+  "doc": "/-- BGR 3.8.1/4, the first step: for a `K`-algebra homomorphism `φ : B → A` and `x ∈ Max A` with\nalgebraic residue field, `φ⁻¹(x)` is a maximal ideal of `B` (its residue field embeds in\n`A ⧸ x`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 200,
+  "kind": "theorem",
+  "name": "evalNorm_comapPoint",
+  "statement": "theorem evalNorm_comapPoint [IsUltrametricDist K] (φ : B →ₐ[K] A) (x : MaximalSpectrum A) (g : B) :\n    evalNorm K x (φ g) = evalNorm K (comapPoint φ x) g",
+  "doc": "/-- `|φ(g)(x)| = |g(φ⁻¹(x))|` (BGR 3.8.1/4, formula (*)). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 205,
+  "kind": "theorem",
+  "name": "supSeminorm_map_le",
+  "statement": "theorem supSeminorm_map_le [IsUltrametricDist K] [HasSupSeminorm K B] (φ : B →ₐ[K] A) (g : B) :\n    supSeminorm K (φ g) ≤ supSeminorm K g",
+  "doc": "/-- BGR 3.8.1/4: every `K`-algebra homomorphism is a contraction for `|·|_sup`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 216,
+  "kind": "instance",
+  "name": "HasSupSeminorm.quotient",
+  "statement": "instance HasSupSeminorm.quotient (I : Ideal A) : HasSupSeminorm K (A ⧸ I)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 221,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_le",
+  "statement": "theorem supSeminorm_mk_le (I : Ideal A) (f : A) :\n    supSeminorm K (Ideal.Quotient.mk I f) ≤ supSeminorm K f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 226,
+  "kind": "theorem",
+  "name": "evalNorm_le_supSeminorm_mk",
+  "statement": "theorem evalNorm_le_supSeminorm_mk {I : Ideal A} {x : MaximalSpectrum A} (hI : I ≤ x.asIdeal)\n    (f : A) : evalNorm K x f ≤ supSeminorm K (Ideal.Quotient.mk I f)",
+  "doc": "/-- A point of `A` containing `I` sees the same value on `f` and on `f mod I`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 232,
+  "kind": "theorem",
+  "name": "exists_minimalPrimes_supSeminorm_mk_eq",
+  "statement": "theorem exists_minimalPrimes_supSeminorm_mk_eq [IsNoetherianRing A] [Nontrivial A] (f : A) :\n    ∃ 𝔭 ∈ minimalPrimes A, supSeminorm K (Ideal.Quotient.mk 𝔭 f) = supSeminorm K f",
+  "doc": "/-- BGR 3.8.1/5 (the noetherian form used in 6.2.1/3): `|f|_sup` is attained on some\n`A ⧸ 𝔭` with `𝔭` a minimal prime. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 238,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_eq_of_le_jacobson",
+  "statement": "theorem supSeminorm_mk_eq_of_le_jacobson {I : Ideal A} (hI : I ≤ Ideal.jacobson ⊥) (f : A) :\n    supSeminorm K (Ideal.Quotient.mk I f) = supSeminorm K f",
+  "doc": "/-- Passing to the quotient by an ideal contained in every maximal ideal does not change\n`|·|_sup` (BGR 6.2.1/3, second equation, proved for `I ≤ jacobson ⊥`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Seminorm.lean",
+  "line": 243,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_nilradical",
+  "statement": "theorem supSeminorm_mk_nilradical (f : A) :\n    supSeminorm K (Ideal.Quotient.mk (nilradical A) f) = supSeminorm K f",
+  "doc": "/-- BGR 6.2.1/3: `|f|_sup = |red f|_sup`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "supSpectralValueTerms_of_lt_natDegree",
+  "statement": "theorem supSpectralValueTerms_of_lt_natDegree (q : B[X]) {n : ℕ} (hn : n < q.natDegree) :\n    supSpectralValueTerms K q n = supSeminorm K (q.coeff n) ^ (1 / (q.natDegree - n : ℝ))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 51,
+  "kind": "theorem",
+  "name": "supSpectralValueTerms_of_natDegree_le",
+  "statement": "theorem supSpectralValueTerms_of_natDegree_le (q : B[X]) {n : ℕ} (hn : q.natDegree ≤ n) :\n    supSpectralValueTerms K q n = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 55,
+  "kind": "theorem",
+  "name": "supSpectralValueTerms_nonneg",
+  "statement": "theorem supSpectralValueTerms_nonneg (q : B[X]) (n : ℕ) : 0 ≤ supSpectralValueTerms K q n",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 58,
+  "kind": "theorem",
+  "name": "supSpectralValueTerms_finite_range",
+  "statement": "theorem supSpectralValueTerms_finite_range (q : B[X]) :\n    (Set.range (supSpectralValueTerms K q)).Finite",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "supSpectralValueTerms_bddAbove",
+  "statement": "theorem supSpectralValueTerms_bddAbove (q : B[X]) :\n    BddAbove (Set.range (supSpectralValueTerms K q))",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 66,
+  "kind": "theorem",
+  "name": "supSpectralValue_nonneg",
+  "statement": "theorem supSpectralValue_nonneg (q : B[X]) : 0 ≤ supSpectralValue K q",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "supSpectralValueTerms_le_supSpectralValue",
+  "statement": "theorem supSpectralValueTerms_le_supSpectralValue (q : B[X]) (n : ℕ) :\n    supSpectralValueTerms K q n ≤ supSpectralValue K q",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 73,
+  "kind": "theorem",
+  "name": "supSpectralValue_le_of_forall",
+  "statement": "theorem supSpectralValue_le_of_forall {q : B[X]} {C : ℝ} (hC : 0 ≤ C)\n    (h : ∀ n, n < q.natDegree → supSeminorm K (q.coeff n) ^ (1 / (q.natDegree - n : ℝ)) ≤ C) :\n    supSpectralValue K q ≤ C",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "supSpectralValue_X_pow",
+  "statement": "theorem supSpectralValue_X_pow (n : ℕ) : supSpectralValue K (X ^ n : B[X]) = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 82,
+  "kind": "theorem",
+  "name": "supSeminorm_coeff_le_supSpectralValue_pow",
+  "statement": "theorem supSeminorm_coeff_le_supSpectralValue_pow (q : B[X]) {n : ℕ} (hn : n < q.natDegree) :\n    supSeminorm K (q.coeff n) ≤ supSpectralValue K q ^ (q.natDegree - n)",
+  "doc": "/-- BGR 1.5.4: `|b_i|_sup ≤ σ(q)^i` (here `i = natDegree - n` for the coefficient of `X^n`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "exists_supSpectralValue_eq",
+  "statement": "theorem exists_supSpectralValue_eq {q : B[X]} (hq : 0 < q.natDegree) :\n    ∃ n, n < q.natDegree ∧\n      supSpectralValue K q = supSeminorm K (q.coeff n) ^ (1 / (q.natDegree - n : ℝ))",
+  "doc": "/-- The supremum spectral value is attained at some coefficient (finitely many terms). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "supSpectralValue_eq_spectralValue",
+  "statement": "theorem supSpectralValue_eq_spectralValue (h : ∀ b : B, supSeminorm K b = ‖b‖) (q : B[X]) :\n    supSpectralValue K q = spectralValue q",
+  "doc": "/-- When the supremum seminorm is the norm of `B`, `supSpectralValue` is Mathlib's\n`spectralValue`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 113,
+  "kind": "theorem",
+  "name": "supSpectralValue_map_le",
+  "statement": "theorem supSpectralValue_map_le [HasSupSeminorm K B] [HasSupSeminorm K C] (φ : C →ₐ[K] B)\n    {q : C[X]} (hq : q.Monic) :\n    supSpectralValue K (q.map (φ : C →+* B)) ≤ supSpectralValue K q",
+  "doc": "/-- Coefficientwise contraction: for `φ : C →ₐ[K] B`, `σ(q.map φ) ≤ σ(q)` (BGR 3.8.1/4 applied to\neach coefficient, as in the proof of 6.2.2/4). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "supSpectralValue_mul_le",
+  "statement": "theorem supSpectralValue_mul_le {p q : B[X]} (hp : p.Monic) (hq : q.Monic) :\n    supSpectralValue K (p * q) ≤ max (supSpectralValue K p) (supSpectralValue K q)",
+  "doc": "/-- BGR 1.5.4/1 (the inequality): `σ(pq) ≤ max {σ(p), σ(q)}` for monic `p, q`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 125,
+  "kind": "theorem",
+  "name": "supSpectralValue_prod_le_of_forall_le",
+  "statement": "theorem supSpectralValue_prod_le_of_forall_le {ι : Type*} {s : Finset ι} {q : ι → B[X]}\n    (hq : ∀ i ∈ s, (q i).Monic) {C : ℝ} (hC : 0 ≤ C)\n    (h : ∀ i ∈ s, supSpectralValue K (q i) ≤ C) : supSpectralValue K (∏ i ∈ s, q i) ≤ C",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 130,
+  "kind": "theorem",
+  "name": "supSpectralValue_pow_le",
+  "statement": "theorem supSpectralValue_pow_le {q : B[X]} (hq : q.Monic) (e : ℕ) :\n    supSpectralValue K (q ^ e) ≤ supSpectralValue K q",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/SpectralValue.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "supSeminorm_le_supSpectralValue_of_eval₂_eq_zero",
+  "statement": "theorem supSeminorm_le_supSpectralValue_of_eval₂_eq_zero [HasSupSeminorm K A] (φ : B →ₐ[K] A)\n    {q : B[X]} (hq : q.Monic) {f : A} (hf : q.eval₂ (φ : B →+* A) f = 0) :\n    supSeminorm K f ≤ supSpectralValue K q",
+  "doc": "/-- BGR 6.2.2/3 (= 3.8.1/6 (b)): if `fⁿ + φ(b₁)fⁿ⁻¹ + ⋯ + φ(bₙ) = 0`, then\n`|f|_sup ≤ max_i |b_i|_sup^{1/i} = σ(q)`. The proof is purely seminorm-theoretic (BGR p. 239):\n`|f|ⁿ_sup = |fⁿ|_sup ≤ |φ(b_j) fⁿ⁻ʲ|_sup ≤ |b_j|_sup |f|_sup^{n−j}` for some `j`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 44,
+  "kind": "theorem",
+  "name": "exists_comap_algebraMap_eq",
+  "statement": "theorem exists_comap_algebraMap_eq [Algebra.IsIntegral B A] [FaithfulSMul B A]\n    (y : MaximalSpectrum B) :\n    ∃ x : MaximalSpectrum A, x.asIdeal.comap (algebraMap B A) = y.asIdeal",
+  "doc": "/-- Going up (BGR 3.8.1/6 (a), \"there is a maximal ideal `x` of `A` lying over `y`\"): for `A`\nintegral over `B` with injective structure map, every maximal ideal of `B` is the contraction of a\nmaximal ideal of `A`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 50,
+  "kind": "theorem",
+  "name": "isMaximal_comap_algebraMap_of_isIntegral",
+  "statement": "theorem isMaximal_comap_algebraMap_of_isIntegral [Algebra.IsIntegral B A] (x : MaximalSpectrum A) :\n    (x.asIdeal.comap (algebraMap B A)).IsMaximal",
+  "doc": "/-- The contraction of a maximal ideal of `A` along an integral map is maximal. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "isAlgebraic_quotient_of_isAlgebraic_quotient_comap",
+  "statement": "theorem isAlgebraic_quotient_of_isAlgebraic_quotient_comap [Algebra.IsIntegral B A]\n    (x : MaximalSpectrum A)\n    [Algebra.IsAlgebraic K (B ⧸ x.asIdeal.comap (algebraMap B A))] :\n    Algebra.IsAlgebraic K (A ⧸ x.asIdeal)",
+  "doc": "/-- For `A` integral over `B`, the residue field at `x` is algebraic over `K` as soon as the residue\nfield at `φ⁻¹(x)` is (BGR 3.8.1/6 (a): \"`A/x` is integral over `B/y`. Therefore `A/x` is an\nalgebraic extension of `k`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "HasSupSeminorm.of_isIntegral",
+  "statement": "theorem HasSupSeminorm.of_isIntegral [HasSupSeminorm K B] : HasSupSeminorm K A",
+  "doc": "/-- BGR 3.8.1/6 (c), one direction: `|·|_sup` is finite on `A` if it is finite on `B`, because\n`|f|_sup ≤ max |b_i|_sup^{1/i}` for any equation of integral dependence (3.8.1/6 (b)). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "HasSupSeminorm.of_isIntegral_of_faithfulSMul",
+  "statement": "theorem HasSupSeminorm.of_isIntegral_of_faithfulSMul [HasSupSeminorm K A] [FaithfulSMul B A] :\n    HasSupSeminorm K B",
+  "doc": "/-- BGR 3.8.1/6 (c), the other direction, for an injective structure map (every `y` has a point\n`x` over it). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 82,
+  "kind": "theorem",
+  "name": "supSeminorm_algebraMap_eq",
+  "statement": "theorem supSeminorm_algebraMap_eq [HasSupSeminorm K A] [HasSupSeminorm K B] [FaithfulSMul B A]\n    (b : B) : supSeminorm K (algebraMap B A b) = supSeminorm K b",
+  "doc": "/-- BGR 3.8.1/6 (a): an integral monomorphism is an isometry for `|·|_sup`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 89,
+  "kind": "theorem",
+  "name": "supSeminorm_le_of_forall_supSeminorm_mk_map_le",
+  "statement": "theorem supSeminorm_le_of_forall_supSeminorm_mk_map_le [HasSupSeminorm K A] {f : A} {C : ℝ}\n    (hC : 0 ≤ C)\n    (h : ∀ y : MaximalSpectrum B,\n      supSeminorm K (Ideal.Quotient.mk (y.asIdeal.map (algebraMap B A)) f) ≤ C) :\n    supSeminorm K f ≤ C",
+  "doc": "/-- `|f|_sup` is the supremum over `y ∈ Max B` of `|f mod yA|_sup` (BGR p. 172,\n\"`|f|_sup = sup_{y ∈ Max_k B} |f_y|_sup`\"), upper-bound half: every point of `A` lies over a point\nof `B`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 107,
+  "kind": "theorem",
+  "name": "exists_evalNorm_root_eq_supSpectralValue",
+  "statement": "theorem exists_evalNorm_root_eq_supSpectralValue {L : Type*} [Field L] [Algebra K L]\n    [Algebra.IsAlgebraic K L] {q : L[X]} (hq : q.Monic) (hq0 : 0 < q.natDegree)\n    [HasSupSeminorm K (AdjoinRoot q)] :\n    ∃ x : MaximalSpectrum (AdjoinRoot q),\n      evalNorm K x (AdjoinRoot.root q) = supSpectralValue K q",
+  "doc": "/-- **The fibre computation** (BGR p. 172, the display `|f̄_y|_sup = max_ν |f̄_ν|_ν = max_ν σ(q_ν)\n= σ(q_y)`): over a field `L` algebraic over `K`, the class of `X` in `L[X] ⧸ (q)` for a monic `q`\nof positive degree attains `σ(q)` at some maximal ideal. The maximal ideals of `L[X] ⧸ (q)` are the\nmonic irreducible factors `p` of `q`; at `p` the residue field is `L[X] ⧸ (p)` and `|X(p)|` is the\nnorm of a root of `p` in a splitting field of `q` (Mathlib `max_norm_root_eq_spectralValue`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 116,
+  "kind": "theorem",
+  "name": "evalNorm_root_le_supSpectralValue",
+  "statement": "theorem evalNorm_root_le_supSpectralValue {L : Type*} [Field L] [Algebra K L]\n    [Algebra.IsAlgebraic K L] {q : L[X]} (hq : q.Monic) [HasSupSeminorm K (AdjoinRoot q)]\n    (x : MaximalSpectrum (AdjoinRoot q)) :\n    evalNorm K x (AdjoinRoot.root q) ≤ supSpectralValue K q",
+  "doc": "/-- The upper bound in the fibre: `|X(x)| ≤ σ(q)` at every point (a root of `q` in the residue\nfield has norm at most the spectral value, Mathlib `norm_root_le_spectralValue`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 125,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_spectralNorm",
+  "statement": "theorem supSeminorm_eq_spectralNorm {L : Type*} [Field L] [Algebra K L] [Algebra.IsAlgebraic K L]\n    [HasSupSeminorm K L] (b : L) : supSeminorm K b = spectralNorm K L b",
+  "doc": "/-- Over a field `L` algebraic over `K`, the supremum seminorm is the spectral norm, so\n`supSpectralValue` of a polynomial over `L` is its Mathlib `spectralValue` for the spectral norm.\nStated through the point evaluation at the unique maximal ideal `⊥`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 130,
+  "kind": "theorem",
+  "name": "HasSupSeminorm.of_field",
+  "statement": "theorem HasSupSeminorm.of_field (L : Type*) [Field L] [Algebra K L] [Algebra.IsAlgebraic K L] :\n    HasSupSeminorm K L",
+  "doc": "/-- A field algebraic over `K` has a supremum seminorm (one point, the spectral norm). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "supSpectralValue_minpoly_le_supSeminorm",
+  "statement": "theorem supSpectralValue_minpoly_le_supSeminorm (f : A) :\n    supSpectralValue K (minpoly B f) ≤ supSeminorm K f",
+  "doc": "/-- The fibre of `B[f] ≅ B[X]/(q)` over `y ∈ Max B` is `(B ⧸ y)[X] ⧸ (q̄)` (BGR p. 172,\n\"`A/yA = (B/y)[X]/(q_y)`\"); the sup seminorm of `f` on it is `σ(q̄)` by the fibre computation, so\n`|f|_sup = sup_y σ(q_y) = max_i |b_i|_sup^{1/i}`. Lower-bound half of 3.8.1/7 (a). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 153,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_supSpectralValue_minpoly",
+  "statement": "theorem supSeminorm_eq_supSpectralValue_minpoly (f : A) :\n    supSeminorm K f = supSpectralValue K (minpoly B f)",
+  "doc": "/-- **BGR 3.8.1/7 (a)**: `|f|_sup = max_{1≤i≤n} |b_i|_sup^{1/i}` where\n`fⁿ + b₁fⁿ⁻¹ + ⋯ + bₙ = 0` is the integral equation of minimal degree of `f` over `B`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 160,
+  "kind": "theorem",
+  "name": "minpoly_algebraMap_mul_eq_scaleRoots",
+  "statement": "theorem minpoly_algebraMap_mul_eq_scaleRoots {b : B} (hb : b ≠ 0) (f : A) :\n    minpoly B (algebraMap B A b * f) = (minpoly B f).scaleRoots b",
+  "doc": "/-- The minimal polynomial of `b • f` is the scaled minimal polynomial of `f` (BGR p. 173,\n\"`(bf)ⁿ + bb₁(bf)ⁿ⁻¹ + ⋯ + bⁿbₙ = 0` is the integral equation of minimal degree for any such\nproduct `bf`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 166,
+  "kind": "theorem",
+  "name": "supSeminorm_algebraMap_mul",
+  "statement": "theorem supSeminorm_algebraMap_mul\n    (hB : ∀ b b' : B, supSeminorm K (b * b') = supSeminorm K b * supSeminorm K b') (b : B) (f : A) :\n    supSeminorm K (algebraMap B A b * f) = supSeminorm K b * supSeminorm K f",
+  "doc": "/-- **BGR 3.8.1/7 (d)**, the if direction: if `|·|_sup` is multiplicative on `B`, then\n`|φ(b) f|_sup = |b|_sup |f|_sup`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 172,
+  "kind": "theorem",
+  "name": "exists_evalNorm_eq_supSeminorm_of_forall_exists",
+  "statement": "theorem exists_evalNorm_eq_supSeminorm_of_forall_exists\n    (hB : ∀ b : B, ∃ y : MaximalSpectrum B, evalNorm K y b = supSeminorm K b) (f : A) :\n    ∃ x : MaximalSpectrum A, evalNorm K x f = supSeminorm K f",
+  "doc": "/-- **BGR 3.8.1/7 (b)**: the maximum modulus principle transfers from `B` to `A`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 178,
+  "kind": "theorem",
+  "name": "eq_zero_of_supSeminorm_eq_zero",
+  "statement": "theorem eq_zero_of_supSeminorm_eq_zero (hB : ∀ b : B, supSeminorm K b = 0 → b = 0) {f : A}\n    (hf : supSeminorm K f = 0) : f = 0",
+  "doc": "/-- **BGR 3.8.1/7 (c)**: if `|·|_sup` is a norm on `B` then it is a norm on the domain `A`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Integral.lean",
+  "line": 185,
+  "kind": "theorem",
+  "name": "supSeminorm_pow_factorial_mem_range_norm",
+  "statement": "theorem supSeminorm_pow_factorial_mem_range_norm\n    (hB : ∀ b : B, supSeminorm K b ∈ Set.range (fun c : K ↦ ‖c‖)) {n : ℕ}\n    (hn : ∀ f : A, (minpoly B f).natDegree ≤ n) (f : A) :\n    supSeminorm K f ^ n.factorial ∈ Set.range (fun c : K ↦ ‖c‖)",
+  "doc": "/-- **BGR 3.8.1/8** in the form used by 6.2.1/4 (ii): if the values `|b|_sup`, `b ∈ B`, lie in\n`‖K‖` (true for `T_d`, whose supremum norm is the Gauss norm), and the minimal polynomials over `B`\nhave degree at most `n`, then `|f|_sup ^ n.factorial ∈ ‖K‖` for every `f`: a uniform exponent. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 46,
+  "kind": "theorem",
+  "name": "AlgHom.continuous_of_supSeminorm_eq_zero_imp",
+  "statement": "theorem AlgHom.continuous_of_supSeminorm_eq_zero_imp\n    [Affinoid.HasSupSeminorm K A]\n    (hfin : ∀ x : MaximalSpectrum A, FiniteDimensional K (A ⧸ x.asIdeal))\n    (hA : ∀ f : A, Affinoid.supSeminorm K f = 0 → f = 0) (φ : B →ₐ[K] A) : Continuous φ",
+  "doc": "/-- **BGR 3.8.2/3.** If `|·|_sup` is a norm on the Banach algebra `A` (with algebraic residue\nfields), every `K`-algebra homomorphism from a Banach algebra `B` into `A` is continuous. Proof:\nclosed graph through the maximal ideals (`AlgHom.continuous_of_forall_isClosed_of_finiteDimensional`\nwith `𝔅 = {𝔪 | 𝔪.IsMaximal}`: maximal ideals of a Banach algebra are closed, their contractions\nare maximal hence closed, the residue fields are finite over `K`, and `⋂ 𝔪 = 0` by 3.8.1/9). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 54,
+  "kind": "theorem",
+  "name": "MaximalSpectrum.isClosed_asIdeal",
+  "statement": "theorem MaximalSpectrum.isClosed_asIdeal (x : MaximalSpectrum A) :\n    IsClosed (x.asIdeal : Set A)",
+  "doc": "/-- Maximal ideals of a Banach algebra are closed (Mathlib `Ideal.IsMaximal.isClosed`, stated for\nthe maximal spectrum). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 61,
+  "kind": "theorem",
+  "name": "AlgEquiv.exists_forall_norm_le_mul_of_supSeminorm_eq_zero_imp",
+  "statement": "theorem AlgEquiv.exists_forall_norm_le_mul_of_supSeminorm_eq_zero_imp [IsUltrametricDist B]\n    [NormOneClass B] [Affinoid.HasSupSeminorm K A]\n    (hfin : ∀ x : MaximalSpectrum A, FiniteDimensional K (A ⧸ x.asIdeal))\n    (hA : ∀ f : A, Affinoid.supSeminorm K f = 0 → f = 0) (e : A ≃ₐ[K] B) :\n    ∃ C : ℝ, ∀ a : A, ‖e a‖ ≤ C * ‖a‖",
+  "doc": "/-- **BGR 3.8.2/4.** All complete `K`-algebra norms on `A` are equivalent when `|·|_sup` is a norm:\nfor an algebra isomorphism `e : A ≃ B` between such Banach algebras there is `C` with\n`‖e a‖ ≤ C * ‖a‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "supSeminorm_le_norm_pow_rpow",
+  "statement": "theorem supSeminorm_le_norm_pow_rpow [HasSupSeminorm K A] (f : A) (i : ℕ+) :\n    supSeminorm K f ≤ ‖f ^ (i : ℕ)‖ ^ (1 / (i : ℝ))",
+  "doc": "/-- `|f|_sup ≤ ‖fⁱ‖^{1/i}` for every `i ≥ 1`, by 3.8.2/2 and power-multiplicativity. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 85,
+  "kind": "theorem",
+  "name": "supSeminorm_le_smoothingFun",
+  "statement": "theorem supSeminorm_le_smoothingFun [HasSupSeminorm K A] (f : A) :\n    supSeminorm K f ≤ smoothingFun (SeminormedRing.toRingSeminorm A) f",
+  "doc": "/-- `|f|_sup ≤ inf_i ‖fⁱ‖^{1/i}` (BGR 3.8.2/5, the first inequality: \"From Corollary 2 one deduces\nimmediately that `|f|_sup ≤ |f|_r`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "smoothingFun_le_of_eval₂_eq_zero",
+  "statement": "theorem smoothingFun_le_of_eval₂_eq_zero {B : Type*} [CommRing B] (φ : B →+* A) {q : B[X]}\n    (hq : q.Monic) {f : A} (hf : q.eval₂ φ f = 0) :\n    smoothingFun (SeminormedRing.toRingSeminorm A) f ≤\n      ⨆ n : Fin q.natDegree, ‖φ (q.coeff n)‖ ^ (1 / (q.natDegree - n : ℝ))",
+  "doc": "/-- The smoothing seminorm bounds a root of a monic polynomial by the spectral value for the\nseminorm `inf ‖·ⁱ‖^{1/i}` (BGR 3.8.2/5: \"one can apply Proposition 3.1.2/1 … and one gets\n`|f|_r ≤ max |φ(b_i)|_r^{1/i}`\"), with the coefficients bounded by `‖φ(b_i)‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 104,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_smoothingFun_of_isIntegral",
+  "statement": "theorem supSeminorm_eq_smoothingFun_of_isIntegral {C : ℝ}\n    (hC : ∀ b : B, ‖algebraMap B A b‖ ≤ C * supSeminorm K b) (f : A) :\n    supSeminorm K f = smoothingFun (SeminormedRing.toRingSeminorm A) f",
+  "doc": "/-- **BGR 3.8.2/5**: under the hypotheses of 3.8.1/7, if `B → A` is continuous for `|·|_sup`\n(`‖algebraMap b‖ ≤ C * |b|_sup`), then `|f|_sup = inf_i ‖fⁱ‖^{1/i}`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 111,
+  "kind": "theorem",
+  "name": "isPowerBounded_of_supSeminorm_le_one_of_isIntegral",
+  "statement": "theorem isPowerBounded_of_supSeminorm_le_one_of_isIntegral {C : ℝ}\n    (hC : ∀ b : B, ‖algebraMap B A b‖ ≤ C * supSeminorm K b) {f : A}\n    (hf : supSeminorm K f ≤ 1) : IsPowerBounded f",
+  "doc": "/-- **BGR 3.8.2/6 (c') ⇒ (a')**: under the hypotheses of 3.8.2/5, `|f|_sup ≤ 1` makes `f`\npower-bounded (the powers of `f` lie in the bounded `B̊`-module `Σ_{i<n} φ(B̊) fⁱ`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "IsPowerBounded.supSeminorm_le_one",
+  "statement": "theorem IsPowerBounded.supSeminorm_le_one {f : A} (hf : IsPowerBounded f) :\n    supSeminorm K f ≤ 1",
+  "doc": "/-- **BGR 3.8.2/6 (a') ⇒ (c')** needs no integrality: power-bounded implies `|f|_sup ≤ 1`, since\n`|·|_sup ≤ ‖·‖` and `|·|_sup` is power-multiplicative. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/Banach.lean",
+  "line": 123,
+  "kind": "theorem",
+  "name": "isTopologicallyNilpotent_iff_supSeminorm_lt_one_of_isIntegral",
+  "statement": "theorem isTopologicallyNilpotent_iff_supSeminorm_lt_one_of_isIntegral {C : ℝ}\n    (hC : ∀ b : B, ‖algebraMap B A b‖ ≤ C * supSeminorm K b) (f : A) :\n    IsTopologicallyNilpotent f ↔ supSeminorm K f < 1",
+  "doc": "/-- **BGR 3.8.2/6 (a) ⇔ (c)**: topologically nilpotent iff `|f|_sup < 1`, under 3.8.2/5. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Module.lean",
+  "line": 35,
+  "kind": "theorem",
+  "name": "Submodule.forall_mem_of_forall_exists_eq_add_sum_smul_of_norm_lt_one",
+  "statement": "theorem Submodule.forall_mem_of_forall_exists_eq_add_sum_smul_of_norm_lt_one {n m : ℕ}\n    (N : Submodule A (Fin n → A)) (x : Fin m → Fin n → A)\n    (h : ∀ i, ∃ y ∈ N, ∃ c : Fin m → A, (∀ μ, ‖c μ‖ < 1) ∧ x i = y + ∑ μ, c μ • x μ) :\n    ∀ i, x i ∈ N",
+  "doc": "/-- Nakayama for the unit ball in `Aⁿ` (the module form of\n`Ideal.forall_mem_of_forall_exists_eq_add_sum_mul_of_norm_lt_one`): if finitely many vectors\n`x i` of `Aⁿ` lie in `N + Σ 𝔞 x μ` with `𝔞` the open unit ball ideal, they lie in `N`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Module.lean",
+  "line": 45,
+  "kind": "theorem",
+  "name": "Submodule.exists_forall_exists_eq_sum_smul_norm_le",
+  "statement": "theorem Submodule.exists_forall_exists_eq_sum_smul_norm_le {n m : ℕ} (x : Fin m → Fin n → A)\n    (N : Submodule A (Fin n → A)) (hN : IsClosed (N : Set (Fin n → A)))\n    (hx : Submodule.span A (Set.range x) = N) :\n    ∃ C : ℝ, ∀ z ∈ N, ∃ a : Fin m → A, z = ∑ i, a i • x i ∧ ∀ i, ‖a i‖ ≤ C * ‖z‖",
+  "doc": "/-- Open mapping for a finitely generated closed submodule `N = span (range x)` of `Aⁿ`: every\n`z ∈ N` is `Σ aᵢ • xᵢ` with `max ‖aᵢ‖ ≤ C ‖z‖` (the module form of\n`Ideal.exists_forall_exists_eq_sum_mul_norm_le`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Module.lean",
+  "line": 54,
+  "kind": "theorem",
+  "name": "Submodule.isClosed_of_isNoetherianRing_pi",
+  "statement": "theorem Submodule.isClosed_of_isNoetherianRing_pi {n : ℕ} (N : Submodule A (Fin n → A)) :\n    IsClosed (N : Set (Fin n → A))",
+  "doc": "/-- **BGR 3.7.2/2 (module form)**: every submodule of `Aⁿ` over a noetherian Banach algebra is\nclosed. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Module.lean",
+  "line": 66,
+  "kind": "theorem",
+  "name": "Submodule.isClosed_of_isClosed_comap",
+  "statement": "theorem Submodule.isClosed_of_isClosed_comap {n : ℕ} (π : (Fin n → A) →ₗ[A] M)\n    (hπ : Continuous π) (hs : Function.Surjective π) (N : Submodule A M)\n    (hN : IsClosed ((N.comap π : Submodule A (Fin n → A)) : Set (Fin n → A))) :\n    IsClosed (N : Set M)",
+  "doc": "/-- A continuous surjective `K`-linear map from the Banach space `Aⁿ` onto `M` is open, so a\nsubmodule of `M` is closed as soon as its preimage in `Aⁿ` is. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/BanachAlgebra/Module.lean",
+  "line": 75,
+  "kind": "theorem",
+  "name": "Submodule.isClosed_of_isNoetherianRing_of_finite",
+  "statement": "theorem Submodule.isClosed_of_isNoetherianRing_of_finite [Module.Finite A M] (N : Submodule A M) :\n    IsClosed (N : Set M)",
+  "doc": "/-- **BGR 3.7.3/1**: every submodule of a complete finite normed module over a noetherian Banach\nalgebra is closed. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 54,
+  "kind": "theorem",
+  "name": "IsBanachFunctionAlgebra.eq_zero_of_supSeminorm_eq_zero",
+  "statement": "theorem IsBanachFunctionAlgebra.eq_zero_of_supSeminorm_eq_zero\n    (hA : IsBanachFunctionAlgebra K A) {f : A} (hf : supSeminorm K f = 0) : f = 0",
+  "doc": "/-- In a Banach function algebra `|·|_sup` is a norm: `|f|_sup = 0 → f = 0`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 60,
+  "kind": "theorem",
+  "name": "IsBanachFunctionAlgebra.norm_eq_supSeminorm_of_isPowMul",
+  "statement": "theorem IsBanachFunctionAlgebra.norm_eq_supSeminorm_of_isPowMul [HasSupSeminorm K A]\n    (hA : IsBanachFunctionAlgebra K A) (hpm : IsPowMul (fun f : A ↦ ‖f‖)) (f : A) :\n    ‖f‖ = supSeminorm K f",
+  "doc": "/-- **BGR 3.8.3/3** (with 1.3.1/3): a power-multiplicative complete algebra norm on a Banach\nfunction algebra is the supremum seminorm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 71,
+  "kind": "theorem",
+  "name": "IsBanachFunctionAlgebra.of_isClosed_range",
+  "statement": "theorem IsBanachFunctionAlgebra.of_isClosed_range [HasSupSeminorm K A] [HasSupSeminorm K B]\n    (hA : IsBanachFunctionAlgebra K A) (φ : B →ₐ[K] A) (hφ : Continuous φ)\n    (hinj : Function.Injective φ) (hcl : IsClosed (Set.range φ)) : IsBanachFunctionAlgebra K B",
+  "doc": "/-- **BGR 3.8.3/4**: a Banach algebra `B` mapping continuously and injectively with closed range\ninto a Banach function algebra `A` is a Banach function algebra (open mapping onto the closed range,\nthen the contraction `|φ b|_sup ≤ |b|_sup`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "IsBanachFunctionAlgebra.of_finite_injective",
+  "statement": "theorem IsBanachFunctionAlgebra.of_finite_injective [HasSupSeminorm K A] [HasSupSeminorm K B]\n    [IsNoetherianRing B] (hA : IsBanachFunctionAlgebra K A) (φ : B →ₐ[K] A) (hφ : Continuous φ)\n    (hinj : Function.Injective φ) (hfin : φ.toRingHom.Finite) : IsBanachFunctionAlgebra K B",
+  "doc": "/-- **BGR 3.8.3/5**: for `φ : B → A` finite, injective and continuous with `B` noetherian and `A` a\nBanach function algebra, `B` is a Banach function algebra (`φ(B)` is closed in the finite normed\n`B`-module `A` by 3.7.3/1). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 101,
+  "kind": "theorem",
+  "name": "Module.isTorsionFree_of_faithfulSMul_of_isDomain",
+  "statement": "theorem Module.isTorsionFree_of_faithfulSMul_of_isDomain : Module.IsTorsionFree B A",
+  "doc": "/-- A domain finite over `B` with injective structure map is torsion-free over `B`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 108,
+  "kind": "theorem",
+  "name": "exists_basis_universalDenominator",
+  "statement": "theorem exists_basis_universalDenominator :\n    ∃ (n : ℕ) (a : Fin n → A) (b : B), b ≠ 0 ∧\n      LinearIndependent B a ∧ ∀ f : A, ∃ β : Fin n → B, b • f = ∑ i, β i • a i",
+  "doc": "/-- The coordinates of `A` inside `Q(A) = Q(B)ⁿ`: `Q(A)` is finite-dimensional over `Q(B)` (Layer 1\n`FractionRing.finiteDimensional_of_finite`) with a basis `a₁, …, aₙ` of elements of `A`, and there\nis a universal denominator `b ≠ 0` in `B` with `b • A ⊆ Σ B aᵢ` (BGR p. 181, \"there is a universal\ndenominator `b ∈ B − {0}` such that `A ⊂ A' := Σ B aᵢ/b`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 117,
+  "kind": "theorem",
+  "name": "exists_coordinateMap",
+  "statement": "theorem exists_coordinateMap {n : ℕ} {a : Fin n → A} {b : B} (hb : b ≠ 0)\n    (ha : LinearIndependent B a) (hA : ∀ f : A, ∃ β : Fin n → B, b • f = ∑ i, β i • a i) :\n    ∃ θ : A →ₗ[B] (Fin n → B), Function.Injective θ ∧\n      (∀ f, b • f = ∑ i, θ f i • a i) ∧ IsClosed (Set.range θ)",
+  "doc": "/-- The coordinate map `θ : A → Bⁿ`, `f ↦ β` with `b • f = Σ βᵢ • aᵢ`, is `B`-linear, injective,\nand has closed range in `Bⁿ` (BGR 3.7.2/2, `Submodule.isClosed_of_isNoetherianRing_pi`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 128,
+  "kind": "theorem",
+  "name": "exists_norm_le_mul_norm_coordinateMap",
+  "statement": "theorem exists_norm_le_mul_norm_coordinateMap (hcont : Continuous (algebraMap B A)) {n : ℕ}\n    {a : Fin n → A} {b : B} (hb : b ≠ 0) (θ : A →ₗ[B] (Fin n → B)) (hθ : Function.Injective θ)\n    (hθa : ∀ f, b • f = ∑ i, θ f i • a i) (hcl : IsClosed (Set.range θ)) :\n    ∃ C : ℝ, ∀ f : A, ‖f‖ ≤ C * ‖θ f‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 138,
+  "kind": "theorem",
+  "name": "spectralNorm_fractionRing_eq_supSeminorm",
+  "statement": "theorem spectralNorm_fractionRing_eq_supSeminorm (hBsup : ∀ b : B, supSeminorm K b = ‖b‖)\n    [HasSupSeminorm K A] [Algebra (FractionRing B) (FractionRing A)]\n    [IsScalarTower B (FractionRing B) (FractionRing A)] (f : A) :\n    letI := IsFractionRing.normedField B (FractionRing B)\n    spectralNorm (FractionRing B) (FractionRing A) (algebraMap A (FractionRing A) f) =\n      supSeminorm K f",
+  "doc": "/-- **The spectral norm of `Q(A)` over `Q(B)` restricts to `|·|_sup` on `A`** (BGR 3.8.3/7, \"From\nProposition 3.8.1/7 (a), we derive `|f|_sup = |f|_sp`\"; the Remark after 3.8.1/9): when\n`|·|_sup = ‖·‖` on `B`, the spectral norm of `f ∈ A ⊆ Q(A)` for the absolute value of `Q(B)`\nextending `‖·‖` equals `supSeminorm K f`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 149,
+  "kind": "theorem",
+  "name": "exists_norm_coordinateMap_le_mul_supSeminorm",
+  "statement": "theorem exists_norm_coordinateMap_le_mul_supSeminorm (hBsup : ∀ b : B, supSeminorm K b = ‖b‖)\n    (hws : letI := IsFractionRing.normedField B (FractionRing B); IsWeaklyStable (FractionRing B))\n    [HasSupSeminorm K A] {n : ℕ} {a : Fin n → A} {b : B} (hb : b ≠ 0) (ha : LinearIndependent B a)\n    (θ : A →ₗ[B] (Fin n → B)) (hθa : ∀ f, b • f = ∑ i, θ f i • a i) :\n    ∃ C : ℝ, ∀ f : A, ‖θ f‖ ≤ C * supSeminorm K f",
+  "doc": "/-- Weak stability bounds the coordinates by the spectral norm: `‖θ f i‖ ≤ C * |f|_sup`\n(BGR 3.8.3/7, \"Since `Q(B)` is weakly stable, all these extensions are weakly `Q(B)`-cartesian\nunder their spectral norm\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm/FunctionAlgebra.lean",
+  "line": 160,
+  "kind": "theorem",
+  "name": "IsBanachFunctionAlgebra.of_finite_domain",
+  "statement": "theorem IsBanachFunctionAlgebra.of_finite_domain (hBsup : ∀ b : B, supSeminorm K b = ‖b‖)\n    (hws : letI := IsFractionRing.normedField B (FractionRing B); IsWeaklyStable (FractionRing B))\n    (hcont : Continuous (algebraMap B A)) : IsBanachFunctionAlgebra K A",
+  "doc": "/-- **BGR 3.8.3/7** (for `A` a domain, plan D1): `A` finite over `B` with injective continuous\nstructure map, `B` a valued (`NormMulClass`) integrally closed noetherian Banach function algebra\n(`|·|_sup = ‖·‖`) with weakly stable fraction field, then `A` is a Banach function algebra:\n`‖f‖ ≤ C * |f|_sup`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "hasSupSeminorm",
+  "statement": "theorem hasSupSeminorm (hA : IsAffinoidAlgebra K A) : HasSupSeminorm K A",
+  "doc": "/-- **BGR 6.2.1/1.** An affinoid algebra has a supremum seminorm: the residue fields are finite\nover `K` (Corollary 6.1.2/3, Layer 1) and `|f(x)| ≤ ‖g‖` for any preimage `g ∈ Tₙ` of `f`\n(Corollary 3.8.2/2 through the presentation). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 58,
+  "kind": "theorem",
+  "name": "supSeminorm_le_norm_of_eq",
+  "statement": "theorem supSeminorm_le_norm_of_eq {n : ℕ} (α : TateAlgebra K n →ₐ[K] A) {g : TateAlgebra K n}\n    {f : A} (hg : α g = f) : supSeminorm K f ≤ ‖g‖",
+  "doc": "/-- Through a presentation `α : Tₙ ↠ A`, `|f|_sup ≤ ‖g‖` for every preimage `g` of `f`\n(BGR p. 236, \"`|f|_sup ≤ |f|_α for all f ∈ A and all epimorphisms α: Tₙ → A`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 67,
+  "kind": "theorem",
+  "name": "exists_evalNorm_eq_supSeminorm_of_isDomain",
+  "statement": "theorem exists_evalNorm_eq_supSeminorm_of_isDomain (hA : IsAffinoidAlgebra K A) [IsDomain A]\n    (f : A) : ∃ x : MaximalSpectrum A, evalNorm K x f = supSeminorm K f",
+  "doc": "/-- **The maximum modulus principle for affinoid domains** (BGR 6.2.1/4 (i), the special case):\nNoether normalisation `T_d ↪ A` (finite, injective), `T_d` integrally closed with the maximum\nmodulus principle (Layer 0), and BGR 3.8.1/7 (b). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "exists_evalNorm_eq_supSeminorm",
+  "statement": "theorem exists_evalNorm_eq_supSeminorm (hA : IsAffinoidAlgebra K A) [Nontrivial A] (f : A) :\n    ∃ x : MaximalSpectrum A, evalNorm K x f = supSeminorm K f",
+  "doc": "/-- **The maximum modulus principle** (BGR 6.2.1/4 (i); Bosch 1.4/14): for a nonzero affinoid\nalgebra `A` and `f ∈ A` there is a point `x` with `|f(x)| = |f|_sup`. Through the minimal primes\n(BGR 6.2.1/3) from the domain case. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 81,
+  "kind": "theorem",
+  "name": "exists_forall_pow_supSeminorm_mem_range_norm_of_isDomain",
+  "statement": "theorem exists_forall_pow_supSeminorm_mem_range_norm_of_isDomain (hA : IsAffinoidAlgebra K A)\n    [IsDomain A] :\n    ∃ m : ℕ, m ≠ 0 ∧ ∀ f : A, supSeminorm K f ^ m ∈ Set.range (fun c : K ↦ ‖c‖)",
+  "doc": "/-- The values of `|·|_sup` on an affinoid domain have a power in `‖K‖`, with a uniform exponent:\n`|f|_sup ^ n! ∈ ‖K‖` where `n = [Q(A) : Q(T_d)]` bounds the degrees of the minimal polynomials over\n`T_d` (BGR 3.8.1/8 with `|T_d|_sup = |K|`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "exists_forall_exists_smul_pow_supSeminorm_eq_one",
+  "statement": "theorem exists_forall_exists_smul_pow_supSeminorm_eq_one (hA : IsAffinoidAlgebra K A) :\n    ∃ m : ℕ, m ≠ 0 ∧ ∀ f : A, supSeminorm K f ≠ 0 → ∃ c : K, supSeminorm K (c • f ^ m) = 1",
+  "doc": "/-- **BGR 6.2.1/4 (ii), uniform form** (roadmap §2.2.2): there is `m ≥ 1` depending only on `A`\nsuch that every `f` with `|f|_sup ≠ 0` has `c ∈ K` with `|c f^m|_sup = 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 94,
+  "kind": "theorem",
+  "name": "exists_smul_pow_supSeminorm_eq_one",
+  "statement": "theorem exists_smul_pow_supSeminorm_eq_one (hA : IsAffinoidAlgebra K A) {f : A}\n    (hf : supSeminorm K f ≠ 0) : ∃ (c : K) (m : ℕ), m ≠ 0 ∧ supSeminorm K (c • f ^ m) = 1",
+  "doc": "/-- **BGR 6.2.1/4 (ii)** (Bosch 1.4/15): for `|f|_sup ≠ 0` there are `c ∈ K` and `m ≥ 1` with\n`|c f^m|_sup = 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_zero_iff_isNilpotent",
+  "statement": "theorem supSeminorm_eq_zero_iff_isNilpotent (hA : IsAffinoidAlgebra K A) (f : A) :\n    supSeminorm K f = 0 ↔ IsNilpotent f",
+  "doc": "/-- **BGR 6.2.1/4 (iii)**: `|f|_sup = 0` iff `f` is nilpotent (the Jacobson radical of an affinoid\nalgebra is its nilradical, Layer 1 `isJacobsonRing`, with BGR 3.8.1/9). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 105,
+  "kind": "theorem",
+  "name": "eq_zero_of_supSeminorm_eq_zero",
+  "statement": "theorem eq_zero_of_supSeminorm_eq_zero (hA : IsAffinoidAlgebra K A) [IsReduced A] {f : A}\n    (hf : supSeminorm K f = 0) : f = 0",
+  "doc": "/-- **BGR 6.2.1/4 (iii)**, second half: on a reduced affinoid algebra `|·|_sup` is a norm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 111,
+  "kind": "theorem",
+  "name": "isReduced_of_forall_supSeminorm_eq_zero_imp",
+  "statement": "theorem isReduced_of_forall_supSeminorm_eq_zero_imp (hA : IsAffinoidAlgebra K A)\n    (h : ∀ f : A, supSeminorm K f = 0 → f = 0) : IsReduced A",
+  "doc": "/-- The converse: if `|·|_sup` is a norm then `A` is reduced (a ring with a power-multiplicative\nnorm is reduced, BGR 1.3.1). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 124,
+  "kind": "theorem",
+  "name": "_root_.AlgHom.continuous_of_isReduced_of_isAffinoidAlgebra",
+  "statement": "theorem _root_.AlgHom.continuous_of_isReduced_of_isAffinoidAlgebra (hA : IsAffinoidAlgebra K A)\n    [IsReduced A] (φ : B →ₐ[K] A) : Continuous φ",
+  "doc": "/-- **BGR 6.2.1/5**: every `K`-algebra homomorphism from a (not necessarily noetherian) Banach\nalgebra into a reduced affinoid Banach algebra is continuous (BGR 3.8.2/3 + 6.2.1/4 (iii)). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 135,
+  "kind": "theorem",
+  "name": "supSeminorm_map_eq_of_isIntegral",
+  "statement": "theorem supSeminorm_map_eq_of_isIntegral (hA : IsAffinoidAlgebra K A) (hB : IsAffinoidAlgebra K B)\n    (φ : B →ₐ[K] A) (hint : φ.toRingHom.IsIntegral) (hinj : Function.Injective φ) (b : B) :\n    supSeminorm K (φ b) = supSeminorm K b",
+  "doc": "/-- **BGR 6.2.2/1**, second half: an integral monomorphism of affinoid algebras is an isometry for\n`|·|_sup` (BGR 3.8.1/6 (a)). The first half, \"every homomorphism is a contraction\", is\n`Affinoid.supSeminorm_map_le`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 145,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_supSpectralValue_minpoly_tateAlgebra",
+  "statement": "theorem supSeminorm_eq_supSpectralValue_minpoly_tateAlgebra (hA : IsAffinoidAlgebra K A)\n    [IsDomain A] [Algebra.IsIntegral (TateAlgebra K d) A] [FaithfulSMul (TateAlgebra K d) A]\n    (f : A) : supSeminorm K f = supSpectralValue K (minpoly (TateAlgebra K d) f)",
+  "doc": "/-- **BGR 6.2.2/2**, the equation `|f|_sup = max |tᵢ|^{1/i}` for an affinoid domain `A` integral\nover `T_d` with injective structure map (BGR 3.8.1/7 (a) with `T_d` integrally closed and\n`|·|_sup = ‖·‖` on `T_d`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 152,
+  "kind": "theorem",
+  "name": "supSeminorm_algebraMap_tateAlgebra_mul",
+  "statement": "theorem supSeminorm_algebraMap_tateAlgebra_mul (hA : IsAffinoidAlgebra K A) [IsDomain A]\n    [Algebra.IsIntegral (TateAlgebra K d) A] [FaithfulSMul (TateAlgebra K d) A]\n    (t : TateAlgebra K d) (f : A) :\n    supSeminorm K (algebraMap (TateAlgebra K d) A t * f) = ‖t‖ * supSeminorm K f",
+  "doc": "/-- **BGR 6.2.2/2**, `|·|_sup` is a faithful `T_d`-algebra norm: `|φ(t) f|_sup = |t| |f|_sup`\n(BGR 3.8.1/7 (d), the Gauss norm being multiplicative). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 162,
+  "kind": "theorem",
+  "name": "exists_monic_eval₂_eq_zero_supSeminorm_eq_supSpectralValue_of_isDomain",
+  "statement": "theorem exists_monic_eval₂_eq_zero_supSeminorm_eq_supSpectralValue_of_isDomain\n    (hA : IsAffinoidAlgebra K A) (hB : IsAffinoidAlgebra K B) [IsDomain A] (φ : B →ₐ[K] A)\n    (hfin : φ.toRingHom.Finite) (f : A) :\n    ∃ q : B[X], q.Monic ∧ q.eval₂ (φ : B →+* A) f = 0 ∧ supSeminorm K f = supSpectralValue K q",
+  "doc": "/-- **BGR 6.2.2/4** for an affinoid domain `A`: for `φ : B → A` finite (plan D10) there is a monic\n`q ∈ B[X]` with `q(f) = 0` and `|f|_sup = σ(q)` (compose with `ψ : T_d → B` from Theorem\n6.1.2/1 so that `φ ∘ ψ` is an integral monomorphism, take the minimal polynomial over `T_d` and\npush its coefficients into `B`; `σ(q) ≤ σ(p)` by contraction, `≥` by 6.2.2/3). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupSeminorm.lean",
+  "line": 172,
+  "kind": "theorem",
+  "name": "exists_monic_eval₂_eq_zero_supSeminorm_eq_supSpectralValue",
+  "statement": "theorem exists_monic_eval₂_eq_zero_supSeminorm_eq_supSpectralValue (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) [Nontrivial A] (φ : B →ₐ[K] A) (hfin : φ.toRingHom.Finite)\n    (f : A) :\n    ∃ q : B[X], q.Monic ∧ q.eval₂ (φ : B →+* A) f = 0 ∧ supSeminorm K f = supSpectralValue K q",
+  "doc": "/-- **BGR 6.2.2/4** (Bosch 1.4/13): for `φ : B → A` finite (plan D10) between affinoid algebras and\n`f ∈ A` there is a monic `q ∈ B[X]` with `q(f) = 0` and `|f|_sup = σ(q)`. From the domain case\nthrough the minimal primes: `q := (∏ qᵢ)^e` with `qᵢ(f) ∈ 𝔭ᵢ` and `e` killing the nilradical, then\nBGR 1.5.4/1 and 6.2.1/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 41,
+  "kind": "def",
+  "name": "powerBounded",
+  "statement": "noncomputable def powerBounded : Subring A where",
+  "doc": "/-- `Å = {f | |f|_sup ≤ 1}`, the power-bounded elements of an affinoid algebra (BGR 6.2.3/1,\n1.2.5/2): a subring by BGR 3.8.1/3. -/",
+  "sorries": 5
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 56,
+  "kind": "def",
+  "name": "topologicallyNilpotent",
+  "statement": "noncomputable def topologicallyNilpotent : Ideal (powerBounded K A) where",
+  "doc": "/-- `Ǎ = {f | |f|_sup < 1}`, the topologically nilpotent elements, an ideal of `Å`\n(BGR 6.2.3/2, 1.2.5/2). -/",
+  "sorries": 3
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "topologicallyNilpotent_isRadical",
+  "statement": "theorem topologicallyNilpotent_isRadical : (topologicallyNilpotent K A).IsRadical",
+  "doc": "/-- `Ǎ` is a radical ideal of `Å` (BGR 1.2.5/7: `Ã = Å/Ǎ` is reduced), by power-multiplicativity. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 81,
+  "kind": "theorem",
+  "name": "algebraMap_mem_powerBounded",
+  "statement": "theorem algebraMap_mem_powerBounded {c : K} (hc : ‖c‖ ≤ 1) :\n    algebraMap K A c ∈ powerBounded K A",
+  "doc": "/-- The scalars of absolute value `≤ 1` are power-bounded. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "isPowerBounded_iff_supSeminorm_le_one",
+  "statement": "theorem isPowerBounded_iff_supSeminorm_le_one (hA : IsAffinoidAlgebra K A) (f : A) :\n    IsPowerBounded f ↔ supSeminorm K f ≤ 1",
+  "doc": "/-- **BGR 6.2.3/1** (Bosch 1.4/16): `f` is power-bounded iff `|f|_sup ≤ 1`. \"⇒\" is 3.8.2/2 with\npower-multiplicativity; \"⇐\": choose a finite `φ : T_d → A`, an integral equation with\n`|f|_sup = max |tᵢ|^{1/i}` (6.2.2/4), so `tᵢ ∈ T̊_d`, and `f^{n+ν} ∈ Σ_{i<n} φ(T̊_d) fⁱ` by\ninduction, a bounded set since `φ(T̊_d)` is bounded (`φ` continuous, Layer 1). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 104,
+  "kind": "theorem",
+  "name": "isPowerBounded_iff_mem_powerBounded",
+  "statement": "theorem isPowerBounded_iff_mem_powerBounded (hA : IsAffinoidAlgebra K A) (f : A) :\n    haveI := hA.hasSupSeminorm\n    IsPowerBounded f ↔ f ∈ powerBounded K A",
+  "doc": "/-- The subring `Å` is the set of power-bounded elements for every complete algebra norm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "isTopologicallyNilpotent_iff_supSeminorm_lt_one",
+  "statement": "theorem isTopologicallyNilpotent_iff_supSeminorm_lt_one (hA : IsAffinoidAlgebra K A) (f : A) :\n    IsTopologicallyNilpotent f ↔ supSeminorm K f < 1",
+  "doc": "/-- **BGR 6.2.3/2 (i) ⇔ (iii)** (Bosch 1.4/17): `f` is topologically nilpotent iff `|f|_sup < 1`.\n\"⇒\" by 3.8.2/2 and power-multiplicativity; \"⇐\" by 6.2.1/4 (ii): `|c f^m|_sup ≤ 1` for some\n`|c| > 1`, so `c f^m` is power-bounded and `f^m ∈ c⁻¹ Å ⊆ Ǎ`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "isTopologicallyNilpotent_iff_forall_evalNorm_lt_one",
+  "statement": "theorem isTopologicallyNilpotent_iff_forall_evalNorm_lt_one (hA : IsAffinoidAlgebra K A)\n    [Nontrivial A] (f : A) :\n    IsTopologicallyNilpotent f ↔ ∀ x : MaximalSpectrum A, evalNorm K x f < 1",
+  "doc": "/-- **BGR 6.2.3/2 (i) ⇔ (ii)**: `f` is topologically nilpotent iff `|f(x)| < 1` at every point\n(the maximum modulus principle). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 123,
+  "kind": "theorem",
+  "name": "isTopologicallyNilpotent_iff_mem_topologicallyNilpotent",
+  "statement": "theorem isTopologicallyNilpotent_iff_mem_topologicallyNilpotent (hA : IsAffinoidAlgebra K A)\n    (f : A) (hf : supSeminorm K f ≤ 1) :\n    haveI := hA.hasSupSeminorm\n    IsTopologicallyNilpotent f ↔ (⟨f, hf⟩ : powerBounded K A) ∈ topologicallyNilpotent K A",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 133,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_smoothingFun",
+  "statement": "theorem supSeminorm_eq_smoothingFun (hA : IsAffinoidAlgebra K A) (f : A) :\n    supSeminorm K f = smoothingFun (SeminormedRing.toRingSeminorm A) f",
+  "doc": "/-- **BGR 6.2.3/3** (the spectral radius formula): `|f|_sup = inf_i ‖fⁱ‖^{1/i}` for every complete\n`K`-algebra norm on `A`. \"≤\" is 3.8.2/2; \"≥\": if `|f|_sup < |f|'` then by 6.2.1/4 (ii) one may\nassume `|f|_sup = 1 < |f|'`, so `‖fⁱ‖ ≥ |f|'^i → ∞` and `f` is not power-bounded, contradicting\n6.2.3/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 139,
+  "kind": "theorem",
+  "name": "lipschitzWith_supSeminorm",
+  "statement": "theorem lipschitzWith_supSeminorm (hA : IsAffinoidAlgebra K A) :\n    LipschitzWith 1 (supSeminorm K : A → ℝ)",
+  "doc": "/-- `|·|_sup` is `1`-Lipschitz for any complete algebra norm: `|f|_sup ≤ ‖f‖` and the\nultrametric inequality, so `|f|_sup - |g|_sup ≤ ‖f - g‖`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 144,
+  "kind": "theorem",
+  "name": "isClosed_powerBounded",
+  "statement": "theorem isClosed_powerBounded (hA : IsAffinoidAlgebra K A) :\n    haveI := hA.hasSupSeminorm\n    IsClosed (powerBounded K A : Set A)",
+  "doc": "/-- `Å` is closed (§2.4.3). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 150,
+  "kind": "theorem",
+  "name": "isOpen_powerBounded",
+  "statement": "theorem isOpen_powerBounded (hA : IsAffinoidAlgebra K A) :\n    haveI := hA.hasSupSeminorm\n    IsOpen (powerBounded K A : Set A)",
+  "doc": "/-- `Å` is open: it contains the open unit ball of the norm and is an additive subgroup (§2.4.3). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 156,
+  "kind": "theorem",
+  "name": "isOpen_setOf_supSeminorm_lt_one",
+  "statement": "theorem isOpen_setOf_supSeminorm_lt_one (hA : IsAffinoidAlgebra K A) :\n    IsOpen {f : A | supSeminorm K f < 1}",
+  "doc": "/-- `Ǎ` is open in `A` (§2.4.3). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 165,
+  "kind": "theorem",
+  "name": "exists_norm_le_mul_supSeminorm_iff_isBounded_powerBounded",
+  "statement": "theorem exists_norm_le_mul_supSeminorm_iff_isBounded_powerBounded (hA : IsAffinoidAlgebra K A) :\n    haveI := hA.hasSupSeminorm\n    (∃ C : ℝ, ∀ f : A, ‖f‖ ≤ C * supSeminorm K f) ↔\n      TopologicalRing.IsBounded (powerBounded K A : Set A)",
+  "doc": "/-- **Uniformity, norm form** (§2.3.5): `Å` is bounded in `A` iff `|·|_sup` is equivalent to the\nnorm of `A`. \"⇐\" is clear; \"⇒\" (BGR p. 181, end of the proof of 3.8.3/6): for `|f|_sup ≠ 0` pick\n`c ∈ K`, `|c| > 1`, and `m` with `|c|^{m−1} < |f|_sup ≤ |c|^m`; then `c^{−m} f ∈ Å` is bounded by\n`M`, so `‖f‖ ≤ M |c|^m ≤ M |c| |f|_sup`; for `|f|_sup = 0`, `c^{-m} f ∈ Å` for all `m` forces\n`f = 0`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/PowerBounded.lean",
+  "line": 173,
+  "kind": "theorem",
+  "name": "isReduced_of_isBounded_powerBounded",
+  "statement": "theorem isReduced_of_isBounded_powerBounded (hA : IsAffinoidAlgebra K A)\n    (h : haveI := hA.hasSupSeminorm; TopologicalRing.IsBounded (powerBounded K A : Set A)) :\n    IsReduced A",
+  "doc": "/-- If `Å` is bounded then `A` is reduced (a nonzero nilpotent `f` has `c^{-m} f ∈ Å` for every\n`m`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 46,
+  "kind": "def",
+  "name": "powerBounded.ofUnitClosedBall",
+  "statement": "noncomputable def powerBounded.ofUnitClosedBall : unitClosedBall K →+* powerBounded K A where",
+  "doc": "/-- The unit ball of `K` maps into `Å` (`|c · 1|_sup ≤ ‖c‖ ≤ 1`). -/",
+  "sorries": 4
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 59,
+  "kind": "theorem",
+  "name": "powerBounded.ofUnitClosedBall_mem_topologicallyNilpotent",
+  "statement": "theorem powerBounded.ofUnitClosedBall_mem_topologicallyNilpotent {c : unitClosedBall K}\n    (hc : c ∈ openUnitBallIdeal K) :\n    powerBounded.ofUnitClosedBall K A c ∈ topologicallyNilpotent K A",
+  "doc": "/-- The maximal ideal of the unit ball of `K` maps into `Ǎ`, so `Ã` is a `K̃`-algebra\n(BGR 6.2.3/4: \"`Ã = Å/Ǎ` … is a `k̃`-algebra\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 65,
+  "kind": "def",
+  "name": "Reduction.ofResidueField",
+  "statement": "noncomputable def Reduction.ofResidueField : ResidueField (unitClosedBall K) →+* Reduction K A",
+  "doc": "/-- The reduction map `K̃ → Ã`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 73,
+  "kind": "instance",
+  "name": "Reduction.isReduced",
+  "statement": "instance Reduction.isReduced : IsReduced (Reduction K A)",
+  "doc": "/-- **BGR 1.2.5/7**: `Ã` is reduced (`Ǎ` is a radical ideal of `Å`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 83,
+  "kind": "theorem",
+  "name": "TateAlgebra.powerBounded_eq_unitClosedBall",
+  "statement": "theorem TateAlgebra.powerBounded_eq_unitClosedBall :\n    powerBounded K (TateAlgebra K n) = unitClosedBall (TateAlgebra K n)",
+  "doc": "/-- For the Tate algebra `Å` is the unit ball of the Gauss norm (`|·|_sup = ‖·‖`, Layer 0). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 89,
+  "kind": "def",
+  "name": "TateAlgebra.reductionEquiv",
+  "statement": "noncomputable def TateAlgebra.reductionEquiv :\n    Reduction K (TateAlgebra K n) ≃+* MvPolynomial (Fin n) (ResidueField (unitClosedBall K))",
+  "doc": "/-- **BGR 6.2.3/4 for `Tₙ`** (roadmap §2.3.4): `T̃ₙ ≅ K̃[X₁, …, Xₙ]`, from Layer 0's\n`MvPowerSeries.Restricted.reductionEquiv`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 105,
+  "kind": "theorem",
+  "name": "supSeminorm_mul_of_isReduced_of_isDomain_reduction",
+  "statement": "theorem supSeminorm_mul_of_isReduced_of_isDomain_reduction (hA : IsAffinoidAlgebra K A)\n    [IsReduced A] (hdom : haveI := hA.hasSupSeminorm; IsDomain (Reduction K A)) (f g : A) :\n    supSeminorm K (f * g) = supSeminorm K f * supSeminorm K g",
+  "doc": "/-- **BGR 6.2.3/5, \"if\"**: on a reduced affinoid algebra whose reduction is a domain, `|·|_sup` is\nmultiplicative (BGR 1.5.3/1 with condition (i) from 6.2.1/4 (ii) and condition (ii) `Ã` a domain;\n`|f|_sup = 0 → f = 0` is 6.2.1/4 (iii)). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "isReduced_of_isValuation",
+  "statement": "theorem isReduced_of_isValuation (hA : IsAffinoidAlgebra K A)\n    (hnorm : ∀ f : A, supSeminorm K f = 0 → f = 0) : IsReduced A",
+  "doc": "/-- **BGR 6.2.3/5, \"only if\" (reducedness)**: if `|·|_sup` is a valuation (multiplicative and a\nnorm) then `A` is reduced (BGR 1.5.1: a valued ring is a domain; here 3.8.1/9 suffices). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/Reduction.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "isDomain_reduction_of_isValuation",
+  "statement": "theorem isDomain_reduction_of_isValuation (hA : IsAffinoidAlgebra K A) [Nontrivial A]\n    (hmul : ∀ f g : A, supSeminorm K (f * g) = supSeminorm K f * supSeminorm K g)\n    (hnorm : ∀ f : A, supSeminorm K f = 0 → f = 0) :\n    haveI := hA.hasSupSeminorm\n    IsDomain (Reduction K A)",
+  "doc": "/-- **BGR 6.2.3/5, \"only if\" (the domain)**: if `|·|_sup` is a valuation then `Ã` is a domain\n(BGR 1.5.1: \"The ideal `Ǎ` is prime in `Å`; hence `Ã` is also an integral domain\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 42,
+  "kind": "theorem",
+  "name": "isBanachFunctionAlgebra_of_isDomain",
+  "statement": "theorem isBanachFunctionAlgebra_of_isDomain [CharZero K] (hA : IsAffinoidAlgebra K A)\n    [IsDomain A] : IsBanachFunctionAlgebra K A",
+  "doc": "/-- **BGR 6.2.4/1 for an affinoid domain** (`[CharZero K]`, plan D2): choose a finite\nnormalisation `φ : T_d ↪ A`; `φ` is continuous (Layer 1), `T_d` is a valued integrally closed\nnoetherian Banach function algebra (`|·|_sup = ‖·‖`, Layer 0) with weakly stable fraction field\n(Layer 0, `isWeaklyStable_fractionRing`), so BGR 3.8.3/7 applies. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "continuousSMul_pi_quotient",
+  "statement": "theorem continuousSMul_pi_quotient (hA : IsAffinoidAlgebra K A) :\n    haveI : ∀ i, IsClosed ((𝔭 i : Ideal A) : Set A) := fun i ↦ hA.isClosed_ideal (𝔭 i)\n    ContinuousSMul A (∀ i, A ⧸ 𝔭 i)",
+  "doc": "/-- The product `∏ A ⧸ 𝔭ᵢ` with the residue norms is a finite `A`-module with continuous scalar\nmultiplication (each quotient by a closed ideal, Layer 1 `isClosed_ideal`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 59,
+  "kind": "theorem",
+  "name": "isClosed_range_pi_quotient_mk",
+  "statement": "theorem isClosed_range_pi_quotient_mk (hA : IsAffinoidAlgebra K A) :\n    haveI : ∀ i, IsClosed ((𝔭 i : Ideal A) : Set A) := fun i ↦ hA.isClosed_ideal (𝔭 i)\n    IsClosed (Set.range (RingHom.pi fun i ↦ Ideal.Quotient.mk (𝔭 i)))",
+  "doc": "/-- The diagonal map `A → ∏ A ⧸ 𝔭ᵢ` is injective when `⋂ 𝔭ᵢ = ⊥`, continuous, and has closed range\n(BGR 3.7.3/1: `A` is a submodule of the finite `A`-module `A'`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 65,
+  "kind": "theorem",
+  "name": "exists_norm_le_mul_norm_pi_quotient_mk",
+  "statement": "theorem exists_norm_le_mul_norm_pi_quotient_mk (hA : IsAffinoidAlgebra K A)\n    (h : ⨅ i, 𝔭 i = ⊥) :\n    haveI : ∀ i, IsClosed ((𝔭 i : Ideal A) : Set A) := fun i ↦ hA.isClosed_ideal (𝔭 i)\n    ∃ C : ℝ, ∀ f : A, ‖f‖ ≤ C * ‖(RingHom.pi fun i ↦ Ideal.Quotient.mk (𝔭 i)) f‖",
+  "doc": "/-- Open mapping for the diagonal map: `‖f‖ ≤ C * max_i ‖f mod 𝔭ᵢ‖` when `⋂ 𝔭ᵢ = ⊥`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "isBanachFunctionAlgebra_of_isReduced",
+  "statement": "theorem isBanachFunctionAlgebra_of_isReduced [CharZero K] (hA : IsAffinoidAlgebra K A)\n    [IsReduced A] : IsBanachFunctionAlgebra K A",
+  "doc": "/-- **BGR 6.2.4/1** (M4; `[CharZero K]`, plan D2): every reduced affinoid algebra is a Banach\nfunction algebra, i.e. `‖f‖ ≤ C * |f|_sup` for every complete `K`-algebra norm. Through the\ndiagonal map into `∏ A ⧸ 𝔭ᵢ` (minimal primes, `⋂ 𝔭ᵢ = nilradical = ⊥`), the domain case on each\nfactor, 6.2.1/3 (`|f mod 𝔭ᵢ|_sup ≤ |f|_sup`) and the open mapping bound. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 82,
+  "kind": "theorem",
+  "name": "isBounded_powerBounded_of_isReduced",
+  "statement": "theorem isBounded_powerBounded_of_isReduced [CharZero K] (hA : IsAffinoidAlgebra K A)\n    [IsReduced A] :\n    haveI := hA.hasSupSeminorm\n    TopologicalRing.IsBounded (powerBounded K A : Set A)",
+  "doc": "/-- **§2.3.5**: a reduced affinoid algebra has bounded `Å` (is \"uniform\" in the norm sense). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/FunctionAlgebra.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "exists_norm_map_le_mul_supSeminorm",
+  "statement": "theorem exists_norm_map_le_mul_supSeminorm [CharZero K] (hA : IsAffinoidAlgebra K A) [IsReduced A]\n    {B : Type*} [NormedCommRing B] [NormedAlgebra K B] (φ : A →ₐ[K] B) (hφ : Continuous φ) :\n    ∃ C : ℝ, ∀ f : A, ‖φ f‖ ≤ C * supSeminorm K f",
+  "doc": "/-- **§2.4.3**: on a reduced affinoid algebra every continuous algebra homomorphism into a Banach\nalgebra is bounded for `|·|_sup` (`‖φ f‖ ≤ C * |f|_sup`), the form in which the Banach function\nalgebra property is used downstream. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 46,
+  "kind": "def",
+  "name": "powerBoundedMap",
+  "statement": "noncomputable def powerBoundedMap (φ : B →ₐ[K] A) : powerBounded K B →+* powerBounded K A where",
+  "doc": "/-- `φ̊ : B̊ → Å` (BGR 6.3: \"each such `φ` maps power-bounded elements into power-bounded\nelements\", by the contraction 3.8.1/4). -/",
+  "sorries": 5
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 63,
+  "kind": "theorem",
+  "name": "powerBoundedMap_mem_topologicallyNilpotent",
+  "statement": "theorem powerBoundedMap_mem_topologicallyNilpotent (φ : B →ₐ[K] A) {b : powerBounded K B}\n    (hb : b ∈ topologicallyNilpotent K B) : powerBoundedMap φ b ∈ topologicallyNilpotent K A",
+  "doc": "/-- `φ̊` maps `B̌` into `Ǎ`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 68,
+  "kind": "def",
+  "name": "reductionMap",
+  "statement": "noncomputable def reductionMap (φ : B →ₐ[K] A) : Reduction K B →+* Reduction K A",
+  "doc": "/-- `φ̃ : B̃ → Ã` (BGR 6.3, the commutative diagram). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "reductionMap_mk",
+  "statement": "theorem reductionMap_mk (φ : B →ₐ[K] A) (b : powerBounded K B) :\n    reductionMap φ (Reduction.mk K B b) = Reduction.mk K A (powerBoundedMap φ b)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 76,
+  "kind": "theorem",
+  "name": "reductionMap_id",
+  "statement": "theorem reductionMap_id : reductionMap (AlgHom.id K A) = RingHom.id (Reduction K A)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "reductionMap_comp",
+  "statement": "theorem reductionMap_comp (φ : B →ₐ[K] A) (ψ : C →ₐ[K] B) :\n    reductionMap (φ.comp ψ) = (reductionMap φ).comp (reductionMap ψ)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 84,
+  "kind": "def",
+  "name": "reductionAlgHom",
+  "statement": "noncomputable def reductionAlgHom (φ : B →ₐ[K] A) :\n    Reduction K B →ₐ[IsLocalRing.ResidueField (Subring.unitClosedBall K)] Reduction K A where",
+  "doc": "/-- `φ̃` is `K̃`-linear. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 113,
+  "kind": "theorem",
+  "name": "isometry_iff_forall_supSeminorm_eq_one_imp",
+  "statement": "theorem isometry_iff_forall_supSeminorm_eq_one_imp (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) :\n    (∀ g : B, supSeminorm K (φ g) = supSeminorm K g) ↔\n      ∀ g : B, supSeminorm K g = 1 → supSeminorm K (φ g) = 1",
+  "doc": "/-- **BGR 6.3.1/1**: `φ` is an isometry for `|·|_sup` iff `|φ(f)|_sup = 1` whenever `|f|_sup = 1`\n(scale by 6.2.1/4 (ii): `|c g^m|_sup = 1`, then `|c| |φ(g)|^m = 1 = |c| |g|^m`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 120,
+  "kind": "theorem",
+  "name": "injective_reductionMap_iff_isometry",
+  "statement": "theorem injective_reductionMap_iff_isometry (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) :\n    haveI := hA.hasSupSeminorm; haveI := hB.hasSupSeminorm\n    Function.Injective (reductionMap φ) ↔ ∀ g : B, supSeminorm K (φ g) = supSeminorm K g",
+  "doc": "/-- **BGR 6.3.1/2**: `φ̃` is injective iff `φ` is an isometry for `|·|_sup`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 128,
+  "kind": "theorem",
+  "name": "ker_le_nilradical_of_injective_reductionMap",
+  "statement": "theorem ker_le_nilradical_of_injective_reductionMap (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A)\n    (h : haveI := hA.hasSupSeminorm; haveI := hB.hasSupSeminorm\n      Function.Injective (reductionMap φ)) :\n    RingHom.ker φ ≤ nilradical B",
+  "doc": "/-- **BGR 6.3.1/3**: if `φ̃` is injective then `ker φ ⊆ rad B` (an isometry has kernel inside\n`{|g|_sup = 0} = rad B`, 6.2.1/4 (iii)). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 137,
+  "kind": "theorem",
+  "name": "injective_of_isometry",
+  "statement": "theorem injective_of_isometry (hB : IsAffinoidAlgebra K B) [IsReduced B] (φ : B →ₐ[K] A)\n    (h : ∀ g : B, supSeminorm K (φ g) = supSeminorm K g) : Function.Injective φ",
+  "doc": "/-- **BGR 6.3.1/6 (ii) ⇒ (i), injectivity**: for `B` reduced, an isometry for `|·|_sup` is\ninjective (`|·|_sup` is a norm on `B`, 6.2.1/4 (iii)). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 151,
+  "kind": "theorem",
+  "name": "comap_ker_reductionMap_eq_radical_of_isStrictMap",
+  "statement": "theorem comap_ker_reductionMap_eq_radical_of_isStrictMap (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) (hφ : IsStrictMap φ) :\n    haveI := hA.hasSupSeminorm; haveI := hB.hasSupSeminorm\n    (RingHom.ker (reductionMap φ)).comap (Reduction.mk K B) =\n      (topologicallyNilpotent K B ⊔ RingHom.ker (powerBoundedMap φ)).radical",
+  "doc": "/-- **BGR 6.3.1/4, first equation**: for `φ` strict,\n`τ⁻¹(ker φ̃) = rad (B̌ + ker φ̊)` in `B̊` (if `φ(g)ⁿ → 0` and `φ(B̌)` is open in `φ(B)` then\n`φ(g)ⁿ ∈ φ(B̌)` for large `n`, i.e. `gⁿ ∈ B̌ + ker φ̊`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 159,
+  "kind": "theorem",
+  "name": "ker_reductionMap_eq_radical_map_of_isStrictMap",
+  "statement": "theorem ker_reductionMap_eq_radical_map_of_isStrictMap (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) (hφ : IsStrictMap φ) :\n    haveI := hA.hasSupSeminorm; haveI := hB.hasSupSeminorm\n    RingHom.ker (reductionMap φ) =\n      ((RingHom.ker (powerBoundedMap φ)).map (Reduction.mk K B)).radical",
+  "doc": "/-- **BGR 6.3.1/4, second equation**: for `φ` strict, `ker φ̃ = rad (τ(ker φ̊))`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 168,
+  "kind": "theorem",
+  "name": "injective_reductionMap_of_isStrictMap_of_ker_le_nilradical",
+  "statement": "theorem injective_reductionMap_of_isStrictMap_of_ker_le_nilradical (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) (hφ : IsStrictMap φ)\n    (hker : RingHom.ker φ ≤ nilradical B) :\n    haveI := hA.hasSupSeminorm; haveI := hB.hasSupSeminorm\n    Function.Injective (reductionMap φ)",
+  "doc": "/-- **BGR 6.3.1/5**: if `φ` is strict and `ker φ ⊆ rad B` then `φ̃` is injective (`B̌` is a radical\nideal, so `rad (B̌ + ker φ̊) = B̌`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 176,
+  "kind": "theorem",
+  "name": "injective_reductionMap_of_injective_of_isStrictMap",
+  "statement": "theorem injective_reductionMap_of_injective_of_isStrictMap (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) (φ : B →ₐ[K] A) (hinj : Function.Injective φ)\n    (hφ : IsStrictMap φ) :\n    haveI := hA.hasSupSeminorm; haveI := hB.hasSupSeminorm\n    Function.Injective (reductionMap φ)",
+  "doc": "/-- **BGR 6.3.1/6 (i) ⇒ (iii)**: an injective strict `φ` has injective `φ̃` (no reducedness). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/ReductionFunctor.lean",
+  "line": 186,
+  "kind": "theorem",
+  "name": "isStrictMap_of_isometry",
+  "statement": "theorem isStrictMap_of_isometry [CharZero K] (hA : IsAffinoidAlgebra K A)\n    (hB : IsAffinoidAlgebra K B) [IsReduced B] (φ : B →ₐ[K] A)\n    (h : ∀ g : B, supSeminorm K (φ g) = supSeminorm K g) : IsStrictMap φ",
+  "doc": "/-- **BGR 6.3.1/6 (ii) ⇒ (i), strictness** (M5; `[CharZero K]`, plan D2): for `B` reduced an\nisometry `φ` for `|·|_sup` is strict: `‖g‖_B ≤ C |g|_sup = C |φ(g)|_sup ≤ C ‖φ(g)‖_A` by\n6.2.4/1 on `B`, and `φ` is continuous (6.1.3/1), so `φ` is a homeomorphism onto its image. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 37,
+  "kind": "theorem",
+  "name": "supSeminorm_X",
+  "statement": "theorem supSeminorm_X (n : ℕ) (i : Fin n) :\n    supSeminorm K (Restricted.X K (1 : Fin n → ℝ) i) = 1",
+  "doc": "/-- `|Xᵢ|_sup = 1` in `Tₙ`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 42,
+  "kind": "theorem",
+  "name": "supSeminorm_natCast",
+  "statement": "theorem supSeminorm_natCast (n m : ℕ) :\n    supSeminorm K (m : TateAlgebra K n) = ‖(m : K)‖",
+  "doc": "/-- `|m|_sup = ‖m‖` in `Tₙ`; over `ℚ_p` this is `|p|_sup = p⁻¹`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "isPowerBounded_X",
+  "statement": "theorem isPowerBounded_X (n : ℕ) (i : Fin n) :\n    IsPowerBounded (Restricted.X K (1 : Fin n → ℝ) i)",
+  "doc": "/-- `X` is power-bounded in `K⟨X⟩` (`|X|_sup = 1`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "isTopologicallyNilpotent_smul_X",
+  "statement": "theorem isTopologicallyNilpotent_smul_X (n : ℕ) (i : Fin n) {c : K} (hc : ‖c‖ < 1) :\n    IsTopologicallyNilpotent (c • Restricted.X K (1 : Fin n → ℝ) i)",
+  "doc": "/-- `c • X` is topologically nilpotent in `K⟨X⟩` for `‖c‖ < 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 67,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_X_span_X_sub_C",
+  "statement": "theorem supSeminorm_mk_X_span_X_sub_C {a : K} (ha : ‖a‖ ≤ 1) :\n    supSeminorm K (Ideal.Quotient.mk (Ideal.span {X₁ K - Restricted.C (1 : Fin 1 → ℝ) a}) (X₁ K)) =\n      ‖a‖",
+  "doc": "/-- `|X|_sup = ‖a‖` in `K⟨X⟩/(X − a)` for `‖a‖ ≤ 1` (the single point `X = a`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 73,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_X_span_X_sq",
+  "statement": "theorem supSeminorm_mk_X_span_X_sq :\n    supSeminorm K (Ideal.Quotient.mk (Ideal.span {X₁ K ^ 2}) (X₁ K)) = 0",
+  "doc": "/-- The nilpotent `ε = X` in `K⟨X⟩/(X²)` has `|ε|_sup = 0`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "norm_mk_X_span_X_sq",
+  "statement": "theorem norm_mk_X_span_X_sq : ‖Ideal.Quotient.mk (Ideal.span {X₁ K ^ 2}) (X₁ K)‖ = 1",
+  "doc": "/-- The nilpotent `ε = X` in `K⟨X⟩/(X²)` has residue norm `1` (every `X + g X²` has Gauss norm\n`≥ 1`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "not_isBounded_powerBounded_span_X_sq",
+  "statement": "theorem not_isBounded_powerBounded_span_X_sq :\n    haveI := (IsAffinoidAlgebra.tateAlgebra_quotient 1 (Ideal.span {X₁ K ^ 2})).hasSupSeminorm\n    ¬ TopologicalRing.IsBounded\n      (powerBounded K (T₁ ⧸ Ideal.span {X₁ K ^ 2}) : Set (T₁ ⧸ Ideal.span {X₁ K ^ 2}))",
+  "doc": "/-- `K⟨X⟩/(X²)` is not uniform: its power-bounded elements are unbounded (it is not reduced,\n`isReduced_of_isBounded_powerBounded`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_X_span_X_sq_sub_C",
+  "statement": "theorem supSeminorm_mk_X_span_X_sq_sub_C {a : K} (ha : ‖a‖ ≤ 1) :\n    supSeminorm K\n      (Ideal.Quotient.mk (Ideal.span {X₁ K ^ 2 - Restricted.C (1 : Fin 1 → ℝ) a}) (X₁ K)) =\n      ‖a‖ ^ (1 / 2 : ℝ)",
+  "doc": "/-- `|X|_sup = ‖a‖^{1/2}` in `K⟨X⟩/(X² − a)` for `‖a‖ ≤ 1` (the roots of `X² − a` have spectral\nnorm `‖a‖^{1/2}`); over `ℚ_p` with `a = p` this is `p^{−1/2} ∉ |ℚ_p^×|`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 110,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_X_annulus",
+  "statement": "theorem supSeminorm_mk_X_annulus {c : K} (hc : ‖c‖ ≤ 1) :\n    supSeminorm K (Ideal.Quotient.mk (annulusIdeal c) (Restricted.X K (1 : Fin 2 → ℝ) 0)) = 1",
+  "doc": "/-- `|f₁|_sup = 1` in `K⟨X, Y⟩/(XY − c)` for `‖c‖ ≤ 1` (the point `x₁ = (X − 1, Y − c)`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 115,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_Y_annulus",
+  "statement": "theorem supSeminorm_mk_Y_annulus {c : K} (hc : ‖c‖ ≤ 1) :\n    supSeminorm K (Ideal.Quotient.mk (annulusIdeal c) (Restricted.X K (1 : Fin 2 → ℝ) 1)) = 1",
+  "doc": "/-- `|f₂|_sup = 1` in `K⟨X, Y⟩/(XY − c)` for `‖c‖ ≤ 1` (the point `x₂ = (X − c, Y − 1)`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 120,
+  "kind": "theorem",
+  "name": "supSeminorm_mk_X_mul_Y_annulus",
+  "statement": "theorem supSeminorm_mk_X_mul_Y_annulus {c : K} (hc : ‖c‖ ≤ 1) :\n    supSeminorm K (Ideal.Quotient.mk (annulusIdeal c)\n      (Restricted.X K (1 : Fin 2 → ℝ) 0 * Restricted.X K (1 : Fin 2 → ℝ) 1)) = ‖c‖",
+  "doc": "/-- `|f₁ f₂|_sup = |c|_sup = ‖c‖` in `K⟨X, Y⟩/(XY − c)` (BGR p. 242). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 127,
+  "kind": "theorem",
+  "name": "not_forall_supSeminorm_mul_annulus",
+  "statement": "theorem not_forall_supSeminorm_mul_annulus {c : K} (hc : ‖c‖ < 1) :\n    ¬ ∀ f g : T₂ ⧸ annulusIdeal c,\n      supSeminorm K (f * g) = supSeminorm K f * supSeminorm K g",
+  "doc": "/-- **The supremum seminorm need not be multiplicative** (BGR 6.2.3, the example after 6.2.3/5):\non `K⟨X, Y⟩/(XY − c)` with `‖c‖ < 1` it is not. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 139,
+  "kind": "theorem",
+  "name": "isAffinoidAlgebra_prod",
+  "statement": "theorem isAffinoidAlgebra_prod : IsAffinoidAlgebra K (K × K)",
+  "doc": "/-- `K × K` with the maximum norm is an affinoid algebra (a quotient of `T₁`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 143,
+  "kind": "def",
+  "name": "prodHom",
+  "statement": "noncomputable def prodHom {c : K} (hc : ‖c‖ ≤ 1) : TateAlgebra K 1 →ₐ[K] K × K",
+  "doc": "/-- BGR 6.3.1 Example 2: `φ : K⟨X⟩ → K × K`, `X ↦ (c, 0)`, for `‖c‖ ≤ 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "prodHom_X",
+  "statement": "theorem prodHom_X {c : K} (hc : ‖c‖ ≤ 1) :\n    prodHom K hc (Restricted.X K (1 : Fin 1 → ℝ) 0) = (c, 0)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 153,
+  "kind": "theorem",
+  "name": "surjective_prodHom",
+  "statement": "theorem surjective_prodHom {c : K} (hc : ‖c‖ ≤ 1) (hc0 : c ≠ 0) :\n    Function.Surjective (prodHom K hc)",
+  "doc": "/-- `φ` is surjective (\"It is easily verified that `φ` is surjective\": `(1, 0)` and `(0, 1)` are\n`φ(X / c)`-free: `φ(c⁻¹X) = (1, 0)`, `φ(1 − c⁻¹X) = (0, 1)` for `c ≠ 0`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 159,
+  "kind": "theorem",
+  "name": "not_surjective_reductionMap_prodHom",
+  "statement": "theorem not_surjective_reductionMap_prodHom {c : K} (hc : ‖c‖ < 1) :\n    haveI := (isAffinoidAlgebra_prod K).hasSupSeminorm\n    ¬ Function.Surjective (reductionMap (prodHom K hc.le))",
+  "doc": "/-- `φ̃ : K̃[X] → K̃ × K̃` is not surjective for `‖c‖ < 1`, since `|φ(X)|_sup = ‖c‖ < 1` forces\n`φ̃(X) = 0`, so the image of `φ̃` is the image of `K̃`, the diagonal. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 171,
+  "kind": "theorem",
+  "name": "isAffinoidAlgebra_of_finiteDimensional",
+  "statement": "theorem isAffinoidAlgebra_of_finiteDimensional : IsAffinoidAlgebra K L",
+  "doc": "/-- A finite extension of `K` is an affinoid `K`-algebra. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 176,
+  "kind": "theorem",
+  "name": "injective_reductionMap_ofId",
+  "statement": "theorem injective_reductionMap_ofId :\n    haveI := (isAffinoidAlgebra_of_finiteDimensional K L).hasSupSeminorm\n    Function.Injective (reductionMap (Algebra.ofId K L))",
+  "doc": "/-- BGR 6.3.1 Example 1, the injectivity: `K̃ → L̃` is injective (`K ↪ L` is an isometry for the\nspectral norm, 6.3.1/2). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Affinoid/SupExamples.lean",
+  "line": 183,
+  "kind": "theorem",
+  "name": "not_surjective_algebraMap_of_one_lt_finrank",
+  "statement": "theorem not_surjective_algebraMap_of_one_lt_finrank (h : 1 < Module.finrank K L) :\n    ¬ Function.Surjective (algebraMap K L)",
+  "doc": "/-- BGR 6.3.1 Example 1, the non-surjectivity: `K → L` is not surjective when `[L : K] > 1`.\n(The existence of such `L` with `K̃ → L̃` bijective, e.g. `ℚ₂(√2)/ℚ₂`, is plan D5.) -/",
+  "sorries": 1
+ }
+]

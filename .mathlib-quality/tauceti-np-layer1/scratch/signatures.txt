@@ -1,0 +1,393 @@
+@WithZero.negLog_zero : ∀ {M : Type u_1} [inst : AddCommGroup M], WithZero.negLog 0 = ⊤
+@WithZero.negLog_exp : ∀ {M : Type u_1} [inst : AddCommGroup M] (m : M), (WithZero.exp m).negLog = ↑(-m)
+@WithZero.negLog_eq_top : ∀ {M : Type u_1} [inst : AddCommGroup M] {x : WithZero (Multiplicative M)},
+  x.negLog = ⊤ ↔ x = 0
+@WithZero.negLog_one : ∀ {M : Type u_1} [inst : AddCommGroup M], WithZero.negLog 1 = 0
+@WithZero.negLog_eq_coe : ∀ {M : Type u_1} [inst : AddCommGroup M] {x : WithZero (Multiplicative M)} {m : M},
+  x.negLog = ↑m ↔ x = WithZero.exp (-m)
+@WithZero.negLog_mul : ∀ {M : Type u_1} [inst : AddCommGroup M] (x y : WithZero (Multiplicative M)),
+  (x * y).negLog = x.negLog + y.negLog
+@WithZero.negLog_le_negLog : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M] [IsOrderedAddMonoid M]
+  {x y : WithZero (Multiplicative M)}, x.negLog ≤ y.negLog ↔ y ≤ x
+@WithZero.negLog_lt_negLog : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M] [IsOrderedAddMonoid M]
+  {x y : WithZero (Multiplicative M)}, x.negLog < y.negLog ↔ y < x
+WithZero.orderAddIsoWithTop : (M : Type u_1) →
+  [inst : AddCommGroup M] → [inst_1 : LinearOrder M] → (Additive (WithZero (Multiplicative M)))ᵒᵈ ≃+o WithTop M
+@WithZero.orderAddIsoWithTop_apply : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M]
+  [IsOrderedAddMonoid M] (x : (Additive (WithZero (Multiplicative M)))ᵒᵈ),
+  (WithZero.orderAddIsoWithTop M) x = WithZero.negLog x
+@WithZero.mapAddHom'_exp : ∀ {M : Type u_1} {N : Type u_2} [inst : AddCommGroup M] [inst_1 : AddCommGroup N]
+  (f : M →+ N) (m : M), (WithZero.mapAddHom' f) (WithZero.exp m) = WithZero.exp (f m)
+@WithZero.mapAddHom'_strictMono : ∀ {M : Type u_1} {N : Type u_2} [inst : AddCommGroup M] [inst_1 : AddCommGroup N]
+  [inst_2 : Preorder M] [inst_3 : Preorder N] {f : M →+ N}, StrictMono ⇑f → StrictMono ⇑(WithZero.mapAddHom' f)
+@WithZero.negLog_mapAddHom' : ∀ {M : Type u_1} {N : Type u_2} [inst : AddCommGroup M] [inst_1 : AddCommGroup N]
+  (f : M →+ N) (x : WithZero (Multiplicative M)), ((WithZero.mapAddHom' f) x).negLog = WithTop.map (⇑f) x.negLog
+NNReal.toRealMultZero : NNReal →*₀ WithZero (Multiplicative ℝ)
+@NNReal.toRealMultZero_of_ne_zero : ∀ {x : NNReal}, x ≠ 0 → NNReal.toRealMultZero x = WithZero.exp (Real.log ↑x)
+NNReal.toRealMultZero_strictMono : StrictMono ⇑NNReal.toRealMultZero
+@WithZeroMulReal.toNNReal : {e : NNReal} → e ≠ 0 → WithZero (Multiplicative ℝ) →*₀ NNReal
+@WithZeroMulReal.toNNReal_exp : ∀ {e : NNReal} (he : e ≠ 0) (t : ℝ),
+  (WithZeroMulReal.toNNReal he) (WithZero.exp t) = e ^ t
+@WithZeroMulReal.toNNReal_strictMono : ∀ {e : NNReal} (he : 1 < e), StrictMono ⇑(WithZeroMulReal.toNNReal ⋯)
+@AddCommGroup.ratLog : {M : Type u_1} →
+  [inst : AddCommGroup M] →
+    [inst_1 : LinearOrder M] → {a₀ : M} → a₀ < 0 → (∀ (a : M), AddCommGroup.IsCommensurableWith a₀ a) → M →+ ℚ
+@AddCommGroup.ratLog_eq : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M] [IsOrderedAddMonoid M]
+  {a₀ a : M} (ha₀ : a₀ < 0) (h : ∀ (a : M), AddCommGroup.IsCommensurableWith a₀ a) {m n : ℤ},
+  0 < n → n • a = m • a₀ → (AddCommGroup.ratLog ha₀ h) a = -(↑m / ↑n)
+@AddCommGroup.ratLog_self : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M] [IsOrderedAddMonoid M]
+  {a₀ : M} (ha₀ : a₀ < 0) (h : ∀ (a : M), AddCommGroup.IsCommensurableWith a₀ a), (AddCommGroup.ratLog ha₀ h) a₀ = -1
+@AddCommGroup.ratLog_strictMono : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M]
+  [IsOrderedAddMonoid M] {a₀ : M} (ha₀ : a₀ < 0) (h : ∀ (a : M), AddCommGroup.IsCommensurableWith a₀ a),
+  StrictMono ⇑(AddCommGroup.ratLog ha₀ h)
+@AddCommGroup.ratLog_unique : ∀ {M : Type u_1} [inst : AddCommGroup M] [inst_1 : LinearOrder M] [IsOrderedAddMonoid M]
+  {a₀ : M} (ha₀ : a₀ < 0) (h : ∀ (a : M), AddCommGroup.IsCommensurableWith a₀ a) (g : M →+ ℚ),
+  g a₀ = -1 → g = AddCommGroup.ratLog ha₀ h
+@Valuation.addVal_apply : ∀ {R : Type u_1} {M : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup M]
+  [inst_2 : LinearOrder M] [inst_3 : IsOrderedAddMonoid M] (v : Valuation R (WithZero (Multiplicative M))) (x : R),
+  v.addVal x = (v x).negLog
+@Valuation.addVal_eq_top : ∀ {R : Type u_1} {M : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup M]
+  [inst_2 : LinearOrder M] [inst_3 : IsOrderedAddMonoid M] {v : Valuation R (WithZero (Multiplicative M))} {x : R},
+  v.addVal x = ⊤ ↔ v x = 0
+@Valuation.addVal_eq_coe : ∀ {R : Type u_1} {M : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup M]
+  [inst_2 : LinearOrder M] [inst_3 : IsOrderedAddMonoid M] {v : Valuation R (WithZero (Multiplicative M))} {x : R}
+  {m : M}, v.addVal x = ↑m ↔ v x = WithZero.exp (-m)
+@Valuation.addVal_le_addVal : ∀ {R : Type u_1} {M : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup M]
+  [inst_2 : LinearOrder M] [inst_3 : IsOrderedAddMonoid M] {v : Valuation R (WithZero (Multiplicative M))} {x y : R},
+  v.addVal x ≤ v.addVal y ↔ v y ≤ v x
+@Valuation.addVal_map : ∀ {R : Type u_1} {M : Type u_2} {N : Type u_3} [inst : Ring R] [inst_1 : AddCommGroup M]
+  [inst_2 : LinearOrder M] [inst_3 : IsOrderedAddMonoid M] [inst_4 : AddCommGroup N] [inst_5 : LinearOrder N]
+  [inst_6 : IsOrderedAddMonoid N] (v : Valuation R (WithZero (Multiplicative M))) {f : M →+ N} (hf : StrictMono ⇑f)
+  (x : R), (Valuation.map (WithZero.mapAddHom' f) ⋯ v).addVal x = WithTop.map (⇑f) (v.addVal x)
+@Valuation.addValValueGroup_apply : ∀ {R : Type u_1} [inst : Ring R] {Γ₀ : Type u_2}
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (x : R),
+  v.addValValueGroup x = WithZero.negLog (v.restrict x)
+@Valuation.addValValueGroup_eq_top : ∀ {R : Type u_1} [inst : Ring R] {Γ₀ : Type u_2}
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) {x : R}, v.addValValueGroup x = ⊤ ↔ v x = 0
+@Valuation.RankOne.addVal_apply : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne] (x : R),
+  (Valuation.RankOne.addVal v) x = (NNReal.toRealMultZero ((Valuation.RankOne.hom v) (v.restrict x))).negLog
+@Valuation.RankOne.addVal_zero : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne],
+  (Valuation.RankOne.addVal v) 0 = ⊤
+@Valuation.RankOne.addVal_eq_top : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne] {x : R},
+  (Valuation.RankOne.addVal v) x = ⊤ ↔ v x = 0
+@Valuation.RankOne.addVal_apply_of_val_ne_zero : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne] {x : R},
+  v x ≠ 0 → (Valuation.RankOne.addVal v) x = ↑(-Real.log ↑((Valuation.RankOne.hom v) (v.restrict x)))
+@Valuation.RankOne.addVal_eq_of_hom_eq : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne] {w : Valuation R Γ₀}
+  [inst_3 : w.RankOne],
+  (∀ (x : R), (Valuation.RankOne.hom v) (v.restrict x) = (Valuation.RankOne.hom w) (w.restrict x)) →
+    Valuation.RankOne.addVal v = Valuation.RankOne.addVal w
+@Valuation.IsCommensurable.val_ne_zero : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π], v π ≠ 0
+@Valuation.IsCommensurable.of_forall_eq : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π]
+  {w : Valuation R Γ₀}, (∀ (x : R), w x = v x) → w.IsCommensurable π
+@Valuation.IsCommensurable.isNontrivial : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π], v.IsNontrivial
+@Valuation.coe_commGen : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R] [inst_1 : LinearOrderedCommGroupWithZero Γ₀]
+  (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π], ↑↑(v.commGen π) = v π
+@Valuation.ofMul_commGen_neg : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π],
+  Additive.ofMul (v.commGen π) < 0
+@Valuation.isCommensurableWith_commGen : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π]
+  (g : ↥(MonoidWithZeroHom.ofClass v).valueGroup),
+  AddCommGroup.IsCommensurableWith (Additive.ofMul (v.commGen π)) (Additive.ofMul g)
+@Valuation.ratLog_strictMono : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π],
+  StrictMono ⇑(v.ratLog π)
+@Valuation.ratLog_commGen : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π],
+  (v.ratLog π) (Additive.ofMul (v.commGen π)) = -1
+@Valuation.ratLog_eq_of_zsmul : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π]
+  {g : ↥(MonoidWithZeroHom.ofClass v).valueGroup} {m n : ℤ},
+  0 < n → n • Additive.ofMul g = m • Additive.ofMul (v.commGen π) → (v.ratLog π) (Additive.ofMul g) = -(↑m / ↑n)
+@Valuation.addValQ_apply : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R] [inst_1 : LinearOrderedCommGroupWithZero Γ₀]
+  (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] (x : R),
+  (v.addValQ π) x = WithTop.map (⇑(v.ratLog π)) (v.addValValueGroup x)
+@Valuation.addValQ_zero : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R] [inst_1 : LinearOrderedCommGroupWithZero Γ₀]
+  (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π], (v.addValQ π) 0 = ⊤
+@Valuation.addValQ_eq_top : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {x : R},
+  (v.addValQ π) x = ⊤ ↔ v x = 0
+@Valuation.addValQ_eq_of_zpow : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {x : R}
+  {m n : ℤ}, v x ≠ 0 → 0 < n → v x ^ n = v π ^ m → (v.addValQ π) x = ↑(↑m / ↑n)
+@Valuation.addValQ_eq_of_pow_eq_pow : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {x : R}
+  {m n : ℕ}, v x ≠ 0 → 0 < n → v x ^ n = v π ^ m → (v.addValQ π) x = ↑(↑m / ↑n)
+@Valuation.addValQ_self : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R] [inst_1 : LinearOrderedCommGroupWithZero Γ₀]
+  (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π], (v.addValQ π) π = 1
+@Valuation.addValQ_ne_top : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {x : R},
+  v x ≠ 0 → (v.addValQ π) x ≠ ⊤
+@Valuation.exists_zpow_eq_and_addValQ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {x : R},
+  v x ≠ 0 → ∃ m n, 0 < n ∧ v x ^ n = v π ^ m ∧ (v.addValQ π) x = ↑(↑m / ↑n)
+@Valuation.addValQ_le_addValQ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {x y : R},
+  (v.addValQ π) x ≤ (v.addValQ π) y ↔ v y ≤ v x
+@Valuation.addValQ_unique : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π]
+  (w : AddValuation R (WithTop ℚ)), (∀ (x y : R), w x ≤ w y ↔ v y ≤ v x) → w π = 1 → w = v.addValQ π
+@Valuation.IsCommensurable.toRankLeOne : {R : Type u_1} →
+  {Γ₀ : Type u_2} →
+    [inst : Ring R] →
+      [inst_1 : LinearOrderedCommGroupWithZero Γ₀] →
+        (v : Valuation R Γ₀) → (π : R) → [hπ : v.IsCommensurable π] → {e : NNReal} → 1 < e → v.RankLeOne
+@Valuation.IsCommensurable.toRankOne_hom_restrict : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) (π : R) [hπ : v.IsCommensurable π] {e : NNReal}
+  (he : 1 < e), (Valuation.RankOne.hom v) (v.restrict π) = e⁻¹
+@Valuation.RankOne.addVal_eq_map_addValQ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne] (π : R)
+  [inst_3 : v.IsCommensurable π] (x : R),
+  (Valuation.RankOne.addVal v) x =
+    WithTop.map (fun q => ↑q * -Real.log ↑((Valuation.RankOne.hom v) (v.restrict π))) ((v.addValQ π) x)
+@Valuation.RankOne.hom_eq_rpow_addValQ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.RankOne] (π : R)
+  [inst_3 : v.IsCommensurable π] {x : R} {q : ℚ},
+  (v.addValQ π) x = ↑q → ↑((Valuation.RankOne.hom v) (v.restrict x)) = ↑((Valuation.RankOne.hom v) (v.restrict π)) ^ ↑q
+@Valuation.IsRankOneDiscrete.exists_zpow_generator_eq : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {x : R},
+  v x ≠ 0 → ∃ k, v x = ↑(Valuation.IsRankOneDiscrete.generator v ^ k)
+@Valuation.IsRankOneDiscrete.exists_zpow_eq_of_isUniformizer : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {π : R},
+  v.IsUniformizer π → ∀ {x : R}, v x ≠ 0 → ∃ k, v x = v π ^ k
+@Valuation.IsRankOneDiscrete.isCommensurable_of_lt_one : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [v.IsRankOneDiscrete] {π : R},
+  v π ≠ 0 → v π < 1 → v.IsCommensurable π
+@Valuation.IsRankOneDiscrete.isCommensurable : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {π : R},
+  v.IsUniformizer π → v.IsCommensurable π
+@Valuation.IsRankOneDiscrete.addValZ_apply : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] (x : R),
+  (Valuation.IsRankOneDiscrete.addValZ v) x =
+    ((Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt v) (v.restrict x)).negLog
+@Valuation.IsRankOneDiscrete.addValZ_zero : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete],
+  (Valuation.IsRankOneDiscrete.addValZ v) 0 = ⊤
+@Valuation.IsRankOneDiscrete.addValZ_eq_top : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {x : R},
+  (Valuation.IsRankOneDiscrete.addValZ v) x = ⊤ ↔ v x = 0
+@Valuation.IsRankOneDiscrete.addValZ_eq_iff : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] (x : R) (k : ℤ),
+  (Valuation.IsRankOneDiscrete.addValZ v) x = ↑k ↔ v x = ↑(Valuation.IsRankOneDiscrete.generator v ^ k)
+@Valuation.IsRankOneDiscrete.addValZ_eq_of_zpow : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {π : R},
+  v.IsUniformizer π → ∀ {x : R} {k : ℤ}, v x = v π ^ k → (Valuation.IsRankOneDiscrete.addValZ v) x = ↑k
+@Valuation.IsRankOneDiscrete.addValZ_eq_iff_of_isUniformizer : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {π : R},
+  v.IsUniformizer π → ∀ (x : R) (k : ℤ), (Valuation.IsRankOneDiscrete.addValZ v) x = ↑k ↔ v x = v π ^ k
+@Valuation.IsRankOneDiscrete.addValZ_isUniformizer : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {π : R},
+  v.IsUniformizer π → (Valuation.IsRankOneDiscrete.addValZ v) π = 1
+@Valuation.IsRankOneDiscrete.addValZ_le_addValZ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {x y : R},
+  (Valuation.IsRankOneDiscrete.addValZ v) x ≤ (Valuation.IsRankOneDiscrete.addValZ v) y ↔ v y ≤ v x
+@Valuation.addValQ_eq_map_addValZ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] {π : R},
+  v.IsUniformizer π →
+    ∀ [inst_3 : v.IsCommensurable π] (x : R),
+      (v.addValQ π) x = WithTop.map (fun n => ↑n) ((Valuation.IsRankOneDiscrete.addValZ v) x)
+@Valuation.IsRankOneDiscrete.hom_eq_toNNReal_comp : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] [inst_3 : v.RankOne]
+  {e : NNReal} (he : e ≠ 0),
+  (Valuation.RankOne.hom v) ↑(Valuation.IsRankOneDiscrete.generator' v) = e⁻¹ →
+    Valuation.RankOne.hom v =
+      (WithZeroMulInt.toNNReal he).comp
+        (MonoidWithZeroHom.ofClass (Valuation.IsRankOneDiscrete.valueGroup₀_equiv_withZeroMulInt v))
+@Valuation.IsRankOneDiscrete.hom_eq_zpow_neg_addValZ : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] [inst_3 : v.RankOne]
+  {e : NNReal},
+  e ≠ 0 →
+    (Valuation.RankOne.hom v) ↑(Valuation.IsRankOneDiscrete.generator' v) = e⁻¹ →
+      ∀ {x : R} {d : ℤ},
+        (Valuation.IsRankOneDiscrete.addValZ v) x = ↑d → (Valuation.RankOne.hom v) (v.restrict x) = e ^ (-d)
+@Valuation.IsRankOneDiscrete.hom_eq_zpow_neg_addValZ_of_isUniformizer : ∀ {R : Type u_1} {Γ₀ : Type u_2} [inst : Ring R]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation R Γ₀) [inst_2 : v.IsRankOneDiscrete] [inst_3 : v.RankOne]
+  {π : R},
+  v.IsUniformizer π →
+    ∀ {e : NNReal},
+      e ≠ 0 →
+        (Valuation.RankOne.hom v) (v.restrict π) = e⁻¹ →
+          ∀ {x : R} {d : ℤ},
+            (Valuation.IsRankOneDiscrete.addValZ v) x = ↑d → (Valuation.RankOne.hom v) (v.restrict x) = e ^ (-d)
+@Valuation.RankOne.addVal_apply_of_ne_zero : ∀ {L : Type u_1} {Γ₀ : Type u_2} [inst : Field L]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] (v : Valuation L Γ₀) [inst_2 : v.RankOne] {x : L},
+  x ≠ 0 → (Valuation.RankOne.addVal v) x = ↑(-Real.log (v.norm x))
+NormedField.valuation_norm_eq : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  (x : K), NormedField.valuation.norm x = ‖x‖
+NormedField.norm_eq_coe_hom : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  (x : K), ‖x‖ = ↑((Valuation.RankOne.hom NormedField.valuation) (NormedField.valuation.restrict x))
+NormedField.normAddVal_zero : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K],
+  (NormedField.normAddVal K) 0 = ⊤
+NormedField.normAddVal_eq_top : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  {x : K}, (NormedField.normAddVal K) x = ⊤ ↔ x = 0
+NormedField.normAddVal_apply_of_ne_zero : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {x : K}, x ≠ 0 → (NormedField.normAddVal K) x = ↑(-Real.log ‖x‖)
+NormedField.exists_normAddVal_eq_and_norm_eq_exp_neg : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {x : K}, x ≠ 0 → ∃ r, (NormedField.normAddVal K) x = ↑r ∧ ‖x‖ = Real.exp (-r)
+NormedField.normAddVal_le_normAddVal : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {x y : K}, (NormedField.normAddVal K) x ≤ (NormedField.normAddVal K) y ↔ ‖y‖ ≤ ‖x‖
+NormedField.normAddVal_unique : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  (w : AddValuation K (WithTop ℝ)),
+  (∀ (x : K), x ≠ 0 → ∃ r, w x = ↑r ∧ ‖x‖ = Real.exp (-r)) → w = NormedField.normAddVal K
+NormedField.normAddValZ_zero : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  [inst_2 : NormedField.valuation.IsRankOneDiscrete], (NormedField.normAddValZ K) 0 = ⊤
+NormedField.normAddValZ_eq_top : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  [inst_2 : NormedField.valuation.IsRankOneDiscrete] {x : K}, (NormedField.normAddValZ K) x = ⊤ ↔ x = 0
+NormedField.normAddValZ_eq_iff_of_isUniformizer : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π → ∀ (x : K) (k : ℤ), (NormedField.normAddValZ K) x = ↑k ↔ ‖x‖ = ‖π‖ ^ k
+NormedField.normAddValZ_isUniformizer : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π → (NormedField.normAddValZ K) π = 1
+NormedField.norm_eq_zpow_neg_normAddValZ : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {e : NNReal},
+  e ≠ 0 →
+    (Valuation.RankOne.hom NormedField.valuation) ↑(Valuation.IsRankOneDiscrete.generator' NormedField.valuation) =
+        e⁻¹ →
+      ∀ {x : K} {d : ℤ}, (NormedField.normAddValZ K) x = ↑d → ‖x‖ = ↑e ^ (-d)
+NormedField.norm_eq_zpow_neg_normAddValZ_of_isUniformizer : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π →
+    ∀ {e : ℝ}, ‖π‖ = e⁻¹ → ∀ {x : K} {d : ℤ}, (NormedField.normAddValZ K) x = ↑d → ‖x‖ = e ^ (-d)
+NormedField.normAddVal_eq_map_normAddValZ : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π →
+    ∀ (x : K), (NormedField.normAddVal K) x = WithTop.map (fun k => ↑k * -Real.log ‖π‖) ((NormedField.normAddValZ K) x)
+NormedField.normAddValQ_zero : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  (π : K) [inst_2 : NormedField.valuation.IsCommensurable π], (NormedField.normAddValQ K π) 0 = ⊤
+NormedField.normAddValQ_eq_top : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  (π : K) [inst_2 : NormedField.valuation.IsCommensurable π] {x : K}, (NormedField.normAddValQ K π) x = ⊤ ↔ x = 0
+NormedField.normAddValQ_self : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  (π : K) [inst_2 : NormedField.valuation.IsCommensurable π], (NormedField.normAddValQ K π) π = 1
+NormedField.normAddValQ_eq_of_pow_eq_pow : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] (π : K) [inst_2 : NormedField.valuation.IsCommensurable π] {x : K},
+  x ≠ 0 → ∀ {m n : ℕ}, 0 < n → ‖x‖ ^ n = ‖π‖ ^ m → (NormedField.normAddValQ K π) x = ↑(↑m / ↑n)
+NormedField.norm_eq_norm_rpow_normAddValQ : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] (π : K) [inst_2 : NormedField.valuation.IsCommensurable π] {x : K} {q : ℚ},
+  (NormedField.normAddValQ K π) x = ↑q → ‖x‖ = ‖π‖ ^ ↑q
+NormedField.normAddVal_eq_map_normAddValQ : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] (π : K) [inst_2 : NormedField.valuation.IsCommensurable π] (x : K),
+  (NormedField.normAddVal K) x = WithTop.map (fun q => ↑q * -Real.log ‖π‖) ((NormedField.normAddValQ K π) x)
+NormedField.normAddValQ_eq_map_normAddValZ : ∀ (K : Type u_1) [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] (π : K) [inst_2 : NormedField.valuation.IsCommensurable π]
+  [inst_3 : NormedField.valuation.IsRankOneDiscrete],
+  NormedField.valuation.IsUniformizer π →
+    ∀ (x : K), (NormedField.normAddValQ K π) x = WithTop.map (fun n => ↑n) ((NormedField.normAddValZ K) x)
+@Padic.nnnorm_p_eq_inv : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], ‖↑p‖₊ = (↑p)⁻¹
+@Padic.nnnorm_p_ne_zero : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], ‖↑p‖₊ ≠ 0
+@Padic.nnnorm_p_zpow_valuation : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {x : ℚ_[p]}, x ≠ 0 → ‖↑p‖₊ ^ x.valuation = ‖x‖₊
+@Padic.zpowers_valueGroupGen : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], Subgroup.zpowers Padic.valueGroupGen = ⊤
+@Padic.isCyclic_valueGroup : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  IsCyclic ↥(MonoidWithZeroHom.ofClass NormedField.valuation).valueGroup
+@Padic.isRankOneDiscrete_valuation : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], NormedField.valuation.IsRankOneDiscrete
+@Padic.coe_generator_eq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  ↑(Valuation.IsRankOneDiscrete.generator NormedField.valuation) = (↑p)⁻¹
+@Padic.isUniformizer_p : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], NormedField.valuation.IsUniformizer ↑p
+@Padic.isCommensurable_p : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], NormedField.valuation.IsCommensurable ↑p
+@NormedField.norm_eq_zpow_neg_normAddValZ_padic : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {x : ℚ_[p]} {d : ℤ},
+  (NormedField.normAddValZ ℚ_[p]) x = ↑d → ‖x‖ = ↑p ^ (-d)
+@NormedField.normAddValZ_padic_apply : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (x : ℚ_[p]),
+  (NormedField.normAddValZ ℚ_[p]) x = Padic.addValuation x
+@NormedField.normAddValZ_padic : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  NormedField.normAddValZ ℚ_[p] = Padic.addValuation
+LaurentSeries.valuation_eq_exp_neg_order : ∀ (K : Type u_1) [inst : Field K] {f : LaurentSeries K},
+  f ≠ 0 → Valued.v f = WithZero.exp (-HahnSeries.order f)
+LaurentSeries.isRankOneDiscrete_valued : ∀ (K : Type u_1) [inst : Field K], Valued.v.IsRankOneDiscrete
+LaurentSeries.generator_valued_eq : ∀ (K : Type u_1) [inst : Field K],
+  Valuation.IsRankOneDiscrete.generator Valued.v = Units.mk0 (WithZero.exp (-1)) ⋯
+LaurentSeries.isUniformizer_X : ∀ (K : Type u_1) [inst : Field K],
+  Valued.v.IsUniformizer ((HahnSeries.ofPowerSeries ℤ K) PowerSeries.X)
+LaurentSeries.addValZ_X : ∀ (K : Type u_1) [inst : Field K],
+  (Valuation.IsRankOneDiscrete.addValZ Valued.v) ((HahnSeries.ofPowerSeries ℤ K) PowerSeries.X) = 1
+LaurentSeries.addValZ_single : ∀ (K : Type u_1) [inst : Field K] (s : ℤ),
+  (Valuation.IsRankOneDiscrete.addValZ Valued.v) ((HahnSeries.single s) 1) = ↑s
+LaurentSeries.addValZ_eq_order : ∀ (K : Type u_1) [inst : Field K] {f : LaurentSeries K},
+  f ≠ 0 → (Valuation.IsRankOneDiscrete.addValZ Valued.v) f = ↑(HahnSeries.order f)
+@Valued.isCommensurable_completion : ∀ {K : Type u_1} {Γ₀ : Type u_2} [inst : Field K]
+  [inst_1 : LinearOrderedCommGroupWithZero Γ₀] [hv : Valued K Γ₀] (π : K) [Valued.v.IsCommensurable π],
+  Valued.v.IsCommensurable ↑π
+@NormedField.normAddVal_algebraMap : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L] [inst_4 : NormedAlgebra K L]
+  (x : K), (NormedField.normAddVal L) ((algebraMap K L) x) = (NormedField.normAddVal K) x
+@NormedField.exists_normAddValZ_algebraMap_eq : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [inst_5 : NormedField.valuation.IsRankOneDiscrete]
+  [inst_6 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π → ∃ e, 0 < e ∧ (NormedField.normAddValZ L) ((algebraMap K L) π) = ↑↑e
+@NormedField.normAddValZ_algebraMap : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L] [inst_4 : NormedAlgebra K L]
+  [inst_5 : NormedField.valuation.IsRankOneDiscrete] [inst_6 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π →
+    ∀ {e : ℤ},
+      (NormedField.normAddValZ L) ((algebraMap K L) π) = ↑e →
+        ∀ (x : K),
+          (NormedField.normAddValZ L) ((algebraMap K L) x) =
+            WithTop.map (fun k => e * k) ((NormedField.normAddValZ K) x)
+@NormedField.isCommensurable_algebraMap_of_isRankOneDiscrete : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [inst_5 : NormedField.valuation.IsRankOneDiscrete]
+  [NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π → NormedField.valuation.IsCommensurable ((algebraMap K L) π)
+@NormedField.map_intCast_normAddValZ_eq_map_normAddValQ : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [inst_5 : NormedField.valuation.IsRankOneDiscrete]
+  [inst_6 : NormedField.valuation.IsRankOneDiscrete] {π : K},
+  NormedField.valuation.IsUniformizer π →
+    ∀ {e : ℤ},
+      (NormedField.normAddValZ L) ((algebraMap K L) π) = ↑e →
+        ∀ [inst_7 : NormedField.valuation.IsCommensurable ((algebraMap K L) π)] (y : L),
+          WithTop.map (fun n => ↑n) ((NormedField.normAddValZ L) y) =
+            WithTop.map (fun q => ↑e * q) ((NormedField.normAddValQ L ((algebraMap K L) π)) y)
+@NormedField.norm_pow_natDegree_minpoly : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {L : Type u_2} [inst_2 : NontriviallyNormedField L] [IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [CompleteSpace K] [Algebra.IsAlgebraic K L] (x : L),
+  ‖x‖ ^ (minpoly K x).natDegree = ‖(minpoly K x).coeff 0‖
+@NormedField.isCommensurable_algebraMap : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L]
+  [inst_4 : NormedAlgebra K L] [CompleteSpace K] [Algebra.IsAlgebraic K L] (π : K)
+  [NormedField.valuation.IsCommensurable π], NormedField.valuation.IsCommensurable ((algebraMap K L) π)
+@NormedField.normAddValQ_algebraMap : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  {L : Type u_2} [inst_2 : NontriviallyNormedField L] [inst_3 : IsUltrametricDist L] [inst_4 : NormedAlgebra K L]
+  [inst_5 : CompleteSpace K] [inst_6 : Algebra.IsAlgebraic K L] (π : K)
+  [inst_7 : NormedField.valuation.IsCommensurable π] (x : K),
+  (NormedField.normAddValQ L ((algebraMap K L) π)) ((algebraMap K L) x) = (NormedField.normAddValQ K π) x
+@NormedField.isCommensurable_natCast_prime : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {L : Type u_1}
+  [inst_1 : NontriviallyNormedField L] [inst_2 : IsUltrametricDist L] [inst_3 : NormedAlgebra ℚ_[p] L]
+  [Algebra.IsAlgebraic ℚ_[p] L], NormedField.valuation.IsCommensurable ↑p
+@PadicAlgCl.isCommensurable_p : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], NormedField.valuation.IsCommensurable ↑p
+@PadicComplex.valuation_eq_nnnorm : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (x : ℂ_[p]), Valued.v x = ‖x‖₊
+@PadicComplex.normedField_valuation_eq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], NormedField.valuation = Valued.v
+@PadicComplex.isCommensurable_p : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], NormedField.valuation.IsCommensurable ↑p
+@PadicComplex.normAddValQ_p : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], (NormedField.normAddValQ ℂ_[p] ↑p) ↑p = 1
+@PadicComplex.normAddValQ_algebraMap_padic : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (x : ℚ_[p]),
+  (NormedField.normAddValQ ℂ_[p] ↑p) ((algebraMap ℚ_[p] ℂ_[p]) x) = WithTop.map (fun n => ↑n) (Padic.addValuation x)
+@PadicComplex.norm_eq_rpow_neg_normAddValQ : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {x : ℂ_[p]} {q : ℚ},
+  (NormedField.normAddValQ ℂ_[p] ↑p) x = ↑q → ‖x‖ = ↑p ^ (-↑q)
+@PadicComplex.exists_normAddValQ_eq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (q : ℚ),
+  ∃ x, x ≠ 0 ∧ (NormedField.normAddValQ ℂ_[p] ↑p) x = ↑q
+@PadicComplex.range_normAddValQ : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  Set.range ⇑(NormedField.normAddValQ ℂ_[p] ↑p) = insert ⊤ (Set.range WithTop.some)
+@NormedField.normAddValZ_padic_p : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)], (NormedField.normAddValZ ℚ_[p]) ↑p = 1
+@NormedField.normAddValZ_padic_inv_p_sq : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)],
+  (NormedField.normAddValZ ℚ_[p]) (↑p ^ 2)⁻¹ = ↑(-2)
+@NormedField.normAddVal_padic : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] (x : ℚ_[p]),
+  (NormedField.normAddVal ℚ_[p]) x = WithTop.map (fun k => ↑k * Real.log ↑p) ((NormedField.normAddValZ ℚ_[p]) x)
+@NormedField.normAddValQ_of_sq_eq_prime : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {L : Type u_1}
+  [inst_1 : NontriviallyNormedField L] [inst_2 : IsUltrametricDist L] [inst_3 : NormedAlgebra ℚ_[p] L]
+  [inst_4 : Algebra.IsAlgebraic ℚ_[p] L] {s : L}, s ^ 2 = ↑p → (NormedField.normAddValQ L ↑p) s = ↑(1 / 2)
+@NormedField.normAddValZ_prime_of_sq_eq_prime : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {L : Type u_1}
+  [inst_1 : NontriviallyNormedField L] [inst_2 : IsUltrametricDist L] [inst_3 : NormedAlgebra ℚ_[p] L]
+  [Algebra.IsAlgebraic ℚ_[p] L] [inst : NormedField.valuation.IsRankOneDiscrete] {s : L},
+  s ^ 2 = ↑p → (NormedField.normAddValZ L) s = 1 → (NormedField.normAddValZ L) ↑p = 2
+@NormedField.normAddValQ_padicComplex_of_pow_three : ∀ {p : ℕ} [inst : Fact (Nat.Prime p)] {x : ℂ_[p]},
+  x ^ 3 = ↑p → (NormedField.normAddValQ ℂ_[p] ↑p) x = ↑(1 / 3)
+LaurentSeries.addValZ_X_pow : ∀ (K : Type u_1) [inst : Field K] (n : ℕ),
+  (Valuation.IsRankOneDiscrete.addValZ Valued.v) ((HahnSeries.ofPowerSeries ℤ K) PowerSeries.X ^ n) = ↑↑n

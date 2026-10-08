@@ -53,182 +53,66 @@ variable {v h : ℕ → WithTop ℝ}
 /-! ### The anchor and the vertices -/
 
 /-- The first finite index of `h` (junk `0` if there is none). -/
-noncomputable def anchor (h : ℕ → WithTop ℝ) : ℕ := sInf (finiteSet h)
+noncomputable
+def anchor (h : ℕ → WithTop ℝ) : ℕ := sInf (finiteSupport h)
 
-/-- The anchor carries a point. -/
 theorem anchor_mem (hne : ∃ i, h i ≠ ⊤) : h (anchor h) ≠ ⊤ :=
-  mem_finiteSet.1 (Nat.sInf_mem (hne.imp fun _ hi ↦ mem_finiteSet.2 hi))
+  mem_finiteSupport.1 (Nat.sInf_mem (hne.imp fun _ hi ↦ mem_finiteSupport.2 hi))
 
-/-- The anchor is the first index carrying a point. -/
-theorem anchor_le {i : ℕ} (hi : h i ≠ ⊤) : anchor h ≤ i := Nat.sInf_le (mem_finiteSet.2 hi)
+theorem anchor_le {i : ℕ} (hi : h i ≠ ⊤) : anchor h ≤ i := Nat.sInf_le (mem_finiteSupport.2 hi)
 
-/-- Before the anchor there is nothing. -/
 theorem eq_top_of_lt_anchor {k : ℕ} (hk : k < anchor h) : h k = ⊤ :=
   not_not.1 (Nat.notMem_of_lt_sInf hk)
 
-/-- The anchor of a Newton polygon is the first index carrying a point. -/
 theorem IsNewtonPolygonOf.anchor_eq_sInf (hh : IsNewtonPolygonOf v h) (hv : ∃ i, v i ≠ ⊤) :
-    anchor h = sInf (finiteSet v) := by
-  have hvne : (finiteSet v).Nonempty := hv.imp fun _ hi ↦ mem_finiteSet.2 hi
-  have hi₀ : v (sInf (finiteSet v)) ≠ ⊤ := mem_finiteSet.1 (Nat.sInf_mem hvne)
+    anchor h = sInf (finiteSupport v) := by
+  have hvne : (finiteSupport v).Nonempty := hv.imp fun _ hi ↦ mem_finiteSupport.2 hi
+  have hi₀ : v (sInf (finiteSupport v)) ≠ ⊤ := mem_finiteSupport.1 (Nat.sInf_mem hvne)
   refine le_antisymm (anchor_le (hh.ne_top_of_ne_top hi₀)) ?_
   by_contra hc
-  rw [not_le] at hc
-  exact anchor_mem ⟨_, hh.ne_top_of_ne_top hi₀⟩
-    (hh.eq_top_of_forall_eq_top fun j hj ↦
-      not_not.1 (Nat.notMem_of_lt_sInf (lt_of_le_of_lt hj hc)))
+  exact anchor_mem ⟨_, hh.ne_top_of_ne_top hi₀⟩ (hh.eq_top_of_forall_eq_top fun j hj ↦
+    not_not.1 (Nat.notMem_of_lt_sInf (lt_of_le_of_lt hj (not_le.mp hc))))
+
+theorem IsNewtonPolygonOf.apply_anchor (hh : IsNewtonPolygonOf v h) :
+    h (anchor h) = v (anchor h) := by
+  by_cases hv : ∃ i, v i ≠ ⊤
+  · rw [hh.anchor_eq_sInf hv]
+    exact hh.anchor_eq (fun j hj ↦ not_not.1 (Nat.notMem_of_lt_sInf hj))
+      (mem_finiteSupport.1 (Nat.sInf_mem (hv.imp fun _ hi ↦ mem_finiteSupport.2 hi)))
+  · push Not at hv
+    exact (hh.eq_top_of_forall_eq_top fun j _ ↦ hv j).trans (hv _).symm
 
 /-- `k` is a *vertex* of `h`: a finite index at which the unit slope strictly increases, or the
-anchor. The last finite index is a vertex, since the unit slope there is `⊤`. -/
+anchor. -/
 def IsVertex (h : ℕ → WithTop ℝ) (k : ℕ) : Prop :=
   h k ≠ ⊤ ∧ (k = anchor h ∨ unitSlope h (k - 1) < unitSlope h k)
 
-/-- The anchor is a vertex. -/
 theorem isVertex_anchor (hne : ∃ i, h i ≠ ⊤) : IsVertex h (anchor h) :=
   ⟨anchor_mem hne, Or.inl rfl⟩
 
-/-- The last finite index is a vertex. -/
 theorem isVertex_of_succ_eq_top (hh : IsConvexSeq h) {k : ℕ} (hk : h k ≠ ⊤) (hk1 : h (k + 1) = ⊤) :
     IsVertex h k := by
   refine ⟨hk, ?_⟩
   rcases eq_or_lt_of_le (anchor_le hk) with heq | hlt
-  · exact Or.inl heq.symm
+  · aesop
   refine Or.inr ?_
-  have htop : unitSlope h k = ⊤ := by
-    rw [unitSlope_eq_top_iff, Order.succ_eq_add_one]
-    exact Or.inr hk1
-  have hprev : h (k - 1) ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out
-    (mem_finiteSet.2 (anchor_mem ⟨k, hk⟩)) (mem_finiteSet.2 hk) ⟨by omega, by omega⟩)
-  have hne' : unitSlope h (k - 1) ≠ ⊤ := by
-    rw [Ne, unitSlope_eq_top_iff, Order.succ_eq_add_one, show k - 1 + 1 = k by omega]
-    push Not
-    exact ⟨hprev, hk⟩
-  rw [htop]
-  exact lt_of_le_of_ne le_top hne'
+  nth_rw 2 [unitSlope]
+  simp only [Order.succ_eq_add_one, hk1, WithTop.LinearOrderedAddCommGroup.top_sub]
+  apply lt_top_iff_ne_top.mpr
+  exact unitSlope_ne_top (hh.ne_top_of_le_of_le (anchor_mem ⟨k, hk⟩) hk (by omega)
+    (Nat.sub_le k 1)) (by rwa [Order.succ_eq_add_one, Nat.sub_add_cancel (by omega)])
 
-/-- **A vertex of the Newton polygon is a point of the sequence** (roadmap §0.4.1): raising the
-polygon at a vertex by a small amount would still give a convex minorant, contradicting
-`greatest`. -/
 theorem IsNewtonPolygonOf.eq_of_isVertex (hh : IsNewtonPolygonOf v h) {k : ℕ}
     (hk : IsVertex h k) : h k = v k := by
-  obtain ⟨hkf, hcase⟩ := hk
-  have hv : ∃ i, v i ≠ ⊤ := by
-    by_contra hc
-    push Not at hc
-    exact hkf (hh.eq_top_of_forall_eq_top fun j _ ↦ hc j)
-  have hvne : (finiteSet v).Nonempty := hv.imp fun _ hi ↦ mem_finiteSet.2 hi
-  rcases hcase with heq | hlt
-  · -- the anchor: the polygon passes through the first point
-    subst heq
-    rw [hh.anchor_eq_sInf hv]
-    exact hh.anchor_eq (fun j hj ↦ not_not.1 (Nat.notMem_of_lt_sInf hj))
-      (mem_finiteSet.1 (Nat.sInf_mem hvne))
-  -- a genuine break: bump the polygon at `k` and contradict maximality
-  by_contra hne
-  have hlt' : h k < v k := lt_of_le_of_ne (hh.le_points k) hne
-  have hkpos : 1 ≤ k := by
-    by_contra hc
-    have : k = 0 := by omega
-    subst this
-    simp only [Nat.zero_sub] at hlt
-    exact absurd hlt (lt_irrefl _)
-  have hprevslope : unitSlope h (k - 1) ≠ ⊤ := fun hc ↦ (hc ▸ hlt).not_gt (lt_of_le_of_ne le_top
-    (fun hx ↦ by rw [hc, hx] at hlt; exact absurd hlt (lt_irrefl _)))
-  have hprev : h (k - 1) ≠ ⊤ := fun hc ↦ hprevslope (unitSlope_eq_top_iff.2 (Or.inl hc))
-  obtain ⟨c, hc⟩ := WithTop.ne_top_iff_exists.1 hkf
-  obtain ⟨p, hp⟩ := WithTop.ne_top_iff_exists.1 hprev
-  have hsucc_prev : k - 1 + 1 = k := by omega
-  -- room above the polygon at `k`, and the convexity gap there
-  obtain ⟨ε, hε0, hεv, hεmid⟩ : ∃ ε : ℝ, 0 < ε ∧ (h k + (ε : WithTop ℝ) ≤ v k) ∧
-      ∀ j, j + 1 = k → (h k + (ε : WithTop ℝ)) + (h k + (ε : WithTop ℝ)) ≤ h j + h (k + 1) := by
-    obtain ⟨r, hr0, hrv⟩ : ∃ r : ℝ, 0 < r ∧ h k + (r : WithTop ℝ) ≤ v k := by
-      by_cases hvk : v k = ⊤
-      · exact ⟨1, one_pos, by rw [hvk]; exact le_top⟩
-      obtain ⟨d, hd⟩ := WithTop.ne_top_iff_exists.1 hvk
-      rw [← hc, ← hd, WithTop.coe_lt_coe] at hlt'
-      refine ⟨d - c, by linarith, ?_⟩
-      rw [← hc, ← hd, ← WithTop.coe_add, WithTop.coe_le_coe]
-      linarith
-    by_cases hnext : h (k + 1) = ⊤
-    · refine ⟨r, hr0, hrv, fun j hj ↦ ?_⟩
-      rw [hnext, add_top]
-      exact le_top
-    obtain ⟨q, hq⟩ := WithTop.ne_top_iff_exists.1 hnext
-    have hgap : 2 * c < p + q := by
-      rw [unitSlope_of_ne_top hprev (by rw [Order.succ_eq_add_one, hsucc_prev]; exact hkf),
-        unitSlope_of_ne_top hkf (by rw [Order.succ_eq_add_one]; exact hnext),
-        WithTop.coe_lt_coe, Order.succ_eq_add_one, Order.succ_eq_add_one, hsucc_prev,
-        ← hc, ← hp, ← hq] at hlt
-      simp only [WithTop.untop₀_coe] at hlt
-      linarith
-    refine ⟨min r ((p + q - 2 * c) / 2), lt_min hr0 (by linarith), ?_, fun j hj ↦ ?_⟩
-    · refine le_trans (add_le_add le_rfl ?_) hrv
-      rw [WithTop.coe_le_coe]
-      exact min_le_left _ _
-    · have hjk : j = k - 1 := by omega
-      subst hjk
-      rw [← hc, ← hp, ← hq, ← WithTop.coe_add, ← WithTop.coe_add, ← WithTop.coe_add,
-        WithTop.coe_le_coe]
-      have : min r ((p + q - 2 * c) / 2) ≤ (p + q - 2 * c) / 2 := min_le_right _ _
-      linarith
-  -- the bumped competitor
-  have hεtop : (0 : WithTop ℝ) ≤ ((ε : ℝ) : WithTop ℝ) := by
-    rw [← WithTop.coe_zero, WithTop.coe_le_coe]
-    exact hε0.le
-  set g : ℕ → WithTop ℝ := fun j ↦ if j = k then h j + (ε : WithTop ℝ) else h j with hgdef
-  have hgval : ∀ j, j ≠ k → g j = h j := fun j hj ↦ by
-    simp only [hgdef]
-    rw [if_neg hj]
-  have hgk : g k = h k + (ε : WithTop ℝ) := by
-    simp only [hgdef, ↓reduceIte]
-  have hgle : ∀ j, h j ≤ g j := by
-    intro j
-    by_cases hj : j = k
-    · subst hj
-      rw [hgk]
-      simpa using add_le_add (le_refl (h j)) hεtop
-    · rw [hgval j hj]
-  have hgfs : finiteSet g = finiteSet h := by
-    ext j
-    by_cases hj : j = k
-    · subst hj
-      simp only [mem_finiteSet, hgk, ne_eq, WithTop.add_eq_top, not_or]
-      exact ⟨fun hx ↦ hx.1, fun hx ↦ ⟨hx, WithTop.coe_ne_top⟩⟩
-    · rw [mem_finiteSet, mem_finiteSet, hgval j hj]
-  have hgconv : IsConvexSeq g := by
-    refine (isConvexSeq_iff_midpoint (by rw [hgfs]; exact hh.convex.ordConnected)).2 fun j ↦ ?_
-    simp only [Order.succ_eq_add_one]
-    by_cases hj1 : j + 1 = k
-    · have hj0 : j ≠ k := by omega
-      have hj2 : j + 1 + 1 ≠ k := by omega
-      rw [hgval j hj0, hgval (j + 1 + 1) hj2, hj1, hgk]
-      exact hεmid j hj1
-    · by_cases hj0 : j = k
-      · have ha : j + 1 ≠ k := by omega
-        have hb : j + 1 + 1 ≠ k := by omega
-        rw [hgval (j + 1) ha, hgval (j + 1 + 1) hb]
-        exact le_trans (hh.convex.midpoint j) (by
-          simp only [Order.succ_eq_add_one]
-          exact add_le_add (hgle j) le_rfl)
-      · by_cases hj2 : j + 1 + 1 = k
-        · have ha : j + 1 ≠ k := by omega
-          rw [hgval j hj0, hgval (j + 1) ha]
-          exact le_trans (hh.convex.midpoint j) (by
-            simp only [Order.succ_eq_add_one]
-            exact add_le_add le_rfl (hgle (j + 1 + 1)))
-        · rw [hgval j hj0, hgval (j + 1) hj1, hgval (j + 1 + 1) hj2]
-          simpa only [Order.succ_eq_add_one] using hh.convex.midpoint j
-  have hgmin : ∀ j, g j ≤ v j := by
-    intro j
-    by_cases hj : j = k
-    · subst hj
-      rw [hgk]
-      exact hεv
-    · rw [hgval j hj]
-      exact hh.le_points j
-  have hge := hh.greatest g hgconv hgmin k
-  rw [hgk, ← hc, ← WithTop.coe_add, WithTop.coe_le_coe] at hge
-  linarith
+  obtain ⟨hkf, rfl | hlt⟩ := hk
+  · exact hh.apply_anchor
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_one_of_ne_zero (n := k)
+    (by rintro rfl; exact lt_irrefl _ hlt)
+  rw [Nat.add_sub_cancel] at hlt
+  refine (hh.le_points _).antisymm (not_lt.1 fun hkv ↦ ?_)
+  obtain ⟨c, hkc, hcv, hconv⟩ := hh.convex.exists_update_of_unitSlope_lt hlt hkv
+  exact hkc.not_ge <| by
+    simpa using hh.greatest _ hconv (update_le_iff.2 ⟨hcv, fun j _ ↦ hh.le_points j⟩) (k + 1)
 
 /-! ### Segments -/
 
@@ -242,15 +126,15 @@ theorem IsConvexSeq.unitSlope_eq_of_isSegment (hh : IsConvexSeq h) {a b : ℕ}
     unitSlope h j = unitSlope h a := by
   obtain ⟨⟨haf, -⟩, ⟨hbf, -⟩, hab', hnov⟩ := hab
   have hfin : ∀ m : ℕ, a ≤ m → m ≤ b → h m ≠ ⊤ := fun m h1 h2 ↦
-    mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 haf) (mem_finiteSet.2 hbf) ⟨h1, h2⟩)
+    hh.ne_top_of_le_of_le haf hbf h1 h2
   induction j, haj using Nat.le_induction with
   | base => rfl
   | succ m hm ih =>
       have hmb : m < b := by omega
       have heq := ih hmb
       have hmono : unitSlope h m ≤ unitSlope h (m + 1) :=
-        hh.monotoneOn (mem_finiteSet.2 (hfin m hm hmb.le))
-          (mem_finiteSet.2 (hfin (m + 1) (by omega) (by omega))) (by omega)
+        hh.monotoneOn (mem_finiteSupport.2 (hfin m hm hmb.le))
+          (mem_finiteSupport.2 (hfin (m + 1) (by omega) (by omega))) (by omega)
       refine le_antisymm ?_ (heq ▸ hmono)
       by_contra hcon
       rw [not_le] at hcon
@@ -265,8 +149,7 @@ theorem IsConvexSeq.eq_add_nsmul_of_isSegment (hh : IsConvexSeq h) {a b : ℕ}
   have haf : h a ≠ ⊤ := hab.1.1
   have hbf : h b ≠ ⊤ := hab.2.1.1
   have hab' : a < b := hab.2.2.1
-  have hsucc : h (a + 1) ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 haf)
-    (mem_finiteSet.2 hbf) ⟨by omega, by omega⟩)
+  have hsucc : h (a + 1) ≠ ⊤ := hh.ne_top_of_le_of_le haf hbf (by omega) (by omega)
   have hus : unitSlope h a ≠ ⊤ := by
     rw [Ne, unitSlope_eq_top_iff, Order.succ_eq_add_one]
     push Not
@@ -306,17 +189,16 @@ theorem IsConvexSeq.slopeIndices_eq_Ico (hh : IsConvexSeq h) (hfin : (slopeIndic
       m ∈ slopeIndices h := by
     intro j hj l hl m hjm hml
     refine mem_slopeIndices_iff.2 ⟨?_, ?_⟩
-    · exact mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 (mem_slopeIndices_iff.1 hj).1)
-        (mem_finiteSet.2 (mem_slopeIndices_iff.1 hl).1) ⟨hjm, hml⟩)
-    · exact mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 (mem_slopeIndices_iff.1 hj).1)
-        (mem_finiteSet.2 (mem_slopeIndices_iff.1 hl).2) ⟨by omega, by omega⟩)
+    · exact hh.ne_top_of_le_of_le (mem_slopeIndices_iff.1 hj).1 (mem_slopeIndices_iff.1 hl).1 hjm
+        hml
+    · exact hh.ne_top_of_le_of_le (mem_slopeIndices_iff.1 hj).1 (mem_slopeIndices_iff.1 hl).2
+        (by omega) (by omega)
   rcases Set.eq_empty_or_nonempty (slopeIndices h) with hS | hS
   · rw [hS, Set.ncard_empty, add_zero, Set.Ico_self]
   obtain ⟨j₀, hj₀⟩ := hS
   have hAj : anchor h ≤ j₀ := hAle j₀ hj₀
   have hA : anchor h ∈ slopeIndices h := mem_slopeIndices_iff.2 ⟨anchor_mem hne,
-    mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 (anchor_mem hne))
-      (mem_finiteSet.2 (mem_slopeIndices_iff.1 hj₀).2) ⟨by omega, by omega⟩)⟩
+    hh.ne_top_of_le_of_le (anchor_mem hne) (mem_slopeIndices_iff.1 hj₀).2 (by omega) (by omega)⟩
   have hL : sSup (slopeIndices h) ∈ slopeIndices h := Nat.sSup_mem ⟨j₀, hj₀⟩ hfin.bddAbove
   have hAL : anchor h ≤ sSup (slopeIndices h) := hAle _ hL
   have hSeq : slopeIndices h = Set.Icc (anchor h) (sSup (slopeIndices h)) := by
@@ -422,21 +304,21 @@ theorem IsConvexSeq.anchor_add_sum_slopeMultiset (hh : IsConvexSeq h)
 /-- A finitely supported sequence has a polygon with finitely many unit slopes, exactly
 `last - anchor` of them. -/
 theorem IsNewtonPolygonOf.slopeIndices_finite (hh : IsNewtonPolygonOf v h)
-    (hfin : (finiteSet v).Finite) : (slopeIndices h).Finite := by
-  rcases Set.eq_empty_or_nonempty (finiteSet v) with hv | hv
+    (hfin : (finiteSupport v).Finite) : (slopeIndices h).Finite := by
+  rcases Set.eq_empty_or_nonempty (finiteSupport v) with hv | hv
   · have htop : ∀ k, h k = ⊤ := fun k ↦ hh.eq_top_of_forall_eq_top fun j _ ↦ by
       by_contra hc
-      exact Set.eq_empty_iff_forall_notMem.1 hv j (mem_finiteSet.2 hc)
+      exact Set.eq_empty_iff_forall_notMem.1 hv j (mem_finiteSupport.2 hc)
     refine Set.Finite.subset (Set.finite_empty) ?_
     intro j hj
     exact absurd (htop j) (mem_slopeIndices_iff.1 hj).1
-  · refine Set.Finite.subset (Set.finite_Iio (sSup (finiteSet v) + 1)) ?_
+  · refine Set.Finite.subset (Set.finite_Iio (sSup (finiteSupport v) + 1)) ?_
     intro j hj
     by_contra hc
     rw [Set.mem_Iio, not_lt] at hc
     refine (mem_slopeIndices_iff.1 hj).1 (hh.eq_top_of_forall_le (n := j) fun k hk ↦ ?_)
     by_contra hvk
-    have : k ≤ sSup (finiteSet v) := le_csSup hfin.bddAbove (mem_finiteSet.2 hvk)
+    have : k ≤ sSup (finiteSupport v) := le_csSup hfin.bddAbove (mem_finiteSupport.2 hvk)
     omega
 
 /-! ### Purity and the first break -/
@@ -493,7 +375,7 @@ theorem IsNewtonPolygonOf.hasFirstBreak_iff (hh : IsNewtonPolygonOf v h) (hv : �
         v (anchor h + l) + (k - (anchor h + l) : ℕ) • (m' : WithTop ℝ) ≤ v k := by
   have hhne : ∃ i, h i ≠ ⊤ := hv.imp fun _ hi ↦ hh.ne_top_of_ne_top hi
   have hAf : h (anchor h) ≠ ⊤ := anchor_mem hhne
-  have hA : h (anchor h) = v (anchor h) := hh.eq_of_isVertex (isVertex_anchor hhne)
+  have hA : h (anchor h) = v (anchor h) := hh.apply_anchor
   have hvAf : v (anchor h) ≠ ⊤ := by
     rw [← hA]
     exact hAf
@@ -529,7 +411,7 @@ theorem IsNewtonPolygonOf.hasFirstBreak_iff (hh : IsNewtonPolygonOf v h) (hv : �
       exact WithTop.coe_ne_top hprevslope.symm
     have hstrict : ((m : ℝ) : WithTop ℝ) < unitSlope h (anchor h + l) := by
       have hmono : unitSlope h (anchor h + l - 1) ≤ unitSlope h (anchor h + l) :=
-        hh.convex.monotoneOn (mem_finiteSet.2 hprevf) (mem_finiteSet.2 hAlf) (by omega)
+        hh.convex.monotoneOn (mem_finiteSupport.2 hprevf) (mem_finiteSupport.2 hAlf) (by omega)
       rw [hprevslope] at hmono
       exact lt_of_le_of_ne hmono (Ne.symm hbreak)
     have hvertex : IsVertex h (anchor h + l) := by
@@ -577,14 +459,8 @@ theorem IsNewtonPolygonOf.hasFirstBreak_iff (hh : IsNewtonPolygonOf v h) (hv : �
           _ ≤ v k := hx
       · rw [hvtop k hk]
         exact le_top
-    have hconv1 : IsConvexSeq (fun k : ℕ ↦ ((y + m * ((k : ℝ) - anchor h) : ℝ) : WithTop ℝ)) := by
-      have heq : (fun k : ℕ ↦ ((y + m * ((k : ℝ) - anchor h) : ℝ) : WithTop ℝ))
-          = fun k : ℕ ↦ (((y - m * anchor h) + m * k : ℝ) : WithTop ℝ) := by
-        funext k
-        congr 1
-        ring
-      rw [heq]
-      exact isConvexSeq_affine _ _
+    have hconv1 : IsConvexSeq (fun k : ℕ ↦ ((y + m * ((k : ℝ) - anchor h) : ℝ) : WithTop ℝ)) :=
+      isConvexSeq_affine_sub _ _ _
     have hge1 : ∀ k : ℕ, ((y + m * ((k : ℝ) - anchor h) : ℝ) : WithTop ℝ) ≤ h k :=
       fun k ↦ hh.greatest _ hconv1 hline1 k
     have hvAl : v (anchor h + l) = ((y + m * l : ℝ) : WithTop ℝ) := by
@@ -599,8 +475,7 @@ theorem IsNewtonPolygonOf.hasFirstBreak_iff (hh : IsNewtonPolygonOf v h) (hv : �
       rwa [show ((y + m * (((anchor h + l : ℕ) : ℝ) - anchor h) : ℝ) : WithTop ℝ)
         = ((y + m * l : ℝ) : WithTop ℝ) by congr 1; push_cast; ring] at hx
     have hfinAl : ∀ j, anchor h ≤ j → j ≤ anchor h + l → h j ≠ ⊤ := fun j h1 h2 ↦
-      mem_finiteSet.1 (hh.convex.ordConnected.out (mem_finiteSet.2 hAf) (mem_finiteSet.2 hAlf)
-        ⟨h1, h2⟩)
+      hh.convex.ne_top_of_le_of_le hAf hAlf h1 h2
     have hslopefin : ∀ j, anchor h ≤ j → j < anchor h + l → unitSlope h j ≠ ⊤ := by
       intro j h1 h2
       rw [ne_eq, unitSlope_eq_top_iff, Order.succ_eq_add_one, not_or]
@@ -618,7 +493,7 @@ theorem IsNewtonPolygonOf.hasFirstBreak_iff (hh : IsNewtonPolygonOf v h) (hv : �
     have hmono : ∀ j, anchor h ≤ j → j < anchor h + l → m ≤ (unitSlope h j).untop₀ := by
       intro j h1 h2
       refine le_trans hsAle (WithTop.untop₀_le_untop₀ (hslopefin j h1 h2) ?_)
-      exact hh.convex.monotoneOn (mem_finiteSet.2 hAf) (mem_finiteSet.2 (hfinAl j h1 (by omega))) h1
+      exact hh.convex.monotoneOn (mem_finiteSupport.2 hAf) (mem_finiteSupport.2 (hfinAl j h1 (by omega))) h1
     have hsum : (∑ j ∈ Finset.Ico (anchor h) (anchor h + l), (unitSlope h j).untop₀) = l * m := by
       have htel := eq_add_sum_unitSlope (a := anchor h) (k := anchor h + l) (by omega) hfinAl
       rw [hAll, hAy, ← WithTop.coe_add, WithTop.coe_inj] at htel
@@ -663,14 +538,8 @@ theorem IsNewtonPolygonOf.hasFirstBreak_iff (hh : IsNewtonPolygonOf v h) (hv : �
           linarith
         nlinarith [mul_nonneg (sub_nonneg.2 hmm'.le) (neg_nonneg.2 hkl.le)]
     have hconv2 : IsConvexSeq
-        (fun k : ℕ ↦ (((y + m * l) + m' * ((k : ℝ) - (anchor h + l)) : ℝ) : WithTop ℝ)) := by
-      have heq : (fun k : ℕ ↦ (((y + m * l) + m' * ((k : ℝ) - (anchor h + l)) : ℝ) : WithTop ℝ))
-          = fun k : ℕ ↦ ((((y + m * l) - m' * (anchor h + l)) + m' * k : ℝ) : WithTop ℝ) := by
-        funext k
-        congr 1
-        ring
-      rw [heq]
-      exact isConvexSeq_affine _ _
+        (fun k : ℕ ↦ (((y + m * l) + m' * ((k : ℝ) - (anchor h + l)) : ℝ) : WithTop ℝ)) :=
+      isConvexSeq_affine_sub _ _ _
     have hgesup := hh.greatest _ (hconv1.sup hconv2)
       (fun k ↦ by
         simp only [Pi.sup_apply]
@@ -720,7 +589,7 @@ theorem IsConvexSeq.endsInRay_iff (hh : IsConvexSeq h) (m : ℝ) :
     refine ⟨fun j hj ↦ ?_, ⟨N, hN N le_rfl⟩⟩
     rcases le_or_gt N j with hjN | hjN
     · exact le_of_eq (hN j hjN)
-    · exact (hh.monotoneOn (mem_finiteSet.2 hj) (mem_finiteSet.2 (hfinN N le_rfl)) hjN.le).trans
+    · exact (hh.monotoneOn (mem_finiteSupport.2 hj) (mem_finiteSupport.2 (hfinN N le_rfl)) hjN.le).trans
         (le_of_eq (hN N le_rfl))
   · rintro ⟨hbound, j₀, hj₀⟩
     have hj₀ne : h j₀ ≠ ⊤ := by
@@ -741,7 +610,7 @@ theorem IsConvexSeq.endsInRay_iff (hh : IsConvexSeq h) (m : ℝ) :
           exact WithTop.coe_ne_top (top_le_iff.1 hy)
     refine ⟨j₀, fun j hj ↦ le_antisymm (hbound j (hfin j hj)) ?_⟩
     rw [← hj₀]
-    exact hh.monotoneOn (mem_finiteSet.2 hj₀ne) (mem_finiteSet.2 (hfin j hj)) hj
+    exact hh.monotoneOn (mem_finiteSupport.2 hj₀ne) (mem_finiteSupport.2 (hfin j hj)) hj
 
 /-- On a terminal ray of slope `m`, no unit slope at a finite index exceeds `m`. -/
 theorem EndsInRay.unitSlope_le (hh : IsConvexSeq h) {m : ℝ} (hm : EndsInRay h m) {j : ℕ}
@@ -753,8 +622,8 @@ theorem EndsInRay.setOf_lt_unitSlope_eq_empty (hh : IsConvexSeq h) (h0 : h 0 ≠
     (hm : EndsInRay h m) : {j | (m : WithTop ℝ) < unitSlope h j} = ∅ := by
   obtain ⟨N, hN⟩ := hm.ne_top
   refine Set.eq_empty_iff_forall_notMem.2 fun j hj ↦ ?_
-  have hjf : h j ≠ ⊤ := mem_finiteSet.1 (hh.ordConnected.out (mem_finiteSet.2 h0)
-    (mem_finiteSet.2 (hN (max j N) (le_max_right _ _))) ⟨Nat.zero_le _, le_max_left _ _⟩)
+  have hjf : h j ≠ ⊤ :=
+    hh.ne_top_of_le_of_le h0 (hN (max j N) (le_max_right _ _)) (Nat.zero_le _) (le_max_left _ _)
   exact absurd (hm.unitSlope_le hh hjf) (not_le.2 hj)
 
 /-! ### Truncation -/
@@ -829,22 +698,20 @@ theorem newtonPolygon_truncate_eq (hv : IsAdmissible v) {n V : ℕ}
     rw [hTV]
     exact hV.1
   have hgconv : IsConvexSeq g := by
-    have hord : (finiteSet g).OrdConnected := by
+    have hord : (finiteSupport g).OrdConnected := by
       constructor
       intro a ha c hc b hb
-      refine mem_finiteSet.2 ?_
+      refine mem_finiteSupport.2 ?_
       rcases le_or_gt b V with hbV | hbV
       · rw [hglow b hbV]
         have haT : newtonPolygon (truncate v n) a ≠ ⊤ := by
-          have hx := mem_finiteSet.1 ha
+          have hx := mem_finiteSupport.1 ha
           rwa [hglow a (hb.1.trans hbV)] at hx
-        exact mem_finiteSet.1 (hT.convex.ordConnected.out (mem_finiteSet.2 haT)
-          (mem_finiteSet.2 hTVne) ⟨hb.1, hbV⟩)
+        exact hT.convex.ne_top_of_le_of_le haT hTVne hb.1 hbV
       · rw [hghigh b hbV]
-        exact mem_finiteSet.1 (hP.convex.ordConnected.out
-          (mem_finiteSet.2 (ne_top_of_le_ne_top (mem_finiteSet.1 ha) (hgP a)))
-          (mem_finiteSet.2 (ne_top_of_le_ne_top (mem_finiteSet.1 hc) (hgP c))) hb)
-    refine (isConvexSeq_iff_midpoint hord).2 fun j ↦ ?_
+        exact hP.convex.ne_top_of_le_of_le (ne_top_of_le_ne_top ha (hgP a))
+          (ne_top_of_le_ne_top hc (hgP c)) hb.1 hb.2
+    refine isConvexSeq_iff_midpoint.2 ⟨hord, fun j ↦ ?_⟩
     simp only [Order.succ_eq_add_one]
     rcases le_or_gt (j + 1 + 1) V with hj2 | hj2
     · rw [hglow j (by omega), hglow (j + 1) (by omega), hglow (j + 1 + 1) hj2]

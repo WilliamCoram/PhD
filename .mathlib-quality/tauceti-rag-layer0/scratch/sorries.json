@@ -1,0 +1,1847 @@
+[
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 47,
+  "kind": "theorem",
+  "name": "norm_coeff_mul_prod_le",
+  "statement": "theorem norm_coeff_mul_prod_le (f : Restricted R c) (t : σ →₀ ℕ) :\n    ‖coeff t f.1‖ * t.prod (c · ^ ·) ≤ ‖f‖",
+  "doc": "/-- Each Gauss term is bounded by the Gauss norm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 53,
+  "kind": "theorem",
+  "name": "exists_norm_eq_norm_coeff_mul_prod",
+  "statement": "theorem exists_norm_eq_norm_coeff_mul_prod (f : Restricted R c) :\n    ∃ t : σ →₀ ℕ, ‖f‖ = ‖coeff t f.1‖ * t.prod (c · ^ ·)",
+  "doc": "/-- The Gauss norm is attained at some index. Source: BGR 5.1.1 (\"`|f| := max |a_ν|` is\nwell-defined\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 58,
+  "kind": "instance",
+  "name": "instNontrivial",
+  "statement": "instance instNontrivial [Nontrivial R] : Nontrivial (Restricted R c)",
+  "doc": "/-- The constants embed injectively, so `Restricted R c` is nontrivial when `R` is. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 62,
+  "kind": "instance",
+  "name": "instCharZero",
+  "statement": "instance instCharZero [CharZero R] : CharZero (Restricted R c)",
+  "doc": "/-- The constants embed injectively, so `Restricted R c` has characteristic zero when `R` has. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 67,
+  "kind": "instance",
+  "name": "instIsDomain",
+  "statement": "instance instIsDomain [NormMulClass R] [Nontrivial R] : IsDomain (Restricted R c)",
+  "doc": "/-- The Gauss norm is multiplicative when the norm of `R` is, so `Restricted R c` has no zero\ndivisors. Source: BGR 5.1.2/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 71,
+  "kind": "theorem",
+  "name": "exists_finset_norm_sub_sum_monomial_lt",
+  "statement": "theorem exists_finset_norm_sub_sum_monomial_lt (f : Restricted R c) {ε : ℝ} (hε : 0 < ε) :\n    ∃ s : Finset (σ →₀ ℕ), ‖f - ∑ t ∈ s, monomial c t (coeff t f.1)‖ < ε",
+  "doc": "/-- A restricted power series is approximated in Gauss norm by its finite truncations. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 83,
+  "kind": "theorem",
+  "name": "denseRange_toRestricted",
+  "statement": "theorem denseRange_toRestricted : DenseRange (MvPolynomial.toRestricted (R := R) c)",
+  "doc": "/-- Polynomials are dense in the restricted power series. Source: BGR 5.1.1/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 94,
+  "kind": "theorem",
+  "name": "norm_smul_eq",
+  "statement": "theorem norm_smul_eq (a : K) (f : Restricted K c) : ‖a • f‖ = ‖a‖ * ‖f‖",
+  "doc": "/-- Scalar multiplication scales the Gauss norm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "norm_coeff_le",
+  "statement": "theorem norm_coeff_le (f : Restricted R (1 : σ → ℝ)) (t : σ →₀ ℕ) : ‖coeff t f.1‖ ≤ ‖f‖",
+  "doc": "/-- At the unit polyradius every coefficient is bounded by the Gauss norm. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 117,
+  "kind": "theorem",
+  "name": "exists_norm_coeff_eq",
+  "statement": "theorem exists_norm_coeff_eq (f : Restricted R (1 : σ → ℝ)) :\n    ∃ t : σ →₀ ℕ, ‖coeff t f.1‖ = ‖f‖",
+  "doc": "/-- At the unit polyradius the Gauss norm is the norm of some coefficient: `|f| = max |a_ν|`.\nSource: BGR 5.1.1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "norm_le_iff_forall_norm_coeff_le",
+  "statement": "theorem norm_le_iff_forall_norm_coeff_le {ε : ℝ} (f : Restricted R (1 : σ → ℝ)) :\n    ‖f‖ ≤ ε ↔ ∀ t, ‖coeff t f.1‖ ≤ ε",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 125,
+  "kind": "theorem",
+  "name": "norm_lt_iff_forall_norm_coeff_lt",
+  "statement": "theorem norm_lt_iff_forall_norm_coeff_lt {ε : ℝ} (f : Restricted R (1 : σ → ℝ)) :\n    ‖f‖ < ε ↔ ∀ t, ‖coeff t f.1‖ < ε",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 130,
+  "kind": "theorem",
+  "name": "tendsto_norm_coeff_cofinite",
+  "statement": "theorem tendsto_norm_coeff_cofinite (f : Restricted R (1 : σ → ℝ)) :\n    Tendsto (fun t ↦ ‖coeff t f.1‖) cofinite (𝓝 0)",
+  "doc": "/-- The coefficients of a restricted power series at the unit polyradius tend to zero. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 135,
+  "kind": "theorem",
+  "name": "finite_setOf_le_norm_coeff",
+  "statement": "theorem finite_setOf_le_norm_coeff (f : Restricted R (1 : σ → ℝ)) {ε : ℝ} (hε : 0 < ε) :\n    {t | ε ≤ ‖coeff t f.1‖}.Finite",
+  "doc": "/-- Only finitely many coefficients of a restricted power series are not small. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 141,
+  "kind": "theorem",
+  "name": "norm_mem_range_norm",
+  "statement": "theorem norm_mem_range_norm (f : Restricted R (1 : σ → ℝ)) :\n    ‖f‖ ∈ Set.range (norm : R → ℝ)",
+  "doc": "/-- The Gauss norm takes its values in the norms of the coefficient ring: `|Tₙ| = |K|`.\nSource: BGR 5.1.1 (\"Using the fact that `|Tₙ| = |k|`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Basic.lean",
+  "line": 152,
+  "kind": "theorem",
+  "name": "exists_norm_smul_eq_one",
+  "statement": "theorem exists_norm_smul_eq_one {f : Restricted K (1 : σ → ℝ)} (hf : f ≠ 0) :\n    ∃ a : K, a ≠ 0 ∧ ‖a • f‖ = 1",
+  "doc": "/-- Every nonzero series can be normed to length `1` by a scalar. Source: BGR 5.1.1/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "finite_support_residue_unitBallCoeff",
+  "statement": "theorem finite_support_residue_unitBallCoeff (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    (Function.support fun t ↦ residue (unitClosedBall K) (unitBallCoeff f t)).Finite",
+  "doc": "/-- All but finitely many coefficients of a series in the unit ball reduce to zero. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 75,
+  "kind": "theorem",
+  "name": "reductionFun_one",
+  "statement": "theorem reductionFun_one :\n    reductionFun (1 : unitClosedBall (Restricted K (1 : σ → ℝ))) = 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "reductionFun_mul",
+  "statement": "theorem reductionFun_mul (f g : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    reductionFun (f * g) = reductionFun f * reductionFun g",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 83,
+  "kind": "theorem",
+  "name": "reductionFun_zero",
+  "statement": "theorem reductionFun_zero :\n    reductionFun (0 : unitClosedBall (Restricted K (1 : σ → ℝ))) = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "reductionFun_add",
+  "statement": "theorem reductionFun_add (f g : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    reductionFun (f + g) = reductionFun f + reductionFun g",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 108,
+  "kind": "theorem",
+  "name": "reduction_eq_zero_iff",
+  "statement": "theorem reduction_eq_zero_iff (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    reduction f = 0 ↔ ‖(f : Restricted K (1 : σ → ℝ))‖ < 1",
+  "doc": "/-- The reduction vanishes exactly on the series of Gauss norm less than one. Source: BGR 5.1.2\n(\"Obviously the kernel of this map is `Tₙˇ`\"); Bosch 1.2 (\"`f̃ = 0` if and only if `|f| < 1`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 113,
+  "kind": "theorem",
+  "name": "norm_eq_one_of_reduction_ne_zero",
+  "statement": "theorem norm_eq_one_of_reduction_ne_zero {f : unitClosedBall (Restricted K (1 : σ → ℝ))}\n    (hf : reduction f ≠ 0) : ‖(f : Restricted K (1 : σ → ℝ))‖ = 1",
+  "doc": "/-- A series of the unit ball with nonzero reduction has Gauss norm one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "ker_reduction",
+  "statement": "theorem ker_reduction :\n    RingHom.ker (reduction (K := K) (σ := σ)) = openUnitBallIdeal (Restricted K (1 : σ → ℝ))",
+  "doc": "/-- The kernel of the reduction map is the open unit ball. Source: BGR 5.1.2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 123,
+  "kind": "theorem",
+  "name": "norm_toRestricted_map_subtype_le_one",
+  "statement": "theorem norm_toRestricted_map_subtype_le_one (p : MvPolynomial σ (unitClosedBall K)) :\n    ‖MvPolynomial.toRestricted (1 : σ → ℝ) (MvPolynomial.map (unitClosedBall K).subtype p)‖ ≤ 1",
+  "doc": "/-- A polynomial with coefficients in the unit ball of `K` has Gauss norm at most one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 141,
+  "kind": "theorem",
+  "name": "reduction_ofUnitBallPolynomial",
+  "statement": "theorem reduction_ofUnitBallPolynomial (p : MvPolynomial σ (unitClosedBall K)) :\n    reduction (ofUnitBallPolynomial p) = MvPolynomial.map (residue (unitClosedBall K)) p",
+  "doc": "/-- The reduction of a polynomial over the unit ball is its coefficientwise reduction. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 147,
+  "kind": "theorem",
+  "name": "exists_sub_ofUnitBallPolynomial_mem_openUnitBallIdeal",
+  "statement": "theorem exists_sub_ofUnitBallPolynomial_mem_openUnitBallIdeal\n    (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    ∃ p : MvPolynomial σ (unitClosedBall K),\n      f - ofUnitBallPolynomial p ∈ openUnitBallIdeal (Restricted K (1 : σ → ℝ))",
+  "doc": "/-- Every series of the unit ball is a polynomial over the unit ball of `K` up to a series of Gauss\nnorm less than one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 154,
+  "kind": "theorem",
+  "name": "reduction_surjective",
+  "statement": "theorem reduction_surjective : Function.Surjective (reduction (K := K) (σ := σ))",
+  "doc": "/-- The reduction map is surjective. Source: BGR 5.1.2 (\"the map is surjective\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 165,
+  "kind": "theorem",
+  "name": "reductionEquiv_mk",
+  "statement": "theorem reductionEquiv_mk (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    reductionEquiv (Ideal.Quotient.mk _ f) = reduction f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 177,
+  "kind": "theorem",
+  "name": "isPowerBounded_iff_forall_norm_coeff_le_one",
+  "statement": "theorem isPowerBounded_iff_forall_norm_coeff_le_one {f : Restricted 𝕜 (1 : σ → ℝ)} :\n    PowerBounded.IsPowerBounded f ↔ ∀ t, ‖coeff t f.1‖ ≤ 1",
+  "doc": "/-- The power-bounded elements of the Tate algebra are the series with coefficients in the unit\nball. Source: BGR 5.1.2 (\"`T̊ₙ = Tₙ°`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 185,
+  "kind": "theorem",
+  "name": "isTopologicallyNilpotent_iff_forall_norm_coeff_lt_one",
+  "statement": "theorem isTopologicallyNilpotent_iff_forall_norm_coeff_lt_one {f : Restricted K (1 : σ → ℝ)} :\n    IsTopologicallyNilpotent f ↔ ∀ t, ‖coeff t f.1‖ < 1",
+  "doc": "/-- The topologically nilpotent elements of the Tate algebra are the series with coefficients in\nthe open unit ball. Source: BGR 5.1.2 (\"`Ťₙ = Tₙˇ`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 197,
+  "kind": "theorem",
+  "name": "isUnit_iff_norm_coeff_lt",
+  "statement": "theorem isUnit_iff_norm_coeff_lt {f : Restricted K (1 : σ → ℝ)} :\n    IsUnit f ↔ coeff 0 f.1 ≠ 0 ∧ ∀ t ≠ 0, ‖coeff t f.1‖ < ‖coeff 0 f.1‖",
+  "doc": "/-- **The units of the Tate algebra**: a series is a unit if and only if its constant coefficient\nstrictly dominates every other coefficient. Source: BGR 5.1.3/1; Bosch 1.2/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 203,
+  "kind": "theorem",
+  "name": "isUnit_iff_isUnit_reduction",
+  "statement": "theorem isUnit_iff_isUnit_reduction (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    IsUnit f ↔ IsUnit (reduction f)",
+  "doc": "/-- An element of the unit ball of the Tate algebra is a unit there if and only if its reduction\nis a unit. Source: BGR 5.1.3/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 209,
+  "kind": "theorem",
+  "name": "isUnit_coe_iff_isUnit_reduction",
+  "statement": "theorem isUnit_coe_iff_isUnit_reduction {f : unitClosedBall (Restricted K (1 : σ → ℝ))}\n    (hf : ‖(f : Restricted K (1 : σ → ℝ))‖ = 1) :\n    IsUnit (f : Restricted K (1 : σ → ℝ)) ↔ IsUnit (reduction f)",
+  "doc": "/-- A series of Gauss norm one is a unit of the Tate algebra if and only if its reduction is a\nunit. Source: BGR 5.1.3/1 (\"`f` is a unit if and only if `f̃` is a unit in `T̃ₙ`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 216,
+  "kind": "theorem",
+  "name": "exists_norm_eq_one_not_isUnit_C_add",
+  "statement": "theorem exists_norm_eq_one_not_isUnit_C_add {f : Restricted K (1 : σ → ℝ)} (hf : ‖f‖ = 1) :\n    ∃ a : K, ‖a‖ = 1 ∧ ¬ IsUnit (C (1 : σ → ℝ) a + f)",
+  "doc": "/-- For a series of Gauss norm one there is a constant of norm one whose sum with it is not a\nunit. Source: BGR 5.1.3/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Reduction.lean",
+  "line": 222,
+  "kind": "theorem",
+  "name": "jacobson_bot",
+  "statement": "theorem jacobson_bot : Ideal.jacobson (⊥ : Ideal (Restricted K (1 : σ → ℝ))) = ⊥",
+  "doc": "/-- **The Jacobson radical of the Tate algebra is zero**: the intersection of all maximal ideals\nis `0`. Source: BGR 5.1.3/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 54,
+  "kind": "theorem",
+  "name": "norm_map_mul_prod_pow_le",
+  "statement": "theorem norm_map_mul_prod_pow_le (hφ : ∀ r, ‖φ r‖ ≤ ‖r‖) (hx : ∀ i, ‖x i‖ ≤ c i) (a : R)\n    (t : σ →₀ ℕ) : ‖φ a * t.prod fun i k ↦ x i ^ k‖ ≤ ‖a‖ * t.prod (c · ^ ·)",
+  "doc": "/-- Each term of the evaluated series is bounded by the corresponding Gauss term. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 60,
+  "kind": "theorem",
+  "name": "tendsto_map_coeff_mul_prod_pow",
+  "statement": "theorem tendsto_map_coeff_mul_prod_pow (hφ : ∀ r, ‖φ r‖ ≤ ‖r‖) (hx : ∀ i, ‖x i‖ ≤ c i)\n    (f : Restricted R c) :\n    Tendsto (fun t : σ →₀ ℕ ↦ φ (coeff t f.1) * t.prod fun i k ↦ x i ^ k) cofinite (𝓝 0)",
+  "doc": "/-- The terms of the evaluated series tend to zero. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 67,
+  "kind": "theorem",
+  "name": "summable_map_coeff_mul_prod_pow",
+  "statement": "theorem summable_map_coeff_mul_prod_pow [CompleteSpace B] (hφ : ∀ r, ‖φ r‖ ≤ ‖r‖)\n    (hx : ∀ i, ‖x i‖ ≤ c i) (f : Restricted R c) :\n    Summable fun t : σ →₀ ℕ ↦ φ (coeff t f.1) * t.prod fun i k ↦ x i ^ k",
+  "doc": "/-- The evaluated series converges. Source: BGR 5.1.4 (\"Since `a_ν x^ν` is a zero-sequence in `L`,\nthe series `Σ a_ν x^ν` must converge\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 77,
+  "kind": "theorem",
+  "name": "eval₂Fun_zero",
+  "statement": "theorem eval₂Fun_zero : eval₂Fun c φ x 0 = 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 81,
+  "kind": "theorem",
+  "name": "eval₂Fun_one",
+  "statement": "theorem eval₂Fun_one : eval₂Fun c φ x 1 = 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 84,
+  "kind": "theorem",
+  "name": "eval₂Fun_add",
+  "statement": "theorem eval₂Fun_add [CompleteSpace B] (hφ : ∀ r, ‖φ r‖ ≤ ‖r‖) (hx : ∀ i, ‖x i‖ ≤ c i)\n    (f g : Restricted R c) : eval₂Fun c φ x (f + g) = eval₂Fun c φ x f + eval₂Fun c φ x g",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 89,
+  "kind": "theorem",
+  "name": "eval₂Fun_mul",
+  "statement": "theorem eval₂Fun_mul [CompleteSpace B] (hφ : ∀ r, ‖φ r‖ ≤ ‖r‖) (hx : ∀ i, ‖x i‖ ≤ c i)\n    (f g : Restricted R c) : eval₂Fun c φ x (f * g) = eval₂Fun c φ x f * eval₂Fun c φ x g",
+  "doc": "/-- Evaluation is multiplicative: the Cauchy product of two evaluated series. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 115,
+  "kind": "theorem",
+  "name": "eval₂_monomial",
+  "statement": "theorem eval₂_monomial (t : σ →₀ ℕ) (a : R) :\n    eval₂ c φ x hφ hx (monomial c t a) = φ a * t.prod fun i k ↦ x i ^ k",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 120,
+  "kind": "theorem",
+  "name": "eval₂_C",
+  "statement": "theorem eval₂_C (a : R) : eval₂ c φ x hφ hx (C c a) = φ a",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 124,
+  "kind": "theorem",
+  "name": "eval₂_X",
+  "statement": "theorem eval₂_X (i : σ) : eval₂ c φ x hφ hx (X R c i) = x i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 128,
+  "kind": "theorem",
+  "name": "eval₂_toRestricted",
+  "statement": "theorem eval₂_toRestricted (p : MvPolynomial σ R) :\n    eval₂ c φ x hφ hx (MvPolynomial.toRestricted c p) = MvPolynomial.eval₂ φ x p",
+  "doc": "/-- On polynomials, evaluation is polynomial evaluation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 133,
+  "kind": "theorem",
+  "name": "norm_eval₂_le",
+  "statement": "theorem norm_eval₂_le (f : Restricted R c) : ‖eval₂ c φ x hφ hx f‖ ≤ ‖f‖",
+  "doc": "/-- Evaluation is contractive. Source: BGR 5.1.4/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 136,
+  "kind": "theorem",
+  "name": "continuous_eval₂",
+  "statement": "theorem continuous_eval₂ : Continuous (eval₂ c φ x hφ hx)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 149,
+  "kind": "theorem",
+  "name": "ringHom_ext_of_continuous",
+  "statement": "theorem ringHom_ext_of_continuous {ψ₁ ψ₂ : Restricted R c →+* B} (h₁ : Continuous ψ₁)\n    (h₂ : Continuous ψ₂) (hC : ∀ a, ψ₁ (C c a) = ψ₂ (C c a))\n    (hX : ∀ i, ψ₁ (X R c i) = ψ₂ (X R c i)) : ψ₁ = ψ₂",
+  "doc": "/-- A continuous ring homomorphism out of the restricted power series is determined by its values\non the constants and on the variables. Source: BGR 5.1.3/5 (\"`φ` is uniquely determined by the\ntuple `(φ(X₁), …, φ(Xₙ))`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 180,
+  "kind": "theorem",
+  "name": "aeval_X",
+  "statement": "theorem aeval_X (i : σ) : aeval c x hx (X K c i) = x i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 184,
+  "kind": "theorem",
+  "name": "aeval_toRestricted",
+  "statement": "theorem aeval_toRestricted (p : MvPolynomial σ K) :\n    aeval c x hx (MvPolynomial.toRestricted c p) = MvPolynomial.aeval x p",
+  "doc": "/-- On polynomials, evaluation is polynomial evaluation. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 189,
+  "kind": "theorem",
+  "name": "norm_aeval_le",
+  "statement": "theorem norm_aeval_le (f : Restricted K c) : ‖aeval c x hx f‖ ≤ ‖f‖",
+  "doc": "/-- Evaluation is contractive: `|f(x)| ≤ |f|`. Source: BGR 5.1.4/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 192,
+  "kind": "theorem",
+  "name": "continuous_aeval",
+  "statement": "theorem continuous_aeval : Continuous (aeval (K := K) c x hx)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Eval.lean",
+  "line": 205,
+  "kind": "theorem",
+  "name": "algHom_ext_of_continuous",
+  "statement": "theorem algHom_ext_of_continuous {ψ₁ ψ₂ : Restricted K c →ₐ[K] B} (h₁ : Continuous ψ₁)\n    (h₂ : Continuous ψ₂) (hX : ∀ i, ψ₁ (X K c i) = ψ₂ (X K c i)) : ψ₁ = ψ₂",
+  "doc": "/-- A continuous `K`-algebra homomorphism out of the restricted power series is determined by its\nvalues on the variables. Source: BGR 5.1.3/5. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/EvalReduction.lean",
+  "line": 49,
+  "kind": "instance",
+  "name": "(anonymous)",
+  "statement": "instance : IsLocalHom (unitClosedBallMap K L)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/EvalReduction.lean",
+  "line": 65,
+  "kind": "theorem",
+  "name": "norm_aeval_le_one",
+  "statement": "theorem norm_aeval_le_one {B : Type*} [NormedCommRing B] [NormedAlgebra K B] [NormOneClass B]\n    [IsUltrametricDist B] [CompleteSpace B] {x : σ → B} (hx : ∀ i, ‖x i‖ ≤ 1)\n    (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    ‖aeval (1 : σ → ℝ) x hx (f : Restricted K (1 : σ → ℝ))‖ ≤ 1",
+  "doc": "/-- Evaluation at a tuple of the unit ball maps the unit ball of the Tate algebra to the unit\nball. Source: BGR 5.1.4/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/EvalReduction.lean",
+  "line": 79,
+  "kind": "theorem",
+  "name": "residue_aeval",
+  "statement": "theorem residue_aeval {x : σ → L} (hx : ∀ i, ‖x i‖ ≤ 1)\n    (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    residue (unitClosedBall L)\n        ⟨aeval (1 : σ → ℝ) x hx (f : Restricted K (1 : σ → ℝ)),\n          mem_unitClosedBall.2 (norm_aeval_le_one hx f)⟩ =\n      MvPolynomial.eval₂ (NormedField.residueFieldMap K L)\n        (fun i ↦ residue (unitClosedBall L) ⟨x i, mem_unitClosedBall.2 (hx i)⟩) (reduction f)",
+  "doc": "/-- **Reduction commutes with evaluation at a point**: for a point `x` of the unit ball of a\ncomplete extension field `L`, the residue class of `f(x)` is the value of the reduced polynomial\n`f̃` at the reduced point `x̃`. Source: BGR 5.1.4 (the commutative diagram before Proposition 3);\nBosch 1.2/5. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/EvalReduction.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "reduction_aeval",
+  "statement": "theorem reduction_aeval {x : σ → Restricted K (1 : τ → ℝ)} (hx : ∀ i, ‖x i‖ ≤ 1)\n    (f : unitClosedBall (Restricted K (1 : σ → ℝ))) :\n    reduction ⟨aeval (1 : σ → ℝ) x hx (f : Restricted K (1 : σ → ℝ)),\n        mem_unitClosedBall.2 (norm_aeval_le_one hx f)⟩ =\n      MvPolynomial.aeval (fun i ↦ reduction ⟨x i, mem_unitClosedBall.2 (hx i)⟩) (reduction f)",
+  "doc": "/-- **Reduction commutes with substitution**: for a tuple `x` of the unit ball of a Tate algebra,\nthe reduction of `f(x)` is the reduced polynomial `f̃` evaluated at the reductions of the `x i`.\nSource: BGR 5.1.3/7 (the induced `k̃`-algebra homomorphism `φ̃`), 5.2.4/1 (\"`(σ(f))~ = σ̃(f̃)`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 53,
+  "kind": "theorem",
+  "name": "evalNorm_nonneg",
+  "statement": "theorem evalNorm_nonneg (x : MaximalSpectrum A) (f : A) : 0 ≤ evalNorm K x f",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "evalNorm_eq_zero_of_mem",
+  "statement": "theorem evalNorm_eq_zero_of_mem {x : MaximalSpectrum A} {f : A} (hf : f ∈ x.asIdeal) :\n    evalNorm K x f = 0",
+  "doc": "/-- A function vanishes at the points of its zero set: `|f(x)| = 0` when `f ∈ x`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 70,
+  "kind": "theorem",
+  "name": "isMaximal_ker_of_isAlgebraic",
+  "statement": "theorem isMaximal_ker_of_isAlgebraic (φ : A →ₐ[K] L) : (RingHom.ker φ).IsMaximal",
+  "doc": "/-- The kernel of a `K`-algebra homomorphism into an algebraic extension field of `K` is a maximal\nideal. Source: BGR 5.1.4/6 (\"`𝔪_x := ker h_x` is a `k`-algebraic maximal ideal\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 75,
+  "kind": "theorem",
+  "name": "finite_quotient_ker",
+  "statement": "theorem finite_quotient_ker [FiniteDimensional K L] (φ : A →ₐ[K] L) :\n    Module.Finite K (A ⧸ RingHom.ker φ)",
+  "doc": "/-- The residue field at the kernel of a `K`-algebra homomorphism into a finite extension of `K`\nis finite over `K`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "evalNorm_eq_norm_algHom",
+  "statement": "theorem evalNorm_eq_norm_algHom (φ : A →ₐ[K] L) (x : MaximalSpectrum A)\n    (hx : x.asIdeal = RingHom.ker φ) (f : A) : evalNorm K x f = ‖φ f‖",
+  "doc": "/-- At the kernel of a `K`-algebra homomorphism `φ` into an algebraic normed extension field `L`\nof `K`, the value `|f(x)|` is the norm of `φ f`. Source: BGR 5.1.4/6 (\"Corresponding elements in\n`Tₙ/𝔪_x` and `L` must have the same spectral norm over `k`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "evalNorm_le_norm",
+  "statement": "theorem evalNorm_le_norm (x : MaximalSpectrum A) (f : A) : evalNorm K x f ≤ ‖f‖",
+  "doc": "/-- In a Banach algebra over `K` the value of a function at a point is bounded by its norm:\n`|f(x)| ≤ ‖f‖`. Source: BGR 3.8.2/1; Bosch 1.2/12 (the contraction argument through units). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "bddAbove_range_evalNorm",
+  "statement": "theorem bddAbove_range_evalNorm (f : A) :\n    BddAbove (Set.range fun x : MaximalSpectrum A ↦ evalNorm K x f)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/SupSeminorm.lean",
+  "line": 112,
+  "kind": "theorem",
+  "name": "supSeminorm_le_norm",
+  "statement": "theorem supSeminorm_le_norm (f : A) : supSeminorm K f ≤ ‖f‖",
+  "doc": "/-- In a Banach algebra over `K` the supremum seminorm is bounded by the norm.\nSource: BGR 3.8.2/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 41,
+  "kind": "theorem",
+  "name": "NormedField.exists_lt_natCast_norm_eq_one",
+  "statement": "theorem NormedField.exists_lt_natCast_norm_eq_one (K : Type*) [NormedField K]\n    [IsUltrametricDist K] (d : ℕ) : ∃ m : ℕ, d < m ∧ ‖(m : K)‖ = 1",
+  "doc": "/-- In a nonarchimedean normed field there are natural numbers of norm one beyond any bound. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "exists_finset_splittingField_X_pow_sub_one",
+  "statement": "theorem exists_finset_splittingField_X_pow_sub_one {m : ℕ} (hm : 0 < m) (hmK : ‖(m : K)‖ = 1) :\n    ∃ S : Finset (X ^ m - 1 : K[X]).SplittingField, S.card = m ∧\n      (∀ s ∈ S, spectralNorm K _ s = 1) ∧\n        ∀ s ∈ S, ∀ t ∈ S, s ≠ t → spectralNorm K _ (s - t) = 1",
+  "doc": "/-- The `m`-th roots of unity in the splitting field of `X ^ m - 1`, for `m` of norm one in `K`:\n`m` elements of spectral norm one whose pairwise differences have spectral norm one. This is the\nfinite extension with a large residue field used in the maximum modulus principle; it replaces\nthe algebraic closure and BGR's Lemma 3.4.1/4. Source: BGR 5.1.4/3 (\"These assertions remain\nvalid if `k_a` is replaced by any field extension `L ⊂ k_a` of `k`, provided `L̃` is infinite\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "exists_norm_aeval_eq_norm",
+  "statement": "theorem exists_norm_aeval_eq_norm (S : Finset L) (hS₁ : ∀ s ∈ S, ‖s‖ ≤ 1)\n    (hS : ∀ s ∈ S, ∀ t ∈ S, s ≠ t → ‖s - t‖ = 1) (f : Restricted K (1 : σ → ℝ))\n    (hf : ∀ t : σ →₀ ℕ, ‖coeff t f.1‖ = ‖f‖ → ∀ i, t i < S.card) :\n    ∃ x : σ → L, ∃ hx : ∀ i, ‖x i‖ ≤ 1, (∀ i, x i ∈ S) ∧ ‖aeval (1 : σ → ℝ) x hx f‖ = ‖f‖",
+  "doc": "/-- **Maximum modulus principle at the points of an extension field.** Let `L` be a complete\nextension field of `K` and `S` a finite subset of its unit ball whose elements are pairwise at\ndistance one, with more elements than every exponent occurring at a coefficient of `f` of maximal\nnorm. Then `|f(x)| = |f|` for some point `x` with coordinates in `S`. Source: BGR 5.1.4/3;\nBosch 1.2/5. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 93,
+  "kind": "theorem",
+  "name": "exists_evalNorm_eq_norm",
+  "statement": "theorem exists_evalNorm_eq_norm (f : Restricted K (1 : σ → ℝ)) :\n    ∃ x : MaximalSpectrum (Restricted K (1 : σ → ℝ)),\n      Module.Finite K (Restricted K (1 : σ → ℝ) ⧸ x.asIdeal) ∧ evalNorm K x f = ‖f‖",
+  "doc": "/-- **Maximum modulus principle for the Tate algebra**: every `f` attains its Gauss norm at a\nmaximal ideal whose residue field is finite over `K`. Source: BGR 5.1.4/6. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "exists_evalNorm_eq_norm_and_notMem",
+  "statement": "theorem exists_evalNorm_eq_norm_and_notMem (f : Restricted K (1 : σ → ℝ))\n    {g : Restricted K (1 : σ → ℝ)} (hg : g ≠ 0) :\n    ∃ x : MaximalSpectrum (Restricted K (1 : σ → ℝ)), evalNorm K x f = ‖f‖ ∧ g ∉ x.asIdeal",
+  "doc": "/-- The points at which `f` attains its Gauss norm are Zariski-dense: every nonzero `g` is nonzero\nat one of them. Source: BGR 5.1.4/4 (the product trick). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "supSeminorm_eq_norm",
+  "statement": "theorem supSeminorm_eq_norm (f : Restricted K (1 : σ → ℝ)) : supSeminorm K f = ‖f‖",
+  "doc": "/-- **The Gauss norm is the supremum norm** on the Tate algebra. Source: BGR 5.1.4/6. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/MaxModulus.lean",
+  "line": 110,
+  "kind": "theorem",
+  "name": "eq_zero_of_forall_mem",
+  "statement": "theorem eq_zero_of_forall_mem {f : Restricted K (1 : σ → ℝ)}\n    (hf : ∀ x : MaximalSpectrum (Restricted K (1 : σ → ℝ)), f ∈ x.asIdeal) : f = 0",
+  "doc": "/-- A series vanishing at every maximal ideal is zero. Source: BGR 5.1.4/5 (identity theorem). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 44,
+  "kind": "theorem",
+  "name": "coeffX0_add",
+  "statement": "theorem coeffX0_add (g h : TateAlgebra K (n + 1)) (ν : ℕ) :\n    coeffX0 (g + h) ν = coeffX0 g ν + coeffX0 h ν",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 48,
+  "kind": "theorem",
+  "name": "coeffX0_smul",
+  "statement": "theorem coeffX0_smul (a : K) (g : TateAlgebra K (n + 1)) (ν : ℕ) :\n    coeffX0 (a • g) ν = a • coeffX0 g ν",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "norm_coeffX0_le",
+  "statement": "theorem norm_coeffX0_le (g : TateAlgebra K (n + 1)) (ν : ℕ) : ‖coeffX0 g ν‖ ≤ ‖g‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 56,
+  "kind": "theorem",
+  "name": "norm_le_iff_forall_norm_coeffX0_le",
+  "statement": "theorem norm_le_iff_forall_norm_coeffX0_le {ε : ℝ} (g : TateAlgebra K (n + 1)) :\n    ‖g‖ ≤ ε ↔ ∀ ν, ‖coeffX0 g ν‖ ≤ ε",
+  "doc": "/-- The Gauss norm of `g = Σ g_ν X 0 ^ ν` is the maximum of the Gauss norms of the `g_ν`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "tendsto_norm_coeffX0",
+  "statement": "theorem tendsto_norm_coeffX0 (g : TateAlgebra K (n + 1)) :\n    Tendsto (fun ν ↦ ‖coeffX0 g ν‖) atTop (𝓝 0)",
+  "doc": "/-- The coefficients in `X 0` of a series of the Tate algebra tend to zero. Source: BGR 5.1.1\n(\"`Tₙ(k) = Tₙ₋₁(k)⟨Xₙ⟩`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "ofTail_injective",
+  "statement": "theorem ofTail_injective : Function.Injective (ofTail K n)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 72,
+  "kind": "theorem",
+  "name": "ofPolynomial_X",
+  "statement": "theorem ofPolynomial_X : ofPolynomial K n Polynomial.X = Restricted.X K (1 : Fin (n + 1) → ℝ) 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 76,
+  "kind": "theorem",
+  "name": "ofTail_X",
+  "statement": "theorem ofTail_X (i : Fin n) :\n    ofTail K n (Restricted.X K (1 : Fin n → ℝ) i) = Restricted.X K (1 : Fin (n + 1) → ℝ) i.succ",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 81,
+  "kind": "theorem",
+  "name": "ofTail_C",
+  "statement": "theorem ofTail_C (a : K) :\n    ofTail K n (Restricted.C (1 : Fin n → ℝ) a) = Restricted.C (1 : Fin (n + 1) → ℝ) a",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "norm_ofPolynomial_le_iff",
+  "statement": "theorem norm_ofPolynomial_le_iff {ε : ℝ} (p : Polynomial (TateAlgebra K n)) :\n    ‖ofPolynomial K n p‖ ≤ ε ↔ ∀ i, ‖p.coeff i‖ ≤ ε",
+  "doc": "/-- The Gauss norm of a polynomial in `X 0` is the maximum of the norms of its coefficients. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "norm_ofTail",
+  "statement": "theorem norm_ofTail (f : TateAlgebra K n) : ‖ofTail K n f‖ = ‖f‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 96,
+  "kind": "theorem",
+  "name": "ne_zero_of_isMulDistinguishedX0",
+  "statement": "theorem ne_zero_of_isMulDistinguishedX0 {g : TateAlgebra K (n + 1)} {s : ℕ}\n    (hg : IsMulDistinguishedX0 g s) : g ≠ 0",
+  "doc": "/-- A distinguished series is nonzero. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 101,
+  "kind": "theorem",
+  "name": "isMulDistinguishedX0_smul_iff",
+  "statement": "theorem isMulDistinguishedX0_smul_iff {a : K} (ha : a ≠ 0) {g : TateAlgebra K (n + 1)} {s : ℕ} :\n    IsMulDistinguishedX0 (a • g) s ↔ IsMulDistinguishedX0 g s",
+  "doc": "/-- Distinguishedness is invariant under multiplication by a nonzero scalar. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 108,
+  "kind": "theorem",
+  "name": "isMulDistinguishedX0_zero_iff",
+  "statement": "theorem isMulDistinguishedX0_zero_iff [CompleteSpace K] {g : TateAlgebra K (n + 1)} :\n    IsMulDistinguishedX0 g 0 ↔ IsUnit g",
+  "doc": "/-- A series is `X 0`-distinguished of order `0` if and only if it is a unit.\nSource: Bosch 1.2/6 (\"an arbitrary series `g ∈ Tₙ` is `ζₙ`-distinguished of order `0` if and only\nif it is a unit\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 114,
+  "kind": "theorem",
+  "name": "coeff_finSuccEquiv_reduction",
+  "statement": "theorem coeff_finSuccEquiv_reduction (g : unitClosedBall (TateAlgebra K (n + 1))) (ν : ℕ) :\n    (MvPolynomial.finSuccEquiv _ n (reduction g)).coeff ν =\n      reduction ⟨coeffX0 (g : TateAlgebra K (n + 1)) ν,\n        mem_unitClosedBall.2 ((norm_coeffX0_le _ ν).trans (Subring.norm_le_one g))⟩",
+  "doc": "/-- The coefficients in `X 0` of the reduction are the reductions of the coefficients in `X 0`.\nSource: BGR 5.2.1 (reading `g̃` in `k̃[X₁, …, X_{n−1}][Xₙ]`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 124,
+  "kind": "theorem",
+  "name": "isMulDistinguishedX0_iff_reduction",
+  "statement": "theorem isMulDistinguishedX0_iff_reduction [CompleteSpace K]\n    {g : unitClosedBall (TateAlgebra K (n + 1))} (hg : ‖(g : TateAlgebra K (n + 1))‖ = 1)\n    {s : ℕ} :\n    IsMulDistinguishedX0 (g : TateAlgebra K (n + 1)) s ↔\n      (MvPolynomial.finSuccEquiv _ n (reduction g)).natDegree = s ∧\n        IsUnit (MvPolynomial.finSuccEquiv _ n (reduction g)).leadingCoeff",
+  "doc": "/-- A series of Gauss norm one is `X 0`-distinguished of order `s` if and only if its reduction,\nas a polynomial in `X 0`, has degree `s` and a unit as leading coefficient. Source: BGR 5.2.1\n(\"`g` with `|g| = 1` is `Xₙ`-distinguished of degree `s` if and only if `g̃` is a unitary polynomial\nof degree `s`\"); Bosch 1.2/6. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 143,
+  "kind": "theorem",
+  "name": "isWeierstrassPolynomial_iff",
+  "statement": "theorem isWeierstrassPolynomial_iff {ω : Polynomial (TateAlgebra K n)} :\n    IsWeierstrassPolynomial K n ω ↔ ω.Monic ∧ ∀ i, ‖ω.coeff i‖ ≤ 1",
+  "doc": "/-- A monic polynomial is a Weierstrass polynomial if and only if its coefficients lie in the\nunit ball. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 148,
+  "kind": "theorem",
+  "name": "isWeierstrassPolynomial_X_pow",
+  "statement": "theorem isWeierstrassPolynomial_X_pow (s : ℕ) :\n    IsWeierstrassPolynomial K n (Polynomial.X ^ s)",
+  "doc": "/-- The powers of the variable `X 0` are Weierstrass polynomials. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 154,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.of_mul_left",
+  "statement": "theorem IsWeierstrassPolynomial.of_mul_left {ω₁ ω₂ : Polynomial (TateAlgebra K n)}\n    (h₁ : ω₁.Monic) (h₂ : ω₂.Monic) (h : IsWeierstrassPolynomial K n (ω₁ * ω₂)) :\n    IsWeierstrassPolynomial K n ω₁",
+  "doc": "/-- If a product of two monic polynomials is a Weierstrass polynomial, so is the left factor.\nSource: BGR 5.2.3/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 161,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.of_mul_right",
+  "statement": "theorem IsWeierstrassPolynomial.of_mul_right {ω₁ ω₂ : Polynomial (TateAlgebra K n)}\n    (h₁ : ω₁.Monic) (h₂ : ω₂.Monic) (h : IsWeierstrassPolynomial K n (ω₁ * ω₂)) :\n    IsWeierstrassPolynomial K n ω₂",
+  "doc": "/-- If a product of two monic polynomials is a Weierstrass polynomial, so is the right factor.\nSource: BGR 5.2.3/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 175,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.isMulDistinguishedX0",
+  "statement": "theorem IsWeierstrassPolynomial.isMulDistinguishedX0 {ω : Polynomial (TateAlgebra K n)}\n    (hω : IsWeierstrassPolynomial K n ω) :\n    IsMulDistinguishedX0 (ofPolynomial K n ω) ω.natDegree",
+  "doc": "/-- A Weierstrass polynomial of degree `s` is `X 0`-distinguished of order `s`.\nSource: BGR 5.2.2/1 (\"`|ω| = 1` so that `ω` is `Xₙ`-distinguished of degree `s`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 183,
+  "kind": "theorem",
+  "name": "exists_isWeierstrassPolynomial_of_isMulDistinguishedX0",
+  "statement": "theorem exists_isWeierstrassPolynomial_of_isMulDistinguishedX0 [CompleteSpace K]\n    {g : TateAlgebra K (n + 1)} {s : ℕ} (hg : IsMulDistinguishedX0 g s) :\n    ∃ (ω : Polynomial (TateAlgebra K n)) (e : (TateAlgebra K (n + 1))ˣ),\n      IsWeierstrassPolynomial K n ω ∧ ω.natDegree = s ∧ g = e * ofPolynomial K n ω",
+  "doc": "/-- **Weierstrass preparation on Weierstrass polynomials**: a series that is `X 0`-distinguished\nof order `s` is a unit times a Weierstrass polynomial of degree `s`. Source: BGR 5.2.2/1;\nBosch 1.2/9. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Distinguished.lean",
+  "line": 190,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.eq_of_mul_eq_mul",
+  "statement": "theorem IsWeierstrassPolynomial.eq_of_mul_eq_mul [CompleteSpace K]\n    {ω₁ ω₂ : Polynomial (TateAlgebra K n)}\n    (h₁ : IsWeierstrassPolynomial K n ω₁) (h₂ : IsWeierstrassPolynomial K n ω₂)\n    {e₁ e₂ : (TateAlgebra K (n + 1))ˣ}\n    (h : (e₁ : TateAlgebra K (n + 1)) * ofPolynomial K n ω₁ = e₂ * ofPolynomial K n ω₂) :\n    ω₁ = ω₂",
+  "doc": "/-- The Weierstrass polynomial of a distinguished series is unique. Source: BGR 5.2.2/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 42,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.existsUnique_remainder",
+  "statement": "theorem IsWeierstrassPolynomial.existsUnique_remainder (hω : IsWeierstrassPolynomial K n ω)\n    (f : TateAlgebra K (n + 1)) :\n    ∃! r : Polynomial (TateAlgebra K n),\n      r.degree < ω.degree ∧ f - ofPolynomial K n r ∈ Ideal.span {ofPolynomial K n ω}",
+  "doc": "/-- Modulo a Weierstrass polynomial `ω` every series has a unique representative that is a\npolynomial in `X 0` of degree less than `deg ω`: the quotient `T_{n+1} ⧸ (ω)` is free over `Tₙ` on\n`1, X 0, …, X 0 ^ (deg ω - 1)`. Source: BGR 5.2.3/3 (i). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 50,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.bijective_quotientMap",
+  "statement": "theorem IsWeierstrassPolynomial.bijective_quotientMap (hω : IsWeierstrassPolynomial K n ω) :\n    Function.Bijective\n      (Ideal.quotientMap ((Ideal.span {ω}).map (ofPolynomial K n)) (ofPolynomial K n)\n        Ideal.le_comap_map)",
+  "doc": "/-- The quotient of the Tate algebra by a Weierstrass polynomial is the quotient of the polynomial\nring: the natural map `Tₙ[X] ⧸ (ω) → T_{n+1} ⧸ (ω)` is bijective. Source: BGR 5.2.3/3 (ii). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 58,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.finite_mk_comp_ofTail",
+  "statement": "theorem IsWeierstrassPolynomial.finite_mk_comp_ofTail (hω : IsWeierstrassPolynomial K n ω) :\n    ((Ideal.Quotient.mk (Ideal.span {ofPolynomial K n ω})).comp (ofTail K n)).Finite",
+  "doc": "/-- The map `Tₙ → T_{n+1} ⧸ (ω)` is finite for every Weierstrass polynomial `ω`.\nSource: BGR 5.2.3/4 (\"In particular, …\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.injective_mk_comp_ofTail",
+  "statement": "theorem IsWeierstrassPolynomial.injective_mk_comp_ofTail (hω : IsWeierstrassPolynomial K n ω)\n    (hdeg : 0 < ω.natDegree) :\n    Function.Injective\n      ((Ideal.Quotient.mk (Ideal.span {ofPolynomial K n ω})).comp (ofTail K n))",
+  "doc": "/-- The map `Tₙ → T_{n+1} ⧸ (ω)` is injective for every Weierstrass polynomial `ω` of positive\ndegree. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 73,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.finite_comp_ofTail",
+  "statement": "theorem IsWeierstrassPolynomial.finite_comp_ofTail (hω : IsWeierstrassPolynomial K n ω)\n    {A : Type*} [CommRing A] (φ : TateAlgebra K (n + 1) →+* A) (hφ : φ.Finite)\n    (h0 : φ (ofPolynomial K n ω) = 0) : (φ.comp (ofTail K n)).Finite",
+  "doc": "/-- **Weierstrass finiteness theorem**: a finite ring homomorphism out of `T_{n+1}` whose kernel\ncontains a Weierstrass polynomial restricts to a finite homomorphism on `Tₙ`.\nSource: BGR 5.2.3/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "finite_mk_comp_ofTail_of_isMulDistinguishedX0",
+  "statement": "theorem finite_mk_comp_ofTail_of_isMulDistinguishedX0 {g : TateAlgebra K (n + 1)} {s : ℕ}\n    (hg : IsMulDistinguishedX0 g s) :\n    ((Ideal.Quotient.mk (Ideal.span {g})).comp (ofTail K n)).Finite",
+  "doc": "/-- The map `Tₙ → T_{n+1} ⧸ (g)` is finite for every `X 0`-distinguished series `g`.\nSource: BGR 5.2.3/4; Bosch 1.2/10 (\"the canonical morphism `T_{n−1} → Tₙ → Tₙ/(g)` is finite\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Finiteness.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "IsWeierstrassPolynomial.finite_compHom",
+  "statement": "theorem IsWeierstrassPolynomial.finite_compHom (hω : IsWeierstrassPolynomial K n ω)\n    (M : Type*) [AddCommGroup M] [Module (TateAlgebra K (n + 1)) M]\n    [Module.Finite (TateAlgebra K (n + 1)) M] (h : ∀ m : M, ofPolynomial K n ω • m = 0) :\n    @Module.Finite (TateAlgebra K n) M _ _ (Module.compHom M (ofTail K n))",
+  "doc": "/-- Module form of the Weierstrass finiteness theorem: a finite `T_{n+1}`-module killed by a\nWeierstrass polynomial is finite over `Tₙ`. Source: BGR 5.2.3/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 55,
+  "kind": "theorem",
+  "name": "shearAlgHom_comp_shearAlgHom",
+  "statement": "theorem shearAlgHom_comp_shearAlgHom (e : Fin n → ℕ) {a b : R} (hab : a + b = 0) :\n    (shearAlgHom R e a).comp (shearAlgHom R e b) = AlgHom.id R _",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 70,
+  "kind": "theorem",
+  "name": "shear_X_zero",
+  "statement": "theorem shear_X_zero (e : Fin n → ℕ) : shear R e (X 0) = X 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "shear_X_succ",
+  "statement": "theorem shear_X_succ (e : Fin n → ℕ) (i : Fin n) :\n    shear R e (X i.succ) = X i.succ + X 0 ^ e i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "sum_pow_mul_ne_of_lt",
+  "statement": "theorem sum_pow_mul_ne_of_lt {t : ℕ} {v w : Fin (n + 1) →₀ ℕ} (hv : ∀ i, v i < t)\n    (hw : ∀ i, w i < t) (hvw : v ≠ w) :\n    ∑ i : Fin (n + 1), t ^ i.val * v i ≠ ∑ i : Fin (n + 1), t ^ i.val * w i",
+  "doc": "/-- Distinct exponent vectors with entries below `t` have distinct weighted degrees\n`Σ t ^ i * v i`: the base-`t` expansion is unique. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "degreeOf_zero_shear_monomial",
+  "statement": "theorem degreeOf_zero_shear_monomial (e : Fin n → ℕ) (v : Fin (n + 1) →₀ ℕ) {a : k}\n    (ha : a ≠ 0) :\n    ((shear k e) (monomial v a)).degreeOf 0 = v 0 + ∑ i : Fin n, e i * v i.succ",
+  "doc": "/-- The degree in `X 0` of the shear of a monomial. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "leadingCoeff_finSuccEquiv_shear_monomial",
+  "statement": "theorem leadingCoeff_finSuccEquiv_shear_monomial {e : Fin n → ℕ} (he : ∀ i, 0 < e i)\n    (v : Fin (n + 1) →₀ ℕ) (a : k) :\n    (finSuccEquiv k n ((shear k e) (monomial v a))).leadingCoeff = C a",
+  "doc": "/-- For positive exponents, the leading coefficient in `X 0` of the shear of a monomial is its\ncoefficient. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 107,
+  "kind": "theorem",
+  "name": "isUnit_leadingCoeff_finSuccEquiv_shear",
+  "statement": "theorem isUnit_leadingCoeff_finSuccEquiv_shear {f : MvPolynomial (Fin (n + 1)) k} (hf : f ≠ 0)\n    {t : ℕ} (ht : ∀ v ∈ f.support, ∀ i, v i < t) :\n    IsUnit (finSuccEquiv k n (shear k (fun i : Fin n ↦ t ^ (i.val + 1)) f)).leadingCoeff",
+  "doc": "/-- After the shear with exponents `t ^ (i + 1)`, for `t` exceeding every exponent of a nonzero\npolynomial `f` over a field, the leading coefficient of `f` in `X 0` is a unit.\nSource: BGR 5.2.4/1 (the computation of `σ̃(f̃)`); Bosch 1.2/7. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 129,
+  "kind": "theorem",
+  "name": "norm_shearTuple_le_one",
+  "statement": "theorem norm_shearTuple_le_one (e : Fin n → ℕ) {a : K} (ha : ‖a‖ ≤ 1) (i : Fin (n + 1)) :\n    ‖shearTuple K n e a i‖ ≤ 1",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 139,
+  "kind": "theorem",
+  "name": "shearAlgHom_comp_shearAlgHom",
+  "statement": "theorem shearAlgHom_comp_shearAlgHom (e : Fin n → ℕ) {a b : K} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)\n    (hab : a + b = 0) :\n    (shearAlgHom K n e a ha).comp (shearAlgHom K n e b hb) = AlgHom.id K _",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 155,
+  "kind": "theorem",
+  "name": "shear_X_zero",
+  "statement": "theorem shear_X_zero (e : Fin n → ℕ) :\n    shear K n e (Restricted.X K (1 : Fin (n + 1) → ℝ) 0) =\n      Restricted.X K (1 : Fin (n + 1) → ℝ) 0",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 161,
+  "kind": "theorem",
+  "name": "shear_X_succ",
+  "statement": "theorem shear_X_succ (e : Fin n → ℕ) (i : Fin n) :\n    shear K n e (Restricted.X K (1 : Fin (n + 1) → ℝ) i.succ) =\n      Restricted.X K (1 : Fin (n + 1) → ℝ) i.succ +\n        Restricted.X K (1 : Fin (n + 1) → ℝ) 0 ^ e i",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 169,
+  "kind": "theorem",
+  "name": "norm_shear",
+  "statement": "theorem norm_shear (e : Fin n → ℕ) (f : TateAlgebra K (n + 1)) : ‖shear K n e f‖ = ‖f‖",
+  "doc": "/-- The shear is an isometry for the Gauss norm. Source: BGR 5.1.3 (Example: \"`φ` is an isometric\nautomorphism of `Tₙ`\"); Bosch 1.2/7 (\"`|σ(f)| = |f|` for all `f ∈ Tₙ`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 174,
+  "kind": "theorem",
+  "name": "reduction_shear",
+  "statement": "theorem reduction_shear (e : Fin n → ℕ) (f : unitClosedBall (TateAlgebra K (n + 1))) :\n    reduction ⟨shear K n e (f : TateAlgebra K (n + 1)),\n        mem_unitClosedBall.2 ((norm_shear e _).trans_le (Subring.norm_le_one f))⟩ =\n      MvPolynomial.shear _ e (reduction f)",
+  "doc": "/-- The reduction of the shear is the shear of the reduction. Source: BGR 5.2.4/1\n(\"`(σ(f))~ = σ̃(f̃)`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 183,
+  "kind": "theorem",
+  "name": "exists_isMulDistinguishedX0_shear",
+  "statement": "theorem exists_isMulDistinguishedX0_shear {f : TateAlgebra K (n + 1)} (hf : f ≠ 0) {t : ℕ}\n    (ht : ∀ ν : Fin (n + 1) →₀ ℕ, ‖MvPowerSeries.coeff ν f.1‖ = ‖f‖ → ∀ i, ν i < t) :\n    ∃ s, IsMulDistinguishedX0 (shear K n (fun i : Fin n ↦ t ^ (i.val + 1)) f) s",
+  "doc": "/-- **Distinguished charts, explicit form**: for `t` exceeding every exponent occurring at a\ncoefficient of `f` of maximal norm, the shear with exponents `t ^ (i + 1)` makes `f`\n`X 0`-distinguished. Source: BGR 5.2.4/2; Bosch 1.2/7. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 190,
+  "kind": "theorem",
+  "name": "exists_shear_isMulDistinguishedX0",
+  "statement": "theorem exists_shear_isMulDistinguishedX0 {f : TateAlgebra K (n + 1)} (hf : f ≠ 0) :\n    ∃ (e : Fin n → ℕ) (s : ℕ), IsMulDistinguishedX0 (shear K n e f) s",
+  "doc": "/-- **Distinguished charts**: every nonzero series becomes `X 0`-distinguished after a shear.\nSource: BGR 5.2.4/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Chart.lean",
+  "line": 196,
+  "kind": "theorem",
+  "name": "exists_shear_forall_isMulDistinguishedX0",
+  "statement": "theorem exists_shear_forall_isMulDistinguishedX0 (F : Finset (TateAlgebra K (n + 1)))\n    (hF : ∀ f ∈ F, f ≠ 0) :\n    ∃ e : Fin n → ℕ, ∀ f ∈ F, ∃ s, IsMulDistinguishedX0 (shear K n e f) s",
+  "doc": "/-- Finitely many nonzero series become `X 0`-distinguished after one and the same shear.\nSource: Bosch 1.2/7. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 43,
+  "kind": "theorem",
+  "name": "ringKrullDim_le_of_isIntegral",
+  "statement": "theorem ringKrullDim_le_of_isIntegral {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S)\n    (hf : f.IsIntegral) : ringKrullDim S ≤ ringKrullDim R",
+  "doc": "/-- An integral ring homomorphism does not raise the Krull dimension: distinct comparable primes\nhave distinct contractions. Source: BGR 6.1.2 (Remark), citing Nagata, Corollary 10.10. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 49,
+  "kind": "theorem",
+  "name": "ringKrullDim_le_add_one_of_forall_quotient_le",
+  "statement": "theorem ringKrullDim_le_add_one_of_forall_quotient_le {R : Type*} [CommRing R] {d : WithBot ℕ∞}\n    (hd : 0 ≤ d)\n    (h : ∀ p q : Ideal R, p.IsPrime → q.IsPrime → q < p → ringKrullDim (R ⧸ p) ≤ d) :\n    ringKrullDim R ≤ d + 1",
+  "doc": "/-- If the quotient by every prime that is not minimal has Krull dimension at most `d`, the ring\nhas Krull dimension at most `d + 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "finite_mk_comp_C",
+  "statement": "theorem finite_mk_comp_C (h : IsRueckert φ W) {ω : I[X]} (hω : ω ∈ W) :\n    ((Ideal.Quotient.mk ((Ideal.span {ω}).map φ)).comp (φ.comp C)).Finite",
+  "doc": "/-- For `ω ∈ W` the canonical map `I → I' ⧸ (ω)` is finite. Source: BGR 5.2.5/1 (\"In particular,\nthe canonical map `I → I'/ωI'` is finite\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "exists_ringEquiv_mem_map",
+  "statement": "theorem exists_ringEquiv_mem_map (h : IsRueckert φ W) {a : Ideal I'} (ha : a ≠ ⊥) :\n    ∃ (σ : I' ≃+* I') (ω : I[X]), ω ∈ W ∧ φ ω ∈ a.map (σ : I' →+* I')",
+  "doc": "/-- Every nonzero ideal of a Rückert overring contains, after an automorphism, a member of `W`.\nSource: BGR 5.2.5/2 (\"According to axiom (3), we may assume that `𝔞` contains a polynomial\n`ω ∈ W`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "isNoetherianRing",
+  "statement": "theorem isNoetherianRing (h : IsRueckert φ W) [IsNoetherianRing I] : IsNoetherianRing I'",
+  "doc": "/-- A Rückert overring of a noetherian ring is noetherian. Source: BGR 5.2.5/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "jacobson_eq_radical",
+  "statement": "theorem jacobson_eq_radical (h : IsRueckert φ W) [IsJacobsonRing I] {a : Ideal I'} (ha : a ≠ ⊥) :\n    a.jacobson = a.radical",
+  "doc": "/-- In a Rückert overring of a Jacobson ring, the nilradical of a nonzero ideal is its Jacobson\nradical. Source: BGR 5.2.5/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 103,
+  "kind": "theorem",
+  "name": "isJacobsonRing",
+  "statement": "theorem isJacobsonRing (h : IsRueckert φ W) [IsJacobsonRing I]\n    (h0 : (⊥ : Ideal I').jacobson = ⊥) : IsJacobsonRing I'",
+  "doc": "/-- A Rückert overring of a Jacobson ring whose Jacobson radical vanishes is a Jacobson ring.\nSource: BGR 5.2.6/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "uniqueFactorizationMonoid",
+  "statement": "theorem uniqueFactorizationMonoid (h : IsRueckert φ W) [IsDomain I]\n    [UniqueFactorizationMonoid I] [IsDomain I'] : UniqueFactorizationMonoid I'",
+  "doc": "/-- An integral domain which is Rückert over a factorial ring is factorial.\nSource: BGR 5.2.5/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 115,
+  "kind": "theorem",
+  "name": "ringKrullDim_quotient_le",
+  "statement": "theorem ringKrullDim_quotient_le (h : IsRueckert φ W) {ω : I[X]} (hω : ω ∈ W) :\n    ringKrullDim (I' ⧸ (Ideal.span {ω}).map φ) ≤ ringKrullDim I",
+  "doc": "/-- For `ω ∈ W` the Krull dimension of `I' ⧸ (ω)` is at most that of `I`. Source: Bosch 1.2/10\n(\"the canonical morphism `T_{n−1} → Tₙ → Tₙ/(g)` is finite\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 121,
+  "kind": "theorem",
+  "name": "ringKrullDim_le",
+  "statement": "theorem ringKrullDim_le (h : IsRueckert φ W) : ringKrullDim I' ≤ ringKrullDim I + 1",
+  "doc": "/-- The Krull dimension of a Rückert overring is at most that of the base plus one.\nSource: Bosch 1.2/10 (the descent `T_{n−1} → Tₙ/(g)` finite), BGR 6.1.2 (Remark). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Rueckert.lean",
+  "line": 127,
+  "kind": "theorem",
+  "name": "ringKrullDim_add_one_le",
+  "statement": "theorem ringKrullDim_add_one_le (h : IsRueckert φ W) [IsDomain I'] (hX : (X : I[X]) ∈ W) :\n    ringKrullDim I + 1 ≤ ringKrullDim I'",
+  "doc": "/-- If the variable `X` belongs to `W` and `I'` is a domain, the Krull dimension of a Rückert\noverring is at least that of the base plus one. Source: BGR 6.1.2 (Remark: the chain\n`0 ⊂ (X₁) ⊂ (X₁, X₂) ⊂ …`). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Rueckert.lean",
+  "line": 38,
+  "kind": "theorem",
+  "name": "isRueckert_ofPolynomial",
+  "statement": "theorem isRueckert_ofPolynomial (K : Type*) [NormedField K] [IsUltrametricDist K]\n    [CompleteSpace K] (n : ℕ) :\n    IsRueckert (ofPolynomial K n) {ω | IsWeierstrassPolynomial K n ω}",
+  "doc": "/-- The Tate algebra in `n + 1` variables is Rückert over the Tate algebra in `n` variables, for\nthe family of Weierstrass polynomials in `X 0`. Source: BGR 5.2.5 (\"According to the results of\n(5.2.2), (5.2.3) and (5.2.4), the algebra `Tₙ` is Rückert over `T_{n−1}`\"), 5.2.6. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Rueckert.lean",
+  "line": 44,
+  "kind": "instance",
+  "name": "instIsNoetherianRing",
+  "statement": "instance instIsNoetherianRing (K : Type*) [NormedField K] [IsUltrametricDist K] [CompleteSpace K]\n    (n : ℕ) : IsNoetherianRing (TateAlgebra K n)",
+  "doc": "/-- **The Tate algebra is noetherian.** Source: BGR 5.2.6/1; Bosch 1.2/13. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Rueckert.lean",
+  "line": 49,
+  "kind": "instance",
+  "name": "instUniqueFactorizationMonoid",
+  "statement": "instance instUniqueFactorizationMonoid (K : Type*) [NormedField K] [IsUltrametricDist K]\n    [CompleteSpace K] (n : ℕ) : UniqueFactorizationMonoid (TateAlgebra K n)",
+  "doc": "/-- **The Tate algebra is factorial.** Source: BGR 5.2.6/1; Bosch 1.2/14. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Rueckert.lean",
+  "line": 58,
+  "kind": "instance",
+  "name": "instIsJacobsonRing",
+  "statement": "instance instIsJacobsonRing (K : Type*) [NormedField K] [IsUltrametricDist K] [CompleteSpace K]\n    (n : ℕ) : IsJacobsonRing (TateAlgebra K n)",
+  "doc": "/-- **The Tate algebra is a Jacobson ring.** Source: BGR 5.2.6/3; Bosch 1.2/15. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Rueckert.lean",
+  "line": 64,
+  "kind": "theorem",
+  "name": "ringKrullDim_eq",
+  "statement": "theorem ringKrullDim_eq (K : Type*) [NormedField K] [IsUltrametricDist K] [CompleteSpace K]\n    (n : ℕ) : ringKrullDim (TateAlgebra K n) = n",
+  "doc": "/-- **The Krull dimension of the Tate algebra `Tₙ` is `n`.** Source: BGR 6.1.2 (Remark);\nBosch 1.2/10. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "IsBald.mono",
+  "statement": "theorem IsBald.mono {S S' : Subring K} (h : S ≤ S') (hS' : S'.IsBald) : S.IsBald",
+  "doc": "/-- A subring of a bald subring is bald. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 65,
+  "kind": "theorem",
+  "name": "le_unitLocalization",
+  "statement": "theorem le_unitLocalization (S : Subring K) : S ≤ S.unitLocalization",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "mem_unitLocalization_iff",
+  "statement": "theorem mem_unitLocalization_iff {S : Subring K} {x : K} :\n    x ∈ S.unitLocalization ↔ ∃ s ∈ S, ∃ u ∈ S, ‖u‖ = 1 ∧ x = s / u",
+  "doc": "/-- The elements of the localisation are the fractions with denominator of norm one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "IsBald.unitLocalization",
+  "statement": "theorem IsBald.unitLocalization {S : Subring K} (hS : S.IsBald) : S.unitLocalization.IsBald",
+  "doc": "/-- The localisation of a bald subring at its elements of norm one is bald. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "isBRing_unitLocalization",
+  "statement": "theorem isBRing_unitLocalization {S : Subring K} (hS : ∀ a ∈ S, ‖a‖ ≤ 1) :\n    S.unitLocalization.IsBRing",
+  "doc": "/-- The localisation at the elements of norm one is a B-ring. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "isBald_bot",
+  "statement": "theorem isBald_bot : (⊥ : Subring K).IsBald",
+  "doc": "/-- The prime subring of a nonarchimedean field is bald. Source: Bosch 1.3/3 (\"The smallest subring\n`S ⊂ R` equals either `ℤ/pℤ` for some prime `p`, or `ℤ`. It is bald\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 92,
+  "kind": "theorem",
+  "name": "IsBald.closure_union_of_norm_le",
+  "statement": "theorem IsBald.closure_union_of_norm_le {S : Subring K} (hS : S.IsBald) {T : Set K} {ε : ℝ}\n    (hε : ε < 1) (hT : ∀ x ∈ T, ‖x‖ ≤ ε) : (closure ((S : Set K) ∪ T)).IsBald",
+  "doc": "/-- Adjoining elements of norm at most `ε < 1` to a bald subring gives a bald subring.\nSource: Bosch 1.3/3 (\"If there is an `ε ∈ R` such that `|aₙ| ≤ ε < 1` for all `n`, we see for\ntrivial reasons that `S[a₀, a₁, …]` is bald\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 98,
+  "kind": "theorem",
+  "name": "IsBRing.exists_monic_norm_aeval_lt_one",
+  "statement": "theorem IsBRing.exists_monic_norm_aeval_lt_one {S : Subring K} (hS : S.IsBRing) {a : K}\n    (ha : ‖a‖ = 1) {p : Polynomial S} (hp : ‖Polynomial.aeval a p‖ < 1)\n    (hc : ∃ i, ‖(p.coeff i : K)‖ = 1) :\n    ∃ g : Polynomial S, g.Monic ∧ g.natDegree ≤ p.natDegree ∧ ‖Polynomial.aeval a g‖ < 1",
+  "doc": "/-- In a B-ring `S`, a polynomial with a coefficient of norm one whose value at an element `a` of\nnorm one is small gives a monic polynomial of no larger degree with the same property. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "IsBRing.isBald_closure_insert",
+  "statement": "theorem IsBRing.isBald_closure_insert {S : Subring K} (hB : S.IsBRing) (hS : S.IsBald) {a : K}\n    (ha : ‖a‖ = 1) : (closure (insert a (S : Set K))).IsBald",
+  "doc": "/-- Adjoining an element of norm one to a bald B-ring gives a bald subring. Source: Bosch 1.3/3\n(the transcendental and the algebraic case). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 113,
+  "kind": "theorem",
+  "name": "IsBald.closure_insert",
+  "statement": "theorem IsBald.closure_insert {S : Subring K} (hS : S.IsBald) {a : K} (ha : ‖a‖ ≤ 1) :\n    (closure (insert a (S : Set K))).IsBald",
+  "doc": "/-- Adjoining an element of the unit ball to a bald subring gives a bald subring.\nSource: Bosch 1.3/3 (\"it is enough to show that, for a bald subring `S ⊂ R` and an element\n`a ∈ R` of value `|a| = 1`, the ring `S[a]` is bald\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Bald.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "isBald_closure_range",
+  "statement": "theorem isBald_closure_range {ι : Type*} {a : ι → K} (ha : ∀ i, ‖a i‖ ≤ 1)\n    (ha0 : Tendsto a cofinite (𝓝 0)) : (closure (Set.range a)).IsBald",
+  "doc": "/-- **The subring generated by a null family of the unit ball is bald.** Source: Bosch 1.3/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "norm_coeff_le_norm_sum",
+  "statement": "theorem norm_coeff_le_norm_sum (he : IsOrthonormalFamily K e) (s : Finset I) (a : I → K) {i : I}\n    (hi : i ∈ s) : ‖a i‖ ≤ ‖∑ j ∈ s, a j • e j‖",
+  "doc": "/-- In a finite combination of an orthonormal family every coefficient is bounded by the norm of\nthe combination. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 73,
+  "kind": "theorem",
+  "name": "norm_sum_le",
+  "statement": "theorem norm_sum_le (he : IsOrthonormalFamily K e) (s : Finset I) (a : I → K) {C : ℝ}\n    (hC : 0 ≤ C) (h : ∀ i ∈ s, ‖a i‖ ≤ C) : ‖∑ i ∈ s, a i • e i‖ ≤ C",
+  "doc": "/-- A finite combination of an orthonormal family is bounded by any bound on its coefficients. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 78,
+  "kind": "theorem",
+  "name": "linearIndependent",
+  "statement": "theorem linearIndependent (he : IsOrthonormalFamily K e) : LinearIndependent K e",
+  "doc": "/-- An orthonormal family is linearly independent. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 82,
+  "kind": "theorem",
+  "name": "tendsto_cofinite_of_hasSum",
+  "statement": "theorem tendsto_cofinite_of_hasSum (he : IsOrthonormalFamily K e) {a : I → K} {x : V}\n    (hx : HasSum (fun i ↦ a i • e i) x) : Tendsto a cofinite (𝓝 0)",
+  "doc": "/-- The coefficients of a convergent expansion in an orthonormal family tend to zero. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 88,
+  "kind": "theorem",
+  "name": "norm_coeff_le_of_hasSum",
+  "statement": "theorem norm_coeff_le_of_hasSum (he : IsOrthonormalFamily K e) {a : I → K} {x : V}\n    (hx : HasSum (fun i ↦ a i • e i) x) (i : I) : ‖a i‖ ≤ ‖x‖",
+  "doc": "/-- In a convergent expansion in an orthonormal family every coefficient is bounded by the norm of\nthe sum. Source: Bosch 1.3/5 (iii). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 94,
+  "kind": "theorem",
+  "name": "norm_le_of_hasSum",
+  "statement": "theorem norm_le_of_hasSum (he : IsOrthonormalFamily K e) {a : I → K} {x : V}\n    (hx : HasSum (fun i ↦ a i • e i) x) {C : ℝ} (hC : 0 ≤ C) (h : ∀ i, ‖a i‖ ≤ C) : ‖x‖ ≤ C",
+  "doc": "/-- A convergent expansion in an orthonormal family is bounded by any bound on its coefficients.\nSource: Bosch 1.3/5 (iii). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 100,
+  "kind": "theorem",
+  "name": "eq_of_hasSum",
+  "statement": "theorem eq_of_hasSum (he : IsOrthonormalFamily K e) {a b : I → K} {x : V}\n    (ha : HasSum (fun i ↦ a i • e i) x) (hb : HasSum (fun i ↦ b i • e i) x) : a = b",
+  "doc": "/-- The coefficients of an expansion in an orthonormal family are unique.\nSource: Bosch 1.3/5 (\"In particular, the coefficients `c_ν` in (ii) are unique\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 106,
+  "kind": "theorem",
+  "name": "summable_smul",
+  "statement": "theorem summable_smul [IsUltrametricDist V] [CompleteSpace V] (he : IsOrthonormalFamily K e)\n    {a : I → K} (ha : Tendsto a cofinite (𝓝 0)) : Summable fun i ↦ a i • e i",
+  "doc": "/-- In a complete nonarchimedean space a family of coefficients tending to zero is summable against\nan orthonormal family. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/PadicFunctionalAnalysis/Orthonormal.lean",
+  "line": 123,
+  "kind": "theorem",
+  "name": "exists_hasSum",
+  "statement": "theorem exists_hasSum [CompleteSpace K] (he : IsOrthonormalBasis K e) (x : V) :\n    ∃ a : I → K, HasSum (fun i ↦ a i • e i) x",
+  "doc": "/-- Every vector of a complete nonarchimedean space over a complete field has an expansion in an\northonormal basis. Source: Bosch 1.3/5 (ii).\n\nCompleteness of the field is necessary: `ℚ_[p]` is a complete normed space over `ℚ` with its\n`p`-adic norm, the family `{1}` is orthonormal with dense span, and an element of `ℚ_[p]` outside\n`ℚ` has no expansion. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/OrthonormalLift.lean",
+  "line": 45,
+  "kind": "theorem",
+  "name": "Finsupp.mem_span_range_of_mapRange_mem_span",
+  "statement": "theorem Finsupp.mem_span_range_of_mapRange_mem_span {F E : Type*} [Field F] [Field E]\n    [Algebra F E] {N M : Type*} (v : M → N →₀ F) (w : N →₀ F)\n    (h : Finsupp.mapRange (algebraMap F E) (map_zero _) w ∈\n      Submodule.span E (Set.range fun μ ↦ Finsupp.mapRange (algebraMap F E) (map_zero _) (v μ))) :\n    w ∈ Submodule.span F (Set.range v)",
+  "doc": "/-- A vector with coefficients in a subfield `F` that lies in the span over the field `E` of a\nfamily of vectors with coefficients in `F` lies in its span over `F`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/OrthonormalLift.lean",
+  "line": 58,
+  "kind": "def",
+  "name": "Subring.IsBRing.residueSubfield",
+  "statement": "def Subring.IsBRing.residueSubfield {S : Subring K} (hS : S.IsBRing) :\n    Subfield (ResidueField (unitClosedBall K)) where",
+  "doc": "/-- The image of a B-ring in the residue field of `K` is a subfield. Source: Bosch 1.3/3 (\"Then\n`S` contains a unique maximal ideal `𝔪`, and `S̃ = S/𝔪` is a field\"). -/",
+  "sorries": 6
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/OrthonormalLift.lean",
+  "line": 86,
+  "kind": "theorem",
+  "name": "IsOrthonormalFamily.of_linearIndependent_residue",
+  "statement": "theorem IsOrthonormalFamily.of_linearIndependent_residue (hx : IsOrthonormalFamily K x)\n    (hy : ∀ μ, HasSum (fun ν ↦ c μ ν • x ν) (y μ)) (hc : ∀ μ ν, ‖c μ ν‖ ≤ 1)\n    (r : M → N →₀ ResidueField (unitClosedBall K))\n    (hr : ∀ μ ν, r μ ν = residue (unitClosedBall K) ⟨c μ ν, mem_unitClosedBall.2 (hc μ ν)⟩)\n    (hli : LinearIndependent (ResidueField (unitClosedBall K)) r) : IsOrthonormalFamily K y",
+  "doc": "/-- A family of the unit ball whose reductions are linearly independent over the residue field is\northonormal. Source: Bosch 1.3/6 (\"In particular, `(y_μ)` is an orthonormal basis of a subspace\n`V' ⊂ V`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/OrthonormalLift.lean",
+  "line": 97,
+  "kind": "theorem",
+  "name": "exists_norm_sub_le_of_span_residue",
+  "statement": "theorem exists_norm_sub_le_of_span_residue (hx : IsOrthonormalFamily K x)\n    (hy : ∀ μ, HasSum (fun ν ↦ c μ ν • x ν) (y μ)) {S : Subring K} (hS : S.IsBald)\n    (hcS : ∀ μ ν, c μ ν ∈ S) (r : M → N →₀ ResidueField (unitClosedBall K))\n    (hr : ∀ μ ν, r μ ν = residue (unitClosedBall K)\n      ⟨c μ ν, mem_unitClosedBall.2 (hS.norm_le_one _ (hcS μ ν))⟩)\n    (hspan : Submodule.span (ResidueField (unitClosedBall K)) (Set.range r) = ⊤) :\n    ∃ ε : ℝ, ε < 1 ∧ ∀ ν, ∃ z ∈ Submodule.span K (Set.range y), ‖x ν - z‖ ≤ ε",
+  "doc": "/-- If the reductions of the `y μ` span the reduction of `V` and the coordinates of the `y μ` lie\nin a bald subring, then every basis vector `x ν` is approximated by the span of `y` up to a uniform\n`ε < 1`. Source: Bosch 1.3/6 (\"for any `x_ν`, there is an element `z_ν ∈ V'_S` satisfying\n`|x_ν − z_ν| ≤ ε`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/OrthonormalLift.lean",
+  "line": 109,
+  "kind": "theorem",
+  "name": "dense_span_of_forall_exists_norm_sub_le",
+  "statement": "theorem dense_span_of_forall_exists_norm_sub_le (hx : IsOrthonormalBasis K x) {ε : ℝ}\n    (hε : ε < 1) (h : ∀ ν, ∃ z ∈ Submodule.span K (Set.range y), ‖x ν - z‖ ≤ ε) :\n    Dense (Submodule.span K (Set.range y) : Set V)",
+  "doc": "/-- If every vector of an orthonormal basis is approximated by a subspace up to a uniform `ε < 1`,\nthe subspace is dense. Source: Bosch 1.3/6 (\"for any `x ∈ V_S`, there is an element `z ∈ V'_S`\nwith `|x − z| ≤ ε|x|`. But then … we get `V'_S = V_S` by iteration\"); BGR 1.1.4/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/OrthonormalLift.lean",
+  "line": 118,
+  "kind": "theorem",
+  "name": "IsOrthonormalBasis.of_residue_basis",
+  "statement": "theorem IsOrthonormalBasis.of_residue_basis (hx : IsOrthonormalBasis K x)\n    (hy : ∀ μ, HasSum (fun ν ↦ c μ ν • x ν) (y μ)) {S : Subring K} (hS : S.IsBald)\n    (hcS : ∀ μ ν, c μ ν ∈ S) (r : M → N →₀ ResidueField (unitClosedBall K))\n    (hr : ∀ μ ν, r μ ν = residue (unitClosedBall K)\n      ⟨c μ ν, mem_unitClosedBall.2 (hS.norm_le_one _ (hcS μ ν))⟩)\n    (hli : LinearIndependent (ResidueField (unitClosedBall K)) r)\n    (hspan : Submodule.span (ResidueField (unitClosedBall K)) (Set.range r) = ⊤) :\n    IsOrthonormalBasis K y",
+  "doc": "/-- **Lifting of orthonormal bases.** Let `x` be an orthonormal basis of a nonarchimedean space\n`V` and `y` a family whose coordinates `c μ ν` with respect to `x` lie in a bald subring. If\nthe reductions of the `y μ` form a basis of the reduction of `V` over the residue field, then `y`\nis an orthonormal basis of `V`. Source: Bosch 1.3/6. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 69,
+  "kind": "theorem",
+  "name": "exists_basis_adaptedFamily",
+  "statement": "theorem exists_basis_adaptedFamily [Fintype ι] {r : ℕ} (h : Fin r → ι → MvPolynomial σ k) :\n    ∃ (A : Set ((σ →₀ ℕ) × Fin r)) (B : Set (Σ _ : ι, σ →₀ ℕ)),\n      LinearIndependent k (adaptedFamily h A B) ∧\n        Submodule.span k (Set.range (adaptedFamily h A B)) = ⊤ ∧\n          Submodule.span k (Set.range fun a : A ↦ monomial a.1.1 (1 : k) • h a.1.2) =\n            (Submodule.span (MvPolynomial σ k) (Set.range h)).restrictScalars k",
+  "doc": "/-- For finitely many vectors `h j` of a free module `k[X]^ι` there are monomial multiples\n`X^ν • h j` forming a `k`-basis of the submodule they generate, and monomial vectors completing\nthem to a `k`-basis of `k[X]^ι`. Source: Bosch 1.3/7 and 1.3/10 (\"we can find a system `(y_μ)` of\nelements of type `ζ^ν aᵢ` such that its residue classes form a `k`-basis of `ã`. Adding monomials\nof type `ζ^ν` …\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 91,
+  "kind": "theorem",
+  "name": "isOrthonormalBasis_monomial",
+  "statement": "theorem isOrthonormalBasis_monomial :\n    IsOrthonormalBasis K fun t : σ →₀ ℕ ↦ (monomial (1 : σ → ℝ) t (1 : K) : 𝕋)",
+  "doc": "/-- The monomials are an orthonormal basis of the Tate algebra as a normed `K`-vector space.\nSource: Bosch 1.3/5 (\"the monomials `ζ^ν ∈ Tₙ` form an orthonormal basis\"); BGR 5.1.1/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 102,
+  "kind": "theorem",
+  "name": "isOrthonormalBasis_single_monomial",
+  "statement": "theorem isOrthonormalBasis_single_monomial :\n    IsOrthonormalBasis K fun p : (Σ _ : ι, σ →₀ ℕ) ↦\n      (Pi.single p.1 (monomial (1 : σ → ℝ) p.2 (1 : K)) : ι → 𝕋)",
+  "doc": "/-- The monomial vectors `X^ν eᵢ` are an orthonormal basis of the free module `Tˢ` with the\nmaximum norm. Source: Bosch 1.3/10 (\"the canonical system `Z = (ζ^ν eⱼ)`, which is an orthonormal\nbasis of `Tₙˢ`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 108,
+  "kind": "theorem",
+  "name": "hasSum_coeff_smul_single_monomial",
+  "statement": "theorem hasSum_coeff_smul_single_monomial (f : ι → 𝕋) :\n    HasSum (fun p : (Σ _ : ι, σ →₀ ℕ) ↦\n      coeff p.2 (f p.1).1 • (Pi.single p.1 (monomial (1 : σ → ℝ) p.2 (1 : K)) : ι → 𝕋)) f",
+  "doc": "/-- The expansion of a tuple of series in the monomial vectors. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 126,
+  "kind": "theorem",
+  "name": "reductionPi_eq_zero_iff",
+  "statement": "theorem reductionPi_eq_zero_iff {x : ι → 𝕋} (hx : ‖x‖ ≤ 1) : reductionPi x hx = 0 ↔ ‖x‖ < 1",
+  "doc": "/-- The reduction vanishes exactly on the tuples of norm less than one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 132,
+  "kind": "def",
+  "name": "reductionSubmodule",
+  "statement": "def reductionSubmodule (N : Submodule 𝕋 (ι → 𝕋)) :\n    Submodule (MvPolynomial σ 𝕜) (ι → MvPolynomial σ 𝕜) where",
+  "doc": "/-- The reduction `Ñ` of a submodule `N` of `Tˢ`: the reductions of the elements of `N` in the\nunit ball, a submodule of `k[X]ˢ`. Source: Bosch 1.3/10 (\"Writing `Ñ` for the image of\n`N ∩ (R⟨ζ⟩)ˢ`, we see that `Ñ` is a `k[ζ]`-submodule of `(k[ζ])ˢ`\"). -/",
+  "sorries": 3
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 146,
+  "kind": "theorem",
+  "name": "exists_generators_reductionSubmodule",
+  "statement": "theorem exists_generators_reductionSubmodule [Finite σ] (N : Submodule 𝕋 (ι → 𝕋)) :\n    ∃ (r : ℕ) (g : Fin r → ι → 𝕋) (hg : ∀ j, ‖g j‖ = 1), (∀ j, g j ∈ N) ∧\n      Submodule.span (MvPolynomial σ 𝕜) (Set.range fun j ↦ reductionPi (g j) (hg j).le) =\n        reductionSubmodule N",
+  "doc": "/-- The reduction of a submodule is generated by the reductions of finitely many of its elements\nof norm one. Source: Bosch 1.3/10 (\"we can choose elements `x₁, …, x_r ∈ N` of norm `1` such that\ntheir residue classes generate `Ñ` as `k[ζ]`-module\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 170,
+  "kind": "theorem",
+  "name": "exists_isBald_forall_coeff_mem",
+  "statement": "theorem exists_isBald_forall_coeff_mem {r : ℕ} (g : Fin r → ι → 𝕋) (hg : ∀ j, ‖g j‖ ≤ 1) :\n    ∃ S : Subring K, S.IsBald ∧ ∀ j i t, coeff t (g j i).1 ∈ S",
+  "doc": "/-- The coefficients of finitely many tuples of the unit ball lie in a bald subring.\nSource: Bosch 1.3/10 (\"we need finitely many zero sequences in `R`, and the smallest subring\n`R' ⊂ R` containing all these coefficients is bald by Proposition 3\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 177,
+  "kind": "theorem",
+  "name": "isOrthonormalBasis_adaptedFamily",
+  "statement": "theorem isOrthonormalBasis_adaptedFamily {r : ℕ} {g : Fin r → ι → 𝕋} (hg : ∀ j, ‖g j‖ = 1)\n    {A : Set ((σ →₀ ℕ) × Fin r)} {B : Set (Σ _ : ι, σ →₀ ℕ)}\n    (hli : LinearIndependent 𝕜\n      (MvPolynomial.adaptedFamily (fun j ↦ reductionPi (g j) (hg j).le) A B))\n    (hspan : Submodule.span 𝕜\n      (Set.range (MvPolynomial.adaptedFamily (fun j ↦ reductionPi (g j) (hg j).le) A B)) = ⊤) :\n    IsOrthonormalBasis K (adaptedFamily g A B)",
+  "doc": "/-- If the reductions of an adapted family are a basis of `k[X]ˢ` over the residue field, the\nadapted family is an orthonormal basis of `Tˢ`. Source: Bosch 1.3/10 (\"Thus, by Theorem 6,\n`(y_μ)` is an orthonormal basis of `Tₙˢ`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 189,
+  "kind": "theorem",
+  "name": "exists_eq_sum_smul_of_hasSum",
+  "statement": "theorem exists_eq_sum_smul_of_hasSum [CompleteSpace K] {r : ℕ} (g : Fin r → ι → 𝕋)\n    {A : Set ((σ →₀ ℕ) × Fin r)} {c : A → K} {a : ι → 𝕋}\n    (ha : HasSum (fun μ : A ↦ c μ • (monomial (1 : σ → ℝ) μ.1.1 (1 : K) • g μ.1.2)) a)\n    (hc0 : Tendsto c cofinite (𝓝 0)) {C : ℝ} (hC0 : 0 ≤ C) (hC : ∀ μ, ‖c μ‖ ≤ C) :\n    ∃ q : Fin r → 𝕋, (∀ j, ‖q j‖ ≤ C) ∧ a = ∑ j, q j • g j",
+  "doc": "/-- A convergent combination of multiples `X^ν • g j` with coefficients bounded by `C` is a\ncombination `Σ qⱼ • gⱼ` with `‖qⱼ‖ ≤ C`. Source: Bosch 1.3/7 (\"we can write `f' = Σ fᵢaᵢ` with\ncertain elements `fᵢ ∈ Tₙ` satisfying `|fᵢ| ≤ |f|`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 200,
+  "kind": "theorem",
+  "name": "coeff_inr_eq_zero_of_mem",
+  "statement": "theorem coeff_inr_eq_zero_of_mem [CompleteSpace K] {N : Submodule 𝕋 (ι → 𝕋)} {r : ℕ}\n    {g : Fin r → ι → 𝕋} (hg : ∀ j, ‖g j‖ = 1) (hgN : ∀ j, g j ∈ N)\n    {A : Set ((σ →₀ ℕ) × Fin r)} {B : Set (Σ _ : ι, σ →₀ ℕ)}\n    (hON : IsOrthonormalBasis K (adaptedFamily g A B))\n    (hli : LinearIndependent 𝕜\n      (MvPolynomial.adaptedFamily (fun j ↦ reductionPi (g j) (hg j).le) A B))\n    (hA : Submodule.span 𝕜 (Set.range fun a : A ↦\n        MvPolynomial.monomial a.1.1 (1 : 𝕜) • reductionPi (g a.1.2) (hg a.1.2).le) =\n      (reductionSubmodule N).restrictScalars 𝕜)\n    {x : ι → 𝕋} (hx : x ∈ N) {c : A ⊕ B → K}\n    (hc : HasSum (fun μ ↦ c μ • adaptedFamily g A B μ) x) (b : B) : c (Sum.inr b) = 0",
+  "doc": "/-- For an adapted orthonormal basis whose part in `N` reduces to a basis of the reduction of `N`,\nthe expansion of an element of `N` involves only the part in `N`. Source: Bosch 1.3/7 (\"we may\nreplace `f` by `f − f'` … and thereby assume `c_μ = 0` for `μ ∈ M'`. Then, if `f ≠ 0` … we would\nget a non-trivial equation … which, however, contradicts the construction\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 218,
+  "kind": "theorem",
+  "name": "exists_isOrthonormalBasis_adaptedFamily",
+  "statement": "theorem exists_isOrthonormalBasis_adaptedFamily [Finite σ] [CompleteSpace K]\n    (N : Submodule 𝕋 (ι → 𝕋)) :\n    ∃ (r : ℕ) (g : Fin r → ι → 𝕋) (A : Set ((σ →₀ ℕ) × Fin r)) (B : Set (Σ _ : ι, σ →₀ ℕ)),\n      (∀ j, g j ∈ N) ∧ (∀ j, ‖g j‖ = 1) ∧ IsOrthonormalBasis K (adaptedFamily g A B) ∧\n        ∀ x ∈ N, ∀ c : A ⊕ B → K, HasSum (fun μ ↦ c μ • adaptedFamily g A B μ) x →\n          ∀ b : B, c (Sum.inr b) = 0",
+  "doc": "/-- **An orthonormal basis adapted to a submodule**: for every submodule `N` of `Tˢ` there are\ngenerators `g j ∈ N` of norm one and an orthonormal basis of `Tˢ` consisting of multiples\n`X^ν • g j` and monomial vectors, in which the elements of `N` are the series in the multiples\n`X^ν • g j`. Source: Bosch 1.3/10 and the remark after 1.3/7 (\"the system `(y_μ)_{μ ∈ M'}` is seen\nto be an orthonormal basis of `𝔞`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 237,
+  "kind": "theorem",
+  "name": "exists_generators_forall_exists_isNearest",
+  "statement": "theorem exists_generators_forall_exists_isNearest (N : Submodule 𝕋 (ι → 𝕋)) :\n    ∃ (r : ℕ) (g : Fin r → ι → 𝕋), (∀ j, g j ∈ N) ∧ (∀ j, ‖g j‖ = 1) ∧\n      ∀ f : ι → 𝕋, ∃ q : Fin r → 𝕋, (∀ j, ‖q j‖ ≤ ‖f‖) ∧\n        ∀ a ∈ N, ‖f - ∑ j, q j • g j‖ ≤ ‖f - ∑ j, q j • g j - a‖",
+  "doc": "/-- **Generators with a best approximation**: every submodule `N` of `Tˢ` has generators\n`g₁, …, g_r` of norm one such that every `f ∈ Tˢ` has a combination `Σ qⱼ gⱼ` with `‖qⱼ‖ ≤ ‖f‖`\nwhich is a nearest point of `N` to `f`. Source: Bosch 1.3/7, 1.3/9, 1.3/10. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 245,
+  "kind": "theorem",
+  "name": "exists_generators_norm_le",
+  "statement": "theorem exists_generators_norm_le (N : Submodule 𝕋 (ι → 𝕋)) :\n    ∃ (r : ℕ) (g : Fin r → ι → 𝕋), (∀ j, g j ∈ N) ∧ (∀ j, ‖g j‖ = 1) ∧\n      ∀ x ∈ N, ∃ q : Fin r → 𝕋, x = ∑ j, q j • g j ∧ ∀ j, ‖q j‖ ≤ ‖x‖",
+  "doc": "/-- Every submodule of `Tˢ` has generators `g₁, …, g_r` of norm one such that every element `x` of\nit is `Σ qⱼ gⱼ` with `‖qⱼ‖ ≤ ‖x‖`. Source: Bosch 1.3/10; BGR 5.2.7/1 with the bound `ρ = 1`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 252,
+  "kind": "theorem",
+  "name": "exists_forall_norm_sub_le",
+  "statement": "theorem exists_forall_norm_sub_le (N : Submodule 𝕋 (ι → 𝕋)) (f : ι → 𝕋) :\n    ∃ a₀ ∈ N, ∀ a ∈ N, ‖f - a₀‖ ≤ ‖f - a‖",
+  "doc": "/-- **Submodules of `Tˢ` are strictly closed**: every `f` has a nearest point in the submodule.\nSource: BGR 5.2.7/7; Bosch 1.3/9. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 257,
+  "kind": "theorem",
+  "name": "isClosed_submodule",
+  "statement": "theorem isClosed_submodule (N : Submodule 𝕋 (ι → 𝕋)) : IsClosed (N : Set (ι → 𝕋))",
+  "doc": "/-- Submodules of `Tˢ` are closed. Source: BGR 5.2.7/1; Bosch 1.3/8. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 263,
+  "kind": "theorem",
+  "name": "infDist_mem_range_norm",
+  "statement": "theorem infDist_mem_range_norm (N : Submodule 𝕋 (ι → 𝕋)) (f : ι → 𝕋) :\n    Metric.infDist f (N : Set (ι → 𝕋)) ∈ Set.range (norm : K → ℝ)",
+  "doc": "/-- The distance of a point of `Tˢ` to a submodule is the norm of an element of `K`: the residue\nnorm on a finite `T`-module presented as `Tˢ ⧸ N` takes its values in `‖K‖`.\nSource: BGR 5.2.7/8. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 277,
+  "kind": "theorem",
+  "name": "exists_generators_norm_le_ideal",
+  "statement": "theorem exists_generators_norm_le_ideal (I : Ideal 𝕋) :\n    ∃ (r : ℕ) (g : Fin r → 𝕋), (∀ j, g j ∈ I) ∧ (∀ j, ‖g j‖ = 1) ∧\n      ∀ x ∈ I, ∃ q : Fin r → 𝕋, x = ∑ j, q j * g j ∧ ∀ j, ‖q j‖ ≤ ‖x‖",
+  "doc": "/-- Every ideal of the Tate algebra has generators `a₁, …, a_r` of norm one such that every element\n`f` of it is `Σ fᵢ aᵢ` with `‖fᵢ‖ ≤ ‖f‖`. Source: Bosch 1.3/7. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 284,
+  "kind": "theorem",
+  "name": "exists_forall_norm_sub_le_ideal",
+  "statement": "theorem exists_forall_norm_sub_le_ideal (I : Ideal 𝕋) (f : 𝕋) :\n    ∃ a₀ ∈ I, ∀ a ∈ I, ‖f - a₀‖ ≤ ‖f - a‖",
+  "doc": "/-- **Ideals of the Tate algebra are strictly closed**: every series has a nearest point in the\nideal. Source: BGR 5.2.7/8; Bosch 1.3/9. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 289,
+  "kind": "theorem",
+  "name": "isClosed_ideal",
+  "statement": "theorem isClosed_ideal (I : Ideal 𝕋) : IsClosed (I : Set 𝕋)",
+  "doc": "/-- **Ideals of the Tate algebra are closed.** Source: BGR 5.2.7/2; Bosch 1.3/8. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/StrictlyClosed.lean",
+  "line": 294,
+  "kind": "theorem",
+  "name": "norm_quotient_mk_mem_range_norm",
+  "statement": "theorem norm_quotient_mk_mem_range_norm (I : Ideal 𝕋) (f : 𝕋) :\n    ‖Ideal.Quotient.mk I f‖ ∈ Set.range (norm : K → ℝ)",
+  "doc": "/-- The residue norm on a quotient of the Tate algebra takes its values in `‖K‖`:\n`|Tₙ ⧸ 𝔞| = |K|`. Source: BGR 5.2.7/8. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 49,
+  "kind": "theorem",
+  "name": "Module.Dual.exists_bound_of_forall_exists_ne_zero",
+  "statement": "theorem Module.Dual.exists_bound_of_forall_exists_ne_zero {K : Type*} [NormedField K]\n    {V : Type*} [AddCommGroup V] [Module K V] [FiniteDimensional K V] (N : V → ℝ)\n    (h : ∀ x : V, x ≠ 0 → ∃ φ : V →ₗ[K] K, (∃ C : ℝ, ∀ y, ‖φ y‖ ≤ C * N y) ∧ φ x ≠ 0)\n    (ψ : V →ₗ[K] K) : ∃ C : ℝ, ∀ y, ‖ψ y‖ ≤ C * N y",
+  "doc": "/-- On a finite-dimensional space, if the functionals bounded with respect to a function `N`\nseparate the points, then every functional is bounded with respect to `N`.\nSource: BGR 2.3.1/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 62,
+  "kind": "theorem",
+  "name": "norm_trace_le_spectralNorm",
+  "statement": "theorem norm_trace_le_spectralNorm (x : L) : ‖Algebra.trace K L x‖ ≤ spectralNorm K L x",
+  "doc": "/-- The trace of a finite extension is a contraction for the spectral norm.\nSource: BGR 3.2.3/2. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 67,
+  "kind": "theorem",
+  "name": "exists_bound_of_isSeparable",
+  "statement": "theorem exists_bound_of_isSeparable [Algebra.IsSeparable K L] (φ : L →ₗ[K] K) :\n    ∃ C : ℝ, ∀ y, ‖φ y‖ ≤ C * spectralNorm K L y",
+  "doc": "/-- **A finite separable extension is weakly cartesian for the spectral norm**: every linear\nfunctional on it is bounded. Source: BGR 3.5.1/3. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 81,
+  "kind": "theorem",
+  "name": "isWeaklyStable_of_perfectField",
+  "statement": "theorem isWeaklyStable_of_perfectField (K : Type u) [NormedField K] [IsUltrametricDist K]\n    [PerfectField K] : IsWeaklyStable K",
+  "doc": "/-- **Perfect fields are weakly stable.** Source: BGR 3.5.1/4. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 87,
+  "kind": "theorem",
+  "name": "isWeaklyStable_of_completeSpace",
+  "statement": "theorem isWeaklyStable_of_completeSpace (K : Type u) [NontriviallyNormedField K]\n    [IsUltrametricDist K] [CompleteSpace K] : IsWeaklyStable K",
+  "doc": "/-- **Complete fields are weakly stable.** Source: BGR 3.5.2 (\"it follows from Proposition 2.3.3/4\nthat each complete field `K` is weakly stable\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 98,
+  "kind": "def",
+  "name": "normAbsoluteValue",
+  "statement": "noncomputable def normAbsoluteValue (A : Type*) [NormedCommRing A] [NormMulClass A] [Nontrivial A]\n    (Q : Type*) [Field Q] [Algebra A Q] [IsFractionRing A Q] : AbsoluteValue Q ℝ where",
+  "doc": "/-- The multiplicative extension of the norm of a normed domain to its fraction field:\n`|a / b| = ‖a‖ / ‖b‖`. Source: BGR 3.5.3 (\"`K` is the field of fractions of `A`, and the valuation\non `K` extends the valuation on `A`\"), 1.5.3. -/",
+  "sorries": 4
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 110,
+  "kind": "theorem",
+  "name": "normAbsoluteValue_algebraMap",
+  "statement": "theorem normAbsoluteValue_algebraMap (a : A) : normAbsoluteValue A Q (algebraMap A Q a) = ‖a‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 113,
+  "kind": "theorem",
+  "name": "normAbsoluteValue_div",
+  "statement": "theorem normAbsoluteValue_div (a : A) {b : A} (hb : b ≠ 0) :\n    normAbsoluteValue A Q (algebraMap A Q a / algebraMap A Q b) = ‖a‖ / ‖b‖",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 117,
+  "kind": "theorem",
+  "name": "isNonarchimedean_normAbsoluteValue",
+  "statement": "theorem isNonarchimedean_normAbsoluteValue [IsUltrametricDist A] :\n    IsNonarchimedean (normAbsoluteValue A Q)",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/WeaklyStable.lean",
+  "line": 126,
+  "kind": "theorem",
+  "name": "isUltrametricDist",
+  "statement": "theorem isUltrametricDist [IsUltrametricDist A] :\n    letI := normedField A Q\n    IsUltrametricDist Q",
+  "doc": "",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/Japanese.lean",
+  "line": 41,
+  "kind": "theorem",
+  "name": "isJapaneseRing_of_perfectField",
+  "statement": "theorem isJapaneseRing_of_perfectField (A : Type u) [CommRing A] [IsDomain A]\n    [IsNoetherianRing A] [IsIntegrallyClosed A] [PerfectField (FractionRing A)] :\n    IsJapaneseRing A",
+  "doc": "/-- **A noetherian integrally closed domain with perfect fraction field is Japanese.**\nSource: BGR 4.3/2, from Dedekind's theorem 4.2/1. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Stable.lean",
+  "line": 36,
+  "kind": "theorem",
+  "name": "isWeaklyStable_fractionRing",
+  "statement": "theorem isWeaklyStable_fractionRing (n : ℕ) :\n    letI := IsFractionRing.normedField (TateAlgebra K n) (FractionRing (TateAlgebra K n))\n    IsWeaklyStable (FractionRing (TateAlgebra K n))",
+  "doc": "/-- **The fraction field of the Tate algebra is weakly stable**, in characteristic zero.\nSource: BGR 5.3.1/1 (\"All valued fields of characteristic `0` are weakly stable\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Stable.lean",
+  "line": 43,
+  "kind": "theorem",
+  "name": "isJapaneseRing",
+  "statement": "theorem isJapaneseRing (n : ℕ) : IsJapaneseRing (TateAlgebra K n)",
+  "doc": "/-- **The Tate algebra is Japanese**, in characteristic zero. Source: BGR 5.3.1/3 (\"the assertion\nfollows from Proposition 4.3/2 if `char k = 0`\"). -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 40,
+  "kind": "theorem",
+  "name": "norm_X",
+  "statement": "theorem norm_X (n : ℕ) (i : Fin n) : ‖Restricted.X K (1 : Fin n → ℝ) i‖ = 1",
+  "doc": "/-- The variables of the Tate algebra have Gauss norm one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 44,
+  "kind": "theorem",
+  "name": "not_isMulDistinguishedX0_X_one",
+  "statement": "theorem not_isMulDistinguishedX0_X_one (s : ℕ) :\n    ¬ IsMulDistinguishedX0 (Restricted.X K (1 : Fin 2 → ℝ) 1) s",
+  "doc": "/-- The variable `X 1` of `T₂` is not `X 0`-distinguished of any order. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 52,
+  "kind": "theorem",
+  "name": "isMulDistinguishedX0_shear_X_one",
+  "statement": "theorem isMulDistinguishedX0_shear_X_one :\n    IsMulDistinguishedX0 (shear K 1 (fun _ ↦ 1) (Restricted.X K (1 : Fin 2 → ℝ) 1)) 1",
+  "doc": "/-- After the shear `X 1 ↦ X 1 + X 0` the variable `X 1` of `T₂` is `X 0`-distinguished of\norder one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 57,
+  "kind": "theorem",
+  "name": "isMaximal_ker_aeval",
+  "statement": "theorem isMaximal_ker_aeval {n : ℕ} (x : Fin n → K) (hx : ∀ i, ‖x i‖ ≤ 1) :\n    (RingHom.ker (aeval (K := K) (1 : Fin n → ℝ) x hx)).IsMaximal",
+  "doc": "/-- The kernel of the evaluation at a `K`-rational point of the unit ball is a maximal ideal. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 68,
+  "kind": "theorem",
+  "name": "norm_one_add_p_mul_X",
+  "statement": "theorem norm_one_add_p_mul_X :\n    ‖(1 + Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) * Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0 :\n      TateAlgebra ℚ_[p] 1)‖ = 1",
+  "doc": "/-- The Gauss norm of `1 + p X` over `ℚ_[p]` is one. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 74,
+  "kind": "theorem",
+  "name": "isUnit_one_add_p_mul_X",
+  "statement": "theorem isUnit_one_add_p_mul_X :\n    IsUnit (1 + Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) * Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0 :\n      TateAlgebra ℚ_[p] 1)",
+  "doc": "/-- The series `1 + p X` is a unit of `T₁` over `ℚ_[p]`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 80,
+  "kind": "theorem",
+  "name": "reduction_p_add_X_add_p_mul_X_sq",
+  "statement": "theorem reduction_p_add_X_add_p_mul_X_sq\n    (h : ‖(Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) + Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0 +\n      Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) * Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0 ^ 2 :\n        TateAlgebra ℚ_[p] 1)‖ ≤ 1) :\n    reduction ⟨Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) + Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0 +\n      Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) * Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0 ^ 2,\n        mem_unitClosedBall.2 h⟩ = MvPolynomial.X 0",
+  "doc": "/-- The reduction of `p + X + p X²` over `ℚ_[p]` is `X`. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 90,
+  "kind": "theorem",
+  "name": "isWeierstrassPolynomial_example",
+  "statement": "theorem isWeierstrassPolynomial_example :\n    IsWeierstrassPolynomial ℚ_[p] 1\n      (Polynomial.X ^ 2 - Polynomial.C (Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p]) *\n        Restricted.X ℚ_[p] (1 : Fin 1 → ℝ) 0) * Polynomial.X -\n          Polynomial.C (Restricted.C (1 : Fin 1 → ℝ) (p : ℚ_[p])))",
+  "doc": "/-- The polynomial `X² - p X₁ X - p` over `T₁ = ℚ_[p]⟨X₁⟩` is a Weierstrass polynomial. -/",
+  "sorries": 1
+ },
+ {
+  "file": "PhD/TauCeti/Code/RigidAnalyticGeometry/TateAlgebra/Examples.lean",
+  "line": 99,
+  "kind": "theorem",
+  "name": "isMaximal_span_X_sq_sub_p",
+  "statement": "theorem isMaximal_span_X_sq_sub_p :\n    (Ideal.span {ofPolynomial ℚ_[p] 0\n      (Polynomial.X ^ 2 - Polynomial.C (Restricted.C (1 : Fin 0 → ℝ) (p : ℚ_[p])))}).IsMaximal",
+  "doc": "/-- The ideal `(X² - p)` of `T₁` over `ℚ_[p]` is maximal, with residue field the quadratic\nextension `ℚ_[p](√p)`. -/",
+  "sorries": 1
+ }
+]

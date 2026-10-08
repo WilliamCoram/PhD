@@ -1,0 +1,15 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Residue
+#print axioms Submodule.unitClosedBall
+#print axioms Submodule.mem_unitClosedBall
+#print axioms NormedRing.PseudoUniformizer.toUnitClosedBall
+#print axioms NormedRing.PseudoUniformizer.coe_toUnitClosedBall
+#print axioms NormedRing.PseudoUniformizer.ideal
+#print axioms NormedRing.PseudoUniformizer.toUnitClosedBall_mem_ideal
+#print axioms NormedRing.PseudoUniformizer.mem_ideal_iff
+#print axioms NormedRing.PseudoUniformizer.ideal_eq_closedBallIdeal
+#print axioms NormedRing.PseudoUniformizer.ideal_le_openUnitBallIdeal
+#print axioms NormedRing.PseudoUniformizer.ideal_eq_openUnitBallIdeal
+#print axioms NormedRing.PseudoUniformizer.ResidueRing
+#print axioms NormedRing.PseudoUniformizer.ResidueModule
+#print axioms NormedRing.PseudoUniformizer.mem_ideal_smul_top_iff
+#print axioms NormedRing.PseudoUniformizer.mem_ideal_smul_top_iff_norm_lt_one

@@ -1,0 +1,226 @@
+===== PDFPAGE 1 =====
+p-adic diﬀerential equations
+18.787, Kiran S. Kedlaya, MIT, fall 2007
+Newton polygons
+In this unit, we then review the theory of Newton polygons for polynomials over ﬁelds
+with valuations. In the process of doing this, we will also ge neralize to polynomials twisted
+by a diﬀerential operator.
+1 Slopes and Newton polygons
+A normed diﬀerential ﬁeld is a ﬁeld F equipped with an absolute value | · |F and a derivation
+d which is bounded as a linear operator on F over F0 = ker( d). If the absolute value is
+nonarchimedean, corresponding to a valuation v, this means that the quantity
+r0 = min
+f ∈F ×
+{v(d(f )) − v(f )}
+is ﬁnite. We’ll abbreviate “nonarchimedean normed diﬀeren tial ﬁeld” to “nonarchimedean
+diﬀerential ﬁeld”.
+Let F be a nonarchimedean diﬀerential ﬁeld. Let P (T ) = ∑n
+i=0 PiT i be a twisted poly-
+nomial of degree n over F . Draw the points in R2 given by
+{(−i, v(fi)) : i = 0, . . . , n, Pi ⁄= 0}.
+Then form the lower convex hull of these points, i.e., take th e intersection of every closed
+halfplane lying above some nonvertical line containing all the points. The boundary of this
+region is called the Newton polygon of P .
+Another way to represent the same data is to form the multiset consisting of the slopes
+of the polygon, each occurring with multiplicity equal to th e width of the corresponding
+segment. The total cardinality is at most n, with equality if and only if P0 ⁄= 0; in case of a
+shortfall, we conventionally put in + ∞ as a slope with the missing multiplicity. This gives
+the slope multiset (multiset of slopes) of the twisted polynomial.
+Keep in mind that we may take d = 0, in which case r0 = + ∞; this gives the usual
+Newton polygon of an untwisted polynomial. A key example wit h d ⁄= 0 will be the case
+F = C((z)) with the z-adic valuation and d = z d
+dz ; in this case, r0 = 0.
+2 The multiplicativity property
+For untwisted polynomials, it was known to Newton (in the cas e F = C((z))) that for
+P, Q ∈ F [T ], the slope multiset of P Q is the union of the slope multisets of P and Q. For
+twisted polynomials, this is only partly true; we must accou nt for the extent the derivation
+disturbs absolute values, as measured by r0.
+1
+===== PDFPAGE 2 =====
+To do this, it is convenient to use yet another representatio n of the data contained in the
+Newton polygon. For r ∈ R, deﬁne the sloped valuation function vr on F {T } as
+vr
+(∑
+i
+PiT i
+)
+= min
+i
+{v(Pi) + ri}.
+That is, vr is the y-intercept of the supporting line of the Newton polygon of sl ope r. Note
+that for P ∈ F {T }, the function r ↦→vr(P ) is continuous.
+Proposition 1 (Robba). For r ≤ r0 and P, Q ∈ F {T }, we have vr(P Q) = vr(P ) + vr(Q).
+Proof. By the continuity of r ↦→vr(∗), it suﬃces to check the claim for r < r 0. Write
+P =∑
+i PiT i and Q =∑
+j QjT j; then
+P Q =
+∑
+k
+(∑
+i+j=k
+∑
+h≥0
+(i + h
+h
+)
+Pi+hdh(Qj)
+)
+T k,
+and hence
+vr(P Q) ≥ min
+h,i,j
+{v(Pi+h) + v(bj) + r(i + j) + (v(dh(Qj)) − v(Qj))}
+≥ min
+h,i,j
+{v(Pi+h) + v(Qj) + r(i + j) + hr0}
+≥ min
+h,i,j
+{v(Pi+h) + v(Qj) + r(i + h + j)}.
+(1)
+This immediately yields vr(P Q) ≥ vr(P ) + vr(Q). To establish equality, let i0 and j0 be the
+smallest values of i and j which minimize ri + v(Pi) and rj + v(Qj), respectively; then (1)
+achieves its minimum for h = 0, i = i0, j = j0 but not for any other h, i, j with i + j = i0 + j0.
+Hence vr(P Q) = vr(P ) + vr(Q).
+Corollary 2. For r < r 0, the multiplicity of r as a slope of P Q is the sum of the multiplicities
+of r as a slope of P and Q.
+Proof. This follows from Proposition 1 and the fact that the left and right endpoints of the
+segment of slope r in the Newton polygon are the points where the support lines o f slightly
+smaller and slightly larger slope, respectively, touch the polygon. (Note that this means that
+we cannot deduce the same conclusion for r = r0; see exercises.)
+Corollary 3. Suppose P factors as (T − c1) · · ·(T − cn) where v(ci) < r 0 for i = 1 , . . . , n.
+Then the slopes of P are v(c1), . . . , v(cn); that is, the Newton polygon computes the valuations
+of the roots of P (counted with multiplicity).
+Note that one can also prove multiplicativity using the foll owing property.
+Proposition 4. The Newton polygon of any twisted polynomial and its formal a djoint have
+the same multiplicities for slopes less than r0.
+2
+===== PDFPAGE 3 =====
+Proof. Exercise. (This can also be easily deduced a posteriori using Proposition 6 below.)
+In the other direction, one gets good behavior of vr under the division algorithm provided
+that you are dividing by a polynomial with all slopes equal to r, and r is not too large.
+Lemma 5. Let P (T ) ∈ F {T } be a polynomial whose slopes are all equal to r < r 0. Let
+S(T ) ∈ F {T } be any polynomial, and write S = P Q + R with deg(R) < deg(P ). Then
+vr(S) = min {vr(P ) + vr(Q), vr(R)}.
+Proof. Exercise.
+3 Slope factorizations (Hensel’s lemma)
+When F is complete for a nonarchimedean absolute value, one has a so rt of converse of
+Proposition 1.
+Proposition 6 (Robba). Let F be a diﬀerential ﬁeld complete for a valuation v. Fix r < r 0
+and m ∈ Z≥0. Let R ∈ F {T } be a twisted polynomial such that vr(R − T m) > v r(T m). Then
+R can be factored uniquely as P Q, where P ∈ F {T } has degree deg(R) − m and all slopes
+less than r, Q ∈ F {T } is monic of degree m and has all slopes greater than r, vr(P − 1) > 0,
+and vr(Q − T m) > v r(T m).
+Proof. We ﬁrst check existence. Deﬁne sequences {Pl}, {Ql} as follows. Deﬁne P0 = 1 and
+Q0 = T m. Given Pl and Ql, write
+R − PlQl =
+∑
+i
+aiT i,
+then put
+Xl =
+∑
+i≥m
+aiT i−m, Y l =
+∑
+i<m
+aiT i
+and set Pl+1 = Pl + Xl, Ql+1 = Ql + Yl. Put cl = vr(R − PlQl) − rm, so that c0 > 0. Suppose
+that vr(Pl − 1) ≥ c0, vr(Ql − T m) ≥ c0 + rm, and cl ≥ c0. Then visibly vr(Pl+1 − 1) ≥ c0
+and vr(Ql+1 − T m) ≥ c0 + rm; by Proposition 1,
+cl+1 = vr(R − (Pl + Xl)(Ql + Yl)) − rm
+= vr(Xl(T m − Ql) + (1 − Pl)Yl − XlYl) − rm
+≥ min{cl + (c0 + rm), c0 + (cl + rm), cl + (cl + rm)} − rm
+≥ cl + c0.
+By induction on l, we deduce that cl ≥ (l + 1)c0. Consequently, the sequences {Pl} and {Ql}
+converge under vr, and their limits P and Q have the desired properties.
+3
+===== PDFPAGE 4 =====
+We next check uniqueness. Suppose R = P1Q1 is a second such factorization; put c =
+min{vr(P − P1), vr(Q − Q1) − vr(T m)}. Put
+X = R − P1Q = (P − P1)Q = P1(Q1 − Q),
+and suppose X ⁄= 0; then vr(X) = c + vr(T m) by Proposition 1. Write X =∑ bkT k, and
+choose k such that vr(X) = vr(bkT k). The equality
+X = (P − P1)T m + (P − P1)(Q − T m)
+shows that we cannot have k < m , while the equality
+X = Q1 − Q + (P1 − 1)(Q1 − Q)
+shows that we cannot have k ≥ m. This contradiction forces X = 0, proving P = P1, Q = Q1
+as desired.
+This yields the following.
+Theorem 7. Any monic twisted polynomial P ∈ F {T } admits a unique factorization
+P = Pr1 · · ·PrmP+
+for some r1 < · · ·< r m < r 0, where each Pri is monic with all slopes equal to ri, and P+ is
+monic with all slopes at least r0.
+Proof. We induct on deg( P ). If P has all slopes at least r0, we may simply set P+ = P ; if
+P has all slopes equal to some r < r 0, we may set Pr = P . Otherwise, let r1 be the least
+slope of P , let r2 be the next smallest slope, and pick r ∈ (r1, r2). Apply Proposition 6 to
+P and r, and call the second factor Pr1. Then apply the induction hypothesis to the ﬁrst
+factor.
+Theorem 7 also holds with the factors in the reverse order (ex ercise).
+4 Another version of Hensel’s lemma
+You may be more accustomed to thinking of Hensel’s lemma as a s tatement about lifting
+factorization of polynomials from Fp to Zp. That statement also admits a twisted analogue,
+also from [Rob80].
+Proposition 8. Assume that r0 > 0. Suppose R ∈ oF {T } and that the reduction of R
+modulo mF factors into the product P Q of two coprime factors. This factorization then lifts
+to a factorization R = P Q in oF {T }.
+Proof. Exercise.
+4
+===== PDFPAGE 5 =====
+5 Applications in the untwisted case
+We will apply the above results to diﬀerential modules in the next unit, but for the rest of
+this unit, take d = 0. We use the aforementioned properties of Newton polygons (which in
+the untwisted case should be familiar) to tie up the loose end s left in our earlier discussion
+of extensions of nonarchimedean absolute values. Note that r0 = ∞ in the untwisted case,
+so the results do not carry any restrictions on slopes.
+We ﬁrst check that if F is a complete nonarchimedean ﬁeld, then any ﬁnite extension
+E of F admits an extension of | · |to an absolute value on E. If E′ is a ﬁeld intermediate
+between F and E, we may ﬁrst extend the absolute value to E′ and then to E. Consequently,
+it suﬃces to check the case where E = F (α) for some α ∈ E, that is, E ∼= F [T ]/(P (T ))
+for some monic irreducible polynomial P ∈ F [T ] (the minimal polynomial of α). Apply
+Theorem 7; since P (T ) cannot factor nontrivially, we deduce that P must have a single
+slope r. We now deﬁne an absolute value on E as follows: for β = c0 + c1α + · · ·+ cn−1αn−1,
+with n = deg(P ) = [ E : F ], put
+|β|E = max
+i
+{|ci|e−ri}.
+That is, take |β|E to be the e−r-Gauss norm of the polynomial c0 + c1T + · · ·+ cn−1T n−1.
+The multiplicativity of | · |E is then a consequence of Lemma 5.
+We next check that the completion E of an algebraically closed nonarchimedean ﬁeld F
+is itself algebraically closed. Let P (T ) ∈ E[T ] be a monic polynomial of degree d.
+Lemma 9. With notation as above, for any ǫ > 0, we can ﬁnd z ∈ F such that |z| ≤ | P (0)|1/d
+and |P (z)| < ǫ.
+Proof. If P (0) = 0 we may pick z = 0, so assume P (0) ⁄= 0. Put P = T d +∑d−1
+i=0 PiT i. For
+any δ > 0, we can pick a polynomial Q = T d +∑d−1
+i=0 Qidi ∈ F [T ] with |Qi − Pi| < δ for
+i = 0, . . . , d− 1.
+Now assume δ < min{|P0|, ǫ, ǫ/|P0|}, so that |Q0| = |P0|. By Corollary 3, we can ﬁnd a
+root z ∈ F of Q0 with |z| ≤ | Q0|1/d = |P0|1/d. We now have
+|P (z)| = |(P − Q)(z)| ≤ δ max{1, |z|}d ≤ δ max{1, |P (0)|} < ǫ,
+as desired.
+Deﬁne a sequence of polynomials P0, P1, . . . as follows. Put P0 = P . Given Pi, apply
+Lemma 9 to construct zi with |zi| ≤ | Pi(0)|1/d and |Pi(zi)| < 2−i, then set Pi+1(T ) = Pi(T +zi)
+so that Pi+1(0) = Pi(zi). If some Pi satisﬁes Pi(0) = 0, then z0 + · · ·+ zi−1 is a root of P .
+Otherwise, we get an inﬁnite sequence z0, z1, . . . such that z0 + z1 + · · ·converges to a root
+of P .
+5
+===== PDFPAGE 6 =====
+6 Notes
+Newton polygons for diﬀerential operators were considered by Dwork and Robba [DR77,
+§6.2.3]; the ﬁrst systematic treatment seems to have been mad e by Robba [Rob80], and our
+results are taken from there. The proofs of Proposition 1 and 6 were self-plagiarized from
+[Ked07, Lemma 3.1.5 and Proposition 3.2.2].
+7 Exercises
+1. Prove Proposition 4.
+2. Prove Lemma 5.
+3. Give an example with F = C((z)) and d = z d
+dz to show that the conclusion of Corol-
+lary 2 need not hold for r = r0, even though Proposition 1 holds for r = r0.
+4. Deduce the analogue of Theorem 7 with the factors in the opp osite order, without
+doing any recalculation. (Hint: the key word here is “opposi te”.)
+5. State and prove a precise version of the assertion that “th e roots of a polynomial
+over a complete algebraically closed nonarchimedean ﬁeld v ary continuously in the
+coeﬃcients.”
+6. Prove Proposition 8.
+6

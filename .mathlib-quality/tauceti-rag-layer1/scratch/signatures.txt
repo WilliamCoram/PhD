@@ -1,0 +1,736 @@
+@MvPowerSeries.isRestricted.smul' : ∀ {R : Type u_1} [inst : NormedRing R] [IsUltrametricDist R] {σ : Type u_2}
+  {K : Type u_3} [inst_2 : Semiring K] [inst_3 : Module K R] [IsScalarTower K R R] (c : σ → ℝ) (k : K)
+  {f : MvPowerSeries σ R}, MvPowerSeries.IsRestricted c f → MvPowerSeries.IsRestricted c (k • f)
+@MvPowerSeries.Restricted.algebraMap_eq_C_comp : ∀ {σ : Type u_1} (c : σ → ℝ) {S : Type u_2} {K : Type u_3}
+  [inst : NormedCommRing S] [inst_1 : IsUltrametricDist S] [inst_2 : CommSemiring K] [inst_3 : Algebra K S],
+  algebraMap K (MvPowerSeries.Restricted S c) = (MvPowerSeries.Restricted.C c).comp (algebraMap K S)
+@MvPowerSeries.Restricted.norm_prod_pow_le_of_norm_le : ∀ {B : Type u_1} [inst : NormedCommRing B] {σ : Type u_2}
+  (c : σ → ℝ) (x : σ → B) [NormOneClass B],
+  (∀ (i : σ), ‖x i‖ ≤ c i) → ∀ (t : σ →₀ ℕ), ‖t.prod fun i k => x i ^ k‖ ≤ 1 * t.prod fun x1 x2 => c x1 ^ x2
+@MvPowerSeries.Restricted.exists_forall_norm_prod_pow_le : ∀ {B : Type u_1} [inst : NormedCommRing B]
+  [IsUltrametricDist B] {σ : Type u_2} (x : σ → B) [Finite σ],
+  (∀ (i : σ), ∃ Cx, ∀ (k : ℕ), ‖x i ^ k‖ ≤ Cx) →
+    ∃ Cx, ∀ (t : σ →₀ ℕ), ‖t.prod fun i k => x i ^ k‖ ≤ Cx * t.prod fun x1 x2 => 1 x1 ^ x2
+@MvPowerSeries.Restricted.norm_map_mul_prod_pow_le : ∀ {R : Type u_1} [inst : NormedCommRing R] {B : Type u_2}
+  [inst_1 : NormedCommRing B] {σ : Type u_3} (c : σ → ℝ) (φ : R →+* B) (x : σ → B) {Cφ Cx : ℝ},
+  (∀ (r : R), ‖φ r‖ ≤ Cφ * ‖r‖) →
+    (∀ (t : σ →₀ ℕ), ‖t.prod fun i k => x i ^ k‖ ≤ Cx * t.prod fun x1 x2 => c x1 ^ x2) →
+      ∀ (a : R) (t : σ →₀ ℕ), ‖φ a * t.prod fun i k => x i ^ k‖ ≤ Cφ * Cx * (‖a‖ * t.prod fun x1 x2 => c x1 ^ x2)
+@MvPowerSeries.Restricted.tendsto_map_coeff_mul_prod_pow : ∀ {R : Type u_1} [inst : NormedCommRing R]
+  [inst_1 : IsUltrametricDist R] {B : Type u_2} [inst_2 : NormedCommRing B] {σ : Type u_3} (c : σ → ℝ) (φ : R →+* B)
+  (x : σ → B) {Cφ Cx : ℝ},
+  (∀ (r : R), ‖φ r‖ ≤ Cφ * ‖r‖) →
+    (∀ (t : σ →₀ ℕ), ‖t.prod fun i k => x i ^ k‖ ≤ Cx * t.prod fun x1 x2 => c x1 ^ x2) →
+      ∀ (f : MvPowerSeries.Restricted R c),
+        Filter.Tendsto (fun t => φ ((MvPowerSeries.coeff t) ↑f) * t.prod fun i k => x i ^ k) Filter.cofinite (nhds 0)
+@MvPowerSeries.Restricted.norm_eval₂_le_mul : ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : IsUltrametricDist R]
+  {B : Type u_2} [inst_2 : NormedCommRing B] [inst_3 : IsUltrametricDist B] {σ : Type u_3} {c : σ → ℝ} {φ : R →+* B}
+  {x : σ → B} {Cφ Cx : ℝ} [inst_4 : CompleteSpace B] (hφ : ∀ (r : R), ‖φ r‖ ≤ Cφ * ‖r‖)
+  (hx : ∀ (t : σ →₀ ℕ), ‖t.prod fun i k => x i ^ k‖ ≤ Cx * t.prod fun x1 x2 => c x1 ^ x2)
+  [inst_5 : Fact (∀ (i : σ), 0 < c i)] (f : MvPowerSeries.Restricted R c),
+  ‖(MvPowerSeries.Restricted.eval₂ c φ x hφ hx) f‖ ≤ Cφ * Cx * ‖f‖
+@TopologicalRing.IsBounded.exists_norm_le_of_normedAlgebra : ∀ {R : Type u_1} [inst : NormedRing R] {S : Set R},
+  TopologicalRing.IsBounded S → ∃ C, ∀ s ∈ S, ‖s‖ ≤ C
+@PowerBounded.IsPowerBounded.exists_norm_pow_le : ∀ {R : Type u_1} [inst : NormedRing R] {a : R},
+  PowerBounded.IsPowerBounded a → ∃ C, ∀ (n : ℕ), ‖a ^ n‖ ≤ C
+@PowerBounded.IsPowerBounded.map : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {R : Type u_2}
+  [inst_1 : NormedRing R] [NormedAlgebra K R] {S : Type u_3} [inst_3 : NormedRing S] [NormedAlgebra K S] {φ : R →+* S}
+  {C : ℝ}, (∀ (r : R), ‖φ r‖ ≤ C * ‖r‖) → ∀ {a : R}, PowerBounded.IsPowerBounded a → PowerBounded.IsPowerBounded (φ a)
+@QuotientAddGroup.isUltrametricDist : ∀ {M : Type u_1} [inst : SeminormedAddCommGroup M] (S : AddSubgroup M),
+  IsUltrametricDist (M ⧸ S)
+@Ideal.Quotient.norm_mk_eq_norm_of_forall_le : ∀ {R : Type u_1} [inst : SeminormedCommRing R] [IsUltrametricDist R]
+  (I : Ideal R) {f : R}, (∀ a ∈ I, ‖f‖ ≤ ‖f - a‖) → ‖(Ideal.Quotient.mk I) f‖ = ‖f‖
+@Ideal.Quotient.normOneClass_of_ne_top : ∀ {R : Type u_1} [inst : NormedCommRing R] [NormOneClass R]
+  [IsUltrametricDist R] [CompleteSpace R] (I : Ideal R) [inst_4 : IsClosed ↑I], I ≠ ⊤ → NormOneClass (R ⧸ I)
+@MvPowerSeries.Restricted.norm_sumTuple_le : ∀ {R : Type u_1} [inst : NormedCommRing R] [NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (c : σ ⊕ τ → ℝ)
+  [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)] (i : σ ⊕ τ), ‖MvPowerSeries.Restricted.sumTuple R c i‖ ≤ c i
+@MvPowerSeries.Restricted.iterToSum_comp_sumToIter : ∀ {R : Type u_1} [inst : NormedCommRing R]
+  [inst_1 : NormOneClass R] [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3}
+  (c : σ ⊕ τ → ℝ) [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)],
+  (MvPowerSeries.Restricted.iterToSum c).comp (MvPowerSeries.Restricted.sumToIter c) =
+    RingHom.id (MvPowerSeries.Restricted R c)
+@MvPowerSeries.Restricted.sumToIter_comp_iterToSum : ∀ {R : Type u_1} [inst : NormedCommRing R]
+  [inst_1 : NormOneClass R] [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3}
+  (c : σ ⊕ τ → ℝ) [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)],
+  (MvPowerSeries.Restricted.sumToIter c).comp (MvPowerSeries.Restricted.iterToSum c) =
+    RingHom.id (MvPowerSeries.Restricted (MvPowerSeries.Restricted R (c ∘ Sum.inr)) (c ∘ Sum.inl))
+@MvPowerSeries.Restricted.sumEquiv_C : ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (c : σ ⊕ τ → ℝ)
+  [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)] (r : R),
+  (MvPowerSeries.Restricted.sumEquiv c) ((MvPowerSeries.Restricted.C c) r) =
+    (MvPowerSeries.Restricted.C (c ∘ Sum.inl)) ((MvPowerSeries.Restricted.C (c ∘ Sum.inr)) r)
+@MvPowerSeries.Restricted.sumEquiv_X_inl : ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (c : σ ⊕ τ → ℝ)
+  [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)] (i : σ),
+  (MvPowerSeries.Restricted.sumEquiv c) (MvPowerSeries.Restricted.X R c (Sum.inl i)) =
+    MvPowerSeries.Restricted.X (MvPowerSeries.Restricted R (c ∘ Sum.inr)) (c ∘ Sum.inl) i
+@MvPowerSeries.Restricted.sumEquiv_X_inr : ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (c : σ ⊕ τ → ℝ)
+  [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)] (j : τ),
+  (MvPowerSeries.Restricted.sumEquiv c) (MvPowerSeries.Restricted.X R c (Sum.inr j)) =
+    (MvPowerSeries.Restricted.C (c ∘ Sum.inl)) (MvPowerSeries.Restricted.X R (c ∘ Sum.inr) j)
+@MvPowerSeries.Restricted.norm_sumEquiv : ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (c : σ ⊕ τ → ℝ)
+  [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)] (f : MvPowerSeries.Restricted R c),
+  ‖(MvPowerSeries.Restricted.sumEquiv c) f‖ = ‖f‖
+@MvPowerSeries.Restricted.continuous_sumEquiv : ∀ {R : Type u_1} [inst : NormedCommRing R] [inst_1 : NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (c : σ ⊕ τ → ℝ)
+  [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)], Continuous ⇑(MvPowerSeries.Restricted.sumEquiv c)
+@MvPowerSeries.Restricted.continuous_sumEquiv_symm : ∀ {R : Type u_1} [inst : NormedCommRing R]
+  [inst_1 : NormOneClass R] [inst_2 : IsUltrametricDist R] [inst_3 : CompleteSpace R] {σ : Type u_2} {τ : Type u_3}
+  (c : σ ⊕ τ → ℝ) [inst_4 : Fact (∀ (i : σ ⊕ τ), 0 < c i)], Continuous ⇑(MvPowerSeries.Restricted.sumEquiv c).symm
+MvPowerSeries.Restricted.renameEquiv : (R : Type u_1) →
+  [inst : NormedCommRing R] →
+    [inst_1 : IsUltrametricDist R] →
+      {σ : Type u_2} → {τ : Type u_3} → σ ≃ τ → MvPowerSeries.Restricted R 1 ≃+* MvPowerSeries.Restricted R 1
+@MvPowerSeries.Restricted.renameEquiv_C : ∀ {R : Type u_1} [inst : NormedCommRing R] [NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (e : σ ≃ τ) (r : R),
+  (MvPowerSeries.Restricted.renameEquiv R e) ((MvPowerSeries.Restricted.C 1) r) = (MvPowerSeries.Restricted.C 1) r
+@MvPowerSeries.Restricted.renameEquiv_X : ∀ {R : Type u_1} [inst : NormedCommRing R] [NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (e : σ ≃ τ) (i : σ),
+  (MvPowerSeries.Restricted.renameEquiv R e) (MvPowerSeries.Restricted.X R 1 i) = MvPowerSeries.Restricted.X R 1 (e i)
+@MvPowerSeries.Restricted.norm_renameEquiv : ∀ {R : Type u_1} [inst : NormedCommRing R] [NormOneClass R]
+  [inst_2 : IsUltrametricDist R] [CompleteSpace R] {σ : Type u_2} {τ : Type u_3} (e : σ ≃ τ)
+  (f : MvPowerSeries.Restricted R 1), ‖(MvPowerSeries.Restricted.renameEquiv R e) f‖ = ‖f‖
+Affinoid.TateAlgebra.sumEquiv : (K : Type u_1) →
+  [inst : NormedField K] →
+    [inst_1 : IsUltrametricDist K] →
+      (n m : ℕ) → MvPowerSeries.Restricted (Affinoid.TateAlgebra K n) 1 ≃ₐ[K] Affinoid.TateAlgebra K (m + n)
+Affinoid.TateAlgebra.norm_sumEquiv : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] (n m : ℕ) (f : MvPowerSeries.Restricted (Affinoid.TateAlgebra K n) 1),
+  ‖(Affinoid.TateAlgebra.sumEquiv K n m) f‖ = ‖f‖
+Affinoid.TateAlgebra.sumEquiv_C : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [inst_2 : CompleteSpace K] (n m : ℕ) (f : Affinoid.TateAlgebra K n),
+  (Affinoid.TateAlgebra.sumEquiv K n m) ((MvPowerSeries.Restricted.C 1) f) =
+    (MvPowerSeries.Restricted.eval₂ 1 (MvPowerSeries.Restricted.C 1)
+        (fun i => MvPowerSeries.Restricted.X K 1 (Fin.natAdd m i)) ⋯ ⋯)
+      f
+Affinoid.TateAlgebra.sumEquiv_X : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] (n m : ℕ) (i : Fin m),
+  (Affinoid.TateAlgebra.sumEquiv K n m) (MvPowerSeries.Restricted.X (Affinoid.TateAlgebra K n) 1 i) =
+    MvPowerSeries.Restricted.X K 1 (Fin.castAdd n i)
+@Affinoid.TateAlgebra.exists_norm_quotient_mk_eq : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ} (I : Ideal (Affinoid.TateAlgebra K n))
+  (f : Affinoid.TateAlgebra K n), ∃ a₀ ∈ I, ‖(Ideal.Quotient.mk I) f‖ = ‖f - a₀‖
+@Affinoid.TateAlgebra.isClosed_ideal_quotient : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {n : ℕ} (I : Ideal (Affinoid.TateAlgebra K n)) (J : Ideal (Affinoid.TateAlgebra K n ⧸ I)),
+  IsClosed ↑J
+@Affinoid.TateAlgebra.norm_quotient_mem_range_norm : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ} (I : Ideal (Affinoid.TateAlgebra K n))
+  (x : Affinoid.TateAlgebra K n ⧸ I), ‖x‖ ∈ Set.range norm
+@Affinoid.TateAlgebra.exists_norm_smul_quotient_eq_one : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ} (I : Ideal (Affinoid.TateAlgebra K n))
+  {x : Affinoid.TateAlgebra K n ⧸ I}, x ≠ 0 → ∃ a, ‖a • x‖ = 1
+@IsAffinoidAlgebra.of_surjective : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} {B : Type u_3} [inst_3 : CommRing A] [inst_4 : Algebra K A] [inst_5 : CommRing B]
+  [inst_6 : Algebra K B], IsAffinoidAlgebra K A → ∀ (φ : A →ₐ[K] B), Function.Surjective ⇑φ → IsAffinoidAlgebra K B
+@IsAffinoidAlgebra.exists_algEquiv_quotient : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → ∃ n I, Nonempty ((Affinoid.TateAlgebra K n ⧸ I) ≃ₐ[K] A)
+@IsAffinoidAlgebra.isNoetherianRing : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → IsNoetherianRing A
+@IsAffinoidAlgebra.isJacobsonRing : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → IsJacobsonRing A
+@MvPowerSeries.Restricted.norm_smul_le_of_normedAlgebra : ∀ {K : Type u_1} [inst : NormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {σ : Type u_3} (c : σ → ℝ)
+  [inst_4 : Fact (∀ (i : σ), 0 < c i)] (k : K) (f : MvPowerSeries.Restricted A c), ‖k • f‖ ≤ ‖k‖ * ‖f‖
+@MvPowerSeries.Restricted.isPowerBounded_X : ∀ {A : Type u_1} [inst : NormedCommRing A] [inst_1 : IsUltrametricDist A]
+  {σ : Type u_2} (i : σ), PowerBounded.IsPowerBounded (MvPowerSeries.Restricted.X A 1 i)
+@MvPowerSeries.Restricted.exists_forall_norm_prod_pow_le_of_isPowerBounded : ∀ {B : Type u_1} [inst : NormedCommRing B]
+  [IsUltrametricDist B] [CompleteSpace B] {σ : Type u_2} [Finite σ] {b : σ → B},
+  (∀ (i : σ), PowerBounded.IsPowerBounded (b i)) →
+    ∃ Cx, ∀ (t : σ →₀ ℕ), ‖t.prod fun i k => b i ^ k‖ ≤ Cx * t.prod fun x1 x2 => 1 x1 ^ x2
+@MvPowerSeries.Restricted.extendAlgHom : {K : Type u_1} →
+  [inst : NontriviallyNormedField K] →
+    {A : Type u_2} →
+      [inst_1 : NormedCommRing A] →
+        [inst_2 : NormedAlgebra K A] →
+          [inst_3 : IsUltrametricDist A] →
+            {B : Type u_3} →
+              [inst_4 : NormedCommRing B] →
+                [inst_5 : NormedAlgebra K B] →
+                  [IsUltrametricDist B] →
+                    [CompleteSpace B] →
+                      {σ : Type u_4} →
+                        [Finite σ] →
+                          (φ : A →ₐ[K] B) →
+                            Continuous ⇑φ →
+                              (b : σ → B) →
+                                (∀ (i : σ), PowerBounded.IsPowerBounded (b i)) → MvPowerSeries.Restricted A 1 →ₐ[K] B
+@MvPowerSeries.Restricted.extendAlgHom_C : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) (b : σ → B)
+  (hb : ∀ (i : σ), PowerBounded.IsPowerBounded (b i)) (a : A),
+  (MvPowerSeries.Restricted.extendAlgHom φ hφ b hb) ((MvPowerSeries.Restricted.C 1) a) = φ a
+@MvPowerSeries.Restricted.extendAlgHom_X : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) (b : σ → B)
+  (hb : ∀ (i : σ), PowerBounded.IsPowerBounded (b i)) (i : σ),
+  (MvPowerSeries.Restricted.extendAlgHom φ hφ b hb) (MvPowerSeries.Restricted.X A 1 i) = b i
+@MvPowerSeries.Restricted.extendAlgHom_comp_toAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  {A : Type u_2} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) (b : σ → B)
+  (hb : ∀ (i : σ), PowerBounded.IsPowerBounded (b i)),
+  (MvPowerSeries.Restricted.extendAlgHom φ hφ b hb).comp (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1)) = φ
+@MvPowerSeries.Restricted.continuous_extendAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) (b : σ → B)
+  (hb : ∀ (i : σ), PowerBounded.IsPowerBounded (b i)), Continuous ⇑(MvPowerSeries.Restricted.extendAlgHom φ hφ b hb)
+@MvPowerSeries.Restricted.exists_forall_norm_extendAlgHom_le : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  {A : Type u_2} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) (b : σ → B)
+  (hb : ∀ (i : σ), PowerBounded.IsPowerBounded (b i)),
+  ∃ C, ∀ (f : MvPowerSeries.Restricted A 1), ‖(MvPowerSeries.Restricted.extendAlgHom φ hφ b hb) f‖ ≤ C * ‖f‖
+@MvPowerSeries.Restricted.extendAlgHom_unique : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) (b : σ → B)
+  (hb : ∀ (i : σ), PowerBounded.IsPowerBounded (b i)) (ψ : MvPowerSeries.Restricted A 1 →ₐ[K] B),
+  Continuous ⇑ψ →
+    (∀ (a : A), ψ ((MvPowerSeries.Restricted.C 1) a) = φ a) →
+      (∀ (i : σ), ψ (MvPowerSeries.Restricted.X A 1 i) = b i) → ψ = MvPowerSeries.Restricted.extendAlgHom φ hφ b hb
+@MvPowerSeries.Restricted.existsUnique_extend : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [IsUltrametricDist B] [CompleteSpace B] {σ : Type u_4}
+  [Finite σ] (φ : A →ₐ[K] B) (b : σ → B),
+  ∃! ψ,
+    Continuous ⇑ψ ∧
+      (∀ (a : A), ψ ((MvPowerSeries.Restricted.C 1) a) = φ a) ∧ ∀ (i : σ), ψ (MvPowerSeries.Restricted.X A 1 i) = b i
+@MvPowerSeries.Restricted.extendAlgHom_ofId_eq_aeval : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  {B : Type u_2} [inst_1 : NormedCommRing B] [inst_2 : NormedAlgebra K B] [inst_3 : IsUltrametricDist B]
+  [inst_4 : CompleteSpace B] {σ : Type u_3} [inst_5 : Finite σ] [inst_6 : IsUltrametricDist K] (b : σ → B)
+  (hb : ∀ (i : σ), ‖b i‖ ≤ 1) [inst_7 : NormOneClass B],
+  MvPowerSeries.Restricted.extendAlgHom (Algebra.ofId K B) ⋯ b ⋯ = MvPowerSeries.Restricted.aeval 1 b ⋯
+@MvPowerSeries.Restricted.isAffinoidGeneratingSystem_of_forall_exists_sum : ∀ {K : Type u_1}
+  [inst : NontriviallyNormedField K] {A : Type u_2} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A]
+  [inst_3 : IsUltrametricDist A] {B : Type u_3} [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B]
+  [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B] {σ : Type u_4} [inst_8 : Finite σ] [inst_9 : Fintype σ]
+  (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ) {b : σ → B},
+  (∀ (i : σ), PowerBounded.IsPowerBounded (b i)) →
+    (∀ (y : B), ∃ q, y = ∑ i, φ (q i) * b i) → MvPowerSeries.Restricted.IsAffinoidGeneratingSystem φ hφ b
+@MvPowerSeries.Restricted.exists_forall_norm_smul_le_one : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  {B : Type u_2} [inst_1 : NormedCommRing B] [inst_2 : NormedAlgebra K B] [IsUltrametricDist B] [CompleteSpace B]
+  {σ : Type u_3} [Finite σ] [Fintype σ] (a : σ → B), ∃ c, c ≠ 0 ∧ ∀ (i : σ), ‖c • a i‖ ≤ 1
+@MvPowerSeries.Restricted.exists_isAffinoidGeneratingSystem_of_finite : ∀ {K : Type u_1}
+  [inst : NontriviallyNormedField K] {A : Type u_2} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A]
+  [inst_3 : IsUltrametricDist A] {B : Type u_3} [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B]
+  [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B] (φ : A →ₐ[K] B) (hφ : Continuous ⇑φ),
+  φ.Finite → ∃ m b, MvPowerSeries.Restricted.IsAffinoidGeneratingSystem φ hφ b
+@MvPowerSeries.Restricted.continuous_algebraMap_restricted : ∀ {A : Type u_1} [inst : NormedCommRing A]
+  [inst_1 : IsUltrametricDist A] {σ : Type u_2} (c : σ → ℝ) [inst_2 : Fact (∀ (i : σ), 0 < c i)],
+  Continuous ⇑(algebraMap A (MvPowerSeries.Restricted A c))
+@MvPowerSeries.Restricted.mapAlgHom_C : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (α : A →ₐ[K] B) (hα : Continuous ⇑α) (a : A),
+  (MvPowerSeries.Restricted.mapAlgHom α hα) ((MvPowerSeries.Restricted.C 1) a) = (MvPowerSeries.Restricted.C 1) (α a)
+@MvPowerSeries.Restricted.mapAlgHom_X : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (α : A →ₐ[K] B) (hα : Continuous ⇑α) (i : σ),
+  (MvPowerSeries.Restricted.mapAlgHom α hα) (MvPowerSeries.Restricted.X A 1 i) = MvPowerSeries.Restricted.X B 1 i
+@MvPowerSeries.Restricted.coeff_mapAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (α : A →ₐ[K] B) (hα : Continuous ⇑α) (f : MvPowerSeries.Restricted A 1)
+  (t : σ →₀ ℕ), (MvPowerSeries.coeff t) ↑((MvPowerSeries.Restricted.mapAlgHom α hα) f) = α ((MvPowerSeries.coeff t) ↑f)
+@MvPowerSeries.Restricted.surjective_mapAlgHom_of_surjective : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  {A : Type u_2} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] {B : Type u_3}
+  [inst_4 : NormedCommRing B] [inst_5 : NormedAlgebra K B] [inst_6 : IsUltrametricDist B] [inst_7 : CompleteSpace B]
+  {σ : Type u_4} [inst_8 : Finite σ] (α : A →ₐ[K] B) (hα : Continuous ⇑α) [CompleteSpace A],
+  Function.Surjective ⇑α → Function.Surjective ⇑(MvPowerSeries.Restricted.mapAlgHom α hα)
+@IsAffinoidAlgebra.of_isAffinoidGeneratingSystem : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {B : Type u_2} [inst_3 : NormedCommRing B]
+  [inst_4 : NormedAlgebra K B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B] {n : ℕ} {b : Fin n → B},
+  MvPowerSeries.Restricted.IsAffinoidGeneratingSystem (Algebra.ofId K B) ⋯ b → IsAffinoidAlgebra K B
+@IsAffinoidAlgebra.of_isAffinoidGeneratingSystem_tateAlgebra : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {B : Type u_2} [inst_3 : NormedCommRing B]
+  [inst_4 : NormedAlgebra K B] [inst_5 : IsUltrametricDist B] [inst_6 : CompleteSpace B] {n m : ℕ}
+  (φ : Affinoid.TateAlgebra K n →ₐ[K] B) (hφ : Continuous ⇑φ) {b : Fin m → B},
+  MvPowerSeries.Restricted.IsAffinoidGeneratingSystem φ hφ b → IsAffinoidAlgebra K B
+@IsAffinoidAlgebra.of_finite_tateAlgebra : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {B : Type u_2} [inst_3 : NormedCommRing B]
+  [inst_4 : NormedAlgebra K B] [IsUltrametricDist B] [CompleteSpace B] {n : ℕ} (φ : Affinoid.TateAlgebra K n →ₐ[K] B),
+  Continuous ⇑φ → φ.Finite → IsAffinoidAlgebra K B
+@Ideal.forall_mem_of_forall_exists_eq_add_sum_mul_of_norm_lt_one : ∀ {A : Type u_1} [inst : NormedCommRing A]
+  [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] (I : Ideal A) {n : ℕ} (x : Fin n → A),
+  (∀ (i : Fin n), ∃ y ∈ I, ∃ c, (∀ (μ : Fin n), ‖c μ‖ < 1) ∧ x i = y + ∑ μ, c μ * x μ) → ∀ (i : Fin n), x i ∈ I
+@Ideal.exists_forall_exists_eq_sum_mul_norm_le : ∀ {A : Type u_1} [inst : NormedCommRing A] [CompleteSpace A] {n : ℕ}
+  (x : Fin n → A) (J : Ideal A),
+  IsClosed ↑J →
+    Ideal.span (Set.range x) = J → ∃ C, 0 < C ∧ ∀ y ∈ J, ∃ a, y = ∑ i, a i * x i ∧ ∀ (i : Fin n), ‖a i‖ ≤ C * ‖y‖
+@Ideal.isClosed_coe_closure_restrictScalars : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A]
+  (I : Ideal A), IsClosed ↑(Submodule.restrictScalars K I.closure)
+@Ideal.isClosed_of_fg_closure : ∀ {A : Type u_1} [inst : NormedCommRing A] [CompleteSpace A] [IsUltrametricDist A]
+  [NormOneClass A] (I : Ideal A), I.closure.FG → IsClosed ↑I
+@LinearMap.continuous_of_isClosed_ker_of_finiteDimensional : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [CompleteSpace K] {E : Type u_2} {F : Type u_3} [inst_2 : NormedAddCommGroup E] [inst_3 : NormedSpace K E]
+  [inst_4 : NormedAddCommGroup F] [inst_5 : NormedSpace K F] [FiniteDimensional K F] (f : E →ₗ[K] F),
+  IsClosed ↑f.ker → Continuous ⇑f
+@AlgHom.continuous_quotient_mk_comp_of_isClosed : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [CompleteSpace K]
+  {A : Type u_2} [inst_2 : NormedCommRing A] [inst_3 : NormedAlgebra K A] [CompleteSpace A] {B : Type u_3}
+  [inst_5 : NormedCommRing B] [inst_6 : NormedAlgebra K B] [CompleteSpace B] (Φ : A →ₐ[K] B) (𝔟 : Ideal B) [IsClosed ↑𝔟]
+  [FiniteDimensional K (B ⧸ 𝔟)], IsClosed ↑(Ideal.comap Φ 𝔟) → Continuous ⇑((Ideal.Quotient.mkₐ K 𝔟).comp Φ)
+@AlgHom.continuous_of_forall_isClosed_of_finiteDimensional : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [CompleteSpace K] {A : Type u_2} [inst_2 : NormedCommRing A] [inst_3 : NormedAlgebra K A] [CompleteSpace A]
+  {B : Type u_3} [inst_5 : NormedCommRing B] [inst_6 : NormedAlgebra K B] [CompleteSpace B] (Φ : A →ₐ[K] B)
+  (𝔅 : Set (Ideal B)),
+  (∀ 𝔟 ∈ 𝔅, IsClosed ↑𝔟) →
+    (∀ 𝔟 ∈ 𝔅, IsClosed ↑(Ideal.comap Φ 𝔟)) → (∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) → sInf 𝔅 = ⊥ → Continuous ⇑Φ
+@AlgHom.continuous_of_isNoetherianRing : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [CompleteSpace K]
+  {A : Type u_2} [inst_2 : NormedCommRing A] [inst_3 : NormedAlgebra K A] [CompleteSpace A] {B : Type u_3}
+  [inst_5 : NormedCommRing B] [inst_6 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist A] [NormOneClass A]
+  [IsUltrametricDist B] [NormOneClass B] [IsNoetherianRing A] [IsNoetherianRing B] (𝔅 : Set (Ideal B)),
+  (∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) → sInf 𝔅 = ⊥ → ∀ (Φ : A →ₐ[K] B), Continuous ⇑Φ
+@AlgEquiv.continuous_symm_of_isNoetherianRing : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [CompleteSpace K]
+  {A : Type u_2} [inst_2 : NormedCommRing A] [inst_3 : NormedAlgebra K A] [CompleteSpace A] {B : Type u_3}
+  [inst_5 : NormedCommRing B] [inst_6 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist A] [NormOneClass A]
+  [IsUltrametricDist B] [NormOneClass B] [IsNoetherianRing A] [IsNoetherianRing B] (𝔅 : Set (Ideal B)),
+  (∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) → sInf 𝔅 = ⊥ → ∀ (e : A ≃ₐ[K] B), Continuous ⇑e.symm
+@AlgEquiv.exists_forall_norm_le_mul_of_isNoetherianRing : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [CompleteSpace K] {A : Type u_2} [inst_2 : NormedCommRing A] [inst_3 : NormedAlgebra K A] [CompleteSpace A]
+  {B : Type u_3} [inst_5 : NormedCommRing B] [inst_6 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist A]
+  [NormOneClass A] [IsUltrametricDist B] [NormOneClass B] [IsNoetherianRing A] [IsNoetherianRing B] (𝔅 : Set (Ideal B)),
+  (∀ 𝔟 ∈ 𝔅, FiniteDimensional K (B ⧸ 𝔟)) →
+    sInf 𝔅 = ⊥ → ∀ (e : A ≃ₐ[K] B), ∃ C C', (∀ (a : A), ‖e a‖ ≤ C * ‖a‖) ∧ ∀ (b : B), ‖e.symm b‖ ≤ C' * ‖b‖
+@Affinoid.TateAlgebra.finite_comp_ofTail_of_isMulDistinguishedX0 : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ} {A : Type u_2} [inst_3 : CommRing A] [Algebra K A]
+  (φ : Affinoid.TateAlgebra K (n + 1) →+* A),
+  φ.Finite →
+    ∀ {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+      MvPowerSeries.Restricted.IsMulDistinguishedX0 g s → φ g = 0 → (φ.comp (Affinoid.TateAlgebra.ofTail K n)).Finite
+@Affinoid.TateAlgebra.injective_mk_comp_ofTail_of_isMulDistinguishedX0 : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ} {g : Affinoid.TateAlgebra K (n + 1)} {s : ℕ},
+  MvPowerSeries.Restricted.IsMulDistinguishedX0 g s →
+    s ≠ 0 → Function.Injective ⇑((Ideal.Quotient.mk (Ideal.span {g})).comp (Affinoid.TateAlgebra.ofTail K n))
+@Affinoid.TateAlgebra.exists_finite_comp_shear_symm_comp_ofTail : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ} {A : Type u_2} [inst_3 : CommRing A]
+  [inst_4 : Algebra K A] (β : Affinoid.TateAlgebra K (n + 1) →ₐ[K] A),
+  β.Finite →
+    ∀ {f : Affinoid.TateAlgebra K (n + 1)},
+      f ≠ 0 →
+        β f = 0 →
+          ∃ e, ((β.comp ↑(Affinoid.TateAlgebra.shear K n e).symm).comp (Affinoid.TateAlgebra.ofTailAlgHom K n)).Finite
+@Affinoid.TateAlgebra.injective_of_nontrivial : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A] [Nontrivial A]
+  (β : Affinoid.TateAlgebra K 0 →ₐ[K] A), Function.Injective ⇑β
+@Affinoid.TateAlgebra.exists_finite_injective_comp : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A]
+  [Nontrivial A] (n : ℕ) (β : Affinoid.TateAlgebra K n →ₐ[K] A),
+  β.Finite → ∃ d ≤ n, ∃ ψ, (β.comp ψ).Finite ∧ Function.Injective ⇑(β.comp ψ)
+@IsAffinoidAlgebra.exists_finite_injective_comp : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} {B : Type u_3} [inst_3 : CommRing A] [inst_4 : Algebra K A] [inst_5 : CommRing B]
+  [inst_6 : Algebra K B],
+  IsAffinoidAlgebra K B →
+    ∀ [Nontrivial A] (φ : B →ₐ[K] A), φ.Finite → ∃ d ψ, (φ.comp ψ).Finite ∧ Function.Injective ⇑(φ.comp ψ)
+@IsAffinoidAlgebra.exists_finite_injective : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → ∀ [Nontrivial A], ∃ d φ, φ.Finite ∧ Function.Injective ⇑φ
+@ringKrullDim_le_of_isIntegral_of_injective : ∀ {R : Type u_1} {S : Type u_2} [inst : CommRing R] [inst_1 : CommRing S]
+  (f : R →+* S), f.IsIntegral → Function.Injective ⇑f → ringKrullDim R ≤ ringKrullDim S
+@IsAffinoidAlgebra.ringKrullDim_eq_of_finite_injective : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A] {d : ℕ}
+  (φ : Affinoid.TateAlgebra K d →ₐ[K] A), φ.Finite → Function.Injective ⇑φ → ringKrullDim A = ↑d
+@IsAffinoidAlgebra.exists_ringKrullDim_eq : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → ∀ [Nontrivial A], ∃ d, ringKrullDim A = ↑d
+@IsAffinoidAlgebra.finiteDimensional_of_finite_zero : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A]
+  (φ : Affinoid.TateAlgebra K 0 →ₐ[K] A), φ.Finite → FiniteDimensional K A
+@IsAffinoidAlgebra.injective_factor_comp_of_injective : ∀ {A : Type u_1} [inst : CommRing A] {R : Type u_2}
+  [inst_1 : CommRing R] [IsReduced R] (𝔮 : Ideal A) (φ : R →+* A ⧸ 𝔮),
+  Function.Injective ⇑φ → Function.Injective ⇑((Ideal.Quotient.factor ⋯).comp φ)
+@Affinoid.TateAlgebra.eq_zero_of_isField : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {d : ℕ}, IsField (Affinoid.TateAlgebra K d) → d = 0
+@IsAffinoidAlgebra.finiteDimensional_quotient_of_radical_isMaximal : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → ∀ (𝔮 : Ideal A), 𝔮.radical.IsMaximal → FiniteDimensional K (A ⧸ 𝔮)
+@Ideal.isMaximal_comap_of_isAffinoidAlgebra : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} {B : Type u_3} [inst_3 : CommRing A] [inst_4 : Algebra K A] [inst_5 : CommRing B]
+  [inst_6 : Algebra K B],
+  IsAffinoidAlgebra K B → ∀ (φ : A →ₐ[K] B) (𝔪 : Ideal B) [𝔪.IsMaximal], (Ideal.comap φ 𝔪).IsMaximal
+IsFractionRing.isLocalization_algebraMapSubmonoid_of_isIntegral : ∀ (R : Type u_1) (S : Type u_2) [inst : CommRing R]
+  [inst_1 : CommRing S] [IsDomain S] [inst_3 : Algebra R S] [Algebra.IsIntegral R S],
+  Function.Injective ⇑(algebraMap R S) →
+    IsLocalization (Algebra.algebraMapSubmonoid S (nonZeroDivisors R)) (FractionRing S)
+FractionRing.finiteDimensional_of_finite : ∀ (R : Type u_1) (S : Type u_2) [inst : CommRing R] [inst_1 : IsDomain R]
+  [inst_2 : CommRing S] [IsDomain S] [inst_4 : Algebra R S] [Module.Finite R S],
+  Function.Injective ⇑(algebraMap R S) →
+    ∀ [inst_6 : Algebra (FractionRing R) (FractionRing S)] [IsScalarTower R (FractionRing R) (FractionRing S)],
+      FiniteDimensional (FractionRing R) (FractionRing S)
+@IsAffinoidAlgebra.isJapaneseRing : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] [CharZero K] {A : Type u_1} [inst_4 : CommRing A] [inst_5 : Algebra K A] [inst_6 : IsDomain A],
+  IsAffinoidAlgebra K A → IsJapaneseRing A
+Ideal.sInf_maximalPowers_eq_bot : ∀ (A : Type u_1) [inst : CommRing A] [IsNoetherianRing A],
+  sInf (Ideal.maximalPowers A) = ⊥
+@IsAffinoidAlgebra.finiteDimensional_of_mem_maximalPowers : ∀ {K : Type u_1} [inst : NormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : CommRing A] [inst_4 : Algebra K A],
+  IsAffinoidAlgebra K A → ∀ {I : Ideal A}, I ∈ Ideal.maximalPowers A → FiniteDimensional K (A ⧸ I)
+@AlgHom.continuous_of_isAffinoidAlgebra : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist B] [NormOneClass B]
+  [IsNoetherianRing A], IsAffinoidAlgebra K B → ∀ (Φ : A →ₐ[K] B), Continuous ⇑Φ
+@AlgEquiv.exists_forall_norm_le_mul_of_isAffinoidAlgebra : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist B] [NormOneClass B],
+  IsAffinoidAlgebra K A →
+    IsAffinoidAlgebra K B → ∀ (e : A ≃ₐ[K] B), ∃ C C', (∀ (a : A), ‖e a‖ ≤ C * ‖a‖) ∧ ∀ (b : B), ‖e.symm b‖ ≤ C' * ‖b‖
+@AlgEquiv.isPowerBounded_map_iff_of_isAffinoidAlgebra : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist B] [NormOneClass B],
+  IsAffinoidAlgebra K A →
+    IsAffinoidAlgebra K B → ∀ (e : A ≃ₐ[K] B) (a : A), PowerBounded.IsPowerBounded (e a) ↔ PowerBounded.IsPowerBounded a
+@AlgEquiv.isTopologicallyNilpotent_map_iff_of_isAffinoidAlgebra : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist B] [NormOneClass B],
+  IsAffinoidAlgebra K A →
+    IsAffinoidAlgebra K B → ∀ (e : A ≃ₐ[K] B) (a : A), IsTopologicallyNilpotent (e a) ↔ IsTopologicallyNilpotent a
+@AlgHom.ext_of_isAffinoidGeneratingSystem : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [inst_5 : CompleteSpace A] [inst_6 : IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist B] [NormOneClass B]
+  {σ : Type u_4} [inst_13 : Finite σ],
+  IsAffinoidAlgebra K A →
+    IsAffinoidAlgebra K B →
+      ∀ {a : σ → A},
+        MvPowerSeries.Restricted.IsAffinoidGeneratingSystem (Algebra.ofId K A) ⋯ a →
+          ∀ {ψ₁ ψ₂ : A →ₐ[K] B}, (∀ (i : σ), ψ₁ (a i) = ψ₂ (a i)) → ψ₁ = ψ₂
+@IsAffinoidAlgebra.exists_isAffinoidGeneratingSystem : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [inst_5 : CompleteSpace A] [inst_6 : IsUltrametricDist A] [NormOneClass A],
+  IsAffinoidAlgebra K A → ∃ n a, MvPowerSeries.Restricted.IsAffinoidGeneratingSystem (Algebra.ofId K A) ⋯ a
+@IsAffinoidAlgebra.of_finite_of_continuous : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [IsUltrametricDist B] [NormOneClass B],
+  IsAffinoidAlgebra K A → ∀ (φ : A →ₐ[K] B), Continuous ⇑φ → φ.Finite → IsAffinoidAlgebra K B
+@IsAffinoidAlgebra.restricted : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K]
+  [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A] [inst_4 : NormedAlgebra K A] [CompleteSpace A]
+  [inst_6 : IsUltrametricDist A] [NormOneClass A],
+  IsAffinoidAlgebra K A → ∀ {σ : Type u_3} [Finite σ], IsAffinoidAlgebra K (MvPowerSeries.Restricted A 1)
+@IsAffinoidAlgebra.exists_algEquiv_quotient_norm_comp_le : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {A : Type u_2} [inst_3 : NormedCommRing A]
+  [inst_4 : NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A] [NormOneClass A] {B : Type u_3}
+  [inst_8 : NormedCommRing B] [inst_9 : NormedAlgebra K B] [CompleteSpace B] [inst_11 : IsUltrametricDist B]
+  [NormOneClass B],
+  IsAffinoidAlgebra K A →
+    IsAffinoidAlgebra K B →
+      ∀ (φ : B →ₐ[K] A), ∃ n I e, Continuous ⇑e ∧ Continuous ⇑e.symm ∧ ∀ (b : B), ‖e.symm (φ b)‖ ≤ ‖b‖
+@MvPowerSeries.Restricted.inlAlgHom_C : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  (σ : Type u_3) (τ : Type u_4) [inst_5 : Finite σ] [Finite τ] (a : A),
+  (MvPowerSeries.Restricted.inlAlgHom K A σ τ) ((MvPowerSeries.Restricted.C 1) a) = (MvPowerSeries.Restricted.C 1) a
+@MvPowerSeries.Restricted.inrAlgHom_C : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  (σ : Type u_3) (τ : Type u_4) [Finite σ] [inst_6 : Finite τ] (a : A),
+  (MvPowerSeries.Restricted.inrAlgHom K A σ τ) ((MvPowerSeries.Restricted.C 1) a) = (MvPowerSeries.Restricted.C 1) a
+@MvPowerSeries.Restricted.inlAlgHom_comp_toAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  (σ : Type u_3) (τ : Type u_4) [inst_5 : Finite σ] [Finite τ],
+  (MvPowerSeries.Restricted.inlAlgHom K A σ τ).comp (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1)) =
+    IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1)
+@MvPowerSeries.Restricted.inrAlgHom_comp_toAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {A : Type u_2}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  (σ : Type u_3) (τ : Type u_4) [Finite σ] [inst_6 : Finite τ],
+  (MvPowerSeries.Restricted.inrAlgHom K A σ τ).comp (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1)) =
+    IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1)
+@Affinoid.IsAffinoidTensorProduct.exists_algEquiv : ∀ {K : Type u_2} [inst : NontriviallyNormedField K] {A : Type u_3}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] {B₁ : Type u_4}
+  [inst_5 : NormedCommRing B₁] [inst_6 : NormedAlgebra K B₁] [IsUltrametricDist B₁] [CompleteSpace B₁] {B₂ : Type u_5}
+  [inst_9 : NormedCommRing B₂] [inst_10 : NormedAlgebra K B₂] [IsUltrametricDist B₂] [CompleteSpace B₂]
+  {α₁ : A →ₐ[K] B₁} {α₂ : A →ₐ[K] B₂} {T T' : Type u_1} [inst_13 : NormedCommRing T] [inst_14 : NormedAlgebra K T]
+  [IsUltrametricDist T] [CompleteSpace T] [inst_17 : NormedCommRing T'] [inst_18 : NormedAlgebra K T']
+  [IsUltrametricDist T'] [CompleteSpace T'] {ι₁ : B₁ →ₐ[K] T} {ι₂ : B₂ →ₐ[K] T} {ι₁' : B₁ →ₐ[K] T'} {ι₂' : B₂ →ₐ[K] T'},
+  Affinoid.IsAffinoidTensorProduct α₁ α₂ ι₁ ι₂ →
+    Affinoid.IsAffinoidTensorProduct α₁ α₂ ι₁' ι₂' →
+      ∃ e, Continuous ⇑e ∧ Continuous ⇑e.symm ∧ (↑e).comp ι₁ = ι₁' ∧ (↑e).comp ι₂ = ι₂'
+@Affinoid.IsAffinoidTensorProduct.of_algEquiv_left : ∀ {K : Type u_2} [inst : NontriviallyNormedField K] {A : Type u_3}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] {B₁ : Type u_4}
+  [inst_5 : NormedCommRing B₁] [inst_6 : NormedAlgebra K B₁] [IsUltrametricDist B₁] [CompleteSpace B₁] {B₂ : Type u_5}
+  [inst_9 : NormedCommRing B₂] [inst_10 : NormedAlgebra K B₂] [IsUltrametricDist B₂] [CompleteSpace B₂] {T : Type u_6}
+  [inst_13 : NormedCommRing T] [inst_14 : NormedAlgebra K T] [IsUltrametricDist T] [CompleteSpace T] {α₁ : A →ₐ[K] B₁}
+  {α₂ : A →ₐ[K] B₂} {ι₁ : B₁ →ₐ[K] T} {ι₂ : B₂ →ₐ[K] T} {B₁' : Type u_7} [inst_17 : NormedCommRing B₁']
+  [inst_18 : NormedAlgebra K B₁'] [IsUltrametricDist B₁'] [CompleteSpace B₁'],
+  Affinoid.IsAffinoidTensorProduct α₁ α₂ ι₁ ι₂ →
+    ∀ (e : B₁' ≃ₐ[K] B₁),
+      Continuous ⇑e → Continuous ⇑e.symm → Affinoid.IsAffinoidTensorProduct ((↑e.symm).comp α₁) α₂ (ι₁.comp ↑e) ι₂
+@Affinoid.isAffinoidTensorProduct_quotient_map : ∀ {K : Type u_2} [inst : NontriviallyNormedField K] {A : Type u_3}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] {B₂ : Type u_4}
+  [inst_5 : NormedCommRing B₂] [inst_6 : NormedAlgebra K B₂] [inst_7 : IsUltrametricDist B₂] [inst_8 : CompleteSpace B₂]
+  [inst_9 : IsUltrametricDist K] [inst_10 : CompleteSpace K] [inst_11 : NormOneClass B₂] (hB₂ : IsAffinoidAlgebra K B₂)
+  (α₂ : A →ₐ[K] B₂),
+  Continuous ⇑α₂ →
+    ∀ (𝔞 : Ideal A) [inst_12 : IsClosed ↑𝔞],
+      Affinoid.IsAffinoidTensorProduct (Ideal.Quotient.mkₐ K 𝔞) α₂ (Ideal.quotientMapₐ (Ideal.map α₂ 𝔞) α₂ ⋯)
+        (Ideal.Quotient.mkₐ K (Ideal.map α₂ 𝔞))
+@Affinoid.IsAffinoidTensorProduct.surjective_ι₂_of_surjective : ∀ {K : Type u_2} [inst : NontriviallyNormedField K]
+  {A : Type u_3} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A]
+  {B₁ : Type u_4} [inst_5 : NormedCommRing B₁] [inst_6 : NormedAlgebra K B₁] [IsUltrametricDist B₁] [CompleteSpace B₁]
+  {α₁ : A →ₐ[K] B₁} [inst_9 : IsUltrametricDist K] [CompleteSpace K] {B₂ T : Type u_1} [inst_11 : NormedCommRing B₂]
+  [inst_12 : NormedAlgebra K B₂] [IsUltrametricDist B₂] [CompleteSpace B₂] [NormOneClass B₂]
+  [inst_16 : NormedCommRing T] [inst_17 : NormedAlgebra K T] [IsUltrametricDist T] [CompleteSpace T] {α₂ : A →ₐ[K] B₂}
+  {ι₁ : B₁ →ₐ[K] T} {ι₂ : B₂ →ₐ[K] T},
+  IsAffinoidAlgebra K B₂ →
+    Affinoid.IsAffinoidTensorProduct α₁ α₂ ι₁ ι₂ →
+      Continuous ⇑α₁ → Function.Surjective ⇑α₁ → Continuous ⇑α₂ → Function.Surjective ⇑ι₂
+Affinoid.tensorInl : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] →
+    (A : Type u_2) →
+      [inst_1 : NormedCommRing A] →
+        [inst_2 : NormedAlgebra K A] →
+          [inst_3 : IsUltrametricDist A] →
+            [inst_4 : CompleteSpace A] →
+              {σ : Type u_3} →
+                {τ : Type u_4} →
+                  [inst_5 : Finite σ] →
+                    [inst_6 : Finite τ] →
+                      (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1)) →
+                        (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)) →
+                          MvPowerSeries.Restricted A 1 ⧸ 𝔟₁ →ₐ[K] Affinoid.TensorQuotient K A 𝔟₁ 𝔟₂
+Affinoid.tensorInr : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] →
+    (A : Type u_2) →
+      [inst_1 : NormedCommRing A] →
+        [inst_2 : NormedAlgebra K A] →
+          [inst_3 : IsUltrametricDist A] →
+            [inst_4 : CompleteSpace A] →
+              {σ : Type u_3} →
+                {τ : Type u_4} →
+                  [inst_5 : Finite σ] →
+                    [inst_6 : Finite τ] →
+                      (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1)) →
+                        (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)) →
+                          MvPowerSeries.Restricted A 1 ⧸ 𝔟₂ →ₐ[K] Affinoid.TensorQuotient K A 𝔟₁ 𝔟₂
+Affinoid.continuous_tensorInl : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {σ : Type u_3} {τ : Type u_4} [inst_5 : Finite σ] [inst_6 : Finite τ] (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1))
+  (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)), Continuous ⇑(Affinoid.tensorInl K A 𝔟₁ 𝔟₂)
+Affinoid.continuous_tensorInr : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {σ : Type u_3} {τ : Type u_4} [inst_5 : Finite σ] [inst_6 : Finite τ] (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1))
+  (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)), Continuous ⇑(Affinoid.tensorInr K A 𝔟₁ 𝔟₂)
+Affinoid.tensorInl_comp_eq_tensorInr_comp : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {σ : Type u_3} {τ : Type u_4} [inst_5 : Finite σ] [inst_6 : Finite τ] (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1))
+  (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)),
+  (Affinoid.tensorInl K A 𝔟₁ 𝔟₂).comp (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1 ⧸ 𝔟₁)) =
+    (Affinoid.tensorInr K A 𝔟₁ 𝔟₂).comp (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1 ⧸ 𝔟₂))
+Affinoid.isAffinoidTensorProduct_tensorQuotient : ∀ (K : Type u_2) [inst : NontriviallyNormedField K] (A : Type u_3)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {σ : Type u_4} {τ : Type u_5} [inst_5 : Finite σ] [inst_6 : Finite τ] (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1))
+  (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)) [inst_7 : IsUltrametricDist K] [inst_8 : CompleteSpace K]
+  [inst_9 : NormOneClass A] (hA : IsAffinoidAlgebra K A),
+  Affinoid.IsAffinoidTensorProduct (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1 ⧸ 𝔟₁))
+    (IsScalarTower.toAlgHom K A (MvPowerSeries.Restricted A 1 ⧸ 𝔟₂)) (Affinoid.tensorInl K A 𝔟₁ 𝔟₂)
+    (Affinoid.tensorInr K A 𝔟₁ 𝔟₂)
+Affinoid.tensorInlₐ : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] →
+    (A : Type u_2) →
+      [inst_1 : NormedCommRing A] →
+        [inst_2 : NormedAlgebra K A] →
+          [inst_3 : IsUltrametricDist A] →
+            [inst_4 : CompleteSpace A] →
+              {σ : Type u_3} →
+                {τ : Type u_4} →
+                  [inst_5 : Finite σ] →
+                    [inst_6 : Finite τ] →
+                      (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1)) →
+                        (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)) →
+                          MvPowerSeries.Restricted A 1 ⧸ 𝔟₁ →ₐ[A] Affinoid.TensorQuotient K A 𝔟₁ 𝔟₂
+Affinoid.tensorInrₐ : (K : Type u_1) →
+  [inst : NontriviallyNormedField K] →
+    (A : Type u_2) →
+      [inst_1 : NormedCommRing A] →
+        [inst_2 : NormedAlgebra K A] →
+          [inst_3 : IsUltrametricDist A] →
+            [inst_4 : CompleteSpace A] →
+              {σ : Type u_3} →
+                {τ : Type u_4} →
+                  [inst_5 : Finite σ] →
+                    [inst_6 : Finite τ] →
+                      (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1)) →
+                        (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)) →
+                          MvPowerSeries.Restricted A 1 ⧸ 𝔟₂ →ₐ[A] Affinoid.TensorQuotient K A 𝔟₁ 𝔟₂
+Affinoid.denseRange_tensorLift : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {σ : Type u_3} {τ : Type u_4} [inst_5 : Finite σ] [inst_6 : Finite τ] (𝔟₁ : Ideal (MvPowerSeries.Restricted A 1))
+  (𝔟₂ : Ideal (MvPowerSeries.Restricted A 1)), DenseRange ⇑(Affinoid.tensorLift K A 𝔟₁ 𝔟₂)
+@Affinoid.IsGeneralisedFractions.exists_algEquiv : ∀ {K : Type u_2} [inst : NontriviallyNormedField K] {A : Type u_3}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] {m n : ℕ}
+  {f : Fin m → A} {g : Fin n → A} {A' A'' : Type u_1} [inst_5 : NormedCommRing A'] [inst_6 : NormedAlgebra K A']
+  [IsUltrametricDist A'] [CompleteSpace A'] [inst_9 : NormedCommRing A''] [inst_10 : NormedAlgebra K A'']
+  [IsUltrametricDist A''] [CompleteSpace A''] {φ₀ : A →ₐ[K] A'} {φ₀' : A →ₐ[K] A''},
+  Affinoid.IsGeneralisedFractions φ₀ f g →
+    Affinoid.IsGeneralisedFractions φ₀' f g → ∃ e, Continuous ⇑e ∧ Continuous ⇑e.symm ∧ (↑e).comp φ₀ = φ₀'
+@Affinoid.IsGeneralisedFractions.trans : ∀ {K : Type u_2} [inst : NontriviallyNormedField K] {A : Type u_3}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] {A' : Type u_4}
+  [inst_5 : NormedCommRing A'] [inst_6 : NormedAlgebra K A'] [IsUltrametricDist A'] [CompleteSpace A'] {φ₀ : A →ₐ[K] A'}
+  {m n : ℕ} {f : Fin m → A} {g : Fin n → A} {A'' : Type u_5} [inst_9 : NormedCommRing A'']
+  [inst_10 : NormedAlgebra K A''] [IsUltrametricDist A''] [CompleteSpace A''] {φ₁ : A' →ₐ[K] A''} {m' n' : ℕ}
+  {f' : Fin m' → A} {g' : Fin n' → A},
+  Affinoid.IsGeneralisedFractions φ₀ f g →
+    Affinoid.IsGeneralisedFractions φ₁ (⇑φ₀ ∘ f') (⇑φ₀ ∘ g') →
+      Affinoid.IsGeneralisedFractions (φ₁.comp φ₀) (Fin.append f f') (Fin.append g g')
+@Affinoid.IsGeneralisedFractions.of_isUnit : ∀ {K : Type u_2} [inst : NontriviallyNormedField K] {A : Type u_3}
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A] {m n : ℕ}
+  {f : Fin m → A} {g : Fin n → A} (hg : ∀ (j : Fin n), IsUnit (g j)),
+  (∀ (i : Fin m), PowerBounded.IsPowerBounded (f i)) →
+    (∀ (j : Fin n), PowerBounded.IsPowerBounded ↑⋯.unit⁻¹) → Affinoid.IsGeneralisedFractions (AlgHom.id K A) f g
+@Affinoid.IsRationalFractions.isGeneralisedFractions_of_one : ∀ {K : Type u_2} [inst : NontriviallyNormedField K]
+  {A : Type u_3} [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [IsUltrametricDist A] [CompleteSpace A]
+  {A' : Type u_4} [inst_5 : NormedCommRing A'] [inst_6 : NormedAlgebra K A'] [IsUltrametricDist A'] [CompleteSpace A']
+  {φ₀ : A →ₐ[K] A'} {m : ℕ} {f : Fin m → A},
+  Affinoid.IsRationalFractions φ₀ f 1 → Affinoid.IsGeneralisedFractions φ₀ f Fin.elim0
+Affinoid.continuous_toFractions : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [CompleteSpace A] {m n : ℕ}
+  (f : Fin m → A) (g : Fin n → A), Continuous ⇑(Affinoid.toFractions K A f g)
+Affinoid.toFractions_mul_mk_X_inr : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [CompleteSpace A] {m n : ℕ}
+  (f : Fin m → A) (g : Fin n → A) (j : Fin n),
+  (Affinoid.toFractions K A f g) (g j) *
+      (Ideal.Quotient.mk (Affinoid.fractionIdeal A f g)) (MvPowerSeries.Restricted.X A 1 (Sum.inr j)) =
+    1
+Affinoid.toFractions_f : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2) [inst_1 : NormedCommRing A]
+  [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [CompleteSpace A] {m n : ℕ} (f : Fin m → A)
+  (g : Fin n → A) (i : Fin m),
+  (Affinoid.toFractions K A f g) (f i) =
+    (Ideal.Quotient.mk (Affinoid.fractionIdeal A f g)) (MvPowerSeries.Restricted.X A 1 (Sum.inl i))
+Affinoid.isPowerBounded_toFractions_f : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [CompleteSpace A] {m n : ℕ}
+  (f : Fin m → A) (g : Fin n → A) (i : Fin m), PowerBounded.IsPowerBounded ((Affinoid.toFractions K A f g) (f i))
+Affinoid.isPowerBounded_inv_toFractions : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {m n : ℕ} (f : Fin m → A) (g : Fin n → A) (j : Fin n), PowerBounded.IsPowerBounded ↑⋯.unit⁻¹
+Affinoid.isGeneralisedFractions_toFractions : ∀ (K : Type u_2) [inst : NontriviallyNormedField K] (A : Type u_3)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {m n : ℕ} (f : Fin m → A) (g : Fin n → A) [inst_5 : IsUltrametricDist K] [inst_6 : CompleteSpace K]
+  [inst_7 : NormOneClass A] (hA : IsAffinoidAlgebra K A),
+  Affinoid.IsGeneralisedFractions (Affinoid.toFractions K A f g) f g
+Affinoid.continuous_toRational : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [CompleteSpace A] {m : ℕ}
+  (f : Fin m → A) (g : A), Continuous ⇑(Affinoid.toRational K A f g)
+Affinoid.isUnit_toRational : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [CompleteSpace A] {m : ℕ}
+  (f : Fin m → A) (g : A), (∃ a a', a * g + ∑ i, a' i * f i = 1) → IsUnit ((Affinoid.toRational K A f g) g)
+Affinoid.toRational_mul_inv : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {m : ℕ} (f : Fin m → A) (g : A) (hgen : ∃ a a', a * g + ∑ i, a' i * f i = 1) (i : Fin m),
+  (Affinoid.toRational K A f g) (f i) * ↑⋯.unit⁻¹ =
+    (Ideal.Quotient.mk (Affinoid.rationalIdeal A f g)) (MvPowerSeries.Restricted.X A 1 i)
+Affinoid.isPowerBounded_toRational_div : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {m : ℕ} (f : Fin m → A) (g : A) (hgen : ∃ a a', a * g + ∑ i, a' i * f i = 1) (i : Fin m),
+  PowerBounded.IsPowerBounded ((Affinoid.toRational K A f g) (f i) * ↑⋯.unit⁻¹)
+Affinoid.isRationalFractions_toRational : ∀ (K : Type u_2) [inst : NontriviallyNormedField K] (A : Type u_3)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {m : ℕ} (f : Fin m → A) (g : A) [inst_5 : IsUltrametricDist K] [inst_6 : CompleteSpace K] [inst_7 : NormOneClass A]
+  (hA : IsAffinoidAlgebra K A),
+  (∃ a a', a * g + ∑ i, a' i * f i = 1) → Affinoid.IsRationalFractions (Affinoid.toRational K A f g) f g
+Affinoid.denseRange_awayLift : ∀ (K : Type u_1) [inst : NontriviallyNormedField K] (A : Type u_2)
+  [inst_1 : NormedCommRing A] [inst_2 : NormedAlgebra K A] [inst_3 : IsUltrametricDist A] [inst_4 : CompleteSpace A]
+  {m : ℕ} (f : Fin m → A) (g : A) (hgen : ∃ a a', a * g + ∑ i, a' i * f i = 1),
+  DenseRange ⇑(Affinoid.awayLift K A f g hgen)
+Affinoid.TateAlgebra.mapBase : (K : Type u_1) →
+  [inst : NormedField K] →
+    [inst_1 : IsUltrametricDist K] →
+      (K' : Type u_2) →
+        [inst_2 : NormedField K'] →
+          [inst_3 : IsUltrametricDist K'] →
+            [inst_4 : NormedAlgebra K K'] →
+              [NormOneClass K'] → (n : ℕ) → Affinoid.TateAlgebra K n →ₐ[K] Affinoid.TateAlgebra K' n
+Affinoid.TateAlgebra.norm_mapBase : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  (K' : Type u_2) [inst_2 : NormedField K'] [inst_3 : IsUltrametricDist K'] [inst_4 : NormedAlgebra K K']
+  [inst_5 : NormOneClass K'] (n : ℕ) (f : Affinoid.TateAlgebra K n), ‖(Affinoid.TateAlgebra.mapBase K K' n) f‖ = ‖f‖
+Affinoid.TateAlgebra.baseChangeAlgHom_tmul : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  (K' : Type u_2) [inst_2 : NormedField K'] [inst_3 : IsUltrametricDist K'] [inst_4 : NormedAlgebra K K']
+  [inst_5 : NormOneClass K'] (n : ℕ) (c : K') (f : Affinoid.TateAlgebra K n),
+  (Affinoid.TateAlgebra.baseChangeAlgHom K K' n) (c ⊗ₜ[K] f) = c • (Affinoid.TateAlgebra.mapBase K K' n) f
+Affinoid.TateAlgebra.exists_sum_smul_mapBase : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  (K' : Type u_2) [inst_2 : NormedField K'] [inst_3 : IsUltrametricDist K'] [inst_4 : NormedAlgebra K K']
+  [inst_5 : NormOneClass K'] (n : ℕ) [CompleteSpace K] {ι : Type u_3} [inst_7 : Fintype ι] (b : Module.Basis ι K K')
+  (g : Affinoid.TateAlgebra K' n), ∃ h, g = ∑ k, b k • (Affinoid.TateAlgebra.mapBase K K' n) (h k)
+Affinoid.TateAlgebra.bijective_baseChangeAlgHom : ∀ (K : Type u_1) [inst : NormedField K] [inst_1 : IsUltrametricDist K]
+  (K' : Type u_2) [inst_2 : NormedField K'] [inst_3 : IsUltrametricDist K'] [inst_4 : NormedAlgebra K K']
+  [inst_5 : NormOneClass K'] (n : ℕ) [CompleteSpace K] [FiniteDimensional K K'],
+  Function.Bijective ⇑(Affinoid.TateAlgebra.baseChangeAlgHom K K' n)
+@IsAffinoidAlgebra.baseChange : ∀ {K : Type u_1} [inst : NormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K]
+  (K' : Type u_2) [inst_3 : NormedField K'] [inst_4 : IsUltrametricDist K'] [inst_5 : NormedAlgebra K K']
+  [NormOneClass K'] [FiniteDimensional K K'] {A : Type u_3} [inst_8 : CommRing A] [inst_9 : Algebra K A],
+  IsAffinoidAlgebra K A → IsAffinoidAlgebra K' (TensorProduct K K' A)
+@MvPowerSeries.Restricted.norm_smul_X_pow : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ} (ρ : Fin n → ℝ) [inst_3 : Fact (∀ (i : Fin n), 0 < ρ i)]
+  (s : Fin n → ℕ) (c : Fin n → K),
+  (∀ (i : Fin n), ρ i ^ s i * ‖c i‖ = 1) → ∀ (i : Fin n), ‖c i • MvPowerSeries.Restricted.X K ρ i ^ s i‖ = 1
+@MvPowerSeries.Restricted.injective_rescaleAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ} {ρ : Fin n → ℝ}
+  [inst_3 : Fact (∀ (i : Fin n), 0 < ρ i)] {s : Fin n → ℕ} {c : Fin n → K} (hc : ∀ (i : Fin n), ρ i ^ s i * ‖c i‖ = 1),
+  (∀ (i : Fin n), s i ≠ 0) → Function.Injective ⇑(MvPowerSeries.Restricted.rescaleAlgHom ρ s c hc)
+@MvPowerSeries.Restricted.isRestricted_shiftCoeff : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ} {ρ : Fin n → ℝ} [Fact (∀ (i : Fin n), 0 < ρ i)]
+  {s : Fin n → ℕ} {c : Fin n → K},
+  (∀ (i : Fin n), s i ≠ 0) →
+    (∀ (i : Fin n), c i ≠ 0) →
+      ∀ (f : MvPowerSeries.Restricted K ρ) (l : Fin n →₀ ℕ),
+        MvPowerSeries.IsRestricted 1 fun μ =>
+          (MvPowerSeries.coeff (Finsupp.ofSupportFinite (fun i => μ i * s i) ⋯ + l)) ↑f * ∏ i, (c i)⁻¹ ^ μ i
+@MvPowerSeries.Restricted.finite_rescaleAlgHom : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {n : ℕ} {ρ : Fin n → ℝ}
+  [inst_3 : Fact (∀ (i : Fin n), 0 < ρ i)] {s : Fin n → ℕ} {c : Fin n → K} (hc : ∀ (i : Fin n), ρ i ^ s i * ‖c i‖ = 1),
+  (∀ (i : Fin n), s i ≠ 0) → (∀ (i : Fin n), c i ≠ 0) → (MvPowerSeries.Restricted.rescaleAlgHom ρ s c hc).Finite
+@MvPowerSeries.Restricted.isAffinoidAlgebra_of_forall_exists_pow_eq_norm : ∀ {K : Type u_1}
+  [inst : NontriviallyNormedField K] [inst_1 : IsUltrametricDist K] [CompleteSpace K] {n : ℕ} {ρ : Fin n → ℝ}
+  [Fact (∀ (i : Fin n), 0 < ρ i)],
+  (∀ (i : Fin n), ∃ s c, s ≠ 0 ∧ c ≠ 0 ∧ ρ i ^ s = ‖c‖) → IsAffinoidAlgebra K (MvPowerSeries.Restricted K ρ)
+@PowerSeries.exists_summable_not_isRestricted : ∀ {K : Type u_1} [inst : NontriviallyNormedField K] {ρ : ℝ},
+  0 < ρ → ∃ f, (∀ (x : K), ‖x‖ < ρ → Summable fun ν => (PowerSeries.coeff ν) f * x ^ ν) ∧ ¬PowerSeries.IsRestricted ρ f
+@Affinoid.Examples.finrank_quotient_X_sq_sub : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {a : K},
+  ‖a‖ < 1 →
+    Module.finrank K
+        (Affinoid.TateAlgebra K 1 ⧸
+          Ideal.span {MvPowerSeries.Restricted.X K 1 0 ^ 2 - (MvPowerSeries.Restricted.C 1) a}) =
+      2
+@Affinoid.Examples.ker_aeval_eq_span : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K] {a : K} (ha : ‖a‖ ≤ 1),
+  RingHom.ker (MvPowerSeries.Restricted.aeval 1 (fun x => a) ⋯) =
+    Ideal.span {MvPowerSeries.Restricted.X K 1 0 - (MvPowerSeries.Restricted.C 1) a}
+@Affinoid.Examples.nonempty_algEquiv_quotient_X_sub : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {a : K},
+  ‖a‖ ≤ 1 →
+    Nonempty
+      ((Affinoid.TateAlgebra K 1 ⧸
+          Ideal.span {MvPowerSeries.Restricted.X K 1 0 - (MvPowerSeries.Restricted.C 1) a}) ≃ₐ[K]
+        K)
+@Affinoid.Examples.isUnit_C_mul_X_sub_one : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {a : K},
+  ‖a‖ < 1 → IsUnit ((MvPowerSeries.Restricted.C 1) a * MvPowerSeries.Restricted.X K 1 0 - 1)
+@Affinoid.Examples.subsingleton_quotient_C_mul_X_sub_one : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K] {a : K},
+  ‖a‖ < 1 →
+    Subsingleton
+      (Affinoid.TateAlgebra K 1 ⧸ Ideal.span {(MvPowerSeries.Restricted.C 1) a * MvPowerSeries.Restricted.X K 1 0 - 1})
+@Affinoid.Examples.nonempty_algEquiv_generalisedFractions_X : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K],
+  Nonempty
+    ((Affinoid.GeneralisedFractions (Affinoid.TateAlgebra K 1) Fin.elim0 fun x =>
+        MvPowerSeries.Restricted.X K 1 0) ≃ₐ[K]
+      Affinoid.TateAlgebra K 2 ⧸ Ideal.span {MvPowerSeries.Restricted.X K 1 0 * MvPowerSeries.Restricted.X K 1 1 - 1})
+@Affinoid.Examples.isMulDistinguishedX0_cusp : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [CompleteSpace K],
+  (MvPowerSeries.Restricted.X K 1 0 ^ 2 - MvPowerSeries.Restricted.X K 1 1 ^ 3).IsMulDistinguishedX0 2
+@Affinoid.Examples.exists_algEquiv_quotient_X_norm_eq : ∀ {K : Type u_1} [inst : NontriviallyNormedField K]
+  [inst_1 : IsUltrametricDist K] [inst_2 : CompleteSpace K],
+  ∃ e, ∀ (f : Affinoid.TateAlgebra K 1 ⧸ Ideal.span {MvPowerSeries.Restricted.X K 1 0}), ‖e f‖ = ‖f‖

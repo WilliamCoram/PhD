@@ -1,0 +1,19 @@
+import PhD.TauCeti.Code.PadicFunctionalAnalysis.Sums
+#print axioms Filter.Tendsto.bddAbove_range_norm
+#print axioms Filter.Tendsto.exists_forall_norm_le
+#print axioms Filter.Tendsto.exists_norm_eq_iSup
+#print axioms Filter.Tendsto.iSup_norm_cofinite_left
+#print axioms Filter.Tendsto.iSup_norm_cofinite_right
+#print axioms tendsto_cofinite_prod_of_tendsto_iSup_norm
+#print axioms tendsto_cofinite_prod_of_norm_le_mul
+#print axioms IsUltrametricDist.norm_tsum_lt_of_forall_lt
+#print axioms IsUltrametricDist.nnnorm_tsum_lt_of_forall_lt
+#print axioms IsUltrametricDist.tendsto_tsum_cofinite_left
+#print axioms IsUltrametricDist.tendsto_tsum_cofinite_right
+#print axioms IsUltrametricDist.norm_tsum_eq_of_forall_lt
+#print axioms IsUltrametricDist.nnnorm_tsum_eq_of_forall_lt
+#print axioms IsUltrametricDist.norm_tsum_sub_tsum_le
+#print axioms IsUltrametricDist.tsum_prod_eq_tsum_tsum
+#print axioms IsUltrametricDist.tsum_tsum_comm
+#print axioms IsUltrametricDist.summable_prod_map₂
+#print axioms IsUltrametricDist.tsum_prod_map₂
