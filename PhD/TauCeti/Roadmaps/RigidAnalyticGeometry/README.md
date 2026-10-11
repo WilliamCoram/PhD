@@ -1515,6 +1515,130 @@ Mathlib's schemes.
 
 ---
 
+## Targets requested by the Tau Ceti AdicSpaces roadmaps
+
+AdicSpaces Parts II–IV will import the following classical rigid-geometry statements from this roadmap once it has been merged into TauCetiRoadmap. The targets below specify the hypotheses, normalisations and canonical maps required by those consumers over a complete nontrivially valued nonarchimedean field K. This proposed extension includes the named reduction, quasi-Stein, proper mapping and GAGA targets beyond the earlier scope exclusions, while adic spectra, Huber pairs and rigid–adic comparison remain targets of AdicSpaces.
+
+Throughout this section, K-affinoid algebras and rigid varieties use the carriers and conventions above; no reducedness is implicit. Geometric morphisms include their local maps of structure sheaves, and coherent cohomology is sheaf cohomology on the admissible G-site. The Banach analysis used in Kiehl’s proofs is supplied by the coordinated functional-analysis roadmaps. “Kiehl A/B” and “Kiehl Endlichkeitssatz” refer respectively to his 1967 papers in Inventiones Mathematicae 2, pp. 256–273 and pp. 191–214.
+
+### Layer 0
+
+Existing target §§0.1–0.3 Tate algebra, Gauss norm, noetherianity and strict finite modules — consumed by AdicSpaces Part II §§R0.4 (field-specialised input), R0.9; III §§R3.1, R3.6.
+
+### Layer 1
+
+Existing target §1.2.1 Noether normalisation / IsAffinoidAlgebra.exists_finite_injective — consumed by AdicSpaces Part II §R0.9.
+
+Existing target §§1.1.2, 1.2.4 IsAffinoidAlgebra.isJacobsonRing and finite residue fields — consumed by AdicSpaces Part II §R0.9.
+
+Existing target §1.2.3 dimension under a finite injective map — consumed by AdicSpaces Part II §R1.9.
+
+Existing target §1.3.2 continuous_algHom and §1.3.3 uniqueness of the Banach topology — consumed by AdicSpaces Part II §R0.9.
+
+Existing target §1.1.5 completed affinoid tensor products — consumed by AdicSpaces Part II §R1.1; III §R3.6.
+
+**isClosedEmbedding_of_finite_injective.** For complete algebra norms on K-affinoid algebras A and B, every finite injective K-algebra homomorphism A → B is a homeomorphism onto a closed subspace. No continuity hypothesis is needed; in particular this applies to a finite Noether normalisation K⟨T₁,…,T_d⟩ → A. Source: BGR 3.7.3/3, with automatic continuity from 6.1.3/1. Consumed by AdicSpaces Part II §R0.9.
+
+**isUnit_toRationalLocalization_of_span_eq_top.** For a nonarchimedean normed ring A, f₁,…,f_m,g ∈ A generating the unit ideal, the image of g in A⟨T₁,…,T_m⟩/(gT_i − f_i) is a unit. The unit-ideal hypothesis is necessary. Source: BGR 6.1.4/3–4. Consumed by AdicSpaces Part II §R1.1.
+
+### Layer 2
+
+Existing target §§2.1–2.4 maximum modulus, spectral radius, power-boundedness, nilradical and reduced norm — consumed by AdicSpaces Part II §§R0.4 (classical specialization), R0.9.
+
+**supSeminorm_pow_pos.** For a K-affinoid algebra A, f ∈ A and n > 0, supSeminorm K (fⁿ) = (supSeminorm K f)ⁿ. The formula includes A = 0; extending it to n = 0 requires A ≠ 0, because the supremum on Sp 0 is zero. The normalization is sup over maximal ideals of the unique absolute value on A/𝔪 extending that of K. Source: BGR 6.2.1/1. Consumed by AdicSpaces Part II §R0.9.
+
+**powerBounded_integral_over_presentation.** For a surjection π : K⟨T₁,…,T_n⟩ → A, let A₀ be the image of the Gauss-unit ball K°⟨T₁,…,T_n⟩. For every a ∈ A, supSeminorm K a ≤ 1 if and only if a is integral over A₀. Thus A° is the integral closure of A₀ inside A, including when A is nonreduced; no finiteness of A° over A₀ is asserted. Source: BGR 6.3.5/1, applied to a finite (in particular surjective) affinoid map. Consumed by AdicSpaces Part II §§R0.9, R1.1.
+
+**reduction_finite_of_finite.** A finite homomorphism A → B of K-affinoid algebras induces a finite homomorphism A°/A°° → B°/B°°. Here A° = {a : supSeminorm K a ≤ 1} and A°° = {a : supSeminorm K a < 1}, and similarly for B; the map is the one induced by A → B. In particular the reduction of A is a finite-type algebra over the residue field of K, by applying this to a Tate presentation. Source: BGR 6.3.5/1. Consumed by AdicSpaces Part II §R0.9.
+
+### Layer 3
+
+Existing target §3.1.3 polynomial generators of maximal ideals of the Tate algebra — consumed by AdicSpaces Part II §R0.9.
+
+**height_eq_ringKrullDim_of_isDomain.** For a K-affinoid integral domain A and every maximal ideal 𝔪, height(𝔪) = dim A. The equality uses Krull dimension, and does not assert that an arbitrary reducible affinoid is equidimensional. Source: BGR 6.1.2/2 and 7.1.1/3; Conrad, Irreducible components, Lemma 2.1.5. Consumed by AdicSpaces Part II §R1.9.
+
+### Layer 4
+
+Existing target §4.1.1 AffinoidSubdomain universal property and quotients by powers of point ideals — consumed by AdicSpaces Part II §R1.1.
+
+Existing target §4.1.2–4 transitivity, preimages and intersections — consumed by AdicSpaces Part II §R1.1.
+
+Existing target §4.4.2 local-ring completions and §4.4.3 flat affinoid restrictions — consumed by AdicSpaces Part II §R1.1.
+
+Existing target §4.6.3 Gerritzen–Grauert, including the ambient rational-cover/Weierstrass-intersection form — consumed by AdicSpaces Part II §R1.1.
+
+**AffinoidSubdomain.injective_of_isDomain.** If A is a K-affinoid integral domain and U is a nonempty affinoid subdomain of Sp A, the representing map A → 𝒪(U) is injective. Nonemptiness is required; the empty subdomain has zero coordinate ring. Source: BGR 7.3.2/6 (flatness), with the nonzero flat algebra criterion. Consumed by AdicSpaces Part II §R1.9.
+
+**faithfullyFlat_affinoidCover.** For a finite affinoid covering U₁,…,U_r of Sp A, the product of the restriction maps A → ∏ᵢ𝒪(U_i) is faithfully flat. The algebra structure on the product is that exact product map. Empty members are permitted, and the empty family covers only Sp 0. Source: BGR 7.3.2/6 and the point description of 7.2.2/2. Consumed by AdicSpaces Part II §R1.1; III §§R3.1–R3.2.
+
+**iUnion_rationalDomain_nonzero_eq_univ_iff.** For g₁,…,g_r ∈ A, put U_i = {x : all |g_j(x)| ≤ |g_i(x)| and |g_i(x)| ≠ 0}. Then ⋃ᵢU_i = Sp A if and only if (g₁,…,g_r) = A. The nonzero-denominator condition excludes common zeros; once the unit-ideal condition holds it is automatic. Source: BGR 7.1.2/5 and the standard rational-cover construction of 8.2.2. Consumed by AdicSpaces Part II §§R1.1, R1.9; III §R3.1.
+
+### Layer 5
+
+Existing target §5.2 rational/Laurent refinements — consumed by AdicSpaces Part II §R1.9; III §§R3.1–R3.2.
+
+Existing target §5.3.4 Tate acyclicity for arbitrary A-modules — consumed by AdicSpaces Part II §R1.1; III §R3.1.
+
+### Layer 6
+
+Existing target §§6.1–6.4 admissible G-topology, locally G-ringed varieties, gluing and fibre products — consumed by AdicSpaces Part II §R1.1.
+
+Existing target §6.4.6 completed extension of complete isometric ground fields — consumed by AdicSpaces Part III §R3.6.
+
+**faithfullyFlat_scalarExtension.** For any complete nontrivially valued nonarchimedean isometric extension L/K and any K-affinoid algebra A, the canonical map A → A_L = A ⊗̂_K L, a ↦ a ⊗ 1, is faithfully flat. Neither algebraicity nor discreteness nor spherical completeness is required. Use the scalar-extension construction of §6.4.6. Source: BGR 3.7.3/3; Conrad, Irreducible components, Lemma 1.1.5(1). Consumed by AdicSpaces Part III §R3.6.
+
+### Layer 7
+
+Existing target §7.1.1 exact associated modules, §7.1.3 Kiehl affinoid equivalence, §7.4 coherent affinoid acyclicity — consumed by AdicSpaces Part III §§R3.1–R3.3; IV Suggested.lean R3/tate-kiehl-affinoid.
+
+Existing target §7.1.4 finite morphisms and §7.2 coherent ideals and closed subvarieties — consumed by AdicSpaces Part II §§R0.10–R0.13 (classical inputs only); III §R3.3.
+
+Existing target §7.3 separatedness, relative compactness and rigid properness — consumed by AdicSpaces Part II §§R0.10–R0.13 (classical inputs only), R1.7; III §R3.6.
+
+**identityPrinciple.** Let X be a connected normal rigid variety and U a nonempty admissible open. Then U is dense for the analytic Zariski topology, X is irreducible, and Γ(X,𝒪_X) → Γ(U,𝒪_X) is injective. Normal means that every local ring is an integrally closed domain; neither connectedness alone nor reducedness alone is substituted for normality. Source: BGR 7.3.2/8–10; Conrad, Irreducible components, Lemma 2.1.4. Consumed by AdicSpaces Part II §R1.9.
+
+**identityPrinciple_locallyFree.** For X and U as in identityPrinciple and a finite locally free 𝒪_X-module F, Γ(X,F) → Γ(U,F) is injective. The assertion is for vector bundles; it need not hold for arbitrary coherent modules supported away from U. Source: BGR 7.3.2/8–10 and 9.4.2/1, by local trivialisation. Consumed by AdicSpaces Part II §R1.9.
+
+**quasiStein_dense_restriction.** Let X = ⋃ₙUₙ be a countable increasing admissible affinoid covering, with Γ(Uₙ₊₁,𝒪) → Γ(Uₙ,𝒪) dense. For every coherent F, both Γ(Uₙ₊₁,F) → Γ(Uₙ,F) and Γ(X,F) → Γ(Uₙ,F) have dense image in the canonical finite-module Banach topology. Relative compactness is not part of this quasi-Stein hypothesis. Source: Kiehl, Theorem A und B, Definition 2.3, Satz 2.4.1 and Hilfssatz 2.5. Consumed by AdicSpaces Part III §R3.4; IV Suggested.lean R3/quasi-stein-theorems-a-b.
+
+**quasiStein_global_generation.** For a quasi-Stein X with the preceding exhaustion and coherent F, the restrictions of Γ(X,F) generate Γ(Uₙ,F) over Γ(Uₙ,𝒪) for every n. Consequently finitely many global sections generate on each Uₙ, and global sections generate every stalk F_x. There need not be one finite set generating on all of X. Source: Kiehl, Theorem A und B, Satz 2.4.3. Consumed by AdicSpaces Part III §R3.4; IV Suggested.lean R3/quasi-stein-theorems-a-b.
+
+**quasiStein_acyclic.** For quasi-Stein X and coherent F, Hⁱ(X,F) = 0 for every i > 0. Cohomology is derived sheaf cohomology on the admissible G-site, with the Čech comparison of §7.4; it is not a newly defined exhaustion cohomology. Source: Kiehl, Theorem A und B, Satz 2.4.2. Consumed by AdicSpaces Part III §R3.4; IV Suggested.lean R3/quasi-stein-theorems-a-b.
+
+**quasiStein_higherDirectImage.** For a rigid morphism f : X → Y such that f⁻¹(V) is quasi-Stein for every admissible affinoid V ⊆ Y and for coherent F on X, Rⁱf_*F = 0 for i > 0. This includes the relative quasi-Stein vanishing used for suitable open immersions; it does not assert that every open immersion has this property. Source: Kiehl, Theorem A und B, Satz 2.4.2, applied on affinoid opens of the target. Consumed by AdicSpaces Part III §R3.4.
+
+**kiehlProperMapping.** For a Kiehl-proper morphism f : X → Y of rigid K-varieties and a coherent 𝒪_X-module F, Rⁱf_*F is coherent for every i ≥ 0. Kiehl-proper means separated and locally on every affinoid base admitting finite affinoid covers V_j ⊆ U_j of the inverse image with V_j relatively compact in U_j over the base. This is the proper mapping theorem, distinct from the affinoid equivalence of §7.1.3. Source: Kiehl, Der Endlichkeitssatz, Theorem 3.3. Consumed by AdicSpaces Part III §R3.6.
+
+**proper_cohomology_finite.** If f : X → Sp A is Kiehl-proper and F is coherent, Hⁱ(X,F) is a finite A-module for every i ≥ 0, with A acting through f. For A = K it is finite-dimensional over K; X need not be smooth or reduced. Source: Kiehl, Der Endlichkeitssatz, Satz 2.6. Consumed by AdicSpaces Part III §R3.6.
+
+**proper_cech_closedRange.** For f and F as in proper_cohomology_finite and a finite admissible affinoid covering of X, the differentials in its Čech complex have closed image in the canonical Banach-module topologies. Since f is separated, finite intersections are affinoid; the resulting complex is strict and computes Hⁱ(X,F). Use the alternating differential, with degree-zero component s_j restricted minus s_i restricted. Source: Kiehl, Der Endlichkeitssatz, Satz 2.6 and its proof. Consumed by AdicSpaces Part III §R3.6.
+
+**proper_formalFunctions.** For Kiehl-proper f : X → Sp A, coherent F, an ideal J ⊆ A and i ≥ 0, the canonical map from the J-adic completion of Hⁱ(X,F) to limₙ Hⁱ(X,F/JⁿF) is an isomorphism of A-modules. Here JⁿF is generated by the image of Jⁿ through f, and the limit has the quotient transition maps. This is ideal-adic completion, not completion for the Banach norm; Theorem 3.4 supplies the principal-ideal good-filtration and null-system argument for Theorem 3.7. Source: Kiehl, Der Endlichkeitssatz, Theorems 3.4 and 3.7. Consumed by AdicSpaces Part III §R3.6.
+
+**proper_cohomology_affinoidSubdomain.** For Kiehl-proper f : X → Sp A, coherent F, U = Sp B an affinoid subdomain of Sp A and i ≥ 0, the canonical B-linear map B ⊗_A Hⁱ(X,F) → Hⁱ(f⁻¹(U),F) is an isomorphism. The tensor product is algebraic, since the cohomology module is finite, and b ⊗ m maps to b times the restriction of m. Source: Kiehl, Der Endlichkeitssatz, Satz 3.5. Consumed by AdicSpaces Part III §R3.6.
+
+**proper_cohomology_finiteFlat.** For Kiehl-proper f : X → Sp A, coherent F and a finite flat homomorphism A → B of K-affinoid algebras, B ⊗_A Hⁱ(X,F) → Hⁱ(X ×_{Sp A} Sp B,F_B) is an isomorphism for every i. The map is induced by pullback and is compatible with connecting homomorphisms. Flatness is essential for this uncorrected tensor formula. Source: Kiehl, Der Endlichkeitssatz, Satz 2.6, and BGR 9.4.2/1 via the finite Čech complex. Consumed by AdicSpaces Part III §R3.6.
+
+**proper_cohomology_fieldExtension.** For Kiehl-proper f : X → Sp A, coherent F and any complete isometric extension L/K, let A_L = A ⊗̂_K L and X_L be scalar extension. The canonical map A_L ⊗_A Hⁱ(X,F) → Hⁱ(X_L,F_L) is an isomorphism of finite A_L-modules for every i ≥ 0, sending b ⊗ m to b times the pullback of m. Scalar extension uses §6.4.6; the proper spaces here are separated, so its gluing hypothesis is satisfied. Source: Kiehl, Der Endlichkeitssatz, Satz 2.6; Conrad, Relative ampleness, Theorem A.1.2. Consumed by AdicSpaces Part III §R3.6.
+
+### Layer 8
+
+Existing target §8.1 classical analytification, its universal property, products, finite maps and local completions — consumed by AdicSpaces Part II §§R1.1, R1.3–R1.4, R1.9; IV §R4.5 (input only).
+
+**analytificationModules_exact_coherent.** For a scheme X locally of finite type over Spec A, where A is K-affinoid, relative analytification over Sp A induces an exact pullback functor on module sheaves, carrying coherent algebraic sheaves to coherent analytic sheaves. It preserves finite limits and finite colimits and agrees with the pullback of §8.1 when A = K. This is relative analytification, not the assumption that X is locally of finite type over K. Source: BGR 9.4.2/1 and 9.3.4; Kiehl, Der Endlichkeitssatz, §4 using Theorem 3.3. Consumed by AdicSpaces Part II §R1.4; III §R3.7.
+
+**analytification_isProper.** If X → Spec A is proper with A K-affinoid, its relative rigid analytification Xᵃⁿ → Sp A is proper in Kiehl’s sense. By working locally on the algebraic target, this also applies to any proper morphism of locally finite type K-schemes. No discretely valued hypothesis is imposed; the conclusion supplies the relative-compactness hypothesis for the rigid proper mapping theorem. Source: Kiehl, Der Endlichkeitssatz, §4 (Theorem 3.3 as input); BGR 9.6.3; Conrad, Relative ampleness, discussion after (2.3.12). Consumed by AdicSpaces Part II §R1.6; III §R3.7.
+
+**proper_gaga_cohomology.** If X → Spec A is proper, A is K-affinoid and F is coherent on X, the canonical map Hⁱ(X,F) → Hⁱ(Xᵃⁿ,Fᵃⁿ) is an A-linear isomorphism for every i ≥ 0. It is pullback on global sections in degree zero and the associated δ-functorial comparison in all degrees; these are finite A-modules. Source: Kiehl, Der Endlichkeitssatz, §4 following Theorems 3.3–3.5; Köpf relative GAGA, as recorded in BGR 9.6.3 and Conrad, Relative ampleness, Example 3.2.6. Consumed by AdicSpaces Part III §R3.7; IV Suggested.lean R3/proper-gaga.
+
+**proper_gaga_equivalence.** For X proper over Spec A with A K-affinoid, the specified analytification functor Coh(X) → Coh(Xᵃⁿ) is an equivalence, with its exact and tensor-compatible structure. The equivalence is identified with pullback, rather than an unspecified equivalence between two categories. No GAGA assertion is made for nonproper affine space. Source: Kiehl, Der Endlichkeitssatz, §4 following Theorem 3.3; Köpf relative GAGA, BGR 9.6.3 and Conrad, Relative ampleness, Example 3.2.6. Consumed by AdicSpaces Part III §R3.7; IV Suggested.lean R3/proper-gaga.
+
+**proper_gaga_directImage.** For a proper morphism f : X → Y of schemes locally of finite type over Spec A, with A K-affinoid, and coherent F on X, (Rⁱf_*F)ᵃⁿ → Rⁱfᵃⁿ_*Fᵃⁿ is an isomorphism for every i. The degree-zero map is the adjunction mate of the analytification units; the higher maps are its derived δ-functor extension. Y itself need not be proper; on affinoid analytic opens use the preceding relative-affinoid GAGA statement. Source: Kiehl, Der Endlichkeitssatz, §4 using Theorems 3.3 and 3.5; Conrad, Relative ampleness, equation (A.1.1). Consumed by AdicSpaces Part III §R3.7; IV Suggested.lean R3/proper-gaga.
+
+**analytification_preconnected_iff.** For any scheme X locally of finite type over K, X is preconnected if and only if its rigid analytification is preconnected in the admissible sense. Nonemptiness then gives the connected version. No quasi-compactness or reducedness hypothesis is imposed. Source: BGR 9.3.4; Conrad, Irreducible components, Theorem 2.3.1 and Appendix A.1.3. Consumed by AdicSpaces Part II §§R1.5, R1.9.
+
+**analytification_irreducibleComponents.** For X locally of finite type over K, inverse image under Xᵃⁿ → X gives a bijection from the irreducible components of X to the analytic irreducible components of Xᵃⁿ. Components carry their reduced induced structures; together with preservation of closed immersions and reduction from §8.1, the support bijection identifies each analytified component with its corresponding reduced analytic component, compatibly with its inclusion. This does not identify a nonreduced X with the union of its reduced components as ringed spaces. Source: BGR 9.3.4; Conrad, Irreducible components, Theorem 2.3.1. Consumed by AdicSpaces Part II §R1.9.
+
 ## Dependency graph
 
 ```text
