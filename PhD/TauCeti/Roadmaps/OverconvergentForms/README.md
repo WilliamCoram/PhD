@@ -1237,6 +1237,49 @@ Newton-polygons roadmap's §5; Mathlib's `PowerSeries.derivative` and `Nat.descF
 
 ---
 
+## Targets requested by the Tau Ceti AdelicAlgebraicGroups roadmap
+
+AdelicAlgebraicGroups AA.5.3 (TauCetiProject/TauCetiRoadmap#792) will import
+these targets from this roadmap. The existing text and declarations are unchanged.
+The consumer treats definite quaternion algebras over `ℚ`; here `D` is totally
+definite over the totally real field `F`, with `Dfx F D` and `unitsIncl F D`
+as in §0.2.1. The stabiliser is `Γ_x = x⁻¹ D^× x ∩ U`, as in §0.3.3, rather than
+`D^× ∩ x U x⁻¹`; conjugation identifies the two. For general `F`, finiteness
+means finiteness modulo the central `F^×`; the whole stabiliser is finite when
+`[F : ℚ] = 1`. The adelic topology is the module topology of §0.2.1.
+
+### Layer 0 — §§0.2.1, 0.3.3 The adelic group and stabilisers
+
+**DefiniteQuaternion.finite_stab.** For a totally definite quaternion algebra `D`
+over a totally real number field `F`, a compact subgroup `U ≤ Dfx F D` and
+`x : Dfx F D`, let `Γ_x = x⁻¹ (globalUnits F D) x ∩ U` and let `Z_x` be the
+subgroup of `Γ_x` lying in the diagonal image of `F^×`. Prove that
+`Γ_x / Z_x` is finite, and that `Γ_x` itself is finite if `[F : ℚ] = 1`.
+In particular this applies to every compact open level of §0.3.3. For larger
+`F`, central units can give an infinite stabiliser, as in §0.2.1.
+The Lean signature uses the existing `F`-algebra carrier `D`, central and simple
+of dimension four. Total definiteness is expressed by an isomorphism of each
+real base change `D ⊗_{F,σ} ℝ` with Hamilton's quaternions, for every
+`σ : F →+* ℝ`; no separate quaternion-algebra carrier is required.
+Source: Milne, *Introduction to Shimura varieties*, §3, Theorem 3.3 and
+Example 3.4, pp. 33–34, for the rational case; the central quotient is the
+general-field form of §0.3.3
+(Buzzard §10, p. 73; Loeffler, Proposition 3.1.4).
+
+**Checks.**
+
+- **hamilton_negative_norm.** Hamilton's algebra `ℍ[F]` over a totally real
+  number field has no element of reduced norm `−1`: at every real embedding
+  its norm is a sum of four squares. In particular this gives the consumer's
+  `ℍ[ℚ]` non-example, with reduced norm expressed by `Quaternion.normSq`.
+- **stab_top.** At `U = ⊤`, `Γ_x = x⁻¹ (globalUnits F D) x`; under conjugation
+  this is all of `D^×`. Thus the full level does not supply a finite stabiliser;
+  compactness of the level is essential.
+
+Consumed by Tau Ceti AdelicAlgebraicGroups AA.5.3 (TauCetiRoadmap#792);
+the rational case is obtained at `F = ℚ`, with the conjugation convention
+of §0.3.3 and its central quotient for general `F`.
+
 ## Dependency graph
 
 ```text
