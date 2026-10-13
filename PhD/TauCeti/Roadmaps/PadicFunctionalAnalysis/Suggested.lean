@@ -420,3 +420,421 @@ end Halo
 end
 
 end TauCetiRoadmap.PadicFunctionalAnalysis
+
+/-! ## Targets requested by the Tau Ceti PadicMeasuresIwasawaAlgebras, LocallyAnalyticDistributions and AdicSpaces roadmaps -/
+
+namespace TauCetiRoadmap.PadicFunctionalAnalysis
+
+open Filter Topology
+open scoped ZeroAtInfty Classical AbstractMeasure PowerSeries.WithPiTopology
+
+noncomputable section
+
+/-! ### Layer 0, §0.4.6: the datum-dependent gauge -/
+
+/-- The gauge attached to the ring of definition, unit and inverse radius of §0.4.6. -/
+def tateGauge {A : Type*} [CommRing A] (A₀ : Subring A) (ϖ : Aˣ) (a : ℝ) (x : A) : ℝ :=
+  sInf ((fun n : ℤ ↦ a ^ (-n)) '' {n | ((ϖ ^ (-n) : Aˣ) : A) * x ∈ A₀})
+
+/-- The gauge gives an ultrametric ring seminorm and its open balls recover the topology. -/
+theorem exists_tateSeminorm {A : Type*} [CommRing A] [TopologicalSpace A]
+    [IsTopologicalRing A] (A₀ : Subring A) (ϖ : Aˣ) (a : ℝ) (ha : 1 < a)
+    (hϖ : (ϖ : A) ∈ A₀) (hnil : IsTopologicallyNilpotent (ϖ : A))
+    (hb : (𝓝 (0 : A)).HasBasis (fun _ : ℕ ↦ True)
+      (fun n ↦ {x | ((ϖ ^ (-(n : ℤ)) : Aˣ) : A) * x ∈ A₀})) :
+    ∃ α : RingSeminorm A, (∀ x, α x = tateGauge A₀ ϖ a x) ∧
+      (∀ x y, α (x + y) ≤ max (α x) (α y)) ∧
+      (𝓝 (0 : A)).HasBasis (fun ε : ℝ ↦ 0 < ε) (fun ε ↦ {x | α x < ε}) := sorry
+
+/-- The seminorm kernel is the closure of zero, so separation is exactly Hausdorffness. -/
+theorem tateGauge_eq_zero_iff {A : Type*} [CommRing A] [TopologicalSpace A]
+    [IsTopologicalRing A] (A₀ : Subring A) (ϖ : Aˣ) (a : ℝ) (ha : 1 < a)
+    (hϖ : (ϖ : A) ∈ A₀) (hnil : IsTopologicallyNilpotent (ϖ : A))
+    (hb : (𝓝 (0 : A)).HasBasis (fun _ : ℕ ↦ True)
+      (fun n ↦ {x | ((ϖ ^ (-(n : ℤ)) : Aˣ) : A) * x ∈ A₀})) :
+    (∀ x, tateGauge A₀ ϖ a x = 0 ↔ x ∈ closure ({0} : Set A)) ∧
+      ((∀ x, tateGauge A₀ ϖ a x = 0 ↔ x = 0) ↔ T2Space A) := sorry
+
+/-- Changing the ring of definition, with fixed unit and radius, gives bounded-equivalent gauges. -/
+theorem tateGauge_equiv {A : Type*} [CommRing A] [TopologicalSpace A]
+    [IsTopologicalRing A] (A₀ B₀ : Subring A) (ϖ : Aˣ) (a : ℝ) (ha : 1 < a)
+    (hA : (𝓝 (0 : A)).HasBasis (fun _ : ℕ ↦ True)
+      (fun n ↦ {x | ((ϖ ^ (-(n : ℤ)) : Aˣ) : A) * x ∈ A₀}))
+    (hB : (𝓝 (0 : A)).HasBasis (fun _ : ℕ ↦ True)
+      (fun n ↦ {x | ((ϖ ^ (-(n : ℤ)) : Aˣ) : A) * x ∈ B₀}))
+    (hϖA : (ϖ : A) ∈ A₀) (hϖB : (ϖ : A) ∈ B₀)
+    (hnil : IsTopologicallyNilpotent (ϖ : A)) :
+    ∃ C : ℝ, 0 < C ∧ ∀ x,
+      tateGauge A₀ ϖ a x ≤ C * tateGauge B₀ ϖ a x ∧
+      tateGauge B₀ ϖ a x ≤ C * tateGauge A₀ ϖ a x := sorry
+
+/-- Changing only the inverse radius raises the gauge to the indicated real power. -/
+theorem tateGauge_rpow {A : Type*} [CommRing A] [TopologicalSpace A]
+    [IsTopologicalRing A] (A₀ : Subring A) (ϖ : Aˣ) (a b : ℝ) (ha : 1 < a) (hb : 1 < b)
+    (hϖ : (ϖ : A) ∈ A₀) (hnil : IsTopologicallyNilpotent (ϖ : A))
+    (hbase : (𝓝 (0 : A)).HasBasis (fun _ : ℕ ↦ True)
+      (fun n ↦ {x | ((ϖ ^ (-(n : ℤ)) : Aˣ) : A) * x ∈ A₀})) (x : A) :
+    tateGauge A₀ ϖ b x = (tateGauge A₀ ϖ a x) ^ (Real.log b / Real.log a) := sorry
+
+example (p : ℕ) [Fact p.Prime] (u : ℚ_[p]ˣ) (hu : (u : ℚ_[p]) = p) (x : ℚ_[p]) :
+    tateGauge (PadicInt.subring p) u p x = ‖x‖ := sorry
+
+example (p : ℕ) [Fact p.Prime] (u : ℚ_[p]ˣ) (hu : (u : ℚ_[p]) = (p : ℚ_[p]) ^ 2) :
+    tateGauge (PadicInt.subring p) u p (p : ℚ_[p]) = 1 ∧
+    tateGauge (PadicInt.subring p) u p ((p : ℚ_[p]) ^ 2) = (p : ℝ)⁻¹ ∧
+      tateGauge (PadicInt.subring p) u p ((p : ℚ_[p]) ^ 2) ≠
+        tateGauge (PadicInt.subring p) u p (p : ℚ_[p]) ^ 2 := sorry
+
+example (a : ℝ) (ha : 1 < a) (x : ZMod 1) :
+    tateGauge (⊤ : Subring (ZMod 1)) 1 a x = 0 := sorry
+
+example (p : ℕ) [Fact p.Prime] (A₀ : Subring (ℚ_[p] × ℚ_[p]))
+    (hA₀ : ∀ x, x ∈ A₀ ↔ ‖x.1‖ ≤ 1 ∧ ‖x.2‖ ≤ 1 ∧
+      ‖x.1 - x.2‖ ≤ (p : ℝ) ^ (-2 : ℤ))
+    (u : (ℚ_[p] × ℚ_[p])ˣ) (hu : (u : ℚ_[p] × ℚ_[p]) = ((p : ℚ_[p]), (p : ℚ_[p]) ^ 2))
+    (a : ℝ) (ha : 1 < a) :
+    (u : ℚ_[p] × ℚ_[p]) ∉ A₀ ∧ tateGauge A₀ u a 1 = 1 ∧
+      tateGauge A₀ u a (u : ℚ_[p] × ℚ_[p]) ≤ a⁻¹ ∧
+      tateGauge A₀ u a (1 + (u : ℚ_[p] × ℚ_[p])) = a ^ 2 ∧
+      max (tateGauge A₀ u a 1) (tateGauge A₀ u a (u : ℚ_[p] × ℚ_[p])) <
+        tateGauge A₀ u a (1 + (u : ℚ_[p] × ℚ_[p])) := sorry
+
+/-! ### Layer 2, §2.4.3: strict splitting; §2.6.5: finite coordinates -/
+
+/-- A strict exact Banach sequence with countable-type middle term splits topologically. -/
+theorem exists_continuousLinearEquiv_prod_of_countableType
+    {K M E N : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+    [NormedAddCommGroup M] [NormedSpace K M] [IsUltrametricDist M] [CompleteSpace M]
+    [NormedAddCommGroup E] [NormedSpace K E] [IsUltrametricDist E] [CompleteSpace E]
+    [NormedAddCommGroup N] [NormedSpace K N] [IsUltrametricDist N] [CompleteSpace N]
+    (e : ℕ → E) (he : Dense (Submodule.span K (Set.range e) : Set E))
+    (i : M →L[K] E) (q : E →L[K] N) (hi : Topology.IsClosedEmbedding i)
+    (hq : Function.Surjective q) (hex : LinearMap.range i.toLinearMap = LinearMap.ker q.toLinearMap) :
+    ∃ d : E ≃L[K] M × N, (∀ m, d (i m) = (m, 0)) ∧ ∀ x, (d x).2 = q x := sorry
+
+-- The constant coefficient and the constant series give the Tate-module splitting.
+example {K : Type*} [NontriviallyNormedField K] (f : C₀(ℕ, K)) :
+    ∃ (c : C₀(ℕ, K) →L[K] K) (s : K →L[K] C₀(ℕ, K)),
+      (∀ g, c g = g 0) ∧ (∀ x, s x = single (J := ℕ) 0 x) ∧
+      (∀ x, c (s x) = x) ∧ f = (f - s (c f)) + s (c f) ∧ c (f - s (c f)) = 0 := sorry
+
+-- The two degenerate exact sequences split by the identity, also after scalar extension.
+example {K E : Type*} [NontriviallyNormedField K] [NormedAddCommGroup E] [NormedSpace K E] :
+    ∃ d : E ≃L[K] E, ∀ x, d x = x := sorry
+
+example {K E : Type*} [NontriviallyNormedField K] [NormedAddCommGroup E] [NormedSpace K E] :
+    ∃ s : E →L[K] E, ∀ x, (ContinuousLinearMap.id K E) (s x) = x := sorry
+
+/-- Finite coordinates control the norm on a finite submodule, without assuming freeness. -/
+theorem exists_finset_norm_le {R I : Type*} [NormedCommRing R] [IsUltrametricDist R]
+    [NormOneClass R] [CompleteSpace R] [IsTate R] [IsNoetherianRing R]
+    [TopologicalSpace I] [DiscreteTopology I] (P : Submodule R C₀(I, R)) (hP : P.FG) :
+    ∃ (S : Finset I) (C : ℝ), 0 < C ∧ ∀ f ∈ P, ‖f‖ ≤ C * (S.sup fun i ↦ ‖f i‖₊) := sorry
+
+example {R I : Type*} [NormedCommRing R] [TopologicalSpace I] [DiscreteTopology I]
+    (f : C₀(I, R)) (hf : f ∈ (⊥ : Submodule R C₀(I, R))) :
+    ‖f‖ ≤ 1 * ((∅ : Finset I).sup fun i ↦ ‖f i‖₊) := sorry
+
+example {R I : Type*} [NormedCommRing R] [TopologicalSpace I] [DiscreteTopology I]
+    [DecidableEq I] (i : I) (r : R) :
+    ‖single i r‖ ≤ 1 * (({i} : Finset I).sup fun j ↦ ‖single i r j‖₊) := sorry
+
+example {R I : Type*} [NormedCommRing R] [TopologicalSpace I] [DiscreteTopology I]
+    (S : Finset I) (f : C₀(I, R)) (hf : ∀ i, i ∉ S → f i = 0) :
+    ‖f‖ ≤ 1 * (S.sup fun i ↦ ‖f i‖₊) := sorry
+
+/-! ### Layer 3, §3.4: native measures, bounded coefficients and Frobenius -/
+
+section Measures
+
+variable {p : ℕ} [Fact p.Prime]
+
+/-- The integral scalar action on the rational field is norm-decreasing. -/
+local instance isBoundedSMul_padicInt_padic : IsBoundedSMul ℤ_[p] ℚ_[p] := sorry
+
+/-- The native power series of Mahler moments on the existing measure carrier. -/
+def amiceTransform {R : Type*} [NormedCommRing R] [Algebra ℤ_[p] R]
+    [IsBoundedSMul ℤ_[p] R] (μ : AbstractMeasure ℤ_[p] R R) : PowerSeries R :=
+  PowerSeries.mk fun n ↦ μ (PadicInt.mahlerTerm (1 : R) n)
+
+/-- The Mahler moments determine the dual operator norm. -/
+theorem norm_toCLMEquiv_eq_iSup_coeff {K : Type*} [NontriviallyNormedField K]
+    [IsUltrametricDist K] [CompleteSpace K] [Algebra ℤ_[p] K] [IsBoundedSMul ℤ_[p] K]
+    (μ : AbstractMeasure ℤ_[p] K K) :
+    ‖AbstractMeasure.toCLMEquiv μ‖ = ⨆ n, ‖(amiceTransform μ).coeff n‖ := sorry
+
+/-- Exactly the bounded native coefficient streams are transforms of bounded measures. -/
+theorem mem_range_amiceTransform_iff {K : Type*} [NontriviallyNormedField K]
+    [IsUltrametricDist K] [CompleteSpace K] [Algebra ℤ_[p] K] [IsBoundedSMul ℤ_[p] K]
+    (F : PowerSeries K) :
+    (∃ μ : AbstractMeasure ℤ_[p] K K, amiceTransform μ = F) ↔
+      ∃ C : ℝ, 0 ≤ C ∧ ∀ n, ‖F.coeff n‖ ≤ C := sorry
+
+example : amiceTransform (AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p])) = 1 ∧
+    ‖AbstractMeasure.toCLMEquiv (AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p]))‖ = 1 := sorry
+
+example : amiceTransform ((p : ℚ_[p])⁻¹ • AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p])) =
+      PowerSeries.C (p : ℚ_[p])⁻¹ ∧
+    ‖AbstractMeasure.toCLMEquiv ((p : ℚ_[p])⁻¹ • AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p]))‖ = p := sorry
+
+example : ¬ ∃ μ : AbstractMeasure ℤ_[p] ℚ_[p] ℚ_[p],
+    amiceTransform μ = PowerSeries.mk (fun n ↦ (p : ℚ_[p]) ^ (-(n : ℤ))) := sorry
+
+/-- Integral measures identify with the rational continuous-dual unit ball by integral tests. -/
+theorem existsUnique_integral_iff_norm_le_one (ν : AbstractMeasure ℤ_[p] ℚ_[p] ℚ_[p]) :
+    (∃! μ : AbstractMeasure ℤ_[p] ℤ_[p] ℤ_[p], ∀ f : C(ℤ_[p], ℤ_[p]),
+      ν ((⟨fun x : ℤ_[p] ↦ (x : ℚ_[p]), continuous_subtype_val⟩ : C(ℤ_[p], ℚ_[p])).comp f) =
+        (μ f : ℚ_[p])) ↔ ‖AbstractMeasure.toCLMEquiv ν‖ ≤ 1 := sorry
+
+example : ‖AbstractMeasure.toCLMEquiv (AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p]))‖ ≤ 1 ∧
+    ∀ f : C(ℤ_[p], ℤ_[p]),
+      AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p])
+        ((⟨fun x : ℤ_[p] ↦ (x : ℚ_[p]), continuous_subtype_val⟩ : C(ℤ_[p], ℚ_[p])).comp f) =
+        (AbstractMeasure.dirac ℤ_[p] (0 : ℤ_[p]) f : ℚ_[p]) := sorry
+
+example : ‖AbstractMeasure.toCLMEquiv (0 : AbstractMeasure ℤ_[p] ℚ_[p] ℚ_[p])‖ ≤ 1 ∧
+    ∀ f : C(ℤ_[p], ℤ_[p]),
+      (0 : AbstractMeasure ℤ_[p] ℚ_[p] ℚ_[p])
+        ((⟨fun x : ℤ_[p] ↦ (x : ℚ_[p]), continuous_subtype_val⟩ : C(ℤ_[p], ℚ_[p])).comp f) =
+        ((0 : AbstractMeasure ℤ_[p] ℤ_[p] ℤ_[p]) f : ℚ_[p]) := sorry
+
+example : ¬ ‖AbstractMeasure.toCLMEquiv
+    ((p : ℚ_[p])⁻¹ • AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p]))‖ ≤ 1 ∧
+    ¬ ∃ μ : AbstractMeasure ℤ_[p] ℤ_[p] ℤ_[p], ∀ f : C(ℤ_[p], ℤ_[p]),
+      ((p : ℚ_[p])⁻¹ • AbstractMeasure.dirac ℚ_[p] (0 : ℤ_[p]))
+        ((⟨fun x : ℤ_[p] ↦ (x : ℚ_[p]), continuous_subtype_val⟩ : C(ℤ_[p], ℚ_[p])).comp f) =
+        (μ f : ℚ_[p]) := sorry
+
+/-- Frobenius is pushforward along multiplication by p, with no mass rescaling. -/
+def phiMeasure (R : Type*) [NormedCommRing R] :
+    AbstractMeasure ℤ_[p] R R →ₗ[R] AbstractMeasure ℤ_[p] R R :=
+  AbstractMeasure.map ⟨fun x ↦ (p : ℤ_[p]) * x, continuous_const.mul continuous_id⟩
+
+/-- The continuous characteristic function of the clopen p-multiples. -/
+def pMultiplesIndicator (R : Type*) [NormedCommRing R] : C(ℤ_[p], R) :=
+  ⟨fun x ↦ if PadicInt.toZMod x = 0 then 1 else 0, sorry⟩
+
+/-- Weighting a measure acts by `(weightMeasure g μ)(f) = μ (g * f)` on continuous tests. -/
+def weightMeasure {R : Type*} [NormedCommRing R] (g : C(ℤ_[p], R)) :
+    AbstractMeasure ℤ_[p] R R →ₗ[R] AbstractMeasure ℤ_[p] R R := sorry
+
+/-- The two projector identities determine the left inverse of Frobenius uniquely. -/
+theorem existsUnique_psiMeasure (R : Type*) [NormedCommRing R] :
+    ∃! ψ : AbstractMeasure ℤ_[p] R R →ₗ[R] AbstractMeasure ℤ_[p] R R,
+      (∀ μ, ψ (phiMeasure R μ) = μ) ∧
+        ∀ μ, phiMeasure R (ψ μ) = weightMeasure (pMultiplesIndicator R) μ := sorry
+
+/-- Frobenius is binomial substitution on integral Amice transforms. -/
+theorem amiceTransform_phiMeasure (μ : AbstractMeasure ℤ_[p] ℤ_[p] ℤ_[p]) :
+    amiceTransform (phiMeasure ℤ_[p] μ) =
+      PowerSeries.subst ((1 + PowerSeries.X) ^ p - 1 : PowerSeries ℤ_[p])
+        (amiceTransform μ) := sorry
+
+example : phiMeasure (p := 3) ℤ_[3] 0 = 0 := sorry
+
+example : phiMeasure (p := 3) ℤ_[3] (AbstractMeasure.dirac ℤ_[3] 2) =
+    AbstractMeasure.dirac ℤ_[3] 6 := sorry
+
+example (μ : AbstractMeasure ℤ_[3] ℤ_[3] ℤ_[3]) :
+    phiMeasure ℤ_[3] μ 1 = μ 1 := sorry
+
+example (ψ : AbstractMeasure ℤ_[3] ℤ_[3] ℤ_[3] →ₗ[ℤ_[3]] AbstractMeasure ℤ_[3] ℤ_[3] ℤ_[3])
+    (h₁ : ∀ μ, ψ (phiMeasure ℤ_[3] μ) = μ)
+    (h₂ : ∀ μ, phiMeasure ℤ_[3] (ψ μ) = weightMeasure (pMultiplesIndicator ℤ_[3]) μ) :
+    ψ (AbstractMeasure.dirac ℤ_[3] 0) = AbstractMeasure.dirac ℤ_[3] 0 ∧
+      ψ (AbstractMeasure.dirac ℤ_[3] 6) = AbstractMeasure.dirac ℤ_[3] 2 ∧
+      ψ (AbstractMeasure.dirac ℤ_[3] 1) = 0 := sorry
+
+example : amiceTransform (phiMeasure (p := 3) ℤ_[3] (AbstractMeasure.dirac ℤ_[3] 0)) = 1 := sorry
+
+example : amiceTransform (phiMeasure (p := 3) ℤ_[3] (AbstractMeasure.dirac ℤ_[3] 1)) =
+    (1 + PowerSeries.X) ^ 3 := sorry
+
+example : amiceTransform (phiMeasure (p := 3) ℤ_[3] 0) = 0 := sorry
+
+end Measures
+
+/-! ### Layer 4, §4.7.2: coefficient forms of the quantitative distribution estimates -/
+
+section DistributionEstimates
+
+variable {p : ℕ} [Fact p.Prime] {K : Type*} [NontriviallyNormedField K]
+    [NormedAlgebra ℚ_[p] K] [IsUltrametricDist K] [CompleteSpace K]
+
+/-- The level-h dual norm computed from Mahler moments in the Amice basis. -/
+def amiceDualNorm (h : ℕ) (F : PowerSeries K) : ℝ :=
+  ⨆ n, ‖F.coeff n‖ * ‖((n / p ^ h).factorial : ℚ_[p])‖
+
+/-- The coefficient Gauss norm on the disc with valuation radius 1/((p-1)p^h). -/
+def amiceDiscNorm (h : ℕ) (F : PowerSeries K) : ℝ :=
+  ⨆ n : ℕ, ‖F.coeff n‖ * (p : ℝ) ^ (-((n : ℝ) / (((p : ℝ) - 1) * (p : ℝ) ^ h)))
+
+/-- The Gauss norm at the level-h radius is bounded by the level-h Amice dual norm. -/
+theorem amiceDiscNorm_le_amiceDualNorm (h : ℕ) (F : PowerSeries K)
+    (hF : ∀ ρ : ℝ, 0 < ρ → ρ < 1 → PowerSeries.IsRestricted ρ F) :
+    amiceDiscNorm (p := p) h F ≤ amiceDualNorm (p := p) h F := sorry
+
+/-- The Amice dual norm is at most p times the Gauss norm at the next radius. -/
+theorem amiceDualNorm_le_amiceDiscNorm (h : ℕ) (F : PowerSeries K)
+    (hF : ∀ ρ : ℝ, 0 < ρ → ρ < 1 → PowerSeries.IsRestricted ρ F) :
+    amiceDualNorm (p := p) h F ≤ p * amiceDiscNorm (p := p) (h + 1) F := sorry
+
+example (h : ℕ) : amiceDiscNorm (p := p) h (0 : PowerSeries K) = 0 ∧
+    amiceDualNorm (p := p) h (0 : PowerSeries K) = 0 := sorry
+
+example (h : ℕ) : amiceDiscNorm (p := p) h (1 : PowerSeries K) = 1 ∧
+    amiceDualNorm (p := p) h (1 : PowerSeries K) = 1 := sorry
+
+-- The derivative distribution gives a logarithm, whose coefficients are unbounded.
+example (h : ℕ) :
+    let F : PowerSeries ℚ_[p] := PowerSeries.mk fun n ↦
+      if n = 0 then 0 else (-1 : ℚ_[p]) ^ (n + 1) / n
+    (∀ ρ : ℝ, 0 < ρ → ρ < 1 → PowerSeries.IsRestricted ρ F) ∧
+      (¬ ∃ C : ℝ, ∀ n, ‖F.coeff n‖ ≤ C) ∧
+      amiceDiscNorm (p := p) h F ≤ amiceDualNorm (p := p) h F ∧
+      amiceDualNorm (p := p) h F ≤ p * amiceDiscNorm (p := p) (h + 1) F := sorry
+
+end DistributionEstimates
+
+/-! ### Layer 5, §5.3.3: the character part of the adic and normed universal properties -/
+
+section UniversalCharacter
+
+variable {p : ℕ} [Fact p.Prime]
+
+/-- The p-adic topology of the integral coefficient ring is linear. -/
+local instance isLinearTopology_padicInt : IsLinearTopology ℤ_[p] ℤ_[p] := sorry
+
+/-- Adic specialisation of the principal universal character, with a prescribed torsion factor. -/
+theorem exists_character_of_hasEval {S : Type*} [CommRing S] [UniformSpace S]
+    [IsUniformAddGroup S] [IsTopologicalRing S] [IsLinearTopology S S] [CompleteSpace S]
+    [T2Space S] [Algebra ℤ_[p] S] [ContinuousSMul ℤ_[p] S]
+    (e : ℤ_[p]ˣ ≃ₜ* ((ZMod (q p))ˣ × Multiplicative ℤ_[p]))
+    (he : e (gamma p) = (1, Multiplicative.ofAdd 1))
+    (η : (ZMod (q p))ˣ →* Sˣ) {z : S} (hz : PowerSeries.HasEval z) :
+    ∃! κ : WeightSpace p S, TCoord κ = z ∧ ∀ x,
+      (κ x : S) = (η (e x).1 : S) * PowerSeries.aeval (R := ℤ_[p]) hz
+        (PowerSeries.binomialSeries ℤ_[p] (Multiplicative.toAdd (e x).2)) := sorry
+
+/-- A weight with nilpotent principal coordinate is the adic evaluation of its binomial character. -/
+theorem eq_aeval_binomialSeries {S : Type*} [CommRing S] [UniformSpace S]
+    [IsUniformAddGroup S] [IsTopologicalRing S] [IsLinearTopology S S] [CompleteSpace S]
+    [T2Space S] [Algebra ℤ_[p] S] [ContinuousSMul ℤ_[p] S]
+    (e : ℤ_[p]ˣ ≃ₜ* ((ZMod (q p))ˣ × Multiplicative ℤ_[p]))
+    (he : e (gamma p) = (1, Multiplicative.ofAdd 1)) (κ : WeightSpace p S)
+    (hz : PowerSeries.HasEval (TCoord κ)) (x : ℤ_[p]ˣ) :
+    (κ x : S) = (κ (e.symm ((e x).1, 1)) : S) *
+      PowerSeries.aeval (R := ℤ_[p]) hz
+        (PowerSeries.binomialSeries ℤ_[p] (Multiplicative.toAdd (e x).2)) := sorry
+
+/-- Small-norm specialisation gives a unique weight, with its convergent binomial sum formula. -/
+theorem existsUnique_character_of_norm_lt_one {A : Type*} [NormedCommRing A]
+    [NormedAlgebra ℚ_[p] A] [IsUltrametricDist A] [CompleteSpace A]
+    (e : ℤ_[p]ˣ ≃ₜ* ((ZMod (q p))ˣ × Multiplicative ℤ_[p]))
+    (he : e (gamma p) = (1, Multiplicative.ofAdd 1))
+    (η : (ZMod (q p))ˣ →* Aˣ) {z : A} (hz : ‖z‖ < 1) :
+    ∃! κ : WeightSpace p A, TCoord κ = z ∧ ∀ x,
+      HasSum (fun n : ℕ ↦ (η (e x).1 : A) *
+        (((Ring.choose (Multiplicative.toAdd (e x).2) n : ℤ_[p]) : ℚ_[p]) • z ^ n))
+        (κ x : A) := sorry
+
+example (n : ℕ) : PowerSeries.binomialSeries ℤ_[p] (n : ℤ_[p]) =
+    (1 + PowerSeries.X) ^ n ∧
+    (PowerSeries.binomialSeries ℤ_[p] (n : ℤ_[p])).coeff 1 = n := sorry
+
+example : PowerSeries.binomialSeries ℤ_[p] (-1 : ℤ_[p]) =
+    PowerSeries.mk (fun n ↦ (-1) ^ n) ∧
+    PowerSeries.binomialSeries ℤ_[p] (-1 : ℤ_[p]) ≠ 1 - PowerSeries.X := sorry
+
+example (e : ℤ_[p]ˣ ≃ₜ* ((ZMod (q p))ˣ × Multiplicative ℤ_[p]))
+    (he : e (gamma p) = (1, Multiplicative.ofAdd 1)) :
+    (∃ κ : WeightSpace p (TrivSqZeroExt ℚ_[p] ℚ_[p]), ∀ x,
+      (κ x : TrivSqZeroExt ℚ_[p] ℚ_[p]) =
+        1 + TrivSqZeroExt.inr ((Multiplicative.toAdd (e x).2 : ℤ_[p]) : ℚ_[p])) ∧
+      max ‖(TrivSqZeroExt.inr 1 : TrivSqZeroExt ℚ_[p] ℚ_[p]).fst‖
+        ‖(TrivSqZeroExt.inr 1 : TrivSqZeroExt ℚ_[p] ℚ_[p]).snd‖ = 1 := sorry
+
+example : TCoord (1 : WeightSpace p ℤ_[p]) = 0 := sorry
+
+-- The dual-number evaluation only uses the constant and linear coefficients.
+example : ∃ f : PowerSeries ℤ_[p] →ₐ[ℤ_[p]] TrivSqZeroExt ℚ_[p] ℚ_[p],
+    Continuous f ∧ ∀ F, f F = TrivSqZeroExt.inl (F.coeff 0 : ℚ_[p]) +
+      TrivSqZeroExt.inr (F.coeff 1 : ℚ_[p]) := sorry
+
+example (F : PowerSeries ℤ_[p]) :
+    PowerSeries.aeval (R := ℤ_[p]) (PowerSeries.HasEval.zero : PowerSeries.HasEval (0 : ℤ_[p])) F =
+      F.coeff 0 := sorry
+
+example (n : ℕ) : ∃ hp : PowerSeries.HasEval (p : ℤ_[p]),
+    PowerSeries.aeval (R := ℤ_[p]) hp (PowerSeries.binomialSeries ℤ_[p] (n : ℤ_[p])) =
+      (1 + (p : ℤ_[p])) ^ n := sorry
+
+example : ¬ PowerSeries.HasEval ((p : ℚ_[p]) - 1) ∧
+    ¬ ∃ f : PowerSeries ℤ_[p] →ₐ[ℤ_[p]] ℚ_[p], Continuous f ∧ f PowerSeries.X = (p : ℚ_[p]) - 1 :=
+  sorry
+
+example : ‖(p : ℚ_[p])‖ < 1 ∧ ¬ IsLinearTopology ℚ_[p] ℚ_[p] ∧
+    ∃ f : PowerSeries ℤ_[p] →ₐ[ℤ_[p]] ℚ_[p], Continuous f ∧ f PowerSeries.X = p := sorry
+
+end UniversalCharacter
+
+/-! ### Layer 5, §5.3.5: integral measures as bounded functions on the existing weight space -/
+
+section MeasureFunctions
+
+variable {p : ℕ} [Fact p.Prime]
+
+/-- Extend coefficients to `ℂ_p`, characterised by agreement on integral continuous tests:
+the value on the coefficient image of `f` is the image of `μ f`. -/
+def extendIntegralMeasure (μ : AbstractMeasure ℤ_[p]ˣ ℤ_[p] ℤ_[p]) :
+    AbstractMeasure ℤ_[p]ˣ ℂ_[p] ℂ_[p] := sorry
+
+/-- A weight, viewed as a continuous field-valued test function. -/
+def weightTest {A : Type*} [NormedCommRing A] (κ : WeightSpace p A) : C(ℤ_[p]ˣ, A) :=
+  ⟨fun x ↦ (κ x : A), Units.continuous_val.comp κ.continuous⟩
+
+/-- The specialisation pairing as a function of the weight. -/
+def measureFun (μ : AbstractMeasure ℤ_[p]ˣ ℤ_[p] ℤ_[p]) (κ : WeightSpace p ℂ_[p]) : ℂ_[p] :=
+  extendIntegralMeasure μ (weightTest κ)
+
+/-- Integral coefficient extension has norm at most one, bounding every character value. -/
+theorem measureFun_norm_le (μ : AbstractMeasure ℤ_[p]ˣ ℤ_[p] ℤ_[p])
+    (κ : WeightSpace p ℂ_[p]) :
+    ‖measureFun μ κ‖ ≤ ‖AbstractMeasure.toCLMEquiv (extendIntegralMeasure μ)‖ ∧
+      ‖AbstractMeasure.toCLMEquiv (extendIntegralMeasure μ)‖ ≤ 1 ∧
+      (⨆ κ : WeightSpace p ℂ_[p], ‖measureFun μ κ‖) ≤ 1 := sorry
+
+/-- Values on all weights distinguish integral measures. -/
+theorem measureFun_injective :
+    Function.Injective (measureFun (p := p)) := sorry
+
+example (a b : ℤ_[p]ˣ) (k : ℤ) (κ : WeightSpace p ℂ_[p])
+    (hκ : ∀ x, (κ x : ℂ_[p]) = (((x : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) ^ k) :
+    measureFun (AbstractMeasure.dirac ℤ_[p] a) κ = (((a : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) ^ k ∧
+      measureFun (AbstractMeasure.dirac ℤ_[p] 1) κ = 1 ∧
+      measureFun (AbstractMeasure.map
+        (⟨fun x : ℤ_[p]ˣ × ℤ_[p]ˣ ↦ x.1 * x.2, continuous_fst.mul continuous_snd⟩)
+        (AbstractMeasure.prodMk (AbstractMeasure.dirac ℤ_[p] a) (AbstractMeasure.dirac ℤ_[p] b))) κ =
+        ((((a * b : ℤ_[p]ˣ) : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) ^ k := sorry
+
+example (a b : ℤ_[p]ˣ) (κ : WeightSpace p ℂ_[p])
+    (hκ : ∀ x, (κ x : ℂ_[p]) = (((x : ℤ_[p]) : ℚ_[p]) : ℂ_[p])) :
+    measureFun (AbstractMeasure.dirac ℤ_[p] a + AbstractMeasure.dirac ℤ_[p] b) κ =
+      (((a : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) + (((b : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) := sorry
+
+example (a b : ℤ_[p]ˣ) (hab : a ≠ b) (κ : WeightSpace p ℂ_[p])
+    (hκ : ∀ x, (κ x : ℂ_[p]) = (((x : ℤ_[p]) : ℚ_[p]) : ℂ_[p])) :
+    measureFun (AbstractMeasure.dirac ℤ_[p] a - AbstractMeasure.dirac ℤ_[p] b) 1 = 0 ∧
+      measureFun (AbstractMeasure.dirac ℤ_[p] a - AbstractMeasure.dirac ℤ_[p] b) κ =
+        (((a : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) - (((b : ℤ_[p]) : ℚ_[p]) : ℂ_[p]) ∧
+      measureFun (AbstractMeasure.dirac ℤ_[p] a - AbstractMeasure.dirac ℤ_[p] b) κ ≠ 0 := sorry
+
+example (a : ℤ_[p]ˣ) (κ : WeightSpace p ℂ_[p]) :
+    ‖AbstractMeasure.toCLMEquiv (extendIntegralMeasure (AbstractMeasure.dirac ℤ_[p] a))‖ = 1 ∧
+      ‖measureFun (AbstractMeasure.dirac ℤ_[p] a) κ‖ = 1 := sorry
+
+end MeasureFunctions
+
+end
+
+end TauCetiRoadmap.PadicFunctionalAnalysis

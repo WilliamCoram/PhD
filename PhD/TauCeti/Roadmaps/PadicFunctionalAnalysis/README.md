@@ -1296,6 +1296,203 @@ the local-fields-and-ramification roadmap for §5.1.1 at odd `p`.
 
 ---
 
+## Targets requested by the Tau Ceti PadicMeasuresIwasawaAlgebras, LocallyAnalyticDistributions and AdicSpaces roadmaps
+
+PadicMeasuresIwasawaAlgebras (TauCetiProject/TauCetiRoadmap#780), LocallyAnalyticDistributions
+(TauCetiProject/TauCetiRoadmap#854), AdicSpacesPartII (TauCetiProject/TauCetiRoadmap#817) and
+AdicSpacesPartIII (TauCetiProject/TauCetiRoadmap#813) will import these targets from this roadmap.
+All existing text and declarations are retained. Layers 0–2 keep the Banach–Tate ring generality;
+#854 specialises to nonzero commutative Noetherian Banach algebras over a complete ultrametric field.
+Its input/output indexing is transposed relative to `matrixCoeff`; finite-submodule approximation
+uses closedness here, supplied by Noetherianity in #854. The Tate-ring bridge allows a seminorm
+before Hausdorffness. Layers 3–5 use `PadicInt`, the existing disc model and `WeightSpace`, with
+`q = 4` at `p = 2`, `γ = exp q`, and `T = [γ] − 1` in the completed group algebra `IwasawaAlgebra p`.
+Valuations normalised by `v_p(p) = 1` are translated using `‖p‖ = p⁻¹`; #854's field-valued
+analytic statements specialise this roadmap's module-valued ones. Adic and normed character
+specialisations are separate, since a Banach algebra need not have a linear topology.
+
+### Layer 0
+
+**§0.4.6 — `tateGauge`, `exists_tateSeminorm`, `tateGauge_eq_zero_iff`, `tateGauge_equiv`, `tateGauge_rpow`.**
+For a topological commutative Tate ring A, a ring of definition A₀, a topologically nilpotent unit
+ϖ belonging to A₀, and a real a > 1, use the gauge of §0.4.6. It is an ultrametric ring seminorm,
+with kernel the closure of zero, and induces the given topology; it separates points exactly when
+A is Hausdorff. With a fixed ϖ and a, changing A₀ gives bounded-equivalent gauges. With A₀ and ϖ
+fixed, replacing a by b > 1 raises the gauge to the power log b / log a. The topology is canonical;
+the numerical gauge depends on all three choices. In the signatures a ring of definition is
+specified by the neighbourhood basis ϖⁿA₀, so no Huber-ring dependency is needed.
+Source: Kedlaya–Liu, Relative p-adic Hodge theory I, §2.4, Remark 2.4.4, p. 39;
+Hansen–Kedlaya, §2, Remark 2.11, p. 5. Consumed by Tau Ceti AdicSpacesPartII §R0.4 (TauCetiRoadmap#817).
+
+Checks: (1) A = ℚ_p, A₀ = ℤ_p, ϖ = p, a = p gives the p-adic norm.
+(2) With ϖ = p² and a = p, the values at p and p² are 1 and p⁻¹, so the gauge is not multiplicative.
+(3) The zero ring gives the zero gauge. (4) In ℚ_p × ℚ_p, take
+A₀ = {(x,y) ∈ ℤ_p² | x − y ∈ p²ℤ_p} and ϖ = (p,p²), which is outside A₀:
+the gauge at 1 is 1, at ϖ is at most a⁻¹, and at 1 + ϖ is a²; the ultrametric inequality fails.
+
+### Layer 1
+
+§1.4.1 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); the consumer's Noetherian K-Banach algebra is a special case of the Noetherian Banach–Tate base here.
+
+### Layer 2
+
+§2.1.1, §2.1.3 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); the coefficient action and bounded-family extension retain arbitrary discrete I and Banach–Tate scalars.
+
+§2.2.3 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); its `PotentiallyONable` is this roadmap's `IsPotentiallyONable`, at the specialised base.
+
+§2.2.4 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854); the lifting characterisation and finite projectivity retain the Banach–Tate generality.
+
+§2.4.1–§2.4.2 — Consumed by Tau Ceti AdicSpacesPartII §R0 (TauCetiRoadmap#817); both use a complete nontrivially normed ultrametric field, with no discreteness assumption.
+
+**§2.4.3 — `exists_continuousLinearEquiv_prod_of_countableType`.**
+Every strict exact sequence 0 → M → E → N → 0 of K-Banach spaces of countable type splits
+continuously and K-linearly. More precisely, there is E ≃L[K] M × N identifying the injection
+with m ↦ (m,0) and the surjection with the second projection. Countable type is expressed in the
+signature by a sequence whose linear span is dense in E; its closed subspaces and quotients are
+of countable type by §2.4.3. For every complete isometric extension K′/K, completed scalar extension
+K′ ⊗̂_K (−) preserves strict exactness of these sequences: extend the splitting and its inverse.
+Source: Conrad, Irreducible components of rigid spaces, proof of Lemma 1.1.5, p. 7, citing BGR
+2.7.1/4. Consumed by Tau Ceti AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813).
+
+Checks: (1) For E = K⟨T⟩ and M = T K⟨T⟩, the constant coefficient gives the quotient E → K and
+constant series give a section. (2) The sequence 0 → E → E → 0 splits by the identity.
+(3) The sequence 0 → 0 → E → E → 0 splits by the identity. Each splitting remains a splitting
+after completed extension of K; the first becomes K′⟨T⟩ → K′.
+
+§2.6.1 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); its input index comes first, whereas `matrixCoeff u i j` uses output i and input j.
+
+§2.6.3 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); coordinate truncation retains the discrete `C₀(I,R)` carrier and Banach–Tate generality.
+
+§2.6.4 — Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); closedness is the hypothesis here, and the consumer's Noetherian base supplies it through §2.6.5.
+
+**§2.6.5 — `exists_finset_norm_le`.**
+For a finitely generated submodule P of `C₀(I,R)` over a commutative Noetherian Banach–Tate ring,
+there are a finite S ⊆ I and C > 0 such that `‖f‖ ≤ C max_{i∈S} ‖f i‖` for every f ∈ P.
+Thus the injective finite coordinate restriction of §2.6.5 is a homeomorphism onto its image;
+P need not be free. Source: Buzzard, Eigenvarieties, Lemma 2.3(a)–(b), pp. 10–11.
+Consumed by Tau Ceti LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854).
+
+Checks: (1) For P = 0, S = ∅ and C = 1 work. (2) For P spanned by `single i 1`, S = {i}
+and C = 1 work. (3) For P supported on a finite S, C = 1 works.
+
+### Layer 3
+
+**§3.4.1, §3.4.4 — `amiceTransform`, `norm_toCLMEquiv_eq_iSup_coeff`, `mem_range_amiceTransform_iff`.**
+Use the measure carrier `AbstractMeasure ℤ_[p] R R` of §3.4, with coefficient n equal to the value
+on `PadicInt.mahlerTerm (1 : R) n`. The supporting instance
+`isBoundedSMul_padicInt_padic` supplies the integral scalar bound in the rational examples.
+For K a complete nontrivially normed ultrametric field with a
+bounded ℤ_p-algebra action, the operator norm of `AbstractMeasure.toCLMEquiv μ` equals
+`sup_n ‖coeff n (amiceTransform μ)‖`. A native series F lies in the range exactly when its
+coefficients are bounded by some C ≥ 0. Source: Rodrigues Jacinto–Williams (RJW),
+Definitions 3.5, 3.8, 3.23, Theorem 3.21 and proof of Theorem 3.25, Remark 3.28(1),(3), pp. 119,
+123–126. Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §2.5 (TauCetiRoadmap#780).
+
+Checks: (1) Over ℚ_p, 1 is the transform of δ₀ and its dual norm is 1.
+(2) The constant p⁻¹ is the transform of p⁻¹δ₀ and its dual norm is p.
+(3) The series with coefficient p⁻ⁿ is unbounded and outside the range.
+
+**§3.4.4 — `existsUnique_integral_iff_norm_le_one`.**
+An ℚ_p-valued measure ν is the extension of a unique ℤ_p-valued measure if and only if its
+continuous-dual operator norm is at most 1. Specify extension by agreement on integral continuous
+test functions after their inclusion into ℚ_p; this identifies the integral carrier with the
+rational dual unit ball without installing a field-style operator norm on integral measures.
+Source: RJW, Definitions 3.5, 3.8, 3.23, Theorem 3.21 and proof of Theorem 3.25,
+Remark 3.28(1),(3), pp. 119, 123–126.
+Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §2.5 (TauCetiRoadmap#780).
+
+Checks: (1) δ₀ is integral and has rational norm 1. (2) The zero measure is integral.
+(3) p⁻¹δ₀ is outside the rational unit ball and has no integral preimage.
+
+**§3.4.5 — `phiMeasure`, `pMultiplesIndicator`, `weightMeasure`, `existsUnique_psiMeasure`, `amiceTransform_phiMeasure`.**
+For a normed commutative R, φ is the R-linear pushforward of measures along x ↦ px.
+Let χ be the characteristic function of pℤ_p and let `weightMeasure χ μ` act on f by μ(χf).
+There is a unique R-linear ψ with ψφ = id and φψ = weightMeasure χ.
+For integral measures, `amiceTransform (φμ) = PowerSeries.subst ((1 + X)^p − 1) (amiceTransform μ)`.
+These operations use the same `PadicInt` and measure carriers as §3.4; ψ has no factor p⁻¹.
+Source: RJW, §3.5.5, p. 128, equations (3-7)–(3-8).
+Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §2.2, §2.11 (TauCetiRoadmap#780).
+
+Checks over ℤ₃: (1) φ0 = 0. (2) φδ₂ = δ₆. (3) φμ(1) = μ(1).
+(4) ψδ₀ = δ₀. (5) ψδ₆ = δ₂. (6) ψδ₁ = 0.
+For the transform identity: (7) δ₀ gives 1. (8) δ₁ gives (1 + X)^3.
+(9) The zero measure gives the zero series.
+
+### Layer 4
+
+§4.3.1–§4.3.3 — Consumed by Tau Ceti LocallyAnalyticDistributions §0.1 (TauCetiRoadmap#854); the consumer's field L is a special case of the Banach module E in the disc model here.
+
+§4.4.2–§4.4.3 — Consumed by Tau Ceti LocallyAnalyticDistributions §0.1 (TauCetiRoadmap#854); the Amice basis and Mahler criterion here retain module-valued coefficients, specialising to L.
+
+§4.7.1 — Consumed by Tau Ceti LocallyAnalyticDistributions §0.1 (TauCetiRoadmap#854).
+
+**§4.7.2 — `amiceDualNorm`, `amiceDiscNorm`, `amiceDiscNorm_le_amiceDualNorm`, `amiceDualNorm_le_amiceDiscNorm`.**
+For F = amiceTransform μ = ∑ bₙTⁿ and u_h = 1/((p − 1)pʰ), write
+S_h(F) = sup_n ‖bₙ‖ p^{−n u_h} and D_h(F) = sup_n ‖bₙ‖ ‖⌊n/pʰ⌋!‖.
+The latter is the norm of μ on `LocallyAnalytic h K` in the Amice basis. Prove
+`S_h(F) ≤ D_h(F) ≤ p S_{h+1}(F)`. Equivalently, for valuations,
+`v_{B(0,u_h)}(F) ≥ v_{LA_h}(μ) ≥ v_{B(0,u_{h+1})}(F) − 1`.
+In the norm formula the factorial multiplies the Mahler moment because the Amice basis is
+`⌊n/pʰ⌋! · mahler n`. State the coefficient inequalities over every complete ultrametric
+normed ℚ_p-field, using native series restricted at every positive radius below 1.
+Source: Colmez, Lemme II.2.1 and Théorème II.2.2, p. 30; RJW,
+Theorem 3.43 and (3.12), p. 25 (arXiv:2309.15692v2).
+Consumed by Tau Ceti LocallyAnalyticDistributions §1.1 (TauCetiRoadmap#854).
+
+Checks: (1) The zero distribution has S_h = D_h = 0. (2) δ₀ has S_h = D_h = 1.
+(3) The derivative at 0 has transform log(1 + T), coefficient (−1)^{n+1}/n for n ≥ 1:
+it satisfies the inequalities at every h while its coefficients are unbounded.
+
+§4.7.3 — Consumed by Tau Ceti LocallyAnalyticDistributions §1.4 (TauCetiRoadmap#854); the Dirac transform and convolution identity are on ℤ_p, with additive convolution.
+
+### Layer 5
+
+§5.1.1, §5.2.1 — Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §3a.1 (TauCetiRoadmap#780); `q = 4` already gives ℤ₂ˣ = {±1} × (1 + 4ℤ₂), and `WeightSpace` retains the more general ultrametric ℤ_p-algebra coefficients. Its two character factors at p = 2 do not split the integral Iwasawa algebra into two rings; §5.3.2 keeps ℤ₂[C₂]⟦T⟧ local.
+
+§5.2.2 — Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §3a.1 (TauCetiRoadmap#780); the consumer takes K = ℂ_p; this roadmap gives the field-valued parametrisation.
+
+**§5.3.1, §5.3.3 — `exists_character_of_hasEval`, `eq_aeval_binomialSeries`, `existsUnique_character_of_norm_lt_one`.**
+Keep Λ = IwasawaAlgebra p as the completed group algebra of ℤ_pˣ. In its principal coordinate,
+[γ^s] is the integral binomial series (1 + T)^s and T = [γ] − 1. For a complete Hausdorff
+linearly topologised commutative ℤ_p-algebra S with continuous scalar action (the supporting
+`isLinearTopology_padicInt` supplies the integral example), a character
+η : Δ → Sˣ and z with `PowerSeries.HasEval z` specify a unique continuous ℤ_p-algebra map Λ → S,
+by δ ↦ η(δ) and F(T) ↦ `PowerSeries.aeval z F`. Its composite with the universal character is
+κ(x) = η(x̄) · aeval_z((1 + T)^{ℓ⟨x⟩}), a point of `WeightSpace p S`; conversely a weight with
+κγ − 1 topologically nilpotent has this formula, with η its torsion restriction.
+For a complete ultrametric normed commutative ℚ_p-algebra A and ‖z‖ < 1, use the convergent sum
+∑ coeff_n(F) zⁿ instead: it specifies the unique continuous ℤ_p-algebra map Λ → A and weight
+with the prescribed torsion restriction and TCoord z. The small-norm assertion is restricted to
+that subfamily; general weights use topological nilpotence as in §5.2.2. The Lean character
+signatures use the splitting ℤ_pˣ ≃ Δ × ℤ_p normalised to send γ to (1,1).
+Source: RJW, Proposition 3.16, pp. 121–122, and Theorem 3.25, p. 124.
+Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §3a.1 (TauCetiRoadmap#780).
+
+Checks: (1) The principal universal character at n is (1 + T)^n, with linear coefficient n;
+at −1 its series has coefficients (−1)^k and differs from 1 − T.
+(2) In ℚ_p[ε]/(ε²), the principal character s ↦ 1 + sε has coefficient-maximum norm
+‖κ(γ) − 1‖ = 1; evaluation is F ↦ coeff₀(F) + coeff₁(F)ε, outside the small-norm subfamily.
+(3) The trivial character has z = 0 and evaluation is augmentation; z = p into ℤ_p sends
+[γ^n] to (1 + p)^n. (4) z = p − 1 admits no continuous evaluation into ℚ_p, since its powers
+fail to tend to zero. (5) z = p gives a normed evaluation into ℚ_p, whose topology is not linear.
+
+§5.3.4, second sentence, §3.4.4 — Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §4.5 (TauCetiRoadmap#780); transporting the principal factor along s ↦ γ^s makes both coordinates send T to [γ] − 1 = δ₁ − δ₀, so the completed-group-algebra comparison equals Amice.
+
+**§5.3.5 — `extendIntegralMeasure`, `weightTest`, `measureFun`, `measureFun_norm_le`, `measureFun_injective`.**
+For μ ∈ AbstractMeasure ℤ_pˣ ℤ_p ℤ_p, extend coefficients to ℂ_p and define
+F_μ(κ) as its value on the continuous test κ, for κ : WeightSpace p ℂ_p.
+This is also the specialisation pairing ⟨λ,κ⟩ under §5.3.4. Prove
+`‖F_μ(κ)‖ ≤ ‖AbstractMeasure.toCLMEquiv (extendIntegralMeasure μ)‖ ≤ 1`, and that μ ↦ F_μ
+is injective. The value bound implies the supremum bound ‖F_μ‖ ≤ 1; characters distinguish
+measures. This uses integral measures, and the norm is taken on their field-valued extension.
+Source: RJW, Remark 3.47, p. 135, and Remark 8.3(2), pp. 160–161.
+Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §3a.1 (TauCetiRoadmap#780).
+
+Checks: (1) For κ(x) = x^k, F_{δ_a}(κ) = a^k, F_{δ₁} = 1,
+and F_{δ_a ⋆ δ_b}(κ) = (ab)^k, whereas F_{δ_a+δ_b}(x ↦ x) = a + b.
+(2) For a ≠ b, F_{δ_a−δ_b} vanishes at the trivial weight and has nonzero value a − b at
+κ(x) = x. (3) Every δ_a attains the bound: its extended dual norm and ‖κ(a)‖ are both 1.
+
 ## Dependency graph
 
 ```text
