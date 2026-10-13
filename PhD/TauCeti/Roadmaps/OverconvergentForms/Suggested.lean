@@ -387,3 +387,50 @@ end Theta
 end
 
 end TauCetiRoadmap.OverconvergentForms
+
+/-! ## Targets requested by the Tau Ceti AdelicAlgebraicGroups roadmap -/
+
+namespace TauCetiRoadmap.OverconvergentForms.DefiniteQuaternion
+
+open IsDedekindDomain
+open scoped TensorProduct Quaternion
+
+attribute [local instance] Algebra.TensorProduct.rightAlgebra
+
+/-- The stabiliser `x⁻¹ D^× x ∩ U` of a compact level in a totally definite quaternion
+algebra is finite modulo its central `F^×`. It is finite itself when `[F : ℚ] = 1
+(Milne §3, Theorem 3.3 and Example 3.4; Buzzard §10, p. 73).
+Total definiteness is stated through the real base changes of the existing carrier `D`. -/
+theorem finite_stab
+    (F : Type*) [Field F] [NumberField F] [NumberField.IsTotallyReal F]
+    (D : Type*) [Ring D] [Algebra F D] [IsDomain D] [FiniteDimensional F D]
+    [Algebra.IsCentral F D] [IsSimpleRing D] (hdim : Module.finrank F D = 4)
+    (hdef : ∀ σ : F →+* ℝ,
+      letI : Algebra F ℝ := σ.toAlgebra
+      Nonempty ((D ⊗[F] ℝ) ≃ₐ[ℝ] ℍ[ℝ]))
+    [TopologicalSpace (D ⊗[F] FiniteAdeleRing (NumberField.RingOfIntegers F) F)]
+    [IsModuleTopology (FiniteAdeleRing (NumberField.RingOfIntegers F) F)
+      (D ⊗[F] FiniteAdeleRing (NumberField.RingOfIntegers F) F)]
+    (U : Subgroup (Dfx F D)) (hU : IsCompact (U : Set (Dfx F D))) (x : Dfx F D) :
+    let Γ := U ⊓ (globalUnits F D).comap (MulAut.conj x).toMonoidHom
+    let Z := ((unitsIncl F D).comp
+      (Units.map (algebraMap F D).toMonoidHom)).range.subgroupOf Γ
+    Finite (Γ ⧸ Z) ∧ (Module.finrank ℚ F = 1 → Finite Γ) :=
+  sorry
+
+/-- `hamilton_negative_norm`: over a totally real number field, Hamilton's reduced
+norm cannot be `−1`; at a real embedding it is a sum of four squares. -/
+example (F : Type*) [Field F] [NumberField F] [NumberField.IsTotallyReal F] :
+    ¬ ∃ q : ℍ[F], Quaternion.normSq q = -1 :=
+  sorry
+
+/-- `stab_top`: in the student's convention the full-level stabiliser is the
+conjugate of all global units. Compactness is essential in `finite_stab`. -/
+example (F : Type*) [Field F] [NumberField F] (D : Type*) [Ring D] [Algebra F D]
+    (x : Dfx F D) :
+    (⊤ : Subgroup (Dfx F D)) ⊓
+        (globalUnits F D).comap (MulAut.conj x).toMonoidHom =
+      (globalUnits F D).comap (MulAut.conj x).toMonoidHom :=
+  sorry
+
+end TauCetiRoadmap.OverconvergentForms.DefiniteQuaternion
