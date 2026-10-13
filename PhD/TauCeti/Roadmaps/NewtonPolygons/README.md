@@ -1061,6 +1061,37 @@ roadmap for §6.1.2.
 
 ---
 
+## Targets requested by the Tau Ceti PadicMeasuresIwasawaAlgebras roadmap
+
+PadicMeasuresIwasawaAlgebras §4.3 (TauCetiProject/TauCetiRoadmap#780) will import
+these targets from this roadmap. The existing text and declarations are unchanged.
+The consumer uses an abstract complete DVR `O`; here the coefficient ring is the
+valuation ring `𝒪` of the complete discretely valued field `K` of Layer 6.
+Preparation uses adic completeness at its maximal ideal, with no finite-residue-field
+hypothesis. Distinguishedness is `Polynomial.IsDistinguishedAt` at that ideal;
+its comparison with normed distinguishedness is §6.3.1.
+
+### Layer 6 — §6.3.3 The adic and normed theories agree
+
+**exists_pow_mul_distinguished_mul_unit.** For a uniformiser `π : 𝒪` and a nonzero
+`f : PowerSeries 𝒪`, prove that there are `μ : ℕ`, a distinguished polynomial
+`P : Polynomial 𝒪`, and `u : (PowerSeries 𝒪)ˣ` such that
+`f = PowerSeries.C (π ^ μ) * u * (P : PowerSeries 𝒪)`.
+Use the valuation ring `𝒪[K]` of `NormedField.valuation`, assumed to be a DVR and
+adic-complete at its maximal ideal; `Irreducible π` specifies the uniformiser.
+As in §6.3.3, `μ` is the minimum coefficient valuation and `P.natDegree` is the
+smallest index attaining it, rather than the right endpoint of the horizontal face.
+Source: NSW (5.3.1)–(5.3.4), pp. 289–290; preparation follows from Mathlib's
+`PowerSeries.exists_isWeierstrassFactorization` after removing `π ^ μ`.
+
+**Check.** For `p = 2` and `𝒪 = ℤ₂[i]`, with `i² = −1`, the polynomial
+`ξ₂ = X² + 2X + 2` factors as `(X − (i − 1)) * (X − (−i − 1))` and is reducible;
+both factors are monic of degree one. The Lean `example` expresses this in the
+valuation ring of a complete ultrametric `ℚ₂`-extension containing such an `i`.
+
+Consumed by Tau Ceti PadicMeasuresIwasawaAlgebras §4.3 (TauCetiRoadmap#780);
+the abstract complete DVR is replaced by the valuation ring of `K`.
+
 ## Dependency graph
 
 ```text

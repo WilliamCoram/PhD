@@ -510,3 +510,37 @@ theorem irreducible_of_isPure {v : AddValuation K (WithTop ℤ)}
 end Arithmetic
 
 end TauCetiRoadmap.NewtonPolygons
+
+/-! ## Targets requested by the Tau Ceti PadicMeasuresIwasawaAlgebras roadmap -/
+
+namespace TauCetiRoadmap.NewtonPolygons
+
+local notation "𝒪[" K "]" => Valuation.integer (NormedField.valuation (K := K))
+
+/-! ### Layer 6 — §6.3.3 The adic and normed theories agree -/
+
+/-- Preparation over the valuation ring of a complete discretely valued field:
+a nonzero series is a uniformiser power times a unit times a distinguished polynomial
+(NSW (5.3.1)–(5.3.4), pp. 289–290). No finite-residue-field hypothesis is needed. -/
+theorem exists_pow_mul_distinguished_mul_unit
+    {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+    [IsDiscreteValuationRing 𝒪[K]]
+    [IsAdicComplete (IsLocalRing.maximalIdeal 𝒪[K]) 𝒪[K]]
+    (π : 𝒪[K]) (hπ : Irreducible π) (f : PowerSeries 𝒪[K]) (hf : f ≠ 0) :
+    ∃ (μ : ℕ) (P : Polynomial 𝒪[K]) (u : (PowerSeries 𝒪[K])ˣ),
+      P.IsDistinguishedAt (IsLocalRing.maximalIdeal 𝒪[K]) ∧
+        f = PowerSeries.C (π ^ μ) * (u : PowerSeries 𝒪[K]) * (P : PowerSeries 𝒪[K]) :=
+  sorry
+
+/-- The reducibility check over `ℤ₂[i]`, expressed in an ultrametric `ℚ₂`-extension:
+`X² + 2X + 2` splits into two monic linear factors when `i² = −1`. -/
+example {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+    [Algebra ℚ_[2] K] (i : 𝒪[K]) (hi : i ^ 2 = -1) :
+    (Polynomial.X ^ 2 + Polynomial.C 2 * Polynomial.X + Polynomial.C 2 : Polynomial 𝒪[K]) =
+      (Polynomial.X - Polynomial.C (i - 1)) *
+        (Polynomial.X - Polynomial.C (-i - 1)) ∧
+    ¬ Irreducible
+      (Polynomial.X ^ 2 + Polynomial.C 2 * Polynomial.X + Polynomial.C 2 : Polynomial 𝒪[K]) :=
+  sorry
+
+end TauCetiRoadmap.NewtonPolygons
