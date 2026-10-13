@@ -1217,3 +1217,511 @@ theorem proper_gaga_directImage (f : X ⟶ Y) (h : f ≫ b = a)
 
 end
 end TauCetiRoadmap.RigidAnalyticGeometry.LocallyGRingedSpace
+
+/-! ## Targets requested by the Tau Ceti AdicSpaces and SchemeAndStackFoundations roadmaps -/
+
+namespace TauCetiRoadmap.RigidAnalyticGeometry
+
+open CategoryTheory Opposite Polynomial
+open scoped TensorProduct Topology ZeroAtInfty
+
+noncomputable section
+
+variable (K : Type u) [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+
+/-! ### Layer 3: the domain hypothesis of `height_eq_ringKrullDim_of_isDomain` -/
+
+/-- `K⟨X⟩ × K` is not a domain: its maximal ideal `K⟨X⟩ × 0` has height `0` while the Krull
+dimension is `1`. -/
+example :
+    (Ideal.prod (⊤ : Ideal (TateAlgebra K 1)) (⊥ : Ideal K)).IsMaximal ∧
+      (Ideal.prod (⊤ : Ideal (TateAlgebra K 1)) (⊥ : Ideal K)).height = 0 ∧
+      ringKrullDim (TateAlgebra K 1 × K) = 1 := sorry
+
+namespace LocallyGRingedSpace
+
+/-! ### Layer 7: Kiehl's principal-ideal refinement of the theorem on formal functions -/
+
+/-- `Hⁱ(X, F/JⁿF)` with its `A`-action; `cohomologyQuotientLimit` is the limit of these over `n`.
+The underlying group is the `Sheaf.H` of the quotient module `F/JⁿF`, with `Jⁿ` acting through
+`f`. -/
+def cohomologyQuotient {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (F : X.Modules) (J : Ideal A) (i n : ℕ) : ModuleCat.{u} A := sorry
+
+/-- The map `Hⁱ(X, F) → Hⁱ(X, F/JⁿF)` induced by the quotient `F → F/JⁿF`. -/
+def cohomologyQuotientMap {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (F : X.Modules) (J : Ideal A) (i n : ℕ) :
+    cohomologyOver K f φ hf F i ⟶ cohomologyQuotient K f φ F J i n := sorry
+
+/-- The transition `Hⁱ(X, F/JᵐF) → Hⁱ(X, F/JⁿF)` for `n ≤ m`, induced by `F/JᵐF → F/JⁿF`. -/
+def cohomologyQuotientTransition {A : Type u} [CommRing A] [Algebra K A]
+    [IsAffinoidAlgebra K A] {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A))
+    (φ : f.SheafMap) (F : X.Modules) (J : Ideal A) (i : ℕ) {n m : ℕ} (h : n ≤ m) :
+    cohomologyQuotient K f φ F J i m ⟶ cohomologyQuotient K f φ F J i n := sorry
+
+/-- **Kiehl's Theorem 3.4** (Kiehl E, §3): for a principal ideal `(a)`, the kernels
+`Rₙ = ker(Hⁱ(X, F) → Hⁱ(X, F/aⁿF))` form a stable `(a)`-filtration, and the kernel and cokernel
+systems of `Hⁱ(X, F)/aⁿ → Hⁱ(X, F/aⁿF)` are null with uniform shifts `d` and `d'`. -/
+theorem proper_cohomology_principalFiltration
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F) (a : A) (i : ℕ) :
+    ∃ R : (Ideal.span {a}).Filtration (cohomologyOver K f φ hf F i),
+      (∀ n, R.N n = LinearMap.ker (cohomologyQuotientMap K f φ hf F (Ideal.span {a}) i n).hom) ∧
+      R.Stable ∧
+      (∃ d, ∀ n, R.N (n + d) ≤ Ideal.span {a} ^ n • (⊤ : Submodule A (cohomologyOver K f φ hf F i))) ∧
+      ∃ d, ∀ n, LinearMap.range
+          (cohomologyQuotientTransition K f φ F (Ideal.span {a}) i (Nat.le_add_right n d)).hom ≤
+        LinearMap.range (cohomologyQuotientMap K f φ hf F (Ideal.span {a}) i n).hom := sorry
+
+/-- For `a = 0`: `R₀` is everything and `Rₙ = 0` for `n ≥ 1`. -/
+example {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (F : X.Modules) (i : ℕ) :
+    LinearMap.ker (cohomologyQuotientMap K f φ hf F (Ideal.span {0}) i 0).hom = ⊤ ∧
+      ∀ n, 1 ≤ n →
+        LinearMap.ker (cohomologyQuotientMap K f φ hf F (Ideal.span {0}) i n).hom = ⊥ := sorry
+
+/-- For `a = 1`: every `Rₙ` is everything. -/
+example {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (F : X.Modules) (i n : ℕ) :
+    LinearMap.ker (cohomologyQuotientMap K f φ hf F (Ideal.span {1}) i n).hom = ⊤ := sorry
+
+/-- For the identity of `Sp A` in degree `0`, `Rₙ = aⁿ Γ(Sp A, F)`. -/
+example {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (φ : (Hom.id (Sp K A)).SheafMap) (hf : Hom.IsRigid K (Hom.id (Sp K A)) φ)
+    (F : (Sp K A).Modules) (hF : IsCoherent F) (a : A) (n : ℕ) :
+    LinearMap.ker (cohomologyQuotientMap K (Hom.id (Sp K A)) φ hf F (Ideal.span {a}) 0 n).hom =
+      Ideal.span {a} ^ n •
+        (⊤ : Submodule A (cohomologyOver K (Hom.id (Sp K A)) φ hf F 0)) := sorry
+
+/-! ### Layer 8: reducedness and normality under analytification -/
+
+/-- A local ring of a `K`-scheme locally of finite type is reduced exactly when the local ring of
+its analytification at a point above it is (§8.1.2 (ii); Conrad, Irreducible components, A.1.3). -/
+theorem analytification_stalk_isReduced_iff
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] (x : (analytification K X a).carrier) :
+    IsReduced (X.presheaf.stalk (analytificationPointMap K X a x)) ↔
+      IsReduced ((analytification K X a).gt.stalk (analytification K X a).𝒪.obj x) := sorry
+
+/-- The same for being a normal domain (§8.1.2 (ii)). -/
+theorem analytification_stalk_isNormal_iff
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] (x : (analytification K X a).carrier) :
+    (IsDomain (X.presheaf.stalk (analytificationPointMap K X a x)) ∧
+        IsIntegrallyClosed (X.presheaf.stalk (analytificationPointMap K X a x))) ↔
+      (IsDomain ((analytification K X a).gt.stalk (analytification K X a).𝒪.obj x) ∧
+        IsIntegrallyClosed ((analytification K X a).gt.stalk (analytification K X a).𝒪.obj x)) :=
+  sorry
+
+/-- A `K`-scheme locally of finite type is reduced exactly when every local ring of its
+analytification is (§8.1.2 (iii)). -/
+theorem isReduced_iff_analytification
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    AlgebraicGeometry.IsReduced X ↔
+      ∀ x, IsReduced ((analytification K X a).gt.stalk (analytification K X a).𝒪.obj x) := sorry
+
+/-- A `K`-scheme locally of finite type has normal-domain local rings exactly when its
+analytification does (§8.1.2 (iii)). -/
+theorem isNormal_iff_analytification
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    (∀ z : X, IsDomain (X.presheaf.stalk z) ∧ IsIntegrallyClosed (X.presheaf.stalk z)) ↔
+      ∀ x, IsDomain ((analytification K X a).gt.stalk (analytification K X a).𝒪.obj x) ∧
+        IsIntegrallyClosed ((analytification K X a).gt.stalk (analytification K X a).𝒪.obj x) :=
+  sorry
+
+/-- `𝔸¹_K` is normal, and the local ring of its analytification at `0` is a discrete valuation
+ring. -/
+example (a : AlgebraicGeometry.Spec (CommRingCat.of K[X]) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of K))
+    (ha : a = AlgebraicGeometry.Spec.map (CommRingCat.ofHom (algebraMap K K[X])))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    (∀ z : AlgebraicGeometry.Spec (CommRingCat.of K[X]),
+      IsDomain ((AlgebraicGeometry.Spec (CommRingCat.of K[X])).presheaf.stalk z) ∧
+        IsIntegrallyClosed ((AlgebraicGeometry.Spec (CommRingCat.of K[X])).presheaf.stalk z)) ∧
+    ∃ x, (analytificationPointMap K _ a x).asIdeal = Ideal.span {X} ∧
+      ∃ _ : IsDomain ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x),
+        IsDiscreteValuationRing ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x) :=
+  sorry
+
+/-- `Spec K[ε]/(ε²)` and its analytification are both non-reduced. -/
+example (a : AlgebraicGeometry.Spec (CommRingCat.of (K[X] ⧸ Ideal.span {(X : K[X]) ^ 2})) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of K))
+    (ha : a = AlgebraicGeometry.Spec.map (CommRingCat.ofHom (algebraMap K _)))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    ¬ AlgebraicGeometry.IsReduced
+        (AlgebraicGeometry.Spec (CommRingCat.of (K[X] ⧸ Ideal.span {(X : K[X]) ^ 2}))) ∧
+      ∃ x, ¬ IsReduced ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x) :=
+  sorry
+
+/-- The node `y² = x²(x + 1)`, `char K ≠ 2`: reduced and not normal on both sides, and at the
+origin the algebraic local ring is a domain while the analytic one is not. -/
+example (hK : ringChar K ≠ 2) (I : Ideal (MvPolynomial (Fin 2) K))
+    (hI : I = Ideal.span {MvPolynomial.X 1 ^ 2 - MvPolynomial.X 0 ^ 2 * (MvPolynomial.X 0 + 1)})
+    (a : AlgebraicGeometry.Spec (CommRingCat.of (MvPolynomial (Fin 2) K ⧸ I)) ⟶
+      AlgebraicGeometry.Spec (CommRingCat.of K))
+    (ha : a = AlgebraicGeometry.Spec.map (CommRingCat.ofHom (algebraMap K _)))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    AlgebraicGeometry.IsReduced (AlgebraicGeometry.Spec (CommRingCat.of (MvPolynomial (Fin 2) K ⧸ I))) ∧
+    ¬ (∀ z : AlgebraicGeometry.Spec (CommRingCat.of (MvPolynomial (Fin 2) K ⧸ I)),
+      IsDomain ((AlgebraicGeometry.Spec (CommRingCat.of (MvPolynomial (Fin 2) K ⧸ I))).presheaf.stalk z) ∧
+        IsIntegrallyClosed
+          ((AlgebraicGeometry.Spec (CommRingCat.of (MvPolynomial (Fin 2) K ⧸ I))).presheaf.stalk z)) ∧
+    (∀ x, IsReduced ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x)) ∧
+    ¬ (∀ x, IsDomain ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x) ∧
+      IsIntegrallyClosed ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x)) ∧
+    ∃ x, (analytificationPointMap K _ a x).asIdeal =
+        Ideal.span {Ideal.Quotient.mk I (MvPolynomial.X 0), Ideal.Quotient.mk I (MvPolynomial.X 1)} ∧
+      IsDomain ((AlgebraicGeometry.Spec (CommRingCat.of (MvPolynomial (Fin 2) K ⧸ I))).presheaf.stalk
+          (analytificationPointMap K _ a x)) ∧
+        ¬ IsDomain ((analytification K _ a).gt.stalk (analytification K _ a).𝒪.obj x) :=
+  sorry
+
+end LocallyGRingedSpace
+
+/-! ### Banach prerequisites for the Kiehl targets
+
+The first three declarations restate, with the same names and bodies, the compact-operators
+roadmap's §0.1 (`opNorm` is its restatement of the `p`-adic-functional-analysis roadmap's §1.1.1);
+the development imports those instead of redefining them. -/
+
+section Banach
+
+/-- The operator norm by Mathlib's formula, for a semiring of scalars (compact-operators roadmap,
+restated). -/
+def opNorm {R M N : Type*} [Semiring R] [SeminormedAddCommGroup M] [Module R M]
+    [SeminormedAddCommGroup N] [Module R N] (u : M →L[R] N) : ℝ :=
+  sInf {c | 0 ≤ c ∧ ∀ x, ‖u x‖ ≤ c * ‖x‖}
+
+/-- **Finite rank** (compact-operators roadmap §0.1.1, restated): the range lies in a finitely
+generated submodule. -/
+def IsFiniteRank {R M N : Type*} [Semiring R] [SeminormedAddCommGroup M] [Module R M]
+    [SeminormedAddCommGroup N] [Module R N] (u : M →L[R] N) : Prop :=
+  ∃ Q : Submodule R N, Q.FG ∧ LinearMap.range (u : M →ₗ[R] N) ≤ Q
+
+/-- **Completely continuous** (compact-operators roadmap §0.1.2, restated): an operator-norm limit
+of finite-rank operators. -/
+def IsCompletelyContinuous {R M N : Type*} [Ring R] [SeminormedAddCommGroup M] [Module R M]
+    [SeminormedAddCommGroup N] [Module R N] (u : M →L[R] N) : Prop :=
+  ∀ ε > 0, ∃ v : M →L[R] N, IsFiniteRank v ∧ opNorm (u - v) < ε
+
+/-- **Strict complete continuity** (Kiehl E, Definition 1.1): one scalar `c ∈ K`, `0 < |c| ≤ 1`,
+such that `u` is approximated in operator norm by finite-rank `v` each of which sends `c·M₀` into
+the `A₀`-span of finitely many elements of `N₀`; `M₀`, `N₀` and `A₀` are the closed unit balls. -/
+def IsStrictlyCompletelyContinuous {A : Type*} [NormedCommRing A] [NormedAlgebra K A]
+    {M N : Type*} [NormedAddCommGroup M] [Module A M] [NormedAddCommGroup N] [Module A N]
+    (u : M →L[A] N) : Prop :=
+  ∃ c : K, c ≠ 0 ∧ ‖c‖ ≤ 1 ∧ ∀ ε > 0, ∃ v : M →L[A] N, IsFiniteRank v ∧ opNorm (u - v) < ε ∧
+    ∃ s : Finset N, (∀ y ∈ s, ‖y‖ ≤ 1) ∧ ∀ x : M, ‖x‖ ≤ 1 →
+      ∃ b : N → A, (∀ y, ‖b y‖ ≤ 1) ∧ algebraMap K A c • v x = ∑ y ∈ s, b y • y
+
+/-- Strictly completely continuous maps are completely continuous (Kiehl E, §1). -/
+theorem IsStrictlyCompletelyContinuous.isCompletelyContinuous {A : Type*} [NormedCommRing A]
+    [NormedAlgebra K A] {M N : Type*} [NormedAddCommGroup M] [Module A M] [NormedAddCommGroup N]
+    [Module A N] {u : M →L[A] N} (hu : IsStrictlyCompletelyContinuous K u) :
+    IsCompletelyContinuous u := sorry
+
+/-- **Descent to a closed target** (Kiehl E, Satz 1.4; Bosch 2014, §6.4, statement 6): from a
+topologically free source `c₀(I, A)`, strict complete continuity into `G` of a map with values in
+a closed submodule `N` gives it into `N`. `A₀` is the image of the Gauss unit ball of a
+presentation. -/
+theorem IsStrictlyCompletelyContinuous.of_subtype_comp
+    {A : Type u} [NormedCommRing A] [NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A]
+    [IsAffinoidAlgebra K A] {n : ℕ} (π : TateAlgebra K n →ₐ[K] A) (hπ : Function.Surjective π)
+    (hA₀ : ∀ a : A, ‖a‖ ≤ 1 ↔ ∃ t, gaussNorm K t ≤ 1 ∧ π t = a)
+    {I : Type*} [TopologicalSpace I] [DiscreteTopology I]
+    {G : Type*} [NormedAddCommGroup G] [Module A G] [IsBoundedSMul A G] [CompleteSpace G]
+    [IsUltrametricDist G] (N : Submodule A G) (hN : IsClosed (N : Set G))
+    (u : C₀(I, A) →L[A] N) (hu : IsStrictlyCompletelyContinuous K (N.subtypeL.comp u)) :
+    IsStrictlyCompletelyContinuous K u := sorry
+
+/-- Every Banach `A`-module is the image of a continuous surjection from some `c₀(I, A)`
+(Kiehl E, §1, before Satz 1.4). -/
+theorem exists_c0_surjective {A : Type u} [NormedCommRing A] [NormedAlgebra K A]
+    {M : Type u} [NormedAddCommGroup M] [Module A M] [IsBoundedSMul A M] [CompleteSpace M]
+    [IsUltrametricDist M] :
+    ∃ (I : Type u) (_ : TopologicalSpace I) (_ : DiscreteTopology I) (q : C₀(I, A) →L[A] M),
+      Function.Surjective q := sorry
+
+/-- **Schwartz's theorem in Kiehl's form** (Kiehl E, Satz 1.2): a continuous surjection plus a
+completely continuous map has closed image and finite cokernel. -/
+theorem IsCompletelyContinuous.finite_cokernel_of_surjective
+    {A : Type u} [NormedCommRing A] [NormedAlgebra K A] [CompleteSpace A] [IsAffinoidAlgebra K A]
+    {M N : Type*} [NormedAddCommGroup M] [Module A M] [IsBoundedSMul A M] [CompleteSpace M]
+    [IsUltrametricDist M] [NormedAddCommGroup N] [Module A N] [IsBoundedSMul A N]
+    [CompleteSpace N] [IsUltrametricDist N] (f g : M →L[A] N) (hf : Function.Surjective f)
+    (hg : IsCompletelyContinuous g) :
+    IsClosed (LinearMap.range ((f + g : M →L[A] N) : M →ₗ[A] N) : Set N) ∧
+      Module.Finite A (N ⧸ LinearMap.range ((f + g : M →L[A] N) : M →ₗ[A] N)) := sorry
+
+/-- **Small perturbations of a surjection are surjective** (Kiehl E, Lemma 1.3). The modules are
+Banach `K`-spaces through `A`. -/
+theorem exists_surjective_sub_of_opNorm_lt {A : Type u} [NormedCommRing A] [NormedAlgebra K A]
+    {M N : Type*} [NormedAddCommGroup M] [Module A M] [NormedSpace K M] [IsScalarTower K A M]
+    [CompleteSpace M] [NormedAddCommGroup N] [Module A N] [NormedSpace K N] [IsScalarTower K A N]
+    [CompleteSpace N] (f : M →L[A] N) (hf : Function.Surjective f) :
+    ∃ c > 0, ∀ e : M →L[A] N, opNorm e < c → Function.Surjective (f - e) := sorry
+
+/-- Generators of a finite Banach module may be perturbed (Kiehl E, Lemma 1.3). -/
+theorem span_eq_top_of_norm_sub_lt {A : Type u} [NormedCommRing A] [NormedAlgebra K A]
+    [CompleteSpace A] {N : Type*} [NormedAddCommGroup N] [Module A N] [IsBoundedSMul A N]
+    [NormedSpace K N] [IsScalarTower K A N] [CompleteSpace N] {r : ℕ} (m : Fin r → N)
+    (hm : Submodule.span A (Set.range m) = ⊤) :
+    ∃ δ > 0, ∀ m' : Fin r → N, (∀ j, ‖m' j - m j‖ < δ) →
+      Submodule.span A (Set.range m') = ⊤ := sorry
+
+/-- **Relative compactness** `U ⋐_A Sp B` (§7.3.3 in its affinoid case; Kiehl E, Definition 2.1;
+Bosch 2014, §6.3, Definition 6): some surjection `A⟨X₁, …, Xₙ⟩ → B` over `A` sends every `Xᵢ` to
+a function of supremum seminorm `< 1` on `U`. -/
+def AffinoidSubdomain.IsRelativelyCompact (A : Type u) [NormedCommRing A] [IsUltrametricDist A]
+    {B : Type u} [CommRing B] [Algebra K B] [IsAffinoidAlgebra K B] [Algebra A B]
+    (U : AffinoidSubdomain K (A := B)) : Prop :=
+  ∃ (n : ℕ) (ψ : RestrictedAlgebra A n →+* B), Function.Surjective ψ ∧
+    (∀ a : A, ψ ⟨MvPowerSeries.C a, MvPowerSeries.isRestricted_C _ a⟩ = algebraMap A B a) ∧
+    ∀ i : Fin n, supSeminorm K (U.ι (ψ ⟨MvPowerSeries.monomial (Finsupp.single i 1) 1,
+      MvPowerSeries.isRestricted_monomial _ _ _⟩)) < 1
+
+/-- **Restriction along a relatively compact subdomain is strictly completely continuous**
+(Kiehl E, §2, before Satz 2.5; Bosch 2014, §6.4, Proposition 2). `B` and `C ≅ 𝒪(U)` carry complete
+`K`-algebra norms (convention 3), acting boundedly on the finite `B`-module `M` and on its
+restriction `N ≅ C ⊗_B M`, `res m = 1 ⊗ m`; for any continuous surjection `q : c₀(I, A) → M`, the
+composite `res ∘ q` is strictly completely continuous over `A`. -/
+theorem AffinoidSubdomain.IsRelativelyCompact.isStrictlyCompletelyContinuous
+    {A : Type u} [NormedCommRing A] [NormedAlgebra K A] [CompleteSpace A] [IsUltrametricDist A]
+    [IsAffinoidAlgebra K A] {n : ℕ} (π : TateAlgebra K n →ₐ[K] A) (hπ : Function.Surjective π)
+    (hA₀ : ∀ a : A, ‖a‖ ≤ 1 ↔ ∃ t, gaussNorm K t ≤ 1 ∧ π t = a)
+    {B : Type u} [NormedCommRing B] [NormedAlgebra K B] [CompleteSpace B] [IsAffinoidAlgebra K B]
+    [Algebra A B] [IsScalarTower K A B] (U : AffinoidSubdomain K (A := B))
+    (hU : U.IsRelativelyCompact K A)
+    {C : Type u} [NormedCommRing C] [NormedAlgebra K C] [CompleteSpace C] [IsAffinoidAlgebra K C]
+    [Algebra B C] [Algebra A C] [IsScalarTower A B C] (eC : U.Alg ≃ₐ[K] C)
+    (hBC : ∀ b, algebraMap B C b = eC (U.ι b))
+    {M : Type u} [NormedAddCommGroup M] [Module B M] [IsBoundedSMul B M] [Module.Finite B M]
+    [CompleteSpace M] [IsUltrametricDist M] [Module A M] [IsScalarTower A B M]
+    {N : Type u} [NormedAddCommGroup N] [Module C N] [IsBoundedSMul C N] [CompleteSpace N]
+    [IsUltrametricDist N] [Module A N] [IsScalarTower A C N]
+    (e : C ⊗[B] M ≃ₗ[C] N) (res : M →L[A] N) (hres : ∀ m, res m = e (1 ⊗ₜ m))
+    {I : Type*} [TopologicalSpace I] [DiscreteTopology I] (q : C₀(I, A) →L[A] M)
+    (hq : Function.Surjective q) :
+    IsStrictlyCompletelyContinuous K (res.comp q) := sorry
+
+/-- **Almost noetherianity** (Kiehl E, §5, Satz 5.1): `A₀` the image of the Gauss unit ball of a
+presentation, `N` a submodule of a finite `A₀`-module; for `0 < ε < 1` a finitely generated
+`N' ⊆ N` contains `cN` for every `c ∈ K` with `|c| ≤ ε`. -/
+theorem exists_fg_smul_le_of_presentation
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {n : ℕ} (π : TateAlgebra K n →ₐ[K] A) (hπ : Function.Surjective π)
+    (S : Subring A) (hS : ∀ a, a ∈ S ↔ ∃ t, gaussNorm K t ≤ 1 ∧ π t = a)
+    {M : Type u} [AddCommGroup M] [Module S M] [Module.Finite S M] (N : Submodule S M)
+    (ε : ℝ) (hε₀ : 0 < ε) (hε₁ : ε < 1) :
+    ∃ N' : Submodule S M, N'.FG ∧ N' ≤ N ∧
+      ∀ s : S, (∃ c : K, ‖c‖ ≤ ε ∧ (s : A) = algebraMap K A c) → ∀ x ∈ N, s • x ∈ N' := sorry
+
+/-- Over a discretely valued `K` the finite `A₀`-modules are noetherian (Kiehl E, §5). -/
+theorem isNoetherian_of_presentation_of_discrete
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (hK : ∃ ρ < 1, ∀ c : K, ‖c‖ < 1 → ‖c‖ ≤ ρ)
+    {n : ℕ} (π : TateAlgebra K n →ₐ[K] A) (hπ : Function.Surjective π)
+    (S : Subring A) (hS : ∀ a, a ∈ S ↔ ∃ t, gaussNorm K t ≤ 1 ∧ π t = a)
+    (M : Type u) [AddCommGroup M] [Module S M] [Module.Finite S M] : IsNoetherian S M := sorry
+
+/-- **Slope `≤ r`** (convention 4): at every `K`-algebra map `χ : A → L` into a field algebraic
+over `K`, every root of `χ(Q)` has spectral norm at least `r`. For `K/ℚ_p` and `r = |p|^h` this is
+valuation `≤ h` on every geometric point. -/
+def IsSlopeLE {A : Type u} [CommRing A] [Algebra K A] (r : ℝ) (Q : A[X]) : Prop :=
+  ∀ (L : Type u) [Field L] [Algebra K L] [Algebra.IsAlgebraic K L] (χ : A →ₐ[K] L) (α : L),
+    (Q.map (χ : A →+* L)).IsRoot α → r ≤ spectralNorm K L α
+
+/-- **An `r`-slope decomposition** of a continuous `A`-linear `U` (LocallyAnalyticDistributions
+§4.16; Urban, §2.3): `M = M₁ ⊕ M₂` with continuous projection, both summands `U`-stable, `M₁`
+finite projective and killed by `Q(U)` for a monic `Q` with unit constant term and slope `≤ r`,
+and every such `P(U)` bijective on `M₂`. -/
+def IsSlopeDecomposition {A : Type u} [NormedCommRing A] [NormedAlgebra K A]
+    {M : Type*} [NormedAddCommGroup M] [Module A M] (U : M →L[A] M) (r : ℝ)
+    (M₁ M₂ : Submodule A M) : Prop :=
+  (∃ h : IsCompl M₁ M₂, Continuous (Submodule.projectionOnto M₁ M₂ h)) ∧
+    (∀ x ∈ M₁, U x ∈ M₁) ∧ (∀ x ∈ M₂, U x ∈ M₂) ∧
+    Module.Finite A M₁ ∧ Module.Projective A M₁ ∧
+    (∃ Q : A[X], Q.Monic ∧ IsUnit (Q.coeff 0) ∧ IsSlopeLE K r Q ∧
+      ∀ x ∈ M₁, Polynomial.aeval (U : M →ₗ[A] M) Q x = 0) ∧
+    ∀ P : A[X], P.Monic → IsUnit (P.coeff 0) → IsSlopeLE K r P →
+      Set.BijOn (Polynomial.aeval (U : M →ₗ[A] M) P) M₂ M₂
+
+/-- The projection of a slope decomposition is continuous, idempotent and commutes with `U`. -/
+theorem IsSlopeDecomposition.exists_projection {A : Type u} [NormedCommRing A]
+    [NormedAlgebra K A] {M : Type*} [NormedAddCommGroup M] [Module A M] {U : M →L[A] M} {r : ℝ}
+    {M₁ M₂ : Submodule A M} (h : IsSlopeDecomposition K U r M₁ M₂) :
+    ∃ P : M →L[A] M, P.comp P = P ∧ LinearMap.range (P : M →ₗ[A] M) = M₁ ∧
+      LinearMap.ker (P : M →ₗ[A] M) = M₂ ∧ P.comp U = U.comp P := sorry
+
+/-- **A ring of definition with reduced reduction is the unit ball of the supremum seminorm**
+(Fujiwara–Kato, Proposition B.1.3(1)): `B` open and bounded, `ϖ ∈ B` a topologically nilpotent
+unit of `A`, `B/ϖB` reduced. -/
+theorem mem_iff_supSeminorm_le_one_of_isReduced
+    {A : Type u} [NormedCommRing A] [NormedAlgebra K A] [CompleteSpace A] [IsAffinoidAlgebra K A]
+    (B : Subring A) (hBo : IsOpen (B : Set A)) (hBb : Bornology.IsBounded (B : Set A))
+    (ϖ : B) (hϖu : IsUnit (ϖ : A)) (hϖ : IsTopologicallyNilpotent (ϖ : A))
+    (hred : IsReduced (B ⧸ Ideal.span {ϖ})) (f : A) :
+    f ∈ B ↔ supSeminorm K f ≤ 1 := sorry
+
+/-! Checks for item 1, on `c₀(ℕ, K)`, the model of `K⟨T⟩` as a Banach `K`-space. -/
+
+/-- The zero map is strictly completely continuous. -/
+example {A : Type*} [NormedCommRing A] [NormedAlgebra K A] {M N : Type*} [NormedAddCommGroup M]
+    [Module A M] [NormedAddCommGroup N] [Module A N] :
+    IsStrictlyCompletelyContinuous K (0 : M →L[A] N) := sorry
+
+/-- The identity of `K` is strictly completely continuous, with `c = 1` and the generator `1`. -/
+example : IsStrictlyCompletelyContinuous K (ContinuousLinearMap.id K K) := sorry
+
+/-- The identity of an infinite-dimensional Banach space is not. -/
+example : ¬ IsStrictlyCompletelyContinuous K (ContinuousLinearMap.id K C₀(ℕ, K)) := sorry
+
+/-- Into `N = T·K⟨T⟩ ⊆ K⟨T⟩`, the series without constant term; `G` is any isometric model of
+`c₀(ℕ, K)`. -/
+example {G : Type u} [NormedAddCommGroup G] [NormedSpace K G] (eG : G ≃ₗᵢ[K] C₀(ℕ, K))
+    (N : Submodule K G) (hN : ∀ x, x ∈ N ↔ eG x 0 = 0) {I : Type*} [TopologicalSpace I]
+    [DiscreteTopology I] (u : C₀(I, K) →L[K] N)
+    (hu : IsStrictlyCompletelyContinuous K (A := K) (N.subtypeL.comp u)) :
+    IsStrictlyCompletelyContinuous K (A := K) u := sorry
+
+/-! Checks for item 2. -/
+
+/-- `h(Σ aₙTⁿ) = Σ aₙϖⁿTⁿ`, `0 < |ϖ| < 1`: `id − h` has closed image `T·K⟨T⟩` and
+one-dimensional cokernel. -/
+example (ϖ : K) (hϖ₀ : ϖ ≠ 0) (hϖ : ‖ϖ‖ < 1) (h : C₀(ℕ, K) →L[K] C₀(ℕ, K))
+    (hh : ∀ x n, h x n = ϖ ^ n * x n) :
+    IsClosed (LinearMap.range ((ContinuousLinearMap.id K _ - h : C₀(ℕ, K) →L[K] C₀(ℕ, K)) :
+        C₀(ℕ, K) →ₗ[K] C₀(ℕ, K)) : Set C₀(ℕ, K)) ∧
+    (∀ x, x ∈ LinearMap.range ((ContinuousLinearMap.id K _ - h : C₀(ℕ, K) →L[K] C₀(ℕ, K)) :
+        C₀(ℕ, K) →ₗ[K] C₀(ℕ, K)) ↔ x 0 = 0) ∧
+      Module.finrank K (C₀(ℕ, K) ⧸ LinearMap.range
+        ((ContinuousLinearMap.id K _ - h : C₀(ℕ, K) →L[K] C₀(ℕ, K)) :
+          C₀(ℕ, K) →ₗ[K] C₀(ℕ, K))) = 1 := sorry
+
+/-- `g = 0`: the cokernel is zero. -/
+example {A : Type u} [NormedCommRing A] [NormedAlgebra K A] {M N : Type*} [NormedAddCommGroup M]
+    [Module A M] [NormedAddCommGroup N] [Module A N] (f : M →L[A] N) (hf : Function.Surjective f) :
+    LinearMap.range ((f + 0 : M →L[A] N) : M →ₗ[A] N) = ⊤ := sorry
+
+/-- `g = −id` is not completely continuous, and the cokernel of `id − id` is not finite. -/
+example :
+    ¬ IsCompletelyContinuous (-ContinuousLinearMap.id K C₀(ℕ, K)) ∧
+      ¬ Module.Finite K (C₀(ℕ, K) ⧸ LinearMap.range
+        ((ContinuousLinearMap.id K C₀(ℕ, K) + -ContinuousLinearMap.id K C₀(ℕ, K) :
+          C₀(ℕ, K) →L[K] C₀(ℕ, K)) : C₀(ℕ, K) →ₗ[K] C₀(ℕ, K))) := sorry
+
+/-! Checks for item 3. -/
+
+/-- In `K²`, `(1, δ)` and `(δ', 1)` with `|δ|, |δ'| < 1` generate. -/
+example (δ δ' : K) (hδ : ‖δ‖ < 1) (hδ' : ‖δ'‖ < 1) :
+    Submodule.span K ({((1 : K), δ), (δ', (1 : K))} : Set (K × K)) = ⊤ := sorry
+
+/-- `e = 0` leaves `f` surjective. -/
+example {A : Type u} [NormedCommRing A] [NormedAlgebra K A] {M N : Type*} [NormedAddCommGroup M]
+    [Module A M] [NormedAddCommGroup N] [Module A N] (f : M →L[A] N) (hf : Function.Surjective f) :
+    Function.Surjective (f - (0 : M →L[A] N)) := sorry
+
+/-- `f = e = id_K`: `‖e‖ = 1` and `f − e = 0` is not surjective, so `c ≤ 1` for this `f`. -/
+example :
+    opNorm (ContinuousLinearMap.id K K) = 1 ∧
+      ¬ Function.Surjective (ContinuousLinearMap.id K K - ContinuousLinearMap.id K K) ∧
+      ∀ c > 0, (∀ e : K →L[K] K, opNorm e < c →
+        Function.Surjective (ContinuousLinearMap.id K K - e)) → c ≤ 1 := sorry
+
+/-! Checks for item 4: `K⟨X⟩ → K⟨X/ϖ⟩` in the coordinate `S = X/ϖ`, multiplying the `n`-th
+coefficient by `ϖⁿ`. -/
+
+/-- It is strictly completely continuous. -/
+example (ϖ : K) (hϖ₀ : ϖ ≠ 0) (hϖ : ‖ϖ‖ < 1) (h : C₀(ℕ, K) →L[K] C₀(ℕ, K))
+    (hh : ∀ x n, h x n = ϖ ^ n * x n) : IsStrictlyCompletelyContinuous K h := sorry
+
+/-- Its truncations below degree `N` are within `|ϖ|^N` and send the unit ball into the `K°`-span
+of finitely many vectors of norm `≤ 1`, so `c = 1` works; its image is not finitely generated, so
+no single finitely generated submodule serves all truncations. -/
+example (ϖ : K) (hϖ₀ : ϖ ≠ 0) (hϖ : ‖ϖ‖ < 1) (h : C₀(ℕ, K) →L[K] C₀(ℕ, K))
+    (hh : ∀ x n, h x n = ϖ ^ n * x n) :
+    (∀ N : ℕ, ∃ v : C₀(ℕ, K) →L[K] C₀(ℕ, K), IsFiniteRank v ∧ opNorm (h - v) ≤ ‖ϖ‖ ^ N ∧
+      ∃ s : Finset C₀(ℕ, K), (∀ y ∈ s, ‖y‖ ≤ 1) ∧ ∀ x : C₀(ℕ, K), ‖x‖ ≤ 1 →
+        ∃ b : C₀(ℕ, K) → K, (∀ y, ‖b y‖ ≤ 1) ∧ v x = ∑ y ∈ s, b y • y) ∧
+      ¬ (LinearMap.range (h : C₀(ℕ, K) →ₗ[K] C₀(ℕ, K))).FG := sorry
+
+/-- It sends the constant `1` to `1`. -/
+example (ϖ : K) (h : C₀(ℕ, K) →L[K] C₀(ℕ, K)) (hh : ∀ x n, h x n = ϖ ^ n * x n)
+    (e₀ : C₀(ℕ, K)) (he₀ : ∀ n, e₀ n = if n = 0 then 1 else 0) : h e₀ = e₀ := sorry
+
+/-! Checks for item 5. -/
+
+/-- `ℂ_p`: its maximal ideal is not finitely generated, and `x𝒪_{ℂ_p}` with `ε < |x| < 1` contains
+`c·𝔪` for `|c| ≤ ε`. -/
+example (p : ℕ) [Fact p.Prime] (ε : ℝ) (hε₀ : 0 < ε) (hε₁ : ε < 1) :
+    (¬ ∃ x : ℂ_[p], ‖x‖ < 1 ∧ ∀ y : ℂ_[p], ‖y‖ < 1 → ‖y‖ ≤ ‖x‖) ∧
+      ∃ x : ℂ_[p], ε < ‖x‖ ∧ ‖x‖ < 1 ∧ ∀ c y : ℂ_[p], ‖c‖ ≤ ε → ‖y‖ < 1 →
+        ∃ z : ℂ_[p], ‖z‖ ≤ 1 ∧ c * y = x * z := sorry
+
+/-- `ℤ_p⟨X₁, …, Xₙ⟩` is noetherian. -/
+example (p : ℕ) [Fact p.Prime] (n : ℕ) (S : Subring (TateAlgebra ℚ_[p] n))
+    (hS : ∀ f, f ∈ S ↔ gaussNorm ℚ_[p] f ≤ 1) : IsNoetherianRing S := sorry
+
+/-- The presentation of `K` by `T₀` has `A₀ = K°`. -/
+example (π : TateAlgebra K 0 →ₐ[K] K) (S : Subring K)
+    (hS : ∀ a, a ∈ S ↔ ∃ t, gaussNorm K t ≤ 1 ∧ π t = a) : ∀ a : K, a ∈ S ↔ ‖a‖ ≤ 1 := sorry
+
+/-! Checks for item 6, on `M = A = K`. -/
+
+/-- `U = c·id` with `|c| = r`: the whole space is the slope part, the endpoint included. -/
+example (c : K) (hc : c ≠ 0) :
+    IsSlopeDecomposition K (c • ContinuousLinearMap.id K K) ‖c‖ ⊤ ⊥ := sorry
+
+/-- `U = 0` and `r > 0`: the slope part is zero. -/
+example (r : ℝ) (hr : 0 < r) : IsSlopeDecomposition K (0 : K →L[K] K) r ⊥ ⊤ := sorry
+
+/-- For `|c| < 1` the eigenvalue `c` fails slope `≤ 1` while the Fredholm root `c⁻¹` passes. -/
+example (c : K) (hc : ‖c‖ < 1) :
+    ¬ IsSlopeLE K (A := K) 1 (X - C c) ∧ IsSlopeLE K (A := K) 1 (1 - C c * X) := sorry
+
+/-! Checks for item 7. -/
+
+/-- `ℤ_p⟨T⟩ ⊆ ℚ_p⟨T⟩` with `ϖ = p`: `𝔽_p[T]` is reduced and `ℤ_p⟨T⟩` is the unit ball. -/
+example (p : ℕ) [Fact p.Prime] (B : Subring (TateAlgebra ℚ_[p] 1))
+    (hB : ∀ f, f ∈ B ↔ gaussNorm ℚ_[p] f ≤ 1) (ϖ : B)
+    (hϖ : (ϖ : TateAlgebra ℚ_[p] 1) = algebraMap ℚ_[p] _ (p : ℚ_[p])) :
+    IsReduced (B ⧸ Ideal.span {ϖ}) ∧ ∀ f, f ∈ B ↔ supSeminorm ℚ_[p] f ≤ 1 := sorry
+
+/-- `A = ℚ_p⟨T, S⟩/(S² − p²T)`, `B` the image of `ℤ_p⟨T, S⟩`: `B/pB` is not reduced and `S/p` is
+power-bounded but not in `B`. -/
+example (p : ℕ) [Fact p.Prime] (T S : TateAlgebra ℚ_[p] 2)
+    (hT : (T : MvPowerSeries (Fin 2) ℚ_[p]) = MvPowerSeries.X 0)
+    (hS : (S : MvPowerSeries (Fin 2) ℚ_[p]) = MvPowerSeries.X 1)
+    (I : Ideal (TateAlgebra ℚ_[p] 2))
+    (hI : I = Ideal.span {S ^ 2 - algebraMap ℚ_[p] _ ((p : ℚ_[p]) ^ 2) * T})
+    (B : Subring (TateAlgebra ℚ_[p] 2 ⧸ I))
+    (hB : ∀ a, a ∈ B ↔ ∃ t, gaussNorm ℚ_[p] t ≤ 1 ∧ Ideal.Quotient.mk I t = a)
+    (ϖ : B) (hϖ : (ϖ : TateAlgebra ℚ_[p] 2 ⧸ I) = algebraMap ℚ_[p] _ (p : ℚ_[p])) :
+    ¬ IsReduced (B ⧸ Ideal.span {ϖ}) ∧
+      (algebraMap ℚ_[p] _ (p : ℚ_[p])⁻¹ * Ideal.Quotient.mk I S) ^ 2 = Ideal.Quotient.mk I T ∧
+      supSeminorm ℚ_[p] (algebraMap ℚ_[p] _ (p : ℚ_[p])⁻¹ * Ideal.Quotient.mk I S) ≤ 1 ∧
+      algebraMap ℚ_[p] _ (p : ℚ_[p])⁻¹ * Ideal.Quotient.mk I S ∉ B := sorry
+
+/-- `ℤ_p ⊆ ℚ_p` with `ϖ = p²`: `B/ϖB` is not reduced, yet `B` is the unit ball. -/
+example (p : ℕ) [Fact p.Prime] (B : Subring ℚ_[p]) (hB : ∀ a, a ∈ B ↔ ‖a‖ ≤ 1) (ϖ : B)
+    (hϖ : (ϖ : ℚ_[p]) = (p : ℚ_[p]) ^ 2) :
+    ¬ IsReduced (B ⧸ Ideal.span {ϖ}) ∧ ∀ a, a ∈ B ↔ supSeminorm ℚ_[p] a ≤ 1 := sorry
+
+/-- `𝒪_{ℂ_p} ⊆ ℂ_p` with `ϖ = p`: `B/ϖB` is not reduced, yet `B` is the unit ball. -/
+example (p : ℕ) [Fact p.Prime] (B : Subring ℂ_[p]) (hB : ∀ a, a ∈ B ↔ ‖a‖ ≤ 1) (ϖ : B)
+    (hϖ : (ϖ : ℂ_[p]) = (p : ℂ_[p])) :
+    ¬ IsReduced (B ⧸ Ideal.span {ϖ}) ∧ ∀ a, a ∈ B ↔ supSeminorm ℂ_[p] a ≤ 1 := sorry
+
+end Banach
+
+end
+
+end TauCetiRoadmap.RigidAnalyticGeometry
