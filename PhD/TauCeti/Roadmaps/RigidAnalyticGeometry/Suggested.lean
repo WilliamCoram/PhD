@@ -615,3 +615,605 @@ theorem classicalValuation_injective :
 end Classical
 
 end TauCetiRoadmap.RigidAnalyticGeometry
+
+/-! ## Targets requested by the Tau Ceti AdicSpaces roadmaps -/
+
+namespace TauCetiRoadmap.RigidAnalyticGeometry
+
+open CategoryTheory Opposite
+open scoped TensorProduct Topology
+
+noncomputable section
+set_option warn.classDefReducibility false
+
+variable (K : Type u) [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+
+/-! ### Layers 1–2: algebra and normalization of the consumer interface -/
+
+/-- Finite injective affinoid maps are closed embeddings for any complete algebra norms
+(BGR 3.7.3/3, 6.1.3/1). No continuity assumption is necessary. -/
+theorem isClosedEmbedding_of_finite_injective
+    {A B : Type u} [NormedCommRing A] [NormedAlgebra K A] [CompleteSpace A]
+    [IsAffinoidAlgebra K A] [NormedCommRing B] [NormedAlgebra K B] [CompleteSpace B]
+    [IsAffinoidAlgebra K B] (φ : A →ₐ[K] B) (hi : Function.Injective φ)
+    (hf : φ.toRingHom.Finite) : Topology.IsClosedEmbedding φ := sorry
+
+/-- Positive powers, including the zero algebra (BGR 6.2.1/1).
+This is the consumer form of `supSeminorm_pow`; exponent zero requires `Nontrivial A`. -/
+theorem supSeminorm_pow_pos {A : Type u} [CommRing A] [Algebra K A]
+    [IsAffinoidAlgebra K A] (f : A) (n : ℕ) (hn : 0 < n) :
+    supSeminorm K (f ^ n) = supSeminorm K f ^ n := sorry
+
+/-- Power-bounded elements are integral over the image of the integral Tate algebra
+(BGR 6.3.5/1, applied to the presentation). `S` is that image, not the whole unit ball of `A`.
+The explicit image equation avoids introducing a second integral Tate-algebra carrier. -/
+theorem powerBounded_integral_over_presentation
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {n : ℕ} (π : TateAlgebra K n →ₐ[K] A) (hπ : Function.Surjective π)
+    (S : Subring A) (hS : ∀ a, a ∈ S ↔ ∃ t, gaussNorm K t ≤ 1 ∧ π t = a) (a : A) :
+    supSeminorm K a ≤ 1 ↔ IsIntegral S a := sorry
+
+/-- A finite affinoid map induces a finite map of canonical reductions (BGR 6.3.5/1).
+The subrings, ideals and quotient map are specified by equations, so the theorem applies to
+any implementation of the reduction already requested in Layer 2. -/
+theorem reduction_finite_of_finite
+    {A B : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    [CommRing B] [Algebra K B] [IsAffinoidAlgebra K B]
+    (φ : A →ₐ[K] B) (hf : φ.toRingHom.Finite)
+    (R : Subring A) (S : Subring B)
+    (hR : ∀ a, a ∈ R ↔ supSeminorm K a ≤ 1)
+    (hS : ∀ b, b ∈ S ↔ supSeminorm K b ≤ 1)
+    (I : Ideal R) (J : Ideal S)
+    (hI : ∀ a : R, a ∈ I ↔ supSeminorm K (a : A) < 1)
+    (hJ : ∀ b : S, b ∈ J ↔ supSeminorm K (b : B) < 1)
+    (φ₀ : R →+* S) (hφ₀ : ∀ a, (φ₀ a : B) = φ (a : A))
+    (φr : R ⧸ I →+* S ⧸ J)
+    (hφr : ∀ a, φr (Ideal.Quotient.mk I a) = Ideal.Quotient.mk J (φ₀ a)) :
+    φr.Finite := sorry
+
+/-! ### Layers 3–4: dimension and affinoid subdomains -/
+
+/-- Equidimensionality of an affinoid domain (BGR 6.1.2/2 and 7.1.1/3;
+Conrad, Irreducible components, Lemma 2.1.5). -/
+theorem height_eq_ringKrullDim_of_isDomain
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A] [IsDomain A]
+    (m : Ideal A) [m.IsMaximal] : (m.height : WithBot ℕ∞) = ringKrullDim A := sorry
+
+/-- Nonempty affinoid restriction in a domain is injective (BGR 7.3.2/6 and
+6.1.2/2, by flatness and the domain criterion). -/
+theorem AffinoidSubdomain.injective_of_isDomain
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A] [IsDomain A]
+    (U : AffinoidSubdomain K (A := A)) (hU : U.carrier.Nonempty) :
+    Function.Injective U.ι := sorry
+
+/-- Faithful flatness of a finite affinoid cover (BGR 7.3.2/6 and 7.2.2/2).
+The algebra structure is exactly the product of the representing maps. -/
+theorem faithfullyFlat_affinoidCover
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {r : ℕ} (U : Fin r → AffinoidSubdomain K (A := A))
+    (hU : (⋃ i, (U i).carrier) = Set.univ) :
+    let φ : A →+* (∀ i, (U i).Alg) := RingHom.pi fun i ↦ (U i).ι.toRingHom
+    letI := φ.toAlgebra
+    Module.FaithfullyFlat A (∀ i, (U i).Alg) := sorry
+
+/-- The denominator becomes a unit when the numerator and denominator generate 1
+(BGR 6.1.4/3–4). This adds the missing hypothesis to the earlier representative target. -/
+theorem isUnit_toRationalLocalization_of_span_eq_top
+    {A : Type u} [NormedCommRing A] [IsUltrametricDist A]
+    {m : ℕ} (f : Fin m → A) (g : A)
+    (hfg : Ideal.span (insert g (Set.range f)) = ⊤) :
+    IsUnit (toRationalLocalization f g g) := sorry
+
+/-- Standard rational covers with the denominator nonzero (BGR 7.1.2/5, 8.2.2).
+The existing `rationalDomain` intentionally imposes only inequalities; the intersection below
+prevents a common zero from belonging to every member of a purported cover. -/
+theorem iUnion_rationalDomain_nonzero_eq_univ_iff
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {r : ℕ} (g : Fin r → A) :
+    (⋃ i, rationalDomain K g (g i) ∩ {x | evalNorm K x (g i) ≠ 0}) = Set.univ ↔
+      Ideal.span (Set.range g) = ⊤ := sorry
+
+/-! ### Layers 6–8: signatures on the existing locally G-ringed spaces
+
+The following auxiliary definitions are the interfaces already requested in Layers 6–8,
+not additional rigid-space carriers. Their implementations, like `Sp` above, remain targets.
+In particular, the old point-only `Hom` is supplemented by an explicit sheaf map: theorems about
+proper maps never silently treat a map of G-topological sets as a morphism of ringed spaces.
+-/
+
+namespace LocallyGRingedSpace
+
+/-- Forget the commutativity of the existing structure sheaf. -/
+def ringSheaf (X : LocallyGRingedSpace.{u}) : Sheaf X.gt.grothendieckTopology RingCat.{u} :=
+  ⟨X.𝒪.obj ⋙ forget₂ CommRingCat RingCat, by sorry⟩
+
+/-- Mathlib module sheaves on the original G-site. -/
+abbrev Modules (X : LocallyGRingedSpace.{u}) := SheafOfModules.{u} X.ringSheaf
+
+/-- BGR 9.4.3 coherence, equivalently local finite presentation on this locally noetherian site. -/
+abbrev IsCoherent {X : LocallyGRingedSpace.{u}} (F : X.Modules) : Prop :=
+  SheafOfModules.IsFinitePresentation.{u, u} F
+
+/-- The admissible whole space; its proof comes from `IsVariety.g0`. -/
+def topOpen (X : LocallyGRingedSpace.{u}) (hX : IsVariety K X) : X.gt.Opens :=
+  ⟨Set.univ, hX.g0.2⟩
+
+/-- Admissible affinoid open, with its structure sheaf identified with that of `Sp A`
+as in BGR 9.3.1/1, not merely a bijection of points. -/
+def IsAffinoidOpen (K : Type u) (X : LocallyGRingedSpace.{u}) (U : X.gt.Opens) : Prop := sorry
+
+/-- The canonical finite-module Banach topology of coherent sections on an affinoid open
+(BGR 3.7.3, 9.4.3). This is a definition, not a global instance. -/
+def sectionsTopology {X : LocallyGRingedSpace.{u}} (F : X.Modules)
+    (U : X.gt.Opens) (hU : IsAffinoidOpen K X U) (hF : IsCoherent F) :
+    TopologicalSpace (F.val.obj (op U)) := sorry
+
+/-- The affinoid Banach topology on the original ring of sections. -/
+def affinoidRingTopology (X : LocallyGRingedSpace.{u}) (U : X.gt.Opens) :
+    TopologicalSpace (X.𝒪.obj.obj (op U)) := sorry
+
+/-- A countable increasing admissible affinoid covering whose ring restrictions are dense
+(Kiehl A/B, Definition 2.3). No relative compactness is required for quasi-Stein. -/
+def IsQuasiSteinExhaustion (X : LocallyGRingedSpace.{u}) (U : ℕ → X.gt.Opens) : Prop :=
+  (∀ n, IsAffinoidOpen K X (U n)) ∧ Monotone U ∧
+    X.gt.IsAdmissibleCover Set.univ (fun n : ULift.{u} ℕ ↦ (U n.down).val) ∧
+    ∀ n, ∃ h : U n ≤ U (n + 1),
+      letI := affinoidRingTopology X (U n)
+      DenseRange (fun x ↦ (X.𝒪.obj.map (homOfLE h).op) x)
+
+/-- Coherent sections have dense restriction along the exhaustion and from the whole space
+(Kiehl A/B, Satz 2.4.1 and Hilfssatz 2.5). -/
+theorem quasiStein_dense_restriction
+    (X : LocallyGRingedSpace.{u}) (hX : IsVariety K X)
+    (U : ℕ → X.gt.Opens) (hU : IsQuasiSteinExhaustion K X U)
+    (F : X.Modules) (hF : IsCoherent F) (n : ℕ) :
+    @DenseRange (F.val.obj (op (U n))) (sectionsTopology K F (U n) (hU.1 n) hF) _
+      (fun x ↦ F.val.map (homOfLE (hU.2.1 (Nat.le_succ n))).op x) ∧
+    @DenseRange (F.val.obj (op (U n))) (sectionsTopology K F (U n) (hU.1 n) hF) _
+      (fun x ↦ F.val.map (homOfLE (show U n ≤ topOpen K X hX from Set.subset_univ _)).op x) := sorry
+
+/-- Theorem A on each affinoid member, which also gives generation at every stalk
+(Kiehl A/B, Satz 2.4.3). -/
+theorem quasiStein_global_generation
+    (X : LocallyGRingedSpace.{u}) (hX : IsVariety K X)
+    (U : ℕ → X.gt.Opens) (hU : IsQuasiSteinExhaustion K X U)
+    (F : X.Modules) (hF : IsCoherent F) (n : ℕ) :
+    Submodule.span (X.ringSheaf.obj.obj (op (U n)))
+      (Set.range (F.val.map
+        (homOfLE (show U n ≤ topOpen K X hX from Set.subset_univ _)).op)) = ⊤ := sorry
+
+/-- Kiehl's Theorem B, using Mathlib sheaf cohomology on the G-site, not Čech cohomology
+as a new definition (Kiehl A/B, Satz 2.4.2). -/
+theorem quasiStein_acyclic
+    (X : LocallyGRingedSpace.{u}) (hX : IsVariety K X)
+    (U : ℕ → X.gt.Opens) (hU : IsQuasiSteinExhaustion K X U)
+    (F : X.Modules) (hF : IsCoherent F) (i : ℕ) (hi : 0 < i) :
+    Subsingleton (Sheaf.H ((SheafOfModules.toSheaf X.ringSheaf).obj F) i) := sorry
+
+/-- Connected in the admissible sense, with the empty space allowed. -/
+def IsPreconnected (X : LocallyGRingedSpace.{u}) : Prop :=
+  ∀ V W : Set X.carrier, X.gt.IsAdmissibleOpen V → X.gt.IsAdmissibleOpen W →
+    Disjoint V W → X.gt.IsAdmissibleCover Set.univ (fun b : ULift.{u} Bool ↦ if b.down then V else W) →
+      V = ∅ ∨ W = ∅
+
+/-- Analytic Zariski closed sets are supports of coherent ideals (BGR 9.5.2/1). -/
+def IsAnalyticSubset (K : Type u) (X : LocallyGRingedSpace.{u}) (Z : Set X.carrier) : Prop := sorry
+
+/-- The rigid identity principle, including analytic density and irreducibility
+(BGR 7.3.2/9–10; Conrad, Irreducible components, Lemma 2.1.4). -/
+theorem identityPrinciple (X : LocallyGRingedSpace.{u}) (hX : IsVariety K X)
+    (hc : X.IsPreconnected)
+    (hn : ∀ x, IsDomain (X.gt.stalk X.𝒪.obj x) ∧
+      IsIntegrallyClosed (X.gt.stalk X.𝒪.obj x))
+    (U : X.gt.Opens) (hU : U.val.Nonempty) :
+    (∀ Z, IsAnalyticSubset K X Z → U.val ⊆ Z → Z = Set.univ) ∧
+    (∀ Z W, IsAnalyticSubset K X Z → IsAnalyticSubset K X W →
+      Z ∪ W = Set.univ → Z = Set.univ ∨ W = Set.univ) ∧
+    Function.Injective (X.𝒪.obj.map
+      (homOfLE (show U ≤ topOpen K X hX from Set.subset_univ _)).op) := sorry
+
+/-- Finite local freeness, with bases compatible under every admissible restriction
+(BGR 9.4.2/1). -/
+def IsFiniteLocallyFree {X : LocallyGRingedSpace.{u}} (F : X.Modules) : Prop :=
+  ∃ (ι : Type u) (V : ι → X.gt.Opens),
+    X.gt.IsAdmissibleCover Set.univ (fun i ↦ (V i).val) ∧
+    ∀ i, ∃ (n : ℕ) (b : Fin n → F.val.obj (op (V i))),
+      ∀ (W : X.gt.Opens) (h : W ≤ V i),
+        ∃ e : Module.Basis (Fin n) (X.ringSheaf.obj.obj (op W)) (F.val.obj (op W)),
+          ∀ j, e j = F.val.map (homOfLE h).op (b j)
+
+/-- The vector-bundle identity principle; no vanishing or injectivity is assumed. -/
+theorem identityPrinciple_locallyFree (X : LocallyGRingedSpace.{u}) (hX : IsVariety K X)
+    (hc : X.IsPreconnected)
+    (hn : ∀ x, IsDomain (X.gt.stalk X.𝒪.obj x) ∧
+      IsIntegrallyClosed (X.gt.stalk X.𝒪.obj x))
+    (F : X.Modules) (hf : IsFiniteLocallyFree F) (U : X.gt.Opens) (hU : U.val.Nonempty) :
+    Function.Injective (F.val.map
+      (homOfLE (show U ≤ topOpen K X hX from Set.subset_univ _)).op) := sorry
+
+/-- The existing map of G-spaces acts on admissible opens by inverse image. -/
+def Hom.preimage {X Y : LocallyGRingedSpace.{u}} (f : Hom X Y) : Y.gt.Opens ⥤ X.gt.Opens :=
+  { obj := fun U ↦ ⟨f.base ⁻¹' U.val, f.isAdmissibleOpen_preimage U.property⟩
+    map := fun h ↦ homOfLE (Set.preimage_mono (leOfHom h)) }
+
+/-- The sheaf component omitted by the representative `Hom` above. -/
+abbrev Hom.SheafMap {X Y : LocallyGRingedSpace.{u}} (f : Hom X Y) :=
+  Y.𝒪.obj ⟶ f.preimage.op ⋙ X.𝒪.obj
+
+/-- Locality on stalks and compatibility with the structural K-algebra maps of a rigid
+morphism (BGR 9.3.1). The structure maps are part of the full `IsVariety` interface. -/
+def Hom.IsRigid (K : Type u) {X Y : LocallyGRingedSpace.{u}} (f : Hom X Y) (φ : f.SheafMap) : Prop := sorry
+
+/-- Kiehl properness: a rigid morphism, separated, with pairs of finite affinoid covers
+relatively compact over each affinoid in the target (BGR 9.6.2/2; Kiehl E, Definition 2.3). -/
+def IsProper (K : Type u) {X Y : LocallyGRingedSpace.{u}} (f : Hom X Y) (φ : f.SheafMap) : Prop := sorry
+
+/-- Derived direct image of module sheaves along the specified ringed-site morphism;
+the degree-zero functor is restriction of scalars on the inverse-image opens. -/
+def higherDirectImage {X Y : LocallyGRingedSpace.{u}} (f : Hom X Y)
+    (φ : f.SheafMap) (hf : Hom.IsRigid K f φ) (i : ℕ) : X.Modules ⥤ Y.Modules := sorry
+
+/-- Kiehl's proper mapping theorem, over every complete nontrivially valued K
+(Kiehl E, Theorem 3.3). -/
+theorem kiehlProperMapping {X Y : LocallyGRingedSpace.{u}}
+    (hX : IsVariety K X) (hY : IsVariety K Y)
+    (f : Hom X Y) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ) (hp : IsProper K f φ)
+    (F : X.Modules) (hF : IsCoherent F) (i : ℕ) :
+    IsCoherent ((higherDirectImage K f φ hf i).obj F) := sorry
+
+/-- Cohomology with its canonical action of the affinoid base. The underlying additive group
+is Mathlib `Sheaf.H`; the scalar action is induced by the structural sheaf map. -/
+def cohomologyOver {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (F : X.Modules) (i : ℕ) : ModuleCat.{u} A := sorry
+
+/-- Finiteness over an affinoid base, including degree zero and nonreduced bases
+(Kiehl E, Satz 2.6). -/
+theorem proper_cohomology_finite
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F) (i : ℕ) :
+    Module.Finite A (cohomologyOver K f φ hf F i) := sorry
+
+/-- Proper cohomology is strict on finite affinoid Čech complexes (Kiehl E, Satz 2.6).
+`cechDifferential` is the alternating restriction differential, with degree-zero sign
+`s_j| - s_i|`; no arbitrary complex is quantified over. -/
+def cechTerm {X : LocallyGRingedSpace.{u}} (F : X.Modules)
+    {r : ℕ} (U : Fin r → X.gt.Opens) (q : ℕ) : AddCommGrpCat.{u} := sorry
+
+def cechDifferential {X : LocallyGRingedSpace.{u}} (F : X.Modules)
+    {r : ℕ} (U : Fin r → X.gt.Opens) (q : ℕ) :
+    cechTerm F U q ⟶ cechTerm F U (q + 1) := sorry
+
+/-- Product Banach topology from the finite intersection modules. -/
+def cechTopology {X : LocallyGRingedSpace.{u}} (F : X.Modules)
+    {r : ℕ} (U : Fin r → X.gt.Opens) (q : ℕ) :
+    TopologicalSpace (cechTerm F U q) := sorry
+
+theorem proper_cech_closedRange
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F)
+    {r : ℕ} (U : Fin r → X.gt.Opens) (hU : ∀ j, IsAffinoidOpen K X (U j))
+    (hcover : X.gt.IsAdmissibleCover Set.univ (fun j : ULift.{u} (Fin r) ↦ (U j.down).val)) (q : ℕ) :
+    @IsClosed _ (cechTopology F U (q + 1)) (Set.range (cechDifferential F U q)) := sorry
+
+end LocallyGRingedSpace
+end
+end TauCetiRoadmap.RigidAnalyticGeometry
+
+namespace TauCetiRoadmap.RigidAnalyticGeometry
+open CategoryTheory Opposite
+open scoped TensorProduct
+noncomputable section
+variable (K : Type u) [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+namespace LocallyGRingedSpace
+
+/-- Rigid base change of `f` along `Sp B → Sp A`, from the fibre product of §6.4. -/
+def affinoidBaseChange
+    {A B : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    [CommRing B] [Algebra K B] [IsAffinoidAlgebra K B]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (g : A →ₐ[K] B) : LocallyGRingedSpace.{u} := sorry
+
+/-- Cohomology over B of the pullback of F to the preceding fibre product, with the
+canonical B-action. The underlying group is the `Sheaf.H` of the pulled-back module. -/
+def baseChangedCohomology
+    {A B : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    [CommRing B] [Algebra K B] [IsAffinoidAlgebra K B]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (g : A →ₐ[K] B) (F : X.Modules) (i : ℕ) : ModuleCat.{u} B := sorry
+
+/-- Scalar extension followed by pullback: b ⊗ m is sent to b times the pullback of m. -/
+def properBaseChangeMap
+    {A B : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    [CommRing B] [Algebra K B] [IsAffinoidAlgebra K B]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (g : A →ₐ[K] B) (F : X.Modules) (i : ℕ) :
+    letI := g.toRingHom.toAlgebra
+    B ⊗[A] cohomologyOver K f φ hf F i →ₗ[B] baseChangedCohomology K f φ g F i := sorry
+
+/-- Kiehl E, Satz 3.5: the canonical base-change map for an affinoid subdomain. -/
+theorem proper_cohomology_affinoidSubdomain
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F)
+    (U : AffinoidSubdomain K (A := A)) (i : ℕ) :
+    Function.Bijective (properBaseChangeMap K f φ hf U.ι F i) := sorry
+
+/-- Finite flat base change, by flat tensoring the finite affinoid Čech complex
+(BGR 9.4.2/1; Kiehl E, Satz 3.5 and its Čech argument). -/
+theorem proper_cohomology_finiteFlat
+    {A B : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    [CommRing B] [Algebra K B] [IsAffinoidAlgebra K B]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F)
+    (g : A →ₐ[K] B) (hfinite : g.toRingHom.Finite)
+    (hflat : letI := g.toRingHom.toAlgebra; Module.Flat A B) (i : ℕ) :
+    Function.Bijective (properBaseChangeMap K f φ hf g F i) := sorry
+
+/-- Inverse limit of H^i(X,F/J^(n+1)F), with the quotient transition maps. -/
+def cohomologyQuotientLimit
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (F : X.Modules) (J : Ideal A) (i : ℕ) : ModuleCat.{u} A := sorry
+
+/-- The canonical map induced by reduction modulo all powers of J. -/
+def formalFunctionsMap
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (F : X.Modules) (J : Ideal A) (i : ℕ) :
+    AdicCompletion J (cohomologyOver K f φ hf F i) →ₗ[A]
+      cohomologyQuotientLimit K f φ F J i := sorry
+
+/-- Rigid formal functions, for an arbitrary ideal of the affinoid base
+(Kiehl E, Theorems 3.4 and 3.7). -/
+theorem proper_formalFunctions
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F) (J : Ideal A) (i : ℕ) :
+    Function.Bijective (formalFunctionsMap K f φ hf F J i) := sorry
+
+/-- Relative analytification over the affinoid base Sp A, extending §8.1; it is formed
+by the relative restricted-series charts and their gluing, not by assuming X is of finite type
+as a K-scheme. For A = K it agrees with the existing `analytification`. -/
+def relativeAnalytification
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] : LocallyGRingedSpace.{u} := sorry
+
+/-- Analytification of module sheaves is pullback along the ringed-site map to X. -/
+def analytificationModules
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    X.Modules ⥤ (relativeAnalytification K X a).Modules := sorry
+
+/-- Coherence and exactness of analytification (BGR 9.4.2/1 and 9.6.3; flatness of
+analytic stalks is the input). Exactness means preservation of finite limits and colimits. -/
+theorem analytificationModules_exact_coherent
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    Limits.PreservesFiniteLimits (analytificationModules K X a) ∧
+    Limits.PreservesFiniteColimits (analytificationModules K X a) ∧
+    ∀ F : X.Modules, SheafOfModules.IsFinitePresentation.{u, u} F →
+      IsCoherent ((analytificationModules K X a).obj F) := sorry
+
+/-- The structural rigid morphism of relative analytification. -/
+def relativeAnalytificationMap
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] : Hom (relativeAnalytification K X a) (Sp K A) := sorry
+
+def relativeAnalytificationSheafMap
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] : (relativeAnalytificationMap K X a).SheafMap := sorry
+
+/-- Proper algebraic morphisms over an affinoid have Kiehl-proper analytification
+(BGR 9.6.3; Köpf GAGA, with Chow dévissage). -/
+theorem analytification_isProper
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.IsProper a] :
+    IsProper K (relativeAnalytificationMap K X a) (relativeAnalytificationSheafMap K X a) := sorry
+
+/-- The ordinary algebraic H^i(X,F), with its A-action. -/
+def algebraicCohomology
+    {A : Type u} [CommRing A] (X : AlgebraicGeometry.Scheme.{u})
+    (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A)) (F : X.Modules) (i : ℕ) :
+    ModuleCat.{u} A := sorry
+
+/-- The analytic H^i(X^an,F^an), with its A-action. -/
+def analytifiedCohomology
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] (F : X.Modules) (i : ℕ) : ModuleCat.{u} A := sorry
+
+/-- The canonical δ-functorial comparison, induced by the unit of pullback/pushforward;
+in degree zero it sends a section to its analytic pullback. -/
+def gagaComparison
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.LocallyOfFiniteType a] (F : X.Modules) (i : ℕ) :
+    algebraicCohomology X a F i ⟶ analytifiedCohomology K X a F i := sorry
+
+/-- Proper GAGA cohomology over an affinoid base (BGR 9.6.3; Köpf, §5;
+Conrad, Relative ampleness, Example 3.2.6). -/
+theorem proper_gaga_cohomology
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.IsProper a]
+    (F : X.Modules) (hF : SheafOfModules.IsFinitePresentation.{u, u} F) (i : ℕ) :
+    IsIso (gagaComparison K X a F i) := sorry
+
+/-- Proper GAGA on coherent sheaves, with the equivalence identified with the specified
+analytification functor by a natural isomorphism (same sources). -/
+theorem proper_gaga_equivalence
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+    [AlgebraicGeometry.IsProper a] :
+    ∃ e : (SheafOfModules.isFinitePresentation (R := X.ringCatSheaf)).FullSubcategory ≌
+        (SheafOfModules.isFinitePresentation
+          (R := (relativeAnalytification K X a).ringSheaf)).FullSubcategory,
+      Nonempty (e.functor ⋙ ObjectProperty.ι _ ≅
+        ObjectProperty.ι _ ⋙ analytificationModules K X a) := sorry
+
+/-- Connectedness comparison, including the empty scheme (BGR 9.3.4;
+Conrad, Irreducible components, Theorem 2.3.1 and Appendix A.1.3). -/
+theorem analytification_preconnected_iff
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    PreconnectedSpace X ↔ (analytification K X a).IsPreconnected := sorry
+
+end LocallyGRingedSpace
+end
+end TauCetiRoadmap.RigidAnalyticGeometry
+
+namespace TauCetiRoadmap.RigidAnalyticGeometry
+open CategoryTheory Opposite
+open scoped TensorProduct
+noncomputable section
+variable (K : Type u) [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+
+/-- The completed affinoid scalar extension of §6.4.6, with its canonical ring structure.
+This names the construction requested there, not another affinoid-algebra carrier. -/
+def scalarExtensionRing (L : Type u) [NontriviallyNormedField L] [IsUltrametricDist L]
+    [CompleteSpace L] [NormedAlgebra K L]
+    (A : Type u) [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A] : CommRingCat.{u} := sorry
+
+/-- The canonical map a ↦ a ⊗ 1 into the completed scalar extension. -/
+def scalarExtensionMap (L : Type u) [NontriviallyNormedField L] [IsUltrametricDist L]
+    [CompleteSpace L] [NormedAlgebra K L]
+    (A : Type u) [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A] :
+    A →+* scalarExtensionRing K L A := sorry
+
+/-- Completed extension of complete nontrivially valued fields is faithfully flat
+(Conrad, Irreducible components, Lemma 1.1.5(1); BGR 3.7.3/3). -/
+theorem faithfullyFlat_scalarExtension
+    (L : Type u) [NontriviallyNormedField L] [IsUltrametricDist L]
+    [CompleteSpace L] [NormedAlgebra K L]
+    (A : Type u) [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A] :
+    letI := (scalarExtensionMap K L A).toAlgebra
+    Module.FaithfullyFlat A (scalarExtensionRing K L A) := sorry
+
+namespace LocallyGRingedSpace
+
+/-- Cohomology after the §6.4.6 extension to L, with coefficients pulled back from F. -/
+def fieldExtendedCohomology
+    (L : Type u) [NontriviallyNormedField L] [IsUltrametricDist L]
+    [CompleteSpace L] [NormedAlgebra K L]
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (F : X.Modules) (i : ℕ) : ModuleCat.{u} (scalarExtensionRing K L A) := sorry
+
+/-- The δ-functorial scalar-extension map, b ⊗ m ↦ b times the pullback of m. -/
+def fieldExtensionCohomologyMap
+    (L : Type u) [NontriviallyNormedField L] [IsUltrametricDist L]
+    [CompleteSpace L] [NormedAlgebra K L]
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (f : Hom X (Sp K A)) (φ : f.SheafMap)
+    (hf : Hom.IsRigid K f φ) (F : X.Modules) (i : ℕ) :
+    letI := (scalarExtensionMap K L A).toAlgebra
+    scalarExtensionRing K L A ⊗[A] cohomologyOver K f φ hf F i →ₗ[scalarExtensionRing K L A]
+      fieldExtendedCohomology K L f φ F i := sorry
+
+/-- Proper cohomology commutes with arbitrary complete isometric field extension
+(Conrad, Relative ampleness, Theorem A.1.2). -/
+theorem proper_cohomology_fieldExtension
+    (L : Type u) [NontriviallyNormedField L] [IsUltrametricDist L]
+    [CompleteSpace L] [NormedAlgebra K L]
+    {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+    {X : LocallyGRingedSpace.{u}} (hX : IsVariety K X)
+    (f : Hom X (Sp K A)) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hp : IsProper K f φ) (F : X.Modules) (hF : IsCoherent F) (i : ℕ) :
+    Function.Bijective (fieldExtensionCohomologyMap K L f φ hf F i) ∧
+      Module.Finite (scalarExtensionRing K L A) (fieldExtendedCohomology K L f φ F i) := sorry
+
+/-- Vanishing of higher direct images when all affinoid inverse images are quasi-Stein
+(Kiehl A/B, Satz 2.4.2, applied locally on the target). -/
+theorem quasiStein_higherDirectImage
+    {X Y : LocallyGRingedSpace.{u}} (hX : IsVariety K X) (hY : IsVariety K Y)
+    (f : Hom X Y) (φ : f.SheafMap) (hf : Hom.IsRigid K f φ)
+    (hq : ∀ V : Y.gt.Opens, IsAffinoidOpen K Y V →
+      ∃ U : ℕ → (restrict X (f.base ⁻¹' V.val)
+        (f.isAdmissibleOpen_preimage V.property)).gt.Opens,
+      IsQuasiSteinExhaustion K _ U)
+    (F : X.Modules) (hF : IsCoherent F) (i : ℕ) (hi : 0 < i) :
+    Limits.IsZero ((higherDirectImage K f φ hf i).obj F) := sorry
+
+/-- The point map of analytification, sending an analytic point to its closed algebraic
+point; its construction is part of §8.1. -/
+def analytificationPointMap
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] : (analytification K X a).carrier → X := sorry
+
+/-- Irreducible components in the analytic Zariski topology. -/
+def analyticIrreducibleComponents (X : LocallyGRingedSpace.{u}) : Set (Set X.carrier) :=
+  { Z | Maximal (fun Z ↦ IsAnalyticSubset K X Z ∧ Z.Nonempty ∧
+      ∀ V W, IsAnalyticSubset K X V → IsAnalyticSubset K X W →
+        Z ⊆ V ∪ W → Z ⊆ V ∨ Z ⊆ W) Z }
+
+/-- The component bijection is the inverse-image operation on supports; components carry
+reduced induced structures (Conrad, Irreducible components, Theorem 2.3.1). -/
+theorem analytification_irreducibleComponents
+    (X : AlgebraicGeometry.Scheme.{u}) (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of K))
+    [AlgebraicGeometry.LocallyOfFiniteType a] :
+    ∃ e : ↥(irreducibleComponents X) ≃
+        ↥(analyticIrreducibleComponents K (analytification K X a)),
+      ∀ Z, (e Z).val = analytificationPointMap K X a ⁻¹' Z.val := sorry
+
+end LocallyGRingedSpace
+end
+end TauCetiRoadmap.RigidAnalyticGeometry
+
+namespace TauCetiRoadmap.RigidAnalyticGeometry.LocallyGRingedSpace
+open CategoryTheory
+noncomputable section
+variable (K : Type u) [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+variable {A : Type u} [CommRing A] [Algebra K A] [IsAffinoidAlgebra K A]
+variable (X Y : AlgebraicGeometry.Scheme.{u})
+variable (a : X ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+variable (b : Y ⟶ AlgebraicGeometry.Spec (CommRingCat.of A))
+variable [AlgebraicGeometry.LocallyOfFiniteType a] [AlgebraicGeometry.LocallyOfFiniteType b]
+
+/-- The algebraic derived pushforward R^i f_* on sheaves of modules. -/
+def algebraicHigherDirectImage (f : X ⟶ Y) (i : ℕ) : X.Modules ⥤ Y.Modules := sorry
+
+/-- Relative analytification of a morphism of schemes over the affinoid base,
+extending the functoriality requested in §8.1. -/
+def analyticSchemeMap (f : X ⟶ Y) (h : f ≫ b = a) :
+    Hom (relativeAnalytification K X a) (relativeAnalytification K Y b) := sorry
+
+def analyticSchemeSheafMap (f : X ⟶ Y) (h : f ≫ b = a) :
+    (analyticSchemeMap K X Y a b f h).SheafMap := sorry
+
+theorem analyticSchemeMap_isRigid (f : X ⟶ Y) (h : f ≫ b = a) :
+    Hom.IsRigid K (analyticSchemeMap K X Y a b f h)
+      (analyticSchemeSheafMap K X Y a b f h) := sorry
+
+/-- The canonical derived comparison; degree zero is the adjunction mate of the
+analytification units and all higher degrees are its δ-functor extension. -/
+def directImageComparison (f : X ⟶ Y) (h : f ≫ b = a) (i : ℕ) :
+    algebraicHigherDirectImage X Y f i ⋙ analytificationModules K Y b ⟶
+      analytificationModules K X a ⋙
+        higherDirectImage K (analyticSchemeMap K X Y a b f h)
+          (analyticSchemeSheafMap K X Y a b f h)
+          (analyticSchemeMap_isRigid K X Y a b f h) i := sorry
+
+/-- Relative proper GAGA over an affinoid base: the specified comparison is an
+isomorphism on coherent modules (Kiehl, Endlichkeitssatz, §4, via Theorems 3.3 and 3.5; Conrad, Relative
+ampleness, equation (A.1.1)). The base Y need not be proper. -/
+theorem proper_gaga_directImage (f : X ⟶ Y) (h : f ≫ b = a)
+    [AlgebraicGeometry.IsProper f] (F : X.Modules)
+    (hF : SheafOfModules.IsFinitePresentation.{u, u} F) (i : ℕ) :
+    IsIso ((directImageComparison K X Y a b f h i).app F) := sorry
+
+end
+end TauCetiRoadmap.RigidAnalyticGeometry.LocallyGRingedSpace
