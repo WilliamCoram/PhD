@@ -513,3 +513,519 @@ end ExactCase
 end
 
 end TauCetiRoadmap.CompactOperators
+
+/-! ## Targets requested by the Tau Ceti LocallyAnalyticDistributions and AdicSpacesPartIII roadmaps -/
+
+namespace TauCetiRoadmap.CompactOperators
+
+open Filter Topology
+open scoped ZeroAtInfty Classical Polynomial
+
+noncomputable section
+
+/-! ### Layer 0 -/
+
+section CompletelyContinuousTargets
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+variable {M N : Type*} [NormedAddCommGroup M] [Module R M] [IsBoundedSMul R M]
+  [NormedAddCommGroup N] [Module R N] [IsBoundedSMul R N]
+
+/-- **Finite rank against finitely generated range** (§0.1.1): over a Noetherian ring an operator
+has finite rank iff its range is finitely generated, so both finite-rank conventions give the same
+`IsCompletelyContinuous`. Without the Noetherian hypothesis only `←` holds. -/
+theorem isFiniteRank_iff_range_fg [IsNoetherianRing R] (u : M →L[R] N) :
+    IsFiniteRank u ↔ (LinearMap.range (u : M →ₗ[R] N)).FG :=
+  sorry
+
+/-- **Finite rank implies complete continuity** (§0.1.2): a finite-rank operator is its own
+approximant. -/
+theorem IsFiniteRank.isCompletelyContinuous {u : M →L[R] N} (hu : IsFiniteRank u) :
+    IsCompletelyContinuous u :=
+  sorry
+
+end CompletelyContinuousTargets
+
+section CompletelyContinuousChecks
+
+/- `IsBoundedSMul R C₀(ℕ, R)` is part of the `p`-adic-functional-analysis roadmap's §2.1.1; Mathlib
+has no instance for a normed ring, so the checks carry it as a hypothesis. -/
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+  [IsTate R] [IsBoundedSMul R C₀(ℕ, R)]
+
+/-- Check `identity_on_infinite_c0` (§0.1.2): the identity of `c₀(ℕ, R)` is not completely
+continuous, by §0.1.3, since `c₀(ℕ, R)` maps onto every `Rⁿ`. No Noetherian hypothesis. -/
+example : ¬ IsCompletelyContinuous (ContinuousLinearMap.id R C₀(ℕ, R)) :=
+  sorry
+
+/-- Check `decaying_diagonal` (§0.1.2): the operator with diagonal matrix `ϖⁱ` is completely
+continuous and does not have finite rank. -/
+example (ϖ : PseudoUniformizer R) (u : C₀(ℕ, R) →L[R] C₀(ℕ, R))
+    (hu : ∀ i j, matrixCoeff u i j = if i = j then (ϖ.unit : R) ^ i else 0) :
+    IsCompletelyContinuous u ∧ ¬ IsFiniteRank u :=
+  sorry
+
+end CompletelyContinuousChecks
+
+/-! ### Layer 1 -/
+
+section FredholmTargets
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+variable {I : Type*} [TopologicalSpace I] [DiscreteTopology I] [DecidableEq I]
+
+/-- Check `nonzero_nilpotent` (§1.2.2): the nonzero nilpotent Jordan block on `c₀(Fin 2, R)` has
+`charPowerSeries u = 1` although `u ≠ 0`. -/
+example (u : C₀(Fin 2, R) →L[R] C₀(Fin 2, R))
+    (hu : ∀ i j, matrixCoeff u i j = if i = 0 ∧ j = 1 then 1 else 0) :
+    charPowerSeries u = 1 ∧ u ≠ 0 :=
+  sorry
+
+/-- **Uniform tail bound under a common row majorant** (§1.2.4, §1.3.3; Serre, Proposition 7(b)):
+if the row norms of every member of a family are bounded by one null family `r`, the weighted
+coefficients `‖cₙ‖ ρⁿ` of their determinants are at most `B ^ |T| · q ^ (n − |T|)`, uniformly in
+the family, where `ρ · r i ≤ q < 1` off the finite set `T` and `ρ · r i ≤ B` everywhere. -/
+theorem norm_charCoeff_mul_pow_le_of_rowNorm_le [IsTate R] {ι : Type*}
+    (u : ι → C₀(I, R) →L[R] C₀(I, R)) {r : I → ℝ} (hr : Tendsto r cofinite (𝓝 0))
+    (hur : ∀ α i, rowNorm (u α) i ≤ r i) {ρ q B : ℝ} (hρ : 0 < ρ) (hq0 : 0 ≤ q) (hq1 : q < 1)
+    (hB : 1 ≤ B) (T : Finset I) (hT : ∀ i ∉ T, ρ * r i ≤ q) (hrB : ∀ i, ρ * r i ≤ B) (α : ι)
+    (n : ℕ) : ‖charCoeff (u α) n‖ * ρ ^ n ≤ B ^ T.card * q ^ (n - T.card) :=
+  sorry
+
+/- The sup norm on `K × K` is ultrametric; Mathlib has no instance for products, so the check
+carries it as a hypothesis. -/
+/-- Check `variable_rank_projective` (§1.5.2): over `K × K` with `e = (1, 0)`, the determinant of
+the identity of the summand `e • (K × K)`, that of multiplication by `e` on `c₀(Fin 1, K × K)`,
+is `1 − eT`, whose leading coefficient `−e` is not a unit. -/
+example {K : Type*} [NontriviallyNormedField K] [IsUltrametricDist K] [CompleteSpace K]
+    [IsUltrametricDist (K × K)] (u : C₀(Fin 1, K × K) →L[K × K] C₀(Fin 1, K × K))
+    (hu : ∀ x, u x = ((1, 0) : K × K) • x) :
+    charPowerSeries u = 1 - PowerSeries.C ((1, 0) : K × K) * PowerSeries.X ∧
+      ¬ IsUnit (-((1, 0) : K × K)) :=
+  sorry
+
+end FredholmTargets
+
+/-! ### Layer 2 -/
+
+namespace PowerSeries
+
+/-- **Hasse derivatives over any semiring** (§2.1.3; Buzzard, §3): the formula of `hasseDeriv`
+over a semiring `B`, commutative or not, with the binomial coefficient acting as a natural-number
+multiple. It applies to series with operator coefficients, such as the resolvent of §2.4.3. -/
+def semiringHasseDeriv {B : Type*} [Semiring B] (k : ℕ) (f : PowerSeries B) : PowerSeries B :=
+  PowerSeries.mk fun n ↦ (n + k).choose k • PowerSeries.coeff (n + k) f
+
+section SemiringHasse
+
+variable {B : Type*} [Semiring B]
+
+/-- `Δ⁰ = id` over any semiring (§2.1.3). -/
+theorem semiringHasseDeriv_zero (f : PowerSeries B) : semiringHasseDeriv 0 f = f :=
+  sorry
+
+/-- `Δᵏ` is additive over any semiring (§2.1.3). -/
+theorem semiringHasseDeriv_add (k : ℕ) (f g : PowerSeries B) :
+    semiringHasseDeriv k (f + g) = semiringHasseDeriv k f + semiringHasseDeriv k g :=
+  sorry
+
+/-- `Δᵏ` commutes with constants acting on the left, `B` being possibly noncommutative
+(§2.1.3). -/
+theorem semiringHasseDeriv_smul (k : ℕ) (b : B) (f : PowerSeries B) :
+    semiringHasseDeriv k (b • f) = b • semiringHasseDeriv k f :=
+  sorry
+
+/-- Check `hasse_characteristic_two` (§2.1.3): over `ZMod 2`, `Δ²(T²) = 1`, while the second
+derivative of `T²` vanishes. -/
+example : semiringHasseDeriv 2 (PowerSeries.X ^ 2 : PowerSeries (ZMod 2)) = 1 ∧
+    PowerSeries.derivative (ZMod 2) (PowerSeries.derivative (ZMod 2) (PowerSeries.X ^ 2)) = 0 :=
+  sorry
+
+end SemiringHasse
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+
+/-- Over a normed commutative ring the two Hasse derivatives agree (§2.1.3). -/
+theorem hasseDeriv_eq_semiringHasseDeriv (k : ℕ) (f : PowerSeries R) :
+    hasseDeriv k f = semiringHasseDeriv k f :=
+  sorry
+
+/-- **The explicit quotient by a monic polynomial** (§2.2.2; Coleman, Appendix A3): for `Q` monic of
+degree `d` and `bₖ` the coefficients of the inverse of `Q.reverse`, the series whose `n`-th
+coefficient is `∑ₖ coeff (n + d + k) F · bₖ`. -/
+def divByMonic (Q : R[X]) (F : PowerSeries R) : PowerSeries R :=
+  PowerSeries.mk fun n ↦ ∑' k, PowerSeries.coeff (n + Q.natDegree + k) F *
+    PowerSeries.coeff k (PowerSeries.invOfUnit (Q.reverse : PowerSeries R) 1)
+
+/-- The explicit quotient of an entire series by a monic polynomial is entire (§2.2.2). -/
+theorem IsEntire.isEntire_divByMonic {F : PowerSeries R} (hF : IsEntire F) {Q : R[X]}
+    (hQ : Q.Monic) : IsEntire (divByMonic Q F) :=
+  sorry
+
+/-- **Euclidean division by a monic polynomial, explicitly** (§2.2.2): `F = Q · divByMonic Q F + r`
+with `deg r < deg Q`, with no multiplicativity hypothesis on the leading coefficient. -/
+theorem IsEntire.exists_eq_mul_divByMonic_add {F : PowerSeries R} (hF : IsEntire F) {Q : R[X]}
+    (hQ : Q.Monic) :
+    ∃ r : R[X], r.degree < Q.degree ∧ F = (Q : PowerSeries R) * divByMonic Q F + r :=
+  sorry
+
+/-- Check `monic_quotient_quadratic` (§2.2.2): for `Q = T² + aT + b`, the quotient of `T³` is
+`T − a`. -/
+example (a b : R) :
+    divByMonic (Polynomial.X ^ 2 + Polynomial.C a * Polynomial.X + Polynomial.C b)
+      (PowerSeries.X ^ 3 : PowerSeries R) = PowerSeries.X - PowerSeries.C a :=
+  sorry
+
+/-- **Zeros and linear factors** (§2.2.2; Coleman, Appendix A3): an entire series vanishes at `a`
+iff `T − a` divides it in `R{{T}}`. -/
+theorem IsEntire.evalAt_eq_zero_iff {F : PowerSeries R} (hF : IsEntire F) (a : R) :
+    evalAt a F = 0 ↔
+      ∃ G : PowerSeries R, IsEntire G ∧ F = (PowerSeries.X - PowerSeries.C a) * G :=
+  sorry
+
+/-- **The resultant of a monic polynomial and an entire series** (§2.2.3–4; Coleman, Lemma A3.7):
+the norm, in `R[T]/(Q)`, of the class of the remainder of `F` on division by `Q`. -/
+def entireResultant (Q : R[X]) (F : PowerSeries R) : R :=
+  Algebra.norm R (AdjoinRoot.mk Q
+    (PowerSeries.trunc Q.natDegree (F - (Q : PowerSeries R) * divByMonic Q F)))
+
+/-- The resultant depends only on `F` modulo `Q` (§2.2.3–4). -/
+theorem entireResultant_eq_of_eq_mul_add {Q : R[X]} (hQ : Q.Monic) {F G S : PowerSeries R}
+    (hG : IsEntire G) (hS : IsEntire S) (h : F = (Q : PowerSeries R) * S + G) :
+    entireResultant Q F = entireResultant Q G :=
+  sorry
+
+/-- The resultant is multiplicative in the entire argument (§2.2.3–4). -/
+theorem entireResultant_mul {Q : R[X]} (hQ : Q.Monic) {F G : PowerSeries R} (hF : IsEntire F)
+    (hG : IsEntire G) : entireResultant Q (F * G) = entireResultant Q F * entireResultant Q G :=
+  sorry
+
+/-- Against a linear factor the resultant is evaluation, `Res(T − a, F) = F(a)` (§2.2.3–4). -/
+theorem entireResultant_X_sub_C (a : R) {F : PowerSeries R} (hF : IsEntire F) :
+    entireResultant (Polynomial.X - Polynomial.C a) F = evalAt a F :=
+  sorry
+
+/-- On polynomials the resultant is Mathlib's, with these degree bounds (§2.2.3–4). -/
+theorem entireResultant_coe {Q : R[X]} (hQ : Q.Monic) (P : R[X]) :
+    entireResultant Q (P : PowerSeries R) = Q.resultant P Q.natDegree P.natDegree :=
+  sorry
+
+/-- **The resultant Bézout identity** (§2.2.3–4): `Res(Q, F) = Q · G + H · F` with `G` entire and
+`H` a polynomial of degree less than `deg Q`. -/
+theorem entireResultant_bezout {Q : R[X]} (hQ : Q.Monic) {F : PowerSeries R} (hF : IsEntire F) :
+    ∃ (G : PowerSeries R) (H : R[X]), IsEntire G ∧ H.degree < Q.degree ∧
+      PowerSeries.C (entireResultant Q F) = (Q : PowerSeries R) * G + (H : PowerSeries R) * F :=
+  sorry
+
+/-- Check `constant_divisor` (§2.2.3–4): `Res(1, F) = 1`, including `F = 0`. -/
+example (F : PowerSeries R) : entireResultant 1 F = 1 :=
+  sorry
+
+/-- Check `linear_evaluation` (§2.2.3–4): `Res(T − a, 1 − bT) = 1 − ba`. -/
+example (a b : R) :
+    entireResultant (Polynomial.X - Polynomial.C a) (1 - PowerSeries.C b * PowerSeries.X) =
+      1 - b * a :=
+  sorry
+
+/-- Check `common_factor` (§2.2.3–4): `Res(Q, Q) = 0` for `Q` monic of positive degree. -/
+example {Q : R[X]} (hQ : Q.Monic) (hd : 0 < Q.natDegree) :
+    entireResultant Q (Q : PowerSeries R) = 0 :=
+  sorry
+
+/-- Check `resultant_zero_series` (§2.2.3–4): against the zero series the resultant is `0`, not a
+unit, for `Q` of positive degree, and `1` for `Q = 1`. -/
+example {Q : R[X]} (hQ : Q.Monic) (hd : 0 < Q.natDegree) :
+    entireResultant Q 0 = 0 ∧ ¬ IsUnit (entireResultant Q 0) ∧
+      entireResultant (1 : R[X]) 0 = 1 :=
+  sorry
+
+/-- Check `resultant_nilpotent_linear` (§2.2.3–4): `Res(T², a + bT) = a²`. -/
+example (a b : R) :
+    entireResultant (Polynomial.X ^ 2) (PowerSeries.C a + PowerSeries.C b * PowerSeries.X) =
+      a ^ 2 :=
+  sorry
+
+/-- **Zeros of a normalised entire series are units** (§2.3.1; Buzzard, §3): if `F(0) = 1` and
+`F(a) = 0`, then `a` is a unit with inverse `−∑ₙ coeff (n + 1) F · aⁿ`. -/
+theorem IsEntire.isUnit_of_evalAt_eq_zero {F : PowerSeries R} (hF : IsEntire F)
+    (hF0 : PowerSeries.coeff 0 F = 1) {a : R} (ha : evalAt a F = 0) :
+    IsUnit a ∧ a * -(∑' n, PowerSeries.coeff (n + 1) F * a ^ n) = 1 :=
+  sorry
+
+/-- Check `root_nonunit_constant` (§2.3.1): `T` vanishes at the non-unit `0`, so `F(0) = 1` is
+needed. -/
+example : evalAt 0 (PowerSeries.X : PowerSeries R) = 0 ∧ ¬ IsUnit (0 : R) :=
+  sorry
+
+end PowerSeries
+
+section ResolventChecks
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+  [IsTate R]
+
+/-- Check `resolvent_not_neumann` (§2.4.1): for the identity of `c₀(Fin 1, R)`, `H = 1 − T`, the
+resolvent coefficients `vₘ = ∑_{k ≤ m} cₖ uᵐ⁻ᵏ` are `v₀ = 1` and `vₘ = 0` for `m ≥ 1`, so the
+resolvent is `1`, while the Neumann coefficients `uᵐ` keep operator norm `1`. -/
+example (u : C₀(Fin 1, R) →L[R] C₀(Fin 1, R)) (hu : u = 1) :
+    ∑ k ∈ Finset.range 1, charCoeff u k • u ^ (0 - k) = 1 ∧
+      (∀ m, 1 ≤ m → ∑ k ∈ Finset.range (m + 1), charCoeff u k • u ^ (m - k) = 0) ∧
+      ¬ Tendsto (fun m ↦ opNorm (u ^ m)) atTop (𝓝 0) :=
+  sorry
+
+/-- Check `whole_series_product_nonexample` (§2.4.4): for the identity `u` of `c₀(Fin 1, R)`,
+`det(1 − u)` is multiplicative along `u + u − u ∘ u = u` while `det(1 − Tu)` is not. -/
+example (u : C₀(Fin 1, R) →L[R] C₀(Fin 1, R)) (hu : u = 1) :
+    charPowerSeries (u + u - u * u) ≠ charPowerSeries u * charPowerSeries u ∧
+      fredholmDet (u + u - u * u) = fredholmDet u * fredholmDet u :=
+  sorry
+
+end ResolventChecks
+
+/-! ### Layer 3 -/
+
+section RieszChecks
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+  [IsTate R]
+
+/-- Check `riesz_jordan_root` (§3.1.1): for `u = 1 + N` on `c₀(Fin 2, R)`, `a = 1` is a good zero
+of order `2` with `c = 1`, and every projector of §3.1.1 there is `p = 0`, so `1 − p` is the
+identity although `1 − u ≠ 0`. -/
+example (u : C₀(Fin 2, R) →L[R] C₀(Fin 2, R))
+    (hu : ∀ i j, matrixCoeff u i j = if i = j ∨ (i = 0 ∧ j = 1) then 1 else 0) :
+    PowerSeries.IsGoodZero (charPowerSeries u) 1 2 ∧
+      PowerSeries.evalAt 1 (PowerSeries.hasseDeriv 2 (charPowerSeries u)) = 1 ∧
+      (∀ p w : C₀(Fin 2, R) →L[R] C₀(Fin 2, R), p * p = p → u * p = p * u → u * w = w * u →
+        p * w = w * p → (1 - (1 : R) • u) ^ 2 * (1 - p) = 0 → (1 - (1 : R) • u) * w = p →
+        p = 0) ∧
+      1 - u ≠ 0 :=
+  sorry
+
+end RieszChecks
+
+section ColemanBounded
+
+variable {A : Type*} [CommRing A]
+
+/-- **Coleman's transform at a prescribed rank** (§3.3.1; Coleman, Appendix A3): the resultant in
+`X` of the rank-`n` reversal of `P` and of `1 − T·B(X)`, with the degree bounds `n` and `m`. -/
+def colemanDBounded (n m : ℕ) (B P : A[X]) : A[X] :=
+  Polynomial.resultant ((Polynomial.reflect n P).map (Polynomial.C : A →+* A[X]))
+    (1 - Polynomial.C (Polynomial.X : A[X]) * B.map (Polynomial.C : A →+* A[X])) n m
+
+/-- The transform does not depend on the bound `m ≥ deg B` (§3.3.1). -/
+theorem colemanDBounded_of_natDegree_le {n m : ℕ} {B P : A[X]} (hP0 : P.coeff 0 = 1)
+    (hPn : P.natDegree ≤ n) (hBm : B.natDegree ≤ m) :
+    colemanDBounded n m B P = colemanDBounded n B.natDegree B P :=
+  sorry
+
+/-- **Padding** (§3.3.1): raising the rank by one multiplies the transform by `1 − B(0) T`, the
+factor of the added eigenvalue `0`. -/
+theorem colemanDBounded_succ {n m : ℕ} {B P : A[X]} (hP0 : P.coeff 0 = 1)
+    (hPn : P.natDegree ≤ n) (hBm : B.natDegree ≤ m) :
+    colemanDBounded (n + 1) m B P =
+      colemanDBounded n m B P * (1 - Polynomial.C (B.coeff 0) * Polynomial.X) :=
+  sorry
+
+/-- When `B(0) = 0` the transform does not depend on the rank (§3.3.1). -/
+theorem colemanDBounded_add_of_coeff_zero {n m : ℕ} {B P : A[X]} (hB0 : B.coeff 0 = 0)
+    (hP0 : P.coeff 0 = 1) (hPn : P.natDegree ≤ n) (hBm : B.natDegree ≤ m) (k : ℕ) :
+    colemanDBounded (n + k) m B P = colemanDBounded n m B P :=
+  sorry
+
+/-- Check `nonzero_constant_padding` (§3.3.1): over `ℤ`, `D_{1,0}(1, 1) = 1 − T` although
+`D_{0,0}(1, 1) = 1`. -/
+example : colemanDBounded 1 0 (1 : ℤ[X]) 1 = 1 - Polynomial.X ∧
+    colemanDBounded 0 0 (1 : ℤ[X]) 1 = 1 :=
+  sorry
+
+/-- Check `nonzero_constant` (§3.3.4): for `B = c ≠ 0` and `P = 1` the rank-`N` transform is
+`(1 − cT) ^ N`, whose linear coefficients `−Nc` do not converge in `ℚ_p`. -/
+example (p : ℕ) [Fact p.Prime] {c : ℚ_[p]} (hc : c ≠ 0) :
+    (∀ N, colemanDBounded N 0 (Polynomial.C c) 1 = (1 - Polynomial.C c * Polynomial.X) ^ N) ∧
+      ¬ CauchySeq fun N : ℕ ↦ (colemanDBounded N 0 (Polynomial.C c) 1).coeff 1 :=
+  sorry
+
+end ColemanBounded
+
+section ColemanEntire
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+
+/-- The **functional majorant** `sup_{m ≥ 1} ‖bₘ‖ rᵐ` of a series `B` at the radius `r`
+(§3.3.4). -/
+def colemanMajorant (B : PowerSeries R) (r : ℝ) : ℝ :=
+  ⨆ m : ℕ, ‖PowerSeries.coeff (m + 1) B‖ * r ^ (m + 1)
+
+/-- **Newton majorants** (§3.3.4): the coefficients of a normalised entire series are dominated by
+the products `ρ₀ ⋯ ρ_{j−1}` of a positive sequence decreasing to `0`. -/
+theorem exists_newtonMajorant {F : PowerSeries R} (hF : PowerSeries.IsEntire F)
+    (hF0 : PowerSeries.coeff 0 F = 1) :
+    ∃ ρ : ℕ → ℝ, (∀ i, 0 < ρ i) ∧ Antitone ρ ∧ Tendsto ρ atTop (𝓝 0) ∧
+      ∀ j, ‖PowerSeries.coeff j F‖ ≤ ∏ i ∈ Finset.range j, ρ i :=
+  sorry
+
+/-- Along radii decreasing to `0` the functional majorants of an entire series decrease to `0`
+(§3.3.4). -/
+theorem tendsto_colemanMajorant {B : PowerSeries R} (hB : PowerSeries.IsEntire B) {ρ : ℕ → ℝ}
+    (hρ0 : ∀ i, 0 < ρ i) (hρ : Antitone ρ) (hρ' : Tendsto ρ atTop (𝓝 0)) :
+    Antitone (fun i ↦ colemanMajorant B (ρ i)) ∧
+      Tendsto (fun i ↦ colemanMajorant B (ρ i)) atTop (𝓝 0) :=
+  sorry
+
+/-- **The coefficient bound without eigenvalues** (§3.3.4): the `k`-th coefficient of every
+truncated transform is at most `β₀ ⋯ β_{k−1}`, with `βᵢ = colemanMajorant B ρᵢ`. -/
+theorem norm_coeff_colemanDBounded_le {B F : PowerSeries R} (hB : PowerSeries.IsEntire B)
+    (hB0 : PowerSeries.coeff 0 B = 0) (hF0 : PowerSeries.coeff 0 F = 1) {ρ : ℕ → ℝ}
+    (hρ0 : ∀ i, 0 < ρ i) (hρ : Antitone ρ)
+    (hFρ : ∀ j, ‖PowerSeries.coeff j F‖ ≤ ∏ i ∈ Finset.range j, ρ i) (N M k : ℕ) :
+    ‖(colemanDBounded N M (PowerSeries.trunc (M + 1) B) (PowerSeries.trunc (N + 1) F)).coeff k‖ ≤
+      ∏ i ∈ Finset.range k, colemanMajorant B (ρ i) :=
+  sorry
+
+/-- Check `spectralMajorant_coordinate` (§3.3.4): the majorant of `T` at `r > 0` is `r`. -/
+example {r : ℝ} (hr : 0 < r) : colemanMajorant (PowerSeries.X : PowerSeries R) r = r :=
+  sorry
+
+/-- Check `spectralMajorant_zero` (§3.3.4): the majorant of `0` vanishes. -/
+example (r : ℝ) : colemanMajorant (0 : PowerSeries R) r = 0 :=
+  sorry
+
+/-- Check `spectralMajorant_square` (§3.3.4): the majorant of `T²` at `r > 0` is `r²`. -/
+example {r : ℝ} (hr : 0 < r) : colemanMajorant (PowerSeries.X ^ 2 : PowerSeries R) r = r ^ 2 :=
+  sorry
+
+/-- **Coleman's transform with an entire functional input** (§3.3.4; Coleman, Appendix A3): the
+coefficientwise limit of the transforms of the truncations of `F` by the truncations of `B`, the
+two ranks tending to infinity independently. -/
+def colemanDEntire (B F : PowerSeries R) : PowerSeries R :=
+  PowerSeries.mk fun k ↦ limUnder (atTop ×ˢ atTop) fun NM : ℕ × ℕ ↦
+    (colemanDBounded NM.1 NM.2 (PowerSeries.trunc (NM.2 + 1) B)
+      (PowerSeries.trunc (NM.1 + 1) F)).coeff k
+
+/-- The truncated transforms converge to `colemanDEntire B F` in every Gauss norm, the two ranks
+tending to infinity independently (§3.3.4). -/
+theorem tendsto_gaussNorm_colemanDBounded {B F : PowerSeries R} (hB : PowerSeries.IsEntire B)
+    (hB0 : PowerSeries.coeff 0 B = 0) (hF : PowerSeries.IsEntire F)
+    (hF0 : PowerSeries.coeff 0 F = 1) {c : ℝ} (hc : 0 < c) :
+    Tendsto (fun NM : ℕ × ℕ ↦ PowerSeries.gaussNorm norm c
+      ((colemanDBounded NM.1 NM.2 (PowerSeries.trunc (NM.2 + 1) B)
+        (PowerSeries.trunc (NM.1 + 1) F) : PowerSeries R) - colemanDEntire B F))
+      (atTop ×ˢ atTop) (𝓝 0) :=
+  sorry
+
+/-- The transform with entire input is entire with constant coefficient `1` (§3.3.4). -/
+theorem colemanDEntire_isEntire {B F : PowerSeries R} (hB : PowerSeries.IsEntire B)
+    (hB0 : PowerSeries.coeff 0 B = 0) (hF : PowerSeries.IsEntire F)
+    (hF0 : PowerSeries.coeff 0 F = 1) :
+    PowerSeries.IsEntire (colemanDEntire B F) ∧ PowerSeries.coeff 0 (colemanDEntire B F) = 1 :=
+  sorry
+
+/-- The transform with entire input is multiplicative in `F` (§3.3.4). -/
+theorem colemanDEntire_mul {B F G : PowerSeries R} (hB : PowerSeries.IsEntire B)
+    (hB0 : PowerSeries.coeff 0 B = 0) (hF : PowerSeries.IsEntire F)
+    (hF0 : PowerSeries.coeff 0 F = 1) (hG : PowerSeries.IsEntire G)
+    (hG0 : PowerSeries.coeff 0 G = 1) :
+    colemanDEntire B (F * G) = colemanDEntire B F * colemanDEntire B G :=
+  sorry
+
+/-- Check `identity` (§3.3.4): `D(T, F) = F` for every normalised entire `F`. -/
+example {F : PowerSeries R} (hF : PowerSeries.IsEntire F) (hF0 : PowerSeries.coeff 0 F = 1) :
+    colemanDEntire PowerSeries.X F = F :=
+  sorry
+
+/-- Check `zero` (§3.3.4): `D(0, F) = 1`, and `D(B, 1) = 1` when `B(0) = 0`. -/
+example {B F : PowerSeries R} (hB : PowerSeries.IsEntire B) (hB0 : PowerSeries.coeff 0 B = 0)
+    (hF : PowerSeries.IsEntire F) (hF0 : PowerSeries.coeff 0 F = 1) :
+    colemanDEntire 0 F = 1 ∧ colemanDEntire B 1 = 1 :=
+  sorry
+
+/-- Check `nilpotent` (§3.3.4): for `ε² = 0`, `D(T, 1 − εT²) = 1 − εT²`. -/
+example {ε : R} (hε : ε ^ 2 = 0) :
+    colemanDEntire PowerSeries.X (1 - PowerSeries.C ε * PowerSeries.X ^ 2) =
+      1 - PowerSeries.C ε * PowerSeries.X ^ 2 :=
+  sorry
+
+/-- Check `wrong_topology` (§3.3.4): `T ^ N` tends to `0` coefficientwise while its Gauss norm at
+radius `1` is `1`. -/
+example :
+    (∀ k, Tendsto (fun N ↦ PowerSeries.coeff k (PowerSeries.X ^ N : PowerSeries R)) atTop
+      (𝓝 0)) ∧ ∀ N, PowerSeries.gaussNorm norm 1 (PowerSeries.X ^ N : PowerSeries R) = 1 :=
+  sorry
+
+end ColemanEntire
+
+section ColemanTate
+
+variable {R : Type*} [NormedCommRing R] [IsUltrametricDist R] [NormOneClass R] [CompleteSpace R]
+  [IsTate R]
+variable {I : Type*} [TopologicalSpace I] [DiscreteTopology I] [DecidableEq I]
+
+/-- `colemanD` is the transform at the smallest rank, `n = deg P` and `m = deg B` (§3.3.1). -/
+theorem colemanD_eq_colemanDBounded {B P : R[X]} (hP0 : P.coeff 0 = 1) :
+    colemanD B P = colemanDBounded P.natDegree B.natDegree B P :=
+  sorry
+
+/-- For a polynomial `B` with `B(0) = 0`, the transform with entire input is `colemanDSeries`
+(§3.3.2, §3.3.4). -/
+theorem colemanDEntire_coe {B : R[X]} (hB0 : B.coeff 0 = 0) {F : PowerSeries R}
+    (hF : PowerSeries.IsEntire F) (hF0 : PowerSeries.coeff 0 F = 1) :
+    colemanDEntire (B : PowerSeries R) F = colemanDSeries B F :=
+  sorry
+
+/-- **Operator evaluation of an entire series** (§2.1.2 in the algebra of operators, §3.3.4): the
+partial sums `∑_{m<N} bₘ • uᵐ` converge in operator norm. -/
+theorem exists_tendsto_opNorm_sum_pow (u : C₀(I, R) →L[R] C₀(I, R)) {B : PowerSeries R}
+    (hB : PowerSeries.IsEntire B) :
+    ∃ v : C₀(I, R) →L[R] C₀(I, R), Tendsto (fun N ↦ opNorm (v - ∑ m ∈ Finset.range N,
+      PowerSeries.coeff m B • u ^ m)) atTop (𝓝 0) :=
+  sorry
+
+/-- For `u` compactoid and `B(0) = 0` the operator `B(u)` is compactoid (§3.3.4). -/
+theorem IsCompactoid.of_tendsto_opNorm_sum_pow {u v : C₀(I, R) →L[R] C₀(I, R)}
+    (hu : IsCompactoid u) {B : PowerSeries R} (hB : PowerSeries.IsEntire B)
+    (hB0 : PowerSeries.coeff 0 B = 0)
+    (hv : Tendsto (fun N ↦ opNorm (v - ∑ m ∈ Finset.range N, PowerSeries.coeff m B • u ^ m))
+      atTop (𝓝 0)) :
+    IsCompactoid v :=
+  sorry
+
+/-- **The spectral mapping formula for an entire `B`** (§3.3.4; Coleman, Theorem A3.9):
+`det(1 − T·B(u)) = D(B, det(1 − Tu))` for `u` compactoid and `B(0) = 0`. -/
+theorem charPowerSeries_eq_colemanDEntire {u v : C₀(I, R) →L[R] C₀(I, R)} (hu : IsCompactoid u)
+    {B : PowerSeries R} (hB : PowerSeries.IsEntire B) (hB0 : PowerSeries.coeff 0 B = 0)
+    (hv : Tendsto (fun N ↦ opNorm (v - ∑ m ∈ Finset.range N, PowerSeries.coeff m B • u ^ m))
+      atTop (𝓝 0)) :
+    charPowerSeries v = colemanDEntire B (charPowerSeries u) :=
+  sorry
+
+/-- Check `entireOperator_zero` (§3.3.4): `B = 0` evaluates to `0` and `B = T` to `u`. -/
+example (u v w : C₀(I, R) →L[R] C₀(I, R))
+    (hv : Tendsto (fun N ↦ opNorm (v - ∑ m ∈ Finset.range N,
+      PowerSeries.coeff m (0 : PowerSeries R) • u ^ m)) atTop (𝓝 0))
+    (hw : Tendsto (fun N ↦ opNorm (w - ∑ m ∈ Finset.range N,
+      PowerSeries.coeff m (PowerSeries.X : PowerSeries R) • u ^ m)) atTop (𝓝 0)) :
+    v = 0 ∧ w = u :=
+  sorry
+
+/-- Check `entireOperator_nilpotent` (§3.3.4): if `u² = 0` then `B(u) = b₀ + b₁ u`. -/
+example (u v : C₀(I, R) →L[R] C₀(I, R)) (hu : u * u = 0) (B : PowerSeries R)
+    (hv : Tendsto (fun N ↦ opNorm (v - ∑ m ∈ Finset.range N, PowerSeries.coeff m B • u ^ m))
+      atTop (𝓝 0)) :
+    v = PowerSeries.coeff 0 B • 1 + PowerSeries.coeff 1 B • u :=
+  sorry
+
+/-- Check `entireOperator_constant` (§3.3.4): on `c₀(ℕ, R)`, `B = 1` evaluates to the identity,
+which is not compactoid. -/
+example (u v : C₀(ℕ, R) →L[R] C₀(ℕ, R)) (hu : IsCompactoid u)
+    (hv : Tendsto (fun N ↦ opNorm (v - ∑ m ∈ Finset.range N,
+      PowerSeries.coeff m (1 : PowerSeries R) • u ^ m)) atTop (𝓝 0)) :
+    v = 1 ∧ ¬ IsCompactoid v :=
+  sorry
+
+end ColemanTate
+
+end
+
+end TauCetiRoadmap.CompactOperators

@@ -1288,6 +1288,399 @@ Layers 1–3; the Newton-polygons roadmap throughout (Layer 1 for the valuation,
 
 ---
 
+## Targets requested by the Tau Ceti LocallyAnalyticDistributions and AdicSpacesPartIII roadmaps
+
+Two Tau Ceti roadmaps will import the targets below from this roadmap:
+TauCetiProject/TauCetiRoadmap#854 (LocallyAnalyticDistributions, its Layer 4) and
+TauCetiProject/TauCetiRoadmap#813 (AdicSpacesPartIII, §R3.6, the non-strict predicate of its target
+*completely-continuous-map*). Nothing above is changed; each entry names an existing target that a
+consumer uses, or states a new one in the conventions of this roadmap. Four conventions differ.
+LocallyAnalyticDistributions writes `a_{ij}` for coordinate `j` of `u(e_i)`, the transpose of
+`matrixCoeff`, so its column norms are `rowNorm` here and its statements are transposed below. It
+works over a Noetherian Banach algebra over a complete nonarchimedean field, a Banach–Tate ring;
+where it uses Noetherianity, this roadmap uses nothing or the closedness hypothesis of §0.2.9. Its
+finite-rank maps have finitely generated range, the same notion over Noetherian rings, and its
+`fredholmSeries`, `entireEval f a` and `hasseSeries` are `charPowerSeries`, `evalAt a f` and
+`hasseDeriv`. AdicSpacesPartIII norms its modules by a lattice, related to these norms in §0.1.2.
+
+### Layer 0
+
+Existing targets §0.1.1–0.1.2 (`IsFiniteRank`, `IsCompletelyContinuous`). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.1 (TauCetiRoadmap#854); there the approximants have finitely
+generated range, which gives the same predicate over a Noetherian ring by
+`isFiniteRank_iff_range_fg` below. Checks:
+
+- `identity_on_infinite_c0`: over a Banach–Tate ring `R` the identity of `c₀(ℕ, R)` is not
+  completely continuous. Every row of its matrix has norm `1`, and with no Noetherian hypothesis the
+  reason is §0.1.3: `c₀(ℕ, R)` maps onto every `Rⁿ`, so it is not finitely generated.
+- `decaying_diagonal`: for a pseudo-uniformiser `ϖ`, the operator on `c₀(ℕ, R)` with diagonal
+  matrix `ϖⁱ` is compactoid (§0.2.7), hence completely continuous (§0.2.3), and it does not have
+  finite rank, its range containing the unit multiples `ϖⁱ eᵢ` of all the basis vectors.
+
+Existing target §0.1.2 (the ideal property, sums and scalar multiples, closure under operator-norm
+limits). Consumed by Tau Ceti AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813), target
+*completely-continuous-map*, as `IsCompletelyContinuous.comp_left`, `.add` and
+`isClosed_setOf_isCompletelyContinuous`; there the approximants have finitely generated image, so
+its sums and precompositions assume a Noetherian ring, while here neither does.
+
+**Finite rank against finitely generated range** (`isFiniteRank_iff_range_fg`, §0.1.1). Over a
+Noetherian ring `R`, `IsFiniteRank u` holds if and only if the range of `u` is finitely generated,
+a submodule of a finitely generated module over a Noetherian ring being finitely generated. Without
+the Noetherian hypothesis only the implication from a finitely generated range holds. Source:
+Buzzard, §2, p. 9 (the definition of finite rank). Consumed by Tau Ceti LocallyAnalyticDistributions
+§4.1 (TauCetiRoadmap#854).
+
+**Finite rank implies complete continuity** (`IsFiniteRank.isCompletelyContinuous`, §0.1.2). An
+operator of finite rank is completely continuous, being its own approximant. Source: Kiehl, *Der
+Endlichkeitssatz für eigentliche Abbildungen in der nichtarchimedischen Funktionentheorie*, Invent.
+Math. 2 (1967), §1, Definition 1.1, p. 198. Consumed by Tau Ceti AdicSpacesPartIII §R3.6
+(TauCetiRoadmap#813), as `IsCompletelyContinuous.of_finiteRank`.
+
+**Banach modules normed by a lattice** (§0.1.2). Let `K` be a complete nontrivially valued
+nonarchimedean field, `A` a nonzero `K`-affinoid algebra, `A₀ ⊆ A` a ring of definition containing
+the image of `K°`, and `M` a complete `A`-module whose topology is defined by an open bounded
+`A₀`-submodule `M₀`. Give `A` and `M` the gauge norms `‖a‖ = inf {|c| : c ∈ K, a ∈ c A₀}` and
+`‖m‖ = inf {|c| : c ∈ K, m ∈ c M₀}`. Then `A` is a Banach–Tate ring in the sense of this roadmap,
+every `c ∈ K` with `0 < |c| < 1` being a multiplicative pseudo-uniformiser; `M` is a Banach
+`A`-module with `‖a m‖ ≤ ‖a‖ ‖m‖`; and a continuous `A`-linear map between two such modules is an
+operator-norm limit of continuous `A`-linear maps with finitely generated image, the non-strict
+predicate of AdicSpacesPartIII, if and only if it is `IsCompletelyContinuous` for the gauge norms,
+the two finite-rank conventions agreeing because `A` is Noetherian. Source: Kiehl, *Der
+Endlichkeitssatz*, §1, Definition 1.1, p. 198. Consumed by Tau Ceti AdicSpacesPartIII §R3.6
+(TauCetiRoadmap#813).
+
+Existing target §0.1.3 (the identity criterion). Consumed by Tau Ceti LocallyAnalyticDistributions
+§4.1 (TauCetiRoadmap#854); there it is stated over a Noetherian Banach algebra, here over every
+Banach–Tate ring.
+
+Existing targets §0.2.2, §0.2.3 and §0.2.9 (the truncation criterion and the two comparisons of
+compactoid with completely continuous). Consumed by Tau Ceti LocallyAnalyticDistributions §4.1
+(TauCetiRoadmap#854), as its completely continuous matrix criterion; its column norm
+`r_j(u) = sup_i ‖a_{ij}‖` is `rowNorm u j` here, and it derives the equivalence from Noetherianity,
+which here enters only through the closedness hypothesis of §0.2.9.
+
+Existing target §0.3.3 (the restriction-of-radius criterion). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.15 (TauCetiRoadmap#854), as complete continuity from analytic
+contraction; there the operator is a coordinate pullback with a bounded multiplier on the
+finite-chart analytic stages of that roadmap, over a Noetherian Banach algebra.
+
+Existing targets §0.4.4 and §3.1.3 (the finiteness germ and the finiteness of the root kernel).
+Consumed by Tau Ceti LocallyAnalyticDistributions §4.8 (TauCetiRoadmap#854), as
+`riesz_kernel_finite` and `riesz_kernel_projective`; there the ring is Noetherian and
+`ker ((1 − a • u) ^ h)` is assumed to have a topological complement, which §3.1.2 supplies here.
+
+### Layer 1
+
+Existing targets §1.1.1 and §1.4.2 (the principal-minors expansion and conjugation). Consumed by
+Tau Ceti LocallyAnalyticDistributions §4.10 (TauCetiRoadmap#854), as the similarity invariance of
+the characteristic series; there it is the statement for finite matrices, whose series is defined by
+principal minors as in §1.1.1.
+
+Existing target §1.1.6 (the ultrametric Hadamard bound). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), as the determinant bound by distinct output
+columns; its hypothesis `‖D_{ij}‖ ≤ b_j` on the output index is `‖A i j‖ ≤ rᵢ` here.
+
+Existing targets §1.2.1–1.2.2 (`minor`, `charCoeff`, `charPowerSeries`). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), as `fredholmSeries` and the cofinite decay
+of principal minors of fixed size; its `operatorEntry u i j` is `matrixCoeff u j i`, and the sums of
+principal minors coincide. Check:
+
+- `nonzero_nilpotent`: the operator `u` on `c₀(Fin 2, R)` with `matrixCoeff u 0 1 = 1` and all other
+  entries `0`, the nonzero nilpotent Jordan block, has `charPowerSeries u = 1`, every principal
+  minor of positive size vanishing; a determinant equal to `1` does not force `u = 0`.
+
+Existing target §1.2.3 (agreement with the finite case). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), as `fredholmSeries_of_finite_support`; its
+hypothesis that `u` takes values in the coordinate submodule on `S` is the vanishing of the rows
+outside `S` here.
+
+Existing targets §1.2.4 and §1.3.3 (the Hadamard bound on the coefficients and the truncation
+limits). Consumed by Tau Ceti LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), in the
+uniform form below; its column majorant is a row majorant here.
+
+**Uniform tail bound under a common row majorant** (`norm_charCoeff_mul_pow_le_of_rowNorm_le`, a
+corollary of §1.2.4). Let `(u_α)` be a family of operators on `c₀(I, R)` and `r : I → ℝ` a null
+family with `rowNorm u_α i ≤ r i` for all `α` and `i`, so that every `u_α` is compactoid. Fix
+`ρ > 0` and `0 ≤ q < 1`, a finite `T ⊆ I` with `ρ · r i ≤ q` for `i ∉ T`, and `B ≥ 1` with
+`ρ · r i ≤ B` for all `i`. Then `‖charCoeff u_α n‖ ρⁿ ≤ B ^ |T| · q ^ (n − |T|)` (truncated
+subtraction) for every `α` and `n`: by §1.2.1 the principal minor on `S` is bounded by
+`∏_{i ∈ S} r i`, and `∏_{i ∈ S} ρ · r i ≤ B ^ |S ∩ T| · q ^ |S ∖ T|`. The bound does not depend on
+`α` and tends to `0` with `n`, which is what the limits in every Gauss norm of §1.3.3 and §1.3.4
+need. Source: Serre, Proposition 7(b) and the estimate in its proof, pp. 75–76, and Proposition 8,
+p. 77. Consumed by Tau Ceti LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854).
+
+Existing target §1.3.1 (entirety). Consumed by Tau Ceti LocallyAnalyticDistributions §4.2
+(TauCetiRoadmap#854), as `fredholmSeries_isEntire`; there for completely continuous operators over a
+Noetherian Banach algebra, here for compactoid ones.
+
+Existing target §1.3.2 (the Lipschitz bound). Consumed by Tau Ceti LocallyAnalyticDistributions
+§4.2 (TauCetiRoadmap#854); there the bound is `‖u − v‖ · C ^ (n − 1)` for a common bound `C ≥ 1` on
+the norms, which follows from the bound here.
+
+Existing target §1.3.4 (limits of compactoid operators). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), as Gauss convergence under a common column
+majorant; there only the second form, with a common majorant, is stated.
+
+Existing target §1.4.1 (the trace property). Consumed by Tau Ceti LocallyAnalyticDistributions §4.2
+(TauCetiRoadmap#854), as the cyclic Fredholm determinant identity; there `u : M → N` and
+`v : N → M` act between potentially orthonormalisable modules, here between model spaces, §1.5.1
+transporting the statement.
+
+Existing targets §1.5.1 and §1.7.3 (independence of the orthonormal basis and of an equivalent
+norm). Consumed by Tau Ceti LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854).
+
+Existing target §1.5.2 (the determinant on modules with property (Pr)). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854). Check:
+
+- `variable_rank_projective`: let `K` be a complete nonarchimedean nontrivially normed field,
+  `R = K × K` with the sup norm, a Banach–Tate ring, and `e = (1, 0)`. The identity of the summand
+  `eR` of `R = c₀(Fin 1, R)` has the determinant of multiplication by `e` on `c₀(Fin 1, R)`, namely
+  `1 − eT`, whose leading coefficient `−e` is not a unit: on a projective module whose rank is not
+  constant, an invertible operator can have a determinant with non-unit leading coefficient.
+
+Existing target §1.6.3 (direct sums). Consumed by Tau Ceti LocallyAnalyticDistributions §4.2
+(TauCetiRoadmap#854); there on modules with property (Pr), here on `c₀(I ⊕ J, R)` and hence on
+direct sums of such modules.
+
+Existing target §1.7.1 (bounded base change), the determinant identity only. Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854); there along continuous homomorphisms of
+Noetherian Banach algebras over a field, which are bounded, being linear over the field, and that
+target also constructs the completed scalar extension of modules, which this roadmap leaves out.
+
+### Layer 2
+
+Existing targets §2.1.1–2.1.2 (`PowerSeries.IsEntire`, `PowerSeries.evalAt`). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), as `IsEntire` and `entireEval`; its
+`entireEval f a` is `evalAt a f`.
+
+Existing target §2.1.3 (`PowerSeries.hasseDeriv`). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.5 (TauCetiRoadmap#854), as `hasseSeries`, which is stated over any
+semiring as below.
+
+**Hasse derivatives over any semiring** (`PowerSeries.semiringHasseDeriv`,
+`semiringHasseDeriv_zero`, `semiringHasseDeriv_add`, `semiringHasseDeriv_smul`,
+`hasseDeriv_eq_semiringHasseDeriv`, §2.1.3). The formula of §2.1.3 defines `Δᵏ` on `B⟦T⟧` for any
+semiring `B`, commutative or not, with `(n + k).choose k` acting as a natural-number multiple, so
+that no factorial is inverted and no norm is used. It satisfies `Δ⁰ = id`, additivity and
+`Δᵏ (b • f) = b • Δᵏ f` for `b ∈ B`, and it agrees with `hasseDeriv` over a normed commutative ring.
+This is the generality of the Hasse derivatives of the resolvent in §2.4.3, whose coefficients are
+operators. Source: Buzzard, §3, p. 22. Consumed by Tau Ceti LocallyAnalyticDistributions §4.5
+(TauCetiRoadmap#854). Check:
+
+- `hasse_characteristic_two`: over `ZMod 2`, `Δ²(T²) = 1`, while the second derivative of `T²` is
+  `2 = 0`.
+
+Existing target §2.1.4 (Gauss norms and convergence in `R{{T}}`). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.12 (TauCetiRoadmap#854), as the convergence of entire truncations at
+every radius and the unique entire limit of sequences that are Cauchy in every Gauss norm.
+
+Existing target §2.2.2 (Euclidean division). Consumed by Tau Ceti LocallyAnalyticDistributions §4.3
+(TauCetiRoadmap#854), as `entire_linear_division` and `entire_monic_division_existsUnique`; there
+the divisor is `T − a` or monic, a case of a multiplicative unit leading coefficient, and for
+`T − a` the remainder is `evalAt a F`.
+
+**The explicit quotient by a monic polynomial** (`PowerSeries.divByMonic`,
+`IsEntire.isEntire_divByMonic`, `IsEntire.exists_eq_mul_divByMonic_add`, §2.2.2). Let `Q ∈ R[T]` be
+monic of degree `d` and `bₖ` the coefficients of the inverse in `R⟦T⟧` of `Q.reverse`, whose
+constant coefficient is `1`. For `F` entire, `divByMonic Q F` is the series whose `n`-th coefficient
+is the convergent sum `∑ₖ coeff (n + d + k) F · bₖ`. It is entire, and `F = Q · divByMonic Q F + r`
+with `r` a polynomial of degree less than `d`; so it is the quotient of §2.2.2 for `B = Q`, obtained
+with no multiplicativity hypothesis and without Weierstrass division. Source: Coleman, Appendix A3,
+p. 434 (the division preceding Lemmas A3.5 and A3.7). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.3 (TauCetiRoadmap#854), as `entireMonicQuotient`. Check:
+
+- `monic_quotient_quadratic`: for `Q = T² + aT + b`, `divByMonic Q T³ = T − a`, the remainder being
+  `(a² − b) T + ab`.
+
+**Zeros and linear factors** (`IsEntire.evalAt_eq_zero_iff`, §2.2.2). For `F` entire and `a ∈ R`,
+`evalAt a F = 0` if and only if `F = (T − a) · G` with `G` entire: division by `T − a` leaves the
+constant remainder `evalAt a F`, evaluation at `a` being a ring homomorphism on `R{{T}}` (§2.1.2),
+and the quotient is unique. Source: Coleman, Appendix A3, p. 434 (the proof of Lemma A3.5, for a
+linear divisor). Consumed by Tau Ceti LocallyAnalyticDistributions §4.3 (TauCetiRoadmap#854), as
+`entire_root_iff_linear_factor`.
+
+Existing targets §2.2.3–2.2.4 and §3.3.3 (relative primality and its criteria). Consumed by Tau
+Ceti LocallyAnalyticDistributions §4.4 (TauCetiRoadmap#854), as the statement that the resultant
+detects analytic coprimality; there the criterion is the resultant below of a monic `Q` against
+`F`, not Coleman's transform at `1`.
+
+**The resultant of a monic polynomial and an entire series** (`PowerSeries.entireResultant`,
+`entireResultant_eq_of_eq_mul_add`, `entireResultant_mul`, `entireResultant_X_sub_C`,
+`entireResultant_coe`, §2.2.3–4). For `Q ∈ R[T]` monic of degree `d` and `F` entire, `R[T]/(Q)` is
+free of rank `d`, and `entireResultant Q F ∈ R` is the norm, the determinant of multiplication, of
+the class of the remainder `r` in `F = Q · divByMonic Q F + r`. It depends only on `F` modulo `Q`
+(if `F = Q S + G` with `S`, `G` entire, `F` and `G` have the same resultant), it is multiplicative
+in `F`, it is `evalAt a F` for `Q = T − a`, and for a polynomial `F` it is
+`Polynomial.resultant Q F d (deg F)`. Source: Coleman, Appendix A3, Lemma A3.7, pp. 434–435.
+Consumed by Tau Ceti LocallyAnalyticDistributions §4.4 (TauCetiRoadmap#854), as `entireResultant`.
+Checks:
+
+- `constant_divisor`: `entireResultant 1 F = 1` for every `F`, including `F = 0`.
+- `linear_evaluation`: `entireResultant (T − a) (1 − bT) = 1 − ba`.
+- `common_factor`: `entireResultant Q Q = 0` for `Q` monic of positive degree.
+- `resultant_zero_series`: for `Q` monic of positive degree, `entireResultant Q 0 = 0` is not a
+  unit, so the resultant does not detect coprimality with the zero series;
+  `entireResultant 1 0 = 1`.
+- `resultant_nilpotent_linear`: `entireResultant T² (a + bT) = a²`, over any ring of this layer,
+  reduced or not.
+
+**The resultant Bézout identity** (`entireResultant_bezout`, §2.2.3–4). For `Q` monic of degree `d`
+and `F` entire there are `G` entire and a polynomial `H` of degree less than `d` with
+`entireResultant Q F = Q · G + H · F` in `R{{T}}`; when the resultant is a unit, `Q` and `F` are
+therefore coprime in the sense of `IsEntireCoprime`. Source: Coleman, Appendix A3, pp. 434–435, by
+the argument of Lemma A3.7. Consumed by Tau Ceti LocallyAnalyticDistributions §4.4
+(TauCetiRoadmap#854), as `entireResultant_bezout`.
+
+Existing target §2.3.1 (`PowerSeries.IsGoodZero`, the clause that `a` is a unit when `F(0) = 1` and
+`s ≥ 1`). Consumed by Tau Ceti LocallyAnalyticDistributions §4.7 (TauCetiRoadmap#854), as
+`entire_root_isUnit`; there over any complete commutative normed ring, with the inverse below.
+
+**Zeros of a normalised entire series are units** (`IsEntire.isUnit_of_evalAt_eq_zero`, §2.3.1). If
+`F` is entire with `F(0) = 1` and `evalAt a F = 0`, then `a` is a unit with inverse
+`−∑_{n ≥ 0} coeff (n + 1) F · aⁿ`, since `0 = evalAt a F = 1 + a · ∑_{n ≥ 0} coeff (n + 1) F · aⁿ`.
+Completeness and submultiplicativity of the norm suffice. Source: Buzzard, §3, p. 22. Consumed by
+Tau Ceti LocallyAnalyticDistributions §4.7 (TauCetiRoadmap#854). Check:
+
+- `root_nonunit_constant`: the polynomial `T` vanishes at the non-unit `0`, so the hypothesis
+  `F(0) = 1` cannot be dropped.
+
+Existing target §2.4.1 (the resolvent coefficients). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.5 (TauCetiRoadmap#854), as the Fredholm resolvent series. Check:
+
+- `resolvent_not_neumann`: for `u` the identity of `c₀(Fin 1, R)`, `H = 1 − T` and the resolvent
+  coefficients are `v₀ = 1` and `vₘ = 0` for `m ≥ 1`, so the resolvent `∑ vₘ Tᵐ = H(T) (1 − T)⁻¹`
+  is `1`, which is entire, while the Neumann series `∑ uᵐ Tᵐ`, whose coefficients have operator
+  norm `1`, is not; the resolvent is not `(1 − T u)⁻¹`.
+
+Existing targets §2.4.2–2.4.3 (the resolvent is entire; divided evaluations). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.6 and §4.7 (TauCetiRoadmap#854); there on modules with property
+(Pr), here on `c₀(I, R)` with the transport of §0.4.
+
+Existing target §2.4.4 (`fredholmDet` and `fredholmDet_mul`). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.2 (TauCetiRoadmap#854), as `fredholmSeries_eval_one_mul`. Check:
+
+- `whole_series_product_nonexample`: for `u` the identity of `c₀(Fin 1, R)`, `u + u − u ∘ u = u`,
+  so `charPowerSeries (u + u − u ∘ u) = 1 − T`, while `charPowerSeries u · charPowerSeries u` is
+  `(1 − T)²`; the two differ, though both vanish at `T = 1`, so the multiplicativity holds for
+  `fredholmDet` and not for the series.
+
+### Layer 3
+
+Existing targets §3.1.1, §3.1.2 and §3.1.4 (existence, decomposition and functoriality of the Riesz
+projector). Consumed by Tau Ceti LocallyAnalyticDistributions §4.7 and §4.14 (TauCetiRoadmap#854);
+there the projector is given by the formula below, on modules with property (Pr).
+
+**The explicit Riesz projector** (§3.1.1). Let `a` be a good zero of `H` of order `h ≥ 1`, let
+`c := evalAt a (hasseDeriv h H)`, a unit, let `P_h(a, u)` be the divided evaluation of §2.4.3, and
+put `b := c⁻¹ • P_h(a, u)`. Then `p := ((1 − a • u) ∘ b) ^ h` and `w := b ∘ p` satisfy the
+conclusion of §3.1.1, `1 − p = 1 − ((1 − a • u) ∘ b) ^ h` is the projector onto
+`ker ((1 − a • u) ^ h)`, and `b` inverts `1 − a • u` on `range p`. Source: Serre, §7, proof of
+Proposition 12, pp. 80–81; Buzzard, Proposition 3.2, pp. 23–24. Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.7 (TauCetiRoadmap#854), as `rieszRootProjector`, whose `E` is
+`1 − p` here. Check:
+
+- `riesz_jordan_root`: for `u = 1 + N` on `c₀(Fin 2, R)`, with `N` the nonzero nilpotent Jordan
+  block, `H = (1 − T)²`, `a = 1` is a good zero of order `2` with `c = 1`, and every `p`, `w` as in
+  §3.1.1 have `p = 0`; so `1 − p`, the projector onto `ker ((1 − u) ^ 2)`, is the identity although
+  `1 − u ≠ 0`: the kernel summand is the whole generalised eigenspace.
+
+Existing targets §3.3.1 and §1.1.4 (Coleman's transform on polynomials and the resultant of the
+characteristic polynomial). Consumed by Tau Ceti LocallyAnalyticDistributions §4.9 and §4.10
+(TauCetiRoadmap#854), as the finite spectral transform and the finite characteristic spectral
+mapping; there the reversal is taken at a prescribed rank, as below.
+
+**Coleman's transform at a prescribed rank** (`colemanDBounded`, `colemanDBounded_of_natDegree_le`,
+`colemanDBounded_succ`, `colemanDBounded_add_of_coeff_zero`, `colemanD_eq_colemanDBounded`, §3.3.1).
+For polynomials `B`, `P` over a commutative ring and `n`, `m ∈ ℕ`, `colemanDBounded n m B P` is
+`Res_X (reflect n P, 1 − T · B(X))` computed with the degree bounds `n` and `m`. Suppose
+`P(0) = 1`, `deg P ≤ n` and `deg B ≤ m`. The value does not depend on `m ≥ deg B`; raising the rank
+`n` by one multiplies it by `1 − B(0) T`, the factor of the eigenvalue `0` that the padding adds, so
+that for `B(0) = 0` it does not depend on `n ≥ deg P` either; and `colemanD B P` is the value at
+`n = deg P`, `m = deg B`. For `B(0) = 0` the transform of a polynomial is thus the same at every
+admissible rank, which is what makes limits over the truncations of an entire series independent
+of the ranks. Source: Coleman, Appendix A3, pp. 434–436 (the finite `D(B, P)`, Lemma A3.8 and
+Theorem A3.9). Consumed by Tau Ceti LocallyAnalyticDistributions §4.9 (TauCetiRoadmap#854), as
+`polynomialSpectralResultant`. Check:
+
+- `nonzero_constant_padding`: over `ℤ`, `colemanDBounded 1 0 1 1 = 1 − T` although
+  `colemanDBounded 0 0 1 1 = 1`; padding changes the transform when `B(0) ≠ 0`.
+
+Existing target §3.3.2 (the transform on entire series). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.11 (TauCetiRoadmap#854), as the entire resultant as a limit of
+polynomial resultants and the scalar limit of Coleman's Lemma A3.8.
+
+Existing target §3.3.4 (the spectral mapping formula). Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.13 (TauCetiRoadmap#854), as the infinite Coleman spectral mapping;
+there `B` is entire with `B(0) = 0`, the generalisation stated by the four targets below.
+
+**Newton majorants without eigenvalues** (`colemanMajorant`, `exists_newtonMajorant`,
+`tendsto_colemanMajorant`, `norm_coeff_colemanDBounded_le`, §3.3.4). For `F` entire with `F(0) = 1`
+there are `ρ₀ ≥ ρ₁ ≥ ⋯ > 0` tending to `0` with `‖coeff j F‖ ≤ ρ₀ ⋯ ρ_{j−1}` for every `j`, from a
+concave majorant of `j ↦ log ‖coeff j F‖` whose slopes tend to `−∞`; the same `ρ` serves every
+truncation of `F`. For `B` entire with `B(0) = 0` let
+`colemanMajorant B r := sup_{m ≥ 1} ‖coeff m B‖ rᵐ` and `βᵢ := colemanMajorant B ρᵢ`; the `βᵢ` are
+finite, nonincreasing and tend to `0`, and for all ranks `N`, `M` and every `k`,
+`‖coeff k (colemanDBounded N M (trunc (M + 1) B) (trunc (N + 1) F))‖ ≤ β₀ ⋯ β_{k−1}`. The bound is
+proved on universal symmetric polynomials, without splitting `F`, and holds over every ring of this
+layer, reduced or not. Source: Coleman, Appendix A3, p. 435 (the definition of `D(B, P)` and Lemma
+A3.8), from which the explicit bound is derived. Consumed by Tau Ceti LocallyAnalyticDistributions
+§4.13 (TauCetiRoadmap#854). Checks:
+
+- `spectralMajorant_coordinate`: `colemanMajorant T r = r` for `r > 0`; the majorant has no constant
+  term.
+- `spectralMajorant_zero`: `colemanMajorant 0 r = 0`, so every `βᵢ` vanishes.
+- `spectralMajorant_square`: `colemanMajorant T² r = r²`, which separates the exponent in `B` from
+  the index of the coefficients of `F`.
+
+**Operator evaluation of an entire series** (`exists_tendsto_opNorm_sum_pow`,
+`IsCompactoid.of_tendsto_opNorm_sum_pow`, §3.3.4). For `u` a bounded operator on `c₀(I, R)` and `B`
+entire, the partial sums `∑_{m < N} coeff m B • uᵐ` converge in operator norm to `B(u)`, the
+evaluation of §2.1.2 in the algebra `c₀(I, R) →L[R] c₀(I, R)`. If `u` is compactoid and `B(0) = 0`,
+then `B(u)` is compactoid, every `uᵐ` with `m ≥ 1` being compactoid (§0.2.4) and compactoid
+operators being closed under operator-norm limits. Source: Coleman, Theorem A3.9, pp. 435–436.
+Consumed by Tau Ceti LocallyAnalyticDistributions §4.13 (TauCetiRoadmap#854), as
+`entireOperatorEval`. Checks:
+
+- `entireOperator_zero`: `B = 0` evaluates to `0` and `B = T` to `u`.
+- `entireOperator_nilpotent`: if `u² = 0`, then `B(u) = coeff 0 B • 1 + coeff 1 B • u` for every
+  `B`, whatever its higher coefficients.
+- `entireOperator_constant`: on `c₀(ℕ, R)`, `B = 1` evaluates to the identity for every `u`, and the
+  identity is not compactoid; `B(0) = 0` cannot be dropped.
+
+**Coleman's transform with an entire functional input** (`colemanDEntire`,
+`tendsto_gaussNorm_colemanDBounded`, `colemanDEntire_isEntire`, `colemanDEntire_coe`,
+`colemanDEntire_mul`, §3.3.4). For `B`, `F` entire with `B(0) = 0` and `F(0) = 1`,
+`colemanDEntire B F` is the coefficientwise limit of
+`colemanDBounded N M (trunc (M + 1) B) (trunc (N + 1) F)` as `N` and `M` tend to infinity
+independently. By the bound of the Newton majorants the coefficients converge with tails uniformly
+small at every radius, so the convergence holds in every Gauss norm `‖·‖_c` (§2.1.4; Mathlib's
+`PowerSeries.gaussNorm`), whatever the relative growth of the two ranks; the limit is entire with
+constant coefficient `1`, it is `colemanDSeries B F` when `B` is a polynomial, and it is
+multiplicative in `F`. Source: Coleman, Appendix A3, p. 435. Consumed by Tau Ceti
+LocallyAnalyticDistributions §4.13 (TauCetiRoadmap#854), as `entireSpectralTransform`. Checks:
+
+- `identity`: `colemanDEntire T F = F` for every entire `F` with `F(0) = 1`, for instance
+  `∑ p^{n²} Tⁿ` over `ℚ_p`, all of whose truncations have full rank.
+- `zero`: `colemanDEntire 0 F = 1`, and `colemanDEntire B 1 = 1` when `B(0) = 0`.
+- `nilpotent`: for `ε² = 0`, `colemanDEntire T (1 − εT²) = 1 − εT²`; the nilpotent coefficient
+  survives both limits.
+- `nonzero_constant`: for `B = c ≠ 0` and `P = 1`, `colemanDBounded N 0 c 1 = (1 − cT) ^ N`, whose
+  linear coefficients `−Nc` do not converge in `ℚ_p`; `B(0) = 0` is needed.
+- `wrong_topology`: `T ^ N` tends to `0` coefficientwise while its Gauss norm at radius `1` is `1`,
+  so coefficientwise convergence is not convergence in `R{{T}}`.
+
+**The spectral mapping formula for an entire `B`** (`charPowerSeries_eq_colemanDEntire`, §3.3.4).
+For `u` compactoid and `B` entire with `B(0) = 0`,
+`charPowerSeries (B(u)) = colemanDEntire B (charPowerSeries u)`; for a polynomial `B` this is the
+formula of §3.3.4. Truncate `B`, apply §3.3.4 to the truncations, and pass to the limit with §1.3.2
+on the left and the convergence above on the right. Source: Coleman, Theorem A3.9, pp. 435–436.
+Consumed by Tau Ceti LocallyAnalyticDistributions §4.13 (TauCetiRoadmap#854).
+
+Existing targets §3.4.1–3.4.2 (the Riesz–Coleman decomposition and its refinements). Consumed by
+Tau Ceti LocallyAnalyticDistributions §4.14 (TauCetiRoadmap#854), as the polynomial Fredholm
+invertibility criterion and the finite projective slope summands; there the invertibility criterion
+is stated for monic `Q`, here for `Q` with `Q(0) = 1` and unit leading coefficient.
+
 ## Dependency graph
 
 ```text
