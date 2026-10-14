@@ -1639,6 +1639,253 @@ Existing target §8.1 classical analytification, its universal property, product
 
 **analytification_irreducibleComponents.** For X locally of finite type over K, inverse image under Xᵃⁿ → X gives a bijection from the irreducible components of X to the analytic irreducible components of Xᵃⁿ. Components carry their reduced induced structures; together with preservation of closed immersions and reduction from §8.1, the support bijection identifies each analytified component with its corresponding reduced analytic component, compatibly with its inclusion. This does not identify a nonreduced X with the union of its reduced components as ringed spaces. Source: BGR 9.3.4; Conrad, Irreducible components, Theorem 2.3.1. Consumed by AdicSpaces Part II §R1.9.
 
+## Targets requested by the Tau Ceti AdicSpaces and SchemeAndStackFoundations roadmaps
+
+These statements are consumed by AdicSpacesPartII, AdicSpacesPartIII and AdicSpacesPartIV
+(TauCetiRoadmap#817, #813, #815) and by LocallyAnalyticDistributions (TauCetiRoadmap#854);
+SchemeAndStackFoundations (TauCetiRoadmap#779) supplies one input to §0.4. Nothing above is
+changed. Conventions to settle: AdicSpacesPartII's `K`-affinoid algebra is a complete Hausdorff
+topological `K`-algebra whose structure map is strictly topologically of finite type, here
+`IsAffinoidAlgebra K A` with the derived topology (convention 3), with the same mathematics;
+AdicSpacesPartIII states its Kiehl targets on adic spaces locally of finite type over `Spa(K, K°)`,
+here on rigid varieties, the two agreeing on quasi-separated objects by the Layer 8 target below;
+AdicSpacesPartIII norms Banach modules by an open bounded lattice over a ring of definition, here
+by complete norms whose closed unit balls are the lattices; LocallyAnalyticDistributions measures
+slopes by `v_p` over a finite extension of `ℚ_p`, here by a lower bound `r = |p|^h` on absolute
+values of roots.
+
+### Layer 0
+
+§0.4.1 — the definition of Japanese rings, finite inseparable extensions included, and Dedekind's
+criterion are supplied by SchemeAndStackFoundations §0.20 (TauCetiRoadmap#779: `Ring.IsJapanese`,
+`isJapanese_of_dedekind_charZero`, `isJapanese_iff_purelyInseparable`). #779 states the criterion in
+characteristic zero; §0.4.1 states it for a noetherian integrally closed domain with perfect
+fraction field. The weak-stability items §0.4.2–0.4.3 belong to this roadmap alone.
+
+### Layer 1
+
+§1.5.1–1.5.2 `T_{n,ρ}` and its affinoid criterion — consumed by Tau Ceti AdicSpacesPartIV §F1.1
+(TauCetiRoadmap#815), *radius-tate-algebra-affinoid*; #815 takes the same radius in every variable,
+where §1.5 allows an arbitrary polyradius.
+
+### Layer 2
+
+`reduction_finite_of_finite` (above) is consumed by Tau Ceti AdicSpacesPartII §R0.9
+(TauCetiRoadmap#817) together with `mem_iff_supSeminorm_le_one_of_isReduced`, item 7 of the Banach
+prerequisites below.
+
+### Layer 3
+
+`height_eq_ringKrullDim_of_isDomain` (above) is the statement of Tau Ceti AdicSpacesPartII §R1.9
+(TauCetiRoadmap#817), *affinoid-domain-equidimensional*, under the same name. **Check**
+(non-example): `K⟨X⟩ × K` is affinoid and not a domain; its maximal ideal `K⟨X⟩ × 0` has
+height `0` while the Krull dimension is `1`, so the domain hypothesis cannot be dropped.
+
+### Layer 4
+
+§4.4.4 reducedness is local — consumed by Tau Ceti AdicSpacesPartIV §R5.7 (TauCetiRoadmap#815),
+*reduced-affinoid-rational-localisation* part (c); #815 states it for rational subdomains only, and
+its part (d), on rings of integral elements, is adic and stays there.
+
+### Layer 6
+
+**Finite modules under completed extension of the ground field.** Let `K'/K` be a complete isometric
+extension, `A` a `K`-affinoid algebra, `A' = A ⊗̂_K K'` as in §6.4.6, and `M` a finite `A`-module
+with its canonical topology (`p`-adic-functional-analysis §1.4). Prove that the natural map
+`A' ⊗_A M → M ⊗̂_K K'`, whose target is the completion of `M ⊗_K K'` for the tensor seminorm as in
+§6.4.6, is an isomorphism of topological `A'`-modules; with `faithfullyFlat_scalarExtension` above
+this completes Conrad's lemma. Source: Conrad, Irreducible components, Lemma 1.1.5, p. 6.
+**Checks.** (computation) For `A = K⟨T⟩` and `M = A/(T)`, `A' = K'⟨T⟩` and `A' ⊗_A M = K'`.
+(degenerate) For `M = A` both sides are `A'`. (degenerate) For `K' = K` the map is `A ⊗_A M ≅ M`.
+Consumed by Tau Ceti AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813),
+*affinoid-completed-field-extension*; #813 builds `A'` as its completed tensor product of Huber
+rings, which is the ring of §6.4.6.
+
+### Layer 7
+
+**proper_cohomology_principalFiltration.** Let `f : X → Sp A` be Kiehl-proper, `F` coherent, `a ∈ A`
+and `i ≥ 0`, and put `Rₙ = ker(Hⁱ(X, F) → Hⁱ(X, F/aⁿF))`, the maps being `cohomologyQuotientMap`
+into `cohomologyQuotient` (the cohomology of `F/JⁿF` for `J = (a)`, whose limit is
+`cohomologyQuotientLimit` above). Prove: `(Rₙ)` is an `(a)`-filtration that is stable
+(`a Rₙ ⊆ Rₙ₊₁`, with equality for all large `n`); there is `d` with `R_{n+d} ⊆ aⁿHⁱ(X, F)` for every
+`n`; and there is `d'` such that the transition `cohomologyQuotientTransition` from level `n + d'`
+to level `n` lands in the image of `Hⁱ(X, F)` for every `n`. That is, the kernel and cokernel
+systems of `Hⁱ(X, F)/aⁿ → Hⁱ(X, F/aⁿF)` are null, with shifts that may differ; this is the input
+from which `proper_formalFunctions` is deduced for a general ideal. Source: Kiehl, Der
+Endlichkeitssatz, §3, Theorem 3.4, p. 206, and before Theorem 3.7, p. 210; the algebraic argument is
+EGA III₁, (4.1.7.9)–(4.1.7.21), pp. 126–128. **Checks.** (degenerate) For `a = 0`, `R₀ = Hⁱ(X, F)`
+and `Rₙ = 0` for `n ≥ 1`. (degenerate) For `a = 1`, `Rₙ = Hⁱ(X, F)` for every `n`. (computation) For
+`f` the identity of `Sp A` and `i = 0`, `Rₙ = aⁿ·Γ(Sp A, F)`: the `a`-adic filtration of the finite
+module `Γ(Sp A, F)`. Consumed by Tau Ceti AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813),
+*proper-cohomology-adic-completion*; #813 states it for proper adic spaces over `Spa(A, A°)`.
+
+### Layer 8
+
+**analytification_stalk_isReduced_iff, analytification_stalk_isNormal_iff,
+isReduced_iff_analytification, isNormal_iff_analytification.** For a `K`-scheme `X` locally of
+finite type, a point `x` of `X^{rig}` and its closed point `x₀` of `X` (§8.1.2), prove: (ii) the
+local ring `𝒪_{X,x₀}` is reduced, respectively a normal domain, exactly when `𝒪_{X^{rig},x}` is; and
+(iii) `X` is reduced, respectively has normal-domain local rings, exactly when every local ring of
+`X^{rig}` is reduced, respectively a normal domain. Item (i), the isomorphism of completions, is
+§8.1.2; (ii) follows by faithfully flat descent in one direction and through the completion of the
+excellent ring `𝒪_{X,x₀}` in the other, and (iii) from (ii) since every point of `X` specialises to
+a closed point. Source: Conrad, Irreducible components, §1.2, p. 7, and Appendix A.1, Lemma
+A.1.2(2), p. 32, and Theorem A.1.3(1), p. 33. **Checks.** (computation) `𝔸¹_K` is normal, and the
+local ring of `(𝔸¹_K)^{rig}` at `0`, the series converging near `0`, is a discrete valuation ring.
+(non-example) `Spec K[ε]/(ε²)` and its analytification are both non-reduced. (non-example) For
+`char K ≠ 2` the node `y² = x²(x + 1)` is reduced and not normal on both sides, and being a domain
+is not reflected: at the origin the algebraic local ring is a domain, while the analytic one is not,
+since `y² − x²(1 + x)` factors there through the square root of `1 + x`. Consumed by Tau Ceti
+AdicSpacesPartII §R1.9 (TauCetiRoadmap#817), *rigid-analytification-normal-reduced*, parts
+(ii)–(iii).
+
+§8.2.2–8.2.5 classical points, the rational correspondence and the covering criterion — consumed
+by Tau Ceti AdicSpacesPartII §R1.9 (TauCetiRoadmap#817), *classical-points-constructible-density*,
+whose part (iv) is §8.2.4–8.2.5; that target adds the following.
+
+**Constructible density of classical points.** For a `K`-affinoid algebra `A` let `L_A ⊆ Spv A` be
+the set of valuations `v` with `v(f) ≤ 1` for `f ∈ Å` and `v(f) < 1` for `f ∈ Ǎ` (§2.3). Prove: (i)
+`L_A` is the closure of the classical points `{v_x : x ∈ Sp A}` (§8.2.2) in the constructible
+topology of `Spv A`; (ii) the classical points are dense in `Spa(A, A°)` for its constructible
+topology; (iii) two constructible subsets of `Spa(A, A°)` with the same classical points are equal.
+Source: Huber, Continuous valuations, §4, Theorem 4.1, p. 472, and Corollaries 4.2–4.3, p. 473;
+Wedhorn §7.7, Example 7.58, pp. 71–72. **Checks.** (computation) In `Spa(K⟨T⟩, K°⟨T⟩)` the Gauss
+point is not classical, yet every constructible set containing it contains a classical point.
+(non-example) The closed point `x_{<1}` of rank two below the Gauss point with `|T| < 1` forms a
+pro-constructible set that is not constructible and has no classical point, so (iii) needs
+constructibility. (computation) The rational subsets `{|T| ≤ |ϖ|}` and `{|T| ≥ 1}` are the only
+constructible sets whose classical points are the Weierstrass domain `{|T(x)| ≤ |ϖ|}` and the
+Laurent domain `{|T(x)| ≥ 1}`.
+
+§8.3.1–8.3.2 the functor `r` and its full faithfulness — consumed by Tau Ceti AdicSpacesPartII
+§R1.7 (TauCetiRoadmap#817), *rigid-adic-comparison-functor* and
+*rigid-adic-quasi-separated-equivalence*; full faithfulness there is Huber's Proposition 4.5(ii),
+and that target adds parts (iii)–(v), as follows.
+
+**Image of `r`, quasi-separated equivalence and affinoid detection.** For `r` of §8.3.2 prove: (a)
+an adic space over `Spa(K, K°)` is locally of finite type exactly when it has an open covering by
+spaces `r(Sp A)`, so the lft adic spaces form the smallest class containing the image of `r` and
+closed under isomorphism, open subspaces and open coverings; (b) `r` restricts to an equivalence
+from quasi-separated rigid varieties (§7.3.2) onto quasi-separated adic spaces locally of finite
+type over `Spa(K, K°)`; (c) `r(X)` is affinoid exactly when `X` is. Source: Huber, A generalization
+of formal schemes and rigid analytic varieties, §4, Proposition 4.5(iii)–(v) and its proof, p. 543;
+Huber, Étale cohomology of rigid analytic varieties and adic spaces, §1.1, (1.1.11), pp. 42–43.
+**Checks.** (computation) The adic affine line is quasi-separated and locally of finite type, and it
+is `r(𝔸^{1,rig})`. (non-example) The open unit disc `⋃_m {|T|^m ≤ |ϖ|}` of `Spa(K⟨T⟩, K°⟨T⟩)` is not
+affinoid, as the rigid open disc of §6.5 is not. (non-example) For the rigid variety glued from two
+closed unit discs along `{|T| < 1}`, which is not quasi-separated, `r(X)` contains two copies of the
+rank-two point `x_{<1}`. (non-example) For `K` algebraically closed, two copies of
+`D = Spa(K⟨T⟩, K°⟨T⟩)` glued along the complement of the closure of the Gauss point give an adic
+space locally of finite type over `Spa(K, K°)` that is `r` of no rigid variety.
+
+### Banach prerequisites for the Kiehl targets
+
+Throughout, `A` is a `K`-affinoid algebra with a complete `K`-algebra norm (convention 3) and a
+Banach `A`-module is a complete ultrametric normed `A`-module with `‖a·m‖ ≤ ‖a‖‖m‖`; `IsFiniteRank`,
+`IsCompletelyContinuous` and `opNorm` are the compact-operators roadmap's §0.1, restated in
+`Suggested.lean` under the same names. Where a target needs the unit ball `A₀` of `A` to be the
+image of the Gauss unit ball under a presentation `π : Tₙ ↠ A`, it says so.
+
+1. **IsStrictlyCompletelyContinuous, IsStrictlyCompletelyContinuous.isCompletelyContinuous,
+   IsStrictlyCompletelyContinuous.of_subtype_comp, exists_c0_surjective.** A continuous `A`-linear
+   `u : M → N` is strictly completely continuous if there is `c ∈ K`, `0 < |c| ≤ 1`, such that for
+   every `ε > 0` some finite-rank `v` has `‖u − v‖ < ε` and `c·v(M₀)` inside the `A₀`-span of
+   finitely many elements of `N₀`, where `M₀`, `N₀` are the closed unit balls; `c` is the same for
+   all `ε`, the finite set is not. Prove that such `u` is completely continuous; that if `A₀` is the
+   image of the Gauss unit ball of a presentation, `N ⊆ G` is a closed submodule of a Banach module
+   and `u : c₀(I, A) → N` becomes strictly completely continuous after composing with `N ↪ G`, then
+   `u` is strictly completely continuous into `N`; and that every Banach module is the image of a
+   continuous surjection from some `c₀(I, A)`. The descent needs no complement of `N` in `G`, which
+   exists over a discretely valued or spherically complete `K`. Source: Kiehl, Der Endlichkeitssatz,
+   §1, Definition 1.1, p. 198, and Satz 1.4 with the remark before it, p. 199; Bosch, Lectures on
+   formal and rigid geometry (2014), §6.4, statement 6, pp. 138–139. **Checks.** (degenerate) The
+   zero map is strictly completely continuous, with all approximants zero. (computation) For `A = K`
+   the identity of `K` is, with `c = 1` and the generator `1`. (non-example) The identity of an
+   infinite-dimensional Banach `K`-space, `K⟨T⟩` for instance, is not, since it is not completely
+   continuous. (compatibility) For `G = K⟨T⟩` and `N = T·K⟨T⟩`, a strictly completely continuous map
+   from `c₀(I, K)` into `G` with values in `N` is one into `N`. Consumed by Tau Ceti
+   AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813), *completely-continuous-map* and
+   *strictly-completely-continuous-closed-target*; #813 states them for a complete Tate ring with a
+   chosen ring of definition, and the unit-ball norm here is one instance of its lattice norm.
+2. **IsCompletelyContinuous.finite_cokernel_of_surjective.** For Banach `A`-modules `M`, `N`, a
+   continuous surjective `A`-linear `f : M → N` and a completely continuous `g : M → N`, the image
+   `(f + g)(M)` is closed and `N/(f + g)(M)` is a finite `A`-module (Schwartz's theorem in Kiehl's
+   form). Source: Kiehl, Der Endlichkeitssatz, §1, Satz 1.2, p. 198. **Checks.** (computation) On
+   `K⟨T⟩` with `h(Σ aₙTⁿ) = Σ aₙϖⁿTⁿ` for `0 < |ϖ| < 1`, `id − h` has closed image `T·K⟨T⟩` and
+   cokernel `K`.
+   (degenerate) For `g = 0` the cokernel is `0`. (non-example) `g = −id` on `K⟨T⟩` is not completely
+   continuous, and the cokernel `K⟨T⟩` of `id − id` is not finite over `K`. Consumed by Tau Ceti
+   AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813), *completely-continuous-finite-cokernel*.
+3. **exists_surjective_sub_of_opNorm_lt, span_eq_top_of_norm_sub_lt.** For a complete normed
+   `K`-algebra `A` and Banach `A`-modules `M`, `N` that are Banach `K`-spaces through `A`, and a
+   continuous surjective `A`-linear `f : M → N`, there is `c > 0` such that `f − e` is surjective
+   for every continuous `A`-linear `e` with `‖e‖ < c`. Consequently, if `m₁, …, m_r` generate a
+   finite Banach `A`-module, every family close enough to them generates it. Source: Kiehl, Der
+   Endlichkeitssatz, §1, Lemma 1.3, p. 198. **Checks.** (computation) In `K²` the vectors `(1, δ)`,
+   `(δ', 1)` with `|δ|, |δ'| < 1` generate. (degenerate) `e = 0` gives `f`. (non-example) For
+   `f = id_K` and `e = id_K`, `‖e‖ = 1` and `f − e = 0`, so `c ≤ 1` for this `f`. Consumed by Tau
+   Ceti AdicSpacesPartIII §R3.3 (TauCetiRoadmap#813), *surjection-small-perturbation*; #813 states
+   it for complete Tate rings and lattice-normed modules.
+4. **AffinoidSubdomain.IsRelativelyCompact,
+   AffinoidSubdomain.IsRelativelyCompact.isStrictlyCompletelyContinuous.** For an affinoid
+   `A`-algebra `B` and an affinoid subdomain `U` of `Sp B`, `U ⋐_A Sp B` (§7.3.3 in its affinoid
+   case) when some surjection `A⟨X₁, …, Xₙ⟩ → B` over `A` sends every `Xᵢ` to a function with
+   `|·|_sup < 1` on `U`. Let `A₀` come from a presentation, give `B` and `𝒪(U)` complete `K`-algebra
+   norms (convention 3), let `M` be a finite `B`-module and `N ≅ 𝒪(U) ⊗_B M` its restriction, each
+   with a complete ultrametric norm on which `B`, respectively `𝒪(U)`, acts boundedly, and let
+   `res(m) = 1 ⊗ m`. Prove that `res ∘ q` is strictly completely continuous over `A` for every
+   continuous surjection `q : c₀(I, A) → M`. Source: Kiehl, Der Endlichkeitssatz, §2, Definition
+   2.1, p. 202, and before Satz 2.5, p. 204; Bosch, Lectures on formal and rigid geometry (2014),
+   §6.3, Definition 6, p. 131, and §6.4, Proposition 2, p. 135. **Checks.** (computation) For `V`
+   the unit disc, `U = {|X| ≤ |ϖ|}` with `0 < |ϖ| < 1`, and `F = 𝒪`, the restriction
+   `K⟨X⟩ → K⟨X/ϖ⟩` is strictly completely continuous; in the coordinate `S = X/ϖ` it multiplies the `n`-th coefficient by `ϖⁿ`.
+   (computation) Its truncations below degree `N` are at distance `≤ |ϖ|^N` and send `K°⟨X⟩` into
+   the finitely generated `⊕_{n<N} K°Sⁿ`, so `c = 1` works; no single finitely generated submodule
+   serves all truncations, since the image is not contained in a finite-dimensional subspace.
+   (compatibility) The map sends `1` to `1`: strictness does not ask that every coefficient be
+   contracted. Consumed by Tau Ceti AdicSpacesPartIII §R3.6 (TauCetiRoadmap#813),
+   *restriction-strictly-completely-continuous*.
+5. **exists_fg_smul_le_of_presentation, isNoetherian_of_presentation_of_discrete.** Let
+   `π : Tₙ ↠ A` be a presentation and `A₀ ⊆ A` the image of the Gauss unit ball, `M` a finitely
+   generated `A₀`-module and `N ⊆ M` a submodule. For every `0 < ε < 1` there is a finitely
+   generated `N' ⊆ N` with `aN ⊆ N'` for all `a ∈ K` with `|a| ≤ ε`. If the value group of `K` is
+   discrete, `M` is a noetherian `A₀`-module. Source: Kiehl, Der Endlichkeitssatz, §5 (Anhang), Satz
+   5.1, p. 212. **Checks.** (computation) For `K = A = ℂ_p`, `A₀ = 𝒪_{ℂ_p}` and `N` its maximal
+   ideal, which is not finitely generated, `N' = x𝒪_{ℂ_p}` with `ε < |x| < 1` works. (compatibility)
+   For `K = ℚ_p` the statement is the noetherianity of `ℤ_p⟨X₁, …, Xₙ⟩`. (degenerate) For `A = K`
+   and the presentation by `T₀ = K`, `A₀ = K°`. Consumed by Tau Ceti AdicSpacesPartIII §R3.6
+   (TauCetiRoadmap#813), *almost-noetherian-integral-affinoid-modules*.
+6. **IsSlopeLE, IsSlopeDecomposition, IsSlopeDecomposition.exists_projection.** A polynomial
+   `Q ∈ A[X]` has slope `≤ r` when, for every `K`-algebra map `χ : A → L` into a field algebraic
+   over `K`, every root of `χ(Q)` in `L` has spectral norm `≥ r` (convention 4; for `K/ℚ_p` and
+   `r = |p|^h` this is valuation `≤ h`). For a continuous `A`-linear `U` on a Banach `A`-module `M`,
+   an `r`-slope decomposition is `M = M₁ ⊕ M₂` with continuous projection, both summands `U`-stable,
+   `M₁` finite projective and killed by `Q(U)` for some monic `Q` with unit constant term and slope
+   `≤ r`, and `P(U)` bijective on `M₂` for every such `P`. Zero roots have norm `0 < r`, so the
+   constant-term condition puts them in `M₂`. Prove that the projection onto `M₁` along `M₂` is
+   continuous, idempotent and commutes with `U`. Source: Urban, Eigenvarieties for reductive groups,
+   §2.3, Definitions 2.3.1 and 2.3.6, Lemma 2.3.2 and Corollaries 2.3.3–2.3.4, pp. 23–25; Pilloni,
+   Higher coherent cohomology and p-adic modular forms of singular weights, §13.1.1, p. 84.
+   **Checks.** (computation) For `U = c·id` on `K` with `c ≠ 0` and `r = |c|`, `M₁ = K` and
+   `M₂ = 0`: the endpoint is in `M₁`. (degenerate) For `U = 0` and `r > 0`, `M₁ = 0`, `M₂ = K`.
+   (compatibility) For `|c| < 1` the eigenvalue `c` of `U = c·id` fails slope `≤ 1` while the
+   Fredholm root `c⁻¹` of `1 − cT` passes, so the condition is read on the monic annihilator.
+   Consumed by Tau Ceti LocallyAnalyticDistributions §4.16 (TauCetiRoadmap#854), *numerical h-slope
+   decomposition*; #854 states it with `v_p` over `K/ℚ_p`.
+7. **mem_iff_supSeminorm_le_one_of_isReduced.** Let `B ⊆ A` be open and bounded and `ϖ ∈ B` a
+   topologically nilpotent unit of `A` with `B/ϖB` reduced. Then `B = Å = {|f|_sup ≤ 1}`. The proof
+   descends from `ϖⁿB[f] ⊆ B` to `ϖ^{n−1}B[f] ⊆ B` for power-bounded `f`: `(ϖⁿfᵏ)²` lies in `ϖB`, so
+   `ϖⁿfᵏ` does by reducedness of `B/ϖB`, and `ϖ` is a unit. Source: Fujiwara–Kato, Foundations of
+   rigid geometry I, Chapter 0, Appendix B.1, Proposition B.1.3(1), p. 236; Kedlaya, Finiteness of
+   rigid cohomology with coefficients, §2.1, Definition 2.1.8, p. 9. **Checks.** (computation) For
+   `A = ℚ_p⟨T⟩`, `B = ℤ_p⟨T⟩` and `ϖ = p`, `B/pB = 𝔽_p[T]` is reduced and `B = Å`. (non-example) For
+   `A = ℚ_p⟨T, S⟩/(S² − p²T)` and `B` the image of `ℤ_p⟨T, S⟩`, `B/pB = 𝔽_p[T, S]/(S²)` is not
+   reduced and `S/p ∈ Å ∖ B`, since `(S/p)² = T`. (non-example) The hypothesis is not necessary:
+   `ℤ_p ⊆ ℚ_p` with `ϖ = p²`, and `𝒪_{ℂ_p} ⊆ ℂ_p` with `ϖ = p`, have non-reduced `B/ϖB` and `B = Å`.
+   Consumed by Tau Ceti AdicSpacesPartII §R0.9 (TauCetiRoadmap#817),
+   *reduced-reduction-ring-of-definition*; #817 states it for every Tate ring, with `A°` in place of
+   `{|f|_sup ≤ 1}`.
+
 ## Dependency graph
 
 ```text
