@@ -1702,8 +1702,8 @@ Closest to home, the spectral variety `{det(1 − T·U) = 0} ⊆ 𝒲 × 𝔸¹`
 overconvergent-forms roadmaps, the rigid-analytic weight space with its affinoid subdomains, and the
 eigencurve glued from finite-slope pieces (Buzzard's *Eigenvarieties* §§4–5, Coleman–Mazur,
 Johansson–Newton §2.3) are rigid varieties over `ℚ_p` built from affinoid algebras over affinoid
-subdomains of weight space; the `p`-adic-functional-analysis roadmap's §5.6 halo ring and the
-spectral-halo roadmap's `Λ^{>1/p}[1/T]` are the coordinate rings of the relevant admissible opens.
+subdomains of weight space. Boundary-of-weight-space slope phenomena also motivate studying
+annular coefficient rings, as in the `p`-adic-functional-analysis roadmap's §5.6.
 What they ask of this roadmap is that affinoid algebras over an arbitrary complete `K` carry their
 supremum seminorm and uniformity (Layer 2), that rational subdomains and finite coverings be
 available with Tate acyclicity (Layers 4–5), and that gluing produce rigid varieties with a
